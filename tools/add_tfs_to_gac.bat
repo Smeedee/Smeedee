@@ -1,0 +1,15 @@
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.Build.Common /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.Client /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.Common /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.Common.Library /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.VersionControl.Client /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.VersionControl.Common /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.VersionControl.Common.Integration /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.WorkItemTracking.Client /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.WorkItemTracking.Client.Cache /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore /ve /d "%programfiles%\    \Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.WorkItemTracking.Client.Provision /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f
+reg add HKCU\Software\Microsoft\.NETFramework\AssemblyFolders\Microsoft.TeamFoundation.WorkItemTracking.Proxy /ve /d "%programfiles%\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies" /f

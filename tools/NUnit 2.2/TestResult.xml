@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Documents and Settings\goeran\My Documents\Visual Studio 2008\Projects\TinyBDD.google\trunk\TinyBDDTests\bin\debug\TinyBDDTests.dll" total="17" failures="0" not-run="0" date="2009-04-01" time="14:21:31">
+  <environment nunit-version="2.2.10.0" clr-version="2.0.50727.3053" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\Documents and Settings\goeran\My Documents\Visual Studio 2008\Projects\TinyBDD.google\trunk\Tools\NUnit 2.2" machine-name="GOERAN-TINYXP" user="goeran" user-domain="GOERAN-TINYXP" />
+  <culture-info current-culture="nb-NO" current-uiculture="en-US" />
+  <test-suite name="C:\Documents and Settings\goeran\My Documents\Visual Studio 2008\Projects\TinyBDD.google\trunk\TinyBDDTests\bin\debug\TinyBDDTests.dll" success="True" time="0.578" asserts="0">
+    <results>
+      <test-suite name="C:\Documents and Settings\goeran\My Documents\Visual Studio 2008\Projects\TinyBDD.google\trunk\TinyBDDTests\bin\debug\TinyBDDTests.dll" success="True" time="0.578" asserts="0">
+        <results>
+          <test-suite name="TinyBDDTests" success="True" time="0.578" asserts="0">
+            <results>
+              <test-suite name="DomainModel" success="True" time="0.563" asserts="0">
+                <results>
+                  <test-suite name="ScenarioTests" success="True" time="0.563" asserts="0">
+                    <results>
+                      <test-case name="TinyBDDTests.DomainModel.ScenarioTests.Can_have_several_events" executed="True" success="True" time="0.031" asserts="2" />
+                      <test-case name="TinyBDDTests.DomainModel.ScenarioTests.Context_should_be_setup_for_every_event" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="TinyBDDTests.DomainModel.ScenarioTests.Should_have_init_state" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="TinyBDDTests.DomainModel.ScenarioTests.Should_log_complex_scenario" executed="True" success="True" time="0.484" asserts="0" />
+                      <test-case name="TinyBDDTests.DomainModel.ScenarioTests.Should_log_simple_scenario" executed="True" success="True" time="0.016" asserts="0" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+              <test-suite name="Dsl" success="True" time="0.016" asserts="0">
+                <results>
+                  <test-suite name="ComplexScenarioTests" success="True" time="0.000" asserts="0">
+                    <results>
+                      <test-case name="TinyBDDTests.Dsl.ComplexScenarioTests.Should_be_able_to_run_scenario" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="TinyBDDTests.Dsl.ComplexScenarioTests.Should_contain_an_context" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="TinyBDDTests.Dsl.ComplexScenarioTests.Should_contain_an_event" executed="True" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="DogfoodingTests" success="True" time="0.016" asserts="0">
+                    <results>
+                      <test-case name="TinyBDDTests.Dsl.DogfoodingTests.Run" executed="True" success="True" time="0.016" asserts="3" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="NewSyntax" success="True" time="0.000" asserts="0">
+                    <results>
+                      <test-case name="TinyBDDTests.Dsl.NewSyntax.Should_contain_an_event" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="TinyBDDTests.Dsl.NewSyntax.Should_contain_an_title" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="TinyBDDTests.Dsl.NewSyntax.Should_contain_context" executed="True" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="SimpleScenarioTests" success="True" time="0.000" asserts="0">
+                    <results>
+                      <test-case name="TinyBDDTests.Dsl.SimpleScenarioTests.Should_be_able_to_run_scenario" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="TinyBDDTests.Dsl.SimpleScenarioTests.Should_contain_an_event" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="TinyBDDTests.Dsl.SimpleScenarioTests.Should_contain_context" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="TinyBDDTests.Dsl.SimpleScenarioTests.Should_return_scenario" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="TinyBDDTests.Dsl.SimpleScenarioTests.Title_should_be_set_for_scenario" executed="True" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
