@@ -1,0 +1,82 @@
+﻿<UserControl 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	mc:Ignorable="d"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+	xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+	xmlns:Regions="clr-namespace:Microsoft.Practices.Composite.Presentation.Regions;assembly=Microsoft.Practices.Composite.Presentation" 
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:local="clr-namespace:APD.Client" xmlns:System="clr-namespace:System;assembly=mscorlib" 
+	xmlns:local1="clr-namespace:APD.Client.Silverlight" 
+	x:Class="APD.Client.Silverlight.NiceShell"
+	d:DesignWidth="1280" d:DesignHeight="800"
+    MinWidth="800" MinHeight="600"
+    KeyDown="UserControl_KeyDown"
+    >
+	<UserControl.Resources>
+        <Style x:Key="ItemsControlGridStyle"  TargetType="ItemsControl">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <Grid/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Name="logoSpin" RepeatBehavior="Forever"/>
+	</UserControl.Resources>
+    
+	<Grid x:Name="LayoutRoot" Margin="0" Background="{StaticResource BackgroundBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition />
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
+        <Grid Margin="6,10,6,6" Grid.Row="1">
+			<controlsToolkit:Viewbox HorizontalAlignment="Left" Margin="0">
+				<ItemsControl 
+					Style="{StaticResource ItemsControlGridStyle}"
+					x:Name="MainContentRegion" Regions:RegionManager.RegionName="MainContent" Margin="0" d:LayoutOverrides="GridBox" Width="1280" Height="654" HorizontalAlignment="Center"/>
+			</controlsToolkit:Viewbox>
+		</Grid>
+        <Grid x:Name="HeaderPanel" Height="80" VerticalAlignment="Top" Grid.Row="0">
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition/>
+        		<ColumnDefinition/>
+        	</Grid.ColumnDefinitions>
+			<Grid.Effect>
+				<DropShadowEffect Direction="270" BlurRadius="20" ShadowDepth="4" Opacity="0.8"/>
+			</Grid.Effect>
+			<Grid.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="{StaticResource primary-bg-dark}" Offset="1"/>
+					<GradientStop Color="#373739"/>
+				</LinearGradientBrush>
+			</Grid.Background>
+
+			<StackPanel HorizontalAlignment="Left">
+				<TextBlock x:Name="slideTitle" FontFamily="{StaticResource FontFamily}" Text="Slide Title" VerticalAlignment="Center" FontSize="36" Margin="15,10,0,0" HorizontalAlignment="Left" Foreground="{StaticResource FontBrush}" d:LayoutOverrides="HorizontalMargin"/>
+				<TextBlock x:Name="slideInformation" FontFamily="{StaticResource FontFamily}" Text="Slide information" FontSize="20" Margin="15,0,0,0" VerticalAlignment="Center" d:LayoutOverrides="Width, HorizontalMargin" Foreground="{StaticResource FontBrush}"/>
+			</StackPanel>
+			<local1:Logo Grid.Column="1" Margin="0,-4,3,-21" HorizontalAlignment="Right" Width="220"/>
+		</Grid>
+    	
+        <Grid x:Name="FooterPanel" Grid.Row="2" Background="{StaticResource BackgroundBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <ContentControl Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Margin="15,0,0,0"
+                            x:Name="BottomLeftRegion" 
+                            Regions:RegionManager.RegionName="BottomLeft"/>
+            
+            <ContentControl Grid.Column="1"
+                x:Name="BottomCenterRegion" Regions:RegionManager.RegionName="BottomCenter" Padding="10" VerticalAlignment="Center"/>
+		</Grid>
+    </Grid>
+</UserControl>

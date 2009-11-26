@@ -1,0 +1,177 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}</ProjectGuid>
+    <ProjectTypeGuids>{603c0e0b-db56-11dc-be95-000d561079b0};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>APD.Client.Web</RootNamespace>
+    <AssemblyName>APD.Client.Web</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <SilverlightApplicationList>{FFEDD3D2-15AF-4BC2-9D78-07F870685E68}|..\APD.Client.Silverlight\APD.Client.Silverlight.csproj|ClientBin|False</SilverlightApplicationList>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate, Version=1.0.0.593, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\fluentnhibernate-1.0RTM\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\fluentnhibernate-1.0RTM\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\fluentnhibernate-1.0RTM\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.60.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Fluent-NH\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\ReferenceTrackingSerializer.cs" />
+    <Compile Include="Serialization\ReferenceTrackingSerializerProvider.cs" />
+    <Compile Include="Services\ChangesetRepositoryService.svc.cs">
+      <DependentUpon>ChangesetRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CIRepositoryService.svc.cs">
+      <DependentUpon>CIRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ConfigurationRepositoryService.svc.cs">
+      <DependentUpon>ConfigurationRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ProjectInfoRepositoryService.svc.cs">
+      <DependentUpon>ProjectInfoRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\SettingsService.svc.cs">
+      <DependentUpon>SettingsService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\UserRepositoryService.svc.cs">
+      <DependentUpon>UserRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\VCSCredentialsService.svc.cs">
+      <DependentUpon>VCSCredentialsService.svc</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="APD.Client.SilverlightTestPage.html" />
+    <Content Include="ClientBin\APD.Admin.Silverlight.xap" />
+    <Content Include="ClientBin\APD.Client.Silverlight.xap" />
+    <Content Include="Default.htm" />
+    <Content Include="Services\ChangesetRepositoryService.svc" />
+    <Content Include="Services\CIRepositoryService.svc" />
+    <Content Include="Services\ConfigurationRepositoryService.svc" />
+    <Content Include="Services\ProjectInfoRepositoryService.svc" />
+    <Content Include="Services\SettingsService.svc" />
+    <Content Include="Services\UserRepositoryService.svc" />
+    <Content Include="Services\VCSCredentialsService.svc" />
+    <Content Include="Silverlight.js" />
+    <Content Include="UserImages\default_user.jpg" />
+    <Content Include="UserImages\system_user.jpg" />
+    <Content Include="UserImages\unknown_user.jpg" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\APD.DomainModel.NHMapping\APD.DomainModel.NHMapping.csproj">
+      <Project>{8C10A03E-E491-41E3-81C8-632BC4E375DF}</Project>
+      <Name>APD.DomainModel.NHMapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.DomainModel\APD.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>APD.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Framework\APD.Framework.csproj">
+      <Project>{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}</Project>
+      <Name>APD.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Plugin.ProjectInfo\APD.Plugin.ProjectInfo.csproj">
+      <Project>{8B29193C-DD09-4A29-B81A-B55B1EB492D2}</Project>
+      <Name>APD.Plugin.ProjectInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>APD.DomainModel.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integration\APD.Integration\APD.Integration.csproj">
+      <Project>{47431D6D-1824-41E1-87B8-D90872E4FA04}</Project>
+      <Name>APD.Integration</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\tools\MSBuild Targets\Microsoft.WebApplication.targets" />
+  <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>1155</DevelopmentServerPort>
+          <DevelopmentServerVPath>/APD/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,12 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" xmlns:APD_Client_Widget_Admin_SL_Views="clr-namespace:APD.Client.Widget.Admin.SL.Views" x:Class="APD.Client.Widget.Admin.SL.MainPage"
+    d:DesignWidth="640" d:DesignHeight="480">
+  <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundBrush}">
+
+  	<APD_Client_Widget_Admin_SL_Views:AdminView x:Name="adminView" Margin="0" Background="{StaticResource BackgroundBrush}" BorderBrush="{StaticResource BackgroundBrush}"/>
+
+  </Grid>
+</UserControl>

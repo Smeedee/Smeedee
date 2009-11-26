@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="APD.DomainModel"
+                   namespace="APD.DomainModel.Config">
+  <class name="Configuration" table="Configuration">
+    <id name="Name">
+      <generator class="assigned"/>
+    </id>
+    <property name="IsConfigured"/>
+    <bag name="Settings" cascade="All" lazy="false" inverse="true">
+      <key column="Configuration_fid"/>
+      <one-to-many class="SettingsEntry"/>
+    </bag>
+  </class>
+
+  <class name="SettingsEntry" table="SettingsEntry">
+    <composite-id>
+      <key-property name="Name"/>
+      <key-many-to-one name="Configuration" class="Configuration" column="Configuration_fid"/>
+    </composite-id>
+    <bag name="Vals" cascade="All" lazy="false" table="SettingsEntryValues">
+      <key>
+        <column name="Configuration_fid"/>
+        <column name="SettingsEntry_fid"/>
+      </key>
+      <element column="Value"/>
+    </bag>
+  </class>
+</hibernate-mapping>

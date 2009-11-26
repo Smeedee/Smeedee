@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<RevisionHistory rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revisionhistory/497955718" objectVersion="1" CreatedAt="Jul 28">
+	<CreationDate>2009-07-28T11:25:08.000Z</CreationDate>
+	<ObjectID>497955718</ObjectID>
+	<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+	<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+	−
+	<Revisions>
+		−
+		<Revision rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revision/498378265" objectVersion="1" CreatedAt="Jul 28" type="Revision">
+			<CreationDate>2009-07-30T14:25:44.000Z</CreationDate>
+			<ObjectID>498378265</ObjectID>
+			<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+			<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+			−
+			<Description>
+				TO DO changed from [12.0 Hours] to [0.0 Hours], ACTUALS changed from [12.0 Hours] to [1.0 Hours], STATE changed from [Defined] to [Completed]
+			</Description>
+			<RevisionNumber>4</RevisionNumber>
+			<User>oleandrejohansen@gmail.com</User>
+		</Revision>
+		−
+		<Revision rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revision/498378265" objectVersion="1" CreatedAt="Jul 28" type="Revision">
+		<CreationDate>2009-07-29T14:25:44.000Z</CreationDate>
+		<ObjectID>498378265</ObjectID>
+		<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+		<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+		−
+		<Description>
+			TO DO changed from [12.0 Hours] to [5.0 Hours], ACTUALS changed from [12.0 Hours] to [1.0 Hours], STATE changed from [Defined] to [Completed]
+		</Description>
+		<RevisionNumber>4</RevisionNumber>
+		<User>oleandrejohansen@gmail.com</User>
+	</Revision>
+		
+		
+		<Revision rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revision/498248587" objectVersion="1" CreatedAt="Jul 28" type="Revision">
+			<CreationDate>2009-07-28T13:42:12.000Z</CreationDate>
+			<ObjectID>498248587</ObjectID>
+			<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+			<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+			<Description>OWNER added [oleandrejohansen@gmail.com]</Description>
+			<RevisionNumber>3</RevisionNumber>
+			<User>mail@goeran.no</User>
+		</Revision>
+		−
+		<Revision rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revision/498134004" objectVersion="1" CreatedAt="Jul 28" type="Revision">
+			<CreationDate>2009-07-29T12:57:38.000Z</CreationDate>
+			<ObjectID>498134004</ObjectID>
+			<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+			<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+			−
+			<Description>
+				TO DO added [12.0 Hours], ESTIMATE added [12.0 Hours], ACTUALS added [12.0 Hours]
+			</Description>
+			<RevisionNumber>2</RevisionNumber>
+			<User>mail@goeran.no</User>
+		</Revision>
+		−
+		<Revision rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revision/497985964" objectVersion="1" CreatedAt="Jul 28" type="Revision">
+			<CreationDate>2009-07-28T11:41:03.000Z</CreationDate>
+			<ObjectID>497985964</ObjectID>
+			<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+			<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+			−
+			<Description>
+				
+</Description>
+			<RevisionNumber>1</RevisionNumber>
+			<User>mail@goeran.no</User>
+		</Revision>
+		−
+		<Revision rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revision/497963281" objectVersion="1" CreatedAt="Jul 28" type="Revision">
+			<CreationDate>2009-07-28T11:28:16.000Z</CreationDate>
+			<ObjectID>497963281</ObjectID>
+			<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+			<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+			<Description>Original revision</Description>
+			<RevisionNumber>0</RevisionNumber>
+			<User>mail@goeran.no</User>
+		</Revision>
+	</Revisions>
+</RevisionHistory>

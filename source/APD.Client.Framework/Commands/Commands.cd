@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="APD.Client.Framework.Commands.NoPayloadCommandBase" Collapsed="true">
+    <Position X="7.5" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\NoPayloadCommandBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APD.Client.Framework.Commands.NoPayloadCommandNotifierBase&lt;TC&gt;" Collapsed="true">
+    <Position X="5" Y="7.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAQAAAAACAAA=</HashCode>
+      <FileName>Commands\NoPayloadCommandNotifierBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APD.Client.Framework.Commands.NoPayloadCommandPublisherBase&lt;T&gt;" Collapsed="true">
+    <Position X="5" Y="4.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\NoPayloadCommandPublisherBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APD.Client.Framework.Commands.PayloadCommandBase&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\PayloadCommandBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APD.Client.Framework.Commands.CommandPublishedEventArgs&lt;TP&gt;" Collapsed="true">
+    <Position X="9" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\PayloadCommandNotifierBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APD.Client.Framework.Commands.CommandPublisher" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Commands\PayloadCommandPublisherBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APD.Client.Framework.Commands.PayloadCommandPublisherBase&lt;TC, TP&gt;" Collapsed="true">
+    <Position X="9" Y="4.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\PayloadCommandPublisherBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APD.Client.Framework.Commands.PayloadCommandNotifierBase&lt;TC, TP&gt;" Collapsed="true">
+    <Position X="9" Y="7.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAQAAAAACAAA=</HashCode>
+      <FileName>Commands\PayloadCommandNotifierBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<QueryResult rallyAPIMajor="1" rallyAPIMinor="13">
+  <Errors/>
+  <Warnings/>
+  <TotalResultCount>5</TotalResultCount>
+  <StartIndex>1</StartIndex>
+  <PageSize>20</PageSize>
+  
+  <Results>
+    <Object rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/290873918" refObjectName="Iteration 0" type="Iteration"/>
+    <Object rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/290885432" refObjectName="Startup" type="Iteration"/>
+    <Object rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/315969147" refObjectName="Assemble team" type="Iteration"/>
+    <Object rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/315970191" refObjectName="Infrastructure" type="Iteration"/>
+    <Object rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/497952597" refObjectName="Sprint 3" type="Iteration"/>
+  </Results>
+</QueryResult>

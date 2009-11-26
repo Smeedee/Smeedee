@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+
+<Task rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/task/512446089" objectVersion="1" refObjectName="Add different colors for commit statisics chart" CreatedAt="8 minutes ago">
+	<CreationDate>2009-08-03T07:28:01.000Z</CreationDate>
+	<ObjectID>512446089</ObjectID>
+	<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+	<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+	−
+	<Description>
+		2 ways: <br /><br>
+
+			<ul>
+
+				<li>Add a one series for each datapoint. This way you can use StylePalette. </li>
+
+			</ul>
+
+			<br />
+
+			<ul>
+				<br>
+
+				<li>Add a codebehind file that sets the color for each datapoint in respons to an event. </li>
+
+			</ul>
+
+			<br />BTW: This is also a test to see if the parser removes the html tags from the xml.<br /><br /><b>Hei</b>,<i> this</i><u> is a test.</u> <br />
+
+			<ol>
+
+				<li>
+					Test 1<br />
+				</li>
+
+				<li>Test 2</li>
+
+			</ol>
+
+			<br /><img src="www.test.com/test.jpg" /><br />
+		</Description>
+	<Discussion/>
+	<FormattedID>TA54</FormattedID>
+	<LastUpdateDate>2009-08-03T07:28:01.000Z</LastUpdateDate>
+	<Name>Add different colors for commit statisics chart</Name>
+	<Notes/>
+	<Owner/>
+	<Project rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/project/290873262" refObjectName="Continuous Project Monitor" type="Project"/>
+	<RevisionHistory rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revisionhistory/512446090" type="RevisionHistory"/>
+	<Tags/>
+	<Attachments/>
+	<Blocked>false</Blocked>
+	<Estimate>3.0</Estimate>
+	<Rank>0.764</Rank>
+	<State>Defined</State>
+	<TaskIndex>0</TaskIndex>
+	<ToDo>3.0</ToDo>
+	<WorkProduct rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/hierarchicalrequirement/512444519" refObjectName="Other" type="HierarchicalRequirement"/>
+</Task>

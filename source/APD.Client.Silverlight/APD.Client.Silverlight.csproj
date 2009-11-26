@@ -1,0 +1,272 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FFEDD3D2-15AF-4BC2-9D78-07F870685E68}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>APD.Client.Silverlight</RootNamespace>
+    <AssemblyName>APD.Client.Silverlight</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>APD.Client.Silverlight.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>APD.Client.Silverlight.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <LinkedServerProject>
+    </LinkedServerProject>
+    <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
+    <EnableOutOfBrowser>true</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactivity, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Microsoft.Expression.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Composite.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.Presentation, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.UnityExtensions, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Composite.UnityExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Theming.BureauBlack, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Silverlight Toolkit July 2009\Themes\System.Windows.Controls.Theming.BureauBlack.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Theming.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Theming.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\APD.Client\IShell.cs">
+      <Link>IShell.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.Client\Services\ICheckIfAdminUIShouldBeDisplayed.cs">
+      <Link>Services\ICheckIfAdminUIShouldBeDisplayed.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.Client\ShellPresenter.cs">
+      <Link>ShellPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.Client\ShellPresenterCommandNotifiers.cs">
+      <Link>ShellPresenterCommandNotifiers.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.Client\Slide.cs">
+      <Link>Slide.cs</Link>
+    </Compile>
+    <Compile Include="Animation.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BootStrapper.cs" />
+    <Compile Include="NiceShell.xaml.cs">
+      <DependentUpon>NiceShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Graphics\Logo.xaml.cs">
+      <DependentUpon>Logo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SampleData\ProjectInfo\ProjectInfo.xaml.cs">
+      <DependentUpon>ProjectInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\CheckIfAdminUIShouldBeDisplayedFromUrl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </ApplicationDefinition>
+    <Page Include="ChartingTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="Colors.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NiceShell.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Graphics\Logo.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SampleData\ProjectInfo\ProjectInfo.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <BlendEmbeddedFont Include="Fonts\Trubble.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+    <Resource Include="Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="SampleData\ProjectInfo\ProjectInfo.xsd" />
+    <None Include="Properties\OutOfBrowserSettings.xml" />
+    <Content Include="Resources\Graphics\logo128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\logo16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\logo32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\logo48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ServiceReferences.ClientConfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\APD.Client.Framework.SL\APD.Client.Framework.SL.csproj">
+      <Project>{E09BCACF-7320-4142-A8D5-40D34B9ABC89}</Project>
+      <Name>APD.Client.Framework.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.BurndownChart.SL\APD.Client.Widget.BurndownChart.SL.csproj">
+      <Project>{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}</Project>
+      <Name>APD.Client.Widget.BurndownChart.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.CI.SL\APD.Client.Widget.CI.SL.csproj">
+      <Project>{B84CF0E7-086A-4836-A317-7FF06AD0D52F}</Project>
+      <Name>APD.Client.Widget.CI.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.DeveloperInfo.SL\APD.Client.Widget.DeveloperInfo.SL.csproj">
+      <Project>{754C1232-CD79-474B-B21C-B3243015C1DC}</Project>
+      <Name>APD.Client.Widget.DeveloperInfo.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.General.SL\APD.Client.Widget.General.SL.csproj">
+      <Project>{8C96AB5E-8C8E-47A1-B31A-86B89CF23601}</Project>
+      <Name>APD.Client.Widget.General.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.ProjectInfo.SL\APD.Client.Widget.ProjectInfo.SL.csproj">
+      <Project>{203A07E5-D01B-4241-B330-8BC91CFBE303}</Project>
+      <Name>APD.Client.Widget.ProjectInfo.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.SourceControl.SL\APD.Client.Widget.SourceControl.SL.csproj">
+      <Project>{9886A595-ADFA-4E80-A383-64B567DB008C}</Project>
+      <Name>APD.Client.Widget.SourceControl.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.TrayBar.SL\APD.Client.Widget.TrayBar.SL.csproj">
+      <Project>{52F5DD2D-7E2B-4B8D-A56E-E675826DA7A7}</Project>
+      <Name>APD.Client.Widget.TrayBar.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.DomainModel\APD.DomainModel.SL.csproj">
+      <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
+      <Name>APD.DomainModel.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Framework.SL\APD.Framework.SL.csproj">
+      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
+      <Name>APD.Framework.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework.SL\APD.DomainModel.Framework.SL.csproj">
+      <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
+      <Name>APD.DomainModel.Framework.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Widget\APD.Client.Widget.Admin.SL\APD.Client.Widget.Admin.SL.csproj">
+      <Project>{660C7FFD-ABB1-44A8-90C8-68553577DB6A}</Project>
+      <Name>APD.Client.Widget.Admin.SL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!--
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\3.0\Silverlight\Microsoft.Expression.Blend.Silverlight.targets" />
+  -->
+</Project>

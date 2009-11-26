@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<Task rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/task/295139730" objectVersion="1" refObjectName="Job interview with students" CreatedAt="Jan 27">
+	<CreationDate>2009-01-27T10:14:27.000Z</CreationDate>
+	<ObjectID>295139730</ObjectID>
+	<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+	<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+	−
+	<Description>
+		HAve 15-20 mintues speed date interviews with the students
+	</Description>
+	<Discussion/>
+	<FormattedID>TA21</FormattedID>
+	<LastUpdateDate>2009-01-27T10:14:27.000Z</LastUpdateDate>
+	<Name>Job interview with students</Name>
+	<Notes/>
+	<Owner>mail@goeran.no</Owner>
+	<Project rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/project/290873262" refObjectName="Continuous Project Monitor" type="Project"/>
+	<RevisionHistory rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revisionhistory/295139731" type="RevisionHistory"/>
+	<Tags/>
+	<Attachments/>
+	<Blocked>false</Blocked>
+	<Estimate>8.0</Estimate>
+	<Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/315969147" refObjectName="Assemble team" type="Iteration"/>
+	<Rank>4375.001</Rank>
+	<State>Defined</State>
+	<TaskIndex>1</TaskIndex>
+	<WorkProduct rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/hierarchicalrequirement/290886769" refObjectName="Assemble summer internship students" type="HierarchicalRequirement"/>
+</Task>

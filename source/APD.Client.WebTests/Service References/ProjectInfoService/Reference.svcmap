@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="886537fc-6797-4cd4-83dc-95cba54cc1fc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ProjectInfoRepositoryService.xsd" MetadataType="Schema" ID="11afd561-f0ad-4406-bec2-42a251d21c62" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ProjectInfoRepositoryService1.wsdl" MetadataType="Wsdl" ID="d7efe262-2bdb-4aa1-9e12-fd937d56c350" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ProjectInfoRepositoryService4.xsd" MetadataType="Schema" ID="98373c2c-972b-4f4c-b745-4f97c02df5a9" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ProjectInfoRepositoryService.disco" MetadataType="Disco" ID="fa31820e-753e-43d7-9dc5-d197c07f9c2f" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?disco" />
+    <MetadataFile FileName="ProjectInfoRepositoryService2.xsd" MetadataType="Schema" ID="f1ff7e42-80f5-4265-93c4-f9a6aeea6db5" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ProjectInfoRepositoryService.wsdl" MetadataType="Wsdl" ID="2a099b07-373f-460d-bc0b-80dbaa45ac8c" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="ProjectInfoRepositoryService3.xsd" MetadataType="Schema" ID="59eef4ec-d3c6-451b-b734-cbc3f38a7c73" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ProjectInfoRepositoryService1.xsd" MetadataType="Schema" ID="f9794291-3402-4b72-a974-218d9d0eea24" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

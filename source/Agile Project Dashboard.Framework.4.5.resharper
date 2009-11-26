@@ -1,0 +1,189 @@
+<Configuration>
+  <CodeStyleSettings>
+    <ExternalPath IsNull="False">
+    </ExternalPath>
+    <Sharing>SOLUTION</Sharing>
+    <CSharp>
+      <FormatSettings>
+        <ANONYMOUS_METHOD_DECLARATION_BRACES>NEXT_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
+        <BLANK_LINES_AFTER_USING_LIST>2</BLANK_LINES_AFTER_USING_LIST>
+        <BLANK_LINES_BETWEEN_USING_GROUPS>1</BLANK_LINES_BETWEEN_USING_GROUPS>
+        <CASE_BLOCK_BRACES>NEXT_LINE</CASE_BLOCK_BRACES>
+        <EMPTY_BLOCK_STYLE>TOGETHER_SAME_LINE</EMPTY_BLOCK_STYLE>
+        <FORCE_FIXED_BRACES_STYLE>ALWAYS_ADD</FORCE_FIXED_BRACES_STYLE>
+        <FORCE_FOR_BRACES_STYLE>ONLY_FOR_MULTILINE</FORCE_FOR_BRACES_STYLE>
+        <FORCE_FOREACH_BRACES_STYLE>ONLY_FOR_MULTILINE</FORCE_FOREACH_BRACES_STYLE>
+        <FORCE_IFELSE_BRACES_STYLE>ALWAYS_ADD</FORCE_IFELSE_BRACES_STYLE>
+        <FORCE_USING_BRACES_STYLE>ALWAYS_ADD</FORCE_USING_BRACES_STYLE>
+        <FORCE_WHILE_BRACES_STYLE>ONLY_FOR_MULTILINE</FORCE_WHILE_BRACES_STYLE>
+        <INDENT_ANONYMOUS_METHOD_BLOCK>False</INDENT_ANONYMOUS_METHOD_BLOCK>
+        <INDENT_EMBRACED_INITIALIZER_BLOCK>False</INDENT_EMBRACED_INITIALIZER_BLOCK>
+        <INDENT_SIZE>4</INDENT_SIZE>
+        <INITIALIZER_BRACES>NEXT_LINE</INITIALIZER_BRACES>
+        <MODIFIERS_ORDER IsNull="False">
+          <Item>public</Item>
+          <Item>protected</Item>
+          <Item>internal</Item>
+          <Item>private</Item>
+          <Item>new</Item>
+          <Item>abstract</Item>
+          <Item>virtual</Item>
+          <Item>override</Item>
+          <Item>sealed</Item>
+          <Item>static</Item>
+          <Item>readonly</Item>
+          <Item>extern</Item>
+          <Item>unsafe</Item>
+          <Item>volatile</Item>
+        </MODIFIERS_ORDER>
+        <PLACE_CONSTRUCTOR_INITIALIZER_ON_SAME_LINE>False</PLACE_CONSTRUCTOR_INITIALIZER_ON_SAME_LINE>
+        <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
+        <PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>False</PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>
+        <SIMPLE_EMBEDDED_STATEMENT_STYLE>LINE_BREAK</SIMPLE_EMBEDDED_STATEMENT_STYLE>
+        <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
+        <SPACE_WITHIN_PARENTHESES>True</SPACE_WITHIN_PARENTHESES>
+        <WRAP_BEFORE_EXTENDS_COLON>True</WRAP_BEFORE_EXTENDS_COLON>
+        <WRAP_LIMIT>110</WRAP_LIMIT>
+      </FormatSettings>
+      <UsingsSettings />
+      <Naming2>
+        <ExceptionName IsNull="False">
+        </ExceptionName>
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
+        <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
+        <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="Constants" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
+        <Abbreviation Text="CI" />
+        <Abbreviation Text="SL" />
+        <Abbreviation Text="URL" />
+      </Naming2>
+    </CSharp>
+    <VB>
+      <FormatSettings>
+        <INDENT_SIZE>4</INDENT_SIZE>
+      </FormatSettings>
+      <ImportsSettings />
+      <Naming2 />
+    </VB>
+    <FileHeader Region="File header"><![CDATA[<copyright>
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+/copyright> 
+
+<contactinfo>
+The project webpage is located at http://agileprojectdashboard.org/
+which contains all the neccessary information.
+</contactinfo>]]></FileHeader>
+    <GenerateMemberBody />
+    <Naming2>
+      <ExceptionName IsNull="False">
+      </ExceptionName>
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
+      <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
+      <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AA_BB" ElementKind="Constants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
+      <Abbreviation Text="CI" />
+      <Abbreviation Text="SL" />
+      <Abbreviation Text="URL" />
+    </Naming2>
+  </CodeStyleSettings>
+  <SharedSolutionTemplateManager>
+    <LiveTemplates>
+      <Template uid="6edfc343-3e4a-4500-b9d4-1fd85667cffa" shortcut="oprop" description="Observable property" text="private $Type$ $P_NAME$;&#xD;&#xA;public $Type$ $Name$&#xD;&#xA;{&#xD;&#xA;	get { return $P_NAME$; }&#xD;&#xA;	set&#xD;&#xA;	{&#xD;&#xA;		if( value != $P_NAME$ )&#xD;&#xA;		{&#xD;&#xA;			$P_NAME$ = value;&#xD;&#xA;			TriggerPropertyChanged&lt;$CLASS$&gt;(vm =&gt; vm.$Name$);&#xD;&#xA;		}&#xD;&#xA;	}&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="False">
+        <Context>
+          <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="Type" expression="" initialRange="0" />
+          <Variable name="Name" expression="" initialRange="0" />
+          <Variable name="P_NAME" expression="decapitalize(Name)" initialRange="-1" />
+          <Variable name="CLASS" expression="typeName()" initialRange="-1" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+      <Template uid="fa784d14-cb5d-4862-a462-2bd115ff8310" shortcut="test" description="A standard NUnit test." text="[Test]&#xD;&#xA;public void $TestName$()&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="False">
+        <Context>
+          <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="TestName" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+      <Template uid="6615e5df-d454-4050-af4b-a7f2b4edf4ae" shortcut="scn" description="A TinyBDD Scenario with placeholders." text="Scenario.StartNew(this, scenario =&gt;&#xD;&#xA;{&#xD;&#xA;	scenario.Given($END$);&#xD;&#xA;	scenario.When();&#xD;&#xA;	scenario.Then();&#xD;&#xA;});" reformat="False" shortenQualifiedReferences="False">
+        <Context>
+          <CSharpContext context="Expression" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="27ad26f2-1af1-482b-b0b8-ddde93984f37" shortcut="cwd" description="Write debug line." text="System.Diagnostics.Debug.WriteLine(&quot;$END$&quot;);" reformat="False" shortenQualifiedReferences="False">
+        <Context>
+          <CSharpContext context="Expression" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="cc328969-6519-43fe-81dd-c707a2f0f77c" shortcut="nhmap" description="Creates a Fluent NHibernate map." text="public class $EntityName$Map : ClassMap&lt;$EntityName$&gt;&#xD;&#xA;{&#xD;&#xA;    public $EntityName$Map()&#xD;&#xA;    {&#xD;&#xA;        Id($END$);&#xD;&#xA;    }&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="False">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="EntityName" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+      <Template uid="8bf44804-718f-420a-b0ae-1104e568138c" shortcut="nhov" description="Inserts overide of GetHashCode and Equals in order to support composite ID's." text="public override bool Equals(object obj)&#xD;&#xA;{&#xD;&#xA;    return this.GetHashCode().Equals(obj.GetHashCode());&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;public override int GetHashCode()&#xD;&#xA;{&#xD;&#xA;    return string.Format(&quot;{0}.{1}&quot;, $CompositeProperty1$, $CompositeProperty2$).GetHashCode();&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="False">
+        <Context>
+          <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="CompositeProperty1" expression="" initialRange="0" />
+          <Variable name="CompositeProperty2" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+    </LiveTemplates>
+  </SharedSolutionTemplateManager>
+</Configuration>

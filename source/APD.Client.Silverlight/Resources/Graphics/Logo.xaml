@@ -1,0 +1,65 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+	x:Class="APD.Client.Silverlight.Logo"
+	d:DesignWidth="900" d:DesignHeight="400">
+	<controlsToolkit:Viewbox>
+	<Canvas x:Name="EagleLogo" Height="236.109" VerticalAlignment="Top" Width="575.204">
+		<Path Stretch="Fill" Height="236.109" Width="228.061" Canvas.Left="347.144" Canvas.Top="0" Data="F1M461.015,-0.109000000000009C433.441,-0.0600000000000023,405.815,10.28,383.944,31.157L383.944,31.157C337.65,75.356,334.726,150.043,377.418,197.977L377.418,197.977C399.861,223.173,430.447,235.96,461.134,236L461.134,236L461.432,236C489.02,235.962,516.669,225.621,538.549,204.733L538.549,204.733C584.846,160.532,587.769,85.849,545.077,37.918L545.077,37.918C522.65,12.737,492.091,-0.0500000000000114,461.426,-0.109000000000009L461.426,-0.109000000000009z">
+			<Path.Fill>
+				<LinearGradientBrush EndPoint="0.5,1.161" StartPoint="0.5,0">
+					<GradientStop Color="#FF0D0E0E" Offset="0"/>
+					<GradientStop Color="#FF5E6062" Offset="0.25"/> 
+					<GradientStop Color="#FFB0AFAE" Offset="0.70"/>
+					<GradientStop Color="#FFFEFEFE" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
+		</Path>
+		<Path Stretch="Fill" Height="226.677" Width="218.948" Canvas.Left="351.7" Canvas.Top="4.717" Data="F1M387.035,34.626C342.588,77.058,339.781,148.76,380.766,194.776L380.766,194.776C421.755,240.797,491.011,243.699,535.459,201.265L535.459,201.265C579.908,158.832,582.712,87.132,541.73,41.114L541.73,41.114C520.15,16.887,490.727,4.61000000000001,461.221,4.608L461.221,4.608C434.684,4.607,408.081,14.534,387.035,34.626">
+			<Path.Fill>
+				<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+					<GradientStop Color="#FFEF3000" Offset="0"/>
+					<GradientStop Color="Orange" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
+		</Path>
+		<Path Fill="#FF0E0E0F" Stretch="Fill" Height="171.013" Width="174.129" Canvas.Left="397.145" Canvas.Top="14.163" Data="F1M425.6001,169.8516C415.4421,175.9146,418.6541,185.0666,418.6541,185.0666C409.1791,179.6206,385.6241,162.9286,404.0921,137.4336C415.4821,121.7106,436.0161,121.8546,436.0161,121.8546C439.9191,123.9366,446.0891,122.3626,449.4051,122.6746C455.9101,112.8236,476.4341,85.0776,476.4341,85.0776C476.4341,85.0776,457.6211,99.7106,448.6221,119.7056C446.3451,119.5706,431.5811,114.7326,428.3631,110.9946C435.1061,102.2016,439.4861,84.2906,439.9851,77.7796C488.8721,39.3606,509.2861,18.7526,504.1771,14.2216C504.1171,14.1656,504.0611,14.1096,504.0071,14.0536C517.0661,19.6796,529.2781,28.0336,539.8321,39.1156C567.1681,67.8206,576.6941,107.8036,568.5151,144.3676C568.0631,142.7416,567.4001,141.1826,564.9751,138.7836C564.2451,142.8736,562.0731,146.0496,561.0891,147.5796C560.8421,143.0986,557.9671,137.3126,556.8011,136.3886C557.2571,137.6586,557.4971,139.0816,557.3331,140.0096C554.2751,138.0846,549.9421,137.7796,546.3951,137.6896C538.9271,137.4946,529.5361,139.2216,517.9061,144.6936C467.8311,168.2496,434.7261,164.3976,425.6001,169.8516"/>
+		<Path Stretch="Fill" Height="171.013" Width="174.128" Canvas.Left="397.146" Canvas.Top="14.162" Data="F1M504.177,14.222C509.286,18.753,488.873,39.361,439.985,77.78L439.985,77.78C439.486,84.291,435.106,102.202,428.363,110.994L428.363,110.994C430.915,113.259,434.245,114,436.522,114.137L436.522,114.137C438.078,112.477,469.055,91.184,469.055,91.184L469.055,91.184C469.055,91.184,455.909,112.823,449.405,122.675L449.405,122.675C446.09,122.362,440.861,120.403,436.954,118.32L436.954,118.32C436.954,118.32,415.482,121.711,404.092,137.434L404.092,137.434C385.625,162.929,409.18,179.62,418.654,185.066L418.654,185.066C418.654,185.066,412.582,172.735,425.463,165.575L425.463,165.575C434.74,160.418,467.692,163.98,517.766,140.421L517.766,140.421C529.399,134.947,538.792,133.222,546.259,133.413L546.259,133.413C549.802,133.503,552.913,134.028,555.625,134.788L555.625,134.788C555.07,130.78,554.436,130.376,553.335,128.274L553.335,128.274C555.741,129.294,560.402,135.946,561.614,141.469L561.614,141.469C562.601,139.934,563.709,135.834,562.999,133.076L562.999,133.076C565.424,135.475,568.209,139.027,568.515,144.367L568.515,144.367C576.694,107.803,567.168,67.821,539.833,39.115L539.833,39.115C529.277,28.033,517.066,19.68,504.007,14.053L504.007,14.053C504.061,14.109,504.117,14.165,504.177,14.222">
+			<Path.Fill>
+				<LinearGradientBrush EndPoint="-0.011,0.513" StartPoint="0.996,0.479">
+					<GradientStop Color="#FFB0AFAE" Offset="0"/>
+					<GradientStop Color="#FFB0AFAE" Offset="0.0056152301840484142"/>
+					<GradientStop Color="sc#1, 0.6121199, 0.6084025, 0.6047124" Offset="0.047849182207741592"/>
+					<GradientStop Color="sc#1, 0.7655742, 0.76336205, 0.7611661" Offset="0.09985749405848951"/>
+					<GradientStop Color="sc#1, 0.8896513, 0.8886562, 0.8876684" Offset="0.17002166229319282"/>
+					<GradientStop Color="sc#1, 0.9741632, 0.9739971, 0.9738322" Offset="0.29175528763424041"/>
+					<GradientStop Color="sc#1, 0.9911021, 0.9911021, 0.9911021" Offset="0.57302898168563843"/>
+					<GradientStop Color="#FFFEFEFE" Offset="0.57302898168563843"/>
+					<GradientStop Color="#FFFEFEFE" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
+		</Path>
+		<TextBlock Canvas.Top="69" FontFamily="/APD.Client.Silverlight;Component/Fonts/Fonts.zip#Trubble" Text="smeedee" FontSize="64" Foreground="Orange" FontWeight="Bold" Canvas.Left="2"/>
+		<TextBlock Canvas.Top="183" FontFamily="/APD.Client.Silverlight;Component/Fonts/Fonts.zip#Trubble" FontSize="64" Text="smeedee" RenderTransformOrigin="0.5,0.5" Foreground="Orange" Opacity="0.5" FontWeight="Bold" Canvas.Left="2">
+			<TextBlock.OpacityMask>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Offset="0.34"/>
+					<GradientStop Color="White" Offset="1"/>
+				</LinearGradientBrush>
+			</TextBlock.OpacityMask>
+			<TextBlock.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleY="-1"/>
+					<SkewTransform/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</TextBlock.RenderTransform>
+		</TextBlock>
+	</Canvas>
+	</controlsToolkit:Viewbox>
+</UserControl>

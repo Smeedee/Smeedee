@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Feed 2</title>
+  <updated>2009-09-15T12:00:00</updated>
+  <entry>
+    <title>Entry 1</title>
+    <updated>2009-09-15T12:00:00</updated>
+    <author>
+      <name>Eivind</name>
+    </author>
+  </entry>
+  <entry>
+    <title>Entry 2</title>
+    <updated>2009-09-16T12:00:00</updated>
+    <author>
+      <name>Gøran</name>
+    </author>
+  </entry>
+  <entry>
+    <title>Entry 3</title>
+    <updated>2009-09-16T11:00:00</updated>
+    <author>
+      <name>Eivind</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5D4669EF-F733-4893-90CE-A4F577B2BD63}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>APD.DomainModel.Tests</RootNamespace>
+    <AssemblyName>APD.DomainModel.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.2.10.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TinyBDD, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
+    </Reference>
+    <Reference Include="TinyBDD.Specification.NUnit, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CI\BuildInfoSpecs.cs" />
+    <Compile Include="CI\BuildSpecificationSpecs.cs" />
+    <Compile Include="CI\CIServerSpecs.cs" />
+    <Compile Include="CI\ProjectSpecs.cs" />
+    <Compile Include="CI\TriggerSpecs.cs" />
+    <Compile Include="Config\ConfigurationSpecs.cs" />
+    <Compile Include="ProjectInfo\HolidayProviderSpecs.cs" />
+    <Compile Include="ProjectInfo\IterationSpecs.cs" />
+    <Compile Include="ProjectInfo\ProjectInfoServerSpecs.cs" />
+    <Compile Include="ProjectInfo\ProjectSpecs.cs" />
+    <Compile Include="ProjectInfo\Repositories\IterationUtilitiesSpecs.cs" />
+    <Compile Include="ProjectInfo\TaskSpecs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceControl\ChangesetSpecificationSpecs.cs" />
+    <Compile Include="SourceControl\ChangesetSpecs.cs" />
+    <Compile Include="SourceControl\EmptyChangesetSpecs.cs" />
+    <Compile Include="SourceControl\Learning\LinqExpressionTests.cs" />
+    <Compile Include="SpecificationExtensionMethods.cs" />
+    <Compile Include="Users\SpecificationSpecs.cs" />
+    <Compile Include="Users\UserdbSpecs.cs" />
+    <Compile Include="Users\UserSpecs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\APD.DomainModel\APD.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>APD.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Plugin.ProjectInfo\APD.Plugin.ProjectInfo.csproj">
+      <Project>{8B29193C-DD09-4A29-B81A-B55B1EB492D2}</Project>
+      <Name>APD.Plugin.ProjectInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>APD.DomainModel.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

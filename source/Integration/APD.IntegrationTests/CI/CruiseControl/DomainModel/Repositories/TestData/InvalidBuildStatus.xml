@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CruiseControl>
+  <Projects>
+    <Project name="AgileProjectDashboard" category="" activity="Sleeping" status="Running" lastBuildStatus="invalid data" lastBuildLabel="4" lastBuildTime="2008-09-26T22:27:19.40625+02:00" nextBuildTime="2008-09-26T22:35:09.96875+02:00" webUrl="http://agileprojectdashboard.org/ccnet" buildStage="" />
+  </Projects>
+  <Queues>
+    <Queue name="AgileProjectDashboard" />
+  </Queues>
+</CruiseControl>

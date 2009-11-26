@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         DefaultTargets="Complete">
+
+  <Import Project="..\Tools\MSBuild Extension Pack\MSBuild.ExtensionPack.tasks"/>
+
+  <PropertyGroup>
+    <ExtensionTasksPath>..\..\Tools\MSBuild Extension Pack\</ExtensionTasksPath>
+    <WorkingDirectory>Build\bin\temp\installer</WorkingDirectory>
+    <OutputDirectory>$(WorkingDirectory)\setup-kits</OutputDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Project Include="APD.Client.Web\APD.Client.Web.csproj"/>
+
+
+    <!--Installer Project-->
+    <InstallerProject Include="Agile Project Dashboard Installers.sln"/>
+
+    <DataCollector Include="Agile Project Dashboard.DataCollector.sln"/>
+    
+
+    <APDClientWebClientBinOutput Include="APD.Client.Web\ClientBin\*.xap"/>
+    <APDClientWebOutputBin Include="APD.Client.Web\bin\*.dll"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.asax"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.aspx"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.config"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.htm"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.js"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.xml"/>
+    <APDClientWebOutputServices Include="APD.Client.Web\Services\*.svc"/>
+    <APDInstallerOutput Include="Installers\APD.Client.Web.Installer\bin\Debug\*.msi"/>
+
+    <DataCollectorOutput Include="DataCollector\APD.DataCollector.Service\bin\Debug\*.dll"/>
+    <DataCollectorOutput Include="DataCollector\APD.DataCollector.Service\bin\Debug\*.exe"/>
+    
+    <DataCollectorConsoleOutput Include="DataCollector\APD.DataCollector.Console\bin\debug\*.*"/>
+  </ItemGroup>
+
+
+  <Target Name="Change_port_before_compile">
+    <ItemGroup>
+      <ServiceReferences Include="**\ServiceReferences.ClientConfig"/>
+    </ItemGroup>
+    <Message Text="@(ServiceReferences)"/>
+    <File TaskAction="Replace" RegexPattern=':1155' Replacement='' Files="@(ServiceReferences)"/>
+  </Target>
+
+  <Target Name="Compile_Data_collector" DependsOnTargets="Change_port_before_compile">
+    <MSBuild Projects="@(DataCollector)" Targets="Build"/>
+  </Target>
+
+  <Target Name="Compile" DependsOnTargets="Compile_Data_collector">
+    <MSBuild Projects="@(Project)" Targets="Build"/>
+  </Target>
+
+  <Target Name="Change_port_back_after_compile" DependsOnTargets="Compile">
+    <ItemGroup>
+      <ServiceReferences Include="**\ServiceReferences.ClientConfig" Exclude="Build\**\ServiceReferences.ClientConfig"/>
+    </ItemGroup>
+    <Message Text="@(ServiceReferences)"/>
+    <File TaskAction="Replace" RegexPattern='http://localhost/' Replacement='http://localhost:1155/'
+          Files="@(ServiceReferences)"/>
+  </Target>
+  
+  <Target Name="CreateOutputDirectories" DependsOnTargets="Change_port_back_after_compile">
+    <RemoveDir Directories="$(WorkingDirectory)" ContinueOnError="true"/>
+    <MakeDir Directories="$(WorkingDirectory)"/>
+    <MakeDir Directories="$(WorkingDirectory)\bin"/>
+    <MakeDir Directories="$(WorkingDirectory)\ClientBin"/>
+    <MakeDir Directories="$(WorkingDirectory)\DataCollector"/>
+    <MakeDir Directories="$(WorkingDirectory)\DataCollector.Console"/>
+    <MakeDir Directories="$(WorkingDirectory)\Services"/>
+  </Target>
+
+
+  <Target Name="DeployOutput" DependsOnTargets="CreateOutputDirectories">
+    <Copy SourceFiles="@(DataCollectorOutput)" DestinationFolder="$(WorkingDirectory)\DataCollector"/>
+    <Copy SourceFiles="@(APDClientWebOutput)" DestinationFolder="$(WorkingDirectory)"/>
+    <Copy SourceFiles="@(APDClientWebOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(APDClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
+    <Copy SourceFiles="@(APDClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
+    <Copy SourceFiles="@(DataCollectorConsoleOutput)" DestinationFolder="$(WorkingDirectory)\DataCollector.Console"/>
+  </Target>
+
+
+  <Target Name="generate_install_file_list" DependsOnTargets="DeployOutput" >
+    <Delete Files="Installers\APD.Client.Web.Installer\Files.wxs"/>
+    <Exec WorkingDirectory="..\tools\WiX v3 binaries" Command=".\heat.exe dir ..\..\source\$(WorkingDirectory)\ -cg generated_components -gg -suid -sfrag -srd -scom -sreg -dr INSTALLLOCATION -out ..\..\source\Installers\APD.Client.Web.Installer\Files.wxs"></Exec>
+  </Target>
+
+  <Target Name="change_sourceDir_in_install_file_list" DependsOnTargets="generate_install_file_list">
+    <ItemGroup>
+      <InstallFileList Include="**\Files.wxs"/>
+    </ItemGroup>
+    <Message Text="@(InstallFileList)"/>
+    <File TaskAction="Replace" RegexPattern='SourceDir' Replacement='..\..\$(WorkingDirectory)' Files="@(InstallFileList)"/>
+    <File TaskAction="Replace" RegexPattern='File Id="APD.DataCollector.Console.exe"' Replacement='File Id="APD.DataCollector.Console.exe" Name="DataCollector.exe"' Files="@(InstallFileList)"/>
+    <File TaskAction="Replace" RegexPattern='File Id="APD.DataCollector.Service.exe"' Replacement='File Id="APD.DataCollector.Service.exe" Name="DataCollectorService.exe"' Files="@(InstallFileList)"/>
+  </Target>
+  
+  <!---->
+  <Target Name="CompileInstaller" DependsOnTargets="change_sourceDir_in_install_file_list">
+    <MSBuild Projects="@(InstallerProject)" Targets="Build"/>
+  </Target>
+
+  <Target Name="DeployInstaller" DependsOnTargets="CompileInstaller">
+    <Copy SourceFiles="@(APDInstallerOutput)" DestinationFolder="$(OutputDirectory)\"/>
+  </Target>
+
+  <Target Name="Complete" DependsOnTargets="DeployInstaller">
+    
+  </Target>
+</Project>

@@ -1,0 +1,46 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:Converters="clr-namespace:APD.Client.Framework.Converters;assembly=APD.Client.Framework.SL"
+	mc:Ignorable="d"
+	x:Class="APD.Client.Widget.Admin.SL.ProviderConfigItemView"
+	d:DesignWidth="640" d:DesignHeight="480" Height="170">
+    <UserControl.Resources>
+        <Converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    </UserControl.Resources>
+	<Grid x:Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.5*"/>
+			<ColumnDefinition Width="0.5*"/>
+		</Grid.ColumnDefinitions>
+		<TextBox Height="24" Margin="8,76,8,0" VerticalAlignment="Top" TextWrapping="Wrap" TabIndex="2"
+                 Text="{Binding Username, Mode=TwoWay}"/>
+		<TextBlock Height="16" Margin="8,60,0,0" VerticalAlignment="Top" Text="Username" TextWrapping="Wrap" Foreground="{StaticResource FontBrushBright}" HorizontalAlignment="Left" Width="120"/>
+		<TextBlock Height="16" Margin="8,60,0,0" VerticalAlignment="Top" Text="Password" TextWrapping="Wrap" HorizontalAlignment="Left" Width="120" Foreground="{StaticResource FontBrushBright}" Grid.Column="1"/>
+        <PasswordBox Height="24" Margin="8,76,8,0" VerticalAlignment="Top" Grid.Column="1" TabIndex="3"
+                 Password="{Binding Password, Mode=TwoWay}"/>
+		<TextBlock Height="16" Margin="8,8,0,0" VerticalAlignment="Top" Text="Url" TextWrapping="Wrap" HorizontalAlignment="Left" Width="120" Foreground="{StaticResource FontBrushBright}" Grid.Column="1"/>
+		<TextBox Height="24" Margin="8,24,8,0" VerticalAlignment="Top" TextWrapping="Wrap" TabIndex="1" Grid.Column="1"
+                 Text="{Binding URL, Mode=TwoWay}"/>
+		<TextBlock Height="16" Margin="8,112,8,0" VerticalAlignment="Top" Text="{Binding Status, Mode=TwoWay}" 
+                   Grid.Column="1"
+                   TextWrapping="Wrap" 
+                   Width="Auto"
+                   Foreground="{StaticResource FontBrushBright}"
+                   HorizontalAlignment="Right"/>
+		<TextBlock Height="16" Margin="8,8,144,0" VerticalAlignment="Top" Text="Provider" TextWrapping="Wrap" Foreground="{StaticResource FontBrushBright}"/>
+		<ComboBox Height="24" Margin="8,24,8,0" VerticalAlignment="Top"
+                  ItemsSource="{Binding SupportedProviders, Mode=TwoWay}" 
+                  SelectedItem="{Binding SelectedProvider, Mode=TwoWay}"/>
+        <TextBlock Text="Project" Grid.Column="0"
+                   Margin="8,112,0,0"
+                   Foreground="{StaticResource FontBrushBright}"
+                   Visibility="{Binding IsProjectEditable, Converter={StaticResource boolToVisibilityConverter}}"/>
+        <TextBox Height="24" Margin="8,112,8,0"
+                 TextWrapping="Wrap"
+                 Visibility="{Binding IsProjectEditable, Converter={StaticResource boolToVisibilityConverter}}"
+                 Text="{Binding Project, Mode=TwoWay}"/>
+	</Grid>
+</UserControl>

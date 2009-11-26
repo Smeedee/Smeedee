@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<QueryResult rallyAPIMajor="1" rallyAPIMinor="13">
+  <Errors/>
+  <Warnings/>
+  <TotalResultCount>1</TotalResultCount>
+  <StartIndex>1</StartIndex>
+  <PageSize>20</PageSize>
+  −
+  <Results>
+    <Object rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/project/290873262" refObjectName="Continuous Project Monitor" type="Project"/>
+  </Results>
+</QueryResult>

@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="APD.DomainModel"
+                   namespace="APD.DomainModel.ProjectInfo">
+  <class name="ProjectInfoServer" table="ProjectInfoServer">
+    <id name="Url"/>
+    <property name="Name"/>
+    <bag name="Projects" cascade="All" lazy="false" inverse="true">
+      <key column="ProjectInfoServer_fid"/>
+      <one-to-many class="APD.DomainModel.ProjectInfo.Project, APD.DomainModel.ProjectInfo"/>
+    </bag>
+  </class>
+
+  <class name="APD.DomainModel.ProjectInfo.Project, APD.DomainModel" table="ProjectInfoProject">
+    <composite-id>
+      <key-property name="SystemId"/>
+      <key-many-to-one name="Server" class="ProjectInfoServer" lazy="false" column="ProjectInfoServer_fid"/>
+    </composite-id>
+    <property name="Name"/>    
+    <bag name="Iterations" cascade="All" lazy="false" inverse="true">
+      <key>
+        <column name="ProjectInfoProject_fid"/>
+        <column name="ProjectInfoServer_fid"/>
+      </key>
+      <one-to-many class="Iteration"/>
+    </bag>
+  </class>
+
+  <class name="Iteration" table="Iteration">
+    <composite-id>
+      <key-property name="SystemId"/>
+      <key-many-to-one name="Project" class="APD.DomainModel.ProjectInfo.Project, APD.DomainModel" lazy="false">
+        <column name="ProjectInfoProject_fid"/>
+        <column name="ProjectInfoServer_fid"/>
+      </key-many-to-one>
+    </composite-id>
+    <property name="StartDate"/>
+    <property name="EndDate"/>
+    <property name="Name"/>
+
+    <bag name="Tasks" cascade="All" lazy="false" inverse="true">
+      <key>
+        <column name="ProjectInfoProject_fid"/>
+        <column name="ProjectInfoServer_fid"/>
+        <column name="Iteration_fid"/>
+      </key>
+      <one-to-many class="Task"/>
+    </bag>
+  </class>
+
+  <class name="Task" table="Task">
+    <composite-id>
+      <key-property name="SystemId"/>
+      <key-many-to-one name="Iteration" class="Iteration" lazy="false">
+        <column name="ProjectInfoProject_fid"/>
+        <column name="ProjectInfoServer_fid"/>
+        <column name="Iteration_fid"/>
+      </key-many-to-one>
+    </composite-id>
+    <property name="Name"/>
+    <property name="Status"/>
+    <property name="WorkEffortEstimate"/>
+    <bag name="WorkEffortHistory" cascade="All" lazy="false" inverse="true">
+      <key>
+        <column name="ProjectInfoProject_fid"/>
+        <column name="ProjectInfoServer_fid"/>
+        <column name="Iteration_fid"/>
+        <column name="Task_fid"/>
+      </key>
+      <one-to-many class="WorkEffortHistoryItem"/>
+    </bag>
+  </class>
+
+  <class name="WorkEffortHistoryItem" table="TaskWorkEffortHistoryItem">
+    <composite-id>
+      <key-property name="TimeStampForUpdate"/>
+      <key-many-to-one name="Task" class="Task" lazy="false">
+        <column name="ProjectInfoProject_fid"/>
+        <column name="ProjectInfoServer_fid"/>
+        <column name="Iteration_fid"/>
+        <column name="Task_fid"/>
+      </key-many-to-one>
+    </composite-id>
+    <property name="RemainingWorkEffort"/>
+  </class>
+</hibernate-mapping>

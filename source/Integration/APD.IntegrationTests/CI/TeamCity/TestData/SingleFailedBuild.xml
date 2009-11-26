@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title>Builds of  Smeedee :: Continuous Build</title>
+  <link rel="alternate" href="http://192.168.1.218:8111/viewType.html?buildTypeId=bt2" />
+  <subtitle>Builds of [Continuous Build] build configuration(s) of TeamCity server at http://192.168.1.218:8111. (no more then 100 items, only for items since Sep 16, 2009)</subtitle>
+  <updated>2009-09-21T19:22:14Z</updated>
+  <dc:creator>TeamCity server</dc:creator>
+  <dc:date>2009-09-21T19:22:14Z</dc:date>
+  <entry>
+    <title>Build Smeedee::Continuous Build #120 has failed</title>
+    <link rel="alternate" href="http://192.168.1.218:8111/viewLog.html?buildId=120&amp;buildTypeId=bt2" />
+    <author>
+      <name>Failed Build</name>
+    </author>
+    <updated>2009-09-21T18:58:39Z</updated>
+    <published>2009-09-21T18:58:39Z</published>
+    <summary type="html">
+      Status: &lt;strong&gt;Tests failed: 3, passed: 34, ignored: 1&lt;/strong&gt;&lt;br/&gt;&#xD;
+      Finished on: &lt;strong&gt;Sep 21, 2009 8:58:39 PM&lt;/strong&gt;&lt;br/&gt;&#xD;
+      Changes in the build: &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?tab=buildChangesDiv&amp;buildId=120&amp;buildTypeId=bt2"&gt;1&lt;/a&gt;&#xD;
+      by &#xD;
+      esortebe &#xD;
+      &lt;br/&gt;&#xD;
+      Agent: &lt;strong&gt;SmeedeeRunner&lt;/strong&gt;&lt;br/&gt;&#xD;
+      &#xD;
+      Tests: &lt;strong&gt;34 passed&#xD;
+      , 3 failed&#xD;
+      , 1 ignored&#xD;
+      &lt;/strong&gt;&lt;br/&gt;&#xD;
+      Failed tests: &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?buildId=120&amp;buildTypeId=bt2#testId3480"&gt;&#xD;
+      when_spawned.should_be_instance_of_AbstractHarvester&lt;/a&gt;, &#xD;
+      &#xD;
+      &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?buildId=120&amp;buildTypeId=bt2#testId3485"&gt;&#xD;
+      when_spawned.should_be_instantiated&lt;/a&gt;, &#xD;
+      &#xD;
+      &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?buildId=120&amp;buildTypeId=bt2#testId3490"&gt;&#xD;
+      when_spawned.should_override_default_name&lt;/a&gt;&#xD;
+      &#xD;
+      &lt;br/&gt;&#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?tab=buildLog&amp;buildId=120&amp;buildTypeId=bt2"&gt;Build log&lt;/a&gt;
+    </summary>
+    <dc:creator>Failed Build</dc:creator>
+    <dc:date>2009-09-21T18:58:39Z</dc:date>
+  </entry>
+</feed>

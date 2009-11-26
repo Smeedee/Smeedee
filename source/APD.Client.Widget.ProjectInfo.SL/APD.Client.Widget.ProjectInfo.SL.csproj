@@ -1,0 +1,218 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{203A07E5-D01B-4241-B330-8BC91CFBE303}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>APD.Client.Widget.ProjectInfo.SL</RootNamespace>
+    <AssemblyName>APD.Client.Widget.ProjectInfo.SL</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>APD.Client.Widget.ProjectInfo.SL.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>APD.Client.Widget.ProjectInfo.SL.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <LinkedServerProject>
+    </LinkedServerProject>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Composite, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Composite.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.Presentation, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\APD.Client.Widget.ProjectInfo\Controllers\WorkingDaysLeftController.cs">
+      <Link>Controllers\WorkingDaysLeftController.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.Client.Widget.ProjectInfo\Repositories\ProjectInfodbRepositoryMock.cs">
+      <Link>Repositories\ProjectInfodbRepositoryMock.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.Client.Widget.ProjectInfo\ViewModels\WorkingDaysLeftViewModel.cs">
+      <Link>ViewModels\WorkingDaysLeftViewModel.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ConfigurationRepository.cs" />
+    <Compile Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xaml.cs">
+      <DependentUpon>WorkingDaysLeftDataSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ConfigurationRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ProjectInfoRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkingDaysLeft.xaml.cs">
+      <DependentUpon>WorkingDaysLeft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkingDaysLeftModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService1.disco" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.disco" />
+    <None Include="Service References\ConfigurationRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\ConfigurationRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
+    <DesignTimeOnly Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <DesignTimeOnly Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DesignTimeOnly>
+    <Page Include="..\APD.Client.Silverlight\Styles.xaml">
+      <Link>Styles.xaml</Link>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WorkingDaysLeft.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\APD.Client.Framework.SL\APD.Client.Framework.SL.csproj">
+      <Project>{E09BCACF-7320-4142-A8D5-40D34B9ABC89}</Project>
+      <Name>APD.Client.Framework.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.Client.Widget.BurndownChart.SL\APD.Client.Widget.BurndownChart.SL.csproj">
+      <Project>{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}</Project>
+      <Name>APD.Client.Widget.BurndownChart.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\APD.DomainModel\APD.DomainModel.SL.csproj">
+      <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
+      <Name>APD.DomainModel.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework.SL\APD.DomainModel.Framework.SL.csproj">
+      <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
+      <Name>APD.DomainModel.Framework.SL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\ProjectInfoRepositoryService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.Project.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService2.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService3.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService4.xsd" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.xsd" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService2.wsdl" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService21.wsdl" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService4.xsd" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService41.xsd" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService42.xsd" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService43.xsd" />
+    <None Include="Service References\ProjectInfoRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

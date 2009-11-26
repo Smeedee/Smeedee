@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title>Builds of 2 build configurations.</title>
+  <link rel="alternate" href="&#xD;&#xA;http://192.168.1.218:8111" />
+  <subtitle>Builds of [DummyProject, Continuous Build] build configuration(s) of TeamCity server at http://192.168.1.218:8111. (no more then 100 items, only for items since Sep 24, 2009)</subtitle>
+  <updated>2009-09-29T13:38:32Z</updated>
+  <dc:creator>TeamCity server</dc:creator>
+  <dc:date>2009-09-29T13:38:32Z</dc:date>
+  <entry>
+    <title>Build Smeedee::DummyProject #4 has failed</title>
+    <link rel="alternate" href="http://192.168.1.218:8111/viewLog.html?buildId=158&amp;buildTypeId=bt3" />
+    <author>
+      <name>Failed Build</name>
+    </author>
+    <updated>2009-09-29T13:36:21Z</updated>
+    <published>2009-09-29T13:36:21Z</published>
+    <summary type="html">
+      Status: &lt;strong&gt;Tests failed: 1, passed: 800, ignored: 51&lt;/strong&gt;&lt;br/&gt;&#xD;
+      Finished on: &lt;strong&gt;Sep 29, 2009 3:36:21 PM&lt;/strong&gt;&lt;br/&gt;&#xD;
+      Changes in the build: none&lt;br/&gt;&#xD;
+      Agent: &lt;strong&gt;SmeedeeRunner&lt;/strong&gt;&lt;br/&gt;&#xD;
+      &#xD;
+      Tests: &lt;strong&gt;800 passed&#xD;
+      , 1 failed&#xD;
+      , 51 ignored&#xD;
+      &lt;/strong&gt;&lt;br/&gt;&#xD;
+      Failed tests: &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?buildId=158&amp;buildTypeId=bt3#testId6396"&gt;&#xD;
+      Spawning_repository.Assert_no_connection_exception_is_thrown&lt;/a&gt;&#xD;
+      &#xD;
+      &lt;br/&gt;&#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?tab=buildLog&amp;buildId=158&amp;buildTypeId=bt3"&gt;Build log&lt;/a&gt;
+    </summary>
+    <dc:creator>Failed Build</dc:creator>
+    <dc:date>2009-09-29T13:36:21Z</dc:date>
+  </entry>
+  <entry>
+    <title>Build Smeedee::Continuous Build #154 has failed</title>
+    <link rel="alternate" href="http://192.168.1.218:8111/viewLog.html?buildId=156&amp;buildTypeId=bt2" />
+    <author>
+      <name>Failed Build</name>
+    </author>
+    <updated>2009-09-29T13:26:00Z</updated>
+    <published>2009-09-29T13:26:00Z</published>
+    <summary type="html">
+      Status: &lt;strong&gt;Tests failed: 3, passed: 39, ignored: 1&lt;/strong&gt;&lt;br/&gt;&#xD;
+      Finished on: &lt;strong&gt;Sep 29, 2009 3:26:00 PM&lt;/strong&gt;&lt;br/&gt;&#xD;
+      Changes in the build: &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?tab=buildChangesDiv&amp;buildId=156&amp;buildTypeId=bt2"&gt;1&lt;/a&gt;&#xD;
+      by &#xD;
+      snd\goeran_cp &#xD;
+      &lt;br/&gt;&#xD;
+      Agent: &lt;strong&gt;SmeedeeRunner&lt;/strong&gt;&lt;br/&gt;&#xD;
+      &#xD;
+      Tests: &lt;strong&gt;39 passed&#xD;
+      , 3 failed&#xD;
+      , 1 ignored&#xD;
+      &lt;/strong&gt;&lt;br/&gt;&#xD;
+      Failed tests: &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?buildId=156&amp;buildTypeId=bt2#testId2773"&gt;&#xD;
+      when_spawned.should_be_instance_of_AbstractHarvester&lt;/a&gt;, &#xD;
+      &#xD;
+      &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?buildId=156&amp;buildTypeId=bt2#testId2778"&gt;&#xD;
+      when_spawned.should_be_instantiated&lt;/a&gt;, &#xD;
+      &#xD;
+      &#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?buildId=156&amp;buildTypeId=bt2#testId2783"&gt;&#xD;
+      when_spawned.should_override_default_name&lt;/a&gt;&#xD;
+      &#xD;
+      &lt;br/&gt;&#xD;
+      &lt;a href="http://192.168.1.218:8111/viewLog.html?tab=buildLog&amp;buildId=156&amp;buildTypeId=bt2"&gt;Build log&lt;/a&gt;
+    </summary>
+    <dc:creator>Failed Build</dc:creator>
+    <dc:date>2009-09-29T13:26:00Z</dc:date>
+  </entry>
+</feed>

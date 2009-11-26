@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Task rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/task/290873986" objectVersion="1" refObjectName="Update User Stories" CreatedAt="Jan 22">
+  <CreationDate>2009-01-22T08:15:49.000Z</CreationDate>
+  <ObjectID>290873986</ObjectID>
+  <Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+  <Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+
+  <Description>
+    When all Tasks related to a User Story are set to Complete the User Story becomes Complete. When the functionality of a User Story is verified and accepted, the status of a User Story should be set to Accepted.
+  </Description>
+  <Discussion/>
+  <FormattedID>TA9</FormattedID>
+  <LastUpdateDate>2009-01-22T08:15:49.000Z</LastUpdateDate>
+  <Name>Update User Stories</Name>
+  <Notes/>
+  <Owner/>
+  <Project rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/project/290873262" refObjectName="Continuous Project Monitor" type="Project"/>
+  <RevisionHistory rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revisionhistory/290873987" type="RevisionHistory"/>
+  <Tags/>
+  <Attachments/>
+  <Blocked>false</Blocked>
+  <Estimate>1.0</Estimate>
+  <Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/290873918" refObjectName="Iteration 0" type="Iteration"/>
+  <Rank>9374.993</Rank>
+  <State>Defined</State>
+  <TaskIndex>1</TaskIndex>
+  <ToDo>1.0</ToDo>
+  <WorkProduct rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/hierarchicalrequirement/290873955" refObjectName="Track Iteration" type="HierarchicalRequirement"/>
+</Task>

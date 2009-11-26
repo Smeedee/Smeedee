@@ -1,0 +1,53 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_UserRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None">
+                        <transport>
+                            <extendedProtectionPolicy policyEnforcement="Never" />
+                        </transport>
+                    </security>
+                </binding>
+                <binding name="BasicHttpBinding_ConfigurationRepositoryService"
+                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="None">
+                        <transport>
+                            <extendedProtectionPolicy policyEnforcement="Never" />
+                        </transport>
+                    </security>
+                </binding>
+            </basicHttpBinding>
+            <customBinding>
+                <binding name="CustomBinding_UserRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647">
+                        <extendedProtectionPolicy policyEnforcement="Never" />
+                    </httpTransport>
+                </binding>
+                <binding name="CustomBinding_VCSCredentialsService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647">
+                        <extendedProtectionPolicy policyEnforcement="Never" />
+                    </httpTransport>
+                </binding>
+            </customBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:1155/APD/Services/UserRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_UserRepositoryService"
+                contract="UserRepositoryService.UserRepositoryService" name="CustomBinding_UserRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/ConfigurationRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ConfigurationRepositoryService"
+                contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
+                name="BasicHttpBinding_ConfigurationRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/VCSCredentialsService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_VCSCredentialsService"
+                contract="VCSCredentialsService.VCSCredentialsService" name="CustomBinding_VCSCredentialsService" />
+            <endpoint address="http://localhost:1155/APD/Services/UserRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_UserRepositoryService"
+                contract="UserdbRepositoryService.UserRepositoryService" name="BasicHttpBinding_UserRepositoryService" />
+        </client>
+    </system.serviceModel>
+</configuration>

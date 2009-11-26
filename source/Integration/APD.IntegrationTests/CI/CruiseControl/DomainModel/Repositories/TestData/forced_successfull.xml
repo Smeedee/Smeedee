@@ -1,0 +1,33 @@
+<cruisecontrol project="Agile Project Dashboard">
+  <request source="Dashboard" buildCondition="ForceBuild">Dashboard triggered a build (ForceBuild)</request>
+  <modifications />
+  <integrationProperties>
+    <CCNetArtifactDirectory>d:\ccnet\AgileProjectDashboard\Artifacts</CCNetArtifactDirectory>
+    <CCNetBuildCondition>ForceBuild</CCNetBuildCondition>
+    <CCNetBuildDate>2009-06-21</CCNetBuildDate>
+
+    <CCNetBuildTime>15:38:43</CCNetBuildTime>
+    <CCNetFailureUsers />
+    <CCNetIntegrationStatus>Success</CCNetIntegrationStatus>
+    <CCNetLabel>0.1.0.97</CCNetLabel>
+    <CCNetLastIntegrationStatus>Success</CCNetLastIntegrationStatus>
+    <CCNetListenerFile>d:\ccnet\AgileProjectDashboard\Artifacts\Agile Project Dashboard_ListenFile.xml</CCNetListenerFile>
+
+    <CCNetModifyingUsers />
+    <CCNetNumericLabel>97</CCNetNumericLabel>
+    <CCNetProject>Agile Project Dashboard</CCNetProject>
+    <CCNetProjectUrl>http://SUMMEROFCODE/ccnet</CCNetProjectUrl>
+    <CCNetRequestSource>Dashboard</CCNetRequestSource>
+    <CCNetWorkingDirectory>d:\ccnet\AgileProjectDashboard\WorkingDirectory</CCNetWorkingDirectory>
+
+    <LastChangeNumber>0</LastChangeNumber>
+    <LastIntegrationStatus>Success</LastIntegrationStatus>
+    <LastSuccessfulIntegrationLabel>0.1.0.97</LastSuccessfulIntegrationLabel>
+    <LastModificationDate>20.06.2009 15:39:47</LastModificationDate>
+  </integrationProperties>
+  <build date="2009-06-21 15:38:43" buildtime="00:01:03" buildcondition="ForceBuild">
+
+    <msbuild startTime="06/21/2009 15:38:45" elapsedTime="00:00:02" success="true">
+    </msbuild>
+  </build>
+</cruisecontrol>

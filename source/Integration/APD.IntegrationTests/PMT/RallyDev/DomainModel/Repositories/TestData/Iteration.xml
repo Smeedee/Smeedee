@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/290873918" objectVersion="3" refObjectName="Iteration 0" CreatedAt="Jan 22">
+  <CreationDate>2009-01-22T08:15:48.000Z</CreationDate>
+  <ObjectID>290873918</ObjectID>
+  <Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+  <Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+  <EndDate>2009-01-23T23:59:59.000Z</EndDate>
+  <Name>Iteration 0</Name>
+  <Notes/>
+  <Project rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/project/290873262" refObjectName="Continuous Project Monitor" type="Project"/>
+  <Resources>10.0</Resources>
+  <RevisionHistory rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/revisionhistory/290873919" type="RevisionHistory"/>
+  <StartDate>2009-01-23T00:00:00.000Z</StartDate>
+  <State>Committed</State>
+  
+  <Theme>
+    <ul>
+
+      <li>Learn How to Use the Rally Application</li>
+
+    </ul>
+  </Theme>
+  <UserIterationCapacities/>
+</Iteration>

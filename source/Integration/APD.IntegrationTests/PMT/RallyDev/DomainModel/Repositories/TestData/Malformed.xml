@@ -1,0 +1,10 @@
+﻿<Taskas rallyAPIMaj</ObjectID>
+	<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+	<Wor
+		HAve 15-20 mintues speed date interviews with the students
+	</Description>
+	<Discussio
+	<State>Defined</State>
+	<TaskIndex>1</TaskIndex>
+	<WorkProduct rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/hierarchicalrequirement/290886769" refObjectName="Assemble summer internship students" type="HierarchicalRequirement"/>
+</Task>

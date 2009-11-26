@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Project rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/project/290873262" objectVersion="2" refObjectName="Continuous Project Monitor" CreatedAt="Jan 22">
+	<CreationDate>2009-01-22T08:15:30.000Z</CreationDate>
+	<ObjectID>290873262</ObjectID>
+	<Subscription rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/subscription/290873179" refObjectName="Community Edition - Myself Inc - mail@goeran.no" type="Subscription"/>
+	<Workspace rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/workspace/290873184" refObjectName="Continuous Project Monitor" type="Workspace"/>
+	−
+	<BuildDefinitions>
+		<BuildDefinition rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/builddefinition/290873268" refObjectName="Default Build Definition" type="BuildDefinition"/>
+	</BuildDefinitions>
+	<Children/>
+	<Description/>
+	−
+	<Iterations>
+		<Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/290873918" refObjectName="Iteration 0" type="Iteration"/>
+		<Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/290885432" refObjectName="Startup" type="Iteration"/>
+		<Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/315969147" refObjectName="Assemble team" type="Iteration"/>
+		<Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/315970191" refObjectName="Infrastructure" type="Iteration"/>
+		<Iteration rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/iteration/497952597" refObjectName="Sprint 3" type="Iteration"/>
+	</Iterations>
+	<Name>Continuous Project Monitor</Name>
+	<Notes/>
+	<Owner/>
+	<Releases/>
+	<State>Open</State>
+	−
+	<Users>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/290873725" refObjectName="Gøran Hansen" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/290880206" refObjectName="Jonas Follesø" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/290913692" refObjectName="Fredrik Kalseth" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/290937577" refObjectName="Sondre Bjellås" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/291988321" refObjectName="Ole Gunnar Borstad" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/292021936" refObjectName="Peter Samuel" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/498084344" refObjectName="dagolap" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/498125427" refObjectName="Jaffe" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/498220381" refObjectName="jask" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/498222158" refObjectName="Joachim" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/498225023" refObjectName="Daniel" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/498229411" refObjectName="tnicolaysen" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/498231078" refObjectName="olea" type="User"/>
+		<User rallyAPIMajor="1" rallyAPIMinor="13" ref="https://community.rallydev.com/slm/webservice/1.13/user/518425578" refObjectName="Hani" type="User"/>
+	</Users>
+</Project>

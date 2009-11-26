@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="APD.Client.Framework.SL.Controls.DefaultImage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    Width="Auto" Height="Auto">
+    <!--<Controls:Viewbox x:Name="LayoutRoot">-->
+        <Image x:Name="image" 
+			   Source="../Resources/Images/v-for-vendetta.jpg" />
+	<!--</Controls:Viewbox>-->
+</UserControl>

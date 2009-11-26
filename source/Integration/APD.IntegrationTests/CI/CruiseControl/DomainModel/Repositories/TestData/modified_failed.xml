@@ -1,0 +1,59 @@
+<cruisecontrol project="Agile Project Dashboard">
+  <request source="continuous" buildCondition="IfModificationExists">continuous triggered a build (IfModificationExists)</request>
+  <modifications>
+    <modification type="Modified">
+      <filename>BuildScript.msbuild</filename>
+      <project>/trunk/source</project>
+      <date>2009-06-25 16:59:24</date>
+
+      <user>goeran</user>
+      <comment>sexy fix!</comment>
+      <changeNumber>338</changeNumber>
+    </modification>
+    <modification type="Modified">
+      <filename>BuildScript.msbuild</filename>
+      <project>/trunk/source</project>
+
+      <date>2009-06-25 17:00:06</date>
+      <user>goeran</user>
+      <comment>Testing Jask new smooth animation</comment>
+      <changeNumber>339</changeNumber>
+    </modification>
+  </modifications>
+  <integrationProperties>
+
+    <CCNetArtifactDirectory>d:\ccnet\AgileProjectDashboard\Artifacts</CCNetArtifactDirectory>
+    <CCNetBuildCondition>IfModificationExists</CCNetBuildCondition>
+    <CCNetBuildDate>2009-06-25</CCNetBuildDate>
+    <CCNetBuildTime>17:01:04</CCNetBuildTime>
+    <CCNetFailureUsers>
+      <user>jask</user>
+
+      <user>goeran</user>
+    </CCNetFailureUsers>
+    <CCNetIntegrationStatus>Failure</CCNetIntegrationStatus>
+    <CCNetLabel>0.1.0.212</CCNetLabel>
+    <CCNetLastIntegrationStatus>Failure</CCNetLastIntegrationStatus>
+    <CCNetListenerFile>d:\ccnet\AgileProjectDashboard\Artifacts\Agile Project Dashboard_ListenFile.xml</CCNetListenerFile>
+
+    <CCNetModifyingUsers>
+      <user>goeran</user>
+    </CCNetModifyingUsers>
+    <CCNetNumericLabel>212</CCNetNumericLabel>
+    <CCNetProject>Agile Project Dashboard</CCNetProject>
+    <CCNetProjectUrl>http://SUMMEROFCODE/ccnet</CCNetProjectUrl>
+    <CCNetRequestSource>continuous</CCNetRequestSource>
+
+    <CCNetWorkingDirectory>d:\ccnet\AgileProjectDashboard\WorkingDirectory</CCNetWorkingDirectory>
+    <LastChangeNumber>339</LastChangeNumber>
+    <LastIntegrationStatus>Failure</LastIntegrationStatus>
+    <LastSuccessfulIntegrationLabel>0.1.0.211</LastSuccessfulIntegrationLabel>
+    <LastModificationDate>25.06.2009 17:00:06</LastModificationDate>
+  </integrationProperties>
+
+  <build date="2009-06-25 17:01:04" buildtime="00:01:24" error="true" buildcondition="IfModificationExists">
+
+    <msbuild startTime="06/25/2009 17:01:07" elapsedTime="00:00:22" success="false">
+    </msbuild>
+  </build>
+</cruisecontrol>

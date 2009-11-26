@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://agileprojectdashboard.org" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" targetNamespace="http://agileprojectdashboard.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://agileprojectdashboard.org/Imports">
+      <xsd:import schemaLocation="http://localhost:1155/APD/Services/SettingsService.svc?xsd=xsd0" namespace="http://agileprojectdashboard.org" />
+      <xsd:import schemaLocation="http://localhost:1155/APD/Services/SettingsService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:1155/APD/Services/SettingsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.Framework.Settings" />
+      <xsd:import schemaLocation="http://localhost:1155/APD/Services/SettingsService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SettingsService_SaveSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSettings" />
+  </wsdl:message>
+  <wsdl:message name="SettingsService_SaveSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SettingsService_GetSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSettings" />
+  </wsdl:message>
+  <wsdl:message name="SettingsService_GetSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSettingsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SettingsService">
+    <wsdl:operation name="SaveSettings">
+      <wsdl:input wsaw:Action="http://agileprojectdashboard.org/SettingsService/SaveSettings" message="tns:SettingsService_SaveSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://agileprojectdashboard.org/SettingsService/SaveSettingsResponse" message="tns:SettingsService_SaveSettings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSettings">
+      <wsdl:input wsaw:Action="http://agileprojectdashboard.org/SettingsService/GetSettings" message="tns:SettingsService_GetSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://agileprojectdashboard.org/SettingsService/GetSettingsResponse" message="tns:SettingsService_GetSettings_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,36 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.UserSampleData"
+	xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+	xmlns:converter="clr-namespace:APD.Client.Widget.DeveloperInfo.SL.Converters"
+	x:Class="APD.Client.Widget.DeveloperInfo.SL.DeveloperInfo" Height="200" Width="200">
+
+	<UserControl.Resources>
+		<ResourceDictionary>
+            <converter:EmailToMailtoConverter x:Key="EmailToMailtoConverter" />
+			<SampleData:UserSampleData x:Key="UserSampleData" d:IsDataSource="True"/>
+		</ResourceDictionary>
+	</UserControl.Resources>
+	
+	<Controls:Viewbox x:Name="ViewBox" HorizontalAlignment="Center" Margin="0,0,0,0" Height="Auto" Width="Auto" Content="Viewbox">
+		
+			<Controls:DockPanel x:Name="LayoutRoot" LastChildFill="False" d:DataContext="{Binding Mode=OneWay, Source={StaticResource UserSampleData}}">	
+				<Image x:Name="Image" Controls:DockPanel.Dock="Top" Width="Auto" Height="150" Source="{Binding Mode=OneWay, Path=LatestBuildViewModel.TriggeredBy.ImageUrl}" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="UniformToFill"/>		
+				<TextBlock x:Name="DeveloperName" Controls:DockPanel.Dock="Top" MinHeight="20" Width="Auto" Margin="0,2,0,1" Text="{Binding Mode=OneWay, Path=LatestBuildViewModel.TriggeredBy.Name}" HorizontalAlignment="Center" FontSize="20" FontFamily="{StaticResource FontFamily}" VerticalAlignment="Stretch" >
+					<TextBlock.Foreground>
+						<SolidColorBrush Color="{StaticResource FontColor}"/>
+					</TextBlock.Foreground>
+				</TextBlock>
+			    <HyperlinkButton x:Name="Email" Controls:DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="12" FontFamily="{StaticResource FontFamily}" Content="{Binding Mode=OneWay, Path=LatestBuildViewModel.TriggeredBy.Email}" NavigateUri="{Binding Mode=OneWay, Path=LatestBuildViewModel.TriggeredBy.Email, Converter={StaticResource EmailToMailtoConverter}}">
+			    	<HyperlinkButton.Foreground>
+			    		<SolidColorBrush Color="{StaticResource FontColor}"/>
+			    	</HyperlinkButton.Foreground>
+			    </HyperlinkButton>
+            </Controls:DockPanel>
+		
+	</Controls:Viewbox>  	
+</UserControl>

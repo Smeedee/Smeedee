@@ -1,0 +1,39 @@
+<cruisecontrol project="JAMP - Just Another Mock Project">
+  <request source="Dashboard" buildCondition="ForceBuild">Dashboard triggered a build (ForceBuild)</request>
+  <modifications />
+  <integrationProperties>
+    <CCNetArtifactDirectory>d:\ccnet\AgileProjectDashboardClone\Artifacts</CCNetArtifactDirectory>
+    <CCNetBuildCondition>ForceBuild</CCNetBuildCondition>
+    <CCNetBuildDate>2009-07-02</CCNetBuildDate>
+
+    <CCNetBuildTime>13:16:46</CCNetBuildTime>
+    <CCNetFailureUsers />
+    <CCNetIntegrationStatus>Exception</CCNetIntegrationStatus>
+    <CCNetLabel>0.1.0.7</CCNetLabel>
+    <CCNetLastIntegrationStatus>Exception</CCNetLastIntegrationStatus>
+    <CCNetListenerFile>d:\ccnet\AgileProjectDashboardClone\Artifacts\JAMP - Just Another Mock Project_ListenFile.xml</CCNetListenerFile>
+
+    <CCNetModifyingUsers />
+    <CCNetNumericLabel>7</CCNetNumericLabel>
+    <CCNetProject>JAMP - Just Another Mock Project</CCNetProject>
+    <CCNetProjectUrl>http://SUMMEROFCODE/ccnet</CCNetProjectUrl>
+    <CCNetRequestSource>Dashboard</CCNetRequestSource>
+    <CCNetWorkingDirectory>d:\ccnet\AgileProjectDashboardClone\WorkingDirectory</CCNetWorkingDirectory>
+
+    <LastChangeNumber>0</LastChangeNumber>
+    <LastIntegrationStatus>Exception</LastIntegrationStatus>
+    <LastSuccessfulIntegrationLabel>0.1.0.1</LastSuccessfulIntegrationLabel>
+    <LastModificationDate>01.07.2009 13:16:47</LastModificationDate>
+  </integrationProperties>
+  <build date="2009-07-02 13:16:46" buildtime="00:00:00" buildcondition="ForceBuild" />
+  <exception>
+    <![CDATA[ThoughtWorks.CruiseControl.Core.CruiseControlException: Source control operation failed: svn: Working copy 'C:\Projects\CPMonitorClone' locked
+svn: run 'svn cleanup' to remove locks (type 'svn help cleanup' for details)
+. Process command: C:\Program Files\VisualSVN Server\bin\svn.exe update c:\Projects\CPMonitorClone\ --username CCUser --password haldis123 --non-interactive --no-auth-cache
+   at ThoughtWorks.CruiseControl.Core.Sourcecontrol.ProcessSourceControl.Execute(ProcessInfo processInfo)
+   at ThoughtWorks.CruiseControl.Core.Sourcecontrol.Svn.GetSource(IIntegrationResult result)
+   at ThoughtWorks.CruiseControl.Core.IntegrationRunner.Build(IIntegrationResult result)
+   at ThoughtWorks.CruiseControl.Core.IntegrationRunner.Integrate(IntegrationRequest request)]]>
+  </exception>
+
+</cruisecontrol>

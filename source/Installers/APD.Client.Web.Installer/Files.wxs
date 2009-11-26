@@ -1,0 +1,641 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="generated_components">
+            <ComponentRef Id="Default.htm" />
+            <ComponentRef Id="Silverlight.js" />
+            <ComponentRef Id="Web.config" />
+            <ComponentRef Id="Antlr3.Runtime.dll" />
+            <ComponentRef Id="APD.Client.Web.dll" />
+            <ComponentRef Id="APD.DataCollector.dll" />
+            <ComponentRef Id="APD.DomainModel.CI.dll" />
+            <ComponentRef Id="APD.DomainModel.dll" />
+            <ComponentRef Id="APD.DomainModel.Framework.dll" />
+            <ComponentRef Id="APD.DomainModel.NHMapping.dll" />
+            <ComponentRef Id="APD.DomainModel.ProjectInfo.dll" />
+            <ComponentRef Id="APD.DomainModel.SourceControl.dll" />
+            <ComponentRef Id="APD.Framework.dll" />
+            <ComponentRef Id="APD.Harvester.Framework.dll" />
+            <ComponentRef Id="APD.Plugin.CruiseControl.dll" />
+            <ComponentRef Id="APD.Plugin.Database.dll" />
+            <ComponentRef Id="APD.Plugin.Framework.dll" />
+            <ComponentRef Id="APD.Plugin.ProjectInfo.dll" />
+            <ComponentRef Id="APD.Plugin.RallyDev.dll" />
+            <ComponentRef Id="APD.Plugin.SVN.dll" />
+            <ComponentRef Id="APD.Plugin.TFSBuild.dll" />
+            <ComponentRef Id="APD.Plugin.TFSVC.dll" />
+            <ComponentRef Id="APD.Plugin.TFSWorkItems.dll" />
+            <ComponentRef Id="Castle.Core.dll" />
+            <ComponentRef Id="Castle.DynamicProxy2.dll" />
+            <ComponentRef Id="FluentNHibernate.dll" />
+            <ComponentRef Id="Iesi.Collections.dll" />
+            <ComponentRef Id="log4net.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Build.Client.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Build.Common.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Client.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Common.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Common.Library.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.VersionControl.Client.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.VersionControl.Common.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" />
+            <ComponentRef Id="NHibernate.ByteCode.Castle.dll" />
+            <ComponentRef Id="NHibernate.dll" />
+            <ComponentRef Id="SharpSvn_DB44_20_Win32.dll" />
+            <ComponentRef Id="SharpSvn_SASL21_22_Win32.dll" />
+            <ComponentRef Id="SharpSvn.dll" />
+            <ComponentRef Id="System.Data.SQLite.dll" />
+            <ComponentRef Id="APD.Admin.Silverlight.xap" />
+            <ComponentRef Id="APD.Client.Silverlight.xap" />
+            <ComponentRef Id="Antlr3.Runtime.dll_1" />
+            <ComponentRef Id="APD.DataCollector.dll_1" />
+            <ComponentRef Id="APD.DataCollector.Service.exe" />
+            <ComponentRef Id="APD.DomainModel.CI.dll_1" />
+            <ComponentRef Id="APD.DomainModel.dll_1" />
+            <ComponentRef Id="APD.DomainModel.Framework.dll_1" />
+            <ComponentRef Id="APD.DomainModel.NHMapping.dll_1" />
+            <ComponentRef Id="APD.DomainModel.ProjectInfo.dll_1" />
+            <ComponentRef Id="APD.DomainModel.SourceControl.dll_1" />
+            <ComponentRef Id="APD.Harvester.CI.dll" />
+            <ComponentRef Id="APD.Harvester.Framework.dll_1" />
+            <ComponentRef Id="APD.Harvester.ProjectInfo.dll" />
+            <ComponentRef Id="APD.Harvester.SourceControl.dll" />
+            <ComponentRef Id="APD.Plugin.CruiseControl.dll_1" />
+            <ComponentRef Id="APD.Plugin.Database.dll_1" />
+            <ComponentRef Id="APD.Plugin.Framework.dll_1" />
+            <ComponentRef Id="APD.Plugin.RallyDev.dll_1" />
+            <ComponentRef Id="APD.Plugin.SVN.dll_1" />
+            <ComponentRef Id="Castle.Core.dll_1" />
+            <ComponentRef Id="Castle.DynamicProxy2.dll_1" />
+            <ComponentRef Id="FluentNHibernate.dll_1" />
+            <ComponentRef Id="Iesi.Collections.dll_1" />
+            <ComponentRef Id="log4net.dll_1" />
+            <ComponentRef Id="NHibernate.ByteCode.Castle.dll_1" />
+            <ComponentRef Id="NHibernate.dll_1" />
+            <ComponentRef Id="SharpSvn_DB44_20_Win32.dll_1" />
+            <ComponentRef Id="SharpSvn_SASL21_22_Win32.dll_1" />
+            <ComponentRef Id="SharpSvn.dll_1" />
+            <ComponentRef Id="System.Data.SQLite.dll_1" />
+            <ComponentRef Id="Antlr3.Runtime.dll_2" />
+            <ComponentRef Id="APD.DataCollector.Console.exe" />
+            <ComponentRef Id="APD.DataCollector.Console.pdb" />
+            <ComponentRef Id="APD.DataCollector.Console.vshost.exe" />
+            <ComponentRef Id="APD.DataCollector.Console.vshost.exe.manifest" />
+            <ComponentRef Id="APD.DataCollector.dll_2" />
+            <ComponentRef Id="APD.DataCollector.pdb" />
+            <ComponentRef Id="APD.DomainModel.CI.dll_2" />
+            <ComponentRef Id="APD.DomainModel.CI.pdb" />
+            <ComponentRef Id="APD.DomainModel.dll_2" />
+            <ComponentRef Id="APD.DomainModel.Framework.dll_2" />
+            <ComponentRef Id="APD.DomainModel.Framework.pdb" />
+            <ComponentRef Id="APD.DomainModel.NHMapping.dll_2" />
+            <ComponentRef Id="APD.DomainModel.NHMapping.pdb" />
+            <ComponentRef Id="APD.DomainModel.pdb" />
+            <ComponentRef Id="APD.DomainModel.ProjectInfo.dll_2" />
+            <ComponentRef Id="APD.DomainModel.ProjectInfo.pdb" />
+            <ComponentRef Id="APD.DomainModel.SourceControl.dll_2" />
+            <ComponentRef Id="APD.DomainModel.SourceControl.pdb" />
+            <ComponentRef Id="APD.Harvester.CI.dll_1" />
+            <ComponentRef Id="APD.Harvester.CI.pdb" />
+            <ComponentRef Id="APD.Harvester.Framework.dll_2" />
+            <ComponentRef Id="APD.Harvester.Framework.pdb" />
+            <ComponentRef Id="APD.Harvester.ProjectInfo.dll_1" />
+            <ComponentRef Id="APD.Harvester.ProjectInfo.pdb" />
+            <ComponentRef Id="APD.Harvester.SourceControl.dll_1" />
+            <ComponentRef Id="APD.Harvester.SourceControl.pdb" />
+            <ComponentRef Id="APD.Plugin.CruiseControl.dll_2" />
+            <ComponentRef Id="APD.Plugin.CruiseControl.pdb" />
+            <ComponentRef Id="APD.Plugin.Database.dll_2" />
+            <ComponentRef Id="APD.Plugin.Database.pdb" />
+            <ComponentRef Id="APD.Plugin.Framework.dll_2" />
+            <ComponentRef Id="APD.Plugin.Framework.pdb" />
+            <ComponentRef Id="APD.Plugin.RallyDev.dll_2" />
+            <ComponentRef Id="APD.Plugin.RallyDev.pdb" />
+            <ComponentRef Id="APD.Plugin.SVN.dll_2" />
+            <ComponentRef Id="APD.Plugin.SVN.pdb" />
+            <ComponentRef Id="APD.Plugin.TFSBuild.dll_1" />
+            <ComponentRef Id="APD.Plugin.TFSBuild.pdb" />
+            <ComponentRef Id="APD.Plugin.TFSVC.dll_1" />
+            <ComponentRef Id="APD.Plugin.TFSVC.pdb" />
+            <ComponentRef Id="Castle.Core.dll_2" />
+            <ComponentRef Id="Castle.DynamicProxy2.dll_2" />
+            <ComponentRef Id="FluentNHibernate.dll_2" />
+            <ComponentRef Id="Iesi.Collections.dll_2" />
+            <ComponentRef Id="log4net.dll_2" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Build.Client.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Build.Common.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Client.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Common.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.Common.Library.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.VersionControl.Client.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.VersionControl.Common.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll_1" />
+            <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll_1" />
+            <ComponentRef Id="NHibernate.ByteCode.Castle.dll_2" />
+            <ComponentRef Id="NHibernate.dll_2" />
+            <ComponentRef Id="SharpPlink_Win32.svnExe" />
+            <ComponentRef Id="SharpSvn_DB44_20_Win32.dll_2" />
+            <ComponentRef Id="SharpSvn_SASL21_22_Win32.dll_2" />
+            <ComponentRef Id="SharpSvn.dll_2" />
+            <ComponentRef Id="SharpSvn.pdb" />
+            <ComponentRef Id="SharpSvn.xml" />
+            <ComponentRef Id="System.Data.SQLite.dll_2" />
+            <ComponentRef Id="ChangesetRepositoryService.svc" />
+            <ComponentRef Id="CIRepositoryService.svc" />
+            <ComponentRef Id="ProjectInfoRepositoryService.svc" />
+            <ComponentRef Id="SettingsService.svc" />
+            <ComponentRef Id="UserRepositoryService.svc" />
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="INSTALLLOCATION">
+            <Component Id="Default.htm" Guid="{D02E267B-DB63-40F1-BB1E-A3CA9C9B3A5E}">
+                <File Id="Default.htm" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Default.htm" />
+            </Component>
+            <Component Id="Silverlight.js" Guid="{198CD482-A72D-4620-B809-B598532CB6EE}">
+                <File Id="Silverlight.js" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Silverlight.js" />
+            </Component>
+            <Component Id="Web.config" Guid="{0D580986-858D-4FDD-B9A1-1AFF342858D7}">
+                <File Id="Web.config" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Web.config" />
+            </Component>
+            <Directory Id="bin" Name="bin">
+                <Component Id="Antlr3.Runtime.dll" Guid="{E02F4CF6-5781-4FBA-99DA-94BB6E7442CB}">
+                    <File Id="Antlr3.Runtime.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Antlr3.Runtime.dll" />
+                </Component>
+                <Component Id="APD.Client.Web.dll" Guid="{73EF9B89-F91D-4CC3-99A1-618E559BA9AB}">
+                    <File Id="APD.Client.Web.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Client.Web.dll" />
+                </Component>
+                <Component Id="APD.DataCollector.dll" Guid="{7138A027-85C4-43A1-9AE1-D32B273997E5}">
+                    <File Id="APD.DataCollector.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.CI.dll" Guid="{F1CBB3D1-1242-4E42-8406-6E4B72AB90D2}">
+                    <File Id="APD.DomainModel.CI.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.CI.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.dll" Guid="{942FC522-3CFA-482A-94FE-D65D761D76D8}">
+                    <File Id="APD.DomainModel.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.Framework.dll" Guid="{1CAD9D48-7882-413A-A9AF-8FCA3FFFCBE3}">
+                    <File Id="APD.DomainModel.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.Framework.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.NHMapping.dll" Guid="{7B3131F3-A73B-4B88-B6E4-21B3DCEA0D0D}">
+                    <File Id="APD.DomainModel.NHMapping.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.NHMapping.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.ProjectInfo.dll" Guid="{530C9EE1-81C8-4087-800A-71022FF3EE76}">
+                    <File Id="APD.DomainModel.ProjectInfo.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.ProjectInfo.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.SourceControl.dll" Guid="{1604874C-B6C9-4071-B8D0-39CD097A2C8C}">
+                    <File Id="APD.DomainModel.SourceControl.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.SourceControl.dll" />
+                </Component>
+                <Component Id="APD.Framework.dll" Guid="{F4ED3710-9F29-4244-BBA5-9E153606AAC4}">
+                    <File Id="APD.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Framework.dll" />
+                </Component>
+                <Component Id="APD.Harvester.Framework.dll" Guid="{9ECC4685-3FD6-49AC-89AE-43A029ACABC7}">
+                    <File Id="APD.Harvester.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Harvester.Framework.dll" />
+                </Component>
+                <Component Id="APD.Plugin.CruiseControl.dll" Guid="{F7E38DFD-EB52-41BF-AEFF-ED9FFF7CE123}">
+                    <File Id="APD.Plugin.CruiseControl.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.CruiseControl.dll" />
+                </Component>
+                <Component Id="APD.Plugin.Database.dll" Guid="{7B2EF93C-CF14-4904-9A21-6196B20BA3DB}">
+                    <File Id="APD.Plugin.Database.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.Database.dll" />
+                </Component>
+                <Component Id="APD.Plugin.Framework.dll" Guid="{8FDD7D02-2B8D-4C5E-BE90-19DF1425772D}">
+                    <File Id="APD.Plugin.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.Framework.dll" />
+                </Component>
+                <Component Id="APD.Plugin.ProjectInfo.dll" Guid="{90491E8C-3E19-408A-BEC0-6EC29D7BB7BD}">
+                    <File Id="APD.Plugin.ProjectInfo.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.ProjectInfo.dll" />
+                </Component>
+                <Component Id="APD.Plugin.RallyDev.dll" Guid="{B547889D-9654-437C-A6D0-C7ACEFF5F781}">
+                    <File Id="APD.Plugin.RallyDev.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.RallyDev.dll" />
+                </Component>
+                <Component Id="APD.Plugin.SVN.dll" Guid="{45694712-CA17-445C-95FD-507C7C1BC6D9}">
+                    <File Id="APD.Plugin.SVN.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.SVN.dll" />
+                </Component>
+                <Component Id="APD.Plugin.TFSBuild.dll" Guid="{47E590E0-3AB5-45EF-B8CD-0B3F7D109894}">
+                    <File Id="APD.Plugin.TFSBuild.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.TFSBuild.dll" />
+                </Component>
+                <Component Id="APD.Plugin.TFSVC.dll" Guid="{BE7CCEE2-0F27-4012-B62C-79778435C93F}">
+                    <File Id="APD.Plugin.TFSVC.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.TFSVC.dll" />
+                </Component>
+                <Component Id="APD.Plugin.TFSWorkItems.dll" Guid="{26CAB31C-2E0D-4165-885F-A390B53A48B5}">
+                    <File Id="APD.Plugin.TFSWorkItems.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.TFSWorkItems.dll" />
+                </Component>
+                <Component Id="Castle.Core.dll" Guid="{FB38AF3E-F67C-493E-BE1F-BA0827BBF3FE}">
+                    <File Id="Castle.Core.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Castle.Core.dll" />
+                </Component>
+                <Component Id="Castle.DynamicProxy2.dll" Guid="{76882AC2-13B2-40B8-B2B4-FBB403424BB3}">
+                    <File Id="Castle.DynamicProxy2.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Castle.DynamicProxy2.dll" />
+                </Component>
+                <Component Id="FluentNHibernate.dll" Guid="{460C2C02-27BE-4C12-846E-F865ED20F898}">
+                    <File Id="FluentNHibernate.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\FluentNHibernate.dll" />
+                </Component>
+                <Component Id="Iesi.Collections.dll" Guid="{506923E3-7FD4-4437-8D52-F664F02D784C}">
+                    <File Id="Iesi.Collections.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Iesi.Collections.dll" />
+                </Component>
+                <Component Id="log4net.dll" Guid="{4E8DF86D-5AAC-45C4-9DB0-AD701883072D}">
+                    <File Id="log4net.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\log4net.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Build.Client.dll" Guid="{D82D6993-1DFC-4A85-8192-E5FB8A402D60}">
+                    <File Id="Microsoft.TeamFoundation.Build.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Build.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Build.Common.dll" Guid="{79072BC7-67E1-4267-A2B5-409FEBF2AD71}">
+                    <File Id="Microsoft.TeamFoundation.Build.Common.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Build.Common.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Client.dll" Guid="{2E334266-6102-4663-A3C0-10F64F35F3EF}">
+                    <File Id="Microsoft.TeamFoundation.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Common.dll" Guid="{8C960612-B5F3-4C23-8D2C-2786DE624269}">
+                    <File Id="Microsoft.TeamFoundation.Common.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Common.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Common.Library.dll" Guid="{F122F9BA-1EA1-4733-BF00-09DBA7885CCE}">
+                    <File Id="Microsoft.TeamFoundation.Common.Library.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Common.Library.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.dll" Guid="{7BF850C6-8413-4A08-8121-DCB426FBA85C}">
+                    <File Id="Microsoft.TeamFoundation.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Client.dll" Guid="{5DBD831E-8D52-4560-B0E3-4DA83AC6817A}">
+                    <File Id="Microsoft.TeamFoundation.VersionControl.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.VersionControl.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.dll" Guid="{705B5A1D-D92A-489B-9978-DCCFA10301F9}">
+                    <File Id="Microsoft.TeamFoundation.VersionControl.Common.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.VersionControl.Common.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" Guid="{14F88DF7-6583-42E1-A17A-D2EE2CF64A21}">
+                    <File Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" Guid="{28CD7777-08A8-4C26-9867-6B90876691BD}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" Guid="{1513D85F-96DD-41EE-9E85-E67BAE4E4B17}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll" Guid="{BA440CAE-E277-4E41-89CA-A99D736835C8}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" Guid="{A883BD7D-0812-458F-9E75-ECA081D961BB}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" Guid="{88D2F126-54EF-4476-B620-404E3E9D1F73}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" Guid="{F384E056-2A0B-480D-85A5-03D3D915E8C0}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" />
+                </Component>
+                <Component Id="NHibernate.ByteCode.Castle.dll" Guid="{5896B796-58D0-4B4E-84D2-89908EB00AED}">
+                    <File Id="NHibernate.ByteCode.Castle.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\NHibernate.ByteCode.Castle.dll" />
+                </Component>
+                <Component Id="NHibernate.dll" Guid="{8A16A391-B0DE-46C3-9BEA-5E49F01F2F77}">
+                    <File Id="NHibernate.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\NHibernate.dll" />
+                </Component>
+                <Component Id="SharpSvn_DB44_20_Win32.dll" Guid="{DD6C6288-C739-497F-AB78-A077720EE576}">
+                    <File Id="SharpSvn_DB44_20_Win32.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\SharpSvn-DB44-20-Win32.dll" />
+                </Component>
+                <Component Id="SharpSvn_SASL21_22_Win32.dll" Guid="{60752D3F-0B26-4F10-BE2C-4E397F839D76}">
+                    <File Id="SharpSvn_SASL21_22_Win32.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\SharpSvn-SASL21-22-Win32.dll" />
+                </Component>
+                <Component Id="SharpSvn.dll" Guid="{A092139A-29F9-4B5E-B311-D6D0335446B5}">
+                    <File Id="SharpSvn.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\SharpSvn.dll" />
+                </Component>
+                <Component Id="System.Data.SQLite.dll" Guid="{AE0C89C4-9AF3-4DC2-8D29-C6C7D9AA92F6}">
+                    <File Id="System.Data.SQLite.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\System.Data.SQLite.dll" />
+                </Component>
+            </Directory>
+            <Directory Id="ClientBin" Name="ClientBin">
+                <Component Id="APD.Admin.Silverlight.xap" Guid="{3D968728-3BB9-4238-B47B-B7C1AD90E2AE}">
+                    <File Id="APD.Admin.Silverlight.xap" KeyPath="yes" Source="..\..\Build\bin\temp\installer\ClientBin\APD.Admin.Silverlight.xap" />
+                </Component>
+                <Component Id="APD.Client.Silverlight.xap" Guid="{72FF4F4A-6047-4845-B8B9-7026BC8B706D}">
+                    <File Id="APD.Client.Silverlight.xap" KeyPath="yes" Source="..\..\Build\bin\temp\installer\ClientBin\APD.Client.Silverlight.xap" />
+                </Component>
+            </Directory>
+            <Directory Id="DataCollector" Name="DataCollector">
+                <Component Id="Antlr3.Runtime.dll_1" Guid="{17C80D70-B681-4260-B6B0-579BFC0B20FD}">
+                    <File Id="Antlr3.Runtime.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\Antlr3.Runtime.dll" />
+                </Component>
+                <Component Id="APD.DataCollector.dll_1" Guid="{BE2484B0-0087-40D4-AFA8-9FA1F7805636}">
+                    <File Id="APD.DataCollector.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DataCollector.dll" />
+                </Component>
+                <Component Id="APD.DataCollector.Service.exe" Guid="{FD544D51-329D-4D77-82EC-5B33E34024B2}">
+                    <File Id="APD.DataCollector.Service.exe" Name="DataCollectorService.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DataCollector.Service.exe" />
+                </Component>
+                <Component Id="APD.DomainModel.CI.dll_1" Guid="{7D903411-F37E-426C-A638-06095E241FF0}">
+                    <File Id="APD.DomainModel.CI.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DomainModel.CI.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.dll_1" Guid="{F95B8F48-FAD2-40CF-BD93-EE58B892ADFC}">
+                    <File Id="APD.DomainModel.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DomainModel.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.Framework.dll_1" Guid="{B5EFDBDA-FA79-4359-ACB6-5C371CC2361E}">
+                    <File Id="APD.DomainModel.Framework.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DomainModel.Framework.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.NHMapping.dll_1" Guid="{4F7E3783-A4C6-4977-83E9-991480CAE823}">
+                    <File Id="APD.DomainModel.NHMapping.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DomainModel.NHMapping.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.ProjectInfo.dll_1" Guid="{795191D8-07AE-45BB-B45C-48AD2429E1B7}">
+                    <File Id="APD.DomainModel.ProjectInfo.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DomainModel.ProjectInfo.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.SourceControl.dll_1" Guid="{7F1C8FFC-B762-4744-81B2-103238820386}">
+                    <File Id="APD.DomainModel.SourceControl.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.DomainModel.SourceControl.dll" />
+                </Component>
+                <Component Id="APD.Harvester.CI.dll" Guid="{0E8C27D9-915F-4882-9DA2-8AB1A5FE1524}">
+                    <File Id="APD.Harvester.CI.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Harvester.CI.dll" />
+                </Component>
+                <Component Id="APD.Harvester.Framework.dll_1" Guid="{63270999-2D00-455E-8751-3D76D608F088}">
+                    <File Id="APD.Harvester.Framework.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Harvester.Framework.dll" />
+                </Component>
+                <Component Id="APD.Harvester.ProjectInfo.dll" Guid="{E7F45F93-E800-44AB-A095-4FB202B998C6}">
+                    <File Id="APD.Harvester.ProjectInfo.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Harvester.ProjectInfo.dll" />
+                </Component>
+                <Component Id="APD.Harvester.SourceControl.dll" Guid="{A5E0613D-F09B-4980-AF6B-9945408666C9}">
+                    <File Id="APD.Harvester.SourceControl.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Harvester.SourceControl.dll" />
+                </Component>
+                <Component Id="APD.Plugin.CruiseControl.dll_1" Guid="{072BF65C-D7B7-4C6F-9C40-7F535372EC17}">
+                    <File Id="APD.Plugin.CruiseControl.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Plugin.CruiseControl.dll" />
+                </Component>
+                <Component Id="APD.Plugin.Database.dll_1" Guid="{80D55741-0610-4BF2-A32A-A01F4ACC45C4}">
+                    <File Id="APD.Plugin.Database.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Plugin.Database.dll" />
+                </Component>
+                <Component Id="APD.Plugin.Framework.dll_1" Guid="{09EC9112-DFD6-4989-A853-572A29FC5A38}">
+                    <File Id="APD.Plugin.Framework.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Plugin.Framework.dll" />
+                </Component>
+                <Component Id="APD.Plugin.RallyDev.dll_1" Guid="{C43B97FD-3531-4649-9D23-D2CADA0C9665}">
+                    <File Id="APD.Plugin.RallyDev.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Plugin.RallyDev.dll" />
+                </Component>
+                <Component Id="APD.Plugin.SVN.dll_1" Guid="{A1FDA0F0-60D4-4853-96EC-709CF75E0D07}">
+                    <File Id="APD.Plugin.SVN.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\APD.Plugin.SVN.dll" />
+                </Component>
+                <Component Id="Castle.Core.dll_1" Guid="{F91AC723-02FA-4CBA-87BA-83357CD2C8C7}">
+                    <File Id="Castle.Core.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\Castle.Core.dll" />
+                </Component>
+                <Component Id="Castle.DynamicProxy2.dll_1" Guid="{BCB5EF3F-3363-420C-B717-FF165D0AB33A}">
+                    <File Id="Castle.DynamicProxy2.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\Castle.DynamicProxy2.dll" />
+                </Component>
+                <Component Id="FluentNHibernate.dll_1" Guid="{FB55B259-44F1-4EE7-B335-FA42A9A800F9}">
+                    <File Id="FluentNHibernate.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\FluentNHibernate.dll" />
+                </Component>
+                <Component Id="Iesi.Collections.dll_1" Guid="{C4481F21-7F76-4218-8A3C-99BD4311FC41}">
+                    <File Id="Iesi.Collections.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\Iesi.Collections.dll" />
+                </Component>
+                <Component Id="log4net.dll_1" Guid="{D456510D-75D6-4FB2-B73E-6567B2007796}">
+                    <File Id="log4net.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\log4net.dll" />
+                </Component>
+                <Component Id="NHibernate.ByteCode.Castle.dll_1" Guid="{A6C60F4B-95DC-4CE6-BBFF-0564DB3131E4}">
+                    <File Id="NHibernate.ByteCode.Castle.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\NHibernate.ByteCode.Castle.dll" />
+                </Component>
+                <Component Id="NHibernate.dll_1" Guid="{ABA8D4A2-DCAB-495D-8B5C-9A40E187550F}">
+                    <File Id="NHibernate.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\NHibernate.dll" />
+                </Component>
+                <Component Id="SharpSvn_DB44_20_Win32.dll_1" Guid="{5AE53FEB-D73C-48D6-99C9-6DF840A7FF5A}">
+                    <File Id="SharpSvn_DB44_20_Win32.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\SharpSvn-DB44-20-Win32.dll" />
+                </Component>
+                <Component Id="SharpSvn_SASL21_22_Win32.dll_1" Guid="{1AB23F90-3D20-4286-9E23-D4DC0F339206}">
+                    <File Id="SharpSvn_SASL21_22_Win32.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\SharpSvn-SASL21-22-Win32.dll" />
+                </Component>
+                <Component Id="SharpSvn.dll_1" Guid="{994D1972-E584-4A18-A5B9-4DD9FF475CC1}">
+                    <File Id="SharpSvn.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\SharpSvn.dll" />
+                </Component>
+                <Component Id="System.Data.SQLite.dll_1" Guid="{78A4C5F9-BB29-40F3-84EE-16536F9A7702}">
+                    <File Id="System.Data.SQLite.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector\System.Data.SQLite.dll" />
+                </Component>
+            </Directory>
+            <Directory Id="DataCollector.Console" Name="DataCollector.Console">
+                <Component Id="Antlr3.Runtime.dll_2" Guid="{1CB523A5-0232-40E8-8979-860B878041AC}">
+                    <File Id="Antlr3.Runtime.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Antlr3.Runtime.dll" />
+                </Component>
+                <Component Id="APD.DataCollector.Console.exe" Guid="{A021FA54-059B-4154-92E9-ADB73FB16FD4}">
+                    <File Id="APD.DataCollector.Console.exe" Name="DataCollector.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DataCollector.Console.exe" />
+                </Component>
+                <Component Id="APD.DataCollector.Console.pdb" Guid="{C233AC81-12AE-46C7-A9C4-157F87B9B1C6}">
+                    <File Id="APD.DataCollector.Console.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DataCollector.Console.pdb" />
+                </Component>
+                <Component Id="APD.DataCollector.Console.vshost.exe" Guid="{6CF3E8D4-9BB6-4649-8355-E47EEE0BF685}">
+                    <File Id="APD.DataCollector.Console.vshost.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DataCollector.Console.vshost.exe" />
+                </Component>
+                <Component Id="APD.DataCollector.Console.vshost.exe.manifest" Guid="{E9313DE4-923A-493D-B49E-D147FA406835}">
+                    <File Id="APD.DataCollector.Console.vshost.exe.manifest" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DataCollector.Console.vshost.exe.manifest" />
+                </Component>
+                <Component Id="APD.DataCollector.dll_2" Guid="{CC77239B-BFDE-442B-954D-DD50C7E1626D}">
+                    <File Id="APD.DataCollector.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DataCollector.dll" />
+                </Component>
+                <Component Id="APD.DataCollector.pdb" Guid="{68BD7FAA-9400-42BB-9A2D-EF03E0E61983}">
+                    <File Id="APD.DataCollector.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DataCollector.pdb" />
+                </Component>
+                <Component Id="APD.DomainModel.CI.dll_2" Guid="{742630ED-35CA-49C2-9169-BF6835B42AA6}">
+                    <File Id="APD.DomainModel.CI.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.CI.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.CI.pdb" Guid="{610FBF19-BA45-4AAA-AE26-D438DA159BF5}">
+                    <File Id="APD.DomainModel.CI.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.CI.pdb" />
+                </Component>
+                <Component Id="APD.DomainModel.dll_2" Guid="{34919457-2970-4DCC-A961-0B296B1A26A6}">
+                    <File Id="APD.DomainModel.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.Framework.dll_2" Guid="{5665B088-480D-44D1-AAF6-F38810FDF426}">
+                    <File Id="APD.DomainModel.Framework.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.Framework.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.Framework.pdb" Guid="{98727D81-7AD8-4D80-B6BE-16FD9101B029}">
+                    <File Id="APD.DomainModel.Framework.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.Framework.pdb" />
+                </Component>
+                <Component Id="APD.DomainModel.NHMapping.dll_2" Guid="{D9647A67-F1F3-4419-9324-E156FD48E72E}">
+                    <File Id="APD.DomainModel.NHMapping.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.NHMapping.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.NHMapping.pdb" Guid="{46F11AC2-5932-4267-86D6-19908D897F17}">
+                    <File Id="APD.DomainModel.NHMapping.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.NHMapping.pdb" />
+                </Component>
+                <Component Id="APD.DomainModel.pdb" Guid="{2C351ECA-7EF8-41C3-A4A3-B877E2207DCA}">
+                    <File Id="APD.DomainModel.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.pdb" />
+                </Component>
+                <Component Id="APD.DomainModel.ProjectInfo.dll_2" Guid="{CD221732-A588-4682-B5D8-CCD1AF358F12}">
+                    <File Id="APD.DomainModel.ProjectInfo.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.ProjectInfo.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.ProjectInfo.pdb" Guid="{A218640B-BB9A-4D45-A58A-1E378BFF51AD}">
+                    <File Id="APD.DomainModel.ProjectInfo.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.ProjectInfo.pdb" />
+                </Component>
+                <Component Id="APD.DomainModel.SourceControl.dll_2" Guid="{5002CDE0-E2EB-4049-AF69-FF1B772B1072}">
+                    <File Id="APD.DomainModel.SourceControl.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.SourceControl.dll" />
+                </Component>
+                <Component Id="APD.DomainModel.SourceControl.pdb" Guid="{C9D8BF67-B2AE-42AF-A99A-F2CDCC9697E5}">
+                    <File Id="APD.DomainModel.SourceControl.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.DomainModel.SourceControl.pdb" />
+                </Component>
+                <Component Id="APD.Harvester.CI.dll_1" Guid="{CC232BAC-4D84-4EAB-99B4-211FA4CE6ADB}">
+                    <File Id="APD.Harvester.CI.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.CI.dll" />
+                </Component>
+                <Component Id="APD.Harvester.CI.pdb" Guid="{3B0FBF1B-BE79-4E77-96E8-4B8028B4B588}">
+                    <File Id="APD.Harvester.CI.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.CI.pdb" />
+                </Component>
+                <Component Id="APD.Harvester.Framework.dll_2" Guid="{FD46BC69-55F9-4D7C-A19D-F08421C9E387}">
+                    <File Id="APD.Harvester.Framework.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.Framework.dll" />
+                </Component>
+                <Component Id="APD.Harvester.Framework.pdb" Guid="{AEE801CE-6BB9-4660-9F1A-C473818EC6F8}">
+                    <File Id="APD.Harvester.Framework.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.Framework.pdb" />
+                </Component>
+                <Component Id="APD.Harvester.ProjectInfo.dll_1" Guid="{750F59DD-EFC4-4ACC-B37E-B925935236CC}">
+                    <File Id="APD.Harvester.ProjectInfo.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.ProjectInfo.dll" />
+                </Component>
+                <Component Id="APD.Harvester.ProjectInfo.pdb" Guid="{4306B25B-3208-4D70-9605-EF69DDA904F5}">
+                    <File Id="APD.Harvester.ProjectInfo.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.ProjectInfo.pdb" />
+                </Component>
+                <Component Id="APD.Harvester.SourceControl.dll_1" Guid="{15C83844-6DC2-4944-833C-A6E78EFA2EB2}">
+                    <File Id="APD.Harvester.SourceControl.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.SourceControl.dll" />
+                </Component>
+                <Component Id="APD.Harvester.SourceControl.pdb" Guid="{313FE62D-B207-4238-871D-216C6291148F}">
+                    <File Id="APD.Harvester.SourceControl.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Harvester.SourceControl.pdb" />
+                </Component>
+                <Component Id="APD.Plugin.CruiseControl.dll_2" Guid="{CDC2ED0B-0344-4BBE-91D6-8B22C93E0585}">
+                    <File Id="APD.Plugin.CruiseControl.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.CruiseControl.dll" />
+                </Component>
+                <Component Id="APD.Plugin.CruiseControl.pdb" Guid="{98D9CC82-1BFE-4448-AE13-61EBDC886D9F}">
+                    <File Id="APD.Plugin.CruiseControl.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.CruiseControl.pdb" />
+                </Component>
+                <Component Id="APD.Plugin.Database.dll_2" Guid="{C883EA85-8330-4D58-8452-D551E0058849}">
+                    <File Id="APD.Plugin.Database.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.Database.dll" />
+                </Component>
+                <Component Id="APD.Plugin.Database.pdb" Guid="{94E0ABF9-4681-47D0-A9E0-E88AD4B8DD43}">
+                    <File Id="APD.Plugin.Database.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.Database.pdb" />
+                </Component>
+                <Component Id="APD.Plugin.Framework.dll_2" Guid="{357C6DCC-4044-46B4-BAED-5E85E8D826F5}">
+                    <File Id="APD.Plugin.Framework.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.Framework.dll" />
+                </Component>
+                <Component Id="APD.Plugin.Framework.pdb" Guid="{7A067C81-2EDE-463E-B622-AF801B38C330}">
+                    <File Id="APD.Plugin.Framework.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.Framework.pdb" />
+                </Component>
+                <Component Id="APD.Plugin.RallyDev.dll_2" Guid="{9041E82D-06E4-4463-A0CD-1BA357B4E846}">
+                    <File Id="APD.Plugin.RallyDev.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.RallyDev.dll" />
+                </Component>
+                <Component Id="APD.Plugin.RallyDev.pdb" Guid="{E01954C8-BCA9-4139-BF92-8DCBA8F4C986}">
+                    <File Id="APD.Plugin.RallyDev.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.RallyDev.pdb" />
+                </Component>
+                <Component Id="APD.Plugin.SVN.dll_2" Guid="{CCEF1E0D-7087-4B55-9D25-EEDB02967A52}">
+                    <File Id="APD.Plugin.SVN.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.SVN.dll" />
+                </Component>
+                <Component Id="APD.Plugin.SVN.pdb" Guid="{7177175D-C397-4BA8-A073-611A3EAEFBD6}">
+                    <File Id="APD.Plugin.SVN.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.SVN.pdb" />
+                </Component>
+                <Component Id="APD.Plugin.TFSBuild.dll_1" Guid="{D7E10872-A4FE-4DDF-BDD5-7B144D700DC7}">
+                    <File Id="APD.Plugin.TFSBuild.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.TFSBuild.dll" />
+                </Component>
+                <Component Id="APD.Plugin.TFSBuild.pdb" Guid="{5E005454-3B77-497F-B0A9-A43B22ACF6AC}">
+                    <File Id="APD.Plugin.TFSBuild.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.TFSBuild.pdb" />
+                </Component>
+                <Component Id="APD.Plugin.TFSVC.dll_1" Guid="{EE11E132-E207-4B4B-809D-E24A5D388411}">
+                    <File Id="APD.Plugin.TFSVC.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.TFSVC.dll" />
+                </Component>
+                <Component Id="APD.Plugin.TFSVC.pdb" Guid="{8C658950-83B9-46C7-BBFB-0E0251D7D77B}">
+                    <File Id="APD.Plugin.TFSVC.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\APD.Plugin.TFSVC.pdb" />
+                </Component>
+                <Component Id="Castle.Core.dll_2" Guid="{F72FD0C7-45F4-4DB4-A344-0A79536EEAC7}">
+                    <File Id="Castle.Core.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Castle.Core.dll" />
+                </Component>
+                <Component Id="Castle.DynamicProxy2.dll_2" Guid="{B48CA909-B529-48D1-AB28-055CD22B66D2}">
+                    <File Id="Castle.DynamicProxy2.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Castle.DynamicProxy2.dll" />
+                </Component>
+                <Component Id="FluentNHibernate.dll_2" Guid="{16353A06-78D8-43B3-B101-852AFE1F556D}">
+                    <File Id="FluentNHibernate.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\FluentNHibernate.dll" />
+                </Component>
+                <Component Id="Iesi.Collections.dll_2" Guid="{DA54699E-729C-447A-897D-DB2436A5758E}">
+                    <File Id="Iesi.Collections.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Iesi.Collections.dll" />
+                </Component>
+                <Component Id="log4net.dll_2" Guid="{83B3556D-8053-403C-9B57-5DD58BB7A7CB}">
+                    <File Id="log4net.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\log4net.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Build.Client.dll_1" Guid="{B03DEB3A-8C15-4BF1-B4A1-8089B96F15A1}">
+                    <File Id="Microsoft.TeamFoundation.Build.Client.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.Build.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Build.Common.dll_1" Guid="{CC0526CC-4A7A-483D-84A2-5972D402C41A}">
+                    <File Id="Microsoft.TeamFoundation.Build.Common.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.Build.Common.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Client.dll_1" Guid="{4F068E9F-2406-496E-BAC4-95FC0D8F6A4C}">
+                    <File Id="Microsoft.TeamFoundation.Client.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Common.dll_1" Guid="{346A748D-E23E-42B1-ACC3-4E7A9F042DAE}">
+                    <File Id="Microsoft.TeamFoundation.Common.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.Common.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.Common.Library.dll_1" Guid="{67150A0D-CCC9-44D0-985F-EB718BD26AEB}">
+                    <File Id="Microsoft.TeamFoundation.Common.Library.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.Common.Library.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.dll_1" Guid="{EE8CBFE9-D925-4316-800C-F1335DE253BF}">
+                    <File Id="Microsoft.TeamFoundation.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Client.dll_1" Guid="{A4F0548B-AD1C-4BD5-BFA4-5AC812E21954}">
+                    <File Id="Microsoft.TeamFoundation.VersionControl.Client.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.VersionControl.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.dll_1" Guid="{4074EFB8-6B4C-4BBA-B28D-0B9333B46ECC}">
+                    <File Id="Microsoft.TeamFoundation.VersionControl.Common.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.VersionControl.Common.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll_1" Guid="{F2CB7DA8-B9B5-44F1-A969-0776BE7D5B41}">
+                    <File Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll_1" Guid="{4A52869A-3AE7-49A8-8A37-732517916BFE}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll_1" Guid="{965674AE-4E79-474C-8A15-4B1E89157013}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll_1" Guid="{643140B1-2365-4A91-AAA0-89B54A96591A}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.WorkItemTracking.Client.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll_1" Guid="{40B7C48A-831E-46FB-977C-9EA56DF79C6D}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll_1" Guid="{1487EBBF-710C-4236-94C2-E80109A9F78F}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" />
+                </Component>
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll_1" Guid="{AC1B6B25-AE6A-47D0-B2B6-72936188BF61}">
+                    <File Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll_1" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" />
+                </Component>
+                <Component Id="NHibernate.ByteCode.Castle.dll_2" Guid="{431059CA-E00C-40B2-8F85-DDBA0442573F}">
+                    <File Id="NHibernate.ByteCode.Castle.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\NHibernate.ByteCode.Castle.dll" />
+                </Component>
+                <Component Id="NHibernate.dll_2" Guid="{32AE578C-3F04-4EC7-BE62-E260F3FF24F0}">
+                    <File Id="NHibernate.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\NHibernate.dll" />
+                </Component>
+                <Component Id="SharpPlink_Win32.svnExe" Guid="{00E30A78-DDBC-41D8-97AC-BCBAA6FA2431}">
+                    <File Id="SharpPlink_Win32.svnExe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\SharpPlink-Win32.svnExe" />
+                </Component>
+                <Component Id="SharpSvn_DB44_20_Win32.dll_2" Guid="{F0B36B48-94CB-49A6-83AB-DEF7896E9B42}">
+                    <File Id="SharpSvn_DB44_20_Win32.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\SharpSvn-DB44-20-Win32.dll" />
+                </Component>
+                <Component Id="SharpSvn_SASL21_22_Win32.dll_2" Guid="{4D5D39C1-4CE0-42DB-8BF6-643B71C6BED9}">
+                    <File Id="SharpSvn_SASL21_22_Win32.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\SharpSvn-SASL21-22-Win32.dll" />
+                </Component>
+                <Component Id="SharpSvn.dll_2" Guid="{D27D1B86-EE71-4584-99F8-DC91D6B1FF34}">
+                    <File Id="SharpSvn.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\SharpSvn.dll" />
+                </Component>
+                <Component Id="SharpSvn.pdb" Guid="{9E61D2D2-F223-447A-8982-A25B61CB44CA}">
+                    <File Id="SharpSvn.pdb" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\SharpSvn.pdb" />
+                </Component>
+                <Component Id="SharpSvn.xml" Guid="{B9D2A2DD-3FDA-447A-8026-FBB1C712EA46}">
+                    <File Id="SharpSvn.xml" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\SharpSvn.xml" />
+                </Component>
+                <Component Id="System.Data.SQLite.dll_2" Guid="{C525BAB1-E2E2-4144-B095-D495183AA24A}">
+                    <File Id="System.Data.SQLite.dll_2" KeyPath="yes" Source="..\..\Build\bin\temp\installer\DataCollector.Console\System.Data.SQLite.dll" />
+                </Component>
+            </Directory>
+            <Directory Id="Services" Name="Services">
+                <Component Id="ChangesetRepositoryService.svc" Guid="{45F052F5-3B4D-4DBA-85AB-16607BFDBCB7}">
+                    <File Id="ChangesetRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\ChangesetRepositoryService.svc" />
+                </Component>
+                <Component Id="CIRepositoryService.svc" Guid="{FED732D4-6284-4860-961C-1BEB4EBD9D5E}">
+                    <File Id="CIRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\CIRepositoryService.svc" />
+                </Component>
+                <Component Id="ProjectInfoRepositoryService.svc" Guid="{812DADCB-1D27-43FA-AE06-ED2FE31A9C19}">
+                    <File Id="ProjectInfoRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\ProjectInfoRepositoryService.svc" />
+                </Component>
+                <Component Id="SettingsService.svc" Guid="{D7D8F18B-E31D-47BE-BF10-20FE89958D60}">
+                    <File Id="SettingsService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\SettingsService.svc" />
+                </Component>
+                <Component Id="UserRepositoryService.svc" Guid="{F882B269-D306-42D0-AE8F-974FCCC9890D}">
+                    <File Id="UserRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\UserRepositoryService.svc" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

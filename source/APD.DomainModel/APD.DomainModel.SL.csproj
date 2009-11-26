@@ -1,0 +1,111 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>APD.DomainModel.SL</RootNamespace>
+    <AssemblyName>APD.DomainModel.SL</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
+    <Reference Include="mscorlib" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CI\Build.cs" />
+    <Compile Include="CI\BuildSpecification.cs" />
+    <Compile Include="CI\CIProject.cs" />
+    <Compile Include="CI\CIServer.cs" />
+    <Compile Include="CI\CodeModifiedTrigger.cs" />
+    <Compile Include="CI\EventTrigger.cs" />
+    <Compile Include="CI\Trigger.cs" />
+    <Compile Include="CI\UnknownTrigger.cs" />
+    <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Config\SettingsEntry.cs" />
+    <Compile Include="Config\SettingsSpecifications.cs" />
+    <Compile Include="ProjectInfo\HolidayProvider.cs" />
+    <Compile Include="ProjectInfo\Iteration.cs" />
+    <Compile Include="ProjectInfo\Project.cs" />
+    <Compile Include="ProjectInfo\ProjectInfoServer.cs" />
+    <Compile Include="ProjectInfo\Repositories\IProjectRepository.cs" />
+    <Compile Include="ProjectInfo\Repositories\IterationUtilities.cs" />
+    <Compile Include="ProjectInfo\Task.cs" />
+    <Compile Include="ProjectInfo\WorkEffortHistoryItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceControl\Author.cs" />
+    <Compile Include="SourceControl\Changeset.cs" />
+    <Compile Include="SourceControl\ChangesetSpecifications.cs" />
+    <Compile Include="SourceControl\EmptyChangeset.cs" />
+    <Compile Include="Users\User.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Users\Userdb.cs" />
+    <Compile Include="Users\UserdbSpecifications.cs" />
+    <Compile Include="Users\UserSpecifications.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework.SL\APD.DomainModel.Framework.SL.csproj">
+      <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
+      <Name>APD.DomainModel.Framework.SL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CI\ClassDiagram.cd" />
+    <None Include="ProjectInfo\ClassDiagram.cd" />
+    <None Include="SourceControl\ClassDiagram.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

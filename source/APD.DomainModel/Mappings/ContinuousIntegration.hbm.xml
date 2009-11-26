@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="APD.DomainModel"
+                   namespace="APD.DomainModel.CI">
+  <class name="CIServer" table="CIServer">
+    <id name="Url">
+      <generator class="assigned"/>
+    </id>
+    <property name="Name"/>
+    <bag name="Projects" cascade="All" lazy="false" inverse="true">
+      <key column="CIServer_fid"/>
+      <one-to-many class="CIProject"/>
+    </bag>
+  </class>
+
+  <class name="CIProject" table="CIProject">
+    <composite-id>
+      <key-property name="SystemId"/>
+      <key-many-to-one name="Server" class="CIServer" lazy="false" column="CIServer_fid"/>
+    </composite-id>
+    <property name="ProjectName"/>
+    <bag name="Builds" cascade="All" lazy="false" inverse="true">
+      <key>
+        <column name="CIProject_fid"/>
+        <column name="CIServer_fid"/>
+      </key>
+      <one-to-many class="Build"/>
+    </bag>
+  </class>
+
+  <class name="Build" table="Build">
+    <composite-id>
+      <key-property name="SystemId"/>
+      <key-many-to-one name="Project" class="CIProject" lazy="false">
+        <column name="CIProject_fid"/>
+        <column name="CIServer_fid"/>
+      </key-many-to-one>
+    </composite-id>
+    <property name="StartTime"/>
+    <property name="Status"/>
+    <property name="FinishedTime"/>
+    <component name="Trigger" class="Trigger" lazy="false">
+      <property name="Cause"/>
+      <property name="InvokedBy"/>
+    </component>
+  </class>
+</hibernate-mapping>
