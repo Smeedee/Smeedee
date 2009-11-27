@@ -22,39 +22,37 @@
 // </contactinfo>
 
 #endregion
-
-using FluentNHibernate.Mapping;
 using APD.DomainModel.Users;
 
 
 namespace APD.DomainModel.NHMapping.Entities.UserdbDomainModelMap
 {
-    public class UserdbMap : ClassMap<Userdb>
-    {
-        public UserdbMap()
-        {
-            Id(x => x.Name).GeneratedBy.Assigned();
+    //public class UserdbMap : ClassMap<Userdb>
+    //{
+    //    public UserdbMap()
+    //    {
+    //        Id(x => x.Name).GeneratedBy.Assigned();
 
-            HasMany<User>(x => x.Users).
-                Cascade.All().
-                Not.LazyLoad();
-        }
-    }
+    //        HasMany<User>(x => x.Users).
+    //            Cascade.All().
+    //            Not.LazyLoad();
+    //    }
+    //}
 
-    public class UserMap : ClassMap<User>
-    {
-        public UserMap()
-        {
-            Id(x => x.Username).
-                GeneratedBy.Assigned();
+    //public class UserMap : ClassMap<User>
+    //{
+    //    public UserMap()
+    //    {
+    //        Id(x => x.Username).
+    //            GeneratedBy.Assigned();
 
-            Component<Userdb>(x => x.Database, m => m.Map(x => x.Name, "Database"));
+    //        Component<Userdb>(x => x.Database, m => m.Map(x => x.Name, "Database"));
 
-            Map(x => x.Email);
-            Map(x => x.ImageUrl);
-            Map(x => x.Firstname);
-            Map(x => x.Middlename);
-            Map(x => x.Surname);
-        }
-    }
+    //        Map(x => x.Email);
+    //        Map(x => x.ImageUrl);
+    //        Map(x => x.Firstname);
+    //        Map(x => x.Middlename);
+    //        Map(x => x.Surname);
+    //    }
+    //}
 }

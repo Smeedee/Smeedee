@@ -24,22 +24,21 @@
 #endregion
 
 using APD.DomainModel.SourceControl;
-using FluentNHibernate.Mapping;
 
 
 namespace APD.DomainModel.NHMapping.Entities
 {
-    public class ChangesetMap : ClassMap<Changeset>
-    {
-        public ChangesetMap()
-        {
-            Id(x => x.Revision)
-                .GeneratedBy.Assigned();
+    //public class ChangesetMap : ClassMap<Changeset>
+    //{
+    //    public ChangesetMap()
+    //    {
+    //        Id(x => x.Revision)
+    //            .GeneratedBy.Assigned();
 
-            Component<Author>(x => x.Author, m => m.Map(x => x.Username, "Author"));
+    //        Component<Author>(x => x.Author, m => m.Map(x => x.Username, "Author"));
 
-            Map(x => x.Time);
-            Map(x => x.Comment);
-        }
-    }   
+    //        Map(x => x.Time);
+    //        Map(x => x.Comment);
+    //    }
+    //}   
 }

@@ -25,20 +25,17 @@
 
 using APD.DomainModel.Config;
 
-using FluentNHibernate.Mapping;
-
-
 namespace APD.DomainModel.NHMapping.Entities.ConfigurationMap
 {
-    public class ConfigurationMap : ClassMap<Configuration>
-    {
-        public ConfigurationMap()
-        {
-            Id(x => x.Name).GeneratedBy.Assigned();
+    //public class ConfigurationMap : ClassMap<Configuration>
+    //{
+    //    public ConfigurationMap()
+    //    {
+    //        Id(x => x.Name).GeneratedBy.Assigned();
 
-            HasMany<SettingsEntry>(x => x.Settings)
-                .Cascade.All()
-                .Not.LazyLoad();
-        }
-    }
+    //        HasMany<SettingsEntry>(x => x.Settings)
+    //            .Cascade.All()
+    //            .Not.LazyLoad();
+    //    }
+    //}
 }

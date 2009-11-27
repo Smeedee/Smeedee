@@ -24,54 +24,53 @@
 #endregion
 
 using APD.DataCollector;
-using FluentNHibernate.Mapping;
 
 
 namespace APD.DomainModel.NHMapping.Entities
 {
-    public class InfoLogEntryMap : ClassMap<InfoLogEntry>
-    {
+    //public class InfoLogEntryMap : ClassMap<InfoLogEntry>
+    //{
         
-        public InfoLogEntryMap()
-        {
-            CompositeId()
-                .KeyProperty(x => x.TimeStamp)
-                .KeyProperty(x => x.Message);
+    //    public InfoLogEntryMap()
+    //    {
+    //        CompositeId()
+    //            .KeyProperty(x => x.TimeStamp)
+    //            .KeyProperty(x => x.Message);
 
-            //Map(x => x.Message);
-            Map(x => x.Severity);
-            Map(x => x.Source);
-            //Map(x => x.TimeStamp);
-        }
-    }
-    public class WarningLogEntryMap : ClassMap<WarningLogEntry>
-    {
+    //        Map(x => x.Message);
+    //        Map(x => x.Severity);
+    //        Map(x => x.Source);
+    //        Map(x => x.TimeStamp);
+    //    }
+    //}
+    //public class WarningLogEntryMap : ClassMap<WarningLogEntry>
+    //{
 
-        public WarningLogEntryMap()
-        {
-            CompositeId()
-                .KeyProperty(x => x.TimeStamp)
-                .KeyProperty(x => x.Message);
+    //    public WarningLogEntryMap()
+    //    {
+    //        CompositeId()
+    //            .KeyProperty(x => x.TimeStamp)
+    //            .KeyProperty(x => x.Message);
 
-            //Map(x => x.Message);
-            Map(x => x.Severity);
-            Map(x => x.Source);
-            //Map(x => x.TimeStamp);
-        }
-    }
-    public class ErrorLogEntryMap : ClassMap<ErrorLogEntry>
-    {
+    //        Map(x => x.Message);
+    //        Map(x => x.Severity);
+    //        Map(x => x.Source);
+    //        Map(x => x.TimeStamp);
+    //    }
+    //}
+    //public class ErrorLogEntryMap : ClassMap<ErrorLogEntry>
+    //{
 
-        public ErrorLogEntryMap()
-        {
-            CompositeId()
-                .KeyProperty(x => x.TimeStamp)
-                .KeyProperty(x => x.Message);
+    //    public ErrorLogEntryMap()
+    //    {
+    //        CompositeId()
+    //            .KeyProperty(x => x.TimeStamp)
+    //            .KeyProperty(x => x.Message);
 
-            //Map(x => x.Message);
-            Map(x => x.Severity);
-            Map(x => x.Source);
-            //Map(x => x.TimeStamp);
-        }
-    }
+    //        Map(x => x.Message);
+    //        Map(x => x.Severity);
+    //        Map(x => x.Source);
+    //        Map(x => x.TimeStamp);
+    //    }
+    //}
 }

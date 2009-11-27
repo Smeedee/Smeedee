@@ -25,23 +25,21 @@
 
 using APD.DomainModel.Config;
 
-using FluentNHibernate.Mapping;
-
 
 namespace APD.DomainModel.NHMapping.Entities.SettingsEntryDomainModelMap
 {
-    public class SettingsEntryMap : ClassMap<SettingsEntry>
-    {
-        public SettingsEntryMap()
-        {
-            CompositeId()
-                .KeyReference(x => x.Configuration)
-                .KeyProperty(x => x.Name);
+    //public class SettingsEntryMap : ClassMap<SettingsEntry>
+    //{
+    //    public SettingsEntryMap()
+    //    {
+    //        CompositeId()
+    //            .KeyReference(x => x.Configuration)
+    //            .KeyProperty(x => x.Name);
 
-            HasMany(x => x.Vals).Element("EntryValues")
-                .KeyColumns.Add("Configuration")
-                .KeyColumns.Add("Name")
-                .Not.LazyLoad();
-        }
-    }
+    //        HasMany(x => x.Vals).Element("EntryValues")
+    //            .KeyColumns.Add("Configuration")
+    //            .KeyColumns.Add("Name")
+    //            .Not.LazyLoad();
+    //    }
+    //}
 }
