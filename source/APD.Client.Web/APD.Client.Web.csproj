@@ -122,10 +122,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\APD.DomainModel.NHMapping\APD.DomainModel.NHMapping.csproj">
-      <Project>{8C10A03E-E491-41E3-81C8-632BC4E375DF}</Project>
-      <Name>APD.DomainModel.NHMapping</Name>
-    </ProjectReference>
     <ProjectReference Include="..\APD.DomainModel\APD.DomainModel.csproj">
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>APD.DomainModel</Name>
