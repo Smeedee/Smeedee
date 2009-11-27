@@ -30,12 +30,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
-using APD.DomainModel.NHMapping.Entities;
+
 using APD.Harvester.CI;
 using APD.Harvester.SourceControl;
 using APD.Integration.Database.DomainModel.Repositories;
 using APD.Integration.VCS.SVN.DomainModel.Repositories;
-using FluentNHibernate.Cfg.Db;
+
 using CIServerRepository = APD.Integration.CI.TFSBuild.DomainModel.Repositories.TFSCIServerRepository;
 using APD.DataCollector;
 using Moq;

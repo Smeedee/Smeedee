@@ -28,9 +28,7 @@
 #endregion
 
 using System;
-using APD.DomainModel.NHMapping.Entities;
 using APD.DomainModel.SourceControl;
-using FluentNHibernate.Cfg.Db;
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
 using NHibernate;

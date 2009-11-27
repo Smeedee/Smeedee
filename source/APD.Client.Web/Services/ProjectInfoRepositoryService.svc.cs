@@ -30,10 +30,8 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using APD.Client.Web.Serialization;
 using APD.DomainModel.Framework;
-using APD.DomainModel.NHMapping.Entities;
 using APD.DomainModel.ProjectInfo;
 using APD.Integration.Database.DomainModel.Repositories;
-using FluentNHibernate.Cfg.Db;
 using NHibernate;
 
 

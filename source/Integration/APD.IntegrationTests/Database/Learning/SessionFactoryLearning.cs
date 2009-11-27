@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-using APD.DomainModel.NHMapping.Entities;
 using APD.DomainModel.SourceControl;
 using APD.Integration.Database.DomainModel.Repositories;
 using APD.IntegrationTests.Database.DomainModel.Repositories.ChangesetPersisterSpecs;
-
-using FluentNHibernate.Cfg.Db;
-
 using NUnit.Framework;
-
 using TinyBDD.Specification.NUnit;
 using APD.IntegrationTests.Database.DomainModel.Repositories;
 

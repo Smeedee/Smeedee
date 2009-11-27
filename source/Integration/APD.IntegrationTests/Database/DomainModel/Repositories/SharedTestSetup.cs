@@ -29,9 +29,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using APD.DomainModel.NHMapping.Entities;
 using APD.DomainModel.Users;
-using FluentNHibernate.Cfg.Db;
 using TinyBDD.Dsl.GivenWhenThen;
 using NHibernate;
 using APD.Integration.Database.DomainModel.Repositories;

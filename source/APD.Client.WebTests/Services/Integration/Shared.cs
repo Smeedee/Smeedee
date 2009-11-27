@@ -29,7 +29,6 @@
 
 using System;
 using System.IO;
-using APD.DomainModel.NHMapping.Entities;
 using APD.Integration.Database.DomainModel.Repositories;
 using TinyBDD.Dsl.GivenWhenThen;
 using NHibernate;

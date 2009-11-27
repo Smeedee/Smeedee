@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.IO;
 
 using APD.DomainModel.Config;
-using APD.DomainModel.NHMapping.Entities;
 using APD.DomainModel.ProjectInfo;
 using APD.Harvester.CI;
 using APD.Harvester.Framework;
@@ -42,9 +41,9 @@ using APD.Integration.CI.CruiseControl.DomainModel.Repositories;
 using APD.Integration.Database.DomainModel.Repositories;
 using APD.Integration.PMT.RallyDev.DomainModel.Repositories;
 using APD.Integration.VCS.SVN.DomainModel.Repositories;
-using FluentNHibernate.Cfg.Db;
 using APD.DomainModel.CI;
 using APD.DomainModel.SourceControl;
+
 using NHibernate;
 
 

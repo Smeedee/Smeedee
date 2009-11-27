@@ -28,11 +28,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
-using APD.DomainModel.NHMapping.Entities;
 using APD.DomainModel.SourceControl;
 using APD.Integration.Database.DomainModel.Repositories;
 using APD.DomainModel.Framework;
-using FluentNHibernate.Cfg.Db;
 
 
 namespace APD.Client.Web.Services
