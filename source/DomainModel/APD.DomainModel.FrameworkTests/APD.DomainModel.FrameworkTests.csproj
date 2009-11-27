@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseLoggerSpecs.cs" />
     <Compile Include="BinaryExpressionSpecificationSpecs.cs" />
     <Compile Include="Factories\GenericFactorySpecs.cs" />
     <Compile Include="AsyncRepositoryWrapperBaseSpecs.cs" />

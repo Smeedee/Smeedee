@@ -30,10 +30,12 @@
 using System.Collections.Generic;
 using APD.DataCollector;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
+
 using Moq;
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
-using APD.Integration.Database.DomainModel.Repositories;
+
 
 
 namespace APD.IntegrationTests.Database.DomainModel.Repositories.DatabaseLoggerSpecs

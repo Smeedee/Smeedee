@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace APD.DomainModel.Framework
+
+namespace APD.DomainModel.Framework.Logging
 {
     public abstract class LogEntry
     {
-        public virtual string Source { get; protected set; }
-        public virtual string Message { get; protected set; }
-        public virtual int Severity { get; protected set; }
+        private int id;
+        public virtual string Source { get; set; }
+        public virtual string Message { get; set; }
+        public virtual int Severity { get; set; }
         public virtual DateTime TimeStamp { get; set; }
 
         protected LogEntry() { }
@@ -38,7 +40,6 @@ namespace APD.DomainModel.Framework
         }
     }
 
-    #region Log classes
     public class InfoLogEntry : LogEntry
     {
         public InfoLogEntry() { }
@@ -70,5 +71,4 @@ namespace APD.DomainModel.Framework
             this.Severity = 0;
         }
     }
-    #endregion
 }

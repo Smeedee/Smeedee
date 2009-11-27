@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using APD.DataCollector;
-using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 
 using Moq;
 using NUnit.Framework;

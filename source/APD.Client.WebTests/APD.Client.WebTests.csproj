@@ -117,6 +117,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\LogEntryRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ProjectInfoService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -134,6 +139,7 @@
     </Compile>
     <Compile Include="Services\Integration\CIRepositorySerivceTests.cs" />
     <Compile Include="Services\Integration\ConfigurationRepositoryServiceTests.cs" />
+    <Compile Include="Services\Integration\LogEntryRepositoryServiceSpecs.cs" />
     <Compile Include="Services\Integration\ProjectInfoRepositoryServiceTests.cs" />
     <Compile Include="Services\Integration\SettingsServiceTests.cs" />
     <Compile Include="Services\Integration\ChangesetRepositoryServiceTests.cs" />
@@ -168,6 +174,7 @@
     <WCFMetadataStorage Include="Service References\ChangesetRepositoryService\" />
     <WCFMetadataStorage Include="Service References\CIRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\LogEntryRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ProjectInfoService\" />
     <WCFMetadataStorage Include="Service References\SettingsService\" />
     <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
@@ -313,6 +320,28 @@
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
     <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.wsdl" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.xsd" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.xsd" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService2.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.disco" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService3.xsd" />
+    <None Include="Service References\LogEntryRepositoryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

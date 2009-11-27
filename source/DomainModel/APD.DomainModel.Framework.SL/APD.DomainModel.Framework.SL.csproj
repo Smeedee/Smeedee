@@ -41,6 +41,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
@@ -71,6 +73,15 @@
     <Compile Include="..\APD.DomainModel.Framework\IRepository.cs">
       <Link>IRepository.cs</Link>
     </Compile>
+    <Compile Include="..\APD.DomainModel.Framework\Logging\DatabaseLogger.cs">
+      <Link>Logging\DatabaseLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.DomainModel.Framework\Logging\ILog.cs">
+      <Link>Logging\ILog.cs</Link>
+    </Compile>
+    <Compile Include="..\APD.DomainModel.Framework\Logging\LogEntry.cs">
+      <Link>Logging\LogEntry.cs</Link>
+    </Compile>
     <Compile Include="..\APD.DomainModel.Framework\RepositoryDecorator.cs">
       <Link>RepositoryDecorator.cs</Link>
     </Compile>
@@ -86,7 +97,14 @@
     <Compile Include="..\APD.DomainModel.Framework\StaticRepositoryCache.cs">
       <Link>StaticRepositoryCache.cs</Link>
     </Compile>
+    <Compile Include="Logging\LogEntryPersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\Impl\" />

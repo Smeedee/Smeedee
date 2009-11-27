@@ -38,6 +38,9 @@ using APD.Client.Widget.SourceControl.SL;
 using APD.Client.Widget.SourceControl.SL.Repositories;
 using APD.Client.Widget.TrayBar.SL;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
+using APD.DomainModel.Framework.SL.Logging;
+
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.UnityExtensions;
 using APD.Client.Widget.Admin.SL;
@@ -98,6 +101,9 @@ namespace APD.Client.Silverlight
                     new SyncChangeSetRepository(new AsyncChangesetRepository()), 15000));
             Container.RegisterType<IRepository<User>, UserWebserviceRepositoryProxy>();
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
+
+            Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryPersister>();
+            Container.RegisterType<ILog, DatabaseLogger>();
         }
 
         protected override void InitializeModules()

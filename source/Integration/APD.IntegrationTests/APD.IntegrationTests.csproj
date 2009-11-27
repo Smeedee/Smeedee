@@ -140,6 +140,7 @@
     <Compile Include="Database\DomainModel\Repositories\DatabaseLoggerSpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\GenericDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\GenericDomainModelPersisterSpecs.cs" />
+    <Compile Include="Database\DomainModel\Repositories\LogEntryDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\NHibernateMappings\ContinuousIntegrationDomainModelTests.cs" />
     <Compile Include="Database\DomainModel\Repositories\ProjectInfoPersisterSpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\ProjectInfoServerPersisterSpecs.cs" />

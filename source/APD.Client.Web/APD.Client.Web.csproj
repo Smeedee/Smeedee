@@ -75,8 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\ReferenceTrackingSerializer.cs" />
-    <Compile Include="Serialization\ReferenceTrackingSerializerProvider.cs" />
+    <Compile Include="Services\Serialization\ReferenceTrackingSerializer.cs" />
+    <Compile Include="Services\Serialization\ReferenceTrackingSerializerProvider.cs" />
     <Compile Include="Services\ChangesetRepositoryService.svc.cs">
       <DependentUpon>ChangesetRepositoryService.svc</DependentUpon>
     </Compile>
@@ -85,6 +85,9 @@
     </Compile>
     <Compile Include="Services\ConfigurationRepositoryService.svc.cs">
       <DependentUpon>ConfigurationRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\LogEntryRepositoryService.svc.cs">
+      <DependentUpon>LogEntryRepositoryService.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\ProjectInfoRepositoryService.svc.cs">
       <DependentUpon>ProjectInfoRepositoryService.svc</DependentUpon>
@@ -107,6 +110,7 @@
     <Content Include="Services\ChangesetRepositoryService.svc" />
     <Content Include="Services\CIRepositoryService.svc" />
     <Content Include="Services\ConfigurationRepositoryService.svc" />
+    <Content Include="Services\LogEntryRepositoryService.svc" />
     <Content Include="Services\ProjectInfoRepositoryService.svc" />
     <Content Include="Services\SettingsService.svc" />
     <Content Include="Services\UserRepositoryService.svc" />

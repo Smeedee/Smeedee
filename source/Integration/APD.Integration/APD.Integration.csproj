@@ -123,13 +123,13 @@
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildFetcher.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildRepository.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\TFSCIServerRepository.cs" />
-    <Compile Include="Database\DomainModel\Repositories\ChangesetDatabaseRepository.cs" />
-    <Compile Include="Database\DomainModel\Repositories\ChangeSetPersister.cs" />
-    <Compile Include="Database\DomainModel\Repositories\DatabaseLogger.cs" />
-    <Compile Include="Database\DomainModel\Repositories\GenericDatabaseRepository.cs" />
-    <Compile Include="Database\DomainModel\Repositories\NHibConfig.cs" />
-    <Compile Include="Database\DomainModel\Repositories\NHibernateFactory.cs" />
-    <Compile Include="Database\DomainModel\Repositories\UserdbDatabaseRepository.cs" />
+    <Compile Include="Repositories\ChangesetDatabaseRepository.cs" />
+    <Compile Include="Repositories\ChangeSetPersister.cs" />
+    <Compile Include="Repositories\GenericDatabaseRepository.cs" />
+    <Compile Include="Repositories\LogEntryDatabaseRepository.cs" />
+    <Compile Include="Repositories\NHibConfig.cs" />
+    <Compile Include="Repositories\NHibernateFactory.cs" />
+    <Compile Include="Repositories\UserdbDatabaseRepository.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\IDownloadXml.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\NoSuchProjectException.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\RallyDevReader.cs" />
@@ -191,6 +191,9 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Database\DomainModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

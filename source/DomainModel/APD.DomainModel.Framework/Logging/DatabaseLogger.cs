@@ -27,28 +27,22 @@
 
 #endregion
 
-using System;
-
-using APD.DomainModel.Framework.Logging;
-
-
-namespace APD.DataCollector
+namespace APD.DomainModel.Framework.Logging
 {
-    public class ConsoleLogger : ILog
+    public class DatabaseLogger : ILog
     {
         public int VerbosityLevel { get; set; }
+        private IPersistDomainModels<LogEntry> persister;
+
+        public DatabaseLogger(IPersistDomainModels<LogEntry> persister)
+        {
+            this.persister = persister;
+        }
 
         public void WriteEntry(LogEntry entry)
         {
             if (VerbosityLevel < entry.Severity) return;
-
-            string severityString = "";
-            if (entry.Severity == 0) severityString = "ERROR";
-            if (entry.Severity == 1) severityString = "WARNING";
-            if (entry.Severity == 2) severityString = "";
-
-            Console.WriteLine("{0}({1}){2}: {3}",
-                              DateTime.Now, severityString, entry.Source, entry.Message);
+            persister.Save(entry);
         }
     }
 }

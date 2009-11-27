@@ -30,7 +30,7 @@
 using System;
 using System.Collections.Generic;
 
-using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.Harvester.Framework;
 
 

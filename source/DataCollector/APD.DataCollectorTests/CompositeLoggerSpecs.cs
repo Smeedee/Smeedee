@@ -29,7 +29,7 @@
 
 using System.Collections.Generic;
 using APD.DataCollector;
-using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 
 using Moq;
 using NUnit.Framework;

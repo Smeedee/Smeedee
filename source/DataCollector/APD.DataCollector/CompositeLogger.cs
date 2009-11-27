@@ -29,7 +29,7 @@
 
 using System.Collections.Generic;
 
-using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 
 
 namespace APD.DataCollector

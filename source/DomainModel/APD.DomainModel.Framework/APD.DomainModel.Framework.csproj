@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logging\DatabaseLogger.cs" />
+
     <Compile Include="AndExpressionSpecification.cs" />
     <Compile Include="BinaryExpressionSpecification.cs" />
     <Compile Include="Factories\GenericFactory.cs" />
@@ -59,10 +61,10 @@
     <Compile Include="AsyncRepositoryWrapperBase.cs" />
     <Compile Include="IAsyncRepository.cs" />
     <Compile Include="IDeleteDomainModels.cs" />
-    <Compile Include="ILog.cs" />
+    <Compile Include="Logging\ILog.cs" />
     <Compile Include="IPersistDomainModels.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="LogEntry.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
     <Compile Include="RepositoryDecorator.cs" />
     <Compile Include="Services\ICheckIfCredentialsIsValid.cs" />
     <Compile Include="Services\ICheckIfResourceExists.cs" />
@@ -73,6 +75,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\LogEntry.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

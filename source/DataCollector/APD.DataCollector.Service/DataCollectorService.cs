@@ -29,7 +29,7 @@ using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
 
-using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.ProjectInfo;
 using APD.Harvester.CI;
 using APD.Harvester.Framework;
@@ -44,6 +44,7 @@ using APD.DomainModel.CI;
 using APD.DomainModel.SourceControl;
 using NHibernate;
 using APD.DomainModel.Config;
+
 
 
 namespace APD.DataCollector.Service

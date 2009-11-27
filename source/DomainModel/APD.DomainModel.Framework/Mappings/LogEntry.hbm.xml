@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="APD.DomainModel.Framework"
+                   namespace="APD.DomainModel.Framework.Logging">
+  
+  <class name="LogEntry" table="LogEntry">
+    <id name="id" access="field">
+      <generator class="native"/>
+    </id>
+    <discriminator column="ENTRY_TYPE" type="string"/>
+    <property name="Message"/>
+    <property name="Severity"/>
+    <property name="Source" />
+    <property name="TimeStamp" />
+
+    <subclass name="InfoLogEntry" discriminator-value="INFO">
+    </subclass>
+
+    <subclass name="WarningLogEntry"  discriminator-value="WARN">
+    </subclass>
+
+    <subclass name="ErrorLogEntry"  discriminator-value="ERROR">
+    </subclass>
+
+
+  </class>
+
+</hibernate-mapping>
