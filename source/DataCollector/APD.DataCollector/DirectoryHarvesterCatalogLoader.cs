@@ -31,6 +31,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+
+using APD.DomainModel.Framework;
 using APD.Harvester.Framework;
 
 

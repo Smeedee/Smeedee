@@ -55,12 +55,15 @@
     <Compile Include="HarvesterLoader.cs" />
     <Compile Include="IAssembleHarvesters.cs" />
     <Compile Include="IGetHarvesterCatalog.cs" />
-    <Compile Include="ILog.cs" />
     <Compile Include="IScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>APD.DomainModel.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\APD.Harvester.Framework\APD.Harvester.Framework.csproj">
       <Project>{EB96EC6A-173A-4D65-A266-0E8F6776B394}</Project>
       <Name>APD.Harvester.Framework</Name>

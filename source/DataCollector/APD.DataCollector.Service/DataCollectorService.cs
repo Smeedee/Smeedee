@@ -28,6 +28,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
+
+using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
 using APD.Harvester.CI;
 using APD.Harvester.Framework;

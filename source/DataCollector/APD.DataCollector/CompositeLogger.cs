@@ -29,6 +29,8 @@
 
 using System.Collections.Generic;
 
+using APD.DomainModel.Framework;
+
 
 namespace APD.DataCollector
 {

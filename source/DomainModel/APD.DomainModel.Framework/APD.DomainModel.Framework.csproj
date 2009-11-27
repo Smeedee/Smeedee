@@ -57,8 +57,10 @@
     <Compile Include="AsyncRepositoryWrapperBase.cs" />
     <Compile Include="IAsyncRepository.cs" />
     <Compile Include="IDeleteDomainModels.cs" />
+    <Compile Include="ILog.cs" />
     <Compile Include="IPersistDomainModels.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="LogEntry.cs" />
     <Compile Include="RepositoryDecorator.cs" />
     <Compile Include="Services\ICheckIfCredentialsIsValid.cs" />
     <Compile Include="Services\ICheckIfResourceExists.cs" />

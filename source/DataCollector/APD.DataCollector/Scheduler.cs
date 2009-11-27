@@ -30,6 +30,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+
+using APD.DomainModel.Framework;
 using APD.Harvester.Framework;
 
 

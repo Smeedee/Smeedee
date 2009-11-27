@@ -32,6 +32,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using APD.DataCollector;
+using APD.DomainModel.Framework;
+
 using Moq;
 using NUnit.Framework;
 using TinyBDD.Dsl.GivenWhenThen;

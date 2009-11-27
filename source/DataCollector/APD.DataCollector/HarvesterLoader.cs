@@ -29,6 +29,8 @@
 
 using System;
 using System.Collections.Generic;
+
+using APD.DomainModel.Framework;
 using APD.Harvester.Framework;
 
 
