@@ -61,7 +61,7 @@ namespace APD.DataCollector.Console
         static void Main(string[] args)
         {
             System.Console.WriteLine("Application started -  Esc to quit");
-
+            
             ISessionFactory sesFact = null;
 
             sesFact = NHibernateFactory.AssembleSessionFactory(DATABASE_TEST_FILE);
