@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logging\DatabaseLogger.cs" />
-
     <Compile Include="AndExpressionSpecification.cs" />
     <Compile Include="BinaryExpressionSpecification.cs" />
     <Compile Include="Factories\GenericFactory.cs" />
@@ -65,6 +64,7 @@
     <Compile Include="IPersistDomainModels.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="OrExpressionSpecification.cs" />
     <Compile Include="RepositoryDecorator.cs" />
     <Compile Include="Services\ICheckIfCredentialsIsValid.cs" />
     <Compile Include="Services\ICheckIfResourceExists.cs" />

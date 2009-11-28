@@ -65,13 +65,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AndExpressionSpecificationSpecs.cs" />
     <Compile Include="DatabaseLoggerSpecs.cs" />
     <Compile Include="BinaryExpressionSpecificationSpecs.cs" />
     <Compile Include="Factories\GenericFactorySpecs.cs" />
     <Compile Include="AsyncRepositoryWrapperBaseSpecs.cs" />
+    <Compile Include="OrExpressionSpecificationSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryDecoratorSpecs.cs" />
     <Compile Include="Services\Impl\UrlCheckerSpecs.cs" />
+    <Compile Include="SharedContext\SharedExpressionScenarioClass.cs" />
     <Compile Include="StaticRepositoryCacheSpecs.cs" />
   </ItemGroup>
   <ItemGroup>

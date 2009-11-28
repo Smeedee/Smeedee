@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace APD.DomainModel.Framework
@@ -12,6 +13,11 @@ namespace APD.DomainModel.Framework
                 base(leftSpecification, rightSpecification)
         {
             
+        }
+
+        public override bool IsSatisfiedBy(TDomainModel domainObject)
+        {
+            return Left.IsSatisfiedBy(domainObject) && Right.IsSatisfiedBy(domainObject);
         }
     }
 }

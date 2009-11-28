@@ -10,46 +10,13 @@ using NUnit.Framework;
 
 using TinyBDD.Specification.NUnit;
 using APD.DomainModel.SourceControl;
+using APD.DomainModel.FrameworkTests.SharedContext;
 
 
 namespace APD.DomainModel.FrameworkTests.BinaryExpressionSpecificationSpecs
 {
-    public class Shared : ScenarioClass
-    {
-        protected static BinaryExpressionSpecification<Changeset> binaryExpressionSpec;
-        protected static Specification<Changeset> leftSpecification;
-        protected static Specification<Changeset> rightSpecification;
-
-        protected Context ExpressionSpecification_is_spawned = () =>
-        {
-            binaryExpressionSpec = new AndExpressionSpecification<Changeset>(leftSpecification, rightSpecification);
-        };
-
-        protected GivenSemantics Left_and_Right_Specification_is_created()
-        {
-            return Given(Left_Specification_is_created).
-                And(Right_Specification_is_created);
-        }
-
-        protected Context Left_Specification_is_created = () =>
-        {
-            leftSpecification = new AllSpecification<Changeset>();
-        };
-
-        protected Context Right_Specification_is_created = () =>
-        {
-            rightSpecification = new AllSpecification<Changeset>();
-        };
-
-        [TearDown]
-        public void TearDown()
-        {
-            StartScenario();
-        }
-    }
-
     [TestFixture]
-    public class When_spawning : Shared
+    public class When_spawning : SharedExpressionScenarioClass
     {
         [SetUp]
         public void Setup()
@@ -78,7 +45,7 @@ namespace APD.DomainModel.FrameworkTests.BinaryExpressionSpecificationSpecs
     }
 
     [TestFixture]
-    public class When_inspecting_structure : Shared
+    public class When_inspecting_structure : SharedExpressionScenarioClass
     {
         [SetUp]
         public void Setup()

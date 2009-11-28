@@ -26,7 +26,7 @@ namespace APD.DomainModel.Framework
 
         public override Expression<Func<TDomainModel, bool>> IsSatisfiedByExpression()
         {
-            throw new NotImplementedException();
-        }
+            return (t) => true;
+         }
     }
 }
