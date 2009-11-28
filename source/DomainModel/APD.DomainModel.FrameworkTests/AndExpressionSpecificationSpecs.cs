@@ -11,6 +11,7 @@ using APD.DomainModel.SourceControl;
 
 using TinyBDD.Specification.NUnit;
 using APD.DomainModel.FrameworkTests.SharedContext;
+using System.Linq.Expressions;
 
 
 namespace APD.DomainModel.FrameworkTests.AndExpressionSpecificationSpecs
@@ -44,6 +45,50 @@ namespace APD.DomainModel.FrameworkTests.AndExpressionSpecificationSpecs
             When("eval expression");
             Then(() =>
                 andExpressionSpec.IsSatisfiedBy(changeset).ShouldBeFalse());
+        }
+    }
+
+    [TestFixture]
+    public class When_interpret_expression : SharedExpressionScenarioClass
+    {
+        [SetUp]
+        public void Setup()
+        {
+            Scenario("Interpret expression");
+            Given(Left_Specification_eval_true).
+                And(Right_Specification_eval_false).
+                And(AndExpressionSpec_is_created);
+            When("interpret expression");
+        }
+
+        [Test]
+        public void assure_LinqExpression_Node_is_And()
+        {
+            Then(() =>
+            {
+                var linqExpression = andExpressionSpec.IsSatisfiedByExpression().Body;
+                linqExpression.NodeType.ShouldBe(ExpressionType.And);
+            });
+        }
+
+        [Test]
+        public void assure_Left_Specification_Expression_is_lifted()
+        {
+            Then(() =>
+            {
+                var linqExpression = andExpressionSpec.IsSatisfiedByExpression().Body as BinaryExpression;
+                (linqExpression.Left == leftSpecification.IsSatisfiedByExpression().Body).ShouldBeTrue();
+            });
+        }
+
+        [Test]
+        public void assure_Right_Specification_Expression_is_lifted()
+        {
+            Then(() =>
+            {
+                var linqExpression = andExpressionSpec.IsSatisfiedByExpression().Body as BinaryExpression;
+                (linqExpression.Right == rightSpecification.IsSatisfiedByExpression().Body).ShouldBeTrue();
+            });
         }
     }
 }

@@ -84,6 +84,14 @@ namespace APD.Integration.VCS.SVN.DomainModel.Repositories
 
             var binaryExpression = expression.Body as BinaryExpression;
 
+            if (binaryExpression != null && expression.Body.NodeType == ExpressionType.And)
+            {
+                if (binaryExpression.Left.ToString().Contains("Revision"))
+                    binaryExpression = binaryExpression.Left as BinaryExpression;
+                else if (binaryExpression.Right.ToString().Contains("Revision"))
+                    binaryExpression = binaryExpression.Right as BinaryExpression;
+            }
+
             if (binaryExpression != null &&
                 binaryExpression.Right.NodeType == ExpressionType.MemberAccess)
             {

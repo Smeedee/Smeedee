@@ -15,9 +15,15 @@ namespace APD.DomainModel.Framework
             
         }
 
-        public override bool IsSatisfiedBy(TDomainModel domainObject)
+        public override Expression<Func<TDomainModel, bool>> IsSatisfiedByExpression()
         {
-            return Left.IsSatisfiedBy(domainObject) && Right.IsSatisfiedBy(domainObject);
+            var andExp = Expression.And(Left.IsSatisfiedByExpression().Body,
+                Right.IsSatisfiedByExpression().Body);
+
+            Expression<Func<TDomainModel, bool>> lambda = Expression.
+                Lambda<Func<TDomainModel, bool>>(andExp, Expression.Parameter(typeof(TDomainModel), "c"));
+
+            return lambda;
         }
     }
 }

@@ -60,5 +60,15 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.QueryOptimizerSp
 
             queryArgs.Range.StartRevision.Revision.ShouldBe(10);
         }
+
+        [Test]
+        public void Assure_StartRevision_is_specified_in_range_when_using_AndExpressionSpec()
+        {
+            var andExpressionSpec = new AndExpressionSpecification<Changeset>(
+                specification, new ChangesetsForUserSpecification("goeran"));
+
+            var queryArgs = queryOptimizer.Optimize(andExpressionSpec);
+            queryArgs.Range.StartRevision.Revision.ShouldBe(10);
+        }
     }
 }
