@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using APD.DomainModel.CI;
+using APD.DomainModel.Framework.Logging;
 
 using NHibernate;
 using NHibernate.Cfg;
@@ -34,6 +35,7 @@ namespace APD.Integration.Database.DomainModel.Repositories
         private static void AddAssembliesToConfiguration(Configuration configuration)
         {
             configuration.AddAssembly(typeof (Userdb).Assembly);
+            configuration.AddAssembly(typeof (LogEntry).Assembly);
         }
 
         public static Configuration CreateConfiguration()
