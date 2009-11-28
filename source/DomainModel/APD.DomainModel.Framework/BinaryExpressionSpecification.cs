@@ -8,8 +8,8 @@ namespace APD.DomainModel.Framework
 {
     public abstract class BinaryExpressionSpecification<TDomainModel> : Specification<TDomainModel>
     {
-        public Specification<TDomainModel> Left { get; private set; }
-        public Specification<TDomainModel> Right { get; private set; }
+        public Specification<TDomainModel> Left { get; set; }
+        public Specification<TDomainModel> Right { get; set; }
 
         public BinaryExpressionSpecification(Specification<TDomainModel> leftSpecification,
             Specification<TDomainModel> rightSpecification)
