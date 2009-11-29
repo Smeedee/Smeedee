@@ -100,13 +100,11 @@ namespace APD.DomainModel.FrameworkTests.AndExpressionSpecificationSpecs
         [SetUp]
         public void Setup()
         {
-            long h = 100;
-            string name = "goeran";
             Scenario("When combine two complex Specifications");
             Given("left Specification is created", () =>
-                leftSpecification = new ChangesetsAfterRevisionSpecification(h));
+                leftSpecification = new ChangesetsAfterRevisionSpecification(100));
             And("right Specification is created", () =>
-                rightSpecification = new ChangesetsForUserSpecification(name));
+                rightSpecification = new ChangesetsForUserSpecification("goeran"));
             And(AndExpressionSpec_is_created);
             When("compile expression");
         }

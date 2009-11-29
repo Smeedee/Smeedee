@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using APD.DomainModel.FrameworkTests.SharedContext;
+using APD.DomainModel.SourceControl;
 
 using NUnit.Framework;
 
@@ -84,4 +85,29 @@ namespace APD.DomainModel.FrameworkTests.OrExpressionSpecificationSpecs
             });
         }
     }
+
+
+    [TestFixture]
+    public class When_combining_two_complex_Specifications : SharedExpressionScenarioClass
+    {
+        [SetUp]
+        public void Setup()
+        {
+            Scenario("When combine two complex Specifications");
+            Given("left Specification is created", () =>
+                leftSpecification = new ChangesetsAfterRevisionSpecification(100));
+            And("right Specification is created", () =>
+                rightSpecification = new ChangesetsForUserSpecification("goeran"));
+            And(OrExpressionSpec_is_created);
+            When("compile expression");
+        }
+
+        [Test]
+        public void assure_Expression_compile()
+        {
+            Then(() =>
+                 orExpressionSpec.IsSatisfiedByExpression().Compile());
+        }
+    }
+
 }
