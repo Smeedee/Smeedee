@@ -42,7 +42,10 @@ namespace APD.DomainModel.Framework.Logging
 
     public class InfoLogEntry : LogEntry
     {
-        public InfoLogEntry() { }
+        public InfoLogEntry() 
+        {
+            Severity = 2;
+        }
 
         public InfoLogEntry(string source, string message)
             : base(source, message)
@@ -53,7 +56,10 @@ namespace APD.DomainModel.Framework.Logging
 
     public class WarningLogEntry : LogEntry
     {
-        public WarningLogEntry() { }
+        public WarningLogEntry()
+        {
+            this.Severity = 1;
+        }
 
         public WarningLogEntry(string source, string message)
             : base(source, message)
