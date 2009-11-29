@@ -27,7 +27,10 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
+using APD.DomainModel.Framework;
+
 using SharpSvn;
+using APD.DomainModel.SourceControl;
 
 
 namespace APD.Integration.VCS.SVN.DomainModel.Repositories
@@ -76,34 +79,21 @@ namespace APD.Integration.VCS.SVN.DomainModel.Repositories
         // TODO: Improve readability
         public override void HandleRequest(SpecificationRequest request)
         {
-            var expression = request.Specification.IsSatisfiedByExpression();
-            
-            // torstn - return home early, god damnit... 
-            if (expression == null || !expression.Body.ToString().Contains("Revision"))
-                return;
+            var specification = request.Specification;
 
-            var binaryExpression = expression.Body as BinaryExpression;
-
-            if (binaryExpression != null && expression.Body.NodeType == ExpressionType.And)
+            if (specification is AndExpressionSpecification<Changeset>)
             {
-                if (binaryExpression.Left.ToString().Contains("Revision"))
-                    binaryExpression = binaryExpression.Left as BinaryExpression;
-                else if (binaryExpression.Right.ToString().Contains("Revision"))
-                    binaryExpression = binaryExpression.Right as BinaryExpression;
+                var andSpec = specification as AndExpressionSpecification<Changeset>;
+                if (andSpec.Left is ChangesetsAfterRevisionSpecification)
+                    specification = andSpec.Left;
+                else if (andSpec.Right is ChangesetsAfterRevisionSpecification)
+                    specification = andSpec.Right;
             }
 
-            if (binaryExpression != null &&
-                binaryExpression.Right.NodeType == ExpressionType.MemberAccess)
+            if (specification is ChangesetsAfterRevisionSpecification)
             {
-                var memberExpression = binaryExpression.Right as MemberExpression;
-                var constantExpression = memberExpression.Expression as ConstantExpression;
-                var obj = constantExpression.Value;
-                var objType = obj.GetType();
-                var value = objType.GetProperty(memberExpression.Member.Name,
-                                                ( BindingFlags.Instance | BindingFlags.Public )
-                                    ).GetValue(obj, null);
-                long val = Convert.ToInt64(value);
-                request.SvnLogArgs.Range = new SvnRevisionRange(val, long.MaxValue);
+                var revisionSpec = specification as ChangesetsAfterRevisionSpecification;
+                request.SvnLogArgs.Range = new SvnRevisionRange(revisionSpec.Revision, long.MaxValue);
             }
         }
     }

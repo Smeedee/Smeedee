@@ -17,11 +17,16 @@ namespace APD.DomainModel.Framework
 
         public override Expression<Func<TDomainModel, bool>> IsSatisfiedByExpression()
         {
-            var andExp = Expression.And(Left.IsSatisfiedByExpression().Body,
-                Right.IsSatisfiedByExpression().Body);
+            var paramExp = Expression.Parameter(typeof (TDomainModel), "c");
+
+            Expression<Func<TDomainModel, bool>> leftExp = Left.IsSatisfiedByExpression();
+            Expression<Func<TDomainModel, bool>> rightExp = Right.IsSatisfiedByExpression();
+
+            var andExp = Expression.And(Expression.Invoke(leftExp, paramExp),
+                Expression.Invoke(rightExp, paramExp));
 
             Expression<Func<TDomainModel, bool>> lambda = Expression.
-                Lambda<Func<TDomainModel, bool>>(andExp, Expression.Parameter(typeof(TDomainModel), "c"));
+                Lambda<Func<TDomainModel, bool>>(andExp, paramExp);
 
             return lambda;
         }

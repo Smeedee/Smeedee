@@ -42,6 +42,7 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
 {
     public class Shared : SharpSVNContext
     {
+        protected static readonly long MAX_NUMBER_OF_REVISIONS_TO_RECEIVE = 50;
         protected static Collection<SvnLogEventArgs> changesetsLog;
         protected static IRepository<Changeset> repository;
         protected static IEnumerable<Changeset> resultset;
@@ -51,7 +52,7 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
             
         protected static void GetAllChangesets()
         {
-            resultset = repository.Get(new AllChangesetsSpecification());
+            resultset = repository.Get(new ChangesetsAfterRevisionSpecification(MinChangeset()));
         }
 
         protected void SetupSharedContext()
@@ -67,11 +68,25 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
             if (changesetsLog == null)
             {
                 Collection<SvnLogEventArgs> log;
-                svnClient.GetLog(new Uri(repositoryUrl), out log);
+                SvnLogArgs svnLogArgs = new SvnLogArgs();
+                svnLogArgs.Range = new SvnRevisionRange(MinChangeset() + 1, long.MaxValue);
+                svnClient.GetLog(new Uri(repositoryUrl), svnLogArgs, out log);
                 changesetsLog = log;
             }
 
             return changesetsLog;
+        }
+
+        protected static long? minChangesetChache;
+        protected static long MinChangeset()
+        {
+            if (minChangesetChache == null)
+            {
+                SvnInfoEventArgs a;
+                svnClient.GetInfo(new Uri(repositoryUrl), out a);
+                return a.LastChangeRevision - MAX_NUMBER_OF_REVISIONS_TO_RECEIVE;
+            }
+            return (long)minChangesetChache;
         }
     }
 
@@ -96,11 +111,11 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
                 scenario.Given(the_repository_contain_changesets);
 
                 scenario.When("changesets are requested", () =>
-                                                          GetAllChangesets());
+                      GetAllChangesets());
 
                 scenario.Then("assure all changesets are received", () =>
-                                                                    resultset.Count().ShouldBe(
-                                                                        QueryChangesetsLog().Count()));
+                    resultset.Count().ShouldBe(
+                        QueryChangesetsLog().Count()));
             });
         }
 
@@ -178,41 +193,6 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
     }
 
     [TestFixture]
-    public class When_specification_defined : Shared
-    {
-        #region Setup/Teardown
-
-        [SetUp]
-        public void Setup()
-        {
-            SetupSharedContext();
-        }
-
-        #endregion
-
-        [Test]
-        public void Assure_IsSatisfiedBy_is_called_on_specfication_obj_for_each_row_in_resultset()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                var specificationMock = new Mock<Specification<Changeset>>();
-
-                scenario.Given(the_repository_contain_changesets);
-
-                scenario.When("changesets are requested", () =>
-                                                          repository.Get(specificationMock.Object));
-
-                scenario.Then(
-                    "assure IsSatisfiedBy is called on specification for each row in the resultset", () =>
-                    {
-                        specificationMock.Verify(s => s.IsSatisfiedBy(It.IsAny<Changeset>()),
-                                                 Times.Exactly(QueryChangesetsLog().Count));
-                    });
-            });
-        }
-    }
-
-    [TestFixture]
     public class When_query_all_changesets_after_a_given_revision : Shared
     {
         #region Setup/Teardown
@@ -235,10 +215,7 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
                 scenario.Given(the_repository_contain_changesets);
 
                 scenario.When("all changesets after revision " + revisionNr + " are requested", () =>
-                                                                                               resultset =
-                                                                                               repository.Get(
-                                                                                                   new ChangesetsAfterRevisionSpecification
-                                                                                                       (revisionNr)));
+                    resultset = repository.Get(new ChangesetsAfterRevisionSpecification(revisionNr)));
 
                 scenario.Then("assure all changesets from revision " + revisionNr + " are received", () =>
                 {
@@ -266,6 +243,7 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
         public void Assure_changesets_are_received()
         {
             List<string> users = "goeran|Pete|ole_gunnar".Split(new[] {'|'}).ToList();
+            long minChangest = MinChangeset();
 
             users.ForEach(user =>
             {
@@ -274,7 +252,9 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
                     scenario.Given(the_repository_contain_changesets);
 
                     scenario.When("all changesets for '" + user + "' are requested", () =>
-                        resultset = repository.Get(new ChangesetsForUserSpecification(user)));
+                        resultset = repository.Get(new AndExpressionSpecification<Changeset>(
+                            new ChangesetsForUserSpecification(user),
+                            new ChangesetsAfterRevisionSpecification(minChangest))));
 
                     scenario.Then("assure all changesets for '" + user + "' are received", () =>
                     {
