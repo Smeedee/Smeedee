@@ -122,9 +122,6 @@
     <Project Include="DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj"/>
     <Project Include="DomainModel\APD.DomainModel.FrameworkTests\APD.DomainModel.FrameworkTests.csproj"/>
 
-    <Project Include="APD.DomainModel.NHMapping\APD.DomainModel.NHMapping.csproj"/>
-    <!--DomainModel END-->
-
     <!-- Integration -->
     <Project Include="Integration\APD.Integration\APD.Integration.csproj"/>
     <Project Include="Integration\APD.IntegrationTests\APD.IntegrationTests.csproj"/>
