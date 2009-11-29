@@ -122,7 +122,7 @@ namespace APD.IntegrationTests.CI.CruiseControl.DomainModel.Repositories
     public class OpimizedHTTPRequestSpecs_Integration
     {
         private readonly string LONGFILE_URL = "http://agileprojectdashboard.org/__utility/js/prototype.js";
-        private readonly string PERMANENT_URL = "http://www.microsoft.com/en/us/default.aspx";
+        private readonly string PERMANENT_URL = "http://smeedee.org/default.aspx";
         private readonly string NONEXISTINGHOST_URL = "http://www.fakedomainserver1234AQWD.com";
         private readonly string NONEXISTINGFILE_URL = "http://www.google.com/SomeDumbFileIKnowsNotThere.dat";
         private readonly int PORT = 80;
