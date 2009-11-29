@@ -39,7 +39,7 @@ namespace APD.Client.Widget.SourceControl.SL
         : VisibleModule
               <BindableViewModel<CommitStatisticsForDate>, CommitStatisticsView, CommitStatisticsController>
     {
-        private const long REFRESH_INTERVAL = 1000 * 60 * 10; // ms * sec * min
+        private const long REFRESH_INTERVAL = 1000 * 30; // ms * sec * min
 
         public CommitStatisticsModule(IUnityContainer globalIocContainer)
             : base(globalIocContainer) {}
