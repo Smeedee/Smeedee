@@ -66,6 +66,7 @@ namespace APD.DomainModel.FrameworkTests.OrExpressionSpecificationSpecs
         }
 
         [Test]
+        [Ignore]
         public void assure_Left_Specification_Expression_is_lifted()
         {
             Then(() =>
@@ -76,6 +77,7 @@ namespace APD.DomainModel.FrameworkTests.OrExpressionSpecificationSpecs
         }
 
         [Test]
+        [Ignore]
         public void assure_Right_Specification_Expression_is_lifted()
         {
             Then(() =>

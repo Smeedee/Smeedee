@@ -21,7 +21,7 @@ namespace APD.DomainModel.Framework
             Expression<Func<TDomainModel, bool>> leftExp = Left.IsSatisfiedByExpression();
             Expression<Func<TDomainModel, bool>> rightExp = Right.IsSatisfiedByExpression();
 
-            var orExp = Expression.And(Expression.Invoke(leftExp, paramExp),
+            var orExp = Expression.Or(Expression.Invoke(leftExp, paramExp),
                 Expression.Invoke(rightExp, paramExp));
 
             Expression<Func<TDomainModel, bool>> lambda = Expression.
