@@ -235,13 +235,13 @@ namespace APD.Client.Widget.DeveloperInfo.SL.Repositories
                         Username =
                             ( specification is UserByUsername )
                                 ? ( (UserByUsername) specification ).Username
-                                : "Unknown",
+                                : User.unknownUser.Username,
                         Firstname =
                             ( specification is UserByUsername )
                                 ? ( (UserByUsername) specification ).Username
-                                : "User",
+                                : User.unknownUser.Firstname,
                         Surname = string.Empty,
-                        ImageUrl = "UserImages/unknown_user.jpg"
+                        ImageUrl = User.unknownUser.ImageUrl
                     }
                 };
             }

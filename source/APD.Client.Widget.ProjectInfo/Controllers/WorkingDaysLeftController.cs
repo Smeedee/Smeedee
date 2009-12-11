@@ -65,7 +65,7 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
         {
             this.repository = repository;
             this.asyncClient = backgroundWorkerInvoker;
-            logger = logger;
+            this.logger = logger;
             this.configRepository = configRepository;
             this.configPersisterRepository = configPersisterRepository;
 
@@ -96,6 +96,7 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
                     }
                     else
                     {
+                        ViewModel.HasConfigError = true;
                         logger.WriteEntry(new WarningLogEntry
                                               {
                                                   Message =
@@ -105,7 +106,6 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
                                                   TimeStamp = DateTime.Now
                                               });
 
-                        ViewModel.HasConfigError = true;
                     }
                 }
                 catch (Exception exception)
