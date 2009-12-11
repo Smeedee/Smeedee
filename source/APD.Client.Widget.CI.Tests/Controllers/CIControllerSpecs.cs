@@ -33,6 +33,7 @@ using APD.Client.Framework.Settings;
 using APD.Client.Framework.ViewModels;
 using APD.Client.Widget.CI.Controllers;
 using APD.DomainModel.CI;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.Users;
 using APD.Tests.SpecialMocks;
 using Moq;
@@ -182,7 +183,8 @@ namespace APD.Client.Widget.CI.Tests.CIControllerSpecs
                                           UnFreezeViewCmdPublisher.Object,
                                           new Mock<IVisibleModule>().Object,
                                           SettingsReaderMock.Object,
-                                          BackgroundWorkerInvoker);
+                                          BackgroundWorkerInvoker,
+                                          new Mock<ILog>().Object);
         }
 
         protected static Build CreateBuild(DomainModel.CI.BuildStatus status, Trigger trigger)
