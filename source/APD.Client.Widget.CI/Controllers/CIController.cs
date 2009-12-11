@@ -86,7 +86,7 @@ namespace APD.Client.Widget.CI.Controllers
             this.unFreezeViewCmdPublisher = unFreezeViewCmdPublisher;
             this.owningModule = owningModule;
             asyncClient = backgroundWorkerInvoker;
-            _logger = logger;
+            this.logger = logger;
 
             ConfigureSoundSettings(settingsReader);
             LoadData();
