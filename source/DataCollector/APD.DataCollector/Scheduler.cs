@@ -159,7 +159,7 @@ namespace APD.DataCollector
                     harversterMetaData.CooldownPoint + ". " + logMessage;
             }
             
-            WriteWarningToLog(logMessage);
+            WriteErrorToLog(logMessage);
         }
 
 
