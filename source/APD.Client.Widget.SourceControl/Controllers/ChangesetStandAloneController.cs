@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using APD.Client.Framework;
 using APD.Client.Framework.Controllers;
 using APD.Client.Framework.ViewModels;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Framework;
 
@@ -41,14 +42,17 @@ namespace APD.Client.Widget.SourceControl.Controllers
         protected IRepository<Changeset> changesetRepository;
         protected IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient;
 
+        private ILog logger;
+
         protected ChangesetStandAloneController(INotifyWhenToRefresh refreshNotifier,
                                                 IRepository<Changeset> changesetRepository,
                                                 IInvokeUI uiInvoker,
-                                                IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker)
+                                                IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker,
+                                                ILog logger)
             : base(refreshNotifier, uiInvoker)
         {
             this.changesetRepository = changesetRepository;
-
+            this.logger = logger;
             asyncClient = backgroundWorkerInvoker;
         }
 
@@ -68,8 +72,14 @@ namespace APD.Client.Widget.SourceControl.Controllers
                         {
                             LoadDataIntoViewModel(qAllChangesets);
                         }
-                        catch
+                        catch (Exception e)
                         {
+                            logger.WriteEntry(new LogEntry()
+                            {
+                                Message = e.ToString(),
+                                Source = this.GetType().ToString(),
+                                TimeStamp = DateTime.Now
+                            });
                             ViewModel.HasConnectionProblems = true;
                         }
                     });

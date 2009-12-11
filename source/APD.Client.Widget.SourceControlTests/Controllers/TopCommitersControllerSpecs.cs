@@ -30,6 +30,7 @@ using System.Threading;
 
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.Controllers;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Users;
 
@@ -180,8 +181,15 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                                                     changesetRepositoryMock.Object,
                                                     userRepositoryMock.Object,
                                                     new NoUIInvocation(),
-                                                    new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>());
+                                                    new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
+                                                    new DatabaseLogger(new LogEntryMockPersister()));
         }
+    }
+
+    public class LogEntryMockPersister : IPersistDomainModels<LogEntry>
+    {
+        public void Save(LogEntry domainModel) { }
+        public void Save(IEnumerable<LogEntry> domainModels) { }
     }
 
     [TestFixture]

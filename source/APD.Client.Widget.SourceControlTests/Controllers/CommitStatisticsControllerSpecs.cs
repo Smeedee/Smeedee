@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Threading;
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.Controllers;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using Moq;
 using NUnit.Framework;
@@ -140,9 +141,17 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
             controller = new CommitStatisticsController(iNotifyWhenToRefreshMock.Object,
                                                         changesetRepositoryMock.Object,
                                                         new NoUIInvocation(),
-                                                        new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>());
+                                                        new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
+                                                        new DatabaseLogger(new LogEntryMockPersister()));
         }
     }
+
+    public class LogEntryMockPersister : IPersistDomainModels<LogEntry>
+    {
+        public void Save(LogEntry domainModel) { }
+        public void Save(IEnumerable<LogEntry> domainModels) { }
+    }
+
 
     [TestFixture]
     public class When_spawned : Shared
@@ -189,7 +198,8 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
                             iNotifyWhenToRefreshMock.Object,
                             changesetRepositoryMock.Object,
                             new NoUIInvocation(),
-                            backgroundWorkerInvokerMock.Object);
+                            backgroundWorkerInvokerMock.Object,
+                            new DatabaseLogger(new LogEntryMockPersister()));
                     });
 
                 scenario.When("data is loading");

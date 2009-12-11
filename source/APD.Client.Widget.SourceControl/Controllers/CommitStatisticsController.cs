@@ -30,6 +30,7 @@ using System.Threading;
 
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.ViewModels;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Framework;
 
@@ -41,8 +42,9 @@ namespace APD.Client.Widget.SourceControl.Controllers
         public CommitStatisticsController(INotifyWhenToRefresh refreshNotifyer,
                                           IRepository<Changeset> changesetRepository,
                                           IInvokeUI uiInvoker,
-                                          IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker)
-            : base(refreshNotifyer, changesetRepository, uiInvoker, backgroundWorkerInvoker)
+                                          IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker,
+                                          ILog logger)
+            : base(refreshNotifyer, changesetRepository, uiInvoker, backgroundWorkerInvoker, logger)
         {
             ViewModel.Data.Add(new CommitStatisticsForDate(uiInvoker)
                                {

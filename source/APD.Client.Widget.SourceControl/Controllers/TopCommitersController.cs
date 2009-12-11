@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.ViewModels;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Users;
@@ -40,10 +41,12 @@ namespace APD.Client.Widget.SourceControl.Controllers
         private IRepository<User> userRepository;
 
         public TopCommitersController(INotifyWhenToRefresh refreshNotifier,
-                                      IRepository<Changeset> changesetRepository, IRepository<User> userRepository,
+                                      IRepository<Changeset> changesetRepository, 
+                                      IRepository<User> userRepository,
                                       IInvokeUI uiInvoker,
-                                      IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker)
-            : base(refreshNotifier, changesetRepository, uiInvoker, backgroundWorkerInvoker)
+                                      IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker,
+                                      ILog logger)
+            : base(refreshNotifier, changesetRepository, uiInvoker, backgroundWorkerInvoker, logger)
         {
             this.userRepository = userRepository;
             LoadData();
