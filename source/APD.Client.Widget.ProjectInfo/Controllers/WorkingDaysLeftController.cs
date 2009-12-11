@@ -31,6 +31,7 @@ using APD.Client.Framework;
 using APD.Client.Framework.Controllers;
 using APD.Client.Widget.ProjectInfo.ViewModels;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.ProjectInfo;
 using APD.DomainModel.Config;
 
@@ -46,6 +47,7 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
 
         private readonly IRepository<ProjectInfoServer> repository;
         private readonly IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> asyncClient;
+        private readonly ILog logger;
         private readonly IRepository<Configuration> configRepository;
         private readonly IPersistDomainModels<Configuration> configPersisterRepository;
 
@@ -56,11 +58,14 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
                                          IPersistDomainModels<Configuration> configPersisterRepository,
                                          INotifyWhenToRefresh refreshNotifier,
                                          IInvokeUI uiInvoker,
-                                         IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> backgroundWorkerInvoker)
+                                         IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> backgroundWorkerInvoker,
+                                         ILog logger)
+
             : base(refreshNotifier, uiInvoker)
         {
             this.repository = repository;
             this.asyncClient = backgroundWorkerInvoker;
+            logger = logger;
             this.configRepository = configRepository;
             this.configPersisterRepository = configPersisterRepository;
 
@@ -91,15 +96,28 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine("[WARNING] : " +
-                            "Setting value for project 'use-config-repo' does not have a valid value. Value is " + settingValue);
+                        logger.WriteEntry(new WarningLogEntry
+                                              {
+                                                  Message =
+                                                      "Setting value for project 'use-config-repo' does not have a valid value. Value is " +
+                                                      settingValue,
+                                                  Source = this.GetType().ToString(),
+                                                  TimeStamp = DateTime.Now
+                                              });
 
                         ViewModel.HasConfigError = true;
                     }
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
                     SetProjectStatusError();
+
+                    logger.WriteEntry(new ErrorLogEntry()
+                    {
+                        Message = exception.ToString(),
+                        Source = this.GetType().ToString(),
+                        TimeStamp = DateTime.Now
+                    });
                 }
 
             });
