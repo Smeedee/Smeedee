@@ -36,6 +36,7 @@ using APD.Client.Framework.ViewModels;
 using APD.Client.Widget.CI.ViewModels;
 using APD.DomainModel.CI;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.Users;
 
 
@@ -58,6 +59,7 @@ namespace APD.Client.Widget.CI.Controllers
         private readonly IVisibleModule owningModule;
 
         private IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient;
+        private readonly ILog logger;
 
         private bool isSoundEnabled = false;
         private bool isFrozen = false;
@@ -73,7 +75,8 @@ namespace APD.Client.Widget.CI.Controllers
                             UnFreezeViewCommandPublisher unFreezeViewCmdPublisher, 
                             IVisibleModule owningModule,
                             IClientSettingsReader settingsReader,
-                            IInvokeBackgroundWorker<IEnumerable<CIProject>> backgroundWorkerInvoker)
+                            IInvokeBackgroundWorker<IEnumerable<CIProject>> backgroundWorkerInvoker,
+                            ILog logger)
             : base(notifier, uiInvoker)
         {
             ciProjectRepository = repository;
@@ -83,6 +86,7 @@ namespace APD.Client.Widget.CI.Controllers
             this.unFreezeViewCmdPublisher = unFreezeViewCmdPublisher;
             this.owningModule = owningModule;
             asyncClient = backgroundWorkerInvoker;
+            _logger = logger;
 
             ConfigureSoundSettings(settingsReader);
             LoadData();
@@ -113,7 +117,6 @@ namespace APD.Client.Widget.CI.Controllers
         {
             isLoading = false;
         }
-
 
         private void LoadData()
         {
@@ -150,9 +153,15 @@ namespace APD.Client.Widget.CI.Controllers
                     projects = qServers.First().Projects;
                 ViewModel.HasConnectionProblems = false;
             }
-            catch
+            catch( Exception exception )
             {
                 ViewModel.HasConnectionProblems = true;
+                logger.WriteEntry(new ErrorLogEntry()
+                                      {
+                                          Message = exception.ToString(),
+                                          Source = this.GetType().ToString(),
+                                          TimeStamp = DateTime.Now
+                                      });
             }
 
             if (projects != null)
@@ -273,7 +282,8 @@ namespace APD.Client.Widget.CI.Controllers
                 {
                     returnPerson = new Person(uiInvoker)
                     {
-                        Username = username
+                        Username = username,
+                        ImageUrl = User.unknownUser.ImageUrl
                     };
                 }
             }
