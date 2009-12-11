@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using APD.DomainModel.ProjectInfo;
 using APD.Plugin.ProjectInfo.DomainModel.Repositories;
-
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;

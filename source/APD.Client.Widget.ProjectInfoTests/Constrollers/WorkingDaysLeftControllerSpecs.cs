@@ -34,7 +34,6 @@ using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
 using APD.Plugin.ProjectInfo.DomainModel.Repositories;
-
 using Moq;
 
 using NUnit.Framework;

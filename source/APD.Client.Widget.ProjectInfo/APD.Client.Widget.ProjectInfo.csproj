@@ -63,10 +63,6 @@
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>APD.DomainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\APD.Plugin.ProjectInfo\APD.Plugin.ProjectInfo.csproj">
-      <Project>{8B29193C-DD09-4A29-B81A-B55B1EB492D2}</Project>
-      <Name>APD.Plugin.ProjectInfo</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>APD.DomainModel.Framework</Name>

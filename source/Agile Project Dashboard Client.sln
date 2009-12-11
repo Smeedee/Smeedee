@@ -1,0 +1,635 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Silverlight", "APD.Client.Silverlight\APD.Client.Silverlight.csproj", "{FFEDD3D2-15AF-4BC2-9D78-07F870685E68}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9886A595-ADFA-4E80-A383-64B567DB008C} = {9886A595-ADFA-4E80-A383-64B567DB008C}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Web", "APD.Client.Web\APD.Client.Web.csproj", "{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client", "APD.Client\APD.Client.csproj", "{E03BE67E-798C-49EC-B5C3-C783A91F6ED0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.ClientTests", "APD.ClientTests\APD.ClientTests.csproj", "{0976D422-94DA-40F2-B5BE-86D930520E21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainModel", "DomainModel", "{DBFAEEDF-45E5-4D81-B80B-14CECABC0614}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DomainModel", "APD.DomainModel\APD.DomainModel.csproj", "{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DomainModel.SL", "APD.DomainModel\APD.DomainModel.SL.csproj", "{6D860A9B-0B17-4E78-AB4D-533D1698F225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.WebTests", "APD.Client.WebTests\APD.Client.WebTests.csproj", "{377B2C84-D2F4-4521-97A4-ADDDA50F53C7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{E8E7AE6E-EF1E-443D-84D9-591F6F1940AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Widgets", "Widgets", "{88EB074E-ADA5-4098-8F85-79CE30913CFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Framework", "APD.Client.Framework\APD.Client.Framework.csproj", "{0E75F289-F4A6-4F4D-B0C0-8CA5E2105981}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Framework.SL", "APD.Client.Framework.SL\APD.Client.Framework.SL.csproj", "{E09BCACF-7320-4142-A8D5-40D34B9ABC89}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.SourceControl.SL", "APD.Client.Widget.SourceControl.SL\APD.Client.Widget.SourceControl.SL.csproj", "{9886A595-ADFA-4E80-A383-64B567DB008C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.SourceControl", "APD.Client.Widget.SourceControl\APD.Client.Widget.SourceControl.csproj", "{900E0DA9-9341-41A5-B562-063815073DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.SourceControlTests", "APD.Client.Widget.SourceControlTests\APD.Client.Widget.SourceControlTests.csproj", "{DAE0045C-6153-4512-A265-F49798DFA84B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Framework.Tests", "APD.Client.FrameworkTests\APD.Client.Framework.Tests.csproj", "{93D53039-47A6-473E-A3D8-9C12D73C37E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.ProjectInfo", "APD.Client.Widget.ProjectInfo\APD.Client.Widget.ProjectInfo.csproj", "{8B63D9B3-7728-413A-94E6-167C30F1B429}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.ProjectInfoTests", "APD.Client.Widget.ProjectInfoTests\APD.Client.Widget.ProjectInfoTests.csproj", "{55A12310-9C06-4C3F-A2E8-57BBAC0E4A0F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectInfo", "ProjectInfo", "{97AD9B12-AA77-49B0-B7A6-9D78FB387EE3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SourceControl", "SourceControl", "{F6F08036-B1F1-4415-93B3-61CD0D4724BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContinuousIntegration", "ContinuousIntegration", "{FBCC72D4-8577-407F-9DC4-D9DD43F9234A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Tests", "APD.Tests\APD.Tests.csproj", "{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "General", "General", "{3472F351-DBAC-41FF-8FC1-21C0E57F3B30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.General", "APD.Client.Widget.General\APD.Client.Widget.General.csproj", "{2B677A2A-AFA0-4D2D-97A0-472C13FCAA04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.GeneralTests", "APD.Client.Widget.GeneralTests\APD.Client.Widget.GeneralTests.csproj", "{6D18ABFB-B9F4-4043-8E8B-F590145B4383}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.General.SL", "APD.Client.Widget.General.SL\APD.Client.Widget.General.SL.csproj", "{8C96AB5E-8C8E-47A1-B31A-86B89CF23601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.ProjectInfo.SL", "APD.Client.Widget.ProjectInfo.SL\APD.Client.Widget.ProjectInfo.SL.csproj", "{203A07E5-D01B-4241-B330-8BC91CFBE303}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.CI", "APD.Client.Widget.CI\APD.Client.Widget.CI.csproj", "{4ABCB9D9-E9EF-40FE-9AA9-E77714A5E275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.CI.SL", "APD.Client.Widget.CI.SL\APD.Client.Widget.CI.SL.csproj", "{B84CF0E7-086A-4836-A317-7FF06AD0D52F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.CI.Tests", "APD.Client.Widget.CI.Tests\APD.Client.Widget.CI.Tests.csproj", "{E374F5FC-DE03-4A95-B28F-2A227841B2AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeveloperInfo", "DeveloperInfo", "{A8DAA6B2-1761-4D5F-91F6-5E3D50F76FE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.DeveloperInfo.SL", "APD.Client.Widget.DeveloperInfo.SL\APD.Client.Widget.DeveloperInfo.SL.csproj", "{754C1232-CD79-474B-B21C-B3243015C1DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BurndownChart", "BurndownChart", "{57BB7959-11F6-4A25-BA74-4C1C7FA1AF7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.BurndownChart.SL", "APD.Client.Widget.BurndownChart.SL\APD.Client.Widget.BurndownChart.SL.csproj", "{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.BurndownChart", "APD.Client.Widget.BurndownChart\APD.Client.Widget.BurndownChart.csproj", "{1B46775D-B317-411F-8111-645C7A81614E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.BurndownChart.Tests", "APD.Client.Widget.BurndownChart.Tests\APD.Client.Widget.BurndownChart.Tests.csproj", "{2298D45A-84B7-48E7-8823-52A124F4A911}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{EFCEC0CE-DCF4-40D0-AE9A-8FE6B1367B99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Framework", "APD.Framework\APD.Framework.csproj", "{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Framework.SL", "APD.Framework.SL\APD.Framework.SL.csproj", "{7425F0CA-91CE-4102-BF89-3259220B3C6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Framework.Tests", "APD.Framework.Tests\APD.Framework.Tests.csproj", "{5E8604FB-4B81-4195-9537-6CC14DD954AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DomainModel.Framework", "DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj", "{7C423CC1-417A-410A-81C9-741029DC0F8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DomainModel.Framework.SL", "DomainModel\APD.DomainModel.Framework.SL\APD.DomainModel.Framework.SL.csproj", "{124594EB-B92D-49B1-9E1D-F3557A0413D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DomainModel.FrameworkTests", "DomainModel\APD.DomainModel.FrameworkTests\APD.DomainModel.FrameworkTests.csproj", "{0108432D-68EB-4F91-962D-D7FF842F8988}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TrayBar", "TrayBar", "{DAC776DE-630C-40E7-8C1B-331BFD4E72D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.TrayBar", "APD.Client.Widget.TrayBar\APD.Client.Widget.TrayBar.csproj", "{2BAAFD26-6AC5-40FA-AEBA-6856D11E5520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.TrayBarTests", "APD.Client.Widget.TrayBarTests\APD.Client.Widget.TrayBarTests.csproj", "{DF6B1B12-F65D-4630-A0C6-F255ABBB5D6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.TrayBar.SL", "APD.Client.Widget.TrayBar.SL\APD.Client.Widget.TrayBar.SL.csproj", "{52F5DD2D-7E2B-4B8D-A56E-E675826DA7A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{1FA71300-2252-4004-A091-382B9962171E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.Admin", "Widget\APD.Client.Widget.Admin\APD.Client.Widget.Admin.csproj", "{0B667158-A786-4433-9911-3C8CC2F4A5D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.Admin.SL", "Widget\APD.Client.Widget.Admin.SL\APD.Client.Widget.Admin.SL.csproj", "{660C7FFD-ABB1-44A8-90C8-68553577DB6A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Client.Widget.AdminTests", "Widget\APD.Client.Widget.AdminTests\APD.Client.Widget.AdminTests.csproj", "{D2BB213D-7095-4D49-9F52-2CA1C65CC267}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DomainModel.Tests", "APD.DomainModel.Tests\APD.DomainModel.Tests.csproj", "{5D4669EF-F733-4893-90CE-A4F577B2BD63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{FC11CD76-1039-4981-B981-A7EA21A2AA84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Integration", "Integration\APD.Integration\APD.Integration.csproj", "{47431D6D-1824-41E1-87B8-D90872E4FA04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.IntegrationTests", "Integration\APD.IntegrationTests\APD.IntegrationTests.csproj", "{64D97E2C-3CA6-43A6-BCE3-F69077919675}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Integration.Framework", "Integration\APD.Integration.Framework\APD.Integration.Framework.csproj", "{D5058BDF-B5D2-48DB-9DD7-04BFB7541509}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Integration.FrameworkTests", "Integration\APD.Integration.FrameworkTests\APD.Integration.FrameworkTests.csproj", "{96DB7413-005C-4001-894F-5821EFCB8A4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{FBB54816-AB83-4E27-97AD-3A6486CEE86A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Plugin.ProjectInfo", "APD.Plugin.ProjectInfo\APD.Plugin.ProjectInfo.csproj", "{8B29193C-DD09-4A29-B81A-B55B1EB492D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Plugin.ProjectInfo.Tests", "APD.Plugin.ProjectInfo.Tests\APD.Plugin.ProjectInfo.Tests.csproj", "{B80B7671-649C-4D20-AA49-7B06EE69D20F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFEDD3D2-15AF-4BC2-9D78-07F870685E68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFEDD3D2-15AF-4BC2-9D78-07F870685E68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFEDD3D2-15AF-4BC2-9D78-07F870685E68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFEDD3D2-15AF-4BC2-9D78-07F870685E68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E03BE67E-798C-49EC-B5C3-C783A91F6ED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E03BE67E-798C-49EC-B5C3-C783A91F6ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E03BE67E-798C-49EC-B5C3-C783A91F6ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E03BE67E-798C-49EC-B5C3-C783A91F6ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0976D422-94DA-40F2-B5BE-86D930520E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0976D422-94DA-40F2-B5BE-86D930520E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0976D422-94DA-40F2-B5BE-86D930520E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0976D422-94DA-40F2-B5BE-86D930520E21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D860A9B-0B17-4E78-AB4D-533D1698F225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D860A9B-0B17-4E78-AB4D-533D1698F225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D860A9B-0B17-4E78-AB4D-533D1698F225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D860A9B-0B17-4E78-AB4D-533D1698F225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377B2C84-D2F4-4521-97A4-ADDDA50F53C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377B2C84-D2F4-4521-97A4-ADDDA50F53C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377B2C84-D2F4-4521-97A4-ADDDA50F53C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377B2C84-D2F4-4521-97A4-ADDDA50F53C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E75F289-F4A6-4F4D-B0C0-8CA5E2105981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E75F289-F4A6-4F4D-B0C0-8CA5E2105981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E75F289-F4A6-4F4D-B0C0-8CA5E2105981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E75F289-F4A6-4F4D-B0C0-8CA5E2105981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E09BCACF-7320-4142-A8D5-40D34B9ABC89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E09BCACF-7320-4142-A8D5-40D34B9ABC89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E09BCACF-7320-4142-A8D5-40D34B9ABC89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E09BCACF-7320-4142-A8D5-40D34B9ABC89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9886A595-ADFA-4E80-A383-64B567DB008C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9886A595-ADFA-4E80-A383-64B567DB008C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9886A595-ADFA-4E80-A383-64B567DB008C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9886A595-ADFA-4E80-A383-64B567DB008C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{900E0DA9-9341-41A5-B562-063815073DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{900E0DA9-9341-41A5-B562-063815073DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{900E0DA9-9341-41A5-B562-063815073DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{900E0DA9-9341-41A5-B562-063815073DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE0045C-6153-4512-A265-F49798DFA84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE0045C-6153-4512-A265-F49798DFA84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE0045C-6153-4512-A265-F49798DFA84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE0045C-6153-4512-A265-F49798DFA84B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D53039-47A6-473E-A3D8-9C12D73C37E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D53039-47A6-473E-A3D8-9C12D73C37E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D53039-47A6-473E-A3D8-9C12D73C37E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D53039-47A6-473E-A3D8-9C12D73C37E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B63D9B3-7728-413A-94E6-167C30F1B429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B63D9B3-7728-413A-94E6-167C30F1B429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B63D9B3-7728-413A-94E6-167C30F1B429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B63D9B3-7728-413A-94E6-167C30F1B429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55A12310-9C06-4C3F-A2E8-57BBAC0E4A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55A12310-9C06-4C3F-A2E8-57BBAC0E4A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55A12310-9C06-4C3F-A2E8-57BBAC0E4A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55A12310-9C06-4C3F-A2E8-57BBAC0E4A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B677A2A-AFA0-4D2D-97A0-472C13FCAA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B677A2A-AFA0-4D2D-97A0-472C13FCAA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B677A2A-AFA0-4D2D-97A0-472C13FCAA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B677A2A-AFA0-4D2D-97A0-472C13FCAA04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D18ABFB-B9F4-4043-8E8B-F590145B4383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D18ABFB-B9F4-4043-8E8B-F590145B4383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D18ABFB-B9F4-4043-8E8B-F590145B4383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D18ABFB-B9F4-4043-8E8B-F590145B4383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C96AB5E-8C8E-47A1-B31A-86B89CF23601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C96AB5E-8C8E-47A1-B31A-86B89CF23601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C96AB5E-8C8E-47A1-B31A-86B89CF23601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C96AB5E-8C8E-47A1-B31A-86B89CF23601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203A07E5-D01B-4241-B330-8BC91CFBE303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203A07E5-D01B-4241-B330-8BC91CFBE303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203A07E5-D01B-4241-B330-8BC91CFBE303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203A07E5-D01B-4241-B330-8BC91CFBE303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ABCB9D9-E9EF-40FE-9AA9-E77714A5E275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ABCB9D9-E9EF-40FE-9AA9-E77714A5E275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ABCB9D9-E9EF-40FE-9AA9-E77714A5E275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ABCB9D9-E9EF-40FE-9AA9-E77714A5E275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B84CF0E7-086A-4836-A317-7FF06AD0D52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B84CF0E7-086A-4836-A317-7FF06AD0D52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B84CF0E7-086A-4836-A317-7FF06AD0D52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B84CF0E7-086A-4836-A317-7FF06AD0D52F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E374F5FC-DE03-4A95-B28F-2A227841B2AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E374F5FC-DE03-4A95-B28F-2A227841B2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E374F5FC-DE03-4A95-B28F-2A227841B2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E374F5FC-DE03-4A95-B28F-2A227841B2AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{754C1232-CD79-474B-B21C-B3243015C1DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{754C1232-CD79-474B-B21C-B3243015C1DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{754C1232-CD79-474B-B21C-B3243015C1DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{754C1232-CD79-474B-B21C-B3243015C1DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B46775D-B317-411F-8111-645C7A81614E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B46775D-B317-411F-8111-645C7A81614E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B46775D-B317-411F-8111-645C7A81614E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B46775D-B317-411F-8111-645C7A81614E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2298D45A-84B7-48E7-8823-52A124F4A911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2298D45A-84B7-48E7-8823-52A124F4A911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2298D45A-84B7-48E7-8823-52A124F4A911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2298D45A-84B7-48E7-8823-52A124F4A911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7425F0CA-91CE-4102-BF89-3259220B3C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7425F0CA-91CE-4102-BF89-3259220B3C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7425F0CA-91CE-4102-BF89-3259220B3C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7425F0CA-91CE-4102-BF89-3259220B3C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E8604FB-4B81-4195-9537-6CC14DD954AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E8604FB-4B81-4195-9537-6CC14DD954AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E8604FB-4B81-4195-9537-6CC14DD954AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E8604FB-4B81-4195-9537-6CC14DD954AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C423CC1-417A-410A-81C9-741029DC0F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C423CC1-417A-410A-81C9-741029DC0F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C423CC1-417A-410A-81C9-741029DC0F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C423CC1-417A-410A-81C9-741029DC0F8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{124594EB-B92D-49B1-9E1D-F3557A0413D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{124594EB-B92D-49B1-9E1D-F3557A0413D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{124594EB-B92D-49B1-9E1D-F3557A0413D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{124594EB-B92D-49B1-9E1D-F3557A0413D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0108432D-68EB-4F91-962D-D7FF842F8988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0108432D-68EB-4F91-962D-D7FF842F8988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0108432D-68EB-4F91-962D-D7FF842F8988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0108432D-68EB-4F91-962D-D7FF842F8988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BAAFD26-6AC5-40FA-AEBA-6856D11E5520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BAAFD26-6AC5-40FA-AEBA-6856D11E5520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BAAFD26-6AC5-40FA-AEBA-6856D11E5520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BAAFD26-6AC5-40FA-AEBA-6856D11E5520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF6B1B12-F65D-4630-A0C6-F255ABBB5D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF6B1B12-F65D-4630-A0C6-F255ABBB5D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF6B1B12-F65D-4630-A0C6-F255ABBB5D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF6B1B12-F65D-4630-A0C6-F255ABBB5D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F5DD2D-7E2B-4B8D-A56E-E675826DA7A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F5DD2D-7E2B-4B8D-A56E-E675826DA7A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F5DD2D-7E2B-4B8D-A56E-E675826DA7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F5DD2D-7E2B-4B8D-A56E-E675826DA7A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B667158-A786-4433-9911-3C8CC2F4A5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B667158-A786-4433-9911-3C8CC2F4A5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B667158-A786-4433-9911-3C8CC2F4A5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B667158-A786-4433-9911-3C8CC2F4A5D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660C7FFD-ABB1-44A8-90C8-68553577DB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660C7FFD-ABB1-44A8-90C8-68553577DB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660C7FFD-ABB1-44A8-90C8-68553577DB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660C7FFD-ABB1-44A8-90C8-68553577DB6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2BB213D-7095-4D49-9F52-2CA1C65CC267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2BB213D-7095-4D49-9F52-2CA1C65CC267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2BB213D-7095-4D49-9F52-2CA1C65CC267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2BB213D-7095-4D49-9F52-2CA1C65CC267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D4669EF-F733-4893-90CE-A4F577B2BD63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D4669EF-F733-4893-90CE-A4F577B2BD63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D4669EF-F733-4893-90CE-A4F577B2BD63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D4669EF-F733-4893-90CE-A4F577B2BD63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47431D6D-1824-41E1-87B8-D90872E4FA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47431D6D-1824-41E1-87B8-D90872E4FA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47431D6D-1824-41E1-87B8-D90872E4FA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47431D6D-1824-41E1-87B8-D90872E4FA04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D97E2C-3CA6-43A6-BCE3-F69077919675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D97E2C-3CA6-43A6-BCE3-F69077919675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D97E2C-3CA6-43A6-BCE3-F69077919675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D97E2C-3CA6-43A6-BCE3-F69077919675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5058BDF-B5D2-48DB-9DD7-04BFB7541509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5058BDF-B5D2-48DB-9DD7-04BFB7541509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5058BDF-B5D2-48DB-9DD7-04BFB7541509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5058BDF-B5D2-48DB-9DD7-04BFB7541509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96DB7413-005C-4001-894F-5821EFCB8A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96DB7413-005C-4001-894F-5821EFCB8A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96DB7413-005C-4001-894F-5821EFCB8A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96DB7413-005C-4001-894F-5821EFCB8A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B29193C-DD09-4A29-B81A-B55B1EB492D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B29193C-DD09-4A29-B81A-B55B1EB492D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B29193C-DD09-4A29-B81A-B55B1EB492D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B29193C-DD09-4A29-B81A-B55B1EB492D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B80B7671-649C-4D20-AA49-7B06EE69D20F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B80B7671-649C-4D20-AA49-7B06EE69D20F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B80B7671-649C-4D20-AA49-7B06EE69D20F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B80B7671-649C-4D20-AA49-7B06EE69D20F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E03BE67E-798C-49EC-B5C3-C783A91F6ED0} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{0976D422-94DA-40F2-B5BE-86D930520E21} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{FFEDD3D2-15AF-4BC2-9D78-07F870685E68} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{88EB074E-ADA5-4098-8F85-79CE30913CFD} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{0E75F289-F4A6-4F4D-B0C0-8CA5E2105981} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{E09BCACF-7320-4142-A8D5-40D34B9ABC89} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{93D53039-47A6-473E-A3D8-9C12D73C37E1} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{F00CBB10-58D2-40B9-82DD-D8ABD14E1995} = {C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}
+		{377B2C84-D2F4-4521-97A4-ADDDA50F53C7} = {E8E7AE6E-EF1E-443D-84D9-591F6F1940AB}
+		{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1} = {E8E7AE6E-EF1E-443D-84D9-591F6F1940AB}
+		{6D3D6DF1-E250-46D8-914D-05C09E6BFA54} = {DBFAEEDF-45E5-4D81-B80B-14CECABC0614}
+		{6D860A9B-0B17-4E78-AB4D-533D1698F225} = {DBFAEEDF-45E5-4D81-B80B-14CECABC0614}
+		{7C423CC1-417A-410A-81C9-741029DC0F8B} = {DBFAEEDF-45E5-4D81-B80B-14CECABC0614}
+		{124594EB-B92D-49B1-9E1D-F3557A0413D8} = {DBFAEEDF-45E5-4D81-B80B-14CECABC0614}
+		{0108432D-68EB-4F91-962D-D7FF842F8988} = {DBFAEEDF-45E5-4D81-B80B-14CECABC0614}
+		{5D4669EF-F733-4893-90CE-A4F577B2BD63} = {DBFAEEDF-45E5-4D81-B80B-14CECABC0614}
+		{F6F08036-B1F1-4415-93B3-61CD0D4724BC} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{97AD9B12-AA77-49B0-B7A6-9D78FB387EE3} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{FBCC72D4-8577-407F-9DC4-D9DD43F9234A} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{3472F351-DBAC-41FF-8FC1-21C0E57F3B30} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{A8DAA6B2-1761-4D5F-91F6-5E3D50F76FE4} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{57BB7959-11F6-4A25-BA74-4C1C7FA1AF7B} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{DAC776DE-630C-40E7-8C1B-331BFD4E72D1} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{1FA71300-2252-4004-A091-382B9962171E} = {88EB074E-ADA5-4098-8F85-79CE30913CFD}
+		{900E0DA9-9341-41A5-B562-063815073DF4} = {F6F08036-B1F1-4415-93B3-61CD0D4724BC}
+		{DAE0045C-6153-4512-A265-F49798DFA84B} = {F6F08036-B1F1-4415-93B3-61CD0D4724BC}
+		{9886A595-ADFA-4E80-A383-64B567DB008C} = {F6F08036-B1F1-4415-93B3-61CD0D4724BC}
+		{55A12310-9C06-4C3F-A2E8-57BBAC0E4A0F} = {97AD9B12-AA77-49B0-B7A6-9D78FB387EE3}
+		{8B63D9B3-7728-413A-94E6-167C30F1B429} = {97AD9B12-AA77-49B0-B7A6-9D78FB387EE3}
+		{203A07E5-D01B-4241-B330-8BC91CFBE303} = {97AD9B12-AA77-49B0-B7A6-9D78FB387EE3}
+		{4ABCB9D9-E9EF-40FE-9AA9-E77714A5E275} = {FBCC72D4-8577-407F-9DC4-D9DD43F9234A}
+		{B84CF0E7-086A-4836-A317-7FF06AD0D52F} = {FBCC72D4-8577-407F-9DC4-D9DD43F9234A}
+		{E374F5FC-DE03-4A95-B28F-2A227841B2AD} = {FBCC72D4-8577-407F-9DC4-D9DD43F9234A}
+		{2B677A2A-AFA0-4D2D-97A0-472C13FCAA04} = {3472F351-DBAC-41FF-8FC1-21C0E57F3B30}
+		{6D18ABFB-B9F4-4043-8E8B-F590145B4383} = {3472F351-DBAC-41FF-8FC1-21C0E57F3B30}
+		{8C96AB5E-8C8E-47A1-B31A-86B89CF23601} = {3472F351-DBAC-41FF-8FC1-21C0E57F3B30}
+		{754C1232-CD79-474B-B21C-B3243015C1DC} = {A8DAA6B2-1761-4D5F-91F6-5E3D50F76FE4}
+		{A93BB217-B5AA-4465-B61A-AEE9D25D73AE} = {57BB7959-11F6-4A25-BA74-4C1C7FA1AF7B}
+		{1B46775D-B317-411F-8111-645C7A81614E} = {57BB7959-11F6-4A25-BA74-4C1C7FA1AF7B}
+		{2298D45A-84B7-48E7-8823-52A124F4A911} = {57BB7959-11F6-4A25-BA74-4C1C7FA1AF7B}
+		{273AC02B-F852-40E5-BEA6-7BDE2D98C48B} = {EFCEC0CE-DCF4-40D0-AE9A-8FE6B1367B99}
+		{7425F0CA-91CE-4102-BF89-3259220B3C6E} = {EFCEC0CE-DCF4-40D0-AE9A-8FE6B1367B99}
+		{5E8604FB-4B81-4195-9537-6CC14DD954AB} = {EFCEC0CE-DCF4-40D0-AE9A-8FE6B1367B99}
+		{2BAAFD26-6AC5-40FA-AEBA-6856D11E5520} = {DAC776DE-630C-40E7-8C1B-331BFD4E72D1}
+		{DF6B1B12-F65D-4630-A0C6-F255ABBB5D6E} = {DAC776DE-630C-40E7-8C1B-331BFD4E72D1}
+		{52F5DD2D-7E2B-4B8D-A56E-E675826DA7A7} = {DAC776DE-630C-40E7-8C1B-331BFD4E72D1}
+		{0B667158-A786-4433-9911-3C8CC2F4A5D8} = {1FA71300-2252-4004-A091-382B9962171E}
+		{660C7FFD-ABB1-44A8-90C8-68553577DB6A} = {1FA71300-2252-4004-A091-382B9962171E}
+		{D2BB213D-7095-4D49-9F52-2CA1C65CC267} = {1FA71300-2252-4004-A091-382B9962171E}
+		{47431D6D-1824-41E1-87B8-D90872E4FA04} = {FC11CD76-1039-4981-B981-A7EA21A2AA84}
+		{64D97E2C-3CA6-43A6-BCE3-F69077919675} = {FC11CD76-1039-4981-B981-A7EA21A2AA84}
+		{D5058BDF-B5D2-48DB-9DD7-04BFB7541509} = {FC11CD76-1039-4981-B981-A7EA21A2AA84}
+		{96DB7413-005C-4001-894F-5821EFCB8A4C} = {FC11CD76-1039-4981-B981-A7EA21A2AA84}
+		{8B29193C-DD09-4A29-B81A-B55B1EB492D2} = {FBB54816-AB83-4E27-97AD-3A6486CEE86A}
+		{B80B7671-649C-4D20-AA49-7B06EE69D20F} = {FBB54816-AB83-4E27-97AD-3A6486CEE86A}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 55
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs08.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = APD.Client.Framework.SL\\APD.Client.Framework.SL.csproj
+		SccProjectTopLevelParentUniqueName1 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName1 = APD.Client.Framework.SL
+		SccLocalPath1 = APD.Client.Framework.SL
+		SccProjectUniqueName2 = APD.Client.Framework\\APD.Client.Framework.csproj
+		SccProjectTopLevelParentUniqueName2 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName2 = APD.Client.Framework
+		SccLocalPath2 = APD.Client.Framework
+		SccProjectUniqueName3 = APD.Client.FrameworkTests\\APD.Client.Framework.Tests.csproj
+		SccProjectTopLevelParentUniqueName3 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName3 = APD.Client.FrameworkTests
+		SccLocalPath3 = APD.Client.FrameworkTests
+		SccProjectUniqueName4 = APD.Client.Silverlight\\APD.Client.Silverlight.csproj
+		SccProjectTopLevelParentUniqueName4 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName4 = APD.Client.Silverlight
+		SccLocalPath4 = APD.Client.Silverlight
+		SccProjectUniqueName5 = APD.Client.Web\\APD.Client.Web.csproj
+		SccProjectTopLevelParentUniqueName5 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName5 = APD.Client.Web
+		SccLocalPath5 = APD.Client.Web
+		SccProjectUniqueName6 = APD.Client.WebTests\\APD.Client.WebTests.csproj
+		SccProjectTopLevelParentUniqueName6 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName6 = APD.Client.WebTests
+		SccLocalPath6 = APD.Client.WebTests
+		SccProjectUniqueName7 = APD.Client.Widget.BurndownChart.SL\\APD.Client.Widget.BurndownChart.SL.csproj
+		SccProjectTopLevelParentUniqueName7 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName7 = APD.Client.Widget.BurndownChart.SL
+		SccLocalPath7 = APD.Client.Widget.BurndownChart.SL
+		SccProjectUniqueName8 = APD.Client.Widget.BurndownChart.Tests\\APD.Client.Widget.BurndownChart.Tests.csproj
+		SccProjectTopLevelParentUniqueName8 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName8 = APD.Client.Widget.BurndownChart.Tests
+		SccLocalPath8 = APD.Client.Widget.BurndownChart.Tests
+		SccProjectUniqueName9 = APD.Client.Widget.BurndownChart\\APD.Client.Widget.BurndownChart.csproj
+		SccProjectTopLevelParentUniqueName9 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName9 = APD.Client.Widget.BurndownChart
+		SccLocalPath9 = APD.Client.Widget.BurndownChart
+		SccProjectUniqueName10 = APD.Client.Widget.CI.SL\\APD.Client.Widget.CI.SL.csproj
+		SccProjectTopLevelParentUniqueName10 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName10 = APD.Client.Widget.CI.SL
+		SccLocalPath10 = APD.Client.Widget.CI.SL
+		SccProjectUniqueName11 = APD.Client.Widget.CI.Tests\\APD.Client.Widget.CI.Tests.csproj
+		SccProjectTopLevelParentUniqueName11 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName11 = APD.Client.Widget.CI.Tests
+		SccLocalPath11 = APD.Client.Widget.CI.Tests
+		SccProjectUniqueName12 = APD.Client.Widget.CI\\APD.Client.Widget.CI.csproj
+		SccProjectTopLevelParentUniqueName12 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName12 = APD.Client.Widget.CI
+		SccLocalPath12 = APD.Client.Widget.CI
+		SccProjectUniqueName13 = APD.Client.Widget.DeveloperInfo.SL\\APD.Client.Widget.DeveloperInfo.SL.csproj
+		SccProjectTopLevelParentUniqueName13 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName13 = APD.Client.Widget.DeveloperInfo.SL
+		SccLocalPath13 = APD.Client.Widget.DeveloperInfo.SL
+		SccProjectUniqueName14 = APD.Client.Widget.General.SL\\APD.Client.Widget.General.SL.csproj
+		SccProjectTopLevelParentUniqueName14 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName14 = APD.Client.Widget.General.SL
+		SccLocalPath14 = APD.Client.Widget.General.SL
+		SccProjectUniqueName15 = APD.Client.Widget.General\\APD.Client.Widget.General.csproj
+		SccProjectTopLevelParentUniqueName15 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName15 = APD.Client.Widget.General
+		SccLocalPath15 = APD.Client.Widget.General
+		SccProjectUniqueName16 = APD.Client.Widget.GeneralTests\\APD.Client.Widget.GeneralTests.csproj
+		SccProjectTopLevelParentUniqueName16 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName16 = APD.Client.Widget.GeneralTests
+		SccLocalPath16 = APD.Client.Widget.GeneralTests
+		SccProjectUniqueName17 = APD.Client.Widget.ProjectInfo.SL\\APD.Client.Widget.ProjectInfo.SL.csproj
+		SccProjectTopLevelParentUniqueName17 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName17 = APD.Client.Widget.ProjectInfo.SL
+		SccLocalPath17 = APD.Client.Widget.ProjectInfo.SL
+		SccProjectUniqueName18 = APD.Client.Widget.ProjectInfo\\APD.Client.Widget.ProjectInfo.csproj
+		SccProjectTopLevelParentUniqueName18 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName18 = APD.Client.Widget.ProjectInfo
+		SccLocalPath18 = APD.Client.Widget.ProjectInfo
+		SccProjectUniqueName19 = APD.Client.Widget.ProjectInfoTests\\APD.Client.Widget.ProjectInfoTests.csproj
+		SccProjectTopLevelParentUniqueName19 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName19 = APD.Client.Widget.ProjectInfoTests
+		SccLocalPath19 = APD.Client.Widget.ProjectInfoTests
+		SccProjectUniqueName20 = APD.Client.Widget.SourceControl.SL\\APD.Client.Widget.SourceControl.SL.csproj
+		SccProjectTopLevelParentUniqueName20 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName20 = APD.Client.Widget.SourceControl.SL
+		SccLocalPath20 = APD.Client.Widget.SourceControl.SL
+		SccProjectUniqueName21 = APD.Client.Widget.SourceControl\\APD.Client.Widget.SourceControl.csproj
+		SccProjectTopLevelParentUniqueName21 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName21 = APD.Client.Widget.SourceControl
+		SccLocalPath21 = APD.Client.Widget.SourceControl
+		SccProjectUniqueName22 = APD.Client.Widget.SourceControlTests\\APD.Client.Widget.SourceControlTests.csproj
+		SccProjectTopLevelParentUniqueName22 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName22 = APD.Client.Widget.SourceControlTests
+		SccLocalPath22 = APD.Client.Widget.SourceControlTests
+		SccProjectUniqueName23 = APD.Client.Widget.TrayBar.SL\\APD.Client.Widget.TrayBar.SL.csproj
+		SccProjectTopLevelParentUniqueName23 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName23 = APD.Client.Widget.TrayBar.SL
+		SccLocalPath23 = APD.Client.Widget.TrayBar.SL
+		SccProjectUniqueName24 = APD.Client.Widget.TrayBar\\APD.Client.Widget.TrayBar.csproj
+		SccProjectTopLevelParentUniqueName24 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName24 = APD.Client.Widget.TrayBar
+		SccLocalPath24 = APD.Client.Widget.TrayBar
+		SccProjectUniqueName25 = APD.Client.Widget.TrayBarTests\\APD.Client.Widget.TrayBarTests.csproj
+		SccProjectTopLevelParentUniqueName25 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName25 = APD.Client.Widget.TrayBarTests
+		SccLocalPath25 = APD.Client.Widget.TrayBarTests
+		SccProjectUniqueName26 = APD.Client\\APD.Client.csproj
+		SccProjectTopLevelParentUniqueName26 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName26 = APD.Client
+		SccLocalPath26 = APD.Client
+		SccProjectUniqueName27 = APD.ClientTests\\APD.ClientTests.csproj
+		SccProjectTopLevelParentUniqueName27 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName27 = APD.ClientTests
+		SccLocalPath27 = APD.ClientTests
+		SccProjectUniqueName28 = APD.DomainModel.NHMapping\\APD.DomainModel.NHMapping.csproj
+		SccProjectTopLevelParentUniqueName28 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName28 = APD.DomainModel.NHMapping
+		SccLocalPath28 = APD.DomainModel.NHMapping
+		SccProjectUniqueName29 = APD.DomainModel.Tests\\APD.DomainModel.Tests.csproj
+		SccProjectTopLevelParentUniqueName29 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName29 = APD.DomainModel.Tests
+		SccLocalPath29 = APD.DomainModel.Tests
+		SccProjectUniqueName30 = APD.DomainModel\\APD.DomainModel.csproj
+		SccProjectTopLevelParentUniqueName30 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName30 = APD.DomainModel
+		SccLocalPath30 = APD.DomainModel
+		SccProjectUniqueName31 = APD.DomainModel\\APD.DomainModel.SL.csproj
+		SccProjectTopLevelParentUniqueName31 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName31 = APD.DomainModel
+		SccLocalPath31 = APD.DomainModel
+		SccProjectUniqueName32 = APD.Plugin.ProjectInfo.Tests\\APD.Plugin.ProjectInfo.Tests.csproj
+		SccProjectTopLevelParentUniqueName32 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName32 = APD.Plugin.ProjectInfo.Tests
+		SccLocalPath32 = APD.Plugin.ProjectInfo.Tests
+		SccProjectUniqueName33 = APD.Plugin.ProjectInfo\\APD.Plugin.ProjectInfo.csproj
+		SccProjectTopLevelParentUniqueName33 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName33 = APD.Plugin.ProjectInfo
+		SccLocalPath33 = APD.Plugin.ProjectInfo
+		SccProjectUniqueName34 = APD.Tests\\APD.Tests.csproj
+		SccProjectTopLevelParentUniqueName34 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName34 = APD.Tests
+		SccLocalPath34 = APD.Tests
+		SccProjectUniqueName35 = DataCollector\\APD.DataCollector.Console\\APD.DataCollector.Console.csproj
+		SccProjectTopLevelParentUniqueName35 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName35 = DataCollector/APD.DataCollector.Console
+		SccLocalPath35 = DataCollector\\APD.DataCollector.Console
+		SccProjectUniqueName36 = DataCollector\\APD.DataCollector.Service\\APD.DataCollector.Service.csproj
+		SccProjectTopLevelParentUniqueName36 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName36 = DataCollector/APD.DataCollector.Service
+		SccLocalPath36 = DataCollector\\APD.DataCollector.Service
+		SccProjectUniqueName37 = DataCollector\\APD.DataCollector\\APD.DataCollector.csproj
+		SccProjectTopLevelParentUniqueName37 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName37 = DataCollector/APD.DataCollector
+		SccLocalPath37 = DataCollector\\APD.DataCollector
+		SccProjectUniqueName38 = DataCollector\\APD.DataCollectorTests\\APD.DataCollectorTests.csproj
+		SccProjectTopLevelParentUniqueName38 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName38 = DataCollector/APD.DataCollectorTests
+		SccLocalPath38 = DataCollector\\APD.DataCollectorTests
+		SccProjectUniqueName39 = DataCollector\\APD.Harvester.Framework\\APD.Harvester.Framework.csproj
+		SccProjectTopLevelParentUniqueName39 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName39 = DataCollector/APD.Harvester.Framework
+		SccLocalPath39 = DataCollector\\APD.Harvester.Framework
+		SccProjectUniqueName40 = DataCollector\\APD.Harvester\\APD.Harvester.csproj
+		SccProjectTopLevelParentUniqueName40 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName40 = DataCollector/APD.Harvester
+		SccLocalPath40 = DataCollector\\APD.Harvester
+		SccProjectUniqueName41 = DataCollector\\APD.HarvesterTests\\APD.HarvesterTests.csproj
+		SccProjectTopLevelParentUniqueName41 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName41 = DataCollector/APD.HarvesterTests
+		SccLocalPath41 = DataCollector\\APD.HarvesterTests
+		SccProjectUniqueName42 = DomainModel\\APD.DomainModel.Framework.SL\\APD.DomainModel.Framework.SL.csproj
+		SccProjectTopLevelParentUniqueName42 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName42 = DomainModel/APD.DomainModel.Framework.SL
+		SccLocalPath42 = DomainModel\\APD.DomainModel.Framework.SL
+		SccProjectUniqueName43 = DomainModel\\APD.DomainModel.Framework\\APD.DomainModel.Framework.csproj
+		SccProjectTopLevelParentUniqueName43 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName43 = DomainModel/APD.DomainModel.Framework
+		SccLocalPath43 = DomainModel\\APD.DomainModel.Framework
+		SccProjectUniqueName44 = DomainModel\\APD.DomainModel.FrameworkTests\\APD.DomainModel.FrameworkTests.csproj
+		SccProjectTopLevelParentUniqueName44 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName44 = DomainModel/APD.DomainModel.FrameworkTests
+		SccLocalPath44 = DomainModel\\APD.DomainModel.FrameworkTests
+		SccProjectUniqueName45 = Widget\\APD.Client.Widget.Admin.SL\\APD.Client.Widget.Admin.SL.csproj
+		SccProjectTopLevelParentUniqueName45 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName45 = Widget/APD.Client.Widget.Admin.SL
+		SccLocalPath45 = Widget\\APD.Client.Widget.Admin.SL
+		SccProjectUniqueName46 = Widget\\APD.Client.Widget.Admin\\APD.Client.Widget.Admin.csproj
+		SccProjectTopLevelParentUniqueName46 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName46 = Widget/APD.Client.Widget.Admin
+		SccLocalPath46 = Widget\\APD.Client.Widget.Admin
+		SccProjectUniqueName47 = Widget\\APD.Client.Widget.AdminTests\\APD.Client.Widget.AdminTests.csproj
+		SccProjectTopLevelParentUniqueName47 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName47 = Widget/APD.Client.Widget.AdminTests
+		SccLocalPath47 = Widget\\APD.Client.Widget.AdminTests
+		SccProjectUniqueName48 = Integration\\APD.Integration\\APD.Integration.csproj
+		SccProjectTopLevelParentUniqueName48 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName48 = Integration/APD.Integration
+		SccLocalPath48 = Integration\\APD.Integration
+		SccProjectUniqueName49 = Integration\\APD.IntegrationTests\\APD.IntegrationTests.csproj
+		SccProjectTopLevelParentUniqueName49 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName49 = Integration/APD.IntegrationTests
+		SccLocalPath49 = Integration\\APD.IntegrationTests
+		SccProjectUniqueName50 = Integration\\APD.Integration.Framework\\APD.Integration.Framework.csproj
+		SccProjectTopLevelParentUniqueName50 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName50 = Integration/APD.Integration.Framework
+		SccLocalPath50 = Integration\\APD.Integration.Framework
+		SccProjectUniqueName51 = APD.Framework.SL\\APD.Framework.SL.csproj
+		SccProjectTopLevelParentUniqueName51 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName51 = APD.Framework.SL
+		SccLocalPath51 = APD.Framework.SL
+		SccProjectUniqueName52 = APD.Framework.Tests\\APD.Framework.Tests.csproj
+		SccProjectTopLevelParentUniqueName52 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName52 = APD.Framework.Tests
+		SccLocalPath52 = APD.Framework.Tests
+		SccProjectUniqueName53 = APD.Framework\\APD.Framework.csproj
+		SccProjectTopLevelParentUniqueName53 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName53 = APD.Framework
+		SccLocalPath53 = APD.Framework
+		SccProjectUniqueName54 = Integration\\APD.Integration.FrameworkTests\\APD.Integration.FrameworkTests.csproj
+		SccProjectTopLevelParentUniqueName54 = Agile\u0020Project\u0020Dashboard.sln
+		SccProjectName54 = Integration/APD.Integration.FrameworkTests
+		SccLocalPath54 = Integration\\APD.Integration.FrameworkTests
+	EndGlobalSection
+EndGlobal

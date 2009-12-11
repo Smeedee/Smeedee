@@ -165,10 +165,6 @@
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>APD.DomainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DataCollector\APD.DataCollector\APD.DataCollector.csproj">
-      <Project>{9DF70FC1-5972-47B7-8000-A8BCBD3B0A9D}</Project>
-      <Name>APD.DataCollector</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>APD.DomainModel.Framework</Name>
