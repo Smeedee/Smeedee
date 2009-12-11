@@ -102,9 +102,8 @@ namespace APD.Client.Silverlight
             Container.RegisterType<IRepository<User>, UserWebserviceRepositoryProxy>();
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
 
-            //Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryWebservicePersister>();
-            //Container.RegisterType<ILog, DatabaseLogger>();
-            Container.RegisterInstance<ILog>(new DatabaseLogger(new LogEntryWebservicePersister()));
+            Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryWebservicePersister>();
+            Container.RegisterType<ILog, DatabaseLogger>();
         }
 
         protected override void InitializeModules()
@@ -183,14 +182,6 @@ namespace APD.Client.Silverlight
             };
 
             shellPresenter.StartSlideRotation();
-
-            var logger = Container.Resolve<ILog>();
-            logger.WriteEntry(
-                new ErrorLogEntry()
-                {
-                    Message = "hejjjjooooooo"
-                });
-
         }
 
         protected override DependencyObject CreateShell()
