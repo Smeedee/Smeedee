@@ -124,7 +124,6 @@ namespace APD.Client.Widget.SourceControl.Controllers
         protected override void AfterQueryAllChangesets()
         {
             allUsers = userRepository.Get(new AllSpecification<User>());
-            //allUsers = new List<User>();
         }
     }
 }

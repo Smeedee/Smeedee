@@ -38,6 +38,7 @@ using APD.Client.Framework.ViewModels;
 using APD.Client.Widget.SourceControl.Controllers;
 using APD.Client.Widget.SourceControl.ViewModels;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Users;
 using APD.Tests;
@@ -124,12 +125,17 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CheckInNotificationCo
                                                            userRepositoryMock.Object,
                                                            iNotifyWhenToRefreshMock.Object,
                                                            new NoUIInvocation(),
-                                                           new NoBackgroundWorkerInvocation
-                                                               <IEnumerable<Changeset>>());
+                                                           new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
+                                                           new DatabaseLogger(new LogEntryMockPersister()));
             viewModel = controller.ViewModel;
             changeRecorder = new PropertyChangedRecorder(viewModel);
             Thread.Sleep(1500);
         }
+    }
+
+    internal class LogEntryMockPersister : IPersistDomainModels<LogEntry> {
+        public void Save(LogEntry domainModel) {}
+        public void Save(IEnumerable<LogEntry> domainModels) {}
     }
 
     [TestFixture]

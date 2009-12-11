@@ -23,6 +23,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,6 +32,7 @@ using APD.Client.Framework.Controllers;
 using APD.Client.Framework.ViewModels;
 using APD.Client.Widget.SourceControl.ViewModels;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Users;
 
@@ -47,11 +49,14 @@ namespace APD.Client.Widget.SourceControl.Controllers
         private IRepository<Changeset> repository;
         private IRepository<User> userRepository;
 
+        private ILog logger;
+
         public CheckInNotificationController(IRepository<Changeset> repository,
                                              IRepository<User> userRepository,
                                              INotifyWhenToRefresh refreshNotifier,
                                              IInvokeUI uiInvoker,
-                                             IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker)
+                                             IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker,
+                                             ILog logger)
             : base(refreshNotifier, uiInvoker)
         {
             asyncClient = backgroundWorker;
@@ -59,6 +64,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
             this.repository = repository;
             this.userRepository = userRepository;
             this.refreshNotifier = refreshNotifier;
+            this.logger = logger;
 
             LoadData();
         }
@@ -99,8 +105,14 @@ namespace APD.Client.Widget.SourceControl.Controllers
                 changeSets = repository.Get(new ChangesetsAfterRevisionSpecification(lastRevision));
                 ViewModel.HasConnectionProblems = false;
             }
-            catch
+            catch(Exception e)
             {
+                logger.WriteEntry(new LogEntry()
+                {
+                    Message = e.ToString(),
+                    Source = this.GetType().ToString(),
+                    TimeStamp = DateTime.Now
+                });
                 ViewModel.HasConnectionProblems = true;
             }
 
