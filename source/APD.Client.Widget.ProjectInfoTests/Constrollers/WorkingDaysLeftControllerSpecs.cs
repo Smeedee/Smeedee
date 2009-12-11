@@ -32,6 +32,7 @@ using APD.Client.Widget.ProjectInfo.Controllers;
 using APD.Client.Widget.ProjectInfo.ViewModels;
 using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.ProjectInfo;
 using APD.Plugin.ProjectInfo.DomainModel.Repositories;
 using Moq;
@@ -251,7 +252,8 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
                 configRepositoryMock.Object,
                 configPersisterRepositoryMock.Object,
                 iNotifyWhenToRefreshMock.Object,
-                new NoUIInvocation(), BackgroundWorkerInvoker
+                new NoUIInvocation(), BackgroundWorkerInvoker,
+                new Mock<ILog>().Object
             );
         }
 
