@@ -39,7 +39,7 @@ using APD.Client.Widget.SourceControl.SL.Repositories;
 using APD.Client.Widget.TrayBar.SL;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Framework.Logging;
-using APD.DomainModel.Framework.SL.Logging;
+using APD.Framework.SL.Logging;
 
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.UnityExtensions;
@@ -102,8 +102,9 @@ namespace APD.Client.Silverlight
             Container.RegisterType<IRepository<User>, UserWebserviceRepositoryProxy>();
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
 
-            Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryPersister>();
-            Container.RegisterType<ILog, DatabaseLogger>();
+            //Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryWebservicePersister>();
+            //Container.RegisterType<ILog, DatabaseLogger>();
+            Container.RegisterInstance<ILog>(new DatabaseLogger(new LogEntryWebservicePersister()));
         }
 
         protected override void InitializeModules()
@@ -182,6 +183,13 @@ namespace APD.Client.Silverlight
             };
 
             shellPresenter.StartSlideRotation();
+
+            var logger = Container.Resolve<ILog>();
+            logger.WriteEntry(
+                new ErrorLogEntry()
+                {
+                    Message = "hejjjjooooooo"
+                });
 
         }
 

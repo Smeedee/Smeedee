@@ -31,10 +31,10 @@ namespace APD.Client.WebTests.Services.Integration
             });
 
             //TODO: Fix this webservice so this will run
-            
-            //client.Get(new AllSpecification<LogEntry>())
-            //    .Where(le => le.Message.Equals(guid.ToString()))
-            //    .Count().ShouldBe(1);
+
+            client.Get(new AllSpecification<LogEntry>())
+                .Where(le => le.Message.Equals(guid.ToString()))
+                .Count().ShouldBe(1);
         }
     }
 }

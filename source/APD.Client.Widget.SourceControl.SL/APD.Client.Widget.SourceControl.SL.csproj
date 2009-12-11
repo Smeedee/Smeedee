@@ -209,6 +209,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset.datasource" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService2.wsdl" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService21.wsdl" />

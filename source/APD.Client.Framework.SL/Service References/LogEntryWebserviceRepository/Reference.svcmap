@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="78db6c99-bfbf-4e19-a83a-9940b45108f1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies>
+      <ReferencedAssembly AssemblyName="APD.DomainModel.Framework.SL" />
+      <ReferencedAssembly AssemblyName="APD.DomainModel.SL" />
+      <ReferencedAssembly AssemblyName="APD.Framework.SL" />
+    </ReferencedAssemblies>
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LogEntryRepositoryService.wsdl" MetadataType="Wsdl" ID="066e4433-6d3e-4fde-be37-ea7653fc22ee" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="LogEntryRepositoryService.xsd" MetadataType="Schema" ID="ed4348e6-9671-4922-b0c5-714b897e89c0" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="LogEntryRepositoryService1.xsd" MetadataType="Schema" ID="a8a1bf18-fb9e-451c-aaa5-68cb60f37097" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="LogEntryRepositoryService2.xsd" MetadataType="Schema" ID="7102537a-61db-4583-93c8-421d618eb630" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="LogEntryRepositoryService3.xsd" MetadataType="Schema" ID="53e2729f-53c5-4db2-9e07-53cc9b29c5ba" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="LogEntryRepositoryService.disco" MetadataType="Disco" ID="84670f8e-99da-45d2-a701-cb73fa43ff7a" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?disco" />
+    <MetadataFile FileName="LogEntryRepositoryService1.wsdl" MetadataType="Wsdl" ID="bc7cfd2b-869b-4639-87a3-40b7c2f8b067" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

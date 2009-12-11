@@ -31,6 +31,8 @@ using System.IO;
 
 using APD.Client.Framework.Settings;
 using APD.Client.Framework.Settings.Repository;
+using APD.DomainModel.Framework.Logging;
+using APD.Framework.SL.Logging;
 
 
 namespace APD.Client.Silverlight
@@ -86,6 +88,26 @@ namespace APD.Client.Silverlight
                 e.Handled = true;
                 Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
             }
+
+            try
+            {
+                ILog logger = new DatabaseLogger(new LogEntryWebservicePersister());
+                ErrorLogEntry error = new ErrorLogEntry()
+                {
+                    Message = e.ExceptionObject.ToString(),
+                    Source = sender.GetType().ToString(),
+                    TimeStamp = DateTime.Now
+                };
+
+                logger.WriteEntry(error);
+
+            }
+            catch (Exception)
+            {
+                // We ignore errors to keep application alive
+            }
+            
+
         }
 
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)

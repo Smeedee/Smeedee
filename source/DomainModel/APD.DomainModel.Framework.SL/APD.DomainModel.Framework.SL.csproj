@@ -97,14 +97,10 @@
     <Compile Include="..\APD.DomainModel.Framework\StaticRepositoryCache.cs">
       <Link>StaticRepositoryCache.cs</Link>
     </Compile>
-    <Compile Include="Logging\LogEntryPersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\Impl\" />

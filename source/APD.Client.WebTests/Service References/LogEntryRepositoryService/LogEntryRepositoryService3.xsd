@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework.Logging" />
-  <xs:import schemaLocation="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework.Logging" />
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
   <xs:element name="Log">
     <xs:complexType>
       <xs:sequence>

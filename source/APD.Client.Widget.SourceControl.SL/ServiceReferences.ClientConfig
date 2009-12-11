@@ -9,7 +9,9 @@
                         maxBytesPerRead="0" maxNameTableCharCount="0" />
                     <security mode="None">
                         <transport clientCredentialType="None" proxyCredentialType="None"
-                            realm="" />
+                            realm="">
+                            <extendedProtectionPolicy policyEnforcement="Never" />
+                        </transport>
                         <message clientCredentialType="UserName" algorithmSuite="Default" />
                     </security>
                 </binding>

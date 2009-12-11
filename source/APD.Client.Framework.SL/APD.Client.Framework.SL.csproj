@@ -200,8 +200,14 @@
     <Compile Include="Controls\LoadingAnimation.xaml.cs">
       <DependentUpon>LoadingAnimation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LogEntryWebservicePersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceDictionary\SLXamlReader.cs" />
+    <Compile Include="Service References\LogEntryWebserviceRepository\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\SettingsService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -239,7 +245,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.Framework.Settings.Settings.datasource" />
-    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.disco" />
+    <None Include="Service References\LogEntryWebserviceRepository\configuration91.svcinfo" />
+    <None Include="Service References\LogEntryWebserviceRepository\configuration.svcinfo" />
+    <None Include="Service References\LogEntryWebserviceRepository\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\APD.DomainModel\APD.DomainModel.SL.csproj">
@@ -250,8 +262,13 @@
       <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
       <Name>APD.Framework.SL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework.SL\APD.DomainModel.Framework.SL.csproj">
+      <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
+      <Name>APD.DomainModel.Framework.SL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\LogEntryWebserviceRepository\" />
     <WCFMetadataStorage Include="Service References\SettingsService\" />
   </ItemGroup>
   <ItemGroup>
@@ -270,6 +287,13 @@
     <None Include="Service References\SettingsService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.wsdl" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.xsd" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService1.wsdl" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService1.xsd" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService2.xsd" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService3.xsd" />
     <None Include="Service References\SettingsService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

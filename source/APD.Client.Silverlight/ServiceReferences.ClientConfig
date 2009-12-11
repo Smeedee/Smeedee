@@ -55,6 +55,12 @@
       <endpoint address="http://localhost:1155/Services/VCSCredentialsService.svc"
           binding="basicHttpBinding" bindingConfiguration="basicHttp"
           contract="VCSCredentialsService.VCSCredentialsService" name="CustomBinding_VCSCredentialsService" />
+      
+      <endpoint address="http://localhost:1155/Services/LogEntryRepositoryService.svc"
+      binding="basicHttpBinding" bindingConfiguration="basicHttp"
+      contract="LogEntryWebserviceRepository.LogEntryRepositoryService"
+      name="BasicHttpBinding_LogEntryRepositoryService" />
+    
     </client>
   </system.serviceModel>
 </configuration>

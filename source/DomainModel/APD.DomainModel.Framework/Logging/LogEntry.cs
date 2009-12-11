@@ -6,7 +6,7 @@ using System.Text;
 
 namespace APD.DomainModel.Framework.Logging
 {
-    public abstract class LogEntry
+    public class LogEntry
     {
         private int id;
         public virtual string Source { get; set; }
@@ -14,7 +14,7 @@ namespace APD.DomainModel.Framework.Logging
         public virtual int Severity { get; set; }
         public virtual DateTime TimeStamp { get; set; }
 
-        protected LogEntry() { }
+        public LogEntry() { }
 
         public LogEntry(string source, string message)
         {

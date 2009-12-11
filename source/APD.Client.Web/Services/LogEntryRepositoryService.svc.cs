@@ -35,7 +35,16 @@ namespace APD.Client.Web.Services
         [OperationContract]
         public IEnumerable<LogEntry> Get(Specification<LogEntry> specification)
         {
-            return repo.Get(specification);
+            // TODO: Try to fix this webservice so the select call can be removed. The problem is that the client side 
+            // fails to deserialize the LogEntry hierarchy even with the knowntype attribute set
+            return repo.Get(specification)
+                .Select(le => new LogEntry()
+                {
+                    Message = le.Message, 
+                    Severity = le.Severity, 
+                    Source = le.Source, 
+                    TimeStamp = le.TimeStamp
+                });
         }
     }
 }
