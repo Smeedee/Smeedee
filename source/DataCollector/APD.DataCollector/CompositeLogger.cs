@@ -27,6 +27,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 
 using APD.DomainModel.Framework.Logging;
@@ -67,6 +68,7 @@ namespace APD.DataCollector
         {
             if (VerbosityLevel < entry.Severity) return;
 
+            entry.TimeStamp = DateTime.Now;
             foreach (ILog logger in registeredLoggers)
             {
                 logger.WriteEntry(entry);

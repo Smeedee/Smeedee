@@ -49,10 +49,8 @@ namespace APD.Harvester.SourceControl
 
         private IRepository<Changeset> changesetDbRepository;
         private IRepository<Configuration> configRepository;
-        //Todo change to IPersistDomainModels<Changeset> to match ChangeSetPersister
         private IPersistDomainModels<Changeset> databasePersister;
         private IAssembleRepository<Changeset> csRepositoryFactory;
-
 
         public override string Name
         {
@@ -99,8 +97,7 @@ namespace APD.Harvester.SourceControl
                 }
             }
             else
-                Console.WriteLine("Version Control System not configured");
-            //System.Diagnostics.Debug.WriteLine("added "+ allNewChangesets.Count() + " new changesets");
+                throw new HarvesterConfigurationException("Version Control System not configured");
         }
     }
 

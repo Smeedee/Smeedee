@@ -1,4 +1,5 @@
-﻿#region File header
+﻿
+#region File header
 
 // <copyright>
 // This library is free software; you can redistribute it and/or
@@ -89,6 +90,14 @@ namespace APD.DataCollector
                         infoHolder.Harvester.DispatchDataHarvesting();
                         infoHolder.FailureCounter = 0;
                     }
+                    catch( HarvesterConfigurationException configException)
+                    {
+                        logger.WriteEntry(new WarningLogEntry()
+                        {
+                            Message = configException.Message,
+                            Source = "Scheduler"
+                        });
+                    }
                     catch(Exception ex)
                     {
                         InvokeOnFailedDispatch();
@@ -120,12 +129,6 @@ namespace APD.DataCollector
                 return true;
         }
 
-
-        /// <summary>
-        /// This will be done in a more dynamic way. Bellongs to another Task.
-        /// I believe tuxbear will look at registering harvesters very soon.
-        /// This is a temporary workaround to allow tests to be run.
-        /// </summary>
         public void RegisterHarvesters(IEnumerable<AbstractHarvester> harvesters)
         {
             foreach (AbstractHarvester harvester in harvesters)

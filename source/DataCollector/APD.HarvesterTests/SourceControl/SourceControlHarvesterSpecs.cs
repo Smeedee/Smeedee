@@ -259,7 +259,8 @@ namespace APD.HarvesterTests.SourceControl.SourceControlHarvesterSpecs
     public class When_dispatched_and_VCS_not_configured : Shared
     {
         [Test]
-        public void Assure_nothing_is_harvested()
+        [ExpectedException(typeof(HarvesterConfigurationException))]
+        public void Assure_exception_is_thrown()
         {
             Scenario.StartNew(this, scenario =>
             {

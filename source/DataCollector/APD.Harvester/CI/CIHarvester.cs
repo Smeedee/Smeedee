@@ -29,6 +29,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 using APD.DomainModel.CI;
@@ -83,15 +84,7 @@ namespace APD.Harvester.CI
                 databasePersister.Save(data);
             }
             else
-                Console.WriteLine("Continuous Integration not configured");
-
-            //IEnumerable<CIServer> fetchedServers = projectInfoRepository.Get(new AllSpecification<CIServer>());
-
-            //foreach (var server in fetchedServers)
-            //{
-            //    databasePersister.Save(server);
-            //}
-
+                throw new HarvesterConfigurationException("Continuous Integration not configured");
         }
 
     }

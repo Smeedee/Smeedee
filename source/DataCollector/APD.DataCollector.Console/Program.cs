@@ -53,7 +53,7 @@ namespace APD.DataCollector.Console
 {
     class Program
     {
-        private static readonly string DATABASE_TEST_FILE =
+        private static readonly string DATABASE_FILE =
             Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "smeedeeDB.db");
@@ -64,12 +64,12 @@ namespace APD.DataCollector.Console
             
             ISessionFactory sesFact = null;
 
-            sesFact = NHibernateFactory.AssembleSessionFactory(DATABASE_TEST_FILE);
+            sesFact = NHibernateFactory.AssembleSessionFactory(DATABASE_FILE);
 
             ILog consoleLogger = new ConsoleLogger();
             consoleLogger.VerbosityLevel = 2;
             ILog databaseLogger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>(sesFact));
-            databaseLogger.VerbosityLevel = 0;
+            databaseLogger.VerbosityLevel = 1;
             ILog log = new CompositeLogger(new List<ILog> {consoleLogger, databaseLogger});
 
             var harvesterScheduler = new Scheduler(log);
@@ -84,9 +84,6 @@ namespace APD.DataCollector.Console
             var ciPersister = new GenericDatabaseRepository<CIServer>(sesFact);
             var ciRepositoryFactory = new CIServerRepositoryFactory();
             var ciHarvester = new CIHarvester(ciRepositoryFactory, ciPersister, configRepository);
-
-            //var piPersister = new GenericDatabaseRepository<ProjectInfoServer>(sesFact);
-            //var piHarvester = new ProjectInfoHarvester(piRep, piPersister);
 
             harvesterScheduler.RegisterHarvesters(new List<AbstractHarvester> { csHarvester, ciHarvester, /*piHarvester*/ });
 

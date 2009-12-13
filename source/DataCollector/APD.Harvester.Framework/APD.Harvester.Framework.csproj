@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AbstractHarvester.cs" />
     <Compile Include="Factories\IAssembleRepository.cs" />
+    <Compile Include="HarvesterConfigurationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IManageFileSystems.cs" />
   </ItemGroup>

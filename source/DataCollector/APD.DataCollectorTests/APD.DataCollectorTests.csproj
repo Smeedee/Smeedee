@@ -109,7 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="InvalidDLLs\PretendingToBeADll.dll">
+    <Content Include="Testdata\PretendingToBeADll.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

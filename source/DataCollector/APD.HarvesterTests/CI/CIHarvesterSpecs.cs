@@ -105,7 +105,7 @@ namespace APD.HarvesterTests.CI.CIHarvesterSpecs
             harvester.DispatchDataHarvesting();
         };
     
-        protected GivenSemantics Dependencies_are_created()
+        public GivenSemantics Dependencies_are_created()
         {
             return Given(RepositoryFactory_is_created).
                 And(DatabasePersister_is_created).
@@ -202,37 +202,25 @@ namespace APD.HarvesterTests.CI.CIHarvesterSpecs
     }
 
     [TestFixture]
-    public class When_dispatched_and_CI_is_not_Configured : Shared
+    public class When_dispatched_and_CI_is_not_Configured : ScenarioClass
     {
-        [SetUp]
-        public void Setup()
-        {
-            Scenario("Dispatching Harvester when CI is not configured");
-            Given(Dependencies_are_created()).
-                And(ConfigurationRepository_does_not_contain_CI_Configuration).
-                And(Harvester_is_created);
-
-            When(dispatching);
-        }
-
         [Test]
-        public void Assure_CI_Configuration_is_fetched()
+        [ExpectedException(typeof(HarvesterConfigurationException))]
+        public void Assure_harvesterConfigurationException_Is_thrown()
         {
-            Then(assure_CI_Configuration_is_fetched);
-        }
+                var configRepoMock = new Mock<IRepository<Configuration>>();
+                CIHarvester harvester = null;
 
-        [Test]
-        public void Assure_data_is_not_fetched_from_SourceRepository()
-        {
-            Then("assure data is not fetched from SourceRepository", () =>
-                sourceRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<CIServer>>()), Times.Never()));
-        }
+                Scenario("Dispatching Harvester when CI is not configured");
+                Given("There is no config for CI", ()=> 
+                        configRepoMock.Setup(r => r.Get(It.IsAny<Specification<Configuration>>()))
+                            .Returns(new List<Configuration>())).
+                    And("The harvester is created", ()=> 
+                        harvester = new CIHarvester(new Mock<IAssembleRepository<CIServer>>().Object, new Mock<IPersistDomainModels<CIServer>>().Object, configRepoMock.Object));
 
-        [Test]
-        public void Assure_no_data_is_persisted()
-        {
-            Then("assure no data is persisted", () =>
-                databasePersisterMock.Verify(r => r.Save(It.IsAny<IEnumerable<CIServer>>()), Times.Never()));
+                When("dispacthing", ()=> harvester.DispatchDataHarvesting());
+                Then("assure exception is thrown");
+                StartScenario();
         }
     }
 }

@@ -54,11 +54,6 @@ namespace APD.DataCollector.Service
         private const string SERVICE_DESCRIPTION = "smeedee_dc_service";
         private const string LOG_NAME = "smeedee_dc_Log";
 
-        //private static string DATABASE_TEST_FILE =
-        //    Path.Combine(
-        //        Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-        //        "smeedeeDB.db");
-
         private string databaseFile;
         public string DatabaseFile
         {
