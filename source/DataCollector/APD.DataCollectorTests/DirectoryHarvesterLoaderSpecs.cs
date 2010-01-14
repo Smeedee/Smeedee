@@ -156,7 +156,7 @@ namespace APD.DataCollectorTests.DirectoryHarvesterLoaderSpecs
                     scenario.Given("an invalid dll exists in the directory", ()=>
                     {
                         loggerMock = new Mock<ILog>();
-                        harvesterCatalogLoader = new DirectoryHarvesterCatalogLoader(Path.Combine(Environment.CurrentDirectory,"InvalidDLLs"), loggerMock.Object);
+                        harvesterCatalogLoader = new DirectoryHarvesterCatalogLoader(Path.Combine(Environment.CurrentDirectory,"Testdata"), loggerMock.Object);
                     });
                     scenario.When("harvester catalog has been created", ()=>
                     {
