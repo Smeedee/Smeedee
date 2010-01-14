@@ -70,7 +70,7 @@ namespace APD.DataCollector.Console
             consoleLogger.VerbosityLevel = 2;
             ILog databaseLogger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>(sesFact));
             databaseLogger.VerbosityLevel = 1;
-            ILog log = new CompositeLogger(new List<ILog> {consoleLogger, databaseLogger});
+            ILog log = new CompositeLogger(consoleLogger, databaseLogger);
 
             var harvesterScheduler = new Scheduler(log);
 

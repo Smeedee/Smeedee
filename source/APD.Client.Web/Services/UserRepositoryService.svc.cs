@@ -6,6 +6,7 @@ using System.ServiceModel.Activation;
 using System.Collections.Generic;
 using System.Text;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.Users;
 using APD.Integration.Database.DomainModel.Repositories;
 
@@ -28,13 +29,32 @@ namespace APD.Client.Web.Services
         [ServiceKnownType(typeof(UserdbNameSpecification))]
         public IEnumerable<Userdb> Get(Specification<Userdb> specification)
         {
-            return userRepository.Get(specification);
+            IEnumerable<Userdb> result = new List<Userdb>();
+            try
+            {
+                result = userRepository.Get(specification);
+            }
+            catch (Exception exception)
+            {
+                ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>());
+                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
+            }
+
+            return result;
         }
 
         [OperationContract]
         public void Save(Userdb userdb)
         {
-            userRepository.Save(userdb);
+            try
+            {
+                userRepository.Save(userdb);
+            }
+            catch (Exception exception)
+            {
+                ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>());
+                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
+            }
         }
     }
 }

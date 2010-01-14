@@ -30,6 +30,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using APD.Client.Web.Serialization;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.ProjectInfo;
 using APD.Integration.Database.DomainModel.Repositories;
 using NHibernate;
@@ -64,11 +65,18 @@ namespace APD.Client.Web.Services
         [ServiceKnownType(typeof(AllSpecification<ProjectInfoServer>))]
         public IEnumerable<ProjectInfoServer> Get(Specification<ProjectInfoServer> specification)
         {
-            IEnumerable<ProjectInfoServer> projectInfoServer = repository.Get(specification);
-            var piServers = new List<ProjectInfoServer>();
-            piServers.AddRange(projectInfoServer);
+            IEnumerable<ProjectInfoServer> result = new List<ProjectInfoServer>();
+            try
+            {
+                result = repository.Get(specification);
+            }
+            catch (Exception exception)
+            {
+                ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>());
+                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
+            }
 
-            return piServers;
+            return result;
         }
     }
 }

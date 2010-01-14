@@ -23,11 +23,14 @@
 
 #endregion
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using APD.DomainModel.CI;
 using APD.DomainModel.Framework;
+using APD.DomainModel.Framework.Logging;
 using APD.Integration.Database.DomainModel.Repositories;
 using APD.Framework;
 using APD.Client.Web.Services.Metadata;
@@ -74,7 +77,17 @@ namespace APD.Client.Web.Services
         [ServiceKnownType(typeof (AllSpecification<CIServer>))]
         public IEnumerable<CIServer> Get(Specification<CIServer> specification)
         {
-            var result = repository.Get(specification);
+            IEnumerable<CIServer> result = new List<CIServer>();
+            try
+            {
+                result = repository.Get(specification);
+            }
+            catch (Exception exception)
+            {
+                ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>());
+                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
+            }
+
             return result;
         }
     }

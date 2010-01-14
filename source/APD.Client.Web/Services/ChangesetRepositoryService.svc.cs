@@ -28,6 +28,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+
+using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.Integration.Database.DomainModel.Repositories;
 using APD.DomainModel.Framework;
@@ -57,7 +59,18 @@ namespace APD.Client.Web.Services
         [ServiceKnownType(typeof (ChangesetsAfterRevisionSpecification))]
         public IEnumerable<Changeset> Get(Specification<Changeset> specification)
         {
-            return repository.Get(specification);
+            IEnumerable<Changeset> result = new List<Changeset>();
+            try
+            {
+                result = repository.Get(specification);
+            }
+            catch (Exception exception)
+            {
+                ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>());
+                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
+            }
+
+            return result;
         }
     }
 }

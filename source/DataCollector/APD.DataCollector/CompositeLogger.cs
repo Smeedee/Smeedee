@@ -46,6 +46,13 @@ namespace APD.DataCollector
             this.registeredLoggers = new List<ILog>();
         }
 
+        public CompositeLogger(params ILog[] loggers)
+        {
+            VerbosityLevel = int.MaxValue;
+            this.registeredLoggers = new List<ILog>();
+            RegisterLoggers(loggers); 
+        }
+
         public CompositeLogger(IEnumerable<ILog> loggers)
         {
             VerbosityLevel = int.MaxValue;

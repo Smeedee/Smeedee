@@ -27,7 +27,10 @@ using System;
 using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+
+using APD.DomainModel.Framework.Logging;
 using APD.Framework.Settings;
+using APD.Integration.Database.DomainModel.Repositories;
 
 
 namespace APD.Client.Web.Services
@@ -51,35 +54,36 @@ namespace APD.Client.Web.Services
             }
         }
 
+        [OperationContract]
+        public Settings GetSettings()
+        {
+            Settings result = new Settings();
+            try
+            {
+                string settingsFilePath = GetServerSettingsFilePath();
+
+                string xmlData = string.Empty;
+                using (var reader = new StreamReader(settingsFilePath))
+                {
+                    xmlData = reader.ReadToEnd();
+                }
+
+                result = Settings.Deserialize(xmlData);
+            }
+            catch (Exception exception)
+            {
+                ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>());
+                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
+            }
+
+            return result;
+        }
+        
         private string GetServerSettingsFilePath()
         {
             string appDirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string settingsFilePath = System.IO.Path.Combine(appDirPath, settingsFileName);
             return settingsFilePath;
-        }
-
-        [OperationContract]
-        public Settings GetSettings()
-        {
-            string settingsFilePath = GetServerSettingsFilePath();
-
-            if (!File.Exists(settingsFilePath))
-                return new Settings();
-
-            string xmlData = string.Empty;
-            try
-            {
-                using (var reader = new StreamReader(settingsFilePath))
-                {
-                    xmlData = reader.ReadToEnd();
-                }
-            }
-            catch (Exception)
-            {
-                return new Settings();
-            }
-
-            return Settings.Deserialize(xmlData);
         }
     }
 }
