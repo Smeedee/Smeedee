@@ -10,6 +10,24 @@
 		<Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id='ProgramFilesFolder' Name='ProgramFiles'>
         <Directory Id="INSTALLLOCATION" Name="Smeedee">
+          <Directory Id="service" Name="bin">
+            <Component Id="DataCollectorServiceInstall" Guid="c462e427-41d7-4c9c-8767-56fd2dd83596">
+
+              <File Id="APD.DataCollector.Service.exe_66" Name="Data Collector Service.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Service.exe" />
+
+
+              <ServiceInstall Id="APD.DataCollector.Service.exe" Name="ServiceInstaller"
+                              DisplayName="Smeedee Data Collector Service"
+                              Description="Populates the database for the Smeedee application"
+                              Type="ownProcess" Interactive="no" Start="auto" Vital="yes" ErrorControl="normal"/>
+
+              <ServiceControl Id="APD.DataCollector.Service.exe" Name="ServiceControl" Start="install"
+                              Stop="uninstall" Remove="uninstall" Wait="yes"/>
+
+            </Component>
+          </Directory>
+          
+          
           <Directory Id="ProgramMenuFolder" Name="Programs">
             <!--<Directory Id="ProgramMenuDirLev1" Name="Smeedee">
               <Component Id="ProgramMenuDataCollectorConsoleAppShortcut" Guid="{F68EFE5A-12D6-424D-970D-275CD783E09B}">
@@ -44,20 +62,7 @@
               <Condition>1</Condition>
             </Component>
           </Directory>-->
-          <!--<Directory Id="DataCollector_1" Name="DataCollectorService">
-            <Component Id="DataCollectorServiceInstall" Guid="c462e427-41d7-4c9c-8767-56fd2dd83596">
-              --><!-- TODO: Insert your files, registry keys, and other resources here. --><!--
-              <File Id="APD.DataCollector.Service.exe_1" Name="Data Collector Service.exe"
-                    Source="..\..\build\bin\temp\installer\bin\APD.DataCollector.Service.exe" />-->
-             <!--
-              <ServiceInstall Id="APD.DataCollector.Service.exe_1" Name="Data Collector Service.exe"
-                              DisplayName="Data Collector Service"
-                              Description="Populates the database for the Smeedee application"
-                              Type="ownProcess" Interactive="no" Start="auto" Vital="yes" ErrorControl="normal"/>
-              <ServiceControl Id="APD.DataCollector.Service.exe_1" Name="Data Collector Service.exe" Start="install"
-                              Stop="uninstall" Remove="uninstall" Wait="yes"/>-->
-            <!--</Component>-->
-          <!--</Directory>-->
+
         </Directory>
       </Directory>
       
@@ -71,9 +76,12 @@
             <Permission GenericAll="yes" User="Administrators"/>
           </File>
         </Component>
+
+
+
       </Directory>
 
-      <Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
+      <!--<Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
         <iis:WebVirtualDir Id="SmeedeeVirtualDir" Alias="Smeedee" Directory="INSTALLLOCATION" WebSite="SmeedeeWebSite">
           <iis:MimeMap Id="SilverligthMimeType" Extension=".xap" Type="application/x-silverlight-app"/>
           <iis:WebApplication Id="SmeedeeWebApp" Name="Smeedee">
@@ -86,10 +94,12 @@
           <iis:WebDirProperties Id="APDWebDirProperties" Execute="yes" Script="yes" Read="yes" WindowsAuthentication="no"
                                 AnonymousAccess="yes" IIsControlledPassword="yes" />
         </iis:WebVirtualDir>
-      </Component>
+      </Component>-->
 
     </Directory>
+    
 
+    
     <iis:WebSite Id='SmeedeeWebSite' Description='Smeedee Web Site'>
       <iis:WebAddress Id='SmeedeeWebSiteAddr' Port='80' />
     </iis:WebSite>
@@ -108,14 +118,19 @@
     
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
     <UIRef Id="InstallationUI"/>
-    <Feature Id="ProductFeature" Title="Smeedee" Level="1">
+    <Feature Id="ProductFeature" Title="Smeedee Core Components" Level="1" TypicalDefault="install"
+             Description="This installs the needed components for Smeedee to work. It will install a website in IIS to host the Smeedee Silverligte client application and the Webservices it needs.">
       <ComponentGroupRef Id="generated_components"/>
       <!--<ComponentRef Id="ProgramMenuDataCollectorConsoleAppShortcut" />
       <ComponentRef Id="StartupDataCollectorConsoleAppShortcut" />
       <ComponentRef Id="DesktopDataCollectorConsoleAppShortcut" />-->
-      <ComponentRef Id="IISSmeedeeApplication" />
-      <!--<ComponentRef Id="DataCollectorServiceInstall" />-->
+      <!--<ComponentRef Id="IISSmeedeeApplication" />-->
+      
       <ComponentRef Id="SmeedeeDB"/>
 		</Feature>
+    <Feature Id="windows_service" Title="Windows Service Data Collector" Level="1" TypicalDefault="install"
+             Description="Installs the Smeedee Data Collector as a windows service. If you do not install this feature you will have to manually start the console based Data Collector to poulate the Smeedee database.">
+      <ComponentRef Id="DataCollectorServiceInstall" />
+    </Feature>
 	</Product>
 </Wix>

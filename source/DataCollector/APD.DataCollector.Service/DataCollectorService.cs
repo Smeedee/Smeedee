@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.ServiceProcess;
 
 using APD.DomainModel.Framework.Logging;
@@ -54,6 +55,8 @@ namespace APD.DataCollector.Service
         private const string SERVICE_DESCRIPTION = "smeedee_dc_service";
         private const string LOG_NAME = "smeedee_dc_Log";
 
+        private Dictionary<string, Assembly> SmeedeeAssemblies = new Dictionary<string, Assembly>();
+
         private string databaseFile;
         public string DatabaseFile
         {
@@ -65,21 +68,52 @@ namespace APD.DataCollector.Service
             set { databaseFile = value; }
         }
 
-        private static bool runningFlag = false;
         private string commonAppPath;
 
         public DataCollectorService()
         {
             InitializeComponent();
 
+            //AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+
             if (!EventLog.SourceExists(SERVICE_DESCRIPTION))
             {
                 EventLog.CreateEventSource(SERVICE_DESCRIPTION, LOG_NAME);
+                EventLog.WriteEntry("Created smeedee Data Collector Service", EventLogEntryType.Information);
+            }
+        }
+
+        Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            EventLog.WriteEntry("Resolving dependency: " + args.Name, EventLogEntryType.Information);
+            return SmeedeeAssemblies[args.Name];
+        }
+
+        private void IndexDependencies()
+        {
+            SmeedeeAssemblies.Clear();
+            var smeedeeBinDir = Assembly.GetExecutingAssembly().Location;
+            EventLog.WriteEntry("Current assembly Location: " + smeedeeBinDir, EventLogEntryType.Information);
+            var smeedeeBinDir2 = AppDomain.CurrentDomain.BaseDirectory;
+            EventLog.WriteEntry("Basedir: " + smeedeeBinDir2, EventLogEntryType.Information);
+            EventLog.WriteEntry("Getassebly: " + Assembly.GetAssembly(GetType()).Location, EventLogEntryType.Information);
+            EventLog.WriteEntry("Fullname: " + Assembly.GetExecutingAssembly().FullName, EventLogEntryType.Information);
+
+
+            var assemblyPaths = Directory.GetFiles(smeedeeBinDir, "*.dll");
+
+            foreach (var assemblyPath in assemblyPaths)
+            {
+                EventLog.WriteEntry("Indexed dependency: " + assemblyPath, EventLogEntryType.Information);
+                var assembly = Assembly.LoadFile(assemblyPath);
+                SmeedeeAssemblies.Add(assembly.FullName, assembly);
             }
         }
 
         protected override void OnStart(string[] args)
         {
+            EventLog.WriteEntry("Starting smeedee Data Collector Service", EventLogEntryType.Information);
+
             if(args.Length < 1 || String.IsNullOrEmpty(args[0]))
             {
                 DatabaseFile = "smeedeeDB.db";
@@ -89,7 +123,9 @@ namespace APD.DataCollector.Service
                 DatabaseFile = args[0];
             }
 
-            EventLog.WriteEntry("Starting smeedee Data Collector Service", EventLogEntryType.Information);
+            EventLog.WriteEntry("Using database file: " + DatabaseFile, EventLogEntryType.Information);
+
+            //IndexDependencies();
 
             RunHarvesters();
 
@@ -104,33 +140,28 @@ namespace APD.DataCollector.Service
 
         private void RunHarvesters()
         {
-            ISessionFactory sesFact = null;
-            sesFact = NHibernateFactory.AssembleSessionFactory(databaseFile);
 
-            ILog consoleLogger = new ConsoleLogger();
-            consoleLogger.VerbosityLevel = 2;
-            ILog databaseLogger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>(sesFact));
-            databaseLogger.VerbosityLevel = 1;
-            ILog log = new CompositeLogger(new List<ILog> {consoleLogger, databaseLogger});
+            ISessionFactory sesFact = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
 
-            var harvesterScheduler = new Scheduler(log);
+            ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>(sesFact));
+
+            var harvesterScheduler = new Scheduler(logger);
 
             var configRepository = new GenericDatabaseRepository<Configuration>();
+            
             var csDatabase = new GenericDatabaseRepository<Changeset>(sesFact);
             var csPersister = new ChangesetPersister(sesFact);
             var repositoryFactory = new ChangesetRepositoryFactory();
             var csHarvester = new SourceControlHarvester(csDatabase, configRepository, csPersister, repositoryFactory);
 
-            var ciRep = new CCServerRepository("http://agileprojectdashboard.org/ccnet/",
-                                                new SocketXMLBuildlogRequester());
             var ciPersister = new GenericDatabaseRepository<CIServer>(sesFact);
             var ciRepositoryFactory = new CIServerRepositoryFactory();
             var ciHarvester = new CIHarvester(ciRepositoryFactory, ciPersister, configRepository);
 
-            var piPersister = new GenericDatabaseRepository<ProjectInfoServer>(sesFact);
+            harvesterScheduler.RegisterHarvesters(new List<AbstractHarvester> { csHarvester, ciHarvester });
 
-            harvesterScheduler.RegisterHarvesters(
-                new List<AbstractHarvester> {csHarvester, ciHarvester});
+            EventLog.WriteEntry("Harvesters started", EventLogEntryType.Information);
+
         }
     }
 }
