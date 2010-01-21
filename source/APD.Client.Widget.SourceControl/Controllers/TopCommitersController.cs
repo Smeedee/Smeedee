@@ -40,6 +40,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
         private IEnumerable<User> allUsers;
         private IRepository<User> userRepository;
 
+
         public TopCommitersController(INotifyWhenToRefresh refreshNotifier,
                                       IRepository<Changeset> changesetRepository, 
                                       IRepository<User> userRepository,
@@ -55,6 +56,8 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qAllChangesets)
         {
+            qAllChangesets = qAllChangesets.Where(c => c != null && c.Author != null && c.Author.Username != null);
+
             var committers = ( from changeset in qAllChangesets
                       group changeset by changeset.Author.Username
                       into g

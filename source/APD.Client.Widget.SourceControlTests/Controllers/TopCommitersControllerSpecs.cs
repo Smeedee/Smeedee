@@ -52,6 +52,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
         protected static TopCommitersController controller;
         protected static Mock<INotifyWhenToRefresh> iNotifyWhenToRefreshMock;
         protected static Mock<IRepository<User>> userRepositoryMock;
+        protected static Mock<ILog> logger = new Mock<ILog>();
 
         protected Context a_new_changeset_is_committed = () =>
         {
@@ -103,6 +104,43 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
                 Returns(GenerateChangesetData()).Callback(
                 () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
+        };
+
+        protected Context there_are_changesets_with_null_Author = () =>
+        {
+            changesetRepositoryMock = new Mock<IRepository<Changeset>>();
+
+            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
+                Returns(new List<Changeset>
+                {
+                    new Changeset
+                    {
+                        Revision = 1,
+                        Time = new DateTime(1981, 9, 1),
+                        Comment = "Repository created",
+                        Author = null
+                    },
+                    new Changeset
+                    {
+                        Revision = 2,
+                        Time = new DateTime(1981, 9, 2),
+                        Comment = "Repository updated",
+                        Author = new Author(null)
+                    },
+                    new Changeset
+                    {
+                        Revision = 3,
+                        Time = new DateTime(1981, 9, 3),
+                        Comment = "Repository updated some more",
+                        Author = new Author("tuxbear")
+                    }
+                });
+        };
+
+        protected Context there_are_no_users_in_userdb = () =>
+        {
+            userRepositoryMock = new Mock<IRepository<User>>();
+            userRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<User>>())).Returns(new List<User>());
         };
 
         protected Context there_are_users_in_userdb = () =>
@@ -182,7 +220,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                                                     userRepositoryMock.Object,
                                                     new NoUIInvocation(),
                                                     new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
-                                                    new DatabaseLogger(new LogEntryMockPersister()));
+                                                    logger.Object);
         }
     }
 
@@ -237,6 +275,24 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                     "assure data loading is performed on the supplied thread (this case: current thread)",
                     () =>
                     changesetRepositoryGetThreadId.ShouldBe(Thread.CurrentThread.ManagedThreadId));
+            });
+        }
+
+        [Test]
+        public void Assure_controller_can_handle_null_author()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_no_users_in_userdb).
+                    And(there_are_changesets_with_null_Author)
+                    .And(the_Controller_is_spawned);
+
+                scenario.When("Loading data");
+
+                scenario.Then("No Exception should be thrown",() =>
+                {
+                    logger.Verify(l=>l.WriteEntry(It.IsAny<LogEntry>()), Times.Never());
+                });
             });
         }
     }
