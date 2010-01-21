@@ -33,7 +33,6 @@ using System.Linq;
 using System.Threading;
 using APD.DomainModel.CI;
 using APD.Integration.CI.CruiseControl.DomainModel.Repositories;
-using APD.IntegrationTests.CI.CruiseControl.Tests;
 
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;

@@ -218,6 +218,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="CI\CruiseControl\DomainModel\Repositories\TestData\forced_unknown.xml" />
     <Content Include="CI\TeamCity\TestData\NoProjects.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

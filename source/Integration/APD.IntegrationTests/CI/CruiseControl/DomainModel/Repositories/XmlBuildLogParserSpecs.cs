@@ -29,7 +29,6 @@
 
 using APD.DomainModel.CI;
 using APD.Integration.CI.CruiseControl.DomainModel.Repositories;
-using APD.IntegrationTests.CI.CruiseControl.Tests;
 
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
@@ -99,8 +98,20 @@ namespace APD.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.XmlBuil
         [Test]
         public void should_have_eventtrigger_and_unknown_status()
         {
-            Build build = parser.Parse(Resource.forced_exception);
+            Build build = parser.Parse(Resource.forced_unknown);
             Assert.IsTrue(build.Status == BuildStatus.Unknown);
+            build.Trigger.ShouldBeInstanceOfType<EventTrigger>();
+        }
+    }
+
+    [TestFixture]
+    public class when_build_is_forced_and_has_exception_result : Shared
+    {
+        [Test]
+        public void should_have_eventtrigger_and_finishedwithfailure_status()
+        {
+            Build build = parser.Parse(Resource.forced_exception);
+            Assert.IsTrue(build.Status == BuildStatus.FinishedWithFailure);
             build.Trigger.ShouldBeInstanceOfType<EventTrigger>();
         }
     }
