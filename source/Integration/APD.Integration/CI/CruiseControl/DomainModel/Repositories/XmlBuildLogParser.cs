@@ -73,6 +73,7 @@ namespace APD.Integration.CI.CruiseControl.DomainModel.Repositories
                     return BuildStatus.FinishedSuccefully;
 
                 case "Failure":
+                case "Exception":
                     return BuildStatus.FinishedWithFailure;
 
                 default:

@@ -35,7 +35,7 @@ namespace APD.Integration.CI.CruiseControl.DomainModel.Repositories
 {
     public class XmlServerReportParser
     {
-        Dictionary<string, Build> buildCache = new Dictionary<string, Build>();
+        private static Dictionary<string, Build> buildCache = new Dictionary<string, Build>();
         private XmlDocument xmlDocument;
 
         public IEnumerable<CIProject> Parse(string inputXmlString)
@@ -171,6 +171,7 @@ namespace APD.Integration.CI.CruiseControl.DomainModel.Repositories
                     case "Success":
                         return BuildStatus.FinishedSuccefully;
                     case "Failure":
+                    case "Exception":
                         return BuildStatus.FinishedWithFailure;
                     default:
                         return BuildStatus.Unknown;
