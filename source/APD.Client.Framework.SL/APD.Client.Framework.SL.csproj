@@ -188,6 +188,9 @@
     <Compile Include="..\APD.Client.Framework\VisibleModule.cs">
       <Link>VisibleModule.cs</Link>
     </Compile>
+    <Compile Include="Controls\CircularTailLoadingAnimation.xaml.cs">
+      <DependentUpon>CircularTailLoadingAnimation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DataTemplateMapping.cs" />
     <Compile Include="Controls\IDataTemplateSelector.cs" />
     <Compile Include="Controls\HorizontalLoadingAnimation.xaml.cs">
@@ -224,6 +227,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Resource>
+    <Page Include="Controls\CircularTailLoadingAnimation.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\HorizontalLoadingAnimation.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>

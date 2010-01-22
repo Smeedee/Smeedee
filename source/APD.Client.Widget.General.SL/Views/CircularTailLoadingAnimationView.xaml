@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="APD.Client.Widget.General.SL.Views.CircularTailLoadingAnimationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:APD_Client_Framework_SL_Controls="clr-namespace:APD.Client.Framework.SL.Controls;assembly=APD.Client.Framework.SL">
+    <Grid x:Name="LayoutRoot" Background="{x:Null}">
+        <APD_Client_Framework_SL_Controls:CircularTailLoadingAnimation x:Name="loadingAnimation" 
+               Width="Auto" 
+               Height="Auto" 
+               Opacity="0.5"/>
+    </Grid>
+</UserControl>

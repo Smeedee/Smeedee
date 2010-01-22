@@ -39,9 +39,14 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch" 
             Visibility="Collapsed"/>-->
-        <local:HorizontalLoadingAnimationView x:Name="loadingAnimationView"
+      <!--  <local:HorizontalLoadingAnimationView x:Name="loadingAnimationView"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch" 
-            Visibility="Visible"/>
+            Visibility="Visible"/> -->
+        
+         <local:CircularTailLoadingAnimationView x:Name="loadingAnimationView"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch" 
+            Visibility="Visible"/>        
     </Grid>
 </UserControl>
