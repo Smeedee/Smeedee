@@ -65,9 +65,9 @@ namespace APD.Client.Widget.SourceControl.Controllers
             LoadData();
         }
 
-        protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qAllChangesets)
+        protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets)
         {
-            var commitStatisticsForDates = (from changeset in qAllChangesets
+            var commitStatisticsForDates = (from changeset in qChangesets
                                             where changeset.Time.Date > DateTime.Now.AddDays(-14)
                                             group changeset by changeset.Time.Date
                                                 into g

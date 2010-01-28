@@ -59,18 +59,23 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         protected void LoadData()
         {
+            LoadData(new AllChangesetsSpecification());
+        }
+
+        protected void LoadData(Specification<Changeset> specification)
+        {
             if (!ViewModel.IsLoading)
             {
                 ViewModel.IsLoading = true;
                 asyncClient.RunAsyncVoid(() =>
                 {
-                    var qAllChangesets = QueryAllChangesets();
+                    var changesets = QueryChangesets(specification);
 
                     uiInvoker.Invoke(() =>
                     {
                         try
                         {
-                            LoadDataIntoViewModel(qAllChangesets);
+                            LoadDataIntoViewModel(changesets);
                         }
                         catch (Exception e)
                         {
@@ -89,25 +94,38 @@ namespace APD.Client.Widget.SourceControl.Controllers
         }
 
 
-        protected IEnumerable<Changeset> QueryAllChangesets()
+        protected IEnumerable<Changeset> QueryChangesets(Specification<Changeset> specification)
         {
             IEnumerable<Changeset> changesets = null;
             try
             {
-                changesets = changesetRepository.Get(new AllChangesetsSpecification());
+                changesets = changesetRepository.Get(specification);
                 ViewModel.HasConnectionProblems = false;
                 AfterQueryAllChangesets();
             }
-            catch
+            catch (Exception e)
             {
+                logger.WriteEntry(new LogEntry()
+                {
+                    Message = e.ToString(),
+                    Source = this.GetType().ToString(),
+                    TimeStamp = DateTime.Now
+                });
                 ViewModel.HasConnectionProblems = true;
             }
 
+            if (changesets == null)
+            {
+                throw new ImplementationViolationException(
+                    "Violation of IChangesetRepository. Does not accept a null reference as a return value.");
+            }
+
             return changesets;
+
         }
 
 
-        protected abstract void LoadDataIntoViewModel(IEnumerable<Changeset> qAllChangesets);
+        protected abstract void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets);
 
         protected abstract override void OnNotifiedToRefresh(object sender, RefreshEventArgs e);
 
@@ -115,5 +133,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
         {
             
         }
+
+        
     }
 }

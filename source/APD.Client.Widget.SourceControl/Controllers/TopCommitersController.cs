@@ -23,7 +23,9 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.ViewModels;
@@ -39,6 +41,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
     {
         private IEnumerable<User> allUsers;
         private IRepository<User> userRepository;
+        private long lastRevision = 1;
 
 
         public TopCommitersController(INotifyWhenToRefresh refreshNotifier,
@@ -54,11 +57,17 @@ namespace APD.Client.Widget.SourceControl.Controllers
         }
 
 
-        protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qAllChangesets)
+        protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets)
         {
-            qAllChangesets = qAllChangesets.Where(c => c != null && c.Author != null && c.Author.Username != null);
+            qChangesets = qChangesets.Where(c => c != null && c.Author != null && c.Author.Username != null);
 
-            var committers = ( from changeset in qAllChangesets
+            if (qChangesets != null && qChangesets.Count() != 0)
+            {
+                lastRevision = qChangesets.OrderByDescending(c => c.Revision).First().Revision;
+            }
+
+
+            var committers = ( from changeset in qChangesets
                       group changeset by changeset.Author.Username
                       into g
                           select new CodeCommiterViewModel(ViewModel.Invoker)
@@ -66,9 +75,13 @@ namespace APD.Client.Widget.SourceControl.Controllers
                                      Username = g.Key, 
                                      Firstname = g.Key,
                                      NumberOfCommits = g.Count()
-                                 }).OrderByDescending(r => r.NumberOfCommits);
+                                 });
 
-            if (HasUpdatedChangesets(committers))
+            var mergedCommiters = GetMergedCommiters(committers);
+
+            committers = mergedCommiters.OrderByDescending(c => c.NumberOfCommits);
+            
+            if (HasUpdatedChangesets((IOrderedEnumerable<CodeCommiterViewModel>) committers))
             {
                 ViewModel.Data.Clear();
                 foreach (var committer in committers)
@@ -87,7 +100,52 @@ namespace APD.Client.Widget.SourceControl.Controllers
             }
             else
             {
-                UpdateNumberOfCommits(committers);
+                UpdateNumberOfCommits((IOrderedEnumerable<CodeCommiterViewModel>) committers);
+            }
+        }
+
+        private ObservableCollection<CodeCommiterViewModel> GetMergedCommiters(IEnumerable<CodeCommiterViewModel> committers) {
+            var mergedCommiters = UpdateOldCommiters(committers);
+
+            AddNewCommiters(committers, mergedCommiters);
+            
+            return mergedCommiters;
+        }
+
+        private ObservableCollection<CodeCommiterViewModel> UpdateOldCommiters(IEnumerable<CodeCommiterViewModel> committers)
+        {
+            var mergedCommiters = new ObservableCollection<CodeCommiterViewModel>();
+            foreach (var oldCommiter in ViewModel.Data)
+            {
+                foreach (var newCommiter in committers)
+                {
+                    if (oldCommiter.Username.Equals(newCommiter.Username))
+                    {
+                        oldCommiter.NumberOfCommits += newCommiter.NumberOfCommits;
+                    }
+                }
+                mergedCommiters.Add(oldCommiter);
+            }
+            return mergedCommiters;
+        }
+
+        private static void AddNewCommiters(IEnumerable<CodeCommiterViewModel> committers, ICollection<CodeCommiterViewModel> mergedCommiters)
+        {
+            foreach (var newCommiter in committers)
+            {
+                var exists = false;
+                foreach (var mergedCommiter in mergedCommiters)
+                {
+                    if (mergedCommiter.Username.Equals(newCommiter.Username))
+                    {
+                        exists = true;
+                    }
+                }
+             
+                if (!exists)
+                {
+                    mergedCommiters.Add(newCommiter);    
+                }
             }
         }
 
@@ -103,7 +161,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         protected override void OnNotifiedToRefresh(object sender, RefreshEventArgs e)
         {
-            LoadData();
+            LoadData(new ChangesetsAfterRevisionSpecification(lastRevision));
         }
  
         protected bool HasUpdatedChangesets(IOrderedEnumerable<CodeCommiterViewModel> committers)

@@ -69,6 +69,10 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                 }
             });
 
+            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).
+                Returns(changesets.Where(c => c.Revision == 4)).Callback(
+                () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
+
             changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
                 Returns(changesets).Callback(
                 () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
@@ -80,7 +84,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
 
             changesets.Add(new Changeset
             {
-                Revision = 4,
+                Revision = 5,
                 Time = new DateTime(1981, 11, 1),
                 Comment = "Added support for superfeature",
                 Author = new Author
@@ -88,6 +92,10 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                     Username = "heine"
                 }
             });
+
+            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<ChangesetsAfterRevisionSpecification>())).
+                Returns(changesets.Where(c => c.Revision == 5)).Callback(
+                () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
 
             changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
                 Returns(changesets).Callback(
@@ -101,7 +109,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
         {
             changesetRepositoryMock = new Mock<IRepository<Changeset>>();
 
-            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
+            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).
                 Returns(GenerateChangesetData()).Callback(
                 () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
         };
@@ -110,7 +118,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
         {
             changesetRepositoryMock = new Mock<IRepository<Changeset>>();
 
-            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
+            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).
                 Returns(new List<Changeset>
                 {
                     new Changeset
@@ -233,6 +241,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
     [TestFixture]
     public class Controller_is_spawned : Shared
     {
+        // TODO: Update for specification > 1
         [Test]
         public void Assure_it_query_ChangesetRepository_for_all_changesets()
         {
@@ -250,7 +259,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                                                                                             r.Get(
                                                                                                 It.IsAny
                                                                                                     <
-                                                                                                    AllChangesetsSpecification
+                                                                                                    Specification<Changeset>
                                                                                                     >()),
                                                                                             Times.Once()));
             });
@@ -417,7 +426,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                                                                                r.Get(
                                                                                    It.IsAny
                                                                                        <
-                                                                                       AllChangesetsSpecification
+                                                                                       Specification<Changeset>
                                                                                        >()), Times.Exactly(2)));
             });
         }
