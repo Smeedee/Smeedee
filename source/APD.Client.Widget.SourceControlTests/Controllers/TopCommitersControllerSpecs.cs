@@ -241,7 +241,6 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
     [TestFixture]
     public class Controller_is_spawned : Shared
     {
-        // TODO: Update for specification > 1
         [Test]
         public void Assure_it_query_ChangesetRepository_for_all_changesets()
         {
