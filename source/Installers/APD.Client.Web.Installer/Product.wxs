@@ -80,7 +80,7 @@
 
       </Directory>
 
-      <!--<Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
+      <Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
         <iis:WebVirtualDir Id="SmeedeeVirtualDir" Alias="Smeedee" Directory="INSTALLLOCATION" WebSite="SmeedeeWebSite">
           <iis:MimeMap Id="SilverligthMimeType" Extension=".xap" Type="application/x-silverlight-app"/>
           <iis:WebApplication Id="SmeedeeWebApp" Name="Smeedee">
@@ -93,7 +93,7 @@
           <iis:WebDirProperties Id="APDWebDirProperties" Execute="yes" Script="yes" Read="yes" WindowsAuthentication="no"
                                 AnonymousAccess="yes" IIsControlledPassword="yes" />
         </iis:WebVirtualDir>
-      </Component>-->
+      </Component>
 
     </Directory>
     
@@ -122,7 +122,7 @@
       <!--<ComponentRef Id="ProgramMenuDataCollectorConsoleAppShortcut" />
       <ComponentRef Id="StartupDataCollectorConsoleAppShortcut" />
       <ComponentRef Id="DesktopDataCollectorConsoleAppShortcut" />-->
-      <!--<ComponentRef Id="IISSmeedeeApplication" />-->
+      <ComponentRef Id="IISSmeedeeApplication" />
       
       <ComponentRef Id="SmeedeeDB"/>
 		</Feature>
