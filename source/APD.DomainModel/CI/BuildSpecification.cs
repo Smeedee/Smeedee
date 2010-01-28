@@ -83,34 +83,4 @@ namespace APD.DomainModel.CI
             return build => build.Project.SystemId.Equals(project.SystemId);
         }
     }
-
-    // NOTE: Old specifications, being phased out.
-    public abstract class BuildSpecification
-    {
-        public abstract bool IsSatisfiedBy(Build build);
-    }
-
-    public class AllBuildsByUser : BuildSpecification
-    {
-        private readonly string username;
-
-        public AllBuildsByUser(string username)
-        {
-            this.username = username;
-        }
-
-        public override bool IsSatisfiedBy(Build build)
-        {
-            var trigger = build.Trigger as CodeModifiedTrigger;
-
-            if (trigger != null)
-            {
-                return trigger.InvokedBy == username;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
 }

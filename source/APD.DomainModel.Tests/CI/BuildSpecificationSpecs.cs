@@ -41,44 +41,4 @@ namespace APD.DomainModel.CI.BuildSpecificationSpecs
             spec.IsSatisfiedBy(null).ShouldBeTrue();
         }
     }
-
-    [TestFixture]
-    public class allBuildsByUserSpecification
-    {
-        [Test]
-        public void should_return_true_when_users_match()
-        {
-            var build = new Build
-                        {
-                            Trigger = new CodeModifiedTrigger("tuxbear")
-                        };
-            var spec = new AllBuildsByUser("tuxbear");
-
-            spec.IsSatisfiedBy(build).ShouldBeTrue();
-        }
-
-        [Test]
-        public void should_return_false_when_users_dont_match()
-        {
-            var build = new Build
-            {
-                Trigger = new CodeModifiedTrigger("torstn")
-            };
-            var spec = new AllBuildsByUser("tuxbear");
-
-            spec.IsSatisfiedBy(build).ShouldBeFalse();
-        }
-
-        [Test]
-        public void should_return_false_when_trigger_is_not_codemodifiedtrigger()
-        {
-            var build = new Build
-            {
-                Trigger = new UnknownTrigger()
-            };
-            var spec = new AllBuildsByUser("tuxbear");
-
-            spec.IsSatisfiedBy(build).ShouldBeFalse();
-        }
-    }
 }

@@ -73,7 +73,6 @@ namespace APD.Client.Web.Services
         }
 
         [OperationContract]
-        [ServiceKnownType(typeof (BuildSpecification))]
         [ServiceKnownType(typeof (AllSpecification<CIServer>))]
         public IEnumerable<CIServer> Get(Specification<CIServer> specification)
         {
