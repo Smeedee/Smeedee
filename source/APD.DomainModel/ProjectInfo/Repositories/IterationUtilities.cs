@@ -51,24 +51,11 @@ namespace APD.DomainModel.ProjectInfo.Repositories
 
         public static IList<Task> GetNewlyCreatedTasks(IList<Task> oldTasks, IList<Task> newTasks)
         {
-            var newlyCreatedTasks = new List<Task>();
-            newlyCreatedTasks.AddRange(newTasks);
-
-            // TODO: Rewrite to LINQ!
-            for (int i = 0; i < newlyCreatedTasks.Count; i++)
-            {
-                Task taskFromMingle = newlyCreatedTasks.ElementAt(i);
-                foreach (Task oldTask in oldTasks)
-                {
-                    if (taskFromMingle.Name == oldTask.Name)
-                    {
-                        newlyCreatedTasks.Remove(taskFromMingle);
-                        i--;
-                    }
-                }
-            }
-
-            return newlyCreatedTasks;
+            var newlyCreatedTasks = (from task in newTasks
+                where ! (from oldTask in oldTasks select oldTask.Name).Contains(task.Name)
+                select task);
+             
+            return newlyCreatedTasks.ToList();
         }
 
         public static IList<Task> GetUpdatedTasks(IList<Task> oldTasks, IList<Task> newTasks)
