@@ -18,8 +18,8 @@
           <Publish Event="DoAction" Value="OpenWebSite">
             <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change")]]>
           </Publish>
-          <Publish Event="DoAction" Value="LaunchDataCollector">
-            <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change")]]> AND (LAUNCHDATACOLLECTOR = 1)
+          <Publish Event="DoAction" Value="StartService">
+            <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change") And (windows_service = 3)]]> AND (START_SERVICE = 1)
           </Publish>
         </Control>
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUICancel)" />
@@ -28,9 +28,9 @@
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
         <Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />
         <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />
-        <!--<Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="LAUNCHDATACOLLECTOR" Hidden="yes" CheckBoxValue="1" Text="Launch Data Collector">
+        <Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="START_SERVICE" Hidden="yes" CheckBoxValue="1" Text="Start Data Collector Service">
           <Condition Action="show">NOT Installed</Condition>
-        </Control>-->
+        </Control>
       </Dialog>
 
       <InstallUISequence>

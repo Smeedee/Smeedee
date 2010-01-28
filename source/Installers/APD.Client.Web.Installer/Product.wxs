@@ -13,15 +13,14 @@
           <Directory Id="service" Name="bin">
             <Component Id="DataCollectorServiceInstall" Guid="c462e427-41d7-4c9c-8767-56fd2dd83596">
 
-              <File Id="APD.DataCollector.Service.exe_66" Name="Data Collector Service.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Service.exe" />
+              <File Id="APD.DataCollector.Service.exe_service" Name="Data Collector Service.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Service.exe" />
 
-
-              <ServiceInstall Id="APD.DataCollector.Service.exe" Name="ServiceInstaller"
-                              DisplayName="Smeedee Data Collector Service"
+              <ServiceInstall Id="APD.DataCollector.Service.exe_service" Name="ServiceInstaller"
+                              DisplayName="Smeedee"
                               Description="Populates the database for the Smeedee application"
                               Type="ownProcess" Interactive="no" Start="auto" Vital="yes" ErrorControl="normal"/>
 
-              <ServiceControl Id="APD.DataCollector.Service.exe" Name="ServiceControl" Start="install"
+              <ServiceControl Id="APD.DataCollector.Service.exe" Name="ServiceControl"
                               Stop="uninstall" Remove="uninstall" Wait="yes"/>
 
             </Component>
@@ -113,8 +112,7 @@
     <CustomAction Id="OpenWebSite" Directory="INSTALLLOCATION"
                   ExeCommand='"[SystemFolder]cmd.exe" /c "start http://localhost/smeedee/Default.htm?view=admin"' Return="asyncNoWait" />
     
-    <CustomAction Id="LaunchDataCollector" FileKey="APD.DataCollector.Console.exe" ExeCommand="" Return="asyncNoWait" />
- 
+    <CustomAction Directory="INSTALLLOCATION" Id="StartService" ExeCommand="sc start Smeedee" Return="asyncNoWait" />
     
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
     <UIRef Id="InstallationUI"/>

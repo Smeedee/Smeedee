@@ -11,7 +11,7 @@
 
       <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
       <Property Id="WixUI_Mode" Value="InstallDir" />
-      <Property Id="LAUNCHDATACOLLECTOR">1</Property>
+      <Property Id="START_SERVICE">1</Property>
 
       <DialogRef Id="BrowseDlg" />
       <!--<DialogRef Id="DiskCostDlg" />-->
