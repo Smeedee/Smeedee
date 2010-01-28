@@ -7,13 +7,14 @@
 	xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
 	xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
 	x:Class="APD.Client.Framework.SL.Controls.CircularTailLoadingAnimation"
-	d:DesignWidth="50" d:DesignHeight="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+	d:DesignWidth="50" d:DesignHeight="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="50" Height="50">
 	<UserControl.Resources>
 		<Storyboard x:Name="Storyboard">
 			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
 				<EasingDoubleKeyFrame KeyTime="00:00:00" Value="-180"/>
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
+		<SolidColorBrush x:Key="AnimationBrush" Color="Orange"/>
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
@@ -36,7 +37,7 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-		<controlsToolkit:Viewbox Stretch="Uniform" Margin="0">
+		<controlsToolkit:Viewbox Stretch="Uniform" Margin="0,-1,0,1">
 			
 			<Grid x:Name="grid" RenderTransformOrigin="0.5,0.5">
 				<Grid.RenderTransform>
@@ -47,16 +48,10 @@
 						<TranslateTransform/>
 					</TransformGroup>
 				</Grid.RenderTransform>
-				<Ellipse Fill="{StaticResource YellowGradientBrush}"
-				 StrokeThickness="0"
-				  Width="14"
-				   HorizontalAlignment="Left"
-				    Margin="19,0,0,19"
-					 Height="14"
-					  VerticalAlignment="Bottom"/>
-				<Ellipse Fill="{StaticResource YellowGradientBrush}" StrokeThickness="0" Height="14" Margin="43,9,43,0" VerticalAlignment="Top" Opacity="0.245" Width="14"/>
-				<Ellipse Fill="{StaticResource YellowGradientBrush}" StrokeThickness="0" Height="14" HorizontalAlignment="Left" Margin="19,19,0,0" VerticalAlignment="Top" Width="14" Opacity="0.495"/>
-				<Ellipse Fill="{StaticResource YellowGradientBrush}" StrokeThickness="0" HorizontalAlignment="Left" Margin="9,43,0,43" Width="14" Opacity="0.75" Height="14"/>
+				<Ellipse Fill="{StaticResource AnimationBrush}" StrokeThickness="0" Width="14" HorizontalAlignment="Left" Margin="19,0,0,19" Height="14" VerticalAlignment="Bottom"/>
+				<Ellipse Fill="{StaticResource AnimationBrush}" StrokeThickness="0" Height="14" Margin="43,9,43,0" VerticalAlignment="Top" Opacity="0.245" Width="14"/>
+				<Ellipse Fill="{StaticResource AnimationBrush}" StrokeThickness="0" Height="14" HorizontalAlignment="Left" Margin="19,19,0,0" VerticalAlignment="Top" Width="14" Opacity="0.495"/>
+				<Ellipse Fill="{StaticResource AnimationBrush}" StrokeThickness="0" HorizontalAlignment="Left" Margin="9,43,0,43" Width="14" Opacity="0.75" Height="14"/>
 			</Grid>
 		</controlsToolkit:Viewbox>
 	</Grid>

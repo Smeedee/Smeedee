@@ -76,7 +76,7 @@
                             Regions:RegionManager.RegionName="BottomLeft"/>
             
             <ContentControl Grid.Column="1"
-                x:Name="BottomCenterRegion" Regions:RegionManager.RegionName="BottomCenter" Padding="10" VerticalAlignment="Center"/>
+                x:Name="BottomCenterRegion" Regions:RegionManager.RegionName="BottomCenter" Padding="10" VerticalAlignment="Center" HorizontalAlignment="Center" Width="70" Height="50"/>
 		</Grid>
     </Grid>
 </UserControl>
