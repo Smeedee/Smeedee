@@ -19,7 +19,7 @@
             <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change")]]>
           </Publish>
           <Publish Event="DoAction" Value="StartService">
-            <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change") And (windows_service = 3)]]> AND (START_SERVICE = 1)
+            <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change")]]> AND (START_SERVICE = 1)
           </Publish>
         </Control>
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUICancel)" />
