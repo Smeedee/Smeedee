@@ -52,15 +52,14 @@ namespace APD.Integration.Database.DomainModel.Repositories
             var schemaExport = new SchemaExport(configuration);
             using (var sqlliteConnection = new SQLiteConnection())
             {
-                sqlliteConnection.ConnectionString = configuration.Properties["connection.connection_string"];
-                var command = new SQLiteCommand("SELECT Name FROM sqlite_master WHERE type='table'",
-                                                sqlliteConnection);
-                sqlliteConnection.Open();
-
-                var reader = command.ExecuteReader();
-
-                if (!reader.HasRows)
-                    new SchemaExport(configuration).Create(false, true);
+                // Non-destructive update mechanism. Updates schema if possible
+                // without losing data. Also creates the entire DB if necessary.
+                var schemaUpdate = new SchemaUpdate(configuration);
+                schemaUpdate.Execute(true, true);
+                if (schemaUpdate.Exceptions.Count > 0)
+                {
+                    throw schemaUpdate.Exceptions[0] as Exception;
+                }
             }
         }
 
