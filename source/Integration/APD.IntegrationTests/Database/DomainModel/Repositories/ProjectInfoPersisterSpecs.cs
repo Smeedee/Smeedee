@@ -55,7 +55,7 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.ProjectInfoPers
         [Ignore]
         public void Assure_all_ProjectInfos_are_saved()
         {
-            var projectInfoPersister = new GenericDatabaseRepository<Project>(sessionFactory);
+            var projectInfoPersister = new ProjectInfoDatabaseRepository(sessionFactory);
 
             var workEffortHistoryItem = new WorkEffortHistoryItem(30, DateTime.Now);
 

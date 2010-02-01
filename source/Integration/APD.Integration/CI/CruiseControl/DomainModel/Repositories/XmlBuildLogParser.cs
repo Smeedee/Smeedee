@@ -96,10 +96,16 @@ namespace APD.Integration.CI.CruiseControl.DomainModel.Repositories
             switch (buildTrigger)
             {
                 case "IfModificationExists":
-                    //TODO: refactor?
+                    //TODO: refactor? Xml parsers should user XPath
                     var users = xmlDocument["cruisecontrol"]["integrationProperties"]["CCNetModifyingUsers"];
-
-                    return new CodeModifiedTrigger(users.ChildNodes[0].InnerText);
+                    if( users.ChildNodes.Count > 0 )
+                    {
+                        return new CodeModifiedTrigger(users.ChildNodes[0].InnerText);
+                    }
+                    else
+                    {
+                        return new UnknownTrigger();
+                    }
 
                 case "ForceBuild":
                     return new EventTrigger("Forced Build");

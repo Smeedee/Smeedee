@@ -21,7 +21,7 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.UserdbRepositor
 
         protected Context Repository_is_created = () =>
         {
-            repository = new GenericDatabaseRepository<Userdb>();
+            repository = new UserdbDatabaseRepository(sessionFactory);
         };
     }
 

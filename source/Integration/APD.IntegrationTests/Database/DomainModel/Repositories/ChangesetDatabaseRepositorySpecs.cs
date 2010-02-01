@@ -34,6 +34,9 @@ using System.Linq;
 using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
 using APD.Integration.Database.DomainModel.Repositories;
+
+using NHibernate;
+
 using NUnit.Framework;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
@@ -70,19 +73,18 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.ChangesetDataba
                                                 };
 
         protected static GenericDatabaseRepository<Changeset> repository;
-        protected static ChangesetPersister persister;
+        protected static ChangesetDatabaseRepository persister;
 
         protected Context a_ChangesetDatabaseRepository_is_created = () =>
         {
             repository = new ChangesetDatabaseRepository(sessionFactory);
-            persister = new ChangesetPersister(sessionFactory);
         };
 
         protected Context there_are_changesets_in_the_database = () =>
         {
-            persister.Save(changeset3);
-            persister.Save(changeset2);
-            persister.Save(changeset1);
+            repository.Save(changeset3);
+            repository.Save(changeset2);
+            repository.Save(changeset1);
         };
 
 
@@ -193,5 +195,47 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.ChangesetDataba
             });
         }
 
+    }
+
+    [TestFixture]
+    public class When_saving : Shared
+    {
+        protected const string TEST_USERNAME = "Kim Bjarne me Musa";
+        protected const string TEST_COMMENT = "What what in the butt butt";
+        protected const int TEST_REVISION_NUMBER = 1001;
+        protected static readonly DateTime TEST_TIME = DateTime.Today;
+
+        [SetUp]
+        public void Setup()
+        {
+            DeleteDatabaseIfExists();
+            RecreateSessionFactory();
+        }
+
+        [Test]
+        public void Assure_Changeset_is_saved()
+        {
+
+            var changesetPersister = new ChangesetDatabaseRepository(sessionFactory);
+
+            var changeset = new Changeset
+                            {
+                                Author = new Author { Username = TEST_USERNAME },
+                                Comment = TEST_COMMENT,
+                                Revision = TEST_REVISION_NUMBER,
+                                Time = TEST_TIME
+                            };
+
+            changesetPersister.Save(changeset);
+
+            ISessionFactory newSessionFactory = NHibernateFactory.AssembleSessionFactory(DATABASE_TEST_FILE);
+
+            var dbResults = DatabaseRetriever.GetDatamodelFromDatabase<Changeset>(newSessionFactory);
+
+            dbResults[0].Author.Username.ShouldBe(TEST_USERNAME);
+            dbResults[0].Comment.ShouldBe(TEST_COMMENT);
+            dbResults[0].Revision.ShouldBe(TEST_REVISION_NUMBER);
+            dbResults[0].Time.ShouldBe(TEST_TIME);
+        }
     }
 }

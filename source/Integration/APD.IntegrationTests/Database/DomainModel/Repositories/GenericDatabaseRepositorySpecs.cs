@@ -37,14 +37,14 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.GenericDatabase
         [Test]
         public void Assure_it_accept_a_ISessionFactory_as_argument()
         {
-            var genericRepository = new GenericDatabaseRepository<CIServer>(CreateSessionFactory());
+            var genericRepository = new CIServerDatabaseRepository(CreateSessionFactory());
         }
 
         [Test]
         public void Assure_ISessionFactory_arg_is_validated()
         {
             this.ShouldThrowException<ArgumentNullException>(() =>
-                new GenericDatabaseRepository<CIServer>(null), exception =>
+                new CIServerDatabaseRepository(null), exception =>
                     exception.Message.ShouldBe("Value cannot be null.\r\nParameter name: sessionFactory"));
         }
     }
@@ -57,7 +57,7 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.GenericDatabase
         [SetUp]
         public void Setup()
         {
-            repository = new GenericDatabaseRepository<CIServer>(CreateSessionFactory());
+            repository = new CIServerDatabaseRepository(CreateSessionFactory());
         }
 
         [Test]

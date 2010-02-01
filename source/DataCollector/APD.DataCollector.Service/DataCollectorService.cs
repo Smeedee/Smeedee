@@ -143,18 +143,17 @@ namespace APD.DataCollector.Service
 
             ISessionFactory sesFact = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
 
-            ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>(sesFact));
+            ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository(sesFact));
 
             var harvesterScheduler = new Scheduler(logger);
 
-            var configRepository = new GenericDatabaseRepository<Configuration>();
+            var configRepository = new ConfigurationDatabaseRepository();
             
-            var csDatabase = new GenericDatabaseRepository<Changeset>(sesFact);
-            var csPersister = new ChangesetPersister(sesFact);
+            var csDatabase = new ChangesetDatabaseRepository(sesFact);
             var repositoryFactory = new ChangesetRepositoryFactory();
-            var csHarvester = new SourceControlHarvester(csDatabase, configRepository, csPersister, repositoryFactory);
+            var csHarvester = new SourceControlHarvester(csDatabase, configRepository, csDatabase, repositoryFactory);
 
-            var ciPersister = new GenericDatabaseRepository<CIServer>(sesFact);
+            var ciPersister = new CIServerDatabaseRepository(sesFact);
             var ciRepositoryFactory = new CIServerRepositoryFactory();
             var ciHarvester = new CIHarvester(ciRepositoryFactory, ciPersister, configRepository);
 

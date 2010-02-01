@@ -46,7 +46,7 @@ using APD.DomainModel.SourceControl;
 
 namespace APD.Integration.Database.DomainModel.Repositories
 {
-    public class GenericDatabaseRepository<TDomainModelType> : IRepository<TDomainModelType>, IPersistDomainModels<TDomainModelType>
+    public abstract class GenericDatabaseRepository<TDomainModelType> : IRepository<TDomainModelType>, IPersistDomainModels<TDomainModelType>
     {
         public static readonly string DatabaseFilePath =
         Path.Combine(

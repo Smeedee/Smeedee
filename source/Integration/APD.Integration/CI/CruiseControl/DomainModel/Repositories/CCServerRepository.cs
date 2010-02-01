@@ -127,24 +127,6 @@ namespace APD.Integration.CI.CruiseControl.DomainModel.Repositories
             return latestBuild;
         }
 
-        //public IEnumerable<CIProject> Get(BuildSpecification specification)
-        //{
-        //    IEnumerable<CIProject> projects = GetProjects();
-        //    foreach (var project in projects)
-        //    {
-        //        if (project.LatestBuild.Status == BuildStatus.FinishedSuccefully ||
-        //            project.LatestBuild.Status == BuildStatus.FinishedWithFailure)
-        //        {
-        //            Build latestBuild = GetLatestBuildFromBuildLog(project.Name);
-        //            project.LatestBuild.FinishedTime = latestBuild.FinishedTime;
-        //            project.LatestBuild.Trigger = latestBuild.Trigger;
-        //        }
-        //    }
-
-
-        //    return projects;
-        //}
-
         public IEnumerable<CIServer> Get(Specification<CIServer> specification)
         {
             IEnumerable<CIProject> projects = GetProjects();

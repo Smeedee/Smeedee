@@ -429,6 +429,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             When(the_controller_is_created);
 
             Then("the project info repository should be queried for the end date", () =>
+                
                 controller.ViewModel.DaysRemaining.ShouldBe(
                    TestingIteration.CalculateWorkingdaysLeft(DateTime.Today).Days));
         }

@@ -66,7 +66,7 @@ namespace APD.Client.Web.Services
             }
             catch (Exception exception)
             {
-                ILog logger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>());
+                ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository());
                 logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
             }
 

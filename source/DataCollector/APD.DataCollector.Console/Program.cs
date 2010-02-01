@@ -68,20 +68,20 @@ namespace APD.DataCollector.Console
 
             ILog consoleLogger = new ConsoleLogger();
             consoleLogger.VerbosityLevel = 2;
-            ILog databaseLogger = new DatabaseLogger(new GenericDatabaseRepository<LogEntry>(sesFact));
+            ILog databaseLogger = new DatabaseLogger(new LogEntryDatabaseRepository(sesFact));
             databaseLogger.VerbosityLevel = 1;
             ILog log = new CompositeLogger(consoleLogger, databaseLogger);
 
             var harvesterScheduler = new Scheduler(log);
 
-            var configRepository = new GenericDatabaseRepository<Configuration>();
-            var csDatabase = new GenericDatabaseRepository<Changeset>(NHibernateFactory.AssembleSessionFactory(GenericDatabaseRepository<Changeset>.DatabaseFilePath));
-            var csPersister = new ChangesetPersister(sesFact);
+            var configRepository = new ConfigurationDatabaseRepository();
+            var csDatabase = new ChangesetDatabaseRepository(sesFact);
+
             var repositoryFactory = new ChangesetRepositoryFactory();
-            var csHarvester = new SourceControlHarvester(csDatabase, configRepository, csPersister, repositoryFactory);
+            var csHarvester = new SourceControlHarvester(csDatabase, configRepository, csDatabase, repositoryFactory);
 
             var ciRep = new CCServerRepository("http://agileprojectdashboard.org/ccnet/", new SocketXMLBuildlogRequester());
-            var ciPersister = new GenericDatabaseRepository<CIServer>(sesFact);
+            var ciPersister = new CIServerDatabaseRepository(sesFact);
             var ciRepositoryFactory = new CIServerRepositoryFactory();
             var ciHarvester = new CIHarvester(ciRepositoryFactory, ciPersister, configRepository);
 

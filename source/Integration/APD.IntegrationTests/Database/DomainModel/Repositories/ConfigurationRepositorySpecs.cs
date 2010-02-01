@@ -78,7 +78,7 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.ConfigurationSp
 
         protected Context Repository_is_created = () =>
         {
-            configurationRepository = new GenericDatabaseRepository<Configuration>(sessionFactory);
+            configurationRepository = new ConfigurationDatabaseRepository(sessionFactory);
         };
     }
 

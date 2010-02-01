@@ -83,12 +83,12 @@ namespace APD.DataCollectorTests.DataCollectorThreadingTest
 
             ISessionFactory sesFact = NHibernateFactory.AssembleSessionFactory(DATABASE_TEST_FILE);
 
-            var csDatabase = new GenericDatabaseRepository<Changeset>(sesFact);
-            var csPersister = new ChangesetPersister(sesFact);
+            var csDatabase = new ChangesetDatabaseRepository(sesFact);
+            var csPersister = new ChangesetDatabaseRepository(sesFact);
             var repositoryFactory = new ChangesetRepositoryFactory();
             var csHarvester = new SourceControlHarvester(csDatabase, configRepositoryMock.Object, csPersister, repositoryFactory);
 
-            var ciPersister = new GenericDatabaseRepository<CIServer>(sesFact);
+            var ciPersister = new CIServerDatabaseRepository(sesFact);
             var ciRepositoryFactory = new CIServerRepositoryFactory();
             var ciHarvester = new CIHarvester(ciRepositoryFactory, ciPersister, null);
 

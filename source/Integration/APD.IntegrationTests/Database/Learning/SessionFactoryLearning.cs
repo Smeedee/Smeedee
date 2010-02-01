@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using APD.DomainModel.SourceControl;
 using APD.Integration.Database.DomainModel.Repositories;
-using APD.IntegrationTests.Database.DomainModel.Repositories.ChangesetPersisterSpecs;
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
 using APD.IntegrationTests.Database.DomainModel.Repositories;
@@ -24,7 +23,7 @@ namespace APD.IntegrationTests.Database.Learning
 
             sessionFactory = NHibernateFactory.AssembleSessionFactory(DATABASE_TEST_FILE);
 
-            ChangesetPersister persister = new ChangesetPersister(sessionFactory);
+            ChangesetDatabaseRepository persister = new ChangesetDatabaseRepository(sessionFactory);
             persister.Save(new Changeset()
             {
                 Revision = 1067,

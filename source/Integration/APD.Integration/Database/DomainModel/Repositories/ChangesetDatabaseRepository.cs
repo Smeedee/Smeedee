@@ -9,14 +9,15 @@ using NHibernate;
 
 namespace APD.Integration.Database.DomainModel.Repositories
 {
-    public class ChangesetDatabaseRepository : GenericDatabaseRepository<Changeset>
+    public class ChangesetDatabaseRepository : GenericDatabaseRepository<Changeset>, IDeleteDomainModels<Changeset>
     {
-        public ChangesetDatabaseRepository() : base()
+        public ChangesetDatabaseRepository()
         {
             
         }
 
-        public ChangesetDatabaseRepository(ISessionFactory sessionFactory) : base(sessionFactory)
+        public ChangesetDatabaseRepository(ISessionFactory sessionFactory)
+            : base(sessionFactory)
         {
             
         }
@@ -24,9 +25,18 @@ namespace APD.Integration.Database.DomainModel.Repositories
         public override IEnumerable<Changeset> Get(Specification<Changeset> specification)
         {
             var result = base.Get(specification);
-
             return result.OrderByDescending(c => c.Revision);
+        }
 
+        public void Delete(Specification<Changeset> specification)
+        {
+            if (specification is AllChangesetsSpecification)
+            {
+                using (var session = sessionFactory.OpenSession())
+                {
+                    session.CreateQuery("DELETE Changeset c").ExecuteUpdate();
+                }
+            }
         }
     }
 }

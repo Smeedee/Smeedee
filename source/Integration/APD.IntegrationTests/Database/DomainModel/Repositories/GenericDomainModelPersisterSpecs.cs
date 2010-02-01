@@ -45,7 +45,7 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.GenericDomainMo
         [SetUp]
         public void Setup()
         {
-            new ChangesetPersister(sessionFactory).Delete(new AllChangesetsSpecification());
+            new ChangesetDatabaseRepository(sessionFactory).Delete(new AllChangesetsSpecification());
         }
 
         [Test]

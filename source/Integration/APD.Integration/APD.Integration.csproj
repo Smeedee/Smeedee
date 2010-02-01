@@ -124,11 +124,14 @@
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildRepository.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\TFSCIServerRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ChangesetDatabaseRepository.cs" />
-    <Compile Include="Database\DomainModel\Repositories\ChangeSetPersister.cs" />
+    <Compile Include="Database\DomainModel\Repositories\CIServerDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\ConfigurationDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\GenericDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\LogEntryDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\NHibConfig.cs" />
     <Compile Include="Database\DomainModel\Repositories\NHibernateFactory.cs" />
+    <Compile Include="Database\DomainModel\Repositories\ProjectInfoDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\ProjectInfoServerDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\UserdbDatabaseRepository.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\IDownloadXml.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\NoSuchProjectException.cs" />
