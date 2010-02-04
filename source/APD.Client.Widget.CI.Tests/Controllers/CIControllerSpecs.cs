@@ -98,6 +98,45 @@ namespace APD.Client.Widget.CI.Tests.CIControllerSpecs
             RepositoryMock.Setup(r => r.Get(It.IsAny<AllSpecification<CIServer>>())).Returns(servers);
         };
 
+        protected Context there_are_active_projects_in_CI_tool_with_different_BuildStatuses = () =>
+        {
+            RepositoryMock = new Mock<IRepository<CIServer>>();
+
+            var normalBuild1 = CreateBuild(DomainModel.CI.BuildStatus.FinishedSuccefully,
+                                          new CodeModifiedTrigger("tuxbear"));
+
+            var normalBuild2 = CreateBuild(DomainModel.CI.BuildStatus.FinishedWithFailure,
+                              new CodeModifiedTrigger("tuxbear"));
+
+            var normalBuild3 = CreateBuild(DomainModel.CI.BuildStatus.FinishedSuccefully,
+                              new CodeModifiedTrigger("tuxbear"));
+
+            var systemBuild = CreateBuild(DomainModel.CI.BuildStatus.FinishedWithFailure,
+                                          new EventTrigger("Trigger test"));
+
+            var unknownBuild = CreateBuild(DomainModel.CI.BuildStatus.Building,
+                                           new UnknownTrigger());
+
+            var nonExistingUserBuild = CreateBuild(DomainModel.CI.BuildStatus.Unknown,
+                                                   new CodeModifiedTrigger("I_DONT_EXIST"));
+
+            var projects = new List<CIProject>();
+
+            projects.Add(new CIProject("Project 1") { Builds = new List<Build> { normalBuild1 } });
+            projects.Add(new CIProject("Project 2") { Builds = new List<Build> { systemBuild } });
+            projects.Add(new CIProject("Project 3") { Builds = new List<Build> { unknownBuild } });
+            projects.Add(new CIProject("Project 4") { Builds = new List<Build> { nonExistingUserBuild } });
+            projects.Add(new CIProject("Project 5") { Builds = new List<Build> { normalBuild2 } });
+            projects.Add(new CIProject("Project 6") { Builds = new List<Build> { normalBuild3 } });
+
+            var servers = new List<CIServer>();
+            servers.Add(new CIServer("What the fuck", "http://www.whatthefuck.com"));
+            projects.ForEach(p =>
+                servers.First().AddProject(p));
+
+            RepositoryMock.Setup(r => r.Get(It.IsAny<AllSpecification<CIServer>>())).Returns(servers);
+        };
+
         protected Context there_are_active_and_inactive_Projects_in_CI_tool = () =>
         {
             RepositoryMock = new Mock<IRepository<CIServer>>();
@@ -397,6 +436,28 @@ namespace APD.Client.Widget.CI.Tests.CIControllerSpecs
                     var activeProjects = RepositoryMock.Object.Get(new AllSpecification<CIServer>()).
                         First().Projects.Where(p => p.LatestBuild.StartTime > DateTime.Now.AddDays(-90));
                     Controller.ViewModel.Data.Count().ShouldBe(activeProjects.Count());
+                });
+            });
+        }
+
+        [Test]
+        public void Assure_Projects_are_sorted_by_LatestBuilds_Status()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_active_projects_in_CI_tool_with_different_BuildStatuses).
+                    And(user_exist_in_userdb).
+                    And(settings_are_configured);
+                scenario.When(controller_is_spawned);
+                scenario.Then("assure Projects are sorted by LatesBuild Status", () =>
+                {
+                    Controller.ViewModel.Data.Count.ShouldBe(6);
+                    Controller.ViewModel.Data[0].LatestBuild.Status.ShouldBe(BuildStatus.Failed);
+                    Controller.ViewModel.Data[1].LatestBuild.Status.ShouldBe(BuildStatus.Failed);
+                    Controller.ViewModel.Data[2].LatestBuild.Status.ShouldBe(BuildStatus.Unknown);
+                    Controller.ViewModel.Data[3].LatestBuild.Status.ShouldBe(BuildStatus.Building);
+                    Controller.ViewModel.Data[4].LatestBuild.Status.ShouldBe(BuildStatus.Successful);
+                    Controller.ViewModel.Data[5].LatestBuild.Status.ShouldBe(BuildStatus.Successful);
                 });
             });
         }

@@ -152,6 +152,13 @@ namespace APD.Client.Widget.CI.Controllers
                 if (qServers.Count() > 0)
                     projects = qServers.First().Projects;
                 ViewModel.HasConnectionProblems = false;
+
+                if (projects != null)
+                {
+                    var activeProjects = RemoveInactiveProjects(projects);
+                    projects = SortProjects(activeProjects);
+                }
+
             }
             catch( Exception exception )
             {
@@ -163,16 +170,20 @@ namespace APD.Client.Widget.CI.Controllers
                                           TimeStamp = DateTime.Now
                                       });
             }
-
-            if (projects != null)
-            {
-                var activeProjects =
-                    projects.Where(
-                        p => p.LatestBuild.StartTime > DateTime.Now.AddDays(- INACTIVE_PROJECT_THRESHOLD));
-                projects = activeProjects;
-            }
-
             return projects;
+        }
+
+        private IOrderedEnumerable<CIProject> SortProjects(IEnumerable<CIProject> activeProjects)
+        {
+            return from c in activeProjects
+                   orderby c
+                   select c;
+        }
+
+        private IEnumerable<CIProject> RemoveInactiveProjects(IEnumerable<CIProject> projects)
+        {
+            return projects.Where(
+                p => p.LatestBuild.StartTime > DateTime.Now.AddDays(-INACTIVE_PROJECT_THRESHOLD));
         }
 
         private void LoadDataIntoViewModel(IEnumerable<CIProject> projects)

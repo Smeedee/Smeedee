@@ -23,6 +23,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -31,7 +32,7 @@ using System.Runtime.Serialization;
 namespace APD.DomainModel.CI
 {
     [DataContract(IsReference = true)]
-    public class CIProject
+    public class CIProject : IComparable<CIProject>
     {
         private IList<Build> internalBuilds;
         public CIProject()
@@ -79,6 +80,39 @@ namespace APD.DomainModel.CI
         {
             build.Project = this;
             internalBuilds.Add(build);
+        }
+       
+        public virtual int CompareTo(CIProject other)
+        {
+            if( LatestBuild.Status == other.LatestBuild.Status)
+            {
+                 return ReversedBuildCompareResult(other.LatestBuild);
+            }
+            if (LatestBuild.Status == BuildStatus.FinishedWithFailure)
+            {
+                return -1;
+            }
+            if (other.LatestBuild.Status == BuildStatus.FinishedWithFailure)
+            {
+                return 1;
+            }
+
+            return LatestBuild.Status.CompareTo(other.LatestBuild.Status);
+        }
+
+        private int ReversedBuildCompareResult(Build otherLatestBuild) {
+            
+            if(LatestBuild.CompareTo(otherLatestBuild)==1)
+            {
+                return -1;
+            }
+
+            if (LatestBuild.CompareTo(otherLatestBuild)==-1)
+            {
+                return 1;
+            }
+
+            return 0;
         }
 
         public override bool Equals(object obj)
