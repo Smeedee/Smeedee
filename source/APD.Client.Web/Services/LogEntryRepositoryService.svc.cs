@@ -24,7 +24,7 @@ namespace APD.Client.Web.Services
     public class LogEntryRepositoryService
     {
 
-        LogEntryDatabaseRepository repo = new LogEntryDatabaseRepository();
+        LogEntryDatabaseRepository repo = new LogEntryDatabaseRepository(DefaultSessionFactory.Instance);
 
         [OperationContract]
         public void Log(LogEntry logEntry)
@@ -51,7 +51,7 @@ namespace APD.Client.Web.Services
             }
             catch (Exception exception)
             {
-                ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository());
+                ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance));
                 logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
             }
 

@@ -35,55 +35,56 @@ using APD.Integration.Database.DomainModel.Repositories;
 
 namespace APD.Client.Web.Services
 {
-    [ServiceContract(Namespace = "http://agileprojectdashboard.org")]
-    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class SettingsService
-    {
-        private string settingsFileName = "ServerSettings.xml";
+    // Note: Can be deleted
+    //[ServiceContract(Namespace = "http://agileprojectdashboard.org")]
+    //[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
+    //[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    //public class SettingsService
+    //{
+    //    private string settingsFileName = "ServerSettings.xml";
 
-        [OperationContract]
-        public void SaveSettings(Settings settings)
-        {
-            string path = GetServerSettingsFilePath();
+    //    [OperationContract]
+    //    public void SaveSettings(Settings settings)
+    //    {
+    //        string path = GetServerSettingsFilePath();
 
-            string xmlData = settings.Serialize();
-            using (var writer = new StreamWriter(path, false))
-            {
-                writer.Write(xmlData);
-            }
-        }
+    //        string xmlData = settings.Serialize();
+    //        using (var writer = new StreamWriter(path, false))
+    //        {
+    //            writer.Write(xmlData);
+    //        }
+    //    }
 
-        [OperationContract]
-        public Settings GetSettings()
-        {
-            Settings result = new Settings();
-            try
-            {
-                string settingsFilePath = GetServerSettingsFilePath();
+    //    [OperationContract]
+    //    public Settings GetSettings()
+    //    {
+    //        Settings result = new Settings();
+    //        try
+    //        {
+    //            string settingsFilePath = GetServerSettingsFilePath();
 
-                string xmlData = string.Empty;
-                using (var reader = new StreamReader(settingsFilePath))
-                {
-                    xmlData = reader.ReadToEnd();
-                }
+    //            string xmlData = string.Empty;
+    //            using (var reader = new StreamReader(settingsFilePath))
+    //            {
+    //                xmlData = reader.ReadToEnd();
+    //            }
 
-                result = Settings.Deserialize(xmlData);
-            }
-            catch (Exception exception)
-            {
-                ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository());
-                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
-            }
+    //            result = Settings.Deserialize(xmlData);
+    //        }
+    //        catch (Exception exception)
+    //        {
+    //            ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository());
+    //            logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
+    //        }
 
-            return result;
-        }
+    //        return result;
+    //    }
         
-        private string GetServerSettingsFilePath()
-        {
-            string appDirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string settingsFilePath = System.IO.Path.Combine(appDirPath, settingsFileName);
-            return settingsFilePath;
-        }
-    }
+    //    private string GetServerSettingsFilePath()
+    //    {
+    //        string appDirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+    //        string settingsFilePath = System.IO.Path.Combine(appDirPath, settingsFileName);
+    //        return settingsFilePath;
+    //    }
+    //}
 }

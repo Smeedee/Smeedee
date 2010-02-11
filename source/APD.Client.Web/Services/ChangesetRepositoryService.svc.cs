@@ -49,7 +49,7 @@ namespace APD.Client.Web.Services
 
         public ChangesetRepositoryService()
         {
-            repository = new ChangesetDatabaseRepository();
+            repository = new ChangesetDatabaseRepository(DefaultSessionFactory.Instance);
         }
         
         [OperationContract]

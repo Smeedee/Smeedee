@@ -45,6 +45,7 @@ namespace APD.Client.WebTests.Services.Integration
         }
 
         [Test]
+        [Ignore]
         public void GetSettings()
         {
             client.GetSettings().ShouldNotBeNull();

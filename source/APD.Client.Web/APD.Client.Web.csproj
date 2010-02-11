@@ -96,6 +96,7 @@
     <Compile Include="Services\ConfigurationRepositoryService.svc.cs">
       <DependentUpon>ConfigurationRepositoryService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Services\DefaultSessionFactory.cs" />
     <Compile Include="Services\LogEntryRepositoryService.svc.cs">
       <DependentUpon>LogEntryRepositoryService.svc</DependentUpon>
     </Compile>

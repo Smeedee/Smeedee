@@ -50,11 +50,9 @@ namespace APD.Client.Web.Services
             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
             "smeedeeDB.db");
 
-        private static ISessionFactory sessionfactory = NHibernateFactory.AssembleSessionFactory(databasePath);
-
         public ProjectInfoRepositoryService()
         {
-            repository = new ProjectInfoServerDatabaseRepository(sessionfactory);
+            repository = new ProjectInfoServerDatabaseRepository(DefaultSessionFactory.Instance);
         }
 
         [OperationContract]
@@ -72,7 +70,7 @@ namespace APD.Client.Web.Services
             }
             catch (Exception exception)
             {
-                ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository());
+                ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance));
                 logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
             }
 

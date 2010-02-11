@@ -55,8 +55,6 @@ namespace APD.DataCollector.Service
         private const string SERVICE_DESCRIPTION = "smeedee_dc_service";
         private const string LOG_NAME = "smeedee_dc_Log";
 
-        private Dictionary<string, Assembly> SmeedeeAssemblies = new Dictionary<string, Assembly>();
-
         private string databaseFile;
         public string DatabaseFile
         {
@@ -69,6 +67,7 @@ namespace APD.DataCollector.Service
         }
 
         private string commonAppPath;
+        private ISessionFactory sesFact;
 
         public DataCollectorService()
         {
@@ -81,33 +80,7 @@ namespace APD.DataCollector.Service
                 EventLog.CreateEventSource(SERVICE_DESCRIPTION, LOG_NAME);
                 EventLog.WriteEntry("Created smeedee Data Collector Service", EventLogEntryType.Information);
             }
-        }
-
-        Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            EventLog.WriteEntry("Resolving dependency: " + args.Name, EventLogEntryType.Information);
-            return SmeedeeAssemblies[args.Name];
-        }
-
-        private void IndexDependencies()
-        {
-            SmeedeeAssemblies.Clear();
-            var smeedeeBinDir = Assembly.GetExecutingAssembly().Location;
-            EventLog.WriteEntry("Current assembly Location: " + smeedeeBinDir, EventLogEntryType.Information);
-            var smeedeeBinDir2 = AppDomain.CurrentDomain.BaseDirectory;
-            EventLog.WriteEntry("Basedir: " + smeedeeBinDir2, EventLogEntryType.Information);
-            EventLog.WriteEntry("Getassebly: " + Assembly.GetAssembly(GetType()).Location, EventLogEntryType.Information);
-            EventLog.WriteEntry("Fullname: " + Assembly.GetExecutingAssembly().FullName, EventLogEntryType.Information);
-
-
-            var assemblyPaths = Directory.GetFiles(smeedeeBinDir, "*.dll");
-
-            foreach (var assemblyPath in assemblyPaths)
-            {
-                EventLog.WriteEntry("Indexed dependency: " + assemblyPath, EventLogEntryType.Information);
-                var assembly = Assembly.LoadFile(assemblyPath);
-                SmeedeeAssemblies.Add(assembly.FullName, assembly);
-            }
+            sesFact = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
         }
 
         protected override void OnStart(string[] args)
@@ -125,8 +98,6 @@ namespace APD.DataCollector.Service
 
             EventLog.WriteEntry("Using database file: " + DatabaseFile, EventLogEntryType.Information);
 
-            //IndexDependencies();
-
             RunHarvesters();
 
         }
@@ -140,9 +111,6 @@ namespace APD.DataCollector.Service
 
         private void RunHarvesters()
         {
-
-            ISessionFactory sesFact = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
-
             ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository(sesFact));
 
             var harvesterScheduler = new Scheduler(logger);
@@ -160,7 +128,6 @@ namespace APD.DataCollector.Service
             harvesterScheduler.RegisterHarvesters(new List<AbstractHarvester> { csHarvester, ciHarvester });
 
             EventLog.WriteEntry("Harvesters started", EventLogEntryType.Information);
-
         }
     }
 }

@@ -21,7 +21,7 @@ namespace APD.Client.Web.Services
 
         public ConfigurationRepositoryService()
         {
-            configurationRepository = new ConfigurationDatabaseRepository();
+            configurationRepository = new ConfigurationDatabaseRepository(DefaultSessionFactory.Instance);
         }
 
         [OperationContract]

@@ -9,11 +9,16 @@ using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
 using APD.Integration.Database.DomainModel.Repositories;
 
+using NHibernate;
+
 
 namespace MemoryLeakTesting.Reader
 {
     class Program
     {
+        private static ISessionFactory factory =
+            NHibernateFactory.AssembleSessionFactory(ChangesetDatabaseRepository.DatabaseFilePath);
+
         static void Main(string[] args)
         {
             int numClients = 5;
@@ -28,7 +33,7 @@ namespace MemoryLeakTesting.Reader
                     try 
                     {
                         var startTime = DateTime.Now;
-                        var csRepo = new ChangesetDatabaseRepository();
+                        var csRepo = new ChangesetDatabaseRepository(factory);
                         var csData = csRepo.Get(new AllSpecification<Changeset>());
                         Console.WriteLine("{0}: {1} Number of dataitems: {2}", Thread.CurrentThread.ManagedThreadId, DateTime.Now - startTime, csData.Count());
                     }
@@ -46,7 +51,7 @@ namespace MemoryLeakTesting.Reader
                     try
                     {
                         var startTime = DateTime.Now;
-                        var ciRepo = new CIServerDatabaseRepository();
+                        var ciRepo = new CIServerDatabaseRepository(factory);
                         var ciData = ciRepo.Get(new AllSpecification<CIServer>());
                         Console.WriteLine("{0}: {1} Number of dataitems: {2}", Thread.CurrentThread.ManagedThreadId, DateTime.Now - startTime, ciData.Count());
 
