@@ -20,6 +20,7 @@
 
     <APDClientWebClientBinOutput Include="APD.Client.Web\ClientBin\*.xap"/>
     <APDClientWebOutputBin Include="APD.Client.Web\bin\*.dll"/>
+    <APDClientWebOutputBin Include="Integration\APD.Integration\bin\Debug\*.dll"/>
     <APDClientWebOutput Include="APD.Client.Web\*.asax"/>
     <APDClientWebOutput Include="APD.Client.Web\*.aspx"/>
     <APDClientWebOutput Include="APD.Client.Web\*.config"/>
