@@ -27,26 +27,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.ServiceProcess;
-
 using APD.DomainModel.Framework.Logging;
-using APD.DomainModel.ProjectInfo;
 using APD.Harvester.CI;
 using APD.Harvester.Framework;
-using APD.Harvester.ProjectInfo;
 using APD.Harvester.SourceControl;
-using APD.Integration.CI.CruiseControl.DomainModel.Repositories;
 using APD.Integration.Database.DomainModel.Repositories;
-using APD.Integration.PMT.RallyDev.DomainModel.Repositories;
-using APD.Integration.VCS.SVN.DomainModel.Repositories;
-
-using APD.DomainModel.CI;
-using APD.DomainModel.SourceControl;
 using NHibernate;
-using APD.DomainModel.Config;
-
-
 
 namespace APD.DataCollector.Service
 {
@@ -67,20 +54,17 @@ namespace APD.DataCollector.Service
         }
 
         private string commonAppPath;
-        private ISessionFactory sesFact;
 
         public DataCollectorService()
         {
             InitializeComponent();
-
-            //AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
             if (!EventLog.SourceExists(SERVICE_DESCRIPTION))
             {
                 EventLog.CreateEventSource(SERVICE_DESCRIPTION, LOG_NAME);
                 EventLog.WriteEntry("Created smeedee Data Collector Service", EventLogEntryType.Information);
             }
-            sesFact = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
+            
         }
 
         protected override void OnStart(string[] args)
@@ -111,22 +95,22 @@ namespace APD.DataCollector.Service
 
         private void RunHarvesters()
         {
-            ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository(sesFact));
+            var sessionFactory = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
+
+            ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository(sessionFactory));
 
             var harvesterScheduler = new Scheduler(logger);
-
             var configRepository = new ConfigurationDatabaseRepository();
-            
-            var csDatabase = new ChangesetDatabaseRepository(sesFact);
+
+            var csDatabase = new ChangesetDatabaseRepository(sessionFactory);
             var repositoryFactory = new ChangesetRepositoryFactory();
             var csHarvester = new SourceControlHarvester(csDatabase, configRepository, csDatabase, repositoryFactory);
 
-            var ciPersister = new CIServerDatabaseRepository(sesFact);
+            var ciPersister = new CIServerDatabaseRepository(sessionFactory);
             var ciRepositoryFactory = new CIServerRepositoryFactory();
             var ciHarvester = new CIHarvester(ciRepositoryFactory, ciPersister, configRepository);
 
             harvesterScheduler.RegisterHarvesters(new List<AbstractHarvester> { csHarvester, ciHarvester });
-
             EventLog.WriteEntry("Harvesters started", EventLogEntryType.Information);
         }
     }
