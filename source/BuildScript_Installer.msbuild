@@ -35,6 +35,9 @@
     
     <DataCollectorConsoleOutput Include="DataCollector\APD.DataCollector.Console\bin\debug\*Console.exe"/>
     <DataCollectorConsoleOutput Include="DataCollector\APD.DataCollector.Console\bin\debug\*.dll"/>
+
+
+    <APDIntegrationOutputBin Include="Integration\APD.Integration\bin\*.dll"/>
   </ItemGroup>
 
 
@@ -81,6 +84,7 @@
     <Copy SourceFiles="@(APDClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
     <Copy SourceFiles="@(APDClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
     <Copy SourceFiles="@(DataCollectorConsoleOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(APDIntegrationOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
   </Target>
 
 
