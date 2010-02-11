@@ -38,30 +38,37 @@
     <Reference Include="Microsoft.TeamFoundation.Build.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Build.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Build.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Build.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.VersionControl.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.VersionControl.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.WorkItemTracking.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
