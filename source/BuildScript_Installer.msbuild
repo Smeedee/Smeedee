@@ -20,7 +20,7 @@
 
     <APDClientWebClientBinOutput Include="APD.Client.Web\ClientBin\*.xap"/>
     <APDClientWebOutputBin Include="APD.Client.Web\bin\*.dll"/>
-    <APDClientWebOutputBin Include="Integration\APD.Integration\bin\Debug\*.dll"/>
+    <TFSDependencies Include="..\tools\TfsPrivateAssemblies\*.dll"/>
     <APDClientWebOutput Include="APD.Client.Web\*.asax"/>
     <APDClientWebOutput Include="APD.Client.Web\*.aspx"/>
     <APDClientWebOutput Include="APD.Client.Web\*.config"/>
@@ -71,14 +71,13 @@
     <MakeDir Directories="$(WorkingDirectory)"/>
     <MakeDir Directories="$(WorkingDirectory)\bin"/>
     <MakeDir Directories="$(WorkingDirectory)\ClientBin"/>
-    <!--<MakeDir Directories="$(WorkingDirectory)\DataCollector"/>
-    <MakeDir Directories="$(WorkingDirectory)\DataCollector.Console"/>-->
     <MakeDir Directories="$(WorkingDirectory)\Services"/>
   </Target>
 
 
   <Target Name="DeployOutput" DependsOnTargets="CreateOutputDirectories">
     <Copy SourceFiles="@(DataCollectorOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(TFSDependencies)" DestinationFolder="$(WorkingDirectory)\bin" />
     <Copy SourceFiles="@(APDClientWebOutput)" DestinationFolder="$(WorkingDirectory)"/>
     <Copy SourceFiles="@(APDClientWebOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
     <Copy SourceFiles="@(APDClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
