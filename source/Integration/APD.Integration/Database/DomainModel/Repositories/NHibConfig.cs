@@ -49,17 +49,15 @@ namespace APD.Integration.Database.DomainModel.Repositories
 
         private static void CreateDbSchema(Configuration configuration) 
         {
-            var schemaExport = new SchemaExport(configuration);
-            using (var sqlliteConnection = new SQLiteConnection())
+           // var schemaExport = new SchemaExport(configuration);
+           
+            // Non-destructive update mechanism. Updates schema if possible
+            // without losing data. Also creates the entire DB if necessary.
+            var schemaUpdate = new SchemaUpdate(configuration);
+            schemaUpdate.Execute(true, true);
+            if (schemaUpdate.Exceptions.Count > 0)
             {
-                // Non-destructive update mechanism. Updates schema if possible
-                // without losing data. Also creates the entire DB if necessary.
-                var schemaUpdate = new SchemaUpdate(configuration);
-                schemaUpdate.Execute(true, true);
-                if (schemaUpdate.Exceptions.Count > 0)
-                {
-                    throw schemaUpdate.Exceptions[0] as Exception;
-                }
+                throw schemaUpdate.Exceptions[0] as Exception;
             }
         }
 

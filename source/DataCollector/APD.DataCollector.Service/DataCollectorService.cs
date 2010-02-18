@@ -100,7 +100,7 @@ namespace APD.DataCollector.Service
             ILog logger = new DatabaseLogger(new LogEntryDatabaseRepository(sessionFactory));
 
             var harvesterScheduler = new Scheduler(logger);
-            var configRepository = new ConfigurationDatabaseRepository();
+            var configRepository = new ConfigurationDatabaseRepository(sessionFactory);
 
             var csDatabase = new ChangesetDatabaseRepository(sessionFactory);
             var repositoryFactory = new ChangesetRepositoryFactory();

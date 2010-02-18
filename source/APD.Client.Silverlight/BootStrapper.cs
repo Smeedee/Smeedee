@@ -29,6 +29,7 @@ using System.Windows.Controls;
 using APD.Client.Framework;
 using APD.Client.Framework.Settings;
 using APD.Client.Framework.SL;
+using APD.Client.Framework.SL.Repositories;
 using APD.Client.Widget.BurndownChart.SL;
 using APD.Client.Widget.CI.SL;
 using APD.Client.Widget.DeveloperInfo.SL.Repositories;
@@ -39,6 +40,7 @@ using APD.Client.Widget.SourceControl.SL.Repositories;
 using APD.Client.Widget.TrayBar.SL;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Framework.Logging;
+using APD.DomainModel.Holidays;
 using APD.Framework.SL.Logging;
 
 using Microsoft.Practices.Composite.Modularity;
@@ -100,6 +102,7 @@ namespace APD.Client.Silverlight
                 new StaticRepositoryCache<Changeset>(
                     new SyncChangeSetRepository(new AsyncChangesetRepository()), 15000));
             Container.RegisterType<IRepository<User>, UserWebserviceRepositoryProxy>();
+            Container.RegisterType<IRepository<Holiday>, HolidayWebserviceRepository>();
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
 
             Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryWebservicePersister>();
@@ -111,10 +114,10 @@ namespace APD.Client.Silverlight
             foreach (var moduleInfo in GetModuleCatalog().Modules)
             {
                 var moduleType = Type.GetType(moduleInfo.ModuleType);
-                var testmod = (IModule)Container.Resolve(moduleType);
-                testmod.Initialize();
+                var module = (IModule)Container.Resolve(moduleType);
+                module.Initialize();
 
-                Container.RegisterInstance(moduleType, testmod);
+                Container.RegisterInstance(moduleType, module);
             }
 
 

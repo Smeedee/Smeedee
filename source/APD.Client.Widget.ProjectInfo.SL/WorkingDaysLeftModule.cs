@@ -27,7 +27,6 @@ using System.Collections.Generic;
 using APD.Client.Framework;
 using APD.Client.Widget.BurndownChart.SL.Repositories;
 using APD.Client.Widget.ProjectInfo.Controllers;
-using APD.Client.Widget.ProjectInfo.Repositories;
 using APD.Client.Widget.ProjectInfo.SL.Repositories;
 using APD.Client.Widget.ProjectInfo.ViewModels;
 using APD.DomainModel.Framework;

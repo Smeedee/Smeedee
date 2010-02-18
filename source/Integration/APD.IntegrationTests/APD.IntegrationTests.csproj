@@ -138,6 +138,7 @@
     <Compile Include="Database\DomainModel\Repositories\DatabaseLoggerSpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\GenericDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\GenericDomainModelPersisterSpecs.cs" />
+    <Compile Include="Database\DomainModel\Repositories\HolidayDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\LogEntryDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\NHibernateMappings\ContinuousIntegrationDomainModelTests.cs" />
     <Compile Include="Database\DomainModel\Repositories\ProjectInfoPersisterSpecs.cs" />
@@ -147,6 +148,12 @@
     <Compile Include="Database\DomainModel\Repositories\UserRepositorySpecs.cs" />
     <Compile Include="Database\Learning\NHibernateLearningTests.cs" />
     <Compile Include="Database\Learning\SessionFactoryLearning.cs" />
+    <Compile Include="Holidays\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Holidays\XmlCountryHolidaysParserSpecs.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\RallyDevReaderSpecs.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\Resource.Designer.cs">
       <DependentUpon>Resource.resx</DependentUpon>
@@ -213,6 +220,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Holidays\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="CI\CruiseControl\DomainModel\Repositories\TestData\forced_unknown.xml" />
@@ -230,6 +241,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Database\DomainModel\Repositories\NHibernateMappings\readme.txt" />
+    <Content Include="Holidays\TestData\InvalidXml.xml" />
+    <Content Include="Holidays\TestData\MalformedXml.xml" />
+    <Content Include="Holidays\TestData\NorwegianHolidays.xml" />
     <Content Include="PMT\RallyDev\DomainModel\Repositories\TestData\Iteration.xml" />
     <Content Include="PMT\RallyDev\DomainModel\Repositories\TestData\IterationsForProject.xml" />
     <Content Include="PMT\RallyDev\DomainModel\Repositories\TestData\Malformed.xml" />

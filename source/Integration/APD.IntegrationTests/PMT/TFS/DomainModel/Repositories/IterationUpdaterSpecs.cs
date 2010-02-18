@@ -60,7 +60,6 @@ namespace APD.IntegrationTests.PMT.TFS.DomainModel.Repositories
                         {
                             SystemId = "SprintX",
                             Name = sprintName,
-                            HolidayProvider = new HolidayProvider(),
                             StartDate = new DateTime(2009, 8, 5),
                             EndDate = new DateTime(2009, 8, 19),
                         };

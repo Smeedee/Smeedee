@@ -12,7 +12,7 @@ using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
 
 
-namespace APD.Client.WebTests.Services.Integration
+namespace APD.Client.WebTests.Services.Integration.LogEntryRepositoryServiceSpecs
 {
     [TestFixture]
     public class LogEntryRepositoryServiceSpecs

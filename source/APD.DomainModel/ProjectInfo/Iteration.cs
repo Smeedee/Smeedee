@@ -31,13 +31,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using APD.DomainModel.Holidays;
+
+
 namespace APD.DomainModel.ProjectInfo
 {
     public class Iteration
     {
         public virtual DateTime StartDate { get; set; }
         public virtual DateTime EndDate { get; set; }
-        public virtual HolidayProvider HolidayProvider { get; set; }
         public virtual string Name { get; set;}
         public virtual string SystemId { get; set; }
         public virtual Project Project { get; set; }
@@ -60,14 +62,13 @@ namespace APD.DomainModel.ProjectInfo
         }
 
         public Iteration()
-            : this(DateTime.Now, DateTime.Now.AddDays(14), new HolidayProvider()) { }
+            : this(DateTime.Now, DateTime.Now.AddDays(14)) { }
         
 
-        public Iteration(DateTime startDate, DateTime endDate, HolidayProvider holidayProvider)
+        public Iteration(DateTime startDate, DateTime endDate)
         {
             StartDate = startDate;
             EndDate = endDate;
-            HolidayProvider = holidayProvider;
             Tasks = new List<Task>();
             internalTasks = new List<Task>();
         }
@@ -85,13 +86,13 @@ namespace APD.DomainModel.ProjectInfo
             return internalTasks.Count;
         }
 
-        public virtual List<DateTime> GetWorkingDays()
+        public virtual List<DateTime> GetWorkingDays(IEnumerable<Holiday> holidays)
         {
             List<DateTime> workingDays = new List<DateTime>();
 
             for (var sprintDay = StartDate; sprintDay < EndDate; sprintDay = sprintDay.AddDays(1))
             {
-                if (IsWorkingDay(sprintDay))
+                if (holidays.Any( hd => hd.Date == sprintDay))
                 {
                     workingDays.Add(sprintDay);
                 }
@@ -100,17 +101,7 @@ namespace APD.DomainModel.ProjectInfo
             return workingDays;
         }
 
-        public virtual void SetExtraWorkingDay(DateTime extraDay)
-        {
-            HolidayProvider.MakeHolidayWorkingDay(extraDay);
-        }
-
-        public virtual void SetExtraHoliday(DateTime nonWorkingDay)
-        {
-            HolidayProvider.MakeWorkingdayHoliday(nonWorkingDay);
-        }
-
-        public virtual TimeSpan CalculateWorkingdaysLeft(DateTime dayToCalculateFrom)
+        public virtual TimeSpan CalculateWorkingdaysLeft(DateTime dayToCalculateFrom, IEnumerable<Holiday> holidays)
         {
             if (IsOvertime(dayToCalculateFrom))
                 return dayToCalculateFrom.Subtract(EndDate);
@@ -118,18 +109,13 @@ namespace APD.DomainModel.ProjectInfo
             int workingDaysLeft = 0;
             for (var sprintDay = dayToCalculateFrom; sprintDay <= EndDate; sprintDay = sprintDay.AddDays(1))
             {
-                if (IsWorkingDay(sprintDay))
+                if (!holidays.Any(hd => hd.Date == sprintDay))
                 {
                     workingDaysLeft++;
                 }
             }
 
             return new TimeSpan(workingDaysLeft, 0,0,0);
-        }
-
-        private bool IsWorkingDay(DateTime sprintDay)
-        {
-            return !HolidayProvider.IsHoliday(sprintDay);
         }
 
         public virtual bool IsOvertime(DateTime dayToCalculateFrom)

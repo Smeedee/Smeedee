@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Holidays>
+  <Holiday date="2009-01-01" />
+  <Holiday date="2009-05-01" />
+  <Holiday date="2009-05-17" />
+  <Holiday date="2009-12-24" />
+  <Holiday date="2009-12-25" />
+  <Holiday date="2009-12-26" />
+  <Holiday date="2009-12-31" />
+  <Holiday date="2009-04-09" />
+  <Holiday date="2009-04-10" />
+  <Holiday date="2009-04-13" />
+  <Holiday date="2009-05-21" />
+  <Holiday date="2009-05-31" />
+  <Holiday date="2009-06-01" />
+  <Holiday date="2010-01-01" />
+  <Holiday date="2010-05-01" />
+  <Holiday date="2010-05-17" description="17. Mai" />
+  <Holiday date="2010-12-24" />
+  <Holiday date="2010-12-25" />
+  <Holiday date="2010-12-26" />
+  <Holiday date="2010-12-31" description="Nyttårsaften" />
+</Holidays>

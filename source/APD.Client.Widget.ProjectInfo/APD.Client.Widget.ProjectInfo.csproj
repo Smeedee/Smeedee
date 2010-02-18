@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Controllers\WorkingDaysLeftController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ProjectInfodbRepositoryMock.cs" />
     <Compile Include="ViewModels\WorkingDaysLeftViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

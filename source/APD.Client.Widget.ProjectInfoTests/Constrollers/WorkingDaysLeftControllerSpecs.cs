@@ -33,8 +33,8 @@ using APD.Client.Widget.ProjectInfo.ViewModels;
 using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Framework.Logging;
+using APD.DomainModel.Holidays;
 using APD.DomainModel.ProjectInfo;
-using APD.Plugin.ProjectInfo.DomainModel.Repositories;
 using Moq;
 
 using NUnit.Framework;
@@ -47,6 +47,8 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 {
     public class Shared : ScenarioClass
     {
+        protected static List<Holiday> NoHolidays = new List<Holiday>();
+
         protected static AllSpecification<ProjectInfoServer> AllSpec;
 
         protected static IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> BackgroundWorkerInvoker =
@@ -65,7 +67,12 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
         protected static DateTime NowTime = DateTime.Now;
         protected static Mock<IRepository<ProjectInfoServer>> repositoryMock;
-        protected static Iteration TestingIteration;        
+        protected static Iteration TestingIteration;
+
+        protected static Mock<IRepository<Holiday>> holidayRepositoryMock =
+            new Mock<IRepository<Holiday>>();
+
+
 
 
         protected Context configuration_says_not_to_use_end_date_from_configuration =
@@ -73,26 +80,20 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
         protected Context configuration_says_to_use_end_date_from_configuration = () =>
         {
-            var xmlParser = new XmlCountryHolidaysParser();
-            HolidayProvider holidayProvider = xmlParser.Parse();
-
             DateTime startDate = NowTime.AddDays(-14);
             DateTime endDate = NowTime.AddDays(3).AddMinutes(30);
 
-            IterationFromConfig = new Iteration(startDate, endDate, holidayProvider);
+            IterationFromConfig = new Iteration(startDate, endDate);
 
             SetupConfigRepositoryMock(true, IterationFromConfig.EndDate);
         };
 
         protected Context configuration_says_to_use_end_date_from_configuration_norwegian = () =>
         {
-            var xmlParser = new XmlCountryHolidaysParser();
-            var holidayProvider = xmlParser.Parse();
-
             var startDate = NowTime.AddDays(-14);
             var endDate = new DateTime(2010, 12, 31);
 
-            IterationFromConfig = new Iteration(startDate, endDate, holidayProvider);
+            IterationFromConfig = new Iteration(startDate, endDate);
 
             SetupConfigRepositoryMockWithNorwegianDateFormat(true, IterationFromConfig.EndDate);
         };
@@ -137,11 +138,8 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             DateTime startDate = NowTime.AddDays(-14);
             DateTime endDate = NowTime.AddDays(2).AddHours(2);
 
-            var xmlParser = new XmlCountryHolidaysParser();
-            HolidayProvider holidayProvider = xmlParser.Parse();
-
             var currentproject = new Project("TestProjectName");
-            var iteration = new Iteration(startDate, endDate, holidayProvider);
+            var iteration = new Iteration(startDate, endDate);
             currentproject.AddIteration(iteration);
 
             TestingIteration = currentproject.CurrentIteration;
@@ -163,11 +161,9 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
             DateTime startDate = NowTime.AddDays(2);
             DateTime endDate = NowTime.AddDays(-14);
-            var xmlParser = new XmlCountryHolidaysParser();
-            HolidayProvider holidayProvider = xmlParser.Parse();
 
             var currentproject = new Project("TestProjectName");
-            var iteration = new Iteration(startDate, endDate, holidayProvider);
+            var iteration = new Iteration(startDate, endDate);
             currentproject.AddIteration(iteration);
 
             TestingIteration = currentproject.CurrentIteration;
@@ -250,6 +246,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             controller = new WorkingDaysLeftController(
                 repositoryMock.Object,
                 configRepositoryMock.Object,
+                holidayRepositoryMock.Object,
                 configPersisterRepositoryMock.Object,
                 iNotifyWhenToRefreshMock.Object,
                 new NoUIInvocation(), BackgroundWorkerInvoker,
@@ -384,7 +381,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
             Then("the number of days on overtime in regards to the current iteration is displayed", () =>
                 controller.ViewModel.DaysRemaining.ShouldBe(
-                    TestingIteration.CalculateWorkingdaysLeft(NowTime).Days))
+                    TestingIteration.CalculateWorkingdaysLeft(NowTime, NoHolidays).Days))
 
                 .And("the text should indicate that the iteration is on overtime", () =>
                     DisplayText.ShouldBe(WorkingDaysLeftViewModel.DAYS_ON_OVERTIME_STRING));
@@ -404,7 +401,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
             Then("the remaining working days of the current iteration is displayed", () =>
                 controller.ViewModel.DaysRemaining.ShouldBe(
-                    TestingIteration.CalculateWorkingdaysLeft(NowTime).Days));
+                    TestingIteration.CalculateWorkingdaysLeft(NowTime, NoHolidays).Days));
         }
 
         [Test]
@@ -417,7 +414,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
             Then("the configuration setting project_end_date should be read and returned", () =>
                 controller.ViewModel.DaysRemaining.ShouldBe(
-                   IterationFromConfig.CalculateWorkingdaysLeft(DateTime.Today).Days));
+                   IterationFromConfig.CalculateWorkingdaysLeft(DateTime.Today, NoHolidays).Days));
         }
 
         [Test]
@@ -431,7 +428,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             Then("the project info repository should be queried for the end date", () =>
                 
                 controller.ViewModel.DaysRemaining.ShouldBe(
-                   TestingIteration.CalculateWorkingdaysLeft(DateTime.Today).Days));
+                   TestingIteration.CalculateWorkingdaysLeft(DateTime.Today, NoHolidays).Days));
         }
     }
 

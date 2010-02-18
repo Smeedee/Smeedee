@@ -83,9 +83,6 @@
     <Compile Include="..\APD.Client.Widget.ProjectInfo\Controllers\WorkingDaysLeftController.cs">
       <Link>Controllers\WorkingDaysLeftController.cs</Link>
     </Compile>
-    <Compile Include="..\APD.Client.Widget.ProjectInfo\Repositories\ProjectInfodbRepositoryMock.cs">
-      <Link>Repositories\ProjectInfodbRepositoryMock.cs</Link>
-    </Compile>
     <Compile Include="..\APD.Client.Widget.ProjectInfo\ViewModels\WorkingDaysLeftViewModel.cs">
       <Link>ViewModels\WorkingDaysLeftViewModel.cs</Link>
     </Compile>

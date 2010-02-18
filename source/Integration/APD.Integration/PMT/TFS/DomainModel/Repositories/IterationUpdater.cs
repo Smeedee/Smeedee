@@ -91,7 +91,7 @@ namespace APD.Integration.PMT.TFS.DomainModel.Repositories
 
             var project = new Project {Name = projectName, SystemId = "123"};
 
-            var iteration = new Iteration(startDate, endDate, new HolidayProvider()) {Name = iterationName, SystemId = "12"};
+            var iteration = new Iteration(startDate, endDate) {Name = iterationName, SystemId = "12"};
 
             endDate = ConvertDateToTodayIfDateInFuture(endDate);
             var dates = new List<DateTime>();

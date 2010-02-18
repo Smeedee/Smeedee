@@ -61,6 +61,8 @@
     <Compile Include="CI\Trigger.cs" />
     <Compile Include="CI\UnknownTrigger.cs" />
     <Compile Include="Config\ConfigurationSpecifications.cs" />
+    <Compile Include="Holidays\Holiday.cs" />
+    <Compile Include="Holidays\IGenerateHolidays.cs" />
     <Compile Include="ProjectInfo\HolidayProvider.cs" />
     <Compile Include="ProjectInfo\Iteration.cs" />
     <Compile Include="ProjectInfo\Project.cs" />
@@ -109,6 +111,9 @@
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>APD.DomainModel.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mappings\Holiday.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -117,6 +117,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\HolidayService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\LogEntryRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -139,9 +144,9 @@
     </Compile>
     <Compile Include="Services\Integration\CIRepositorySerivceTests.cs" />
     <Compile Include="Services\Integration\ConfigurationRepositoryServiceTests.cs" />
+    <Compile Include="Services\Integration\HolidayRepositoryServiceTests.cs" />
     <Compile Include="Services\Integration\LogEntryRepositoryServiceSpecs.cs" />
     <Compile Include="Services\Integration\ProjectInfoRepositoryServiceTests.cs" />
-    <Compile Include="Services\Integration\SettingsServiceTests.cs" />
     <Compile Include="Services\Integration\ChangesetRepositoryServiceTests.cs" />
     <Compile Include="Services\Integration\Shared.cs" />
     <Compile Include="Services\Integration\UserRepositoryServiceTests.cs" />
@@ -174,6 +179,7 @@
     <WCFMetadataStorage Include="Service References\ChangesetRepositoryService\" />
     <WCFMetadataStorage Include="Service References\CIRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\HolidayService\" />
     <WCFMetadataStorage Include="Service References\LogEntryRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ProjectInfoService\" />
     <WCFMetadataStorage Include="Service References\SettingsService\" />
@@ -342,6 +348,30 @@
     <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
     <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService3.xsd" />
     <None Include="Service References\LogEntryRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Holidays.Holiday.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\HolidayRepositoryService.disco" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService.wsdl" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService.xsd" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService1.wsdl" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService1.xsd" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService2.xsd" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService3.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

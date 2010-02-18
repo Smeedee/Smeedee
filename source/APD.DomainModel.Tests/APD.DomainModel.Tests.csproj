@@ -67,7 +67,7 @@
     <Compile Include="CI\CIProjectSpecs.cs" />
     <Compile Include="CI\TriggerSpecs.cs" />
     <Compile Include="Config\ConfigurationSpecs.cs" />
-    <Compile Include="ProjectInfo\HolidayProviderSpecs.cs" />
+    <Compile Include="Holidays\HolidaysSpecs.cs" />
     <Compile Include="ProjectInfo\IterationSpecs.cs" />
     <Compile Include="ProjectInfo\ProjectInfoServerSpecs.cs" />
     <Compile Include="ProjectInfo\ProjectSpecs.cs" />
@@ -88,9 +88,9 @@
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>APD.DomainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\APD.Plugin.ProjectInfo\APD.Plugin.ProjectInfo.csproj">
-      <Project>{8B29193C-DD09-4A29-B81A-B55B1EB492D2}</Project>
-      <Name>APD.Plugin.ProjectInfo</Name>
+    <ProjectReference Include="..\APD.Tests\APD.Tests.csproj">
+      <Project>{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}</Project>
+      <Name>APD.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>

@@ -134,12 +134,20 @@
     <Compile Include="Database\DomainModel\Repositories\CIServerDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ConfigurationDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\GenericDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\HolidayDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\LogEntryDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\NHibConfig.cs" />
     <Compile Include="Database\DomainModel\Repositories\NHibernateFactory.cs" />
     <Compile Include="Database\DomainModel\Repositories\ProjectInfoDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ProjectInfoServerDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\UserdbDatabaseRepository.cs" />
+    <Compile Include="Holidays\HolidayXmlMalformedException.cs" />
+    <Compile Include="Holidays\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Holidays\XmlHolidayParser.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\IDownloadXml.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\NoSuchProjectException.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\RallyDevReader.cs" />
@@ -186,17 +194,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CI\CruiseControl\DomainModel\Repositories\XmlServerReport.xsd" />
+    <None Include="Holidays\XmlCountryHolidays.xsd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Holidays\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Holidays\NorwegianHolidays.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

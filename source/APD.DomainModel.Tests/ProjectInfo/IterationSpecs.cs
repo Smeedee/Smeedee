@@ -25,8 +25,9 @@
 
 using System;
 using System.Collections.Generic;
+
+using APD.DomainModel.Holidays;
 using APD.DomainModel.ProjectInfo;
-using APD.Plugin.ProjectInfo.DomainModel.Repositories;
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
@@ -43,16 +44,14 @@ namespace APD.DomainModel.IterationSpecs
 
         protected Context iteration_has_been_created = () =>
         {
-            iteration = new Iteration {SystemId = Guid.NewGuid().ToString(), HolidayProvider = new HolidayProvider()};
+            iteration = new Iteration {SystemId = Guid.NewGuid().ToString()};
         };
 
         public Context an_iteration_has_been_created = () =>
         {
             var startDate = new DateTime(2009, 6, 26);
             var endDate = new DateTime(2009, 7, 10);
-            var xmlParser = new XmlCountryHolidaysParser();
-            holidayProvider = xmlParser.Parse();
-            iteration = new Iteration(startDate, endDate, holidayProvider);
+            iteration = new Iteration(startDate, endDate);
         };
 
 
@@ -160,25 +159,25 @@ namespace APD.DomainModel.IterationSpecs
             });
         }
 
-        [Test]
-        public void should_get_correct_list_of_actual_working_days()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
+        //[Test]
+        //public void should_get_correct_list_of_actual_working_days()
+        //{
+        //    Scenario.StartNew(this, scenario =>
+        //    {
+        //        scenario.Given(an_iteration_has_been_created);
 
-                scenario.When("getting a list of actual working days");
+        //        scenario.When("getting a list of actual working days");
 
-                scenario.Then("the list should only consist of all the actual working days for this iteration", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 8, 3);
-                    iteration.EndDate = new DateTime(2009, 8, 16);
-                    List<DateTime> days = iteration.GetWorkingDays();
+        //        scenario.Then("the list should only consist of all the actual working days for this iteration", () =>
+        //        {
+        //            iteration.StartDate = new DateTime(2009, 8, 3);
+        //            iteration.EndDate = new DateTime(2009, 8, 16);
+        //            List<DateTime> days = iteration.GetWorkingDays(new List<Holiday>());
                     
-                    days.Count.ShouldBe(10);
-                });
-            });
-        }
+        //            days.Count.ShouldBe(10);
+        //        });
+        //    });
+        //}
     }
 
     [TestFixture]
@@ -245,163 +244,142 @@ namespace APD.DomainModel.IterationSpecs
         }
     }
 
-    [TestFixture]
-    public class When_calculating_WorkingDays : Shared
-    {
+    //[TestFixture]
+    //public class When_calculating_WorkingDays : Shared
+    //{
         
-        [Test]
-        public void should_calculate_workingdays_with_startDate_earlier_than_endDate()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the iteration has a startDate earlier then its endDate");
-                scenario.Then("workingdays left should be calculated", ()=>
-                {
-                    iteration.StartDate = new DateTime(2009, 6, 26);
-                    iteration.EndDate = new DateTime(2009, 7, 10);
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(11);
-                });
-            });
-        }
+    //    [Test]
+    //    public void should_calculate_workingdays_with_startDate_earlier_than_endDate()
+    //    {
+    //        Scenario.StartNew(this, scenario =>
+    //        {
+    //            scenario.Given(an_iteration_has_been_created);
+    //            scenario.When("the iteration has a startDate earlier then its endDate");
+    //            scenario.Then("workingdays left should be calculated", ()=>
+    //            {
+    //                iteration.StartDate = new DateTime(2009, 6, 26);
+    //                iteration.EndDate = new DateTime(2009, 7, 10);
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, new List<Holiday>()).Days.ShouldBe(15);
+    //            });
+    //        });
+    //    }
 
-        [Test]
-        public void should_calculate_workingdays_with_startDate_on_the_same_day_as_the_endDate()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the iteration has a startDate on the same day as the endDate");
-                scenario.Then("workingdays left should be 1", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 6, 26);
-                    iteration.EndDate = new DateTime(2009, 6, 26);
+    //    [Test]
+    //    public void should_calculate_workingdays_with_startDate_on_the_same_day_as_the_endDate()
+    //    {
+    //        Scenario.StartNew(this, scenario =>
+    //        {
+    //            scenario.Given(an_iteration_has_been_created);
+    //            scenario.When("the iteration has a startDate on the same day as the endDate");
+    //            scenario.Then("workingdays left should be 1", () =>
+    //            {
+    //                iteration.StartDate = new DateTime(2009, 6, 26);
+    //                iteration.EndDate = new DateTime(2009, 6, 26);
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(1);
-                });
-            });
-        }
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, new List<Holiday>()).Days.ShouldBe(1);
+    //            });
+    //        });
+    //    }
 
-        [Test]
-        public void should_calculate_workingdays_with_startDate_later_than_endDate()
-        {
+    //    [Test]
+    //    public void should_calculate_workingdays_with_startDate_later_than_endDate()
+    //    {
 
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the iteration has a startDate later then its endDate");
-                scenario.Then("workingdays left should be 1", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 6, 27);
-                    iteration.EndDate = new DateTime(2009, 6, 26);
+    //        Scenario.StartNew(this, scenario =>
+    //        {
+    //            scenario.Given(an_iteration_has_been_created);
+    //            scenario.When("the iteration has a startDate later then its endDate");
+    //            scenario.Then("workingdays left should be 1", () =>
+    //            {
+    //                iteration.StartDate = new DateTime(2009, 6, 27);
+    //                iteration.EndDate = new DateTime(2009, 6, 26);
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(1);
-                });
-            });
-        }
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, new List<Holiday>()).Days.ShouldBe(1);
+    //            });
+    //        });
+    //    }
 
-        [Test]
-        public void should_calculate_workingdays_in_iteration_spanning_across_two_years()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the iteration has a startDate in one year and endDate in the next");
-                scenario.Then("workingdays left should caluculated correctly", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 12, 23);
-                    iteration.EndDate = new DateTime(2010, 1, 3);
+    //    [Test]
+    //    public void should_calculate_workingdays_in_iteration_spanning_across_two_years()
+    //    {
+    //        Scenario.StartNew(this, scenario =>
+    //        {
+    //            scenario.Given(an_iteration_has_been_created);
+    //            scenario.When("the iteration has a startDate in one year and endDate in the next");
+    //            scenario.Then("workingdays left should caluculated correctly", () =>
+    //            {
+    //                iteration.StartDate = new DateTime(2009, 12, 23);
+    //                iteration.EndDate = new DateTime(2010, 1, 3);
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(4);
-                });
-            });
-        }
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, new List<Holiday>()).Days.ShouldBe(4);
+    //            });
+    //        });
+    //    }
 
-        [Test]
-        public void should_calculate_workingdays_when_iteration_is_affected_by_a_leap_year()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the iteration span is affected by leap yaer");
-                scenario.Then("workingdays left should caluculated correctly", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 2, 22);
-                    iteration.EndDate = new DateTime(2009, 3, 3);
+    //    [Test]
+    //    public void should_calculate_workingdays_when_iteration_is_affected_by_a_leap_year()
+    //    {
+    //        Scenario.StartNew(this, scenario =>
+    //        {
+    //            scenario.Given(an_iteration_has_been_created);
+    //            scenario.When("the iteration span is affected by leap yaer");
+    //            scenario.Then("workingdays left should caluculated correctly", () =>
+    //            {
+    //                iteration.StartDate = new DateTime(2009, 2, 22);
+    //                iteration.EndDate = new DateTime(2009, 3, 3);
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(7);
-                });
-            });
-        }
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, new List<Holiday>()).Days.ShouldBe(7);
+    //            });
+    //        });
+    //    }
 
-        [Test]
-        public void should_calculate_workingdays_when_iteration_is_affected_easter()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the iteration span is affected by easter");
-                scenario.Then("workingdays left should caluculated correctly", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 4, 1);
-                    iteration.EndDate = new DateTime(2009, 4, 22);
+    //    [Test]
+    //    public void should_calculate_workingdays_when_iteration_is_affected_easter()
+    //    {
+    //        Scenario.StartNew(this, scenario =>
+    //        {
+    //            scenario.Given(an_iteration_has_been_created);
+    //            scenario.When("the iteration span is affected by easter");
+    //            scenario.Then("workingdays left should caluculated correctly", () =>
+    //            {
+    //                iteration.StartDate = new DateTime(2009, 4, 1);
+    //                iteration.EndDate = new DateTime(2009, 4, 22);
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(13);
-                });
-            });
-        }
-    }
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, new List<Holiday>()).Days.ShouldBe(13);
+    //            });
+    //        });
+    //    }
+    //}
 
-    [TestFixture]
-    public class When_changing_status_of_a_day : Shared
-    {
+    //[TestFixture]
+    //public class When_changing_status_of_a_day : Shared
+    //{
 
-        [Test]
-        public void should_set_a_non_working_day_as_a_working_day()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the the user wants to add a extra working day");
-                scenario.Then("an extra workingday should be added", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 6, 15);
-                    iteration.EndDate = new DateTime(2009, 6, 22);
+    //    [Test]
+    //    public void should_set_a_working_day_as_a_non_working_day()
+    //    {
+    //        Scenario.StartNew(this, scenario =>
+    //        {
+    //            scenario.Given(an_iteration_has_been_created);
+    //            scenario.When("the the user wants add a holiday");
+    //            scenario.Then("an holiday is added", () =>
+    //            {
+    //                iteration.StartDate = new DateTime(2009, 6, 15);
+    //                iteration.EndDate = new DateTime(2009, 6, 22);
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(6);
+    //                var holidaysList = new List<Holiday>();
 
-                    var extraWorkingDay = new DateTime(2009, 6, 20);
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, holidaysList).Days.ShouldBe(6);
 
-                    iteration.SetExtraWorkingDay(extraWorkingDay);
+    //                holidaysList.Add(new Holiday() { Date = new DateTime(2009, 6, 19) });
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(7);
-                });
-            });
-        }
 
-        [Test]
-        public void should_set_a_working_day_as_a_non_working_day()
-        {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(an_iteration_has_been_created);
-                scenario.When("the the user wants add a holiday");
-                scenario.Then("an holiday is added", () =>
-                {
-                    iteration.StartDate = new DateTime(2009, 6, 15);
-                    iteration.EndDate = new DateTime(2009, 6, 22);
+    //                iteration.CalculateWorkingdaysLeft(iteration.StartDate, holidaysList).Days.ShouldBe(5);
+    //            });
+    //        });
+    //    }
 
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(6);
-
-                    var nonWorkingDay = new DateTime(2009, 6, 19);
-                    iteration.SetExtraHoliday(nonWorkingDay);
-
-                    iteration.CalculateWorkingdaysLeft(iteration.StartDate).Days.ShouldBe(5);
-                });
-            });
-        }
-
-    }
+    //}
 
     [TestFixture]
     public class When_getting_WorkEffort_info : Shared

@@ -34,6 +34,7 @@ using APD.DomainModel.Framework;
 using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.ProjectInfo;
 using APD.DomainModel.Config;
+using APD.DomainModel.Holidays;
 
 
 namespace APD.Client.Widget.ProjectInfo.Controllers
@@ -50,11 +51,13 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
         private readonly ILog logger;
         private readonly IRepository<Configuration> configRepository;
         private readonly IPersistDomainModels<Configuration> configPersisterRepository;
+        private IRepository<Holiday> holidayRepository;
 
         public Project CurrentProject { get; private set; }
 
         public WorkingDaysLeftController(IRepository<ProjectInfoServer> repository,
                                          IRepository<Configuration> configRepository,
+                                        IRepository<Holiday> holidayRepository, 
                                          IPersistDomainModels<Configuration> configPersisterRepository,
                                          INotifyWhenToRefresh refreshNotifier,
                                          IInvokeUI uiInvoker,
@@ -63,6 +66,7 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
 
             : base(refreshNotifier, uiInvoker)
         {
+            this.holidayRepository = holidayRepository;
             this.repository = repository;
             this.asyncClient = backgroundWorkerInvoker;
             this.logger = logger;
@@ -204,7 +208,7 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
             }
 
             CurrentProject = new Project();
-            var iteration = new Iteration(startDate, endDate, new HolidayProvider());
+            var iteration = new Iteration(startDate, endDate);
             CurrentProject.Iterations = new List<Iteration>() { iteration };
             SetProjectStatus();
         }
@@ -248,14 +252,16 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
 
         private int GetDaysRemaining()
         {
-
             if (CurrentProject == null)
                 throw new ArgumentNullException("CurrentProject");
 
             if (CurrentProject.CurrentIteration == null)
                 throw new ArgumentNullException("CurrentProject.CurrentIteration");
 
-            return CurrentProject.CurrentIteration.CalculateWorkingdaysLeft(DateTime.Now).Days;
+            var holidays = holidayRepository.Get(new AllSpecification<Holiday>());
+
+
+            return CurrentProject.CurrentIteration.CalculateWorkingdaysLeft(DateTime.Now, holidays).Days;
 
         }
     }

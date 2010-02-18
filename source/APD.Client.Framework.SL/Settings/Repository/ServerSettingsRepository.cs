@@ -27,8 +27,7 @@ using System;
 using System.ComponentModel;
 using APD.Client.Framework.SL;
 //using APD.Client.Framework.SL.SettingsService;
-using APD.Client.Framework.SL.SettingsService;
-//using APD.Client.Silverlight.SettingsService;
+
 using APD.Framework.Settings.Repository;
 using SettingsCollection = APD.Client.Framework.Settings;
 using System.Threading;
@@ -39,37 +38,11 @@ namespace APD.Client.Framework.Settings.Repository
 {
     public class ServerSettingsRepository : ISettingsRepository
     {
-
-
         public event EventHandler<SettingsRepositoryEventArgs> GetSettingsComplete;
         public event EventHandler SetSettingsComplete;
 
-        //private SettingsServiceClient client;
-
-        public ServerSettingsRepository()
-        {
-            //client = new SettingsServiceClient();
-            //client.Endpoint.Address =
-            //    WebServiceEndpointResolver.ResolveDynamicEndpointAddress(client.Endpoint.Address);
-            //client.GetSettingsCompleted += GetClientResultAndFireGetCompletedEvent;
-            //client.SaveSettingsCompleted += FireSaveSettingsCompletedEvent;
-        }
-
-        void GetClientResultAndFireGetCompletedEvent(object sender, GetSettingsCompletedEventArgs e)
-        {
-            //if( GetSettingsComplete != null  )
-            //    GetSettingsComplete(this, new SettingsRepositoryEventArgs(e.Result));
-        }
-
-        void FireSaveSettingsCompletedEvent(object sender, AsyncCompletedEventArgs e)
-        {
-            //if (SetSettingsComplete != null)
-            //    SetSettingsComplete(this, EventArgs.Empty);
-        }
-
         public void GetSettingsAsync()
         {
-            //client.GetSettingsAsync();
             if (GetSettingsComplete != null)
                 GetSettingsComplete(this, new SettingsRepositoryEventArgs(new APD.Framework.Settings.Settings()));
         }

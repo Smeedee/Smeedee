@@ -97,6 +97,9 @@
       <DependentUpon>ConfigurationRepositoryService.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\DefaultSessionFactory.cs" />
+    <Compile Include="Services\HolidayRepositoryService.svc.cs">
+      <DependentUpon>HolidayRepositoryService.svc</DependentUpon>
+    </Compile>
     <Compile Include="Services\LogEntryRepositoryService.svc.cs">
       <DependentUpon>LogEntryRepositoryService.svc</DependentUpon>
     </Compile>
@@ -105,9 +108,6 @@
     </Compile>
     <Compile Include="Services\Serialization\ReferenceTrackingSerializer.cs" />
     <Compile Include="Services\Serialization\ReferenceTrackingSerializerProvider.cs" />
-    <Compile Include="Services\SettingsService.svc.cs">
-      <DependentUpon>SettingsService.svc</DependentUpon>
-    </Compile>
     <Compile Include="Services\UserRepositoryService.svc.cs">
       <DependentUpon>UserRepositoryService.svc</DependentUpon>
     </Compile>
@@ -123,9 +123,9 @@
     <Content Include="Services\ChangesetRepositoryService.svc" />
     <Content Include="Services\CIRepositoryService.svc" />
     <Content Include="Services\ConfigurationRepositoryService.svc" />
+    <Content Include="Services\HolidayRepositoryService.svc" />
     <Content Include="Services\LogEntryRepositoryService.svc" />
     <Content Include="Services\ProjectInfoRepositoryService.svc" />
-    <Content Include="Services\SettingsService.svc" />
     <Content Include="Services\UserRepositoryService.svc" />
     <Content Include="Services\VCSCredentialsService.svc" />
     <Content Include="Silverlight.js" />

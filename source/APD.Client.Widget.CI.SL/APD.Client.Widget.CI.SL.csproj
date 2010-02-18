@@ -98,7 +98,6 @@
     <Compile Include="Converters\BuildStatusToOpacityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CIProjectRepository.cs" />
-    <Compile Include="Repository\CIProjectRepositoryMock.cs" />
     <Compile Include="SampleData\CINotifierDataSource\CINotifierDataSource.xaml.cs">
       <DependentUpon>CINotifierDataSource.xaml</DependentUpon>
     </Compile>

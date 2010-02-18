@@ -60,7 +60,12 @@
       binding="basicHttpBinding" bindingConfiguration="basicHttp"
       contract="LogEntryWebserviceRepository.LogEntryRepositoryService"
       name="BasicHttpBinding_LogEntryRepositoryService" />
-    
+
+      <endpoint address="http://localhost:1155/Services/HolidayRepositoryService.svc"
+    binding="basicHttpBinding" bindingConfiguration="basicHttp"
+    contract="HolidayRepositoryService.HolidayRepositoryService"
+    name="BasicHttpBinding_HolidayRepositoryService" />
+
     </client>
   </system.serviceModel>
 </configuration>
