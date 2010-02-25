@@ -26,7 +26,10 @@
 using System;
 using System.Linq;
 
+using APD.DomainModel.Framework;
+using APD.DomainModel.Holidays;
 using APD.DomainModel.ProjectInfo;
+using APD.Integration.Database.DomainModel.Repositories;
 using APD.Integration.Holidays;
 using APD.Plugin.ProjectInfo.DomainModel.Repositories;
 
@@ -86,7 +89,7 @@ namespace APD.IntegrationTests.Holidays
         public void Should_return_list_of_holidays()
         {
             var holidaysList = parser.GenerateHolidays(DateTime.MinValue, DateTime.MaxValue);
-            holidaysList.Count().ShouldBe(20);
+            holidaysList.Count().ShouldBe(30);
             holidaysList.Last().Description.ShouldBe("Nyttårsaften");
         }
 
@@ -97,8 +100,29 @@ namespace APD.IntegrationTests.Holidays
             var inclusiveEnd = new DateTime(2010, 05, 17);
 
             var holidaysList = parser.GenerateHolidays(inclusiveStart, inclusiveEnd);
-            holidaysList.Count().ShouldBe(3);
-            holidaysList.Last().Description.ShouldBe("17. Mai");
+            holidaysList.Count().ShouldBe(9);
+            holidaysList.Last().Description.ShouldBe("17. Mai!");
+        }
+
+        [Test]
+        [Ignore("This is only used to fill the database with holidays from the xmlfile. It is not actually a test")]
+        public void save_holidays_to_database()
+        {
+            var inclusiveStart = DateTime.MinValue;
+            var inclusiveEnd = DateTime.MaxValue;
+
+            var holidaysList = parser.GenerateHolidays(inclusiveStart, inclusiveEnd);
+
+            var db = new HolidayDatabaseRepository();
+            db.Save(holidaysList);
+            db = new HolidayDatabaseRepository();
+
+            var holidaysFromDb = db.Get(new AllSpecification<Holiday>());
+            foreach (var holiday in holidaysList)
+            {
+                Assert.IsTrue( holidaysFromDb.Any(h=> h.Date == holiday.Date && h.Description == holiday.Description) );
+            }
+
         }
     }
 }

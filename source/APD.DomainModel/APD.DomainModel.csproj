@@ -63,7 +63,6 @@
     <Compile Include="Config\ConfigurationSpecifications.cs" />
     <Compile Include="Holidays\Holiday.cs" />
     <Compile Include="Holidays\IGenerateHolidays.cs" />
-    <Compile Include="ProjectInfo\HolidayProvider.cs" />
     <Compile Include="ProjectInfo\Iteration.cs" />
     <Compile Include="ProjectInfo\Project.cs" />
     <Compile Include="ProjectInfo\ProjectInfoServer.cs" />

@@ -127,12 +127,6 @@
     <Project Include="Integration\APD.IntegrationTests\APD.IntegrationTests.csproj"/>
     <!-- End: Integration -->
 
-    <!--Plugin-->
-    <Project Include="APD.Plugin.ProjectInfo\APD.Plugin.ProjectInfo.csproj"/>
-    <Project Include="APD.Plugin.ProjectInfo.Tests\APD.Plugin.ProjectInfo.Tests.csproj"/>
-
-    <!--Plugin END-->
-
     <!--Server-->
 
     <Project Include="APD.Client.Web\APD.Client.Web.csproj"/>
@@ -361,8 +355,7 @@
   </ItemGroup>
 
   <Target Name="Clean">
-    <Exec WorkingDirectory="..\Source"
-          Command="del $(ArtifactsDirectory)\TestResults*.xml"/>
+    <Delete Files="$(ArtifactsDirectory)\TestResults*.xml"/>
   </Target>
 
   <Target Name="Labeling" DependsOnTargets="Clean">

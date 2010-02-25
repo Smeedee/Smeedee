@@ -217,6 +217,9 @@
     <Compile Include="Views\GenericConfigurationView.xaml.cs">
       <DependentUpon>GenericConfigurationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HolidaysView.xaml.cs">
+      <DependentUpon>HolidaysView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ModelDialogWindowContainerView.xaml.cs">
       <DependentUpon>ModelDialogWindowContainerView.xaml</DependentUpon>
     </Compile>
@@ -270,6 +273,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Views\GenericConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="Views\HolidaysView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>

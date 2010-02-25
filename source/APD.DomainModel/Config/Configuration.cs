@@ -97,7 +97,7 @@ namespace APD.DomainModel.Config
         public static Configuration DefaultCIConfiguration()
         {
             return ProviderConfiguration("ci", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "cc.net",
-                                         "tfs");
+                                         "tfs - vanilla", "tfs - scrum by conchango");
         }
 
         public static Configuration DefaultDashboardConfiguration()
@@ -110,6 +110,15 @@ namespace APD.DomainModel.Config
             dashboardConfig.NewSetting("is-expanded", "false");
 
             return dashboardConfig;
+        }
+
+        public static Configuration DefaultHolidayConfiguration()
+        {
+            var holidayConfiguration = new Configuration("holidays");
+            holidayConfiguration.NewSetting("saturdays-are-holidays", "true");
+            holidayConfiguration.NewSetting("sundays-are-holidays", "true");
+
+            return holidayConfiguration;
         }
     }
 }

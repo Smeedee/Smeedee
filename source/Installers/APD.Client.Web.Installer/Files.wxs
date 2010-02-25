@@ -5,25 +5,11 @@
             <ComponentRef Id="Default.htm" />
             <ComponentRef Id="Silverlight.js" />
             <ComponentRef Id="Web.config" />
-            <ComponentRef Id="Antlr3.Runtime.dll" />
-            <ComponentRef Id="APD.Client.Web.dll" />
-            <ComponentRef Id="APD.DataCollector.Console.exe" />
             <ComponentRef Id="APD.DataCollector.dll" />
             <ComponentRef Id="APD.DataCollector.Service.exe" />
-            <ComponentRef Id="APD.DataCollector.Service.vshost.exe" />
-            <ComponentRef Id="APD.DomainModel.dll" />
-            <ComponentRef Id="APD.DomainModel.Framework.dll" />
             <ComponentRef Id="APD.DomainModel.NHMapping.dll" />
-            <ComponentRef Id="APD.Framework.dll" />
-            <ComponentRef Id="APD.Harvester.dll" />
             <ComponentRef Id="APD.Harvester.Framework.dll" />
-            <ComponentRef Id="APD.Integration.dll" />
-            <ComponentRef Id="APD.Integration.Framework.dll" />
             <ComponentRef Id="APD.Plugin.ProjectInfo.dll" />
-            <ComponentRef Id="Castle.Core.dll" />
-            <ComponentRef Id="Castle.DynamicProxy2.dll" />
-            <ComponentRef Id="Iesi.Collections.dll" />
-            <ComponentRef Id="log4net.dll" />
             <ComponentRef Id="Microsoft.TeamFoundation.Build.Client.dll" />
             <ComponentRef Id="Microsoft.TeamFoundation.Build.Common.dll" />
             <ComponentRef Id="Microsoft.TeamFoundation.Build.Controls.dll" />
@@ -46,202 +32,158 @@
             <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Controls.dll" />
             <ComponentRef Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" />
             <ComponentRef Id="NHibernate.ByteCode.Castle.dll" />
-            <ComponentRef Id="NHibernate.dll" />
-            <ComponentRef Id="SharpSvn_DB44_20_Win32.dll" />
-            <ComponentRef Id="SharpSvn_SASL21_22_Win32.dll" />
-            <ComponentRef Id="SharpSvn.dll" />
             <ComponentRef Id="System.Data.SQLite.dll" />
             <ComponentRef Id="APD.Client.Silverlight.xap" />
             <ComponentRef Id="ChangesetRepositoryService.svc" />
             <ComponentRef Id="CIRepositoryService.svc" />
             <ComponentRef Id="ConfigurationRepositoryService.svc" />
+            <ComponentRef Id="HolidayRepositoryService.svc" />
             <ComponentRef Id="LogEntryRepositoryService.svc" />
             <ComponentRef Id="ProjectInfoRepositoryService.svc" />
-            <ComponentRef Id="SettingsService.svc" />
             <ComponentRef Id="UserRepositoryService.svc" />
             <ComponentRef Id="VCSCredentialsService.svc" />
+            <ComponentRef Id="default_user.jpg" />
+            <ComponentRef Id="system_user.jpg" />
+            <ComponentRef Id="unknown_user.jpg" />
         </ComponentGroup>
     </Fragment>
     <Fragment>
         <DirectoryRef Id="INSTALLLOCATION">
-            <Component Id="Default.htm" Guid="{D4D2675E-0227-4D95-85FC-9D2BE078D2A1}">
+            <Component Id="Default.htm" Guid="{9A0EC3B2-76BA-425E-B645-7B726A04B36C}">
                 <File Id="Default.htm" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Default.htm" />
             </Component>
-            <Component Id="Silverlight.js" Guid="{282454CF-0B38-4FB7-9F90-2AB5BE382DEC}">
+            <Component Id="Silverlight.js" Guid="{1ACEA410-76C3-4CAB-953E-98C36A680254}">
                 <File Id="Silverlight.js" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Silverlight.js" />
             </Component>
-            <Component Id="Web.config" Guid="{09FE5FD8-FB0E-47DD-AA7E-9B01FBA3C226}">
+            <Component Id="Web.config" Guid="{1D5BC92E-78C6-423A-BBDA-A48E88CF21EC}">
                 <File Id="Web.config" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Web.config" />
             </Component>
             <Directory Id="bin" Name="bin">
-                <Component Id="Antlr3.Runtime.dll" Guid="{36285165-4F96-49F9-A7B2-D05AC28D33FE}">
-                    <File Id="Antlr3.Runtime.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Antlr3.Runtime.dll" />
-                </Component>
-                <Component Id="APD.Client.Web.dll" Guid="{4725E557-D977-4610-9059-4F194F888DE8}">
-                    <File Id="APD.Client.Web.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Client.Web.dll" />
-                </Component>
-                <Component Id="APD.DataCollector.Console.exe" Guid="{B2959214-BE8B-48D0-8217-0E5F46769C13}">
-                    <File Id="APD.DataCollector.Console.exe" Name="DataCollector.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Console.exe" />
-                </Component>
-                <Component Id="APD.DataCollector.dll" Guid="{10397291-04C5-44D9-9AB3-659B0AD70C0E}">
+                <Component Id="APD.DataCollector.dll" Guid="{7C6F6DAE-E396-4269-A1CE-8B948E967386}">
                     <File Id="APD.DataCollector.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.dll" />
                 </Component>
-                <Component Id="APD.DataCollector.Service.exe" Guid="{7270796E-B6CD-4EEA-98F6-B3D7712AD951}">
+                <Component Id="APD.DataCollector.Service.exe" Guid="{FA996EB2-EDEC-4A4C-8D93-E45B63BF5034}">
                     <File Id="APD.DataCollector.Service.exe" Name="DataCollectorService.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Service.exe" />
                 </Component>
-                <Component Id="APD.DataCollector.Service.vshost.exe" Guid="{C1561D94-1A35-4C00-B4AC-CC93D6F163BA}">
-                    <File Id="APD.DataCollector.Service.vshost.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Service.vshost.exe" />
-                </Component>
-                <Component Id="APD.DomainModel.dll" Guid="{62F25546-4F1F-4560-8C23-EC52D2531951}">
-                    <File Id="APD.DomainModel.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.dll" />
-                </Component>
-                <Component Id="APD.DomainModel.Framework.dll" Guid="{41874ABD-39DE-45CF-B3D9-DC265DD28B9D}">
-                    <File Id="APD.DomainModel.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.Framework.dll" />
-                </Component>
-                <Component Id="APD.DomainModel.NHMapping.dll" Guid="{A756F770-B990-4DA1-8FE3-94704077DE07}">
+                <Component Id="APD.DomainModel.NHMapping.dll" Guid="{B0AD966A-AFDB-4627-A695-913FEBF9A554}">
                     <File Id="APD.DomainModel.NHMapping.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DomainModel.NHMapping.dll" />
                 </Component>
-                <Component Id="APD.Framework.dll" Guid="{78D6B6C9-30C5-4E22-A373-C8B5B314DD5F}">
-                    <File Id="APD.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Framework.dll" />
-                </Component>
-                <Component Id="APD.Harvester.dll" Guid="{73FF6E03-43DE-4CFE-8F02-9946EAAD8637}">
-                    <File Id="APD.Harvester.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Harvester.dll" />
-                </Component>
-                <Component Id="APD.Harvester.Framework.dll" Guid="{65341E0E-29C9-475D-91A2-A9399B50F474}">
+                <Component Id="APD.Harvester.Framework.dll" Guid="{FEFD4E4D-3835-4EC7-87C8-91BE11AC23D4}">
                     <File Id="APD.Harvester.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Harvester.Framework.dll" />
                 </Component>
-                <Component Id="APD.Integration.dll" Guid="{E6A7C2A8-71AC-4C14-9225-A4D9F58CFF36}">
-                    <File Id="APD.Integration.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Integration.dll" />
-                </Component>
-                <Component Id="APD.Integration.Framework.dll" Guid="{02B7596C-D9A3-41A3-ACA4-97B7B0D5F4EA}">
-                    <File Id="APD.Integration.Framework.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Integration.Framework.dll" />
-                </Component>
-                <Component Id="APD.Plugin.ProjectInfo.dll" Guid="{AB8CAEBC-5531-4BAF-96D0-D92281D6091B}">
+                <Component Id="APD.Plugin.ProjectInfo.dll" Guid="{A8C9A0B1-5222-492C-B6F4-2445FC78BEFE}">
                     <File Id="APD.Plugin.ProjectInfo.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.Plugin.ProjectInfo.dll" />
                 </Component>
-                <Component Id="Castle.Core.dll" Guid="{1C828207-AD00-46A8-8A76-C37F4190E9BD}">
-                    <File Id="Castle.Core.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Castle.Core.dll" />
-                </Component>
-                <Component Id="Castle.DynamicProxy2.dll" Guid="{BB85F22B-D7DC-4D02-8205-B4E45F010FC2}">
-                    <File Id="Castle.DynamicProxy2.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Castle.DynamicProxy2.dll" />
-                </Component>
-                <Component Id="Iesi.Collections.dll" Guid="{23E0FC56-1484-4BF1-A109-A57481A3F8C2}">
-                    <File Id="Iesi.Collections.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Iesi.Collections.dll" />
-                </Component>
-                <Component Id="log4net.dll" Guid="{0A0CD61D-7916-4D65-8B53-79BB00D6D9DE}">
-                    <File Id="log4net.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\log4net.dll" />
-                </Component>
-                <Component Id="Microsoft.TeamFoundation.Build.Client.dll" Guid="{CB63A00E-4959-4F4A-9450-436A6E69FD3F}">
+                <Component Id="Microsoft.TeamFoundation.Build.Client.dll" Guid="{00C72F03-E1DF-463A-A2C8-A9B5314C2438}">
                     <File Id="Microsoft.TeamFoundation.Build.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Build.Client.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.Build.Common.dll" Guid="{8AF73CDA-C1D3-4562-A67E-808418485DE7}">
+                <Component Id="Microsoft.TeamFoundation.Build.Common.dll" Guid="{B651C95A-8662-442D-9A0A-6D1DDDB0C912}">
                     <File Id="Microsoft.TeamFoundation.Build.Common.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Build.Common.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.Build.Controls.dll" Guid="{0E6E714F-1DEC-4501-AEFE-C4BC59561DAC}">
+                <Component Id="Microsoft.TeamFoundation.Build.Controls.dll" Guid="{B19DC6EA-3659-44A9-B442-314FDE662CE0}">
                     <File Id="Microsoft.TeamFoundation.Build.Controls.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Build.Controls.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.Build.Tasks.dll" Guid="{ECC5F595-E0BA-4C96-A229-AC106E1D8879}">
+                <Component Id="Microsoft.TeamFoundation.Build.Tasks.dll" Guid="{3C18D744-158F-4F32-9465-5C39F7961E1E}">
                     <File Id="Microsoft.TeamFoundation.Build.Tasks.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Build.Tasks.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.Build.Tasks.VersionControl.dll" Guid="{0A4A895B-ED86-42E6-9FF2-4BF74D65CE46}">
+                <Component Id="Microsoft.TeamFoundation.Build.Tasks.VersionControl.dll" Guid="{301F94D3-0F63-4B08-AD0E-99255BC5229B}">
                     <File Id="Microsoft.TeamFoundation.Build.Tasks.VersionControl.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Build.Tasks.VersionControl.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.Client.dll" Guid="{6B0D057A-21EB-4D06-B095-8B19D3AFCCD3}">
+                <Component Id="Microsoft.TeamFoundation.Client.dll" Guid="{824D7B62-8CDD-46D8-A281-87F1AF680300}">
                     <File Id="Microsoft.TeamFoundation.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Client.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.Common.dll" Guid="{52BF546C-24D4-44CF-8D31-24C4373935C0}">
+                <Component Id="Microsoft.TeamFoundation.Common.dll" Guid="{31D4048D-999F-4D04-BAFC-4F7B882284D6}">
                     <File Id="Microsoft.TeamFoundation.Common.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Common.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.Common.Library.dll" Guid="{744169A5-140B-4377-BF99-6DB90A8C297B}">
+                <Component Id="Microsoft.TeamFoundation.Common.Library.dll" Guid="{EAFBE3D4-8698-423F-A290-51844D30E9E2}">
                     <File Id="Microsoft.TeamFoundation.Common.Library.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.Common.Library.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.dll" Guid="{7894ED49-590D-4C0C-8289-91D2B12F1180}">
+                <Component Id="Microsoft.TeamFoundation.dll" Guid="{26BB1D50-7BB6-4D37-A5A1-B70AFA39D969}">
                     <File Id="Microsoft.TeamFoundation.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.VersionControl.Client.dll" Guid="{31CF841F-BF82-4C86-91B1-5A8D97449424}">
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Client.dll" Guid="{9E16EE2A-8BFB-408F-A9DD-64EBB1526351}">
                     <File Id="Microsoft.TeamFoundation.VersionControl.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.VersionControl.Client.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.dll" Guid="{B4C2252A-5628-4C20-B2E8-9DD8373939A8}">
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.dll" Guid="{59C445C6-FA11-4D44-AAED-EE972F574A64}">
                     <File Id="Microsoft.TeamFoundation.VersionControl.Common.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.VersionControl.Common.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" Guid="{753AD365-4B98-4178-9E9F-09638767BB7C}">
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" Guid="{DE8B1E20-A811-4CC9-B321-D18158140918}">
                     <File Id="Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.VersionControl.Common.Integration.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.VersionControl.Controls.dll" Guid="{5D31183D-A4E4-43CA-B5B6-78F43CAA2C03}">
+                <Component Id="Microsoft.TeamFoundation.VersionControl.Controls.dll" Guid="{7A4C229C-95C9-421E-A623-FAAE552E23F5}">
                     <File Id="Microsoft.TeamFoundation.VersionControl.Controls.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.VersionControl.Controls.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" Guid="{A35A6EE8-80A2-4601-8114-93757CDF8B59}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" Guid="{1F05F21E-CE47-463B-9353-7FF1F8FFE960}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" Guid="{1EF819BB-E617-4B89-B8D4-D679338F14E9}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" Guid="{FD0EC74F-8F97-48F5-9D38-96E6612025D2}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll" Guid="{D803D0BD-DE13-4599-9EA1-4E0C7D661C6F}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll" Guid="{A1326CD1-D931-4104-8214-226A0B9C832B}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" Guid="{4B94DC8F-18ED-4637-B772-E58F63A3968D}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" Guid="{0C516CCA-0718-4A6B-9F69-83A154088314}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll" Guid="{93349CCC-32CE-49E7-AA9C-ED9B8CE5ACDE}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll" Guid="{759FD57C-49FC-4E5E-81B1-3AFBCFD97880}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" Guid="{2329E1CD-E483-48A6-9505-862E62BA26EA}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" Guid="{327C4E2A-871F-4192-BFD5-CFB12BB64FA8}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Controls.dll" Guid="{D53924C0-3D05-40DC-8024-C9BC87904174}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Controls.dll" Guid="{19DB9B75-A628-4214-8D32-99F9808CFCCB}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Controls.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Controls.dll" />
                 </Component>
-                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" Guid="{322B5889-7569-4F09-B9E1-CBE70B0F7CF1}">
+                <Component Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" Guid="{40165CE8-0EF5-493B-AF7D-C5AB845BF556}">
                     <File Id="Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\Microsoft.TeamFoundation.WorkItemTracking.Proxy.dll" />
                 </Component>
-                <Component Id="NHibernate.ByteCode.Castle.dll" Guid="{31D2316C-F684-4B1C-8B8E-8F093E7505AD}">
+                <Component Id="NHibernate.ByteCode.Castle.dll" Guid="{14273A81-6639-48E4-9C41-7F8C9FA4B2BE}">
                     <File Id="NHibernate.ByteCode.Castle.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\NHibernate.ByteCode.Castle.dll" />
                 </Component>
-                <Component Id="NHibernate.dll" Guid="{E5A676C6-EB7C-43A9-BC7D-651D4FF0D4D7}">
-                    <File Id="NHibernate.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\NHibernate.dll" />
-                </Component>
-                <Component Id="SharpSvn_DB44_20_Win32.dll" Guid="{1323EF10-6DC3-41BD-A271-6BB800AB8F8A}">
-                    <File Id="SharpSvn_DB44_20_Win32.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\SharpSvn-DB44-20-Win32.dll" />
-                </Component>
-                <Component Id="SharpSvn_SASL21_22_Win32.dll" Guid="{9B3344D5-79A7-4CED-BFD7-1D4430008A61}">
-                    <File Id="SharpSvn_SASL21_22_Win32.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\SharpSvn-SASL21-22-Win32.dll" />
-                </Component>
-                <Component Id="SharpSvn.dll" Guid="{31641866-E941-4A12-B9F1-4A27B37EFAC5}">
-                    <File Id="SharpSvn.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\SharpSvn.dll" />
-                </Component>
-                <Component Id="System.Data.SQLite.dll" Guid="{15703F51-9C7F-4C49-806E-221F7D1F893C}">
+                <Component Id="System.Data.SQLite.dll" Guid="{806A9D9F-AE90-45C5-B220-01364BA3EA1D}">
                     <File Id="System.Data.SQLite.dll" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\System.Data.SQLite.dll" />
                 </Component>
             </Directory>
             <Directory Id="ClientBin" Name="ClientBin">
-                <Component Id="APD.Client.Silverlight.xap" Guid="{FE890CCE-E34D-443D-8258-61D079678445}">
+                <Component Id="APD.Client.Silverlight.xap" Guid="{197464D7-0110-4124-89FD-C7F7D60FC883}">
                     <File Id="APD.Client.Silverlight.xap" KeyPath="yes" Source="..\..\Build\bin\temp\installer\ClientBin\APD.Client.Silverlight.xap" />
                 </Component>
             </Directory>
             <Directory Id="Services" Name="Services">
-                <Component Id="ChangesetRepositoryService.svc" Guid="{97FE4D29-3046-4530-B7B3-58BADA16FE5A}">
+                <Component Id="ChangesetRepositoryService.svc" Guid="{27B07D7F-3704-4873-B66D-FF457B2249EE}">
                     <File Id="ChangesetRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\ChangesetRepositoryService.svc" />
                 </Component>
-                <Component Id="CIRepositoryService.svc" Guid="{F055459B-051E-43B0-8ED8-2662B08577A9}">
+                <Component Id="CIRepositoryService.svc" Guid="{DE020E2C-0884-4954-8C2E-F3D35E97178A}">
                     <File Id="CIRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\CIRepositoryService.svc" />
                 </Component>
-                <Component Id="ConfigurationRepositoryService.svc" Guid="{686A01C1-5A1D-4A84-8E09-455B302F4F49}">
+                <Component Id="ConfigurationRepositoryService.svc" Guid="{D97E2449-CC54-4617-901F-D552ADE2B237}">
                     <File Id="ConfigurationRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\ConfigurationRepositoryService.svc" />
                 </Component>
-                <Component Id="LogEntryRepositoryService.svc" Guid="{15B6A392-B0C0-4BFC-A2C1-26B80A709173}">
+                <Component Id="HolidayRepositoryService.svc" Guid="{5FA27C49-3F05-46B3-A695-736662641501}">
+                    <File Id="HolidayRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\HolidayRepositoryService.svc" />
+                </Component>
+                <Component Id="LogEntryRepositoryService.svc" Guid="{7187BE97-E769-4E41-807B-B6EFA725B55C}">
                     <File Id="LogEntryRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\LogEntryRepositoryService.svc" />
                 </Component>
-                <Component Id="ProjectInfoRepositoryService.svc" Guid="{611B7833-FD61-4729-85C5-D270860C85E7}">
+                <Component Id="ProjectInfoRepositoryService.svc" Guid="{CCEACAC3-DEB4-4EE0-8664-3338664AB6E6}">
                     <File Id="ProjectInfoRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\ProjectInfoRepositoryService.svc" />
                 </Component>
-                <Component Id="SettingsService.svc" Guid="{A0C5E039-0E90-4BB6-8966-A2567BAE1B7F}">
-                    <File Id="SettingsService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\SettingsService.svc" />
-                </Component>
-                <Component Id="UserRepositoryService.svc" Guid="{11F81921-188B-4B32-A993-C9452CF1FE54}">
+                <Component Id="UserRepositoryService.svc" Guid="{30398B8D-18BC-41C9-9C14-DBE57280DDA6}">
                     <File Id="UserRepositoryService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\UserRepositoryService.svc" />
                 </Component>
-                <Component Id="VCSCredentialsService.svc" Guid="{A87F2AA5-0F7F-4386-AA57-239C7AEC5AC5}">
+                <Component Id="VCSCredentialsService.svc" Guid="{4F13412F-C45D-4F31-B67F-97E6CDFC7C8C}">
                     <File Id="VCSCredentialsService.svc" KeyPath="yes" Source="..\..\Build\bin\temp\installer\Services\VCSCredentialsService.svc" />
+                </Component>
+            </Directory>
+            <Directory Id="UserImages" Name="UserImages">
+                <Component Id="default_user.jpg" Guid="{A26650C9-B8E7-4FE8-BE30-A81730738B9D}">
+                    <File Id="default_user.jpg" KeyPath="yes" Source="..\..\Build\bin\temp\installer\UserImages\default_user.jpg" />
+                </Component>
+                <Component Id="system_user.jpg" Guid="{64FB5177-CAF9-4930-8B23-8FDF90F23468}">
+                    <File Id="system_user.jpg" KeyPath="yes" Source="..\..\Build\bin\temp\installer\UserImages\system_user.jpg" />
+                </Component>
+                <Component Id="unknown_user.jpg" Guid="{193ECB88-6F8F-48CC-9E80-3756D8EC4397}">
+                    <File Id="unknown_user.jpg" KeyPath="yes" Source="..\..\Build\bin\temp\installer\UserImages\unknown_user.jpg" />
                 </Component>
             </Directory>
         </DirectoryRef>

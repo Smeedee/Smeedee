@@ -201,7 +201,7 @@ namespace APD.IntegrationTests.Database.DomainModel.Repositories.ChangesetDataba
     public class When_saving : Shared
     {
         protected const string TEST_USERNAME = "Kim Bjarne me Musa";
-        protected const string TEST_COMMENT = "What what in the butt butt";
+        protected const string TEST_COMMENT = "What what in the butt butt æøå norsk test";
         protected const int TEST_REVISION_NUMBER = 1001;
         protected static readonly DateTime TEST_TIME = DateTime.Today;
 

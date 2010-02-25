@@ -1,23 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Holidays>
-  <Holiday date="2009-01-01" />
-  <Holiday date="2009-05-01" />
-  <Holiday date="2009-05-17" />
-  <Holiday date="2009-12-24" />
-  <Holiday date="2009-12-25" />
-  <Holiday date="2009-12-26" />
-  <Holiday date="2009-12-31" />
-  <Holiday date="2009-04-09" />
-  <Holiday date="2009-04-10" />
-  <Holiday date="2009-04-13" />
-  <Holiday date="2009-05-21" />
-  <Holiday date="2009-05-31" />
-  <Holiday date="2009-06-01" />
-  <Holiday date="2010-01-01" />
-  <Holiday date="2010-05-01" />
-  <Holiday date="2010-05-17" />
+  <Holiday date="2010-01-01" description="Første nyttårsdag" />
+  <Holiday date="2010-03-28" description="Palmesøndag" />
+  <Holiday date="2010-04-01" description="Skjærtorsdag" />
+  <Holiday date="2010-04-02" description="Langfredag" />
+  <Holiday date="2010-04-04" description="Første påskedag" />
+  <Holiday date="2010-04-05" description="Andre påskedag" />
+  <Holiday date="2010-05-01" description="1. Mai" />
+  <Holiday date="2010-05-13" description="Kristi himmelfart" />
+  <Holiday date="2010-05-17" description="17. Mai!" />
+  <Holiday date="2010-05-23" description="Første pinsedag" />
+  <Holiday date="2010-05-24" description="Andre pinsedag" />
   <Holiday date="2010-12-24" description="Julaften" />
   <Holiday date="2010-12-25" description="Første juledag" />
   <Holiday date="2010-12-26" description="Andre juledag" />
   <Holiday date="2010-12-31" description="Nyttårsaften" />
+
+  <Holiday date="2011-01-01" description="Første nyttårsdag" />
+  <Holiday date="2011-04-17" description="Palmesøndag" />
+  <Holiday date="2011-04-21" description="Skjærtorsdag" />
+  <Holiday date="2011-04-22" description="Langfredag" />
+  <Holiday date="2011-04-24" description="Første påskedag" />
+  <Holiday date="2011-04-25" description="Andre påskedag" />
+  <Holiday date="2011-05-01" description="1. Mai" />
+  <Holiday date="2011-06-02" description="Kristi himmelfart" />
+  <Holiday date="2011-05-17" description="17. Mai!" />
+  <Holiday date="2011-06-12" description="Første pinsedag" />
+  <Holiday date="2011-06-13" description="Andre pinsedag" />
+  <Holiday date="2011-12-24" description="Julaften" />
+  <Holiday date="2011-12-25" description="Første juledag" />
+  <Holiday date="2011-12-26" description="Andre juledag" />
+  <Holiday date="2011-12-31" description="Nyttårsaften" />
 </Holidays>

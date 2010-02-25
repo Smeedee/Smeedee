@@ -53,7 +53,7 @@ namespace APD.Client.Widget.Admin.ViewModels.Configuration
                 TriggerPropertyChanged<ProviderConfigItemViewModel>(vm => vm.SelectedProvider);
                 TriggerPropertyChanged<ProviderConfigItemViewModel>(vm => vm.IsProjectEditable);
 
-                if ( value == "tfs" && this.Project.StartsWith("$/") == false)
+                if ( value.StartsWith("tfs") && this.Project.StartsWith("$/") == false)
                     this.Project = "$/" + this.Project;
             }
         }

@@ -12,7 +12,8 @@
 
   <ItemGroup>
     <WebProject Include="APD.Client.Web\APD.Client.Web.csproj"/>
-
+    <SmeedeeSolution Include="Agile Project Dashboard.sln"/>
+    
     <InstallerProject Include="Agile Project Dashboard Installers.sln"/>
 
     <DataCollector Include="Agile Project Dashboard.DataCollector.sln"/>
@@ -32,7 +33,7 @@
     <APDInstallerOutput Include="Installers\APD.Client.Web.Installer\bin\Debug\*.msi"/>
 
     <DataCollectorOutput Include="DataCollector\APD.DataCollector.Service\bin\Debug\*.dll"/>
-    <DataCollectorOutput Include="DataCollector\APD.DataCollector.Service\bin\Debug\*.exe"/>
+    <DataCollectorOutput Include="DataCollector\APD.DataCollector.Service\bin\Debug\APD.DataCollector.Service.exe"/>
     
     <DataCollectorConsoleOutput Include="DataCollector\APD.DataCollector.Console\bin\debug\*Console.exe"/>
     <DataCollectorConsoleOutput Include="DataCollector\APD.DataCollector.Console\bin\debug\*.dll"/>
@@ -54,11 +55,11 @@
     <MSBuild Projects="@(DataCollector)" Targets="Build"/>
   </Target>
 
-  <Target Name="Compile_web_Project" DependsOnTargets="Compile_Data_collector">
+  <Target Name="Compile_smeedee" DependsOnTargets="Compile_Data_collector">
     <MSBuild Projects="@(WebProject)" Targets="Build"/>
   </Target>
 
-  <Target Name="Change_port_back_after_compile" DependsOnTargets="Compile_web_Project">
+  <Target Name="Change_port_back_after_compile" DependsOnTargets="Compile_smeedee">
     <ItemGroup>
       <ServiceReferences Include="**\ServiceReferences.ClientConfig" Exclude="Build\**\ServiceReferences.ClientConfig"/>
     </ItemGroup>
@@ -72,7 +73,7 @@
     <MakeDir Directories="$(WorkingDirectory)"/>
     <MakeDir Directories="$(WorkingDirectory)\bin"/>
     <MakeDir Directories="$(WorkingDirectory)\ClientBin"/>
-	<MakeDir Directories="$(WorkingDirectory)\UserImages"/>
+	  <MakeDir Directories="$(WorkingDirectory)\UserImages"/>
     <MakeDir Directories="$(WorkingDirectory)\Services"/>
   </Target>
 

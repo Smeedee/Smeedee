@@ -40,7 +40,6 @@ namespace APD.DomainModel.IterationSpecs
         protected static ProjectInfoServer server;
         protected static Project project;
         protected static Iteration iteration;
-        protected static HolidayProvider holidayProvider;
 
         protected Context iteration_has_been_created = () =>
         {

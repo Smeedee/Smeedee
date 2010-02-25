@@ -45,7 +45,7 @@ namespace APD.Client.Widget.Admin.Factories
 
         private bool IsPluginConfiguration()
         {
-            return configurationToBeAssembled.Settings.Where(s => s.Name == PLUGIN_SETTING_NAME).Count() > 0;
+            return configurationToBeAssembled.Settings.Any(s => s.Name == PLUGIN_SETTING_NAME);
         }
 
         private ConfigurationItemViewModel AssemblePluginConfiguration(Configuration configuration)
