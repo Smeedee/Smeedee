@@ -27,12 +27,5 @@ namespace APD.Client.Widget.Admin.SL
         {
 
         }
-
-		private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-			var childWindow = new ModalDialogWindowContainerView();
-			childWindow.DataContext = DataContext;
-			childWindow.Show();
-		}
 	}
 }

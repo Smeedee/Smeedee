@@ -39,7 +39,6 @@ namespace APD.Client.Widget.Admin.Controllers
         {
             this.commandWiring = commandWiring;
 
-
             this.commandWiring.NewNotification += new EventHandler<EventArgs>(commandWiring_NewNotification);
         }
 

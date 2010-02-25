@@ -89,6 +89,7 @@
     <Compile Include="ViewModels\Configuration\GenericConfigItemViewModel.cs" />
     <Compile Include="ViewModels\Configuration\PluginConfigItemViewModel.cs" />
     <Compile Include="ViewModels\Configuration\ProviderConfigItemViewModel.cs" />
+    <Compile Include="ViewModels\HolidayViewModel.cs" />
     <Compile Include="ViewModels\ITriggerCommand.cs" />
     <Compile Include="ViewModels\ModalDialogViewModel.cs" />
     <Compile Include="ViewModels\Configuration\SettingViewModel.cs" />
@@ -111,6 +112,9 @@
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>APD.DomainModel.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
