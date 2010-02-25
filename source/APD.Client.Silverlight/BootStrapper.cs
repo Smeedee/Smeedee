@@ -38,6 +38,7 @@ using APD.Client.Widget.ProjectInfo.SL;
 using APD.Client.Widget.SourceControl.SL;
 using APD.Client.Widget.SourceControl.SL.Repositories;
 using APD.Client.Widget.TrayBar.SL;
+using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.Holidays;
@@ -104,6 +105,9 @@ namespace APD.Client.Silverlight
             Container.RegisterType<IRepository<User>, UserWebserviceRepositoryProxy>();
             Container.RegisterType<IRepository<Holiday>, HolidayWebserviceRepository>();
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
+
+            Container.RegisterType<IRepository<Configuration>, ConfigurationRepository>();
+            Container.RegisterType<IPersistDomainModels<Configuration>, ConfigurationRepository>();
 
             Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryWebservicePersister>();
             Container.RegisterType<ILog, DatabaseLogger>();

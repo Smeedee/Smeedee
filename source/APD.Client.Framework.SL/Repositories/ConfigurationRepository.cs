@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Windows;
@@ -10,14 +11,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-using APD.Client.Framework.SL;
-using APD.Client.Widget.ProjectInfo.SL.ConfigurationRepositoryService;
+using APD.Client.Framework.SL.ConfigurationRepositoryService;
 using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
-using System.Collections.Generic;
 
 
-namespace APD.Client.Widget.ProjectInfo.SL.Repositories
+namespace APD.Client.Framework.SL.Repositories
 {
     public class ConfigurationRepository : IRepository<Configuration>, IPersistDomainModels<Configuration>
     {

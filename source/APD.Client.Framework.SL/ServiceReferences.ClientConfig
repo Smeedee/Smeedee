@@ -2,7 +2,7 @@
     <system.serviceModel>
         <bindings>
             <basicHttpBinding>
-                <binding name="BasicHttpBinding_ProjectInfoRepositoryService"
+                <binding name="BasicHttpBinding_ConfigurationRepositoryService"
                     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
                     <security mode="None">
                         <transport>
@@ -13,10 +13,10 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ProjectInfoRepositoryService"
-                contract="ProjectInfoRepositoryService.ProjectInfoRepositoryService"
-                name="BasicHttpBinding_ProjectInfoRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/ConfigurationRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ConfigurationRepositoryService"
+                contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
+                name="BasicHttpBinding_ConfigurationRepositoryService" />
         </client>
     </system.serviceModel>
 </configuration>

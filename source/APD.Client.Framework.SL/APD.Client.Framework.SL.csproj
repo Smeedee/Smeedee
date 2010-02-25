@@ -205,8 +205,14 @@
     </Compile>
     <Compile Include="LogEntryWebservicePersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ConfigurationRepository.cs" />
     <Compile Include="Repositories\HolidayWebserviceRepository.cs" />
     <Compile Include="ResourceDictionary\SLXamlReader.cs" />
+    <Compile Include="Service References\ConfigurationRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\HolidayRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,6 +282,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
     <WCFMetadataStorage Include="Service References\HolidayRepositoryService\" />
     <WCFMetadataStorage Include="Service References\LogEntryWebserviceRepository\" />
   </ItemGroup>
@@ -305,7 +312,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Holidays.Holiday.datasource" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService2.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService3.xsd" />
     <None Include="Service References\HolidayRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.disco" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService4.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
+    <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

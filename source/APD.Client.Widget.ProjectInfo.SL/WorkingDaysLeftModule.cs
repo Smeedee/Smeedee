@@ -27,7 +27,6 @@ using System.Collections.Generic;
 using APD.Client.Framework;
 using APD.Client.Widget.BurndownChart.SL.Repositories;
 using APD.Client.Widget.ProjectInfo.Controllers;
-using APD.Client.Widget.ProjectInfo.SL.Repositories;
 using APD.Client.Widget.ProjectInfo.ViewModels;
 using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
@@ -47,10 +46,7 @@ namespace APD.Client.Widget.ProjectInfo.SL
 
         protected override void ConfigureIocContainer()
         {
-            localIocContainer.RegisterType<IRepository<Configuration>, ConfigurationRepository>();
-            localIocContainer.RegisterType<IPersistDomainModels<Configuration>, ConfigurationRepository>();
             localIocContainer.RegisterType<IRepository<ProjectInfoServer>, ProjectInfoRepository>();
-            //localIocContainer.RegisterType<IRepository<ProjectInfoServer>, ProjectInfoFromConfigRepository>();
             localIocContainer.RegisterType<IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>>, AsyncClient<IEnumerable<ProjectInfoServer>>>();
             localIocContainer.RegisterInstance<INotifyWhenToRefresh>(new TimerNotifyRefresh(REFRESH_INTERVAL, false));
             localIocContainer.RegisterInstance<IVisibleModule>(this);
