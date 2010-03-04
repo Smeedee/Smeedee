@@ -18,6 +18,9 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
     {
         private readonly TeamFoundationServer tfsServer;
         private readonly WorkItemStore workItemStore;
+        // TODO: Introduce settings for these.
+        private const string WORK_REMAINING_FIELD = "Conchango.TeamSystem.Scrum.WorkRemaining";
+        private const string ESTIMATED_EFFORT_FIELD = "Conchango.TeamSystem.Scrum.EstimatedEffort";
 
         public String ProjectName { get; private set; }
         public String IterationPath { get; private set; }
@@ -35,22 +38,23 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         }
 
 
-        public List<Task> GetAllCurrentItemsInSprint()
+        public List<Task> GetAllWorkEffortInSprint()
         {
-            var wiqlQuery =
-                @"SELECT [Conchango.TeamSystem.Scrum.EstimatedEffort], " +
-                @"[Conchango.TeamSystem.Scrum.WorkRemaining] " +
-                @"FROM [WorkItems] " +
-                @"WHERE [System.TeamProject] = '" + ProjectName + "'" +
-                @"AND [System.IterationPath] = '" + IterationPath + "'" +
-                @"AND [Work Item Type] = 'Sprint Backlog Item'";
-            return ConvertWICollectionToTaskList(workItemStore.Query(wiqlQuery));
+            var allWorkItems = GetCurrentWorkItemsInSprint();
+
+            List<WorkItem> allWorkItemRevisions = GetWorkItemRevisions(allWorkItems);
+
+            return ConvertWorkItemsToTasks(allWorkItemRevisions);
+        }
+
+        public List<Task> GetCurrentTasksInSprint()
+        {
+            return ConvertWorkItemsToTasks(GetCurrentWorkItemsInSprint());
         }
 
 
-        public List<Task> GetAllRevisionsForAllItemsInSprint()
+        private WorkItemCollection GetCurrentWorkItemsInSprint()
         {
-            List<Task> allTasks = new List<Task>();
             var wiqlQuery =
                 @"SELECT [Conchango.TeamSystem.Scrum.EstimatedEffort], " +
                 @"[Conchango.TeamSystem.Scrum.WorkRemaining] " +
@@ -58,17 +62,13 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
                 @"WHERE [System.TeamProject] = '" + ProjectName + "'" +
                 @"AND [System.IterationPath] = '" + IterationPath + "'" +
                 @"AND [Work Item Type] = 'Sprint Backlog Item'";
-
-            var allWorkItems = workItemStore.Query(wiqlQuery);
-
-            List<WorkItem> allWorkItemRevisions = GetAllWorkItemRevisions(allWorkItems);
-
-            return ConvertWICollectionToTaskList(allWorkItemRevisions);
+            return workItemStore.Query(wiqlQuery);
         }
 
 
         // TODO: Performance
-        private List<WorkItem> GetAllWorkItemRevisions(WorkItemCollection allWorkItems) {
+        private List<WorkItem> GetWorkItemRevisions(WorkItemCollection allWorkItems)
+        {
             List<WorkItem> allWorkItemRevisions = new List<WorkItem>();
 
 
@@ -86,33 +86,35 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         }
 
 
-        private static List<Task> ConvertWICollectionToTaskList(IEnumerable workItems)
+        private static List<Task> ConvertWorkItemsToTasks(IEnumerable workItems)
         {
             var tasks = new List<Task>();
 
             foreach (WorkItem workItem in workItems)
             {
                 // These are specific to Conchango's Scrum for Team System template.
-                var remainingWork = ParseFieldToInt(workItem.Fields["Conchango.TeamSystem.Scrum.WorkRemaining"]);
-                var estimatedWork = ParseFieldToInt(workItem.Fields["Conchango.TeamSystem.Scrum.EstimatedEffort"]);
+                var remainingWork = ParseFieldToInt(workItem.Fields[WORK_REMAINING_FIELD]);
+                var estimatedWork = ParseFieldToInt(workItem.Fields[ESTIMATED_EFFORT_FIELD]);
+
+                Console.WriteLine(workItem.Fields["Title"].Value);
 
                 // TODO: We have at least one corner case here.. What if someone changes a name as part of a revision?
                 if (!tasks.Select((t) => t.Name).Contains(workItem.Title))
                 {
-                    var task = new Task()
+                    var task = new Task
                     {
                         SystemId = workItem.Id.ToString(),
                         Name = workItem.Title,
-                        Status = workItem.State
+                        Status = workItem.State,
+                        WorkEffortEstimate = estimatedWork
                     };
 
-                    task.WorkEffortEstimate = estimatedWork;
                     tasks.Add(task);
                 }
 
                 var taskToAddTo = tasks.Where((t) => t.Name == workItem.Title).First();
                 taskToAddTo.AddWorkEffortHistoryItem(
-                     new WorkEffortHistoryItem(remainingWork, workItem.ChangedDate));
+                    new WorkEffortHistoryItem(remainingWork, workItem.ChangedDate));
                 taskToAddTo.WorkEffortEstimate = estimatedWork;
             }
 
@@ -120,13 +122,32 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         }
 
 
+        public List<Task> GetAllCurrentTasks()
+        {
+            return ConvertWorkItemsToTasks(GetAllCurrentWorkItems());
+        }
+
+        public List<Task> GetAllWorkEffort()
+        {
+            var allWorkItemRevisions = GetWorkItemRevisions(GetAllCurrentWorkItems());
+
+            return ConvertWorkItemsToTasks(allWorkItemRevisions);
+        }
+
+        private WorkItemCollection GetAllCurrentWorkItems()
+        {
+            var wiqlQuery =
+                @"SELECT [Conchango.TeamSystem.Scrum.EstimatedEffort], " +
+                @"[Conchango.TeamSystem.Scrum.WorkRemaining] " +
+                @"FROM [WorkItems] " +
+                @"WHERE [System.TeamProject] = '" + ProjectName + "'" +
+                @"AND [Work Item Type] = 'Sprint Backlog Item'";
+            return workItemStore.Query(wiqlQuery);
+        }
+
         private static int ParseFieldToInt(Field field)
         {
-            if (field.Value != null)
-            {
-                return Int32.Parse(field.Value.ToString());
-            }
-            return 0;
+            return field.Value != null ? Int32.Parse(field.Value.ToString()) : 0;
         }
     }
 }
