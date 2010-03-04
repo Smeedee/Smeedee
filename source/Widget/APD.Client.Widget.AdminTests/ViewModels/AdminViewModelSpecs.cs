@@ -25,6 +25,9 @@ namespace APD.Client.Widget.AdminTests.ViewModels.AdminViewModelSpecs
         protected static Mock<ITriggerCommand> saveConfigNotifierMock;
         protected static Mock<ITriggerCommand> refreshConfigNotifierMock;
 
+        protected static Mock<ITriggerCommand> saveHolidaysNotifierMock;
+        protected static Mock<ITriggerCommand> reloadHolidaysMock;
+
         protected static Context viewModel_is_created = () =>
         {
             saveUserdbNotifierMock = new Mock<ITriggerCommand>();
@@ -32,12 +35,17 @@ namespace APD.Client.Widget.AdminTests.ViewModels.AdminViewModelSpecs
             editUserdbNotifierMock = new Mock<ITriggerEvent<EventArgs>>();
             saveConfigNotifierMock = new Mock<ITriggerCommand>();
             refreshConfigNotifierMock = new Mock<ITriggerCommand>();
+            saveHolidaysNotifierMock = new Mock<ITriggerCommand>();
+            reloadHolidaysMock = new Mock<ITriggerCommand>();
+
             viewModel = new AdminViewModel(new NoUIInvocation(), 
                                                    saveUserdbNotifierMock.Object,
                                                    reloadUserdbNotifierMock.Object, 
                                                    editUserdbNotifierMock.Object,
                                                    saveConfigNotifierMock.Object,
-                                                   refreshConfigNotifierMock.Object);
+                                                   refreshConfigNotifierMock.Object,
+                                                   saveHolidaysNotifierMock.Object,
+                                                   reloadHolidaysMock.Object);
         };
     }
 

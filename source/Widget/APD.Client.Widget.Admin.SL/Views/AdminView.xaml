@@ -54,6 +54,26 @@
                     </Grid> 
     			</Grid>
     		</controls:TabItem>
-    	</controls:TabControl>
+
+            <controls:TabItem Header="Holidays">
+                <Grid DataContext="{Binding HolidaysDbViewModel}" >
+                    <Views:HolidaysView Margin="0"/>
+                    <Grid Background="Black" Opacity="0.5"
+                          Width="Auto"
+                          Height="Auto"
+                          Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                            <customControls:LoadingAnimation Width="50"
+                                                             Height="50"/>
+                            <TextBlock Text="Busy..."
+                                       Foreground="White"
+                                       TextAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </controls:TabItem>
+
+        </controls:TabControl>
     </Grid>
 </UserControl>

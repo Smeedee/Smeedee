@@ -153,7 +153,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Holidays\XmlCountryHolidaysParserSpecs.cs" />
+    <Compile Include="Holidays\XmlHolidaysParserSpecs.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\RallyDevReaderSpecs.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\Resource.Designer.cs">
       <DependentUpon>Resource.resx</DependentUpon>

@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\PRISM Feb 2009 Drop\wpf\Microsoft.Practices.Composite.Presentation.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework, Version=2.2.10.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -71,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Controllers\CommandNotifierWiring.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
+    <Compile Include="Controllers\HolidaysDbController.cs" />
     <Compile Include="Controllers\ModalDialogController.cs" />
     <Compile Include="Controllers\URLCheckerController.cs" />
     <Compile Include="Controllers\UserdbController.cs" />
@@ -89,7 +94,7 @@
     <Compile Include="ViewModels\Configuration\GenericConfigItemViewModel.cs" />
     <Compile Include="ViewModels\Configuration\PluginConfigItemViewModel.cs" />
     <Compile Include="ViewModels\Configuration\ProviderConfigItemViewModel.cs" />
-    <Compile Include="ViewModels\HolidayViewModel.cs" />
+    <Compile Include="ViewModels\HolidaysDbViewModel.cs" />
     <Compile Include="ViewModels\ITriggerCommand.cs" />
     <Compile Include="ViewModels\ModalDialogViewModel.cs" />
     <Compile Include="ViewModels\Configuration\SettingViewModel.cs" />

@@ -8,7 +8,7 @@
     xmlns:Framework="clr-namespace:APD.Client.Framework;assembly=APD.Client.Framework.SL" 
     d:DesignWidth="640" d:DesignHeight="480">
 
-    <Grid x:Name="LayoutRoot" d:DataContext="{Binding Source={StaticResource UserdbSampleDataSource}}">
+    <Grid x:Name="LayoutRoot">
         <Button Height="24" HorizontalAlignment="Right" Margin="0,0,84,8" VerticalAlignment="Bottom" Width="72" Content="Save" 
 				IsEnabled="{Binding DataIsChanged, Mode=OneWay}" />
         
@@ -16,10 +16,9 @@
                 VerticalAlignment="Bottom" Width="72" Content="Reload" 
                 IsEnabled="{Binding DataIsChanged, Mode=OneWay}"/>
         
-        <data:DataGrid x:Name="gridHolidays" Margin="0,0,0,48" 
-                       d:DataContext="{StaticResource UserdbSampleDataSource}" 
+        <data:DataGrid x:Name="gridHolidays" Margin="0,0,0,48"
                        AutoGenerateColumns="False" 
-                       ItemsSource="{Binding DuckTypedData, Mode=OneWay}">
+                       ItemsSource="{Binding Data, Mode=OneWay}">
             <data:DataGrid.Columns>
                 <data:DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                 <data:DataGridTextColumn Header="Description" Binding="{Binding Description}"/>

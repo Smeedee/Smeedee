@@ -65,6 +65,7 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
@@ -121,6 +122,9 @@
     <Compile Include="Views\CIView.xaml.cs">
       <DependentUpon>CIView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProjectBuildHistoryView.xaml.cs">
+      <DependentUpon>ProjectBuildHistoryView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\APD.Client.Framework.SL\APD.Client.Framework.SL.csproj">
@@ -166,6 +170,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>
     <Page Include="Views\CIView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </Page>
+    <Page Include="Views\ProjectBuildHistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
     </Page>

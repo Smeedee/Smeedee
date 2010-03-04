@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ConfigurationControllerSpecs.cs" />
+    <Compile Include="Controllers\HolidaysDbControllerSpecs.cs" />
     <Compile Include="Controllers\ModalDialogControllerSpecs.cs" />
     <Compile Include="Controllers\SharedForUrlAndAuthChecker.cs" />
     <Compile Include="Controllers\ShowModalDialogEventAggregatorSubscriberSpecs.cs" />

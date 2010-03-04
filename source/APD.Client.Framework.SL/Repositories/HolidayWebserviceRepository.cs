@@ -57,9 +57,9 @@ namespace APD.Client.Framework.SL.Repositories
 
             var resultingHolidays = e.Result;
 
-            if (holidays != null && resultingHolidays.Count > 0)
+            if (resultingHolidays != null)
             {
-                this.holidays = holidays;
+                this.holidays = resultingHolidays;
             }
 
             invocationException = e.Error;

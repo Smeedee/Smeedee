@@ -101,6 +101,9 @@
     <Compile Include="..\APD.Client.Widget.Admin\Controllers\CredentialsCheckerController.cs">
       <Link>Controllers\CredentialsCheckerController.cs</Link>
     </Compile>
+    <Compile Include="..\APD.Client.Widget.Admin\Controllers\HolidaysDbController.cs">
+      <Link>Controllers\HolidaysDbController.cs</Link>
+    </Compile>
     <Compile Include="..\APD.Client.Widget.Admin\Controllers\ModalDialogController.cs">
       <Link>Controllers\ModalDialogController.cs</Link>
     </Compile>
@@ -146,8 +149,8 @@
     <Compile Include="..\APD.Client.Widget.Admin\ViewModels\EditableUserViewModel.cs">
       <Link>ViewModels\EditableUserViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\APD.Client.Widget.Admin\ViewModels\HolidayViewModel.cs">
-      <Link>ViewModels\HolidayViewModel.cs</Link>
+    <Compile Include="..\APD.Client.Widget.Admin\ViewModels\HolidaysDbViewModel.cs">
+      <Link>ViewModels\HolidaysDbViewModel.cs</Link>
     </Compile>
     <Compile Include="..\APD.Client.Widget.Admin\ViewModels\ITriggerCommand.cs">
       <Link>ViewModels\ITriggerCommand.cs</Link>

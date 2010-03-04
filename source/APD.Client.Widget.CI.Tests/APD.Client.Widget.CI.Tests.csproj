@@ -85,9 +85,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BuildHistoryControllerSpecs.cs" />
     <Compile Include="Controllers\CIControllerSpecs.cs" />
     <Compile Include="Learning\UnityContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ProjectBuildHistoryViewModelSpecs.cs" />
     <Compile Include="ViewModels\BuildViewModelSpecs.cs" />
     <Compile Include="ViewModels\CINotifierViewModelSpecs.cs" />
     <Compile Include="ViewModels\CIViewModelSpecs.cs" />

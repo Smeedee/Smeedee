@@ -18,7 +18,7 @@ namespace APD.Client.WebTests.Services.Integration.HolidayRepositoryServiceTests
     public class HolidayRepositoryServiceTests
     {
         [Test]
-        public void Assure_webSerivce_can_save_holidays()
+        public void Assure_webSerivce_can_save_and_retreive_holidays()
         {
             var guid = Guid.NewGuid();
             var holiday = new Holiday() {Date = new DateTime(2010, 10, 12), Description = guid.ToString()};
