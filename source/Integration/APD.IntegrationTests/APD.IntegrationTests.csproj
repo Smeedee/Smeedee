@@ -121,12 +121,6 @@
     <Compile Include="CI\Hudson\DomainModel\Repositories\HudsonApiSpecs.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\MockRequestProxy.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\RequestProxySpecs.cs" />
-    <Compile Include="CI\TeamCity\DomainModel\Repositories\CIProjectRepositorySpecs.cs" />
-    <Compile Include="CI\TeamCity\DomainModel\Repositories\Integration\TeamCityServerIntegration.cs" />
-    <Content Include="CI\TeamCity\TestData\SingleProjectWithNoBuilds.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Compile Include="CI\TeamCity\DomainModel\Repositories\TeamCityServerRepositorySpecs.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildRepositorySpecs.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\CIServerRepositorySpecs.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\Integration\BuildFetcherIntegrationTests.cs" />
@@ -227,19 +221,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CI\CruiseControl\DomainModel\Repositories\TestData\forced_unknown.xml" />
-    <Content Include="CI\TeamCity\TestData\NoProjects.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CI\TeamCity\TestData\TwoProjectsManyBuilds.xml" />
-    <Content Include="CI\TeamCity\TestData\TwoProjectsTwoBuilds.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CI\TeamCity\TestData\SingleFailedBuild.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CI\TeamCity\TestData\SingleSuccessfulBuild.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Database\DomainModel\Repositories\NHibernateMappings\readme.txt" />
     <Content Include="Holidays\TestData\InvalidXml.xml" />
     <Content Include="Holidays\TestData\MalformedXml.xml" />

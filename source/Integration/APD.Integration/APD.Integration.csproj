@@ -123,10 +123,6 @@
     <Compile Include="CI\Hudson\DomainModel\Repositories\HudsonRepositoryException.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\IRequestProxy.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\RequestProxy.cs" />
-    <Compile Include="CI\TeamCity\DomainModel\Factories\TeamCityBuildAtomEntryFactory.cs" />
-    <Compile Include="CI\TeamCity\DomainModel\Factories\TeamCityProjectFactory.cs" />
-    <Compile Include="CI\TeamCity\DomainModel\Repositories\NewestBuildSpecification.cs" />
-    <Compile Include="CI\TeamCity\DomainModel\Repositories\TeamCityServerRepository.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildFetcher.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildRepository.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\TFSCIServerRepository.cs" />

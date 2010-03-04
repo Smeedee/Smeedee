@@ -43,7 +43,7 @@ namespace APD.Integration.CI.CruiseControl.DomainModel.Repositories
             if(port != 80)
                 throw new Exception("Only port 80 is supported");
 
-            var xmlResponse = NetUtilities.CreateRequestWithCompressionSupport(fileURL);
+            var xmlResponse = NetUtilities.CreateRequestWithCompressionSupportAndGetResponse(fileURL);
 
             var xmlData = string.Empty;
 
