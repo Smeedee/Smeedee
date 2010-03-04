@@ -57,20 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Atom\DomainModel\Repositories\AtomEntryRepositorySpecs.cs" />
-    <Compile Include="Atom\DomainModel\Repositories\AtomFeedRepositorySpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Atom\TestData\EmptyFeed.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Atom\TestData\MultipleEntryFeed.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Atom\TestData\SingleEntryFeed.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj">

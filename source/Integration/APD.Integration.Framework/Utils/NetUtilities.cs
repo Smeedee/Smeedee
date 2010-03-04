@@ -57,7 +57,7 @@ namespace APD.Integration.Framework.Utils
             return response;
         }
 
-        public static HttpWebResponse CreateRequestWithCompressionSupport(string url)
+        public static HttpWebResponse CreateRequestWithCompressionSupportAndGetResponse(string url)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Headers["Accept-Encoding"] = "gzip, deflate";
