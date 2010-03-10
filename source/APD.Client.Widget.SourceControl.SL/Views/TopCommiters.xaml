@@ -43,6 +43,6 @@
 				IndependentValueBinding="{Binding Firstname}"
                 DependentValueBinding="{Binding NumberOfCommits}" LegendItemStyle="{StaticResource TopCommitersLegendItemStyle}"/>
 		</charting:Chart>
-		<TextBlock x:Name="Date" Margin="0" VerticalAlignment="Bottom" FontSize="48" TextWrapping="Wrap" FontWeight="Bold" Foreground="{StaticResource FontBrushBright}" Width="1300" Height="65" FontFamily="{StaticResource FontFamily}" Text="{Binding SinceDate, Converter={StaticResource DateToStringConverter}, Mode=OneWay}"/>
+		<TextBlock x:Name="Date" Margin="0" VerticalAlignment="Bottom" FontSize="48" TextWrapping="Wrap" FontWeight="Bold" Foreground="{StaticResource FontBrushDark}" Width="1300" Height="65" FontFamily="{StaticResource FontFamily}" Text="{Binding SinceDate, Converter={StaticResource DateToStringConverter}, Mode=OneWay}"/>
 	</Grid>
 </UserControl>
