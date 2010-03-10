@@ -53,6 +53,20 @@ namespace APD.Client.Framework.Tests.ViewModels
                     viewModel.Data.Count.ShouldBe(0));
             });
         }
+
+        [Test]
+        public void assure_contain_SinceDate_property()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(the_viewmodel_is_created);
+                scenario.When("SinceDate property is accessed");
+                scenario.Then("Should return a datetime object", ()=>
+                {
+                    viewModel.SinceDate.ShouldNotBeNull();
+                });
+            });
+        }
     }
 
     [TestFixture]

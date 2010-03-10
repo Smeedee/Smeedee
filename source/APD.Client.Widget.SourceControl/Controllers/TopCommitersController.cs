@@ -26,9 +26,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
+
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.ViewModels;
+using APD.DomainModel.Config;
 using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Framework;
@@ -41,21 +44,126 @@ namespace APD.Client.Widget.SourceControl.Controllers
     {
         private IEnumerable<User> allUsers;
         private IRepository<User> userRepository;
+        private readonly IRepository<Configuration> configRepository;
+        private readonly IPersistDomainModels<Configuration> configPersisterRepository;
         private long lastRevision = 1;
+        public DateTime lastUpdated = DateTime.Now;   
+        private int commitTimespan;
+        private DateTime commitFromDate;
+        private bool useFromDate;
 
 
         public TopCommitersController(INotifyWhenToRefresh refreshNotifier,
-                                      IRepository<Changeset> changesetRepository, 
+                                      IRepository<Changeset> changesetRepository,
                                       IRepository<User> userRepository,
+                                      IRepository<Configuration> configRepository,
+                                      IPersistDomainModels<Configuration> configPersisterRepository,
                                       IInvokeUI uiInvoker,
                                       IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker,
                                       ILog logger)
             : base(refreshNotifier, changesetRepository, uiInvoker, backgroundWorkerInvoker, logger)
         {
             this.userRepository = userRepository;
+            this.configRepository = configRepository;
+            this.configPersisterRepository = configPersisterRepository;
+            LoadConfig();
             LoadData();
         }
 
+        private void LoadConfig()
+        {
+            asyncClient.RunAsyncVoid(() =>
+            {
+                try
+                {
+                    var allConfigSpec = new AllSpecification<Configuration>();
+                    var config = configRepository
+                        .Get(allConfigSpec)
+                        .Where(c => c.Name.Equals(("Commit Heroes Slide")))
+                        .SingleOrDefault();
+
+                    LoadSettings(config);
+                }
+                catch (Exception exception)
+                {
+                    LogErrorMsg(exception);
+                }
+            });
+        }
+
+       
+        private void LoadSettings(Configuration config)
+        {
+            if (config != null)
+            {
+                LoadTimespanSetting(config.GetSetting("timespan"));
+                LoadFromDateSetting(config.GetSetting("from date"));
+            }
+            else
+            {
+                CreateDefaultSetting();
+            }
+
+            UpdateSinceDateValueInViewModel();
+        }
+
+        private void UpdateSinceDateValueInViewModel()
+        {
+            if (useFromDate)
+            {
+                ViewModel.SinceDate = commitFromDate;       
+            }
+            else
+            {
+                ViewModel.SinceDate = DateTime.Now.AddDays(-commitTimespan);    
+            }
+        }
+
+        private void LoadFromDateSetting(SettingsEntry fromDateSetting)
+        {
+            if (fromDateSetting != null)
+            {
+                try
+                {
+                    commitFromDate = DateTime.Parse(fromDateSetting.Value.Trim(), new CultureInfo("en-US"));
+                    useFromDate = true;
+                }
+                catch (Exception exception)
+                {
+                    //LogWarningMsg(exception);
+                }
+            }
+        }
+
+        private void LoadTimespanSetting(SettingsEntry timespanSetting)
+        {
+            if (timespanSetting != null)
+            {
+                try
+                {
+                    commitTimespan = Int32.Parse(timespanSetting.Value.Trim());
+                }
+                catch (Exception exception)
+                {
+                    LogWarningMsg(exception);
+                }
+            }
+        }
+
+        private void ReloadViewModelData()
+        {
+            ViewModel.Data.Clear();
+            LoadData();
+            lastUpdated = DateTime.Now;
+        }
+
+        private void CreateDefaultSetting() 
+        {
+            var newConfig = new Configuration("Commit Heroes Slide");
+            newConfig.NewSetting("from date", "");
+            newConfig.NewSetting("timespan", "0");
+            configPersisterRepository.Save(newConfig);
+        }
 
         protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets)
         {
@@ -66,16 +174,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
                 lastRevision = qChangesets.OrderByDescending(c => c.Revision).First().Revision;
             }
 
-
-            var committers = ( from changeset in qChangesets
-                      group changeset by changeset.Author.Username
-                      into g
-                          select new CodeCommiterViewModel(ViewModel.Invoker)
-                                 {
-                                     Username = g.Key, 
-                                     Firstname = g.Key,
-                                     NumberOfCommits = g.Count()
-                                 });
+            var committers = GetFilteredCommitters(qChangesets);
 
             var mergedCommiters = GetMergedCommiters(committers);
 
@@ -95,6 +194,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
                         committer.Email = userInfo.Email;
                         committer.ImageUrl = userInfo.ImageUrl;
                     }
+
                     ViewModel.Data.Add(committer);
                 }
             }
@@ -102,6 +202,22 @@ namespace APD.Client.Widget.SourceControl.Controllers
             {
                 UpdateNumberOfCommits((IOrderedEnumerable<CodeCommiterViewModel>) committers);
             }
+        }
+
+        private IEnumerable<CodeCommiterViewModel> GetFilteredCommitters(IEnumerable<Changeset> qChangesets)
+        {
+            var filterDate = useFromDate ? commitFromDate : DateTime.Today.AddDays(-commitTimespan);
+            
+            return ( from changeset in qChangesets
+                     where changeset.Time >= filterDate.Date
+                     group changeset by changeset.Author.Username
+                     into g
+                         select new CodeCommiterViewModel(ViewModel.Invoker)
+                         {
+                             Username = g.Key, 
+                             Firstname = g.Key,
+                             NumberOfCommits = g.Count()
+                         });
         }
 
         private ObservableCollection<CodeCommiterViewModel> GetMergedCommiters(IEnumerable<CodeCommiterViewModel> committers) {
@@ -161,9 +277,18 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         protected override void OnNotifiedToRefresh(object sender, RefreshEventArgs e)
         {
-            LoadData(new ChangesetsAfterRevisionSpecification(lastRevision));
+            UpdateSinceDateValueInViewModel();
+
+            if (!useFromDate && lastUpdated.Date < DateTime.Now.Date)  
+            {
+                ReloadViewModelData();  
+            }
+            else
+            {
+                LoadData(new ChangesetsAfterRevisionSpecification(lastRevision));    
+            }
         }
- 
+
         protected bool HasUpdatedChangesets(IOrderedEnumerable<CodeCommiterViewModel> committers)
         {
            

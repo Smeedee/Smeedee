@@ -30,6 +30,7 @@ using System.Threading;
 
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.Controllers;
+using APD.DomainModel.Config;
 using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Users;
@@ -42,7 +43,6 @@ using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 using APD.DomainModel.Framework;
 
-
 namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControllerSpecs
 {
     public class Shared
@@ -53,6 +53,77 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
         protected static Mock<INotifyWhenToRefresh> iNotifyWhenToRefreshMock;
         protected static Mock<IRepository<User>> userRepositoryMock;
         protected static Mock<ILog> logger = new Mock<ILog>();
+        protected static Mock<IPersistDomainModels<Configuration>> configPersisterRepositoryMock =
+                new Mock<IPersistDomainModels<Configuration>>();  
+        protected static Mock<IRepository<Configuration>> configRepositoryMock =
+            new Mock<IRepository<Configuration>>(); 
+
+
+        private static void SetupConfigRepositoryMock(int timespan)
+        {
+            configRepositoryMock = new Mock<IRepository<Configuration>>();
+            var configuration = new Configuration("Commit Heroes Slide");
+            configuration.NewSetting("from date", "");
+            configuration.NewSetting("timespan", timespan.ToString());
+            var configList = new List<Configuration> { configuration };
+
+            configRepositoryMock.Setup(
+                r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configList);
+        }
+
+        protected Context Configuration_timepan_entry_is_correctly_setup_for_one_day = () =>
+        {
+            SetupConfigRepositoryMock(1);
+        };
+
+        protected Context Configuration_timespan_entry_is_correctly_setup_for_2_days = () =>
+        {
+            SetupConfigRepositoryMock(2);
+        };
+
+
+        protected Context Configuration_timespan_entry_is_changed_from_2_to_1 = () =>
+        {
+            var configuration = new Configuration("Commit Heroes Slide");
+            configuration.NewSetting("from date", "");
+            configuration.NewSetting("timespan", "1");
+            var configList = new List<Configuration> { configuration };
+
+            configRepositoryMock.Setup(
+                r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configList);
+        };
+
+        protected Context Configuration_has_valid_from_date = () =>
+        {
+            var configuration = new Configuration("Commit Heroes Slide");
+            configuration.NewSetting("from date", "2009-12-30");
+            configuration.NewSetting("timespan", "1");
+            var configList = new List<Configuration> { configuration };
+
+            configRepositoryMock.Setup(
+                r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configList);
+        };
+
+        protected Context Configuration_entry_for_from_date_is_changed = () =>
+        {
+            var configuration = new Configuration("Commit Heroes Slide");
+            configuration.NewSetting("from date", "2009-12-20");
+            configuration.NewSetting("timespan", "1");
+            var configList = new List<Configuration> { configuration };
+
+            configRepositoryMock.Setup(
+                r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configList);
+        };
+
+        protected Context Configuration_entry_does_not_exist = () =>
+        {
+            configRepositoryMock = new Mock<IRepository<Configuration>>();
+            configPersisterRepositoryMock = new Mock<IPersistDomainModels<Configuration>>();
+
+            var configlist = new List<Configuration>();
+            configRepositoryMock.Setup(
+                r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configlist);
+        };
 
         protected Context a_new_changeset_is_committed = () =>
         {
@@ -61,7 +132,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             changesets.Add(new Changeset
             {
                 Revision = 4,
-                Time = new DateTime(1981, 11, 1),
+                Time = DateTime.Now,
                 Comment = "Added support for superfeature",
                 Author = new Author
                 {
@@ -85,7 +156,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             changesets.Add(new Changeset
             {
                 Revision = 5,
-                Time = new DateTime(1981, 11, 1),
+                Time = DateTime.Now,
                 Comment = "Added support for superfeature",
                 Author = new Author
                 {
@@ -124,21 +195,21 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                     new Changeset
                     {
                         Revision = 1,
-                        Time = new DateTime(1981, 9, 1),
+                        Time = DateTime.Now.AddDays(-1),
                         Comment = "Repository created",
                         Author = null
                     },
                     new Changeset
                     {
                         Revision = 2,
-                        Time = new DateTime(1981, 9, 2),
+                        Time = DateTime.Now.AddDays(-1),
                         Comment = "Repository updated",
                         Author = new Author(null)
                     },
                     new Changeset
                     {
                         Revision = 3,
-                        Time = new DateTime(1981, 9, 3),
+                        Time = DateTime.Now.AddDays(-1),
                         Comment = "Repository updated some more",
                         Author = new Author("tuxbear")
                     }
@@ -190,7 +261,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             changesets.Add(new Changeset
             {
                 Revision = 1,
-                Time = new DateTime(1981, 9, 1),
+                Time = DateTime.Now.AddDays(-2),
                 Comment = "Repository created",
                 Author = new Author
                 {
@@ -200,7 +271,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             changesets.Add(new Changeset
             {
                 Revision = 2,
-                Time = new DateTime(1981, 9, 1),
+                Time = DateTime.Now.AddDays(-1),
                 Comment = "Added build script",
                 Author = new Author
                 {
@@ -210,7 +281,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             changesets.Add(new Changeset
             {
                 Revision = 3,
-                Time = new DateTime(1981, 10, 1),
+                Time = DateTime.Now.AddDays(-2),
                 Comment = "Added unit testing framework",
                 Author = new Author
                 {
@@ -226,9 +297,12 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             controller = new TopCommitersController(iNotifyWhenToRefreshMock.Object,
                                                     changesetRepositoryMock.Object,
                                                     userRepositoryMock.Object,
+                                                    configRepositoryMock.Object,
+                                                    configPersisterRepositoryMock.Object,
                                                     new NoUIInvocation(),
                                                     new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
-                                                    logger.Object);
+                                                    logger.Object
+                                                    );
         }
     }
 
@@ -241,8 +315,75 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
     [TestFixture]
     public class Controller_is_spawned : Shared
     {
+
         [Test]
-        public void Assure_it_query_ChangesetRepository_for_all_changesets()
+        public void Assure_Configuration_is_created_if_it_does_not_exist()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_users_in_userdb).
+                And(Configuration_entry_does_not_exist).
+                And(there_are_changesets_in_SourceControl_system);
+
+                scenario.When(the_Controller_is_created);
+
+                scenario.Then("assure Configuration is created if it doesn't exist", () =>
+                configPersisterRepositoryMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Once()));
+            });
+        }
+
+        [Test]
+        public void Should_get_timespan_from_configrepo_if_settings_are_set()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_users_in_userdb).
+                    And(Configuration_timepan_entry_is_correctly_setup_for_one_day).
+                    And(there_are_changesets_in_SourceControl_system);
+
+                scenario.When(the_Controller_is_created);
+
+                scenario.Then("the configuration service should be asked for the Topcommiter Slide configuration", () =>
+                configRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Configuration>>()), Times.Once()));
+            });
+        }
+
+        [Test]
+        public void Assure_viewmodel_is_updated_with_value_from_configrepo()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_no_users_in_userdb).
+                    And(Configuration_timepan_entry_is_correctly_setup_for_one_day).
+                    And(there_are_changesets_in_SourceControl_system);
+
+                scenario.When(the_Controller_is_created);
+                scenario.Then("the controller should set the date on the viewmodel", ()=>
+                {
+                    controller.ViewModel.SinceDate.Date.ShouldBe(DateTime.Now.Date.AddDays(-1));
+                });
+            });
+        }
+
+        [Test]
+        public void Assure_fromDate_configuration_has_precedence_over_timespan()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_no_users_in_userdb).
+                    And(Configuration_has_valid_from_date).
+                    And(there_are_changesets_in_SourceControl_system);
+                scenario.When(the_Controller_is_created);
+                scenario.Then("the controller should use from date if set in stead of timespan", ()=>
+                {
+                    controller.ViewModel.SinceDate.Date.ShouldBe(new DateTime(2009, 12, 30));
+                });
+            });
+        }
+        
+        
+        [Test]
+        public void Assure_controller_querys_ChangesetRepository_for_all_changesets()
         {
             Scenario.StartNew(this, scenario =>
             {
@@ -252,15 +393,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                 scenario.When(the_Controller_is_created);
 
                 scenario.Then("assure it query ChangesetRepository for all changesets", () =>
-                                                                                        changesetRepositoryMock
-                                                                                            .Verify(
-                                                                                            r =>
-                                                                                            r.Get(
-                                                                                                It.IsAny
-                                                                                                    <
-                                                                                                    Specification<Changeset>
-                                                                                                    >()),
-                                                                                            Times.Once()));
+                    changesetRepositoryMock.Verify(r =>r.Get(It.IsAny<Specification<Changeset>>()),Times.Once()));
             });
         }
     }
@@ -275,31 +408,32 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
             {
                 scenario.Given(there_are_users_in_userdb).
                     And(there_are_changesets_in_SourceControl_system)
+                    .And(Configuration_has_valid_from_date)
                     .And(the_Controller_is_spawned);
 
                 scenario.When("data is loading");
 
                 scenario.Then(
-                    "assure data loading is performed on the supplied thread (this case: current thread)",
-                    () =>
+                    "assure data loading is performed on the supplied thread (this case: current thread)",() =>
                     changesetRepositoryGetThreadId.ShouldBe(Thread.CurrentThread.ManagedThreadId));
             });
         }
 
         [Test]
-        public void Assure_controller_can_handle_null_author()
+        public void Assure_the_controller_can_handle_null_author()
         {
             Scenario.StartNew(this, scenario =>
             {
                 scenario.Given(there_are_no_users_in_userdb).
-                    And(there_are_changesets_with_null_Author)
-                    .And(the_Controller_is_spawned);
+                    And(there_are_changesets_with_null_Author).
+                    And(Configuration_has_valid_from_date).
+                    And(the_Controller_is_spawned);
 
                 scenario.When("Loading data");
 
                 scenario.Then("No Exception should be thrown",() =>
                 {
-                    logger.Verify(l=>l.WriteEntry(It.IsAny<LogEntry>()), Times.Never());
+                    logger.Verify(l => l.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.Never());
                 });
             });
         }
@@ -309,17 +443,20 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
     [TestFixture]
     public class Data_is_loaded : Shared
     {
+        
         [Test]
         public void Assure_data_is_loaded_into_the_viewModel()
         {
             Scenario.StartNew(this, scenario =>
             {
                 scenario.Given(there_are_changesets_in_SourceControl_system).
-                    And(there_are_users_in_userdb);
+                    And(there_are_users_in_userdb).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_2_days).
+                    And(the_Controller_is_spawned);
 
-                scenario.When(the_Controller_is_created);
+                scenario.When("loadData() is run");
 
-                scenario.Then("assure data is loaded into the viewModel", () =>
+                scenario.Then("assure data is correctly loaded into the viewModel", () =>
                 {
                     Thread.Sleep(200);
                     controller.ViewModel.Data.Count.ShouldBe(2);
@@ -327,6 +464,27 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                         NumberOfCommits.ShouldBe(2);
                     controller.ViewModel.Data.Where(d => d.Username.Equals("dagolap")).First().
                         NumberOfCommits.ShouldBe(1);
+                });
+            });
+        }
+
+
+        [Test]
+        public void Should_use_timespan_from_config_when_loading_data()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_users_in_userdb).
+                    And(Configuration_timepan_entry_is_correctly_setup_for_one_day).
+                    And(there_are_changesets_in_SourceControl_system).
+                    And(the_Controller_is_spawned);
+
+                scenario.When("data is loaded");
+
+                scenario.Then("the value from the configuration should be used in caluculating top committers", () =>
+                {
+                    controller.ViewModel.Data.Count.ShouldBe(1);
+                    controller.ViewModel.Data[0].NumberOfCommits.ShouldBe(1);
                 });
             });
         }
@@ -343,6 +501,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                 bool viewModelChanged = false;
                 scenario.Given(there_are_changesets_in_SourceControl_system).
                     And(there_are_users_in_userdb).
+                     And(Configuration_timespan_entry_is_correctly_setup_for_2_days).
                     And(the_Controller_is_spawned).
                     And(a_new_changeset_is_committed).
                     And("subscribe to ViewModel CollectionChanged",
@@ -351,7 +510,6 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                             controller.ViewModel.Data.CollectionChanged +=
                                 (o, e) => { viewModelChanged = true; };
                         });
-
 
                 scenario.When("controller is notified to refresh",
                     () => { iNotifyWhenToRefreshMock.Raise(n => n.Refresh += null, new RefreshEventArgs()); });
@@ -369,6 +527,65 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
         }
 
         [Test]
+        [Ignore("Due to threading issues")]
+        public void Assure_new_timespan_in_configuration_will_update_changesets()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                bool viewModelChanged = false;
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(there_are_users_in_userdb).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_2_days).
+                    And(the_Controller_is_spawned).
+                    And(Configuration_timespan_entry_is_changed_from_2_to_1)
+                    
+                    .And("subscribe to ViewModel CollectionChanged", () =>
+                        {
+                            controller.ViewModel.Data.CollectionChanged +=
+                                (o, e) => { viewModelChanged = true; };
+                        });
+
+                scenario.When("controller is notified to refresh",() =>
+                    {
+                        iNotifyWhenToRefreshMock.Raise(n => n.Refresh += null, new RefreshEventArgs());
+                    });
+
+                scenario.Then("assure new NumberOfCommits is loaded into the viewModel", () =>
+                      {
+                          controller.ViewModel.Data.Count.ShouldBe(1);
+                          controller.ViewModel.Data.Where(d => d.Username.Equals("goeran")).First().
+                            NumberOfCommits.ShouldBe(1);
+                      });
+            });
+        }
+
+        [Test]
+        public void Assure_data_is_reloaded_each_day_if_only_timespan_is_correctly_configured()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(there_are_users_in_userdb).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_2_days).
+                    And(the_Controller_is_spawned)
+
+                    .And("controller was last updated one day ago", () =>
+                    {
+                        controller.lastUpdated = DateTime.Now.AddDays(-1);
+                    });
+
+                scenario.When("controller is notified to refresh", () =>
+                {
+                    iNotifyWhenToRefreshMock.Raise(n => n.Refresh += null, new RefreshEventArgs());
+                });
+
+                scenario.Then("data should be reloaded into the viewmodel", () => 
+                    changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()),Times.Exactly(2)));
+            });
+        }
+
+
+        [Test]
         public void new_user_in_changesets_should_update_view_model()
         {
             Scenario.StartNew(this, scenario =>
@@ -376,6 +593,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                 bool viewModelChanged = false;
                 scenario.Given(there_are_changesets_in_SourceControl_system).
                     And(there_are_users_in_userdb).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_2_days).
                     And(the_Controller_is_spawned).
                     And(a_new_changeset_with_a_new_user_is_committed).
                     And("subscribe to ViewModel CollectionChanged",
@@ -386,9 +604,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                         });
 
                 scenario.When("controller is notified to refresh", () =>
-                                                                   iNotifyWhenToRefreshMock.Raise(
-                                                                       n => n.Refresh += null,
-                                                                       new RefreshEventArgs()));
+                    iNotifyWhenToRefreshMock.Raise(n => n.Refresh += null,new RefreshEventArgs()));
 
                 scenario.Then("the viewmodel should be updated", () =>
                 {
@@ -415,18 +631,10 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                     And(the_Controller_is_spawned);
 
                 scenario.When("controller is notified to refresh", () =>
-                                                                   iNotifyWhenToRefreshMock.Raise(
-                                                                       n => n.Refresh += null,
-                                                                       new RefreshEventArgs()));
+                iNotifyWhenToRefreshMock.Raise(n => n.Refresh += null,new RefreshEventArgs()));
 
                 scenario.Then("it should query repository for changesets", () =>
-                                                                           changesetRepositoryMock.Verify(
-                                                                               r =>
-                                                                               r.Get(
-                                                                                   It.IsAny
-                                                                                       <
-                                                                                       Specification<Changeset>
-                                                                                       >()), Times.Exactly(2)));
+                    changesetRepositoryMock.Verify(r =>r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2)));
             });
         }
 
@@ -439,18 +647,14 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                 scenario.Given(there_are_changesets_in_SourceControl_system).
                     And(there_are_users_in_userdb).
                     And(the_Controller_is_spawned).
-                    And("subscribe_to_ViewModel_CollectionChanged",
-                        () =>
+                    And("subscribe_to_ViewModel_CollectionChanged",() =>
                         {
                             controller.ViewModel.Data.CollectionChanged +=
                                 (o, e) => { viewModelChanged = true; };
                         });
 
-
                 scenario.When("controller is notified to refresh", () =>
-                                                                   iNotifyWhenToRefreshMock.Raise(
-                                                                       n => n.Refresh += null,
-                                                                       new RefreshEventArgs()));
+                    iNotifyWhenToRefreshMock.Raise(n => n.Refresh += null,new RefreshEventArgs()));
 
                 scenario.Then("the viewmodel should not be updated",
                               () => { viewModelChanged.ShouldBeFalse(); });

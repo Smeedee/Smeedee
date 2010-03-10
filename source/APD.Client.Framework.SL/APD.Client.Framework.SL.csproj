@@ -128,6 +128,9 @@
     <Compile Include="..\APD.Client.Framework\Converters\DateTimeToPrettyStringConverter.cs">
       <Link>Converters\DateTimeToPrettyStringConverter.cs</Link>
     </Compile>
+    <Compile Include="..\APD.Client.Framework\Converters\DateToStringConverter.cs">
+      <Link>Converters\DateToStringConverter.cs</Link>
+    </Compile>
     <Compile Include="..\APD.Client.Framework\Converters\TimeSpanToPrettyStringConverter.cs">
       <Link>Converters\TimeSpanToPrettyStringConverter.cs</Link>
     </Compile>

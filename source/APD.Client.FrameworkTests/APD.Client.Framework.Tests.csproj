@@ -101,6 +101,7 @@
     <Compile Include="Commands\MockCommandTypes.cs" />
     <Compile Include="Converters\BoolToVisibilityConverterSpecs.cs" />
     <Compile Include="Converters\DateTimeToPrettyStringConverterSpecs.cs" />
+    <Compile Include="Converters\DateToStringConverterSpecs.cs" />
     <Compile Include="Converters\TimeSpanToPrettyStringConverterSpecs.cs" />
     <Compile Include="ManualNotifyRefreshSpecs.cs" />
     <Compile Include="NotifyRefreshTimerSpecs.cs" />

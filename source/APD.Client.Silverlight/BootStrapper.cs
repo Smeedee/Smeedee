@@ -105,10 +105,10 @@ namespace APD.Client.Silverlight
             Container.RegisterType<IRepository<User>, UserWebserviceRepositoryProxy>();
             Container.RegisterType<IRepository<Holiday>, HolidayWebserviceRepository>();
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
-
-            Container.RegisterType<IRepository<Configuration>, ConfigurationRepository>();
+            Container.RegisterInstance<IRepository<Configuration>>(
+                new StaticRepositoryCache<Configuration>(
+                new ConfigurationRepository(), 3600000));
             Container.RegisterType<IPersistDomainModels<Configuration>, ConfigurationRepository>();
-
             Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryWebservicePersister>();
             Container.RegisterType<ILog, DatabaseLogger>();
         }

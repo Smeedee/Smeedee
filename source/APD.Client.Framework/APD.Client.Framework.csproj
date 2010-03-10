@@ -84,6 +84,7 @@
     <Compile Include="Controllers\ITriggerEvent.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeToPrettyStringConverter.cs" />
+    <Compile Include="Converters\DateToStringConverter.cs" />
     <Compile Include="Converters\TimeSpanToPrettyStringConverter.cs" />
     <Compile Include="Factories\UIInvokerFactory.cs" />
     <Compile Include="IInvokeBackgroundWorker.cs" />

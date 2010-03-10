@@ -27,6 +27,8 @@
 
 #endregion
 
+using System;
+
 using APD.Client.Framework.ViewModels;
 using APD.Client.Framework;
 using System.Collections.ObjectModel;

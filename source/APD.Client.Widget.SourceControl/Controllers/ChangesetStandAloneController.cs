@@ -42,7 +42,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
         protected IRepository<Changeset> changesetRepository;
         protected IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient;
 
-        private ILog logger;
+        protected ILog logger;
 
         protected ChangesetStandAloneController(INotifyWhenToRefresh refreshNotifier,
                                                 IRepository<Changeset> changesetRepository,
@@ -79,12 +79,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
                         }
                         catch (Exception e)
                         {
-                            logger.WriteEntry(new LogEntry()
-                            {
-                                Message = e.ToString(),
-                                Source = this.GetType().ToString(),
-                                TimeStamp = DateTime.Now
-                            });
+                            LogErrorMsg(e);
                             ViewModel.HasConnectionProblems = true;
                         }
                     });
@@ -105,12 +100,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
             }
             catch (Exception e)
             {
-                logger.WriteEntry(new LogEntry()
-                {
-                    Message = e.ToString(),
-                    Source = this.GetType().ToString(),
-                    TimeStamp = DateTime.Now
-                });
+                LogErrorMsg(e);
                 ViewModel.HasConnectionProblems = true;
             }
 
@@ -124,6 +114,26 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         }
 
+        protected void LogErrorMsg(Exception exception)
+        {
+            logger.WriteEntry(new ErrorLogEntry()
+            {
+                Message = exception.ToString(),
+                Source = this.GetType().ToString(),
+                TimeStamp = DateTime.Now
+            });
+        }
+
+        protected void LogWarningMsg (Exception exception)
+        {
+            logger.WriteEntry(new WarningLogEntry()
+            {
+                Message = exception.ToString(),
+                Source = this.GetType().ToString(),
+                TimeStamp = DateTime.Now
+            });
+        }
+        
 
         protected abstract void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets);
 

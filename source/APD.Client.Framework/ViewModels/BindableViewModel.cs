@@ -45,6 +45,22 @@ namespace APD.Client.Framework.ViewModels
                 DuckTypedData = value;
             }
         }
+
+        private DateTime sinceDate;
+
+        public DateTime SinceDate
+        {
+            get { return sinceDate; }
+            set
+            {
+                if (value != sinceDate)
+                {
+                    sinceDate = value;
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.SinceDate);
+                }
+            }
+        } 
+
         public Object DuckTypedData { get; set; }
 
         public BindableViewModel(IInvokeUI uiInvoker) :

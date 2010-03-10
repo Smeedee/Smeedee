@@ -6,12 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" 
+    xmlns:APD_Client_Framework_Converters="clr-namespace:APD.Client.Framework.Converters;assembly=APD.Client.Framework.SL" 
     x:Class="APD.Client.Widget.SourceControl.SL.Views.TopCommiters" 
 	d:DesignWidth="1300"
 	d:DesignHeight="768"
     Width="Auto" 
     Height="Auto">
 	<UserControl.Resources>
+		<APD_Client_Framework_Converters:DateToStringConverter x:Key="DateToStringConverter"/>
 		<SampleData:TopCommittersDataSource x:Key="TopCommittersDataSource" d:IsDataSource="True"/>
 		
         <Style x:Key="PlotAreaStyle" TargetType="Grid">
@@ -30,17 +32,17 @@
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		
-        <charting:Chart 
-            Grid.Column="1"
+		
+        <charting:Chart
 			BorderThickness="0,0,0,0" 
             Style="{StaticResource PieChartStyle}" 
-            LegendStyle="{StaticResource TopCommittersLegendStyle}">
+            LegendStyle="{StaticResource TopCommittersLegendStyle}" Margin="0,0,0,65" d:LayoutOverrides="GridBox">
 			<charting:PieSeries
-                Name="PieChart"
-                ItemsSource="{Binding Path=Data}"
-				IndependentValueBinding="{Binding Path=Firstname}"
-                DependentValueBinding="{Binding Path=NumberOfCommits}" LegendItemStyle="{StaticResource TopCommitersLegendItemStyle}">
-			</charting:PieSeries>
+                x:Name="PieChart"
+                ItemsSource="{Binding Data}"
+				IndependentValueBinding="{Binding Firstname}"
+                DependentValueBinding="{Binding NumberOfCommits}" LegendItemStyle="{StaticResource TopCommitersLegendItemStyle}"/>
 		</charting:Chart>
+		<TextBlock x:Name="Date" Margin="0" VerticalAlignment="Bottom" FontSize="48" TextWrapping="Wrap" FontWeight="Bold" Foreground="{StaticResource FontBrushBright}" Width="1300" Height="65" FontFamily="{StaticResource FontFamily}" Text="{Binding SinceDate, Converter={StaticResource DateToStringConverter}, Mode=OneWay}"/>
 	</Grid>
 </UserControl>
