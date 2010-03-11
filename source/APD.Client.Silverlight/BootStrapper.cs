@@ -36,7 +36,6 @@ using APD.Client.Widget.DeveloperInfo.SL.Repositories;
 using APD.Client.Widget.General.SL;
 using APD.Client.Widget.ProjectInfo.SL;
 using APD.Client.Widget.SourceControl.SL;
-using APD.Client.Widget.SourceControl.SL.Repositories;
 using APD.Client.Widget.TrayBar.SL;
 using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
@@ -108,7 +107,7 @@ namespace APD.Client.Silverlight
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
             Container.RegisterInstance<IRepository<Configuration>>(
                 new StaticRepositoryCache<Configuration>(
-                new ConfigurationRepository(), 3600000));
+                    new ConfigurationRepository(), 3600000));
             Container.RegisterType<IPersistDomainModels<Configuration>, ConfigurationRepository>();
             Container.RegisterType<IPersistDomainModels<LogEntry>, LogEntryWebservicePersister>();
             Container.RegisterType<ILog, DatabaseLogger>();

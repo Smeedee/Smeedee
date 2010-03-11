@@ -123,8 +123,6 @@
     </Compile>
     <Compile Include="CommitStatisticsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\AsyncChangesetRepository.cs" />
-    <Compile Include="Repositories\SyncChangeSetRepository.cs" />
     <Compile Include="SampleData\ChangesetSampleData\ChangesetSampleData.xaml.cs">
       <DependentUpon>ChangesetSampleData.xaml</DependentUpon>
     </Compile>

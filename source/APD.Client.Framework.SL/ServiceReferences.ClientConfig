@@ -10,6 +10,14 @@
                         </transport>
                     </security>
                 </binding>
+                <binding name="BasicHttpBinding_ChangesetRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None">
+                        <transport>
+                            <extendedProtectionPolicy policyEnforcement="Never" />
+                        </transport>
+                    </security>
+                </binding>
             </basicHttpBinding>
         </bindings>
         <client>
@@ -17,6 +25,10 @@
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ConfigurationRepositoryService"
                 contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
                 name="BasicHttpBinding_ConfigurationRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ChangesetRepositoryService"
+                contract="ChangesetRepositoryService.ChangesetRepositoryService"
+                name="BasicHttpBinding_ChangesetRepositoryService" />
         </client>
     </system.serviceModel>
 </configuration>

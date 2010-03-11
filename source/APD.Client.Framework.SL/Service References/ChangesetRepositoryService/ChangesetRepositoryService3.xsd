@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/APD.DomainModel.SourceControl" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.SourceControl" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
+  <xs:complexType name="ChangesetsForUserSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" base="q1:SpecificationOfChangesetx0ZJ4Ye_P">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ChangesetsForUserSpecification" nillable="true" type="tns:ChangesetsForUserSpecification" />
+  <xs:complexType name="AllChangesetsSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" base="q2:SpecificationOfChangesetx0ZJ4Ye_P">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AllChangesetsSpecification" nillable="true" type="tns:AllChangesetsSpecification" />
+  <xs:complexType name="ChangesetsAfterRevisionSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" base="q3:SpecificationOfChangesetx0ZJ4Ye_P">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Revision" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ChangesetsAfterRevisionSpecification" nillable="true" type="tns:ChangesetsAfterRevisionSpecification" />
+  <xs:complexType name="ArrayOfChangeset">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Changeset" nillable="true" type="tns:Changeset" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChangeset" nillable="true" type="tns:ArrayOfChangeset" />
+  <xs:complexType name="Changeset">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Author" nillable="true" type="tns:Author" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Revision" type="xs:long" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Changeset" nillable="true" type="tns:Changeset" />
+  <xs:complexType name="Author">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Author" nillable="true" type="tns:Author" />
+</xs:schema>

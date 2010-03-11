@@ -208,9 +208,16 @@
     </Compile>
     <Compile Include="LogEntryWebservicePersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AsyncChangesetRepository.cs" />
     <Compile Include="Repositories\ConfigurationRepository.cs" />
     <Compile Include="Repositories\HolidayWebserviceRepository.cs" />
+    <Compile Include="Repositories\SyncChangeSetRepository.cs" />
     <Compile Include="ResourceDictionary\SLXamlReader.cs" />
+    <Compile Include="Service References\ChangesetRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ConfigurationRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -285,6 +292,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ChangesetRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
     <WCFMetadataStorage Include="Service References\HolidayRepositoryService\" />
     <WCFMetadataStorage Include="Service References\LogEntryWebserviceRepository\" />
@@ -325,6 +333,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.disco" />
+    <None Include="Service References\ChangesetRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\ChangesetRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\ChangesetRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +354,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset.datasource" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.xsd" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.wsdl" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.xsd" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService2.xsd" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.xsd" />
     <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

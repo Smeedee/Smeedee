@@ -13,11 +13,11 @@ using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
 
 
-namespace APD.Client.Widget.SourceControl.SL.Repositories
+namespace APD.Client.Framework.SL.Repositories
 {
     public class SyncChangeSetRepository : AsyncRepositoryWrapperBase<Changeset>
     {
         public SyncChangeSetRepository(IAsyncRepository<Changeset> asyncRepository)
-            : base(asyncRepository) {}
+            : base(asyncRepository) { }
     }
 }
