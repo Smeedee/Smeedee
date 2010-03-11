@@ -104,20 +104,6 @@ namespace APD.Client.Widget.SourceControl.Controllers
             {
                 CreateDefaultSetting();
             }
-
-            UpdateSinceDateValueInViewModel();
-        }
-
-        private void UpdateSinceDateValueInViewModel()
-        {
-            if (useFromDate)
-            {
-                ViewModel.SinceDate = commitFromDate;       
-            }
-            else
-            {
-                ViewModel.SinceDate = DateTime.Now.AddDays(-commitTimespan);    
-            }
         }
 
         private void LoadFromDateSetting(SettingsEntry fromDateSetting)
@@ -133,7 +119,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
                 }
                 catch (Exception exception)
                 {
-                    //LogWarningMsg(exception);
+                    LogWarningMsg(exception);
                 }
             }
         }
@@ -153,17 +139,6 @@ namespace APD.Client.Widget.SourceControl.Controllers
                     LogWarningMsg(exception);
                 }
             }
-        }
-
-        private void ReloadViewModelData()
-        {
-            uiInvoker.Invoke(() =>
-            {
-                ViewModel.Data.Clear();
-                LoadData();
-                lastUpdated = DateTime.Now;
-                configurationChanged = false;
-            });
         }
 
         private void CreateDefaultSetting() 
@@ -292,12 +267,23 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         }
 
+        private void UpdateSinceDateValueInViewModel()
+        {
+            if (useFromDate)
+            {
+                ViewModel.SinceDate = commitFromDate;
+            }
+            else
+            {
+                ViewModel.SinceDate = DateTime.Now.AddDays(-commitTimespan);
+            }
+        }
+
         protected override void OnNotifiedToRefresh(object sender, RefreshEventArgs e)
         {
             LoadConfig();
 
             var newDayForTimespan = !useFromDate && lastUpdated.Date < DateTime.Now.Date;
-
             
             if (newDayForTimespan||configurationChanged)  
             {
@@ -307,9 +293,18 @@ namespace APD.Client.Widget.SourceControl.Controllers
             {
                 LoadData(new ChangesetsAfterRevisionSpecification(lastRevision));    
             }
-
-           
             
+        }
+
+        private void ReloadViewModelData()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.Data.Clear();
+                LoadData();
+                lastUpdated = DateTime.Now;
+                configurationChanged = false;
+            });
         }
 
         protected bool HasUpdatedChangesets(IOrderedEnumerable<CodeCommiterViewModel> committers)

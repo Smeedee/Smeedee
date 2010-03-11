@@ -527,7 +527,6 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
         }
 
         [Test]
-        //[Ignore("Due to threading issues")]
         public void Assure_new_config_values_will_update_ViewModel()
         {
             Scenario.StartNew(this, scenario =>
