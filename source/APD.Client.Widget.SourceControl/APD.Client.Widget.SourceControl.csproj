@@ -63,7 +63,6 @@
     <Compile Include="Controllers\ChangesetStandAloneController.cs" />
     <Compile Include="Controllers\CommitStatisticsController.cs" />
     <Compile Include="Controllers\TopCommitersController.cs" />
-    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ChangesetViewModel.cs" />
     <Compile Include="ViewModels\CheckInNotification.cs" />

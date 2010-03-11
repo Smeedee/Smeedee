@@ -106,9 +106,6 @@
     <Compile Include="..\APD.Client.Widget.SourceControl\Controllers\TopCommitersController.cs">
       <Link>Controllers\TopCommitersController.cs</Link>
     </Compile>
-    <Compile Include="..\APD.Client.Widget.SourceControl\Converters\BoolToVisibilityConverter.cs">
-      <Link>Converters\BoolToVisibilityConverter.cs</Link>
-    </Compile>
     <Compile Include="..\APD.Client.Widget.SourceControl\ViewModels\ChangesetViewModel.cs">
       <Link>ViewModels\ChangesetViewModel.cs</Link>
     </Compile>

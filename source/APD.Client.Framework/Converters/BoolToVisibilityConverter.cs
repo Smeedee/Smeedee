@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Data;
@@ -11,20 +12,21 @@ namespace APD.Client.Framework.Converters
     {
         #region IValueConverter Members
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool)
+            if (value is bool && targetType == typeof(Visibility))
             {
-                var val = System.Convert.ToBoolean(value);
-                if (val == true)
-                    return Visibility.Visible;
+                return (bool)value ? Visibility.Visible : Visibility.Collapsed;
             }
-
-            return Visibility.Collapsed;
+            throw new NotImplementedException();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is Visibility && targetType == typeof(bool))
+            {
+                return ((Visibility)value == Visibility.Visible);
+            }
             throw new NotImplementedException();
         }
 

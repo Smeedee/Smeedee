@@ -2,21 +2,22 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:local="clr-namespace:APD.Client.Widget.SourceControl.SL"
-    xmlns:converter="clr-namespace:APD.Client.Widget.SourceControl.Converters"
     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
     xmlns:APD_Client_Silverlight="clr-namespace:APD.Client.Widget.SourceControl.SL.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.ChangesetsSampleDataSource"
     xmlns:APD_Client_Widget_SourceControl_Repositories="clr-namespace:APD.Client.Widget.SourceControl.Repositories"
     xmlns:APD_Client_Framework_SL_Controls="clr-namespace:APD.Client.Framework.SL.Controls;assembly=APD.Client.Framework.SL"
     xmlns:local1="clr-namespace:APD.Client.Widget.SourceControl.SL.Views"
-    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" 
+    xmlns:Converters="clr-namespace:APD.Client.Framework.Converters;assembly=APD.Client.Framework.SL" 
     x:Class="APD.Client.Widget.SourceControl.SL.Views.CheckInNotification"
 	d:DesignHeight="654" d:DesignWidth="1280">
 	
     <UserControl.Resources>
         <SolidColorBrush x:Key="FontColor" Color="#FFFFFFFF"/>
-        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     	<SampleData:ChangesetsSampleDataSource x:Key="ChangesetsSampleDataSource" d:IsDataSource="True"/>
     	<DataTemplate x:Key="ChangesetDataTemplate">
     		<Grid Margin="0,0,5,5">

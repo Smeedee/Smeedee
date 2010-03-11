@@ -79,7 +79,6 @@
     <Compile Include="Controllers\CheckInNotificationControllerSpecs.cs" />
     <Compile Include="Controllers\CommitStatisticsControllerSpecs.cs" />
     <Compile Include="Controllers\TopCommitersControllerSpecs.cs" />
-    <Compile Include="Converters\BoolToVisibilityConverterSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ChangesetSpecs.cs" />
     <Compile Include="ViewModels\CheckInNotificationSpecs.cs" />

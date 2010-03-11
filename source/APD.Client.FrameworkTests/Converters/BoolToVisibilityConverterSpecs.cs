@@ -1,53 +1,90 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using APD.Client.Framework.Converters;
-
 using NUnit.Framework;
-using System.Threading;
 using System.Windows;
 
-using TinyBDD.Specification.NUnit;
 
 
 namespace APD.Client.Framework.Tests.Converters.BoolToVisibilityConverterSpecs
 {
     [TestFixture]
-    public class When_converting
+    public class BoolToVisibilityConverterSpecs
     {
-        private BoolToVisibilityConverter converter;
-        private Visibility co;
-
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void Assure_collapsed_returns_false()
         {
-            converter = new BoolToVisibilityConverter();
+            var bc = new BoolToVisibilityConverter();
+            Assert.IsFalse((bool)bc.ConvertBack(Visibility.Collapsed, true.GetType(), null, null));
         }
 
         [Test]
-        public void Assure_False_is_converted_to_Collapsed()
+        public void Assure_false_returns_colapsed()
         {
-            Convert(false).ShouldBe(Visibility.Collapsed);
+            var bc = new BoolToVisibilityConverter();
+            Assert.IsTrue(Visibility.Collapsed ==
+                          (Visibility)bc.Convert(false, typeof(Visibility), null, null));
         }
 
         [Test]
-        public void Assure_True_is_converted_To_Visible()
+        public void Assure_true_returns_visible()
         {
-            Convert(true).ShouldBe(Visibility.Visible);
+            var bc = new BoolToVisibilityConverter();
+            Assert.IsTrue(Visibility.Visible == (Visibility)bc.Convert(true, typeof(Visibility), null, null));
         }
 
         [Test]
-        public void Assure_crap_values_are_converted_to_Collapsed()
+        public void Assure_visible_returns_true()
         {
-            Convert("asdadsds").ShouldBe(Visibility.Collapsed);
-            Convert(123124).ShouldBe(Visibility.Collapsed);
+            var bc = new BoolToVisibilityConverter();
+            Assert.IsTrue((bool)bc.ConvertBack(Visibility.Visible, true.GetType(), null, null));
         }
 
-        private Object Convert(object value)
+        [Test]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Assure_convert_throws_when_bool_not_supplied()
         {
-            return converter.Convert(value, null, null, Thread.CurrentThread.CurrentCulture);
+            var bc = new BoolToVisibilityConverter();
+            bc.Convert("foo", typeof(Visibility), null, null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Assure_convert_throws_when_visibility_not_supplied()
+        {
+            var bc = new BoolToVisibilityConverter();
+            bc.Convert(true, typeof(string), null, null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Assure_convert_throws_when_both_not_supplied()
+        {
+            var bc = new BoolToVisibilityConverter();
+            bc.Convert("lol", typeof(string), null, null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Assure_convBack_throws_when_visibility_not_supplied()
+        {
+            var bc = new BoolToVisibilityConverter();
+            bc.ConvertBack("lol", typeof(bool), null, null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Assure_convBack_throws_when_bool_not_supplied()
+        {
+            var bc = new BoolToVisibilityConverter();
+            bc.ConvertBack(Visibility.Visible, typeof(string), null, null);
+        }
+
+        [Test]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Assure_convBack_throws_when_both_not_supplied()
+        {
+            var bc = new BoolToVisibilityConverter();
+            bc.ConvertBack("lol", typeof(string), null, null);
         }
     }
 }
