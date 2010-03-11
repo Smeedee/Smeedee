@@ -153,6 +153,7 @@
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\XmlParser.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\XmlProjectParser.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\XmlTaskParser.cs" />
+    <Compile Include="PMT\ScrumForTFS\DomainModel\Repositories\ScrumForTFSRepository.cs" />
     <Compile Include="PMT\ScrumForTFS\DomainModel\Repositories\WorkItemFetcher.cs" />
     <Compile Include="PMT\TFS\DomainModel\Repositories\IterationUpdater.cs" />
     <Compile Include="PMT\TFS\DomainModel\Repositories\WorkItemFetcher.cs" />

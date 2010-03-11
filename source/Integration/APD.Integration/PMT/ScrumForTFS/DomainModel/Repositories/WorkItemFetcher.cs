@@ -14,7 +14,7 @@ using System.Collections;
 
 namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
 {
-    public class WorkItemFetcher
+    public class WorkItemFetcher : IFetchWorkItems
     {
         private readonly TeamFoundationServer tfsServer;
         private readonly WorkItemStore workItemStore;
@@ -23,13 +23,10 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         private const string ESTIMATED_EFFORT_FIELD = "Conchango.TeamSystem.Scrum.EstimatedEffort";
 
         public String ProjectName { get; private set; }
-        public String IterationPath { get; private set; }
-
         
         public WorkItemFetcher(String serverAddress, String projectName, String iterationPath, ICredentials credentials)
         {
             ProjectName = projectName;
-            IterationPath = iterationPath;
 
             tfsServer = new TeamFoundationServer(serverAddress, credentials);
             tfsServer.Authenticate();
@@ -38,29 +35,29 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         }
 
 
-        public List<Task> GetAllWorkEffortInSprint()
+        public List<Task> GetAllWorkEffortInSprint(string iterationPath)
         {
-            var allWorkItems = GetCurrentWorkItemsInSprint();
+            var allWorkItems = GetCurrentWorkItemsInSprint(iterationPath);
 
             List<WorkItem> allWorkItemRevisions = GetWorkItemRevisions(allWorkItems);
 
             return ConvertWorkItemsToTasks(allWorkItemRevisions);
         }
 
-        public List<Task> GetCurrentTasksInSprint()
+        public List<Task> GetCurrentTasksInSprint(string iterationPath)
         {
-            return ConvertWorkItemsToTasks(GetCurrentWorkItemsInSprint());
+            return ConvertWorkItemsToTasks(GetCurrentWorkItemsInSprint(iterationPath));
         }
 
 
-        private WorkItemCollection GetCurrentWorkItemsInSprint()
+        private WorkItemCollection GetCurrentWorkItemsInSprint(string iterationPath)
         {
             var wiqlQuery =
                 @"SELECT [Conchango.TeamSystem.Scrum.EstimatedEffort], " +
                 @"[Conchango.TeamSystem.Scrum.WorkRemaining] " +
                 @"FROM [WorkItems] " +
                 @"WHERE [System.TeamProject] = '" + ProjectName + "'" +
-                @"AND [System.IterationPath] = '" + IterationPath + "'" +
+                @"AND [System.IterationPath] = '" + iterationPath + "'" +
                 @"AND [Work Item Type] = 'Sprint Backlog Item'";
             return workItemStore.Query(wiqlQuery);
         }
@@ -69,13 +66,13 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         // TODO: Performance
         private List<WorkItem> GetWorkItemRevisions(WorkItemCollection allWorkItems)
         {
-            List<WorkItem> allWorkItemRevisions = new List<WorkItem>();
+            var allWorkItemRevisions = new List<WorkItem>();
 
 
-            for (int i = 0; i < allWorkItems.Count; i++)
+            for (var i = 0; i < allWorkItems.Count; i++)
             {
                 var item = allWorkItems[i];
-                for (int j = 0; j < item.Revisions.Count; j++)
+                for (var j = 0; j < item.Revisions.Count; j++)
                 {
                     var revision = item.Revisions[j];
                     var itemRevision = workItemStore.GetWorkItem(item.Id, (int)revision.Fields[CoreField.Rev].Value);
@@ -134,6 +131,21 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
             return ConvertWorkItemsToTasks(allWorkItemRevisions);
         }
 
+        // TODO: Can we improve runtime for this?
+        public IEnumerable<String> GetAllIterations()
+        {
+            var allWorkItems = GetAllCurrentWorkItems();
+            var iterationPaths = new List<String>();
+            foreach (WorkItem item in allWorkItems)
+            {
+                if (!iterationPaths.Contains(item.IterationPath))
+                {
+                    iterationPaths.Add(item.IterationPath);
+                }
+            }
+            return iterationPaths;
+        }
+
         private WorkItemCollection GetAllCurrentWorkItems()
         {
             var wiqlQuery =
@@ -144,6 +156,9 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
                 @"AND [Work Item Type] = 'Sprint Backlog Item'";
             return workItemStore.Query(wiqlQuery);
         }
+
+        
+
 
         private static int ParseFieldToInt(Field field)
         {
