@@ -113,6 +113,9 @@
     <Compile Include="..\APD.Client.Widget.Admin\Controllers\UserdbController.cs">
       <Link>Controllers\UserdbController.cs</Link>
     </Compile>
+    <Compile Include="..\APD.Client.Widget.Admin\Converters\DateToStringConverter.cs">
+      <Link>Converters\DateToStringConverter.cs</Link>
+    </Compile>
     <Compile Include="..\APD.Client.Widget.Admin\Factories\ConfigItemViewModelFactory.cs">
       <Link>Factories\ConfigItemViewModelFactory.cs</Link>
     </Compile>

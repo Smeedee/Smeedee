@@ -21,10 +21,12 @@ namespace APD.Client.Widget.Admin.ViewModels
             ITriggerCommand saveConfigNotifier,
             ITriggerCommand refreshConfigNotifier,
             ITriggerCommand saveHolidaysNotifier,
-            ITriggerCommand reloadHolidaysNotifier) : 
+            ITriggerCommand reloadHolidaysNotifier,
+            ITriggerCommand createNewHolidayTrigger,
+            ITriggerCommand deleteSelectedHolidayTrigger ) : 
             base(uiInvoker)
         {
-            HolidaysDbViewModel = new HolidaysDbViewModel(uiInvoker, saveHolidaysNotifier, reloadHolidaysNotifier);
+            HolidaysDbViewModel = new HolidaysDbViewModel(uiInvoker, saveHolidaysNotifier, reloadHolidaysNotifier, createNewHolidayTrigger, deleteSelectedHolidayTrigger);
             Userdb = new UserdbViewModel(uiInvoker, saveUserDbNotifier, reloadUserdbNotifier, editUserdbNotifier);
             Configuration = new ConfigurationViewModel(uiInvoker, saveConfigNotifier, refreshConfigNotifier);
         }

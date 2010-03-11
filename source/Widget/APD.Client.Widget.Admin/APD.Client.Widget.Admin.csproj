@@ -80,6 +80,7 @@
     <Compile Include="Controllers\URLCheckerController.cs" />
     <Compile Include="Controllers\UserdbController.cs" />
     <Compile Include="Controllers\CredentialsCheckerController.cs" />
+    <Compile Include="Converters\DateToStringConverter.cs" />
     <Compile Include="Factories\ConfigItemViewModelFactory.cs" />
     <Compile Include="Plugins\CIConfigPlugin.cs" />
     <Compile Include="Plugins\ConfigPlugin.cs" />

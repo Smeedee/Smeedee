@@ -29,12 +29,19 @@ namespace APD.Client.Widget.AdminTests.ControllersSpecs
         protected static IInvokeUI uiInvoker = new NoUIInvocation();
         protected static ManualNotifyRefresh refreshNotifier  = new ManualNotifyRefresh();
         protected static Mock<INotify<EventArgs>> saveNotifierMock = new Mock<INotify<EventArgs>>();
+        protected static Mock<INotify<EventArgs>> createNewNotifier = new Mock<INotify<EventArgs>>();
+        protected static Mock<INotify<EventArgs>> deleteSelectedNotifier = new Mock<INotify<EventArgs>>();
+
+
         protected static IInvokeBackgroundWorker<IEnumerable<Holiday>> asyncClient = new NoBackgroundWorkerInvocation<IEnumerable<Holiday>>();
 
         protected static Mock<IRepository<Holiday>> holidaysRepositoryMock = new Mock<IRepository<Holiday>>();
         protected static Mock<IPersistDomainModels<Holiday>> persisterMock = new Mock<IPersistDomainModels<Holiday>>();
         protected static Mock<ITriggerCommand> saveHolidaysTrigger = new Mock<ITriggerCommand>();
         protected static Mock<ITriggerCommand> reloadHolidaysTrigger = new Mock<ITriggerCommand>();
+        protected static Mock<ITriggerCommand> newHolidayTrigger = new Mock<ITriggerCommand>();
+        protected static Mock<ITriggerCommand> deleteSelectedHolidayTrigger = new Mock<ITriggerCommand>();
+
         protected static HolidaysDbViewModel viewModel;
 
         protected static HolidaysDbController controller;
@@ -67,8 +74,8 @@ namespace APD.Client.Widget.AdminTests.ControllersSpecs
 
         protected static void CreateController()
         {
-            viewModel = new HolidaysDbViewModel(uiInvoker, saveHolidaysTrigger.Object, reloadHolidaysTrigger.Object);
-            controller = new HolidaysDbController(refreshNotifier, uiInvoker, holidaysRepositoryMock.Object, viewModel, asyncClient, persisterMock.Object, saveNotifierMock.Object);
+            viewModel = new HolidaysDbViewModel(uiInvoker, saveHolidaysTrigger.Object, reloadHolidaysTrigger.Object, newHolidayTrigger.Object, deleteSelectedHolidayTrigger.Object);
+            controller = new HolidaysDbController(refreshNotifier, uiInvoker, holidaysRepositoryMock.Object, viewModel, asyncClient, persisterMock.Object, saveNotifierMock.Object, createNewNotifier.Object, deleteSelectedNotifier.Object);
         }
 
         [TearDown]
@@ -156,6 +163,49 @@ namespace APD.Client.Widget.AdminTests.ControllersSpecs
         }
     }
 
+
+    [TestFixture]
+    public class when_CreateNewUICommand_is_triggered : Shared
+    {
+        private When createNewCommand_is_triggered = () =>
+        {
+            createNewNotifier.Raise(sn => sn.NewNotification += null, new EventArgs());
+        };
+
+        [Test]
+        public void should_add_holiday_to_viewModel()
+        {
+            Given(There_are_holidays_in_repository).And(Controller_is_created);
+            When(createNewCommand_is_triggered);
+            Then("there should be a new entry last in the list of holidays", () =>
+            {
+                viewModel.Data.Last().Date.ShouldBe(new DateTime(11,11,12));
+            });
+        }
+    }
+
+    [TestFixture]
+    public class when_deleteSelectedHoliday_is_triggered : Shared
+    {
+        private When deleteSelectedHolidayCommand_is_triggered = () =>
+        {
+            deleteSelectedNotifier.Raise(sn => sn.NewNotification += null, new EventArgs());
+        };
+
+        [Test]
+        public void should_delete_holiday_at_selectedIndex()
+        {
+            Given(There_are_holidays_in_repository)
+                .And(Controller_is_created)
+                .And("Selected index is valid", () => viewModel.SelectedHolidayIndex = 0);
+            When(deleteSelectedHolidayCommand_is_triggered);
+            Then("the selected holiday should be deleted", () =>
+            {
+                viewModel.Data.Count.ShouldBe(1);
+                viewModel.Data.First().Date.ShouldBe(new DateTime(11,11,11));
+            });
+        }
+    }
 
     // ReSharper enable InconsistentNaming
 }

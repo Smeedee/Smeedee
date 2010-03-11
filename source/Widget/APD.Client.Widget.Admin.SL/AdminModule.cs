@@ -76,11 +76,13 @@ namespace APD.Client.Widget.Admin.SL
             var saveHolidaysCommandTrigger = new CommandNotifierWiring<EventArgs>();
             var reloadHolidaysCommandTrigger = new CommandNotifierWiring<EventArgs>();
             var reloadHolidaysNotifierAdapter = new CommandNotifierAdapter(reloadHolidaysCommandTrigger);
+            var createNewHolidaytrigger = new CommandNotifierWiring<EventArgs>();
+            var deleteSelectedHolidayTrigger = new CommandNotifierWiring<EventArgs>();
 
             var uiInvoker = iocContainer.Resolve<IInvokeUI>();
           
             var adminViewModel = new AdminViewModel(uiInvoker, saveUserDbNotifier, updateCommandWire, editUserdbNotifier,
-                saveConfigNotifier, refreshConfigNotifier, saveHolidaysCommandTrigger, reloadHolidaysCommandTrigger);
+                saveConfigNotifier, refreshConfigNotifier, saveHolidaysCommandTrigger, reloadHolidaysCommandTrigger, createNewHolidaytrigger, deleteSelectedHolidayTrigger);
 
             var userdbRepository = new UserdbWebserviceRepository();
             var userdbController = new UserdbController(adminViewModel.Userdb,
@@ -97,7 +99,7 @@ namespace APD.Client.Widget.Admin.SL
             var holidayRepository = iocContainer.Resolve<IRepository<Holiday>>();
             var holidayPersister = iocContainer.Resolve<IPersistDomainModels<Holiday>>();
             var holidayDbController = new HolidaysDbController(reloadHolidaysNotifierAdapter, uiInvoker,
-                                                               holidayRepository, adminViewModel.HolidaysDbViewModel, new AsyncClient<IEnumerable<Holiday>>(), holidayPersister, saveHolidaysCommandTrigger);
+                                                               holidayRepository, adminViewModel.HolidaysDbViewModel, new AsyncClient<IEnumerable<Holiday>>(), holidayPersister, saveHolidaysCommandTrigger, createNewHolidaytrigger, deleteSelectedHolidayTrigger);
 
             iocContainer.RegisterInstance<HolidaysDbController>(holidayDbController);
 

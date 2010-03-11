@@ -14,6 +14,6 @@ namespace APD.Client.Widget.AdminTests.ViewModels
     [TestFixture]
     public class HolidayViewModelSpecs
     {
-
+        
     }
 }

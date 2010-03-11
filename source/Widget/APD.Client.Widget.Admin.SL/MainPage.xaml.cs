@@ -67,12 +67,16 @@ namespace APD.Client.Widget.Admin.SL
 
             var saveHolidaysCommandTrigger = new CommandNotifierWiring<EventArgs>();
             var reloadHolidaysCommandTrigger = new CommandNotifierWiring<EventArgs>();
+            var createNewHolidayTrigger = new CommandNotifierWiring<EventArgs>();
+            var deleteSelectedHolidayTrigger = new CommandNotifierWiring<EventArgs>();
 
             var adminViewModel = new AdminViewModel(uiInvoker, saveCommandWire,
                                                     updateCommandWire, editCommandWire,
                                                     saveConfigCommand, refreshConfigCommand,
                                                     saveHolidaysCommandTrigger,
-                                                    reloadHolidaysCommandTrigger);
+                                                    reloadHolidaysCommandTrigger,
+                                                    createNewHolidayTrigger,
+                                                    deleteSelectedHolidayTrigger);
 
             var userdbRepository = new UserdbMockRepository();
             var controller = new UserdbController(adminViewModel.Userdb, 

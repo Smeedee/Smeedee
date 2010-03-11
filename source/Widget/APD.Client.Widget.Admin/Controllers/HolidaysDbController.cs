@@ -27,7 +27,9 @@ namespace APD.Client.Widget.Admin.Controllers
             HolidaysDbViewModel viewModel, 
             IInvokeBackgroundWorker<IEnumerable<Holiday>> asyncInvoker,
             IPersistDomainModels<Holiday> persister,
-            INotify<EventArgs> saveNotifier
+            INotify<EventArgs> saveNotifier,
+            INotify<EventArgs> createNewNotifier,
+            INotify<EventArgs> deleteSelectedNotifier
             )
             : base(refreshNotifier, uiInvoker, viewModel)
         {
@@ -36,8 +38,38 @@ namespace APD.Client.Widget.Admin.Controllers
             this.holidaysRepository = holidaysRepository;
 
             saveNotifier.NewNotification += new EventHandler<EventArgs>(saveNotifier_NewNotification);
+            createNewNotifier.NewNotification += new EventHandler<EventArgs>(createNewNotifier_NewNotification);
+            deleteSelectedNotifier.NewNotification += new EventHandler<EventArgs>(deleteSelectedNotifier_NewNotification);
 
             LoadData();
+        }
+
+        void deleteSelectedNotifier_NewNotification(object sender, EventArgs e)
+        {
+            uiInvoker.Invoke(()=>
+            {
+                if( ViewModel.SelectedHolidayIndex > -1 && ViewModel.SelectedHolidayIndex < ViewModel.Data.Count )
+                {
+                    ViewModel.Data.RemoveAt(ViewModel.SelectedHolidayIndex);
+                }
+            });
+        }
+
+        void createNewNotifier_NewNotification(object sender, EventArgs e)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                DateTime nextDateInHolidayList = DateTime.Today;
+                
+                if ( ViewModel.Data.Count > 0 )
+                    nextDateInHolidayList =  ViewModel.Data.Max(h=> h.Date).AddDays(1);
+                
+                ViewModel.Data.Add(new HolidayViewModel(uiInvoker)
+                {
+                    Date = nextDateInHolidayList,
+                    Description = "New Holiday (yay!)"
+                });
+            });
         }
 
         void saveNotifier_NewNotification(object sender, EventArgs e)

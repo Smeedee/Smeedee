@@ -10,6 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
+using APD.Client.Widget.Admin.ViewModels;
+
+
 namespace APD.Client.Widget.Admin.SL.Views
 {
     public partial class HolidaysView : UserControl
@@ -18,6 +21,12 @@ namespace APD.Client.Widget.Admin.SL.Views
         {
             InitializeComponent();
             gridHolidays.BeginEdit();
+        }
+
+        private void gridHolidays_KeyDown(object sender, KeyEventArgs e)
+        {
+            if( e.Key == Key.Delete )
+                (DataContext as HolidaysDbViewModel).DeleteSelectedHolidayUICommand.Execute(null);
         }
     }
 }
