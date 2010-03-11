@@ -14,10 +14,10 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
     {
         private IFetchWorkItems fetcher;
         
-        public ScrumForTFSRepository(string server, string project, string username, string password)
+        public ScrumForTFSRepository(string server, string project, string username, string password, Dictionary<String, String> config)
         {
             var credentials = new NetworkCredential(username, password);
-            fetcher = new WorkItemFetcher(server, project, "\\", credentials);
+            fetcher = new WorkItemFetcher(server, project, credentials, config);
         }
 
         public ScrumForTFSRepository(IFetchWorkItems workItemFetcher)

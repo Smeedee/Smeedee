@@ -4,7 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
+using APD.DomainModel.Config;
+using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
+using APD.Integration.Database.DomainModel.Repositories;
 
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
@@ -18,14 +21,22 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
     {
         private readonly TeamFoundationServer tfsServer;
         private readonly WorkItemStore workItemStore;
-        // TODO: Introduce settings for these.
-        private const string WORK_REMAINING_FIELD = "Conchango.TeamSystem.Scrum.WorkRemaining";
-        private const string ESTIMATED_EFFORT_FIELD = "Conchango.TeamSystem.Scrum.EstimatedEffort";
+        // Defaulting to the values used by Conchango Scrum for Team System
+        private readonly string WORK_REMAINING_FIELD = "Conchango.TeamSystem.Scrum.WorkRemaining";
+        private readonly string ESTIMATED_EFFORT_FIELD = "Conchango.TeamSystem.Scrum.EstimatedEffort";
 
         public String ProjectName { get; private set; }
         
-        public WorkItemFetcher(String serverAddress, String projectName, String iterationPath, ICredentials credentials)
+        public WorkItemFetcher(String serverAddress, String projectName, ICredentials credentials, Dictionary<String, String> configuration)
         {
+            String configValue = "";
+            WORK_REMAINING_FIELD = (configuration.TryGetValue("tfswi-remaining-field", out configValue))
+                                       ? configValue
+                                       : WORK_REMAINING_FIELD;
+            ESTIMATED_EFFORT_FIELD = ( configuration.TryGetValue("tfswi-estimated-field", out configValue) )
+                                        ? configValue
+                                        : ESTIMATED_EFFORT_FIELD;
+
             ProjectName = projectName;
 
             tfsServer = new TeamFoundationServer(serverAddress, credentials);
