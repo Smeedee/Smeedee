@@ -40,7 +40,6 @@ namespace APD.Client.Widget.Admin.Controllers
         private UserdbViewModel viewModel;
         private IRepository<Userdb> userdbRepository;
         private IInvokeBackgroundWorker<IEnumerable<Userdb>> backgroundWorker;
-        private INotifyWhenToRefresh refreshNotifier;
         private IPersistDomainModels<Userdb> userdbPersistanceRepository;
         private INotify<EventArgs> saveNotifier;
         private INotify<EventArgs> editNotifier;
@@ -65,8 +64,6 @@ namespace APD.Client.Widget.Admin.Controllers
             this.editNotifier = editNotifier;
             this.showModalDialogEventTrigger = showModalDialogEventTrigger;
 
-
-            this.refreshNotifier.Refresh += new EventHandler<RefreshEventArgs>(refreshNotifier_NewNotification);
             this.saveNotifier.NewNotification += new EventHandler<EventArgs>(saveNotifier_NewNotification);
             this.editNotifier.NewNotification += new EventHandler<EventArgs>(editNotifier_NewNotification);
 
@@ -122,11 +119,6 @@ namespace APD.Client.Widget.Admin.Controllers
             foreach (User user in users)
                 data.AddUser(user);
             return data;
-        }
-
-        void refreshNotifier_NewNotification(object sender, EventArgs e)
-        {
-            LoadData();
         }
 
         private bool loadingFlag;
@@ -192,6 +184,7 @@ namespace APD.Client.Widget.Admin.Controllers
 
         protected override void OnNotifiedToRefresh(object sender, RefreshEventArgs e)
         {
+            LoadData();
         }
     }
 }

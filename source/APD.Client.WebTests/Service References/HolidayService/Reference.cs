@@ -17,6 +17,7 @@ namespace APD.Client.WebTests.HolidayService {
         
         [System.ServiceModel.OperationContractAttribute(Action="urn:HolidayRepositoryService/Get", ReplyAction="urn:HolidayRepositoryService/GetResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(APD.DomainModel.Framework.AllSpecification<APD.DomainModel.Holidays.Holiday>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(APD.DomainModel.Holidays.HolidaySpecification))]
         System.Collections.Generic.List<APD.DomainModel.Holidays.Holiday> Get(APD.DomainModel.Framework.Specification<APD.DomainModel.Holidays.Holiday> specification);
         
         [System.ServiceModel.OperationContractAttribute(Action="urn:HolidayRepositoryService/Save", ReplyAction="urn:HolidayRepositoryService/SaveResponse")]

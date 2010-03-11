@@ -371,6 +371,7 @@
     <None Include="Service References\HolidayService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\HolidayService\HolidayRepositoryService4.xsd" />
     <None Include="Service References\HolidayService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

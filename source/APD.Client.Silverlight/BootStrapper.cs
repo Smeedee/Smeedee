@@ -104,6 +104,7 @@ namespace APD.Client.Silverlight
                     new SyncChangeSetRepository(new AsyncChangesetRepository()), 15000));
             Container.RegisterType<IRepository<User>, UserWebserviceRepositoryProxy>();
             Container.RegisterType<IRepository<Holiday>, HolidayWebserviceRepository>();
+            Container.RegisterType<IPersistDomainModels<Holiday>, HolidayWebserviceRepository>();
             Container.RegisterType<ICheckIfAdminUIShouldBeDisplayed, CheckIfAdminUIShouldBeDisplayedFromUrl>();
             Container.RegisterInstance<IRepository<Configuration>>(
                 new StaticRepositoryCache<Configuration>(

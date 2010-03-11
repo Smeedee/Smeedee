@@ -28,13 +28,14 @@ namespace APD.Client.Widget.AdminTests.ControllersSpecs
     {
         protected static IInvokeUI uiInvoker = new NoUIInvocation();
         protected static ManualNotifyRefresh refreshNotifier  = new ManualNotifyRefresh();
+        protected static Mock<INotify<EventArgs>> saveNotifierMock = new Mock<INotify<EventArgs>>();
         protected static IInvokeBackgroundWorker<IEnumerable<Holiday>> asyncClient = new NoBackgroundWorkerInvocation<IEnumerable<Holiday>>();
 
         protected static Mock<IRepository<Holiday>> holidaysRepositoryMock = new Mock<IRepository<Holiday>>();
+        protected static Mock<IPersistDomainModels<Holiday>> persisterMock = new Mock<IPersistDomainModels<Holiday>>();
         protected static Mock<ITriggerCommand> saveHolidaysTrigger = new Mock<ITriggerCommand>();
         protected static Mock<ITriggerCommand> reloadHolidaysTrigger = new Mock<ITriggerCommand>();
         protected static HolidaysDbViewModel viewModel;
-
 
         protected static HolidaysDbController controller;
 
@@ -67,7 +68,7 @@ namespace APD.Client.Widget.AdminTests.ControllersSpecs
         protected static void CreateController()
         {
             viewModel = new HolidaysDbViewModel(uiInvoker, saveHolidaysTrigger.Object, reloadHolidaysTrigger.Object);
-            controller = new HolidaysDbController(refreshNotifier, uiInvoker, holidaysRepositoryMock.Object, viewModel, asyncClient);
+            controller = new HolidaysDbController(refreshNotifier, uiInvoker, holidaysRepositoryMock.Object, viewModel, asyncClient, persisterMock.Object, saveNotifierMock.Object);
         }
 
         [TearDown]
@@ -133,8 +134,28 @@ namespace APD.Client.Widget.AdminTests.ControllersSpecs
                 controller.ViewModel.Data[0].Description.ShouldBe("The ten day");
             });
         }
-
     }
+
+    [TestFixture]
+    public class when_SaveHolidaysUICommand_is_triggered : Shared
+    {
+        private When saveCommand_is_triggered = ()=>
+        {
+           saveNotifierMock.Raise( sn => sn.NewNotification += null, new EventArgs() );
+        };
+
+        [Test]
+        public void should_save_holidays_in_viewModel()
+        {
+            Given(Controller_is_created);
+            When(saveCommand_is_triggered);
+            Then("the holidays in the viewmodel should be saved", () =>
+            {
+                persisterMock.Verify(hp => hp.Save(It.IsAny<IEnumerable<Holiday>>()));
+            });
+        }
+    }
+
 
     // ReSharper enable InconsistentNaming
 }

@@ -17,6 +17,7 @@ namespace APD.Client.Widget.Admin.SL.Views
         public HolidaysView()
         {
             InitializeComponent();
+            gridHolidays.BeginEdit();
         }
     }
 }

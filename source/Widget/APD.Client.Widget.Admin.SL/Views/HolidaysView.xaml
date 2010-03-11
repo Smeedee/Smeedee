@@ -9,20 +9,27 @@
     d:DesignWidth="640" d:DesignHeight="480">
 
     <Grid x:Name="LayoutRoot">
-        <Button Height="24" HorizontalAlignment="Right" Margin="0,0,84,8" VerticalAlignment="Bottom" Width="72" Content="Save" 
-				IsEnabled="{Binding DataIsChanged, Mode=OneWay}" />
+        <Button Height="24" HorizontalAlignment="Right" Margin="0,0,84,8" 
+                VerticalAlignment="Bottom" Width="72" Content="Save" 
+				IsEnabled="{Binding DataIsChanged, Mode=OneWay}"
+                Framework:Cmd.Command="{Binding SaveHolidaysUICommand}"
+                />
         
         <Button Height="24" HorizontalAlignment="Right" Margin="0,0,8,8" 
                 VerticalAlignment="Bottom" Width="72" Content="Reload" 
-                IsEnabled="{Binding DataIsChanged, Mode=OneWay}"/>
+                IsEnabled="{Binding DataIsChanged, Mode=OneWay}"
+                Framework:Cmd.Command="{Binding ReloadHolidaysUICommand}"
+                />
         
         <data:DataGrid x:Name="gridHolidays" Margin="0,0,0,48"
                        AutoGenerateColumns="False" 
                        ItemsSource="{Binding Data, Mode=OneWay}">
+            
             <data:DataGrid.Columns>
                 <data:DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                 <data:DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
             </data:DataGrid.Columns>
+            
         </data:DataGrid>
     </Grid>
 </UserControl>

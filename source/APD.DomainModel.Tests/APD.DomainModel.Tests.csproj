@@ -67,6 +67,7 @@
     <Compile Include="CI\CIProjectSpecs.cs" />
     <Compile Include="CI\TriggerSpecs.cs" />
     <Compile Include="Config\ConfigurationSpecs.cs" />
+    <Compile Include="Holidays\HolidaySpecificationSpecs.cs" />
     <Compile Include="Holidays\HolidaysSpecs.cs" />
     <Compile Include="ProjectInfo\IterationSpecs.cs" />
     <Compile Include="ProjectInfo\ProjectInfoServerSpecs.cs" />

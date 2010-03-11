@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows;
@@ -18,7 +19,7 @@ using APD.DomainModel.Holidays;
 
 namespace APD.Client.Framework.SL.Repositories
 {
-    public class HolidayWebserviceRepository : IRepository<Holiday>
+    public class HolidayWebserviceRepository : IRepository<Holiday>, IPersistDomainModels<Holiday>
     {
 
         private ManualResetEvent resetEvent = new ManualResetEvent(false);
@@ -65,6 +66,20 @@ namespace APD.Client.Framework.SL.Repositories
             invocationException = e.Error;
             
             resetEvent.Set();
+        }
+
+        #endregion
+
+        #region IPersistDomainModels<Holiday> Members
+
+        public void Save(Holiday domainModel)
+        {
+            client.SaveAsync(new List<Holiday>() {domainModel});
+        }
+
+        public void Save(IEnumerable<Holiday> domainModels)
+        {
+            client.SaveAsync(domainModels.ToList());
         }
 
         #endregion

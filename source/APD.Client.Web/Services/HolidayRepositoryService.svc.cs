@@ -17,6 +17,7 @@ namespace APD.Client.Web.Services
     [ServiceContract(Namespace = "")]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [ServiceKnownType(typeof(AllSpecification<Holiday>))]
+    [ServiceKnownType(typeof(HolidaySpecification))]
     [ServiceKnownType(typeof(Specification<Holiday>))]
     public class HolidayRepositoryService
     {

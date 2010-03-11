@@ -28,6 +28,7 @@
                                   ItemsSource="{Binding ViewModel.DuckTypedData, Mode=OneWay}" 
                                   CurrentItem="{Binding Mode=OneWay}" CommitButtonContent="Save" 
                                   CancelButtonContent="Cancel" CommandButtonsVisibility="All"/>
+        
         <Button x:Name="OKButton" Content="Done" Width="75" Height="23" HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
                 Framework:Cmd.Command="{Binding CloseUICommand}"

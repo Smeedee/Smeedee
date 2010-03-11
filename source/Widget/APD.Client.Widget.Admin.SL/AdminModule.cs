@@ -95,8 +95,9 @@ namespace APD.Client.Widget.Admin.SL
 
 
             var holidayRepository = iocContainer.Resolve<IRepository<Holiday>>();
+            var holidayPersister = iocContainer.Resolve<IPersistDomainModels<Holiday>>();
             var holidayDbController = new HolidaysDbController(reloadHolidaysNotifierAdapter, uiInvoker,
-                                                               holidayRepository, adminViewModel.HolidaysDbViewModel, new AsyncClient<IEnumerable<Holiday>>());
+                                                               holidayRepository, adminViewModel.HolidaysDbViewModel, new AsyncClient<IEnumerable<Holiday>>(), holidayPersister, saveHolidaysCommandTrigger);
 
             iocContainer.RegisterInstance<HolidaysDbController>(holidayDbController);
 
@@ -138,9 +139,7 @@ namespace APD.Client.Widget.Admin.SL
                         modalDialogView.DialogResult = true;
                     }
                 }
-
             };
-
         }
 
         #region IVisibleModule Members

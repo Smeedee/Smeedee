@@ -62,6 +62,7 @@
     <Compile Include="CI\UnknownTrigger.cs" />
     <Compile Include="Config\ConfigurationSpecifications.cs" />
     <Compile Include="Holidays\Holiday.cs" />
+    <Compile Include="Holidays\HolidaysSpecifications.cs" />
     <Compile Include="Holidays\IGenerateHolidays.cs" />
     <Compile Include="ProjectInfo\Iteration.cs" />
     <Compile Include="ProjectInfo\Project.cs" />
