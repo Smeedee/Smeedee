@@ -94,7 +94,7 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         }
 
 
-        private static List<Task> ConvertWorkItemsToTasks(IEnumerable workItems)
+        private List<Task> ConvertWorkItemsToTasks(IEnumerable workItems)
         {
             var tasks = new List<Task>();
 
