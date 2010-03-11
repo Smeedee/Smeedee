@@ -527,8 +527,8 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
         }
 
         [Test]
-        [Ignore("Due to threading issues")]
-        public void Assure_new_timespan_in_configuration_will_update_changesets()
+        //[Ignore("Due to threading issues")]
+        public void Assure_new_config_values_will_update_ViewModel()
         {
             Scenario.StartNew(this, scenario =>
             {
@@ -555,6 +555,10 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
                           controller.ViewModel.Data.Count.ShouldBe(1);
                           controller.ViewModel.Data.Where(d => d.Username.Equals("goeran")).First().
                             NumberOfCommits.ShouldBe(1);
+                          changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()),
+                                                         Times.Exactly(2));
+
+                          viewModelChanged.ShouldBeTrue();
                       });
             });
         }

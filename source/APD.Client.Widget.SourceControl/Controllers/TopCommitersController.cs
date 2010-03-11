@@ -51,6 +51,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
         private int commitTimespan;
         private DateTime commitFromDate;
         private bool useFromDate;
+        private bool configurationChanged;
 
 
         public TopCommitersController(INotifyWhenToRefresh refreshNotifier,
@@ -125,7 +126,9 @@ namespace APD.Client.Widget.SourceControl.Controllers
             {
                 try
                 {
-                    commitFromDate = DateTime.Parse(fromDateSetting.Value.Trim(), new CultureInfo("en-US"));
+                    var newConfigValue = DateTime.Parse(fromDateSetting.Value.Trim(), new CultureInfo("en-US"));
+                    configurationChanged = commitFromDate != newConfigValue;
+                    commitFromDate = newConfigValue;
                     useFromDate = true;
                 }
                 catch (Exception exception)
@@ -141,7 +144,9 @@ namespace APD.Client.Widget.SourceControl.Controllers
             {
                 try
                 {
-                    commitTimespan = Int32.Parse(timespanSetting.Value.Trim());
+                    var newConfigValue = Int32.Parse(timespanSetting.Value.Trim());
+                    configurationChanged = commitTimespan != newConfigValue;
+                    commitTimespan = newConfigValue;
                 }
                 catch (Exception exception)
                 {
@@ -152,9 +157,13 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         private void ReloadViewModelData()
         {
-            ViewModel.Data.Clear();
-            LoadData();
-            lastUpdated = DateTime.Now;
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.Data.Clear();
+                LoadData();
+                lastUpdated = DateTime.Now;
+                configurationChanged = false;
+            });
         }
 
         private void CreateDefaultSetting() 
@@ -182,25 +191,33 @@ namespace APD.Client.Widget.SourceControl.Controllers
             
             if (HasUpdatedChangesets((IOrderedEnumerable<CodeCommiterViewModel>) committers))
             {
-                ViewModel.Data.Clear();
-                foreach (var committer in committers)
-                {
-                    var userInfo = allUsers.Where(u => u.Username.Equals(committer.Username)).SingleOrDefault();
-                    if (userInfo != null)
-                    {
-                        committer.Firstname = userInfo.Firstname;
-                        committer.Middlename = userInfo.Middlename;
-                        committer.Surname = userInfo.Surname;
-                        committer.Email = userInfo.Email;
-                        committer.ImageUrl = userInfo.ImageUrl;
-                    }
-
-                    ViewModel.Data.Add(committer);
-                }
+                ReloadCommitters(committers);
             }
             else
             {
                 UpdateNumberOfCommits((IOrderedEnumerable<CodeCommiterViewModel>) committers);
+            }
+
+            UpdateSinceDateValueInViewModel();
+        }
+
+        private void ReloadCommitters(IEnumerable<CodeCommiterViewModel> committers) {
+            
+            ViewModel.Data.Clear();
+
+            foreach (var committer in committers)
+            {
+                var userInfo = allUsers.Where(u => u.Username.Equals(committer.Username)).SingleOrDefault();
+                if (userInfo != null)
+                {
+                    committer.Firstname = userInfo.Firstname;
+                    committer.Middlename = userInfo.Middlename;
+                    committer.Surname = userInfo.Surname;
+                    committer.Email = userInfo.Email;
+                    committer.ImageUrl = userInfo.ImageUrl;
+                }
+
+                ViewModel.Data.Add(committer);
             }
         }
 
@@ -277,16 +294,22 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         protected override void OnNotifiedToRefresh(object sender, RefreshEventArgs e)
         {
-            UpdateSinceDateValueInViewModel();
+            LoadConfig();
 
-            if (!useFromDate && lastUpdated.Date < DateTime.Now.Date)  
+            var newDayForTimespan = !useFromDate && lastUpdated.Date < DateTime.Now.Date;
+
+            
+            if (newDayForTimespan||configurationChanged)  
             {
-                ReloadViewModelData();  
+                ReloadViewModelData();
             }
             else
             {
                 LoadData(new ChangesetsAfterRevisionSpecification(lastRevision));    
             }
+
+           
+            
         }
 
         protected bool HasUpdatedChangesets(IOrderedEnumerable<CodeCommiterViewModel> committers)
