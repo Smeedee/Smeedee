@@ -98,7 +98,6 @@
     <Compile Include="Converters\BuildStatusConverter.cs" />
     <Compile Include="Converters\BuildStatusToOpacityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\CIProjectRepository.cs" />
     <Compile Include="SampleData\CINotifierDataSource\CINotifierDataSource.xaml.cs">
       <DependentUpon>CINotifierDataSource.xaml</DependentUpon>
     </Compile>
@@ -107,11 +106,6 @@
     </Compile>
     <Compile Include="SampleData\SampleDataSource\SampleDataSource.xaml.cs">
       <DependentUpon>SampleDataSource.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\CIRepositoryService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Views\CINotifierView.xaml.cs">
       <DependentUpon>CINotifierView.xaml</DependentUpon>
@@ -190,9 +184,6 @@
     <None Include="Properties\DataSources\APD.DomainModel.CI.ProjectInfo.datasource" />
     <DesignTimeOnly Include="SampleData\CINotifierDataSource\CINotifierDataSource.xsd" />
     <DesignTimeOnly Include="SampleData\ProjectInfoSampleData\ProjectInfoSampleData.xsd" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService1.wsdl" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -212,27 +203,6 @@
     <DesignTimeOnly Include="SampleData\SampleDataSource\SampleDataSource_Files\image03.png" />
     <DesignTimeOnly Include="SampleData\SampleDataSource\SampleDataSource_Files\image04.png" />
     <DesignTimeOnly Include="SampleData\SampleDataSource\SampleDataSource_Files\image05.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\CIRepositoryService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\CIRepositoryService\CIRepositoryService.disco" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService1.xsd" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService2.xsd" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService3.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\CIRepositoryService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\CIRepositoryService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\CIRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

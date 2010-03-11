@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="y+IP+wzq8HMchiYxwAm9C9KhsbU=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="Y2CrV22z2ZV0yFvlHcZC4dh/F2c=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_ChangesetRepositoryService">
+    <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_CIRepositoryService">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_ChangesetRepositoryService</serializedValue>
+          <serializedValue>BasicHttpBinding_CIRepositoryService</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -78,6 +78,18 @@
         <property path="/security/transport/realm" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
         </property>
+        <property path="/security/transport/extendedProtectionPolicy" isComplexType="true" isExplicitlyDefined="false" clrType="System.Security.Authentication.ExtendedProtection.Configuration.ExtendedProtectionPolicyElement, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <serializedValue>System.Security.Authentication.ExtendedProtection.Configuration.ExtendedProtectionPolicyElement</serializedValue>
+        </property>
+        <property path="/security/transport/extendedProtectionPolicy/policyEnforcement" isComplexType="false" isExplicitlyDefined="false" clrType="System.Security.Authentication.ExtendedProtection.PolicyEnforcement, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <serializedValue>Never</serializedValue>
+        </property>
+        <property path="/security/transport/extendedProtectionPolicy/protectionScenario" isComplexType="false" isExplicitlyDefined="false" clrType="System.Security.Authentication.ExtendedProtection.ProtectionScenario, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <serializedValue>TransportSelected</serializedValue>
+        </property>
+        <property path="/security/transport/extendedProtectionPolicy/customServiceNames" isComplexType="true" isExplicitlyDefined="false" clrType="System.Security.Authentication.ExtendedProtection.Configuration.ServiceNameElementCollection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <serializedValue>(Collection)</serializedValue>
+        </property>
         <property path="/security/message" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.BasicHttpMessageSecurityElement, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.BasicHttpMessageSecurityElement</serializedValue>
         </property>
@@ -100,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_ChangesetRepositoryService" contract="ChangesetRepositoryService.ChangesetRepositoryService" bindingType="basicHttpBinding" address="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc" bindingConfiguration="BasicHttpBinding_ChangesetRepositoryService">
+    <endpoint name="BasicHttpBinding_CIRepositoryService" contract="CIRepositoryService.CIRepositoryService" bindingType="basicHttpBinding" address="http://localhost:1155/APD/Services/CIRepositoryService.svc" bindingConfiguration="BasicHttpBinding_CIRepositoryService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:1155/APD/Services/ChangesetRepositoryService.svc</serializedValue>
+          <serializedValue>http://localhost:1155/APD/Services/CIRepositoryService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -112,10 +124,10 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_ChangesetRepositoryService</serializedValue>
+          <serializedValue>BasicHttpBinding_CIRepositoryService</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ChangesetRepositoryService.ChangesetRepositoryService</serializedValue>
+          <serializedValue>CIRepositoryService.CIRepositoryService</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -175,7 +187,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_ChangesetRepositoryService</serializedValue>
+          <serializedValue>BasicHttpBinding_CIRepositoryService</serializedValue>
         </property>
       </properties>
     </endpoint>

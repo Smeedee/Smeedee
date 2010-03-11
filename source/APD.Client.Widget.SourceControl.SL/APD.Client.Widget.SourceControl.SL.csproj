@@ -132,11 +132,6 @@
     <Compile Include="SampleData\TopCommittersDataSource\TopCommittersDataSource.xaml.cs">
       <DependentUpon>TopCommittersDataSource.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ChangesetRepositoryService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="SourceControlModule.cs" />
     <Compile Include="TopCommitersModule.cs" />
     <Compile Include="Views\ChangesetView.xaml.cs">
@@ -206,19 +201,6 @@
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset.datasource" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService2.wsdl" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService21.wsdl" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService4.xsd" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService41.xsd" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService42.xsd" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService43.xsd" />
-    <None Include="Service References\ChangesetRepositoryService\configuration91.svcinfo" />
-    <None Include="Service References\ChangesetRepositoryService\configuration.svcinfo" />
-    <None Include="Service References\ChangesetRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.disco" />
     <Content Include="ServiceReferences.ClientConfig" />
     <DesignTimeOnly Include="SampleData\TopCommittersDataSource\TopCommittersDataSource.xsd" />
     <DesignTimeOnly Include="SampleData\ChangesetsSampleDataSource\ChangesetsSampleDataSource.xsd" />
@@ -255,9 +237,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ChangesetRepositoryService\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

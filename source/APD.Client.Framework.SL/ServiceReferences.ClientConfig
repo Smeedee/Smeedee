@@ -18,6 +18,14 @@
                         </transport>
                     </security>
                 </binding>
+                <binding name="BasicHttpBinding_CIRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None">
+                        <transport>
+                            <extendedProtectionPolicy policyEnforcement="Never" />
+                        </transport>
+                    </security>
+                </binding>
             </basicHttpBinding>
         </bindings>
         <client>
@@ -29,6 +37,9 @@
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ChangesetRepositoryService"
                 contract="ChangesetRepositoryService.ChangesetRepositoryService"
                 name="BasicHttpBinding_ChangesetRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/CIRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_CIRepositoryService"
+                contract="CIRepositoryService.CIRepositoryService" name="BasicHttpBinding_CIRepositoryService" />
         </client>
     </system.serviceModel>
 </configuration>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://agileprojectdashboard.org" elementFormDefault="qualified" targetNamespace="http://agileprojectdashboard.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
-  <xs:import schemaLocation="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.CI" />
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.CI" />
   <xs:element name="Get">
     <xs:complexType>
       <xs:sequence>

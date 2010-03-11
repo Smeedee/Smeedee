@@ -1,27 +1,6 @@
 ﻿<configuration>
     <system.serviceModel>
-        <bindings>
-            <basicHttpBinding>
-                <binding name="BasicHttpBinding_ChangesetRepositoryService" hostNameComparisonMode="StrongWildcard"
-                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647"
-                    messageEncoding="Text" textEncoding="utf-8" transferMode="Buffered">
-                    <readerQuotas maxDepth="0" maxStringContentLength="0" maxArrayLength="0"
-                        maxBytesPerRead="0" maxNameTableCharCount="0" />
-                    <security mode="None">
-                        <transport clientCredentialType="None" proxyCredentialType="None"
-                            realm="">
-                            <extendedProtectionPolicy policyEnforcement="Never" />
-                        </transport>
-                        <message clientCredentialType="UserName" algorithmSuite="Default" />
-                    </security>
-                </binding>
-            </basicHttpBinding>
-        </bindings>
-        <client>
-            <endpoint address="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ChangesetRepositoryService"
-                contract="ChangesetRepositoryService.ChangesetRepositoryService"
-                name="BasicHttpBinding_ChangesetRepositoryService" />
-        </client>
+        <bindings />
+        <client />
     </system.serviceModel>
 </configuration>

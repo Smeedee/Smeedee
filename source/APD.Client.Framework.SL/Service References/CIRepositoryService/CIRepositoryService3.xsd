@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/APD.DomainModel.CI" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.CI" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="BuildSpecification">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:element name="BuildSpecification" nillable="true" type="tns:BuildSpecification" />
   <xs:complexType name="ArrayOfCIServer">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="CIServer" nillable="true" type="tns:CIServer" />

@@ -24,8 +24,8 @@
 #endregion
 
 using APD.Client.Framework;
+using APD.Client.Framework.SL.Repositories;
 using APD.Client.Widget.CI.Controllers;
-using APD.Client.Widget.CI.SL.Repository;
 using APD.Client.Widget.CI.SL.Views;
 using APD.Client.Widget.CI.ViewModels;
 using Microsoft.Practices.Unity;

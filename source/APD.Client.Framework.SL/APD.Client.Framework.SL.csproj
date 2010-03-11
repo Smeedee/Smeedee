@@ -209,11 +209,17 @@
     <Compile Include="LogEntryWebservicePersister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AsyncChangesetRepository.cs" />
+    <Compile Include="Repositories\CIProjectRepository.cs" />
     <Compile Include="Repositories\ConfigurationRepository.cs" />
     <Compile Include="Repositories\HolidayWebserviceRepository.cs" />
     <Compile Include="Repositories\SyncChangeSetRepository.cs" />
     <Compile Include="ResourceDictionary\SLXamlReader.cs" />
     <Compile Include="Service References\ChangesetRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CIRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -293,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ChangesetRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\CIRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
     <WCFMetadataStorage Include="Service References\HolidayRepositoryService\" />
     <WCFMetadataStorage Include="Service References\LogEntryWebserviceRepository\" />
@@ -340,6 +347,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.disco" />
+    <None Include="Service References\CIRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\CIRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\CIRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +367,7 @@
     <None Include="Service References\ConfigurationRepositoryService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.CI.CIServer.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset.datasource" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
@@ -361,6 +376,12 @@
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.xsd" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService2.xsd" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.xsd" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.xsd" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService2.xsd" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService3.xsd" />
     <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
