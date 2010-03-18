@@ -51,6 +51,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
         protected static AllSpecification<ProjectInfoServer> AllSpec;
 
+
         protected static IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> BackgroundWorkerInvoker =
             new NoBackgroundWorkerInvocation<IEnumerable<ProjectInfoServer>>();
 
@@ -66,13 +67,12 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
         protected static Iteration IterationFromConfig;
 
         protected static DateTime NowTime = DateTime.Now;
-        protected static Mock<IRepository<ProjectInfoServer>> repositoryMock;
+        protected static Mock<IRepository<ProjectInfoServer>> projectRepositoryMock;
         protected static Iteration TestingIteration;
-
+        protected static Mock<ILog> loggerMock = new Mock<ILog>();
+        
         protected static Mock<IRepository<Holiday>> holidayRepositoryMock =
             new Mock<IRepository<Holiday>>();
-
-
 
 
         protected Context configuration_says_not_to_use_end_date_from_configuration =
@@ -88,14 +88,14 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             SetupConfigRepositoryMock(true, IterationFromConfig.EndDate);
         };
 
-        protected Context configuration_says_to_use_end_date_from_configuration_norwegian = () =>
+        protected Context configuration_says_to_use_end_date_from_configuration_and_end_date_is_bad = () =>
         {
             var startDate = NowTime.AddDays(-14);
             var endDate = new DateTime(2010, 12, 31);
 
             IterationFromConfig = new Iteration(startDate, endDate);
 
-            SetupConfigRepositoryMockWithNorwegianDateFormat(true, IterationFromConfig.EndDate);
+            SetupConfigRepositoryMockWithCorruptDateFormat(true, IterationFromConfig.EndDate);
         };
 
         protected Context controller_is_created = () => { CreateController(); };
@@ -115,8 +115,8 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
         {
             var server = new ProjectInfoServer("Mock Server", "http://wdl.com");
 
-            repositoryMock = new Mock<IRepository<ProjectInfoServer>>();
-            repositoryMock.Setup(
+            projectRepositoryMock = new Mock<IRepository<ProjectInfoServer>>();
+            projectRepositoryMock.Setup(
                 r => r.Get(It.IsAny<AllSpecification<ProjectInfoServer>>()))
                 .Returns(new List<ProjectInfoServer> {server});
 
@@ -125,8 +125,8 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
         protected Context there_are_no_servers = () =>
         {
-            repositoryMock = new Mock<IRepository<ProjectInfoServer>>();
-            repositoryMock.Setup(
+            projectRepositoryMock = new Mock<IRepository<ProjectInfoServer>>();
+            projectRepositoryMock.Setup(
                 r => r.Get(It.IsAny<AllSpecification<ProjectInfoServer>>()))
                 .Returns(new List<ProjectInfoServer>());
         };
@@ -146,8 +146,8 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
             server.AddProject(currentproject);
 
-            repositoryMock = new Mock<IRepository<ProjectInfoServer>>();
-            repositoryMock.Setup(
+            projectRepositoryMock = new Mock<IRepository<ProjectInfoServer>>();
+            projectRepositoryMock.Setup(
                 r => r.Get(It.IsAny<AllSpecification<ProjectInfoServer>>()))
                 .Returns(new List<ProjectInfoServer> {server});
 
@@ -159,7 +159,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
         {
             var server = new ProjectInfoServer("Mock Server", "http://wdl.com");
 
-            DateTime startDate = NowTime.AddDays(2);
+            DateTime startDate = NowTime.AddDays(-28);
             DateTime endDate = NowTime.AddDays(-14);
 
             var currentproject = new Project("TestProjectName");
@@ -170,8 +170,8 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
 
             server.AddProject(currentproject);
 
-            repositoryMock = new Mock<IRepository<ProjectInfoServer>>();
-            repositoryMock.Setup(
+            projectRepositoryMock = new Mock<IRepository<ProjectInfoServer>>();
+            projectRepositoryMock.Setup(
                 r => r.Get(It.IsAny<AllSpecification<ProjectInfoServer>>())).Returns(
                 new List<ProjectInfoServer> {server});
 
@@ -179,13 +179,19 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             SetupConfigRepositoryMock(false, DateTime.Now);
         };
 
+        protected Context there_are_holidays_in_the_given_time_period = () =>
+        {
+            holidayRepositoryMock.Setup(m => m.Get(It.IsAny<Specification<Holiday>>()))
+                .Returns(holidays);
+        };
+
         protected Context there_is_no_iteration_in_the_given_project = () =>
         {
             var server = new ProjectInfoServer("Mock Server", "http://wdl.com");
             server.AddProject(new Project("TestProjectName"));
 
-            repositoryMock = new Mock<IRepository<ProjectInfoServer>>();
-            repositoryMock.Setup(
+            projectRepositoryMock = new Mock<IRepository<ProjectInfoServer>>();
+            projectRepositoryMock.Setup(
                 r => r.Get(It.IsAny<AllSpecification<ProjectInfoServer>>()))
                 .Returns(new List<ProjectInfoServer> {server});
 
@@ -201,6 +207,11 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             var configlist = new List<Configuration>();
             configRepositoryMock.Setup(
                 r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configlist);
+        };
+
+        private static List<Holiday> holidays = new List<Holiday>
+        {
+            new Holiday() { Date = DateTime.Now.Date }
         };
 
         private static void SetupConfigRepositoryMock(bool returnValue, DateTime endDate)
@@ -227,12 +238,12 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
                 r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configList);
         }
 
-        private static void SetupConfigRepositoryMockWithNorwegianDateFormat(bool useConfigValues, DateTime endDate)
+        private static void SetupConfigRepositoryMockWithCorruptDateFormat(bool useConfigValues, DateTime endDate)
         {
             configRepositoryMock = new Mock<IRepository<Configuration>>();
             var configuration = new Configuration("project-info");
             configuration.NewSetting("use-config-repo", useConfigValues ? "true" : "false");
-            configuration.NewSetting("end-date", endDate.ToString(new CultureInfo("nb-NO")));
+            configuration.NewSetting("end-date", "epic fail");
             var configList = new List<Configuration> { configuration };
 
             configRepositoryMock.Setup(
@@ -244,13 +255,13 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
         {
             iNotifyWhenToRefreshMock = new Mock<INotifyWhenToRefresh>();
             controller = new WorkingDaysLeftController(
-                repositoryMock.Object,
+                projectRepositoryMock.Object,
                 configRepositoryMock.Object,
                 holidayRepositoryMock.Object,
                 configPersisterRepositoryMock.Object,
                 iNotifyWhenToRefreshMock.Object,
                 new NoUIInvocation(), BackgroundWorkerInvoker,
-                new Mock<ILog>().Object
+                loggerMock.Object
             );
         }
 
@@ -304,21 +315,20 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             When(the_controller_is_created);
 
             Then("the project infor repository should not be queried", () => 
-                repositoryMock.Verify(r => r.Get(It.IsAny<Specification<ProjectInfoServer>>()),
+                projectRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<ProjectInfoServer>>()),
                                       Times.Never()));
         }
 
         [Test]
-        [Ignore("Test is failing due to weak test-implementation. Feature must be revised. -Torstein N")]
-        public void Should_fail_to_parse_norwegian_formatted_date_string_from_config()
+        public void Should_log_if_the_end_date_parsing_fails()
         {
             Given(there_is_an_iteration_in_the_given_project)
-                .And(configuration_says_to_use_end_date_from_configuration_norwegian);
+                .And(configuration_says_to_use_end_date_from_configuration_and_end_date_is_bad);
 
             When(the_controller_is_created);
 
-            Then("the parsing of the end-date should fail", ()=>
-                controller.ViewModel.HasConnectionProblems.ShouldBeTrue());
+            Then("the error should be logged", () =>
+                loggerMock.Verify(l=>l.WriteEntry(It.IsAny<ErrorLogEntry>())));
         }
 
         [Test]
@@ -388,23 +398,6 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
         }
 
         [Test]
-        public void should_update_workingdaysleft_in_viewmodel()
-        {
-            /*
-             * TODO: actually tests same method twice (CalculateWorkingdaysLeft). 
-             * Should test that method, the viewmodel's display and the HolidayProvider
-             * in separate tests.
-             */
-            Given(there_is_an_iteration_in_the_given_project);
-
-            When(the_controller_is_created);
-
-            Then("the remaining working days of the current iteration is displayed", () =>
-                controller.ViewModel.DaysRemaining.ShouldBe(
-                    TestingIteration.CalculateWorkingdaysLeft(NowTime, NoHolidays).Days));
-        }
-
-        [Test]
         public void Should_use_end_date_from_config_if_project_info_setting_is_set()
         {
             Given(there_is_an_iteration_in_the_given_project)
@@ -447,7 +440,7 @@ namespace APD.Client.Widget.ProjectInfoTests.Controllers.WorkingDaysLeftControll
             Then("assure it queried project repository for the given project", () =>
             {
                 AllSpec = new AllSpecification<ProjectInfoServer>();
-                repositoryMock.Verify(
+                projectRepositoryMock.Verify(
                     r => r.Get(It.IsAny<AllSpecification<ProjectInfoServer>>()),
                     Times.Exactly(2));
             });

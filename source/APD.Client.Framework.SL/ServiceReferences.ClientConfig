@@ -4,27 +4,19 @@
             <basicHttpBinding>
                 <binding name="BasicHttpBinding_ConfigurationRepositoryService"
                     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-                    <security mode="None">
-                        <transport>
-                            <extendedProtectionPolicy policyEnforcement="Never" />
-                        </transport>
-                    </security>
+                    <security mode="None" />
                 </binding>
                 <binding name="BasicHttpBinding_ChangesetRepositoryService" maxBufferSize="2147483647"
                     maxReceivedMessageSize="2147483647">
-                    <security mode="None">
-                        <transport>
-                            <extendedProtectionPolicy policyEnforcement="Never" />
-                        </transport>
-                    </security>
+                    <security mode="None" />
                 </binding>
                 <binding name="BasicHttpBinding_CIRepositoryService" maxBufferSize="2147483647"
                     maxReceivedMessageSize="2147483647">
-                    <security mode="None">
-                        <transport>
-                            <extendedProtectionPolicy policyEnforcement="Never" />
-                        </transport>
-                    </security>
+                    <security mode="None" />
+                </binding>
+                <binding name="BasicHttpBinding_HolidayRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
                 </binding>
             </basicHttpBinding>
         </bindings>
@@ -40,6 +32,10 @@
             <endpoint address="http://localhost:1155/APD/Services/CIRepositoryService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_CIRepositoryService"
                 contract="CIRepositoryService.CIRepositoryService" name="BasicHttpBinding_CIRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/HolidayRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_HolidayRepositoryService"
+                contract="HolidayRepositoryService.HolidayRepositoryService"
+                name="BasicHttpBinding_HolidayRepositoryService" />
         </client>
     </system.serviceModel>
 </configuration>

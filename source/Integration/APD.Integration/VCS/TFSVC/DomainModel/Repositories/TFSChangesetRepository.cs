@@ -81,8 +81,7 @@ namespace APD.Integration.VCS.TFSVC.DomainModel.Repositories
             return username.Substring(username.LastIndexOf('\\') + 1);
         }
 
-        private static List<Changeset> PostFilterRevisions(IEnumerable changesets,
-                                                          Specification<Changeset> specification)
+        private static List<Changeset> PostFilterRevisions(IEnumerable changesets, Specification<Changeset> specification)
         {
             var satisfyingChangesets = new List<Changeset>();
 

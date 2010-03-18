@@ -42,7 +42,7 @@ namespace APD.Client.Framework.SL.Repositories
 
         public IEnumerable<Holiday> Get(Specification<Holiday> specification)
         {
-            client.GetAsync(new AllSpecification<Holiday>());
+            client.GetAsync(specification);
             resetEvent.Reset();
             resetEvent.WaitOne();
 

@@ -92,7 +92,8 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
 
                     if (settingValue == "true")
                     {
-                        SetEndDateFromConfig(config);
+                        var endDate = GetEndDateFromConfig(config);
+                        SetProjectStatusFromEndDate(endDate);
                     }
                     else if(settingValue == "false")
                     {
@@ -152,19 +153,18 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
             }
         }
 
-        private void SetEndDateFromConfig(Configuration config)
+        private DateTime GetEndDateFromConfig(Configuration config)
         {
             SettingsEntry endDateEntry = config.GetSetting("end-date");
             string endDateSetting = endDateEntry.Value;
-
             try
             {
-                var endDate = DateTime.Parse(endDateSetting, new CultureInfo("en-US"));
-                SetProjectStatusFromEndDate(endDate);
+                return DateTime.Parse(endDateSetting, new CultureInfo("en-US"));
             }
             catch (FormatException e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                logger.WriteEntry(new ErrorLogEntry( this.ToString(), "Error parsing given end-date: " + e ));
+                throw;
             }
         }
 
@@ -258,7 +258,16 @@ namespace APD.Client.Widget.ProjectInfo.Controllers
             if (CurrentProject.CurrentIteration == null)
                 throw new ArgumentNullException("CurrentProject.CurrentIteration");
 
-            var holidays = holidayRepository.Get(new AllSpecification<Holiday>());
+            var holidays = holidayRepository.Get(new HolidaySpecification()
+            {
+                StartDate = CurrentProject.CurrentIteration.StartDate,
+                EndDate = CurrentProject.CurrentIteration.EndDate,
+                NonWorkingDaysOfWeek = new List<DayOfWeek>
+                {
+                    DayOfWeek.Saturday,
+                    DayOfWeek.Sunday
+                }
+            } );
 
 
             return CurrentProject.CurrentIteration.CalculateWorkingdaysLeft(DateTime.Now, holidays).Days;

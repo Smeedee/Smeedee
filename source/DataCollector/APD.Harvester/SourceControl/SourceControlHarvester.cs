@@ -35,7 +35,6 @@ using APD.DomainModel.SourceControl;
 using APD.Harvester.Framework;
 using APD.DomainModel.Config;
 using System.Diagnostics;
-
 using APD.Harvester.SourceControl.Factories;
 
 
@@ -100,5 +99,4 @@ namespace APD.Harvester.SourceControl
                 throw new HarvesterConfigurationException("Version Control System not configured");
         }
     }
-
 }

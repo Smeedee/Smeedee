@@ -22,13 +22,14 @@
     <MetadataSource Address="http://localhost:1155/APD/Services/HolidayRepositoryService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="HolidayRepositoryService.disco" MetadataType="Disco" ID="79e0b3df-43b4-4d3f-86a1-a079d539b0f1" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?disco" />
-    <MetadataFile FileName="HolidayRepositoryService.xsd" MetadataType="Schema" ID="c684407c-2da5-49e3-803a-46403ab064b6" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd2" />
-    <MetadataFile FileName="HolidayRepositoryService1.xsd" MetadataType="Schema" ID="4a3c2a72-7fe9-4c11-9b3b-08da34520cc3" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd0" />
     <MetadataFile FileName="HolidayRepositoryService.wsdl" MetadataType="Wsdl" ID="9d463a02-faf5-4231-b67e-ca1b4133ba7d" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="HolidayRepositoryService2.xsd" MetadataType="Schema" ID="beebe641-0be5-4241-b28f-02e049deb5da" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd3" />
-    <MetadataFile FileName="HolidayRepositoryService1.wsdl" MetadataType="Wsdl" ID="61e29888-bc4f-4d43-8311-c4d5389be1ff" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="HolidayRepositoryService5.xsd" MetadataType="Schema" ID="2d598697-762d-45c5-8952-1e60e9f27562" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd4" />
     <MetadataFile FileName="HolidayRepositoryService3.xsd" MetadataType="Schema" ID="422ee20f-f1e3-42a7-a85e-8414952e6f4c" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="HolidayRepositoryService1.wsdl" MetadataType="Wsdl" ID="61e29888-bc4f-4d43-8311-c4d5389be1ff" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="HolidayRepositoryService2.xsd" MetadataType="Schema" ID="beebe641-0be5-4241-b28f-02e049deb5da" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="HolidayRepositoryService.disco" MetadataType="Disco" ID="79e0b3df-43b4-4d3f-86a1-a079d539b0f1" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?disco" />
+    <MetadataFile FileName="HolidayRepositoryService1.xsd" MetadataType="Schema" ID="4a3c2a72-7fe9-4c11-9b3b-08da34520cc3" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="HolidayRepositoryService.xsd" MetadataType="Schema" ID="c684407c-2da5-49e3-803a-46403ab064b6" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

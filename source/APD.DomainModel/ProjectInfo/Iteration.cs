@@ -92,7 +92,7 @@ namespace APD.DomainModel.ProjectInfo
 
             for (var sprintDay = StartDate; sprintDay < EndDate; sprintDay = sprintDay.AddDays(1))
             {
-                if (holidays.Any( hd => hd.Date == sprintDay))
+                if (!holidays.Any( hd => hd.Date == sprintDay.Date))
                 {
                     workingDays.Add(sprintDay);
                 }
@@ -109,7 +109,7 @@ namespace APD.DomainModel.ProjectInfo
             int workingDaysLeft = 0;
             for (var sprintDay = dayToCalculateFrom; sprintDay <= EndDate; sprintDay = sprintDay.AddDays(1))
             {
-                if (!holidays.Any(hd => hd.Date == sprintDay))
+                if (!holidays.Any(hd => hd.Date == sprintDay.Date))
                 {
                     workingDaysLeft++;
                 }
