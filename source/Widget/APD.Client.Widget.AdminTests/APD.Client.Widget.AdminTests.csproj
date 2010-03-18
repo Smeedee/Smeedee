@@ -101,7 +101,7 @@
     <Compile Include="ViewModels\Configuration\ConfigurationViewModelSpecs.cs" />
     <Compile Include="ViewModels\Configuration\PluginConfigItemViewModelSpecs.cs" />
     <Compile Include="ViewModels\Configuration\ProviderConfigItemViewModelSpecs.cs" />
-    <Compile Include="ViewModels\HolidayViewModelSpecs.cs" />
+    <Compile Include="ViewModels\HolidaysDbViewModelSpecs.cs" />
     <Compile Include="ViewModels\ModalDialogViewModelSpecs.cs" />
     <Compile Include="ViewModels\Configuration\KeyValueSettingViewModelSpecs.cs" />
     <Compile Include="ViewModels\UserdbViewModelSpecs.cs" />
