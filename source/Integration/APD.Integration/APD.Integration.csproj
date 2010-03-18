@@ -35,6 +35,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DiffieHellman, Version=0.0.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\DiffieHellman.dll</HintPath>
+    </Reference>
+    <Reference Include="GitSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\GitSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GitSharp.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\GitSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.TeamFoundation.Build.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Build.Client.dll</HintPath>
@@ -78,6 +94,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
+    <Reference Include="Org.Mentalis.Security, Version=1.0.13.715, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\Org.Mentalis.Security.dll</HintPath>
+    </Reference>
     <Reference Include="SharpSvn, Version=1.5005.984.35067, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\SharpSvn\SharpSvn.dll</HintPath>
@@ -101,6 +121,14 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tamir.SharpSSH, Version=1.1.1.13, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\Tamir.SharpSSH.dll</HintPath>
+    </Reference>
+    <Reference Include="Winterdom.IO.FileMap, Version=2.0.2.0, Culture=neutral, PublicKeyToken=4982617362e1edb5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\Winterdom.IO.FileMap.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CI\CruiseControl\DomainModel\Repositories\CCServerRepository.cs" />
@@ -165,6 +193,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="VCS\ClearCase\DomainModels\Repositories\ChangesetRepository.cs" />
+    <Compile Include="VCS\Git\DomainModel\GitChangesetRepository.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationHandler.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationRequest.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SVNChangesetRepository.cs" />
