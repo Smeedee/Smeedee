@@ -25,9 +25,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.Controllers;
+using APD.DomainModel.Config;
 using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using Moq;
@@ -35,6 +37,7 @@ using NUnit.Framework;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 using APD.DomainModel.Framework;
+
 
 
 namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsControllerSpecs
@@ -46,6 +49,59 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
         protected static int changesetRepositoryGetThreadId;
         protected static Mock<INotifyWhenToRefresh> iNotifyWhenToRefreshMock;
         protected static Mock<IInvokeBackgroundWorker<IEnumerable<Changeset>>> backgroundWorkerInvokerMock;
+        protected static Mock<IPersistDomainModels<Configuration>> configPersisterRepositoryMock =
+        new Mock<IPersistDomainModels<Configuration>>();
+        protected static Mock<IRepository<Configuration>> configRepositoryMock =
+            new Mock<IRepository<Configuration>>();
+
+
+        private static void SetupConfigRepositoryMock(int timespan)
+        {
+            var configuration = new Configuration("Commit Statistics");
+            configuration.NewSetting("timespan", timespan.ToString());
+            var configList = new List<Configuration> { configuration };
+
+            configRepositoryMock.Setup(
+                r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configList);
+        }
+
+        protected Context Configuration_entry_does_not_exist = () =>
+        {
+            var configlist = new List<Configuration>();
+            configRepositoryMock.Setup(
+                r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(configlist);
+        };
+
+        protected Context Configuration_timespan_entry_is_correctly_setup_for_14_days = () =>
+        {
+            SetupConfigRepositoryMock(14);
+        };
+
+        protected Context Configuration_timespan_entry_is_correctly_setup_for_10_days = () =>
+        {
+            SetupConfigRepositoryMock(10);
+        };
+
+        
+        protected Context Configuration_timespan_entry_is_changed_to_5 = () =>
+        {
+            SetupConfigRepositoryMock(5);
+        };
+
+        protected Context Configuration_timespan_entry_is_set_up_for_1_day = () =>
+        {
+            SetupConfigRepositoryMock(0);
+        };
+
+        protected Context Configuration_timespan_entry_is_set_up_for_0_days = () =>
+        {
+            SetupConfigRepositoryMock(0);
+        };
+
+        protected Context Configuration_is_set_up_with_negative_timespan = () =>
+        {
+            SetupConfigRepositoryMock(-2);
+        };
 
         protected Context there_are_changesets_in_SourceControl_system = () =>
         {
@@ -88,6 +144,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
                     changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
         };
 
+        protected Context controller_is_spawned = CreateController;
 
         protected Context there_are_only_three_changesets_this_week = () =>
         {
@@ -141,6 +198,8 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
             controller = new CommitStatisticsController(iNotifyWhenToRefreshMock.Object,
                                                         changesetRepositoryMock.Object,
                                                         new NoUIInvocation(),
+                                                        configRepositoryMock.Object,
+                                                        configPersisterRepositoryMock.Object,
                                                         new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
                                                         new DatabaseLogger(new LogEntryMockPersister()));
         }
@@ -148,22 +207,125 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
 
     public class LogEntryMockPersister : IPersistDomainModels<LogEntry>
     {
-        public void Save(LogEntry domainModel) { }
-        public void Save(IEnumerable<LogEntry> domainModels) { }
+        public static List<LogEntry> entries;
+
+        public LogEntryMockPersister()
+        {
+            entries = new List<LogEntry>();
+        }
+        
+        public void Save(LogEntry domainModel)
+        {
+            entries.Add(domainModel);
+        }
+
+        public void Save(IEnumerable<LogEntry> domainModels)
+        {
+            entries.AddRange(domainModels);
+        }
     }
 
 
     [TestFixture]
     public class When_spawned : Shared
     {
+
+        [Test]
+        public void Assure_Configuration_is_created_if_it_does_not_exist()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_entry_does_not_exist);
+
+                scenario.When(the_controller_is_created);
+
+                scenario.Then("assure Configuration is created if it doesn't exist", () =>
+                configPersisterRepositoryMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Once()));
+            });
+        }
+
+        
+        [Test]
+        public void Should_get_timespan_from_configrepo_if_settings_are_set()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_14_days);
+
+                scenario.When(the_controller_is_created);
+
+                scenario.Then(
+                    "the configuration service should be asked for the Commit Statistics configuration",
+                    () => configRepositoryMock.Verify(
+                        r => r.Get(It.IsAny<Specification<Configuration>>()),Times.AtLeastOnce()));
+            });
+        }
+
+        [Test]
+        public void Should_add_2_datapoints_if_timespan_is_negative_or_zero()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_entry_does_not_exist).
+                    And(controller_is_spawned);
+                scenario.When("data is loaded");
+                scenario.Then("viweModel should have 2 data points", ()=>
+                {
+                    controller.ViewModel.Data.Count.ShouldBe(2);
+                });
+               
+            });
+        }
+
+        [Test]
+        public void Should_treat_timepan_of_1_as_timespan_of_2()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_timespan_entry_is_set_up_for_1_day).
+                    And(controller_is_spawned);
+                scenario.When("data is loaded");
+                scenario.Then("timespan should be considered to be two days", () =>
+                {
+                    controller.ViewModel.Data.Count.ShouldBe(2);
+                });
+            });
+        }
+
+        [Test]
+        public void Should_throw_exception_if_negative_configuration_timespan_is_used()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_is_set_up_with_negative_timespan).
+                    And(controller_is_spawned);
+
+                scenario.When("data is loaded");
+
+                scenario.Then("exception should be thrown when trying to parse negative timespan", ()=>
+                {
+                    LogEntryMockPersister.entries.Where(r => r.Message.Contains("Start date must be before or at end date")).Count().ShouldBe(1);
+                });
+            });
+        }
+         
+        
         [Test]
         public void Assert_groups_all_changesets_on_the_same_date()
         {
             Scenario.StartNew(this, scenario =>
             {
-                scenario.Given(there_are_changesets_in_SourceControl_system);
+                scenario.Given(there_are_changesets_in_SourceControl_system).And(Configuration_timespan_entry_is_correctly_setup_for_14_days);
                 scenario.When(the_controller_is_created);
-                scenario.Then("all the changesets on the same date sould be grouped", () => { controller.ViewModel.Data.Count.ShouldBe(14); });
+                scenario.Then("all the changesets on the same date sould be grouped", () =>
+                {
+                    controller.ViewModel.Data.Count.ShouldBe(14);
+                });
             });
         }
 
@@ -198,6 +360,8 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
                             iNotifyWhenToRefreshMock.Object,
                             changesetRepositoryMock.Object,
                             new NoUIInvocation(),
+                            configRepositoryMock.Object,
+                            configPersisterRepositoryMock.Object,
                             backgroundWorkerInvokerMock.Object,
                             new DatabaseLogger(new LogEntryMockPersister()));
                     });
@@ -205,7 +369,25 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
                 scenario.When("data is loading");
 
                 scenario.Then("assure data loading is performed delegated to the BackgroundWorkerInvoker object", () =>
-                    backgroundWorkerInvokerMock.Verify(w => w.RunAsyncVoid(It.IsAny<Action>()), Times.Once()));
+                    backgroundWorkerInvokerMock.Verify(w => w.RunAsyncVoid(It.IsAny<Action>()), Times.Exactly(2)));
+            });
+        }
+
+        [Test]
+        public void Assure_timespan_from_config_is_used_when_loading_data()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_10_days).
+                    And(controller_is_spawned);
+
+                scenario.When("data is loaded");
+
+                scenario.Then("the value fom configuration should be used to define commit timespan", () =>
+                {
+                    controller.ViewModel.Data.Count.ShouldBe(10);
+                });
             });
         }
 
@@ -214,7 +396,9 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
         {
             Scenario.StartNew(this, scenario =>
             {
-                scenario.Given(there_are_only_three_changesets_this_week);
+                scenario.Given(there_are_only_three_changesets_this_week).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_14_days);
+
                 scenario.When(the_controller_is_created);
                 scenario.Then("we should have data points for dates with no commits", () =>
                           {
@@ -293,6 +477,40 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
                 scenario.Then("it should query repository for changesets", () =>
                     changesetRepositoryMock.Verify(r => r.Get(It.IsAny<AllChangesetsSpecification>()), Times.Exactly(2)));
             });
+        }
+
+        [Test]
+        public void assure_new_config_value_reloades_viewModel()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                bool viewModelChanged = false;
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_10_days).
+                    And(controller_is_spawned).
+
+                    And("subscribe to ViewModel CollectionChanged", () =>
+                    {
+                        
+                        controller.ViewModel.Data.CollectionChanged +=
+                            (o, e) => { viewModelChanged = true; };
+                    });
+
+                scenario.When("controller is notified to refresh", () =>
+                {
+                    Configuration_timespan_entry_is_changed_to_5();
+                    iNotifyWhenToRefreshMock.Raise(n => n.Refresh += null, new RefreshEventArgs());
+                });
+
+                scenario.Then("assure data is loaded into the viewModel according to config value", () =>
+                {
+                    controller.ViewModel.Data.Count.ShouldBe(5);
+                    controller.ViewModel.Data.Where(d => d.NumberOfCommits.Equals(3)).Last();
+                    changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()),
+                                                   Times.Exactly(2));
+                    viewModelChanged.ShouldBeTrue();
+                });
+            });   
         }
     }
 }

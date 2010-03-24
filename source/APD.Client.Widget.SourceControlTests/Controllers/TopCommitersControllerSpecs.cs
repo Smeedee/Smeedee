@@ -343,7 +343,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.TopCommitersControlle
 
                 scenario.When(the_Controller_is_created);
 
-                scenario.Then("the configuration service should be asked for the Topcommiter Slide configuration", () =>
+                scenario.Then("the configuration service should be asked for the Commit Heroes Slide configuration", () =>
                 configRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Configuration>>()), Times.Once()));
             });
         }

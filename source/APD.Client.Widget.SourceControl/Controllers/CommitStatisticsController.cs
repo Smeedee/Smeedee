@@ -30,6 +30,7 @@ using System.Threading;
 
 using APD.Client.Framework;
 using APD.Client.Widget.SourceControl.ViewModels;
+using APD.DomainModel.Config;
 using APD.DomainModel.Framework.Logging;
 using APD.DomainModel.SourceControl;
 using APD.DomainModel.Framework;
@@ -39,29 +40,98 @@ namespace APD.Client.Widget.SourceControl.Controllers
 {
     public class CommitStatisticsController : ChangesetStandAloneController<CommitStatisticsForDate>
     {
+        private readonly IRepository<Configuration> configRepository;
+        private readonly IPersistDomainModels<Configuration> configPersisterRepository;
+        private int commitTimespan;
+        
         public CommitStatisticsController(INotifyWhenToRefresh refreshNotifyer,
                                           IRepository<Changeset> changesetRepository,
                                           IInvokeUI uiInvoker,
+                                          IRepository<Configuration> configRepository,
+                                          IPersistDomainModels<Configuration> configPersisterRepository,
                                           IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorkerInvoker,
                                           ILog logger)
             : base(refreshNotifyer, changesetRepository, uiInvoker, backgroundWorkerInvoker, logger)
         {
-            ViewModel.Data.Add(new CommitStatisticsForDate(uiInvoker)
-                               {
-                                   Date = DateTime.Today,
-                                   NumberOfCommits = 0
-                               });
-            ViewModel.Data.Add(new CommitStatisticsForDate(uiInvoker)
-                               {
-                                   Date = DateTime.Today.AddDays(1),
-                                   NumberOfCommits = 1
-                               });
+            this.configRepository = configRepository;
+            this.configPersisterRepository = configPersisterRepository;
+            
+            LoadDummyDataIntoViewModel();
 
+            LoadConfig();
             LoadData();
+        }
+
+        private void LoadDummyDataIntoViewModel() {
+            
+            ViewModel.Data.Add(new CommitStatisticsForDate(uiInvoker)
+            {
+                Date = DateTime.Today,
+                NumberOfCommits = 0
+            });
+            ViewModel.Data.Add(new CommitStatisticsForDate(uiInvoker)
+            {
+                Date = DateTime.Today.AddDays(1),
+                NumberOfCommits = 0
+            });
+        }
+
+        private void LoadConfig()
+        {
+            asyncClient.RunAsyncVoid(() =>
+            {
+                try
+                {
+                    var allConfigSpec = new AllSpecification<Configuration>();
+                    var config = configRepository
+                        .Get(allConfigSpec)
+                        .Where(c => c.Name.Equals(("Commit Statistics")))
+                        .SingleOrDefault();
+
+                    LoadSettings(config);
+                }
+                catch (Exception exception)
+                {
+                    LogErrorMsg(exception);
+                }
+            });
+        }
+
+
+        private void LoadSettings(Configuration config)
+        {
+            if (config != null)
+            {
+                LoadTimespanSetting(config.GetSetting("timespan"));
+            }
+            else
+            {
+                CreateDefaultSetting();
+            }
+        }
+
+        private void LoadTimespanSetting(SettingsEntry timespanSetting)
+        {
+            try
+            {
+                commitTimespan = Int32.Parse(timespanSetting.Value.Trim());
+            }
+            catch (Exception exception)
+            {
+                LogWarningMsg(exception);
+            }
+        }
+
+        private void CreateDefaultSetting()
+        {
+            var newConfig = new Configuration("Commit Statistics");
+            newConfig.NewSetting("timespan", "14");
+            configPersisterRepository.Save(newConfig);
         }
 
         protected override void OnNotifiedToRefresh(object sender, RefreshEventArgs e)
         {
+            LoadConfig();
             LoadData();
         }
 
@@ -69,7 +139,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
         {
             
             var commitStatisticsForDates = (from changeset in qChangesets
-                                            where changeset.Time.Date > DateTime.Now.AddDays(-14)
+                                            where changeset.Time.Date > DateTime.Now.AddDays(-commitTimespan)
                                             group changeset by changeset.Time.Date
                                                 into g
                                                 select new CommitStatisticsForDate(uiInvoker)
@@ -79,8 +149,16 @@ namespace APD.Client.Widget.SourceControl.Controllers
                                                        }).OrderBy(r => r.Date);
 
             ViewModel.Data.Clear();
+
+            if (commitTimespan <= 0)
+            {
+                LoadDummyDataIntoViewModel();
+                throw new InvalidOperationException("Start date must be before or at end date");
+            }
+        
             foreach (var row in FillInMissingDates(commitStatisticsForDates))
                 ViewModel.Data.Add(row);
+
         }
 
         private IOrderedEnumerable<CommitStatisticsForDate> FillInMissingDates(IEnumerable<CommitStatisticsForDate> commitStatistics)
@@ -90,7 +168,8 @@ namespace APD.Client.Widget.SourceControl.Controllers
                 throw new ArgumentNullException("commitStatistics");
 
             var allCommits = new Dictionary<DateTime, CommitStatisticsForDate>();
-            foreach (DateTime date in GetDatesInRage(DateTime.Today.AddDays(-13), DateTime.Today))
+
+            foreach (DateTime date in GetDatesInRage(DateTime.Today.AddDays(-(commitTimespan-1)), DateTime.Today))
             {
                 allCommits.Add(date, new CommitStatisticsForDate(uiInvoker) { Date = date, NumberOfCommits =  0});
             }
@@ -106,14 +185,18 @@ namespace APD.Client.Widget.SourceControl.Controllers
 
         private IEnumerable<DateTime> GetDatesInRage(DateTime startDate, DateTime endDate)
         {
-
-            if (startDate > endDate)
-                throw new InvalidOperationException("Start date must be before or at end date");
-
             List<DateTime> allDates = new List<DateTime>();
+
 
             DateTime currentDate = startDate;
             allDates.Add(currentDate);
+            
+            if (startDate == endDate)  //Note: We do this because 1 data point looks wierd in the view
+            {
+                allDates.Add(currentDate.AddDays(1));
+                return allDates;
+            }
+
             while (currentDate < endDate)
             {
                 currentDate = currentDate.AddDays(1);
