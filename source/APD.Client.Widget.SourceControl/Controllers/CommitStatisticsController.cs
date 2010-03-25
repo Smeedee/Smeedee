@@ -43,6 +43,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
         private readonly IRepository<Configuration> configRepository;
         private readonly IPersistDomainModels<Configuration> configPersisterRepository;
         private int commitTimespan;
+        private bool configLoaded;
         
         public CommitStatisticsController(INotifyWhenToRefresh refreshNotifyer,
                                           IRepository<Changeset> changesetRepository,
@@ -57,7 +58,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
             this.configPersisterRepository = configPersisterRepository;
             
             LoadDummyDataIntoViewModel();
-
+            
             LoadConfig();
             LoadData();
         }
@@ -115,6 +116,7 @@ namespace APD.Client.Widget.SourceControl.Controllers
             try
             {
                 commitTimespan = Int32.Parse(timespanSetting.Value.Trim());
+                configLoaded = true;
             }
             catch (Exception exception)
             {
@@ -153,7 +155,11 @@ namespace APD.Client.Widget.SourceControl.Controllers
             if (commitTimespan <= 0)
             {
                 LoadDummyDataIntoViewModel();
-                throw new InvalidOperationException("Start date must be before or at end date");
+
+                if(configLoaded)
+                    throw new InvalidOperationException("Start date must be before or at end date");
+
+                return;
             }
         
             foreach (var row in FillInMissingDates(commitStatisticsForDates))

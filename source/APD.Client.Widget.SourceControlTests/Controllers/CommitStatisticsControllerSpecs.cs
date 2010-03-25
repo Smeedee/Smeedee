@@ -296,6 +296,7 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
             });
         }
 
+
         [Test]
         public void Should_throw_exception_if_negative_configuration_timespan_is_used()
         {
@@ -310,6 +311,22 @@ namespace APD.Client.Widget.SourceControlTests.Controllers.CommitStatisticsContr
                 scenario.Then("exception should be thrown when trying to parse negative timespan", ()=>
                 {
                     LogEntryMockPersister.entries.Where(r => r.Message.Contains("Start date must be before or at end date")).Count().ShouldBe(1);
+                });
+            });
+        }
+
+        [Test]
+        public void Should_only_throw_exception_if_configvalue_is_loaded() //Functionality not realy tested because of threading. Should add delay to config mock? Do i have to write a whole new mock to do this?
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(there_are_changesets_in_SourceControl_system).
+                    And(Configuration_timespan_entry_is_correctly_setup_for_10_days).
+                    And(controller_is_spawned);
+                scenario.When("data is loaded");
+                scenario.Then("exception should not be thrown", ()=>
+                {
+                    LogEntryMockPersister.entries.Count.ShouldBe(0);
                 });
             });
         }
