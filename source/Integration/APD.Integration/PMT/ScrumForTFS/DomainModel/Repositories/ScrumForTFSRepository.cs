@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 
 using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
@@ -12,29 +10,53 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
 {
     public class ScrumForTFSRepository : IRepository<ProjectInfoServer>
     {
-        private IFetchWorkItems fetcher;
+        private readonly IFetchWorkItems fetcher;
+        private readonly string serverAddress;
+        private readonly string projectName;
         
+
         public ScrumForTFSRepository(string server, string project, string username, string password, Dictionary<String, String> config)
         {
+            serverAddress = server;
+            projectName = project;
             var credentials = new NetworkCredential(username, password);
             fetcher = new WorkItemFetcher(server, project, credentials, config);
         }
+
 
         public ScrumForTFSRepository(IFetchWorkItems workItemFetcher)
         {
             fetcher = workItemFetcher;
         }
 
+
         public IEnumerable<ProjectInfoServer> Get(Specification<ProjectInfoServer> specification)
         {
-            //TODO: Config and whatnot
-            var server = new ProjectInfoServer("Team Foundation Work Items", "");
-            var project = new Project();
+            var server = new ProjectInfoServer(serverAddress + " - " + projectName, serverAddress);
+            var project = new Project
+                              {
+                                  Name = projectName,
+                                  SystemId = projectName
+                              };
 
+            AddIterations(project);
+            server.AddProject(project);
+
+            var results = new List<ProjectInfoServer> { server };
+
+            return results;
+        }
+
+
+        private void AddIterations(Project project)
+        {
             foreach (var iterationName in fetcher.GetAllIterations())
             {
-                var iteration = new Iteration();
-                iteration.Name = iterationName;
+                var iteration = new Iteration
+                                    {
+                                        Name = iterationName,
+                                        SystemId = iterationName
+                                    };
 
                 foreach (var task in fetcher.GetAllWorkEffortInSprint(iterationName))
                 {
@@ -43,12 +65,6 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
 
                 project.AddIteration(iteration);
             }
-
-            server.AddProject(project);
-
-            var results = new List<ProjectInfoServer> {server};
-
-            return results;
         }
     }
 }
