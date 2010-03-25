@@ -64,6 +64,7 @@
     <Compile Include="FileImport\Services\IKnowTheFileImportQueue.cs" />
     <Compile Include="FileImport\Services\IProcessFiles.cs" />
     <Compile Include="ProjectInfo\ProjectInfoHarvester.cs" />
+    <Compile Include="ProjectInfo\ProjectInfoRepositoryFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceControl\ChangesetRepositoryFactory.cs" />
     <Compile Include="SourceControl\SourceControlHarvester.cs" />

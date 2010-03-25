@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
 using APD.Harvester.Framework;
@@ -32,6 +33,7 @@ using APD.Harvester.ProjectInfo;
 using Moq;
 using NUnit.Framework;
 using TinyBDD.Dsl.GivenWhenThen;
+using APD.Harvester.SourceControl.Factories;
 using TinyBDD.Specification.NUnit;
 
 
@@ -42,17 +44,32 @@ namespace APD.HarvesterTests.ProjectInfo
         protected static ProjectInfoHarvester harvester;
         protected static Mock<IPersistDomainModels<ProjectInfoServer>> databasePersister;
         protected static Mock<IRepository<ProjectInfoServer>> projectRepository;
+        protected static Mock<IRepository<Configuration>> configRepoMock;
+        protected static Mock<IAssembleRepository<ProjectInfoServer>> repositoryFactoryMock;
         protected static List<ProjectInfoServer> SavedProjectInfoServers;
 
         protected Context a_ProjectInfoHarvester_is_created = () =>
         {
             databasePersister = new Mock<IPersistDomainModels<ProjectInfoServer>>();
             projectRepository = new Mock<IRepository<ProjectInfoServer>>();
+            configRepoMock = new Mock<IRepository<Configuration>>();
+            repositoryFactoryMock = new Mock<IAssembleRepository<ProjectInfoServer>>();
 
+            repositoryFactoryMock.Setup(r => r.Assemble(It.IsAny<Configuration>())).
+                Returns(projectRepository.Object);
+ 
             databasePersister.Setup(d => d.Save(It.IsAny<ProjectInfoServer>())).Callback(
                 (ProjectInfoServer projectInfoServer) => SavedProjectInfoServers.Add(projectInfoServer));
 
-            harvester = new ProjectInfoHarvester(projectRepository.Object, databasePersister.Object);
+            var configs = new List<Configuration>();
+            var piConfig = new Configuration();
+            piConfig.NewSetting("provider", "conchango-tfs");
+            configs.Add(piConfig);
+
+            configRepoMock.Setup(r => r.Get(It.IsAny<Specification<Configuration>>())).
+                Returns(configs);
+
+            harvester = new ProjectInfoHarvester(repositoryFactoryMock.Object, databasePersister.Object, configRepoMock.Object);
         };
 
         protected Context there_are_projects_in_repository = () =>
@@ -191,7 +208,7 @@ namespace APD.HarvesterTests.ProjectInfo
                 scenario.When("instance is accessed");
                 scenario.Then("the harvester has time span of 20 min", () =>
                 {
-                    harvester.Interval.ShouldBe(new TimeSpan(0, 5, 0));
+                    harvester.Interval.ShouldBe(new TimeSpan(0, 20, 0));
                 });
             });
         }

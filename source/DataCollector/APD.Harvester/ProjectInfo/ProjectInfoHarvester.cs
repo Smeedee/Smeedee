@@ -24,17 +24,23 @@
 #endregion
 
 using System;
+using System.Linq;
+using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
 using APD.Harvester.Framework;
+using APD.Harvester.SourceControl.Factories;
 
 
 namespace APD.Harvester.ProjectInfo
 {
     public class ProjectInfoHarvester : AbstractHarvester
     {
-        private readonly IRepository<ProjectInfoServer> projectRepository;
+        private const string PI_CONFIG_NAME = "pi";
+
         private readonly IPersistDomainModels<ProjectInfoServer> databasePersister;
+        private IRepository<Configuration> configurationRepository;
+        private IAssembleRepository<ProjectInfoServer> repositoryFactory;
 
         public override string Name
         {
@@ -43,23 +49,42 @@ namespace APD.Harvester.ProjectInfo
 
         public override TimeSpan Interval
         {
-            get { return new TimeSpan(0, 5, 0); }
+            get { return new TimeSpan(0, 20, 0); }
         }
 
-        public ProjectInfoHarvester(IRepository<ProjectInfoServer> projectRepository,
-                                    IPersistDomainModels<ProjectInfoServer> databasePersister)
+        public ProjectInfoHarvester(IAssembleRepository<ProjectInfoServer> repositoryFactory,
+                            IPersistDomainModels<ProjectInfoServer> databasePersister,
+                            IRepository<Configuration> configurationRepository)
         {
-            this.projectRepository = projectRepository;
+            if (repositoryFactory == null)
+                throw new ArgumentNullException("piServerSourceRepository");
+
+            if (databasePersister == null)
+                throw new ArgumentNullException("databasePersister");
+
+            if (configurationRepository == null)
+                throw new ArgumentNullException("configurationRepository");
+
             this.databasePersister = databasePersister;
+            this.configurationRepository = configurationRepository;
+            this.repositoryFactory = repositoryFactory;
         }
+
 
         public override void DispatchDataHarvesting()
         {
-            var serversFromRepository =
-                projectRepository.Get(new AllSpecification<ProjectInfoServer>());
+            var piConfiguration =
+                configurationRepository.Get(new ConfigurationByName(PI_CONFIG_NAME)).SingleOrDefault();
 
-            foreach (var pisFromRepository in serversFromRepository)
-                databasePersister.Save(pisFromRepository);
+            if (piConfiguration != null)
+            {
+                var sourceRepository = repositoryFactory.Assemble(piConfiguration);
+                var data = sourceRepository.Get(new AllSpecification<ProjectInfoServer>());
+
+                databasePersister.Save(data);
+            }
+            else
+                throw new HarvesterConfigurationException("Project Info not configured");
         }
     }
 }

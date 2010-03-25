@@ -41,10 +41,11 @@ using APD.Harvester.SourceControl;
 using APD.Integration.CI.CruiseControl.DomainModel.Repositories;
 using APD.Integration.Database.DomainModel.Repositories;
 using APD.Integration.PMT.RallyDev.DomainModel.Repositories;
+using APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories;
 using APD.Integration.VCS.SVN.DomainModel.Repositories;
 using APD.DomainModel.CI;
 using APD.DomainModel.SourceControl;
-
+using Moq;
 using NHibernate;
 
 
@@ -85,7 +86,11 @@ namespace APD.DataCollector.Console
             var ciRepositoryFactory = new CIServerRepositoryFactory();
             var ciHarvester = new CIHarvester(ciRepositoryFactory, ciPersister, configRepository);
 
-            harvesterScheduler.RegisterHarvesters(new List<AbstractHarvester> { csHarvester, ciHarvester, /*piHarvester*/ });
+            var piRepositoryFactory = new ProjectInfoRepositoryFactory();
+            var piPersister = new ProjectInfoServerDatabaseRepository(sesFact);
+            var piHarvester = new ProjectInfoHarvester(piRepositoryFactory, piPersister, configRepository);
+            
+            harvesterScheduler.RegisterHarvesters(new List<AbstractHarvester> { csHarvester, ciHarvester, piHarvester });
 
             //new HarvesterLoader(harvesterScheduler, catalog, log, factory);
 
