@@ -12,10 +12,14 @@
     <AssemblyName>APD.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -187,6 +191,7 @@
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\XmlParserSpecs.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\XmlProjectParserSpecs.cs" />
     <Compile Include="PMT\RallyDev\DomainModel\Repositories\XmlTaskParserSpecs.cs" />
+    <Compile Include="PMT\ScrumForTFS\DomainModel\Repositories\ScrumForTFSRepositorySpecs.cs" />
     <Compile Include="PMT\TFS\DomainModel\Repositories\IterationUpdaterSpecs.cs" />
     <Compile Include="PMT\TFS\DomainModel\Repositories\WorkItemFetcherSpeccs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
