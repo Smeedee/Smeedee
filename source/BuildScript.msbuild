@@ -329,10 +329,6 @@
     <!--DomainModel END-->
 
     <!-- Plugins -->
-    <TestProject Include="APD.Plugin.ProjectInfo.Tests\APD.Plugin.ProjectInfo.Tests.csproj">
-      <Assembly>APD.Plugin.ProjectInfo.Tests\bin\debug\APD.Plugin.ProjectInfo.Tests.dll</Assembly>
-      <Report>TestResults.APD.Plugin.ProjectInfo.Tests.xml</Report>
-    </TestProject>
 
     <TestProject Include="Integration\APD.IntegrationTests\APD.IntegrationTests.csproj">
       <Assembly>Integration\APD.IntegrationTests\bin\debug\APD.IntegrationTests.dll</Assembly>
