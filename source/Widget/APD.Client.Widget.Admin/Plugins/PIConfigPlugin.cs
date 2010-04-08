@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace APD.Client.Widget.Admin.Plugins
 {
-    class PIConfigPlugin : ConfigPlugin
+    public class PIConfigPlugin : ConfigPlugin
     {
         public override string Name
         {
