@@ -186,6 +186,7 @@
     </Compile>
     <Compile Include="Plugins\CIConfigPlugin.cs" />
     <Compile Include="Plugins\DashboardConfigPlugin.cs" />
+    <Compile Include="Plugins\PIConfigPlugin.cs" />
     <Compile Include="Plugins\VCSConfigPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ConfigurationMockRepository.cs" />

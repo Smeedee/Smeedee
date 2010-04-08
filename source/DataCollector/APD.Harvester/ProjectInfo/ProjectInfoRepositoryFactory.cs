@@ -21,7 +21,7 @@ namespace APD.Harvester.ProjectInfo
         private const string PASSWORD_SETTING_NAME = "password";
         private const string PROVIDER_SETTING_NAME = "provider";
         private const string PROJECT_SETTING_NAME = "project";
-        private const string SCRUM_FOR_TFS = "conchango-tfs";
+        private const string SCRUM_FOR_TFS = "Scrum for Team System (Conchango)";
 
         public IRepository<ProjectInfoServer> Assemble(Configuration configuration)
         {
@@ -36,8 +36,11 @@ namespace APD.Harvester.ProjectInfo
                 throw new ArgumentException("Unsupported Project Info Provider.");
             }
 
-            var serverUrl = configuration.GetSetting(URL_SETTING_NAME).Value;
-            var projectName = configuration.GetSetting(PROJECT_SETTING_NAME).Value;
+            // TODO: Add this properly in the configuration - This concatenation stuff is horrid.
+            var serverConfig = configuration.GetSetting(URL_SETTING_NAME).Value;
+            var serverConfigArray = serverConfig.Split('|');
+            var serverUrl = serverConfigArray[0];
+            var projectName = serverConfigArray[1];
             var username = configuration.GetSetting(USERNAME_SETTING_NAME).Value;
             var password = configuration.GetSetting(PASSWORD_SETTING_NAME).Value;
 

@@ -29,6 +29,7 @@ namespace APD.Client.Widget.Admin.Controllers
         private INotify<EventArgs> refreshNotifier;
         private const string VCS_CONFIG_NAME = "vcs";
         private const string CI_CONFIG_NAME = "ci";
+        private const string PI_CONFIG_NAME = "pi";
         private const string DASHBOARD_CONFIG_NAME = "dashboard";
         private static Dictionary<string, string> prettyPrintMappings = new Dictionary<string, string>();
         private readonly ConfigItemViewModelFactory configViewModelFactory = new ConfigItemViewModelFactory();
@@ -174,6 +175,8 @@ namespace APD.Client.Widget.Admin.Controllers
                 LoadDefaultVersionControlConfig();
             if (!IsContinuousIntegrationConfigLoaded())
                 LoadDefaultContinuousIntegrationConfig();
+            if (!IsProjectInfoIntegrationConfigLoaded())
+                LoadDefaultProjectInfoIntegrationConfig();
             if (!IsDashboardConfigLoaded())
                 LoadDefaultDashboardConfig();
         }
@@ -202,6 +205,18 @@ namespace APD.Client.Widget.Admin.Controllers
             viewModel.Data.Add(CreateConfigItemViewModel(defaultCIConfig));
         }
 
+        private bool IsProjectInfoIntegrationConfigLoaded()
+        {
+            return viewModel.Data.Where(c => c.Name == PI_CONFIG_NAME).Count() == 1;
+        }
+
+        private void LoadDefaultProjectInfoIntegrationConfig()
+        {
+            var defaultPIConfig = Configuration.DefaultPIConfiguration();
+            defaultPIConfig.NewSetting("plugin-class", typeof(PIConfigPlugin).AssemblyQualifiedName);
+            viewModel.Data.Add(CreateConfigItemViewModel(defaultPIConfig));
+        }
+
         private bool IsDashboardConfigLoaded()
         {
             return viewModel.Data.Where(c => c.Name == DASHBOARD_CONFIG_NAME).Count() == 1;
@@ -218,11 +233,14 @@ namespace APD.Client.Widget.Admin.Controllers
         {
             var vcsConfig = viewModel.Data.Where(c => c.Name == VCS_CONFIG_NAME).Single();
             var ciConfig = viewModel.Data.Where(c => c.Name == CI_CONFIG_NAME).Single();
+            var piConfig = viewModel.Data.Where(c => c.Name == PI_CONFIG_NAME).Single();
             viewModel.Data.Remove(vcsConfig);
             viewModel.Data.Remove(ciConfig);
+            viewModel.Data.Remove(piConfig);
 
             viewModel.Data.Insert(0, vcsConfig);
             viewModel.Data.Insert(1, ciConfig);
+            viewModel.Data.Insert(2, piConfig);
         }
 
         private void SetReadbleNamesOnViewModels()

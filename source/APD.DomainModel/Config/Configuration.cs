@@ -97,7 +97,13 @@ namespace APD.DomainModel.Config
         public static Configuration DefaultCIConfiguration()
         {
             return ProviderConfiguration("ci", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "cc.net",
-                                         "tfs - vanilla", "tfs - scrum by conchango");
+                                         "Team Build");
+        }
+
+        public static Configuration DefaultPIConfiguration()
+        {
+            return ProviderConfiguration("pi", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty,
+                                         "Scrum for Team System (Conchango)");
         }
 
         public static Configuration DefaultDashboardConfiguration()
