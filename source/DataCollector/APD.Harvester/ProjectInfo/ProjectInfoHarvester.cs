@@ -29,7 +29,7 @@ using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
 using APD.Harvester.Framework;
-using APD.Harvester.SourceControl.Factories;
+using APD.Harvester.Framework.Factories;
 
 
 namespace APD.Harvester.ProjectInfo

@@ -5,10 +5,9 @@ using System.Net;
 using System.Text;
 using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
+using APD.Harvester.Framework.Factories;
 using APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories;
-using APD.Integration.VCS.Git.DomainModel;
 using APD.Integration.VCS.TFSVC.DomainModel.Repositories;
-using APD.Harvester.SourceControl.Factories;
 using APD.DomainModel.ProjectInfo;
 using APD.DomainModel.Config;
 

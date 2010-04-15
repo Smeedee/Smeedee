@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 using APD.DomainModel.Framework;
-using APD.Harvester.SourceControl.Factories;
+using APD.Harvester.Framework.Factories;
 using APD.DomainModel.CI;
 using APD.DomainModel.Config;
 using APD.Integration.CI.CruiseControl.DomainModel.Repositories;

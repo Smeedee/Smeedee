@@ -35,11 +35,13 @@ using APD.DomainModel.CI;
 using APD.DomainModel.Framework;
 using APD.Harvester.CI;
 using APD.Harvester.Framework;
+using APD.Harvester.Framework.Factories;
+
 using Moq;
 using NUnit.Framework;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
-using APD.Harvester.SourceControl.Factories;
+
 using APD.DomainModel.Config;
 
 

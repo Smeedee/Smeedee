@@ -35,7 +35,7 @@ using System.Linq;
 using APD.DomainModel.CI;
 using APD.DomainModel.Framework;
 using APD.Harvester.Framework;
-using APD.Harvester.SourceControl.Factories;
+using APD.Harvester.Framework.Factories;
 using APD.DomainModel.Config;
 
 

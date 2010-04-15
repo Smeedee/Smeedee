@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using APD.DomainModel.Config;
+﻿using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 
 
-namespace APD.Harvester.SourceControl.Factories
+namespace APD.Harvester.Framework.Factories
 {
     /// <summary>
     /// Factory for assembling a Changeset Repository based on a Configuration

@@ -33,8 +33,8 @@ using System.Linq;
 using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
 using APD.Harvester.Framework;
+using APD.Harvester.Framework.Factories;
 using APD.Harvester.SourceControl;
-using APD.Harvester.SourceControl.Factories;
 
 using Moq;
 using NUnit.Framework;

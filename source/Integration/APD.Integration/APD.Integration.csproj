@@ -114,9 +114,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\SQLite.NET.0.21_x68_dll\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -197,7 +199,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="VCS\ClearCase\DomainModels\Repositories\ChangesetRepository.cs" />
-    <Compile Include="VCS\Git\DomainModel\GitChangesetRepository.cs" />
+    <Compile Include="VCS\Git\DomainModel\Exceptions\GitScriptErrorException.cs" />
+    <Compile Include="VCS\Git\DomainModel\Repositories\GitChangesetRepository.cs" />
+    <Compile Include="VCS\Git\DomainModel\Helper classes\GitChangesetRepositoryHelper.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationHandler.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationRequest.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SVNChangesetRepository.cs" />
@@ -243,6 +247,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Holidays\NorwegianHolidays.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="VCS\Git\DomainModel\Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

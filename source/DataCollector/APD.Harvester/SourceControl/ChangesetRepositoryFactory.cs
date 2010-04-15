@@ -1,7 +1,7 @@
 ﻿using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
-using APD.Harvester.SourceControl.Factories;
-using APD.Integration.VCS.Git.DomainModel;
+using APD.Harvester.Framework.Factories;
+using APD.Integration.VCS.Git.DomainModel.Repositories;
 using APD.Integration.VCS.SVN.DomainModel.Repositories;
 using APD.Integration.VCS.TFSVC.DomainModel.Repositories;
 using APD.DomainModel.Config;
@@ -17,27 +17,34 @@ namespace APD.Harvester.SourceControl
         private const string PASSWORD_SETTING_NAME = "password";
         private const string PROVIDER_SETTING_NAME = "provider";
         private const string PROJECT_SETTING_NAME = "project";
-        private const string TFS = "tfs";
-        private const string GIT = "git";
 
         public IRepository<Changeset> Assemble(Configuration configuration)
         {
-            if (configuration.GetSetting(PROVIDER_SETTING_NAME).Value.Equals(TFS))
-                return new TFSChangesetRepository(configuration.GetSetting(URL_SETTING_NAME).Value,
-                    configuration.GetSetting(PROJECT_SETTING_NAME).Value,
-                    new NetworkCredential()
-                    {
-                        UserName = configuration.GetSetting(USERNAME_SETTING_NAME).Value,
-                        Password = configuration.GetSetting(PASSWORD_SETTING_NAME).Value
-                    });
-            if (configuration.GetSetting(PROVIDER_SETTING_NAME).Value.Equals(GIT))
+            string providerName = configuration.GetSetting(PROVIDER_SETTING_NAME).Value;
+            string repoUrl = configuration.GetSetting(URL_SETTING_NAME).Value;
+
+            if (providerName.Equals("tfs"))
             {
-                return new GitChangesetRepository(configuration.GetSetting(URL_SETTING_NAME).Value);
+                return new TFSChangesetRepository(configuration.GetSetting(URL_SETTING_NAME).Value,
+                                                  configuration.GetSetting(PROJECT_SETTING_NAME).Value,
+                                                  new NetworkCredential
+                                                  {
+                                                      UserName =
+                                                          configuration.GetSetting(USERNAME_SETTING_NAME).
+                                                          Value,
+                                                      Password =
+                                                          configuration.GetSetting(PASSWORD_SETTING_NAME).
+                                                          Value
+                                                  });
             }
+
+            if (providerName.Equals("git"))
+                return new GitChangesetRepository(repoUrl);
             
             return new SVNChangesetRepository(configuration.GetSetting(URL_SETTING_NAME).Value,
-                    configuration.GetSetting(USERNAME_SETTING_NAME).Value,
-                    configuration.GetSetting(PASSWORD_SETTING_NAME).Value);
+                                              configuration.GetSetting(USERNAME_SETTING_NAME).Value,
+                                              configuration.GetSetting(PASSWORD_SETTING_NAME).Value);
+
         }
     }
 }

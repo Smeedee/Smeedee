@@ -26,66 +26,82 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-
 using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
+using APD.Integration.VCS.Git.DomainModel.RepositoryHelpers;
+
 using GitSharp;
 using Author = APD.DomainModel.SourceControl.Author;
 using System.Linq;
 
-
-namespace APD.Integration.VCS.Git.DomainModel
+namespace APD.Integration.VCS.Git.DomainModel.Repositories
 {
     public class GitChangesetRepository : IRepository<Changeset>
     {
-        static Repository _gitRepos;
+        static Repository gitRepo;
+        private static GitChangesetRepositoryHelper helper;
 
-        public GitChangesetRepository(string reposDir)
+        public GitChangesetRepository(string reposUrl)
         {
-            _gitRepos = new Repository(reposDir);
-            ReposDir = reposDir;
+            helper = new GitChangesetRepositoryHelper(reposUrl);
+            if (!Repository.IsValid(helper.OurRepoPath))
+                helper.RunCloneScript();
+            gitRepo = new Repository(helper.OurRepoPath);
         }
 
         public static string ReposDir { get; set; }
+        public Specification<Changeset> Specification { get; set; }
 
-        public IEnumerable<Changeset> Get(Specification<Changeset> specification)
+        public Collection<Commit> GetCommitLog()
         {
             var log = new Collection<Commit>();
-            var resultset = new List<Changeset>();
-            var head = _gitRepos.Get<Commit>("HEAD");
+            var head = gitRepo.Get<Commit>("HEAD");
+
+            log.Add(head);
 
             foreach (Commit ancestor in head.Ancestors)
             {
                 log.Add(ancestor);
             }
+
+            return log;
+        }
+ 
+        public IEnumerable<Changeset> Get(Specification<Changeset> specification)
+        {
+            helper.RunPullScript();
+            var resultset = new List<Changeset>();
+            Collection<Commit> log = GetCommitLog();
+            Specification = specification;
             int revision = log.Count();
 
             foreach (var item in log)
             {
-                var t = item.CommitDate;
-                DateTime time = t.DateTime;
+                var changeset = ConvertCommitToChangeset(item, revision);
 
-                var changeset = new Changeset()
-                {
-                    Time = time,
-                    Comment = item.Message,
-                    Author = new Author(item.Author.Name)
-                };
-                if (specification.IsSatisfiedBy(changeset))
+                if (Specification.IsSatisfiedBy(changeset))
                 {
                     resultset.Add(changeset);
-                    --revision;
                 }
-
+                --revision;
             }
             return resultset.OrderByDescending(c => c.Revision);
         }
 
-        ~GitChangesetRepository()
+        public Changeset ConvertCommitToChangeset(Commit item, int revision)
         {
-            //_gitRepos.Dispose();
+            DateTimeOffset t = item.CommitDate;
+            DateTime time = t.DateTime;
+
+            var changeset = new Changeset
+            {
+                Time = time,
+                Comment = item.Message,
+                Author = new Author(item.Author.Name),
+                Revision = revision
+            };
+
+            return changeset;   
         }
     }
 }
