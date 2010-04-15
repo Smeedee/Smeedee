@@ -53,10 +53,12 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
             foreach (var iterationName in fetcher.GetAllIterations())
             {
                 var iteration = new Iteration
-                                    {
-                                        Name = iterationName,
-                                        SystemId = iterationName
-                                    };
+                {
+                    Name = iterationName,
+                    SystemId = iterationName,
+                    StartDate = fetcher.GetStartDateForIteration(iterationName),
+                    EndDate = fetcher.GetEndDateForIteration(iterationName)
+                };
 
                 foreach (var task in fetcher.GetAllWorkEffortInSprint(iterationName))
                 {

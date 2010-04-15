@@ -15,6 +15,8 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         // Defaulting to the values used by Conchango's Scrum for Team System
         private readonly string WORK_REMAINING_FIELD = "Conchango.TeamSystem.Scrum.WorkRemaining";
         private readonly string ESTIMATED_EFFORT_FIELD = "Conchango.TeamSystem.Scrum.EstimatedEffort";
+        private readonly string SPRINT_START_DATE_FIELD = "Sprint Start Date";
+        private readonly string SPRINT_END_DATE_FIELD = "Spring End Date";
         
         private readonly TeamFoundationServer tfsServer;
         private readonly WorkItemStore workItemStore;
@@ -32,6 +34,12 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
             ESTIMATED_EFFORT_FIELD = (configuration.TryGetValue("tfswi-estimated-field", out configValue))
                                          ? configValue
                                          : ESTIMATED_EFFORT_FIELD;
+            SPRINT_START_DATE_FIELD = (configuration.TryGetValue("tfswi-start-date-field", out configValue))
+                                         ? configValue
+                                         : SPRINT_START_DATE_FIELD;
+            SPRINT_END_DATE_FIELD = (configuration.TryGetValue("tfswi-end-date-field", out configValue))
+                                         ? configValue
+                                         : SPRINT_END_DATE_FIELD;
 
             this.projectName = projectName;
 
@@ -70,6 +78,22 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
                 }
             }
             return iterationPaths;
+        }
+
+        public DateTime GetStartDateForIteration(string iterationPath)
+        {
+            var stringDate = workItemStore.GetWorkItem(new Uri(iterationPath)).Fields[SPRINT_START_DATE_FIELD].Value as String;
+            DateTime startDate = new DateTime();
+            DateTime.TryParse(stringDate, out startDate);
+            return startDate;
+        }
+
+        public DateTime GetEndDateForIteration(string iterationPath)
+        {
+            var stringDate = workItemStore.GetWorkItem(new Uri(iterationPath)).Fields[SPRINT_END_DATE_FIELD].Value as String;
+            DateTime endDate = new DateTime();
+            DateTime.TryParse(stringDate, out endDate);
+            return endDate;
         }
 
         #endregion

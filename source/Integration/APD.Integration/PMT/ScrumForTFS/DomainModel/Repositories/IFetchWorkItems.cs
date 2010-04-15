@@ -10,5 +10,7 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         List<Task> GetAllWorkEffort();
         IEnumerable<String> GetAllIterations();
         List<Task> GetAllWorkEffortInSprint(string iterationPath);
+        DateTime GetStartDateForIteration(string iterationPath);
+        DateTime GetEndDateForIteration(string iterationPath);
     }
 }
