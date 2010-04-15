@@ -77,7 +77,7 @@ namespace APD.Client.Silverlight
             catalog.AddModule(typeof(SourceControlModule));
             catalog.AddModule(typeof(TopCommitersModule));
             catalog.AddModule(typeof(ContinuousIntegrationModule));
-            //catalog.AddModule(typeof(BurndownChartModule));
+            catalog.AddModule(typeof(BurndownChartModule));
             catalog.AddModule(typeof(CommitStatisticsModule));
             catalog.AddModule(typeof(AdminModule));
             catalog.AddModule(typeof(CINotifierModule));
@@ -142,10 +142,10 @@ namespace APD.Client.Silverlight
                 BottomLeftModule = Container.Resolve<TrayBarModule>()
             };
 
-            //Slide slide3 = new Slide("Burndown Chart", 15)
-            //{
-            //    MainContentModule = Container.Resolve<BurndownChartModule>()
-            //};
+            Slide slide3 = new Slide("Burndown Chart", 15)
+            {
+                MainContentModule = Container.Resolve<BurndownChartModule>()
+            };
           
             Slide slide4 = new Slide("Commit Heroes", 15)
             {
@@ -179,7 +179,7 @@ namespace APD.Client.Silverlight
             //                          });
             shellPresenter.Slides = (new[]
                                       {
-                                          slide1, slide2, slide4, slide5, slide6
+                                          slide1, slide2, slide3, slide4, slide5, slide6
                                       });
 
             shellPresenter.AdminSlide = new Slide("Administration", 15)
