@@ -39,11 +39,9 @@ using Tamir.SharpSsh.jsch;
 
 namespace APD.IntegrationTests.VCS.Git.Learning.SharpSSH
 {
-    [Ignore]
     [TestFixture]
     public class SharpSSHLearningTests : SharpSSHContext
     {
-        [Ignore]
         [Test]
         public void how_to_connect_to_a_remote_location()
         {

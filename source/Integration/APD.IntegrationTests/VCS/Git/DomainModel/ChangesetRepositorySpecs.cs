@@ -85,7 +85,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
             return 0;
         }
    
-        [Ignore] // Integration
         [Test]
         public void AssureAllChangesetsAreReceived()
         {
@@ -97,7 +96,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
             });
         }
 
-        [Ignore] // Integration
         [Test]
         public void AssureAuthorIsLoadedIntoTheResultset()
         {
@@ -114,7 +112,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
             });
         }
 
-        [Ignore] // Integration
         [Test]
         public void AssureLogMessageIsLoadedIntoTheResultset()
         {
@@ -130,7 +127,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
             });
         }
 
-        [Ignore] // Integration
         [Test]
         public void AssureTimeIsLoadedIntoTheResultset()
         {
@@ -145,8 +141,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
                 });
             });
         }
-
-        [Ignore] // Integration
+ 
         [Test]
         public void AssureChangesetsAreReceived()
         {

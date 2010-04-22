@@ -45,18 +45,22 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
         {
             reposToBeCloned = "git://github.com/flyrev/Smeedee_dummy.git";
             gitSharpHelper = new GitChangesetRepositoryHelper(reposToBeCloned);
+            gitSharpHelper = new GitChangesetRepositoryHelper(reposToBeCloned);
+        }
+
+        private void TheBatScriptsDoesNotExist()
+        {
             try
             {
                 if (File.Exists(gitSharpHelper.PullScriptPath))
                     File.Delete(gitSharpHelper.PullScriptPath);
                 if (File.Exists(gitSharpHelper.CloneScriptPath))
                     File.Delete(gitSharpHelper.CloneScriptPath);
-            }catch (IOException e)
+            }catch (IOException)
             {
                 Debug.WriteLine("Please delete the bat scripts manually");
                 throw;
             }
-            gitSharpHelper = new GitChangesetRepositoryHelper(reposToBeCloned);
         }
 
         [Test]
@@ -65,7 +69,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
         {
             Scenario.StartNew(this, scenario =>
             {
-                scenario.Given("I wants to generate the clone script");
+                scenario.Given("The clone scripts do not exist", TheBatScriptsDoesNotExist);
                 scenario.When("I call the generate function", () => gitSharpHelper.GenerateCloneScript(reposToBeCloned));
                 scenario.Then("the clone script is generated", CheckThatTheCloneScriptWasGenerated);
             });
@@ -81,7 +85,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
             fileContents.IndexOf("clone").ShouldNotBe(-1);
         }
 
-        [Ignore] // Integration specific
         [Test]
         public void AssureRunningThePullScriptResultsInAClonedRepository()
         {
@@ -102,10 +105,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
             rep.Get<Commit>("HEAD").ShouldNotBeNull();
         }
 
-        // Has timing issues:  System.IO.IOException: The process cannot access the file 
-        // 'C:\Documents and Settings\dagolap\Application Data\smeedee_data\bat\git-clone.bat' 
-        // because it is being used by another process.
-        [Ignore] 
         [Test]
         public void AssurePullScriptIsGenerated()
         {
@@ -114,7 +113,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
             File.Exists(gitSharpHelper.PullScriptPath).ShouldBeTrue();
         }
 
-        [Ignore] // Integration specific
         [Test]
         public void AssureRunningThePullScriptResultsInAPull()
         {

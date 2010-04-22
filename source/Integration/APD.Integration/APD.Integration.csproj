@@ -202,6 +202,7 @@
     <Compile Include="VCS\Git\DomainModel\Exceptions\GitScriptErrorException.cs" />
     <Compile Include="VCS\Git\DomainModel\Repositories\GitChangesetRepository.cs" />
     <Compile Include="VCS\Git\DomainModel\Helper classes\GitChangesetRepositoryHelper.cs" />
+    <Compile Include="VCS\Git\DomainModel\Services\GitCredentialChecker.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationHandler.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationRequest.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SVNChangesetRepository.cs" />
