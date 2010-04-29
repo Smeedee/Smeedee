@@ -86,6 +86,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
         }
    
         [Test]
+        [Ignore] // Integration specific
         public void AssureAllChangesetsAreReceived()
         {
             Scenario.StartNew(this, scenario =>
@@ -97,6 +98,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
         }
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureAuthorIsLoadedIntoTheResultset()
         {
             Scenario.StartNew(this, scenario =>
@@ -113,6 +115,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
         }
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureLogMessageIsLoadedIntoTheResultset()
         {
             Scenario.StartNew(this, scenario =>
@@ -128,6 +131,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
         }
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureTimeIsLoadedIntoTheResultset()
         {
             Scenario.StartNew(this, scenario =>
@@ -143,6 +147,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel
         }
  
         [Test]
+        [Ignore] // Integration specific
         public void AssureChangesetsAreReceived()
         {
             var users = "unknown|Martin Altin|Christian Jonassen".Split(new[] { '|' }).ToList();

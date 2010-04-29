@@ -64,7 +64,6 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
         }
 
         [Test]
-        
         public void AssureCloneScriptIsGenerated()
         {
             Scenario.StartNew(this, scenario =>
@@ -86,6 +85,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
         }
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureRunningThePullScriptResultsInAClonedRepository()
         {
             Scenario.StartNew(this, scenario => {
@@ -114,6 +114,7 @@ namespace APD.IntegrationTests.VCS.Git.DomainModel.RepositoryHelpers
         }
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureRunningThePullScriptResultsInAPull()
         {
             var rep = new Repository(gitSharpHelper.OurRepoPath);

@@ -26,6 +26,7 @@ namespace APD.IntegrationTests.VCS.Git.Services
         #endregion
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureGeneratedRsaKeyIsWrittenToFileAndIsValid()
         {
             Scenario.StartNew(this, scenario =>
@@ -43,6 +44,7 @@ namespace APD.IntegrationTests.VCS.Git.Services
 
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureRsaIsGeneratedWhenDsaExists()
         {
             Scenario.StartNew(this, scenario =>
@@ -57,6 +59,7 @@ namespace APD.IntegrationTests.VCS.Git.Services
         }
 
         [Test]
+        [Ignore] // Integration specific
         public void AssureGeneratedDsaKeyIsWrittenToFile()
         {
             Scenario.StartNew(this, scenario =>

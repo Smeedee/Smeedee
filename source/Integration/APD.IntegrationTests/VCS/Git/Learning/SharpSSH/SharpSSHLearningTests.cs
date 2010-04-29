@@ -43,6 +43,7 @@ namespace APD.IntegrationTests.VCS.Git.Learning.SharpSSH
     public class SharpSSHLearningTests : SharpSSHContext
     {
         [Test]
+        [Ignore] // Integration specific learning test
         public void how_to_connect_to_a_remote_location()
         {
             var shell = new SshShell(theHostIWantToConnectTo, myUsername);
