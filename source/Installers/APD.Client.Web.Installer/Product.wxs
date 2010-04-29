@@ -15,12 +15,12 @@
 
               <File Id="APD.DataCollector.Service.exe_service" Name="Data Collector Service.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Service.exe" />
 
-              <ServiceInstall Id="APD.DataCollector.Service.exe_service" Name="ServiceInstaller"
+              <ServiceInstall Id="APD.DataCollector.Service.exe_service" Name="Smeedee"
                               DisplayName="Smeedee"
                               Description="Populates the database for the Smeedee application"
                               Type="ownProcess" Interactive="no" Start="auto" Vital="yes" ErrorControl="normal"/>
 
-              <ServiceControl Id="APD.DataCollector.Service.exe" Name="ServiceControl"
+              <ServiceControl Id="APD.DataCollector.Service.exe" Name="Smeedee"
                               Stop="uninstall" Remove="uninstall" Wait="yes"/>
 
             </Component>
@@ -68,12 +68,13 @@
       <Directory Id="CommonAppDataFolder" Name="CommonAppDataFolder">
         <Component Id="SmeedeeDB" Guid="09de0156-a1f1-43f0-9016-3d8ec58e0a3d"
                    Permanent="yes">
-          <File Id="SmeedeeDB.db_1" Name="SmeedeeDB.db"
+		  <File Id="SmeedeeDB.db_1" Name="SmeedeeDB.db"
                 Source="SmeedeeDB.db">
             <Permission GenericAll="yes" User="[IISUser]"/>
             <Permission GenericAll="yes" User="Users"/>
             <Permission GenericAll="yes" User="Administrators"/>
           </File>
+		  <RemoveFile Id="RemoveSmeedeeDB" Name="SmeedeeDB.db" On="uninstall" />
         </Component>
 
 
