@@ -6,9 +6,29 @@
     <Package InstallerVersion="200" Compressed="yes" />
 		<Media Id="1" Cabinet="APD.cab" EmbedCab="yes" />
     <Property Id="IISUser">Network Service</Property>
+		
+		<!-- Checking if IIS is installed -->
+		<Property Id="IIS_MAJOR_VERSION">
+			<RegistrySearch Id="CheckIISVersion" Root="HKLM" Key="SOFTWARE\Microsoft\InetStp" Name="MajorVersion" Type="raw" />
+		</Property>
+
+		<Condition Message="Setup could not detect IIS. IIS can be installed from 'Control Panel -> Add or remove programs -> Add/remove Windows Components' or similar, depending on your version of Microsoft Windows. You must also remember to enable IIS6 compatibility.">
+			Installed OR IIS_MAJOR_VERSION
+		</Condition>
+		
+		<!-- Checking if IIS 6 Metabase Compatibility is enabled -->
+		<Property Id="IIS_METABASE_COMPAT">
+			<RegistrySearch Id="CheckIISMetabase" Root="HKLM" Key="SOFTWARE\Microsoft\InetStp\Components" Name="ADSICompatibility" Type="raw" />
+		</Property>
+
+		<Condition Message="IIS 6 Management Compatibility feature must be installed. This can be done from 'Control Panel -> Add or remove programs -> Add/remove Windows Components' or similar, depending on your version of Microsoft Windows.">
+			Installed OR ((VersionNT &lt; 600) OR IIS_METABASE_COMPAT)
+		</Condition>
    
+		
+		
 		<Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id='ProgramFilesFolder' Name='ProgramFiles'>
+		<Directory Id='ProgramFilesFolder' Name='ProgramFiles'>
         <Directory Id="INSTALLLOCATION" Name="Smeedee">
           <Directory Id="service" Name="bin">
             <Component Id="DataCollectorServiceInstall" Guid="c462e427-41d7-4c9c-8767-56fd2dd83596">
