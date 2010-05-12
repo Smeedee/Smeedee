@@ -8,9 +8,9 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
 {
     public interface IFetchWorkItems {
         List<Task> GetAllWorkEffort();
-        IEnumerable<String> GetAllIterations();
+        Dictionary<int, String> GetAllSprints();
         List<Task> GetAllWorkEffortInSprint(string iterationPath);
-        DateTime GetStartDateForIteration(string iterationPath);
-        DateTime GetEndDateForIteration(string iterationPath);
+        DateTime GetStartDateForIteration(int iterationId);
+        DateTime GetEndDateForIteration(int iterationId);
     }
 }

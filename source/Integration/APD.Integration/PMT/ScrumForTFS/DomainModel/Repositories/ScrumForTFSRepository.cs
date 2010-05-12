@@ -50,17 +50,17 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
 
         private void AddIterations(Project project)
         {
-            foreach (var iterationName in fetcher.GetAllIterations())
+            foreach (var sprint in fetcher.GetAllSprints())
             {
                 var iteration = new Iteration
                 {
-                    Name = iterationName,
-                    SystemId = iterationName,
-                    StartDate = fetcher.GetStartDateForIteration(iterationName),
-                    EndDate = fetcher.GetEndDateForIteration(iterationName)
+                    Name = sprint.Value,
+                    SystemId = sprint.Key.ToString(),
+                    StartDate = fetcher.GetStartDateForIteration(sprint.Key),
+                    EndDate = fetcher.GetEndDateForIteration(sprint.Key)
                 };
 
-                foreach (var task in fetcher.GetAllWorkEffortInSprint(iterationName))
+                foreach (var task in fetcher.GetAllWorkEffortInSprint(sprint.Value))
                 {
                     iteration.AddTask(task);
                 }

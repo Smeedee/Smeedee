@@ -15,11 +15,12 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         // Defaulting to the values used by Conchango's Scrum for Team System
         private readonly string WORK_REMAINING_FIELD = "Conchango.TeamSystem.Scrum.WorkRemaining";
         private readonly string ESTIMATED_EFFORT_FIELD = "Conchango.TeamSystem.Scrum.EstimatedEffort";
-        private readonly string SPRINT_START_DATE_FIELD = "Sprint Start Date";
-        private readonly string SPRINT_END_DATE_FIELD = "Spring End Date";
+        private readonly string SPRINT_START_DATE_FIELD = "Conchango.TeamSystem.Scrum.SprintStart";
+        private readonly string SPRINT_END_DATE_FIELD = "Conchango.TeamSystem.Scrum.SprintStart";
         
         private readonly TeamFoundationServer tfsServer;
         private readonly WorkItemStore workItemStore;
+        private readonly String serverAddress;
 
         private readonly string projectName;
 
@@ -27,6 +28,7 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         public WorkItemFetcher(String serverAddress, String projectName, ICredentials credentials,
                                Dictionary<String, String> configuration)
         {
+            this.serverAddress = serverAddress;
             String configValue = "";
             WORK_REMAINING_FIELD = (configuration.TryGetValue("tfswi-remaining-field", out configValue))
                                        ? configValue
@@ -66,31 +68,31 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         }
 
 
-        public IEnumerable<String> GetAllIterations()
+        public Dictionary<int, String> GetAllSprints()
         {
-            var allWorkItems = GetAllCurrentWorkItems();
-            var iterationPaths = new List<String>();
-            foreach (WorkItem item in allWorkItems)
+            var allWorkItems = GetAllSprintsFromTFS();
+            var iterationInfo = new Dictionary<int, String>();
+            foreach (WorkItem sprint in allWorkItems)
             {
-                if (!iterationPaths.Contains(item.IterationPath))
+                if (!iterationInfo.Keys.Contains(sprint.Id))
                 {
-                    iterationPaths.Add(item.IterationPath);
+                    iterationInfo.Add(sprint.Id, sprint.IterationPath);
                 }
             }
-            return iterationPaths;
+            return iterationInfo;
         }
 
-        public DateTime GetStartDateForIteration(string iterationPath)
+        public DateTime GetStartDateForIteration(int iterationId)
         {
-            var stringDate = workItemStore.GetWorkItem(new Uri(iterationPath)).Fields[SPRINT_START_DATE_FIELD].Value as String;
+            var stringDate = workItemStore.GetWorkItem(iterationId).Fields[SPRINT_START_DATE_FIELD].Value as String;
             DateTime startDate = new DateTime();
             DateTime.TryParse(stringDate, out startDate);
             return startDate;
         }
 
-        public DateTime GetEndDateForIteration(string iterationPath)
+        public DateTime GetEndDateForIteration(int iterationId)
         {
-            var stringDate = workItemStore.GetWorkItem(new Uri(iterationPath)).Fields[SPRINT_END_DATE_FIELD].Value as String;
+            var stringDate = workItemStore.GetWorkItem(iterationId).Fields[SPRINT_END_DATE_FIELD].Value as String;
             DateTime endDate = new DateTime();
             DateTime.TryParse(stringDate, out endDate);
             return endDate;
@@ -182,8 +184,18 @@ namespace APD.Integration.PMT.ScrumForTFS.DomainModel.Repositories
                 @"SELECT [Conchango.TeamSystem.Scrum.EstimatedEffort], " +
                 @"[Conchango.TeamSystem.Scrum.WorkRemaining] " +
                 @"FROM [WorkItems] " +
-                @"WHERE [System.TeamProject] = '" + projectName + "'" +
+                @"WHERE [System.TeamProject] = '" + projectName + @"'" +
                 @"AND [Work Item Type] = 'Sprint Backlog Item'";
+            return workItemStore.Query(wiqlQuery);
+        }
+
+        private WorkItemCollection GetAllSprintsFromTFS()
+        {
+            var wiqlQuery =
+                @"SELECT Id " + 
+                @"FROM [WorkItems] " +
+                @"WHERE [System.TeamProject] = '" + projectName + @"'" +
+                @"AND [Work Item Type] = 'Sprint'";
             return workItemStore.Query(wiqlQuery);
         }
 

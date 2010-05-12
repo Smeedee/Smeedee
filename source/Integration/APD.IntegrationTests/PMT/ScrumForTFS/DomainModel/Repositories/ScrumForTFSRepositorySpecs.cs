@@ -113,8 +113,8 @@ namespace APD.IntegrationTests.PMT.ScrumForTFS.DomainModel.Repositories
             mockFetcher.Setup((o) => o.GetAllWorkEffort())
                 .Returns(pTasks);
 
-            mockFetcher.Setup((o) => o.GetAllIterations())
-                .Returns(new List<String>() {"Iteration 1"});
+            mockFetcher.Setup((o) => o.GetAllSprints())
+                .Returns(new Dictionary<int, String>() {{1, "Iteration 1"}});
 
             mockFetcher.Setup((o) => o.GetAllWorkEffortInSprint("Iteration 1"))
                 .Returns(pTasks);
