@@ -58,7 +58,7 @@ namespace APD.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetReposit
         protected void SetupSharedContext()
         {
             SetupContext();
-            repositoryUrl = "https://agileprojectdashboard.org:8443/svn/CPMonitor";
+            repositoryUrl = "https://smeedee.org:8443/svn/CPMonitor";
             //repository = new ChangesetRepository(repositoryUrl);
             repository = new StaticRepositoryCache<Changeset>(new SVNChangesetRepository(repositoryUrl), 99000);
         }
