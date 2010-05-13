@@ -1,6 +1,12 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainModel", "DomainModel", "{8536D4DA-83F9-45CA-B460-02C97BCC5E42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Harvester", "Harvester", "{88B37D85-4329-460C-B8BB-4C17B992FAE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{3407C7FF-7275-4C3C-9C5F-BAC6AB59083F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DataCollector.Console", "DataCollector\APD.DataCollector.Console\APD.DataCollector.Console.csproj", "{9AAB9A13-D535-4ACA-9DB3-36E9FBEAAE05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DataCollectorTests", "DataCollector\APD.DataCollectorTests\APD.DataCollectorTests.csproj", "{857BBB02-9897-44C8-93CA-C4290EE7A3E4}"
@@ -8,10 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DataCollector", "DataCollector\APD.DataCollector\APD.DataCollector.csproj", "{9DF70FC1-5972-47B7-8000-A8BCBD3B0A9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DataCollector.Service", "DataCollector\APD.DataCollector.Service\APD.DataCollector.Service.csproj", "{BD60A0FD-5700-4853-A23F-A70D5C3A7F05}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainModel", "DomainModel", "{8536D4DA-83F9-45CA-B460-02C97BCC5E42}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Harvester", "Harvester", "{88B37D85-4329-460C-B8BB-4C17B992FAE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.DomainModel.Framework", "DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj", "{7C423CC1-417A-410A-81C9-741029DC0F8B}"
 EndProject
@@ -22,8 +24,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Harvester", "DataCollector\APD.Harvester\APD.Harvester.csproj", "{2010684E-AE16-4A45-B64A-252F807E7DB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.HarvesterTests", "DataCollector\APD.HarvesterTests\APD.HarvesterTests.csproj", "{E63B0802-67A6-4B3E-B8D3-C3EFB4FEB03E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{3407C7FF-7275-4C3C-9C5F-BAC6AB59083F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APD.Integration", "Integration\APD.Integration\APD.Integration.csproj", "{47431D6D-1824-41E1-87B8-D90872E4FA04}"
 EndProject
