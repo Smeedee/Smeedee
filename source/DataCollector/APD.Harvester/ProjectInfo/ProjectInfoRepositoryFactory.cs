@@ -35,11 +35,8 @@ namespace APD.Harvester.ProjectInfo
                 throw new ArgumentException("Unsupported Project Info Provider.");
             }
 
-            // TODO: Add this properly in the configuration - This concatenation stuff is horrid.
-            var serverConfig = configuration.GetSetting(URL_SETTING_NAME).Value;
-            var serverConfigArray = serverConfig.Split('|');
-            var serverUrl = serverConfigArray[0];
-            var projectName = serverConfigArray[1];
+            var serverUrl = configuration.GetSetting(URL_SETTING_NAME).Value;
+            var projectName = configuration.GetSetting(PROJECT_SETTING_NAME).Value;
             var username = configuration.GetSetting(USERNAME_SETTING_NAME).Value;
             var password = configuration.GetSetting(PASSWORD_SETTING_NAME).Value;
 
