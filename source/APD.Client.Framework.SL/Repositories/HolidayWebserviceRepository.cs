@@ -16,14 +16,16 @@ using APD.Client.Framework.SL.HolidayRepositoryService;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Holidays;
 
+using Holiday = APD.DomainModel.Holidays.Holiday;
+
 
 namespace APD.Client.Framework.SL.Repositories
 {
-    public class HolidayWebserviceRepository : IRepository<Holiday>, IPersistDomainModels<Holiday>
+    public class HolidayWebserviceRepository : IRepository<APD.DomainModel.Holidays.Holiday>, IPersistDomainModels<Holiday>
     {
 
         private ManualResetEvent resetEvent = new ManualResetEvent(false);
-        private List<Holiday> holidays = new List<Holiday>();
+        private List<APD.DomainModel.Holidays.Holiday> holidays = new List<APD.DomainModel.Holidays.Holiday>();
         private HolidayRepositoryServiceClient client;
 
         private Exception invocationException;

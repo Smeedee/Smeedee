@@ -218,7 +218,8 @@ namespace APD.HarvesterTests.SourceControl.SourceControlHarvesterSpecs
         {
             Scenario.StartNew(this, scenario =>
             {
-                scenario.Given(sourceControlHarvester_is_created);
+                scenario.Given(Configuration_Repository_contains_VCS_config).
+                    And(sourceControlHarvester_is_created);
                 scenario.When("instance is accessed");
                 scenario.Then("instance exists", () => sourceControlHarvester.ShouldNotBeNull());
             });
@@ -230,7 +231,8 @@ namespace APD.HarvesterTests.SourceControl.SourceControlHarvesterSpecs
         {
             Scenario.StartNew(this, scenario =>
             {
-                scenario.Given(sourceControlHarvester_is_created);
+                scenario.Given(Configuration_Repository_contains_VCS_config).
+                    And(sourceControlHarvester_is_created);
                 scenario.When("instance is accessed");
                 scenario.Then("the harvester is an instance of AbstractHarvester", () =>
                     sourceControlHarvester.ShouldBeInstanceOfType<AbstractHarvester>());
@@ -244,7 +246,8 @@ namespace APD.HarvesterTests.SourceControl.SourceControlHarvesterSpecs
 
             Scenario.StartNew(this, scenario =>
             {
-                scenario.Given(sourceControlHarvester_is_created);
+                scenario.Given(Configuration_Repository_contains_VCS_config).
+                    And(sourceControlHarvester_is_created);
                 scenario.When("name is checked");
                 scenario.Then("the harvester does not have the default harvester name", () =>
                 {

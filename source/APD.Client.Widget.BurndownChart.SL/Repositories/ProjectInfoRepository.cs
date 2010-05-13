@@ -27,9 +27,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using APD.Client.Framework.SL;
-using APD.Client.Widget.BurndownChart.SL.ProjectInfoRepositoryService.cs;
+using APD.Client.Framework.SL.ProjectInfoRepositoryService;
 using APD.DomainModel.Framework;
 using APD.DomainModel.ProjectInfo;
+
+using ProjectInfoServer = APD.DomainModel.ProjectInfo.ProjectInfoServer;
 
 
 namespace APD.Client.Widget.BurndownChart.SL.Repositories

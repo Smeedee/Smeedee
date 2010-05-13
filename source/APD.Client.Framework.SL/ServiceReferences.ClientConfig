@@ -4,27 +4,51 @@
             <basicHttpBinding>
                 <binding name="BasicHttpBinding_ConfigurationRepositoryService"
                     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
+                    <security mode="None">
+                        <message algorithmSuite="Default" />
+                    </security>
                 </binding>
                 <binding name="BasicHttpBinding_ChangesetRepositoryService" maxBufferSize="2147483647"
                     maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
+                    <security mode="None">
+                        <message algorithmSuite="Default" />
+                    </security>
                 </binding>
                 <binding name="BasicHttpBinding_CIRepositoryService" maxBufferSize="2147483647"
                     maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
+                    <security mode="None">
+                        <message algorithmSuite="Default" />
+                    </security>
                 </binding>
                 <binding name="BasicHttpBinding_HolidayRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None">
+                        <message algorithmSuite="Default" />
+                    </security>
+                </binding>
+                <binding name="BasicHttpBinding_LogEntryRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+                <binding name="BasicHttpBinding_ProjectInfoRepositoryService"
+                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+                <binding name="BasicHttpBinding_UserRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+                <binding name="BasicHttpBinding_VCSCredentialsService" maxBufferSize="2147483647"
                     maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:1155/APD/Services/ConfigurationRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ConfigurationRepositoryService"
-                contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
-                name="BasicHttpBinding_ConfigurationRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_LogEntryRepositoryService"
+                contract="LogEntryWebserviceRepository.LogEntryRepositoryService"
+                name="BasicHttpBinding_LogEntryRepositoryService" />
             <endpoint address="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ChangesetRepositoryService"
                 contract="ChangesetRepositoryService.ChangesetRepositoryService"
@@ -32,10 +56,24 @@
             <endpoint address="http://localhost:1155/APD/Services/CIRepositoryService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_CIRepositoryService"
                 contract="CIRepositoryService.CIRepositoryService" name="BasicHttpBinding_CIRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/ConfigurationRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ConfigurationRepositoryService"
+                contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
+                name="BasicHttpBinding_ConfigurationRepositoryService" />
             <endpoint address="http://localhost:1155/APD/Services/HolidayRepositoryService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_HolidayRepositoryService"
                 contract="HolidayRepositoryService.HolidayRepositoryService"
                 name="BasicHttpBinding_HolidayRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ProjectInfoRepositoryService"
+                contract="ProjectInfoRepositoryService.ProjectInfoRepositoryService"
+                name="BasicHttpBinding_ProjectInfoRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/UserRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_UserRepositoryService"
+                contract="UserRepositoryService.UserRepositoryService" name="BasicHttpBinding_UserRepositoryService" />
+            <endpoint address="http://localhost:1155/APD/Services/VCSCredentialsService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_VCSCredentialsService"
+                contract="VCSCredentialsService.VCSCredentialsService" name="BasicHttpBinding_VCSCredentialsService" />
         </client>
     </system.serviceModel>
 </configuration>

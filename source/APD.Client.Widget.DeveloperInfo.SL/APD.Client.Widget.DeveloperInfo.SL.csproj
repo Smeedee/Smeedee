@@ -1,4 +1,8 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Widget.DeveloperInfo.SL</RootNamespace>
     <AssemblyName>APD.Client.Widget.DeveloperInfo.SL</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -23,6 +27,12 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -86,11 +96,6 @@
     <Compile Include="SampleData\UserSampleData\UserSampleData.xaml.cs">
       <DependentUpon>UserSampleData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Service References\UserdbRepositoryService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Views\DeveloperInfo.xaml.cs">
       <DependentUpon>DeveloperInfo.xaml</DependentUpon>
     </Compile>
@@ -102,22 +107,32 @@
     <DesignTimeOnly Include="SampleData\UserSampleData\UserSampleData.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </DesignTimeOnly>
     <Page Include="..\APD.Client.Silverlight\Styles.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
       <Link>Views\Styles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <DesignTimeOnly Include="SampleData\UserDataSource\UserDataSource.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignTimeOnly>
     <Page Include="Views\DeveloperInfo.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\UserInfo.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -155,31 +170,9 @@
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\UserdbRepositoryService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UserdbRepositoryService\UserRepositoryService.disco" />
-    <None Include="Service References\UserdbRepositoryService\UserRepositoryService.wsdl" />
-    <None Include="Service References\UserdbRepositoryService\UserRepositoryService.xsd" />
-    <None Include="Service References\UserdbRepositoryService\UserRepositoryService1.wsdl" />
-    <None Include="Service References\UserdbRepositoryService\UserRepositoryService1.xsd" />
-    <None Include="Service References\UserdbRepositoryService\UserRepositoryService2.xsd" />
-    <None Include="Service References\UserdbRepositoryService\UserRepositoryService3.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UserdbRepositoryService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UserdbRepositoryService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />
-    <None Include="Service References\UserdbRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

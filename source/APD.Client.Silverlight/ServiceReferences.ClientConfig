@@ -18,54 +18,37 @@
       
     </bindings>
     <client>
-      <endpoint address="http://localhost:1155/Services/ChangesetRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="basicHttp"
-                contract="ChangesetRepositoryService.ChangesetRepositoryService"
-                name="ChangesetEndpoint" />
-      
-      <endpoint address="http://localhost:1155/Services/CIRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="basicHttp"
-                contract="CIRepositoryService.CIRepositoryService"
-                name="CIEndpoint" />
 
-      <endpoint address="http://localhost:1155/Services/SettingsService.svc"
-                binding="basicHttpBinding" bindingConfiguration="basicHttp"
-                contract="SettingsService.SettingsService"
-                name="SettingsEndpoint" />
 
-      <endpoint address="http://localhost:1155/Services/ProjectInfoRepositoryService.svc"
-              binding="customBinding" bindingConfiguration="basicHttp"
-              contract="basicHttpBinding.cs.ProjectInfoRepositoryService"
-              name="ProjectInfoEndpoint" />
-
-      <endpoint address="http://localhost:1155/Services/UserRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="basicHttp"
-                contract="UserdbRepositoryService.UserRepositoryService" name="CustomBinding_UserRepositoryService" />
-
-      <endpoint address="http://localhost:1155/Services/ProjectInfoRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="basicHttp"
-                contract="ProjectInfoRepositoryService.cs.ProjectInfoRepositoryService"
-                name="BasicHttpBinding_ProjectInfoRepositoryService" />
-
-      <endpoint address="http://localhost:1155/Services/ConfigurationRepositoryService.svc"
+      <endpoint address="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc"
+         binding="basicHttpBinding" bindingConfiguration="basicHttp"
+         contract="LogEntryWebserviceRepository.LogEntryRepositoryService"
+         name="BasicHttpBinding_LogEntryRepositoryService" />
+      <endpoint address="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc"
+          binding="basicHttpBinding" bindingConfiguration="basicHttp"
+          contract="ChangesetRepositoryService.ChangesetRepositoryService"
+          name="BasicHttpBinding_ChangesetRepositoryService" />
+      <endpoint address="http://localhost:1155/APD/Services/CIRepositoryService.svc"
+          binding="basicHttpBinding" bindingConfiguration="basicHttp"
+          contract="CIRepositoryService.CIRepositoryService" name="BasicHttpBinding_CIRepositoryService" />
+      <endpoint address="http://localhost:1155/APD/Services/ConfigurationRepositoryService.svc"
           binding="basicHttpBinding" bindingConfiguration="basicHttp"
           contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
           name="BasicHttpBinding_ConfigurationRepositoryService" />
-
-      <endpoint address="http://localhost:1155/Services/VCSCredentialsService.svc"
+      <endpoint address="http://localhost:1155/APD/Services/HolidayRepositoryService.svc"
           binding="basicHttpBinding" bindingConfiguration="basicHttp"
-          contract="VCSCredentialsService.VCSCredentialsService" name="CustomBinding_VCSCredentialsService" />
-      
-      <endpoint address="http://localhost:1155/Services/LogEntryRepositoryService.svc"
-      binding="basicHttpBinding" bindingConfiguration="basicHttp"
-      contract="LogEntryWebserviceRepository.LogEntryRepositoryService"
-      name="BasicHttpBinding_LogEntryRepositoryService" />
-
-      <endpoint address="http://localhost:1155/Services/HolidayRepositoryService.svc"
-    binding="basicHttpBinding" bindingConfiguration="basicHttp"
-    contract="HolidayRepositoryService.HolidayRepositoryService"
-    name="BasicHttpBinding_HolidayRepositoryService" />
-
+          contract="HolidayRepositoryService.HolidayRepositoryService"
+          name="BasicHttpBinding_HolidayRepositoryService" />
+      <endpoint address="http://localhost:1155/APD/Services/ProjectInfoRepositoryService.svc"
+          binding="basicHttpBinding" bindingConfiguration="basicHttp"
+          contract="ProjectInfoRepositoryService.ProjectInfoRepositoryService"
+          name="BasicHttpBinding_ProjectInfoRepositoryService" />
+      <endpoint address="http://localhost:1155/APD/Services/UserRepositoryService.svc"
+          binding="basicHttpBinding" bindingConfiguration="basicHttp"
+          contract="UserRepositoryService.UserRepositoryService" name="BasicHttpBinding_UserRepositoryService" />
+      <endpoint address="http://localhost:1155/APD/Services/VCSCredentialsService.svc"
+          binding="basicHttpBinding" bindingConfiguration="basicHttp"
+          contract="VCSCredentialsService.VCSCredentialsService" name="BasicHttpBinding_VCSCredentialsService" />
     </client>
   </system.serviceModel>
 </configuration>

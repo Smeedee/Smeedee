@@ -1,4 +1,8 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Widget.ProjectInfo.SL</RootNamespace>
     <AssemblyName>APD.Client.Widget.ProjectInfo.SL</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <SilverlightApplication>true</SilverlightApplication>
     <SupportedCultures>
     </SupportedCultures>
@@ -34,6 +38,12 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,11 +107,6 @@
     <Compile Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xaml.cs">
       <DependentUpon>WorkingDaysLeftDataSource.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ProjectInfoRepositoryService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Views\WorkingDaysLeft.xaml.cs">
       <DependentUpon>WorkingDaysLeft.xaml</DependentUpon>
     </Compile>
@@ -111,11 +116,12 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService1.disco" />
     <Content Include="ServiceReferences.ClientConfig" />
     <DesignTimeOnly Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xsd" />
   </ItemGroup>
@@ -123,14 +129,20 @@
     <DesignTimeOnly Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </DesignTimeOnly>
     <Page Include="..\APD.Client.Silverlight\Styles.xaml">
       <Link>Styles.xaml</Link>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\WorkingDaysLeft.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -156,31 +168,11 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ProjectInfoRepositoryService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProjectInfoRepositoryService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProjectInfoRepositoryService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.Project.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService2.wsdl" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService21.wsdl" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService4.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService41.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService42.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService43.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

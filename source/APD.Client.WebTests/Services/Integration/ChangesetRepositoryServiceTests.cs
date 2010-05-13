@@ -36,6 +36,12 @@ using APD.DomainModel.SourceControl;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
 
+using AllChangesetsSpecification = APD.DomainModel.SourceControl.AllChangesetsSpecification;
+using Author = APD.DomainModel.SourceControl.Author;
+using Changeset = APD.DomainModel.SourceControl.Changeset;
+using ChangesetsAfterRevisionSpecification = APD.DomainModel.SourceControl.ChangesetsAfterRevisionSpecification;
+using ChangesetsForUserSpecification = APD.DomainModel.SourceControl.ChangesetsForUserSpecification;
+
 
 namespace APD.Client.WebTests.Services.Integration.ChangesetRepositoryServiceTests
 {
@@ -80,7 +86,7 @@ namespace APD.Client.WebTests.Services.Integration.ChangesetRepositoryServiceTes
         {
             Scenario.StartNew(this, scenario =>
             {
-                IEnumerable<Changeset> changesetsFromWS = null;
+                IEnumerable<APD.DomainModel.SourceControl.Changeset> changesetsFromWS = null;
 
                 scenario.Given(Database_is_created).
                     And(Database_contains_changesets).
@@ -99,7 +105,7 @@ namespace APD.Client.WebTests.Services.Integration.ChangesetRepositoryServiceTes
             });
         }
 
-        private void AssertResultsets(IEnumerable<Changeset> changesetsFromWS, IList<Changeset> changesetsFromDB) 
+        private void AssertResultsets(IEnumerable<APD.DomainModel.SourceControl.Changeset> changesetsFromWS, IList<APD.DomainModel.SourceControl.Changeset> changesetsFromDB) 
         {
             changesetsFromWS.ShouldNotBeNull();
 
@@ -123,14 +129,14 @@ namespace APD.Client.WebTests.Services.Integration.ChangesetRepositoryServiceTes
         {
             Scenario.StartNew(this, scenario =>
             {
-                IEnumerable<Changeset> changesetsFromWS = null;
-                IEnumerable<Changeset> changesetsFromDB = null;
+                IEnumerable<APD.DomainModel.SourceControl.Changeset> changesetsFromWS = null;
+                IEnumerable<APD.DomainModel.SourceControl.Changeset> changesetsFromDB = null;
 
                 scenario.Given(Database_is_created).
                     And(Database_contains_changesets).
                     And(WebServiceClient_is_created).
                     And("changesets is fetched from database", () =>
-                        changesetsFromDB = databaseSession.CreateCriteria(typeof(Changeset)).List<Changeset>());
+                        changesetsFromDB = databaseSession.CreateCriteria(typeof(APD.DomainModel.SourceControl.Changeset)).List<APD.DomainModel.SourceControl.Changeset>());
 
                 scenario.When("get all changesets for a given user", () =>
                     changesetsFromWS = webServiceClient.Get(new ChangesetsForUserSpecification("goeran")));

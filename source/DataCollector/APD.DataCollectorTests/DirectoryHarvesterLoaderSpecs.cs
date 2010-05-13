@@ -66,6 +66,7 @@ namespace APD.DataCollectorTests.DirectoryHarvesterLoaderSpecs
 
         protected static void CreateInvalidHarvesterCataloger()
         {
+            loggerMock = new Mock<ILog>();
             harvesterCatalogLoader = new DirectoryHarvesterCatalogLoader(nonexistingDirectoryPath,loggerMock.Object);
         }
 

@@ -14,6 +14,9 @@ using APD.DomainModel.Framework;
 
 using TinyBDD.Specification.NUnit;
 
+using User = APD.DomainModel.Users.User;
+using Userdb = APD.DomainModel.Users.Userdb;
+
 
 namespace APD.Client.WebTests.Services.Integration.UserRepositoryServiceTests
 {
@@ -29,7 +32,7 @@ namespace APD.Client.WebTests.Services.Integration.UserRepositoryServiceTests
         protected Context Database_contains_users = () =>
         {
             var userdb = new Userdb("default");
-            var users = new List<User>();
+            var users = new List<APD.DomainModel.Users.User>();
             users.Add(new User("goeran")
             {
                 Email = "mail@goeran.no",

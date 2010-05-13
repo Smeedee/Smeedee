@@ -5,6 +5,8 @@ using APD.Client.Framework.SL.ConfigurationRepositoryService;
 using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 
+using Configuration = APD.DomainModel.Config.Configuration;
+
 
 namespace APD.Client.Framework.SL.Repositories
 {
@@ -16,7 +18,7 @@ namespace APD.Client.Framework.SL.Repositories
 
         private Exception invocationException;
 
-        private IEnumerable<Configuration> configurations;
+        private IEnumerable<APD.DomainModel.Config.Configuration> configurations;
 
         public ConfigurationRepository()
         {

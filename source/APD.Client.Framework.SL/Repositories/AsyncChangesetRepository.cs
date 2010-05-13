@@ -3,6 +3,8 @@ using APD.Client.Framework.SL.ChangesetRepositoryService;
 using APD.DomainModel.Framework;
 using APD.DomainModel.SourceControl;
 
+using Changeset = APD.DomainModel.SourceControl.Changeset;
+
 
 namespace APD.Client.Framework.SL.Repositories
 {

@@ -11,11 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 using APD.Client.Framework.SL;
+using APD.Client.Framework.SL.ConfigurationRepositoryService;
 using APD.DomainModel.Config;
 using APD.DomainModel.Framework;
 using System.Collections.Generic;
-using APD.Client.Widget.Admin.SL.ConfigurationRepositoryService;
 using System.Threading;
+
+using Configuration = APD.DomainModel.Config.Configuration;
+
 
 namespace APD.Client.Widget.Admin.SL.Repositories
 {

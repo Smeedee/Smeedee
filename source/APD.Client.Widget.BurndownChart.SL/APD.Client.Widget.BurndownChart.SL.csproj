@@ -1,4 +1,8 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Widget.BurndownChart.SL</RootNamespace>
     <AssemblyName>APD.Client.Widget.BurndownChart.SL</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -23,6 +27,12 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -89,11 +99,6 @@
     <Compile Include="SampleData\SampleDataSource\SampleDataSource.xaml.cs">
       <DependentUpon>SampleDataSource.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ProjectInfoRepositoryService.cs\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Views\BurndownChartView.xaml.cs">
       <DependentUpon>BurndownChartView.xaml</DependentUpon>
     </Compile>
@@ -102,10 +107,14 @@
     <DesignTimeOnly Include="SampleData\SampleDataSource\SampleDataSource.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </DesignTimeOnly>
     <Page Include="Views\BurndownChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -127,36 +136,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.Project.datasource" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService.wsdl" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService1.xsd" />
     <DesignTimeOnly Include="SampleData\SampleDataSource\SampleDataSource.xsd" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ProjectInfoRepositoryService.cs\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService.disco" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService1.wsdl" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService2.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService3.xsd" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\ProjectInfoRepositoryService4.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProjectInfoRepositoryService.cs\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProjectInfoRepositoryService.cs\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
-    <None Include="Service References\ProjectInfoRepositoryService.cs\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

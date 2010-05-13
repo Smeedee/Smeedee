@@ -37,6 +37,11 @@ using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
 using APD.DomainModel.Framework;
 
+using Project = APD.DomainModel.ProjectInfo.Project;
+using ProjectInfoServer = APD.DomainModel.ProjectInfo.ProjectInfoServer;
+using Task = APD.DomainModel.ProjectInfo.Task;
+using WorkEffortHistoryItem = APD.DomainModel.ProjectInfo.WorkEffortHistoryItem;
+
 
 namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceTests
 {
@@ -64,7 +69,7 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
             };
             projectInfoServer.AddProject(project);
 
-            var iteration = new Iteration()
+            var iteration = new APD.DomainModel.ProjectInfo.Iteration()
             {
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(7),
@@ -80,12 +85,12 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
                 SystemId = "Task 1",
                 WorkEffortEstimate = 10
             };
-            task.AddWorkEffortHistoryItem(new WorkEffortHistoryItem()
+            task.AddWorkEffortHistoryItem(new APD.DomainModel.ProjectInfo.WorkEffortHistoryItem()
             {
                 RemainingWorkEffort = 9,
                 TimeStampForUpdate = DateTime.Now
             });
-            task.AddWorkEffortHistoryItem(new WorkEffortHistoryItem()
+            task.AddWorkEffortHistoryItem(new APD.DomainModel.ProjectInfo.WorkEffortHistoryItem()
             {
                 RemainingWorkEffort = 8,
                 TimeStampForUpdate = DateTime.Now.AddHours(1)
@@ -186,7 +191,7 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
             });
         }
 
-        private void AssertTaskHistoryItem(WorkEffortHistoryItem actual, WorkEffortHistoryItem expected)
+        private void AssertTaskHistoryItem(APD.DomainModel.ProjectInfo.WorkEffortHistoryItem actual, APD.DomainModel.ProjectInfo.WorkEffortHistoryItem expected)
         {
             Console.WriteLine("AssertTaskHistoryItem");
 
@@ -200,7 +205,7 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
             actual.Task.SystemId.ShouldBe(expected.Task.SystemId);
         }
 
-        private void AssertTask(Task actual, Task expected)
+        private void AssertTask(APD.DomainModel.ProjectInfo.Task actual, APD.DomainModel.ProjectInfo.Task expected)
         {
             Console.WriteLine("AssertTask");
 
@@ -215,7 +220,7 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
             actual.WorkEffortEstimate.ShouldBe(expected.WorkEffortEstimate);
         }
 
-        private void AssertIteration(Iteration actual, Iteration expected)
+        private void AssertIteration(APD.DomainModel.ProjectInfo.Iteration actual, APD.DomainModel.ProjectInfo.Iteration expected)
         {
             Console.WriteLine("AssertIteration");
 
@@ -235,7 +240,7 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
 
         }
 
-        private void AssertProject(Project actual, Project expected)
+        private void AssertProject(APD.DomainModel.ProjectInfo.Project actual, APD.DomainModel.ProjectInfo.Project expected)
         {
             Console.WriteLine("AssertProject");
 
@@ -248,7 +253,7 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
             actual.CurrentIteration.ShouldBe(expected.CurrentIteration);
         }
 
-        private void AssertProjectInfoServer(ProjectInfoServer piServerWS, ProjectInfoServer piServerDB)
+        private void AssertProjectInfoServer(APD.DomainModel.ProjectInfo.ProjectInfoServer piServerWS, APD.DomainModel.ProjectInfo.ProjectInfoServer piServerDB)
         {
             Console.WriteLine("AssertProjectInfoServer");
 
@@ -257,7 +262,7 @@ namespace APD.Client.WebTests.Services.Integration.ProjectInfoRepositoryServiceT
             piServerWS.Url.ShouldBe(piServerDB.Url);
         }
 
-        private void AssertProjectInfoServers(IEnumerable<ProjectInfoServer> actual, IEnumerable<ProjectInfoServer> expected)
+        private void AssertProjectInfoServers(IEnumerable<APD.DomainModel.ProjectInfo.ProjectInfoServer> actual, IEnumerable<APD.DomainModel.ProjectInfo.ProjectInfoServer> expected)
         {
             Console.WriteLine("AssertProjectInfoServers");
 

@@ -1,4 +1,8 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Framework.SL</RootNamespace>
     <AssemblyName>APD.Client.Framework.SL</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -23,6 +27,12 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -243,6 +253,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ProjectInfoRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\VCSCredentialsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Settings\Repository\IsolatedStorageSettingsRepository.cs" />
     <Compile Include="Settings\Repository\ServerSettingsRepository.cs" />
     <Compile Include="SilverlightUIInvoker.cs" />
@@ -253,21 +278,31 @@
       <Link>Styles.xaml</Link>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Resource>
     <Page Include="Controls\CircularTailLoadingAnimation.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\HorizontalLoadingAnimation.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DefaultImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LoadingAnimation.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -278,13 +313,58 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />
     <None Include="Properties\DataSources\APD.Framework.Settings.Settings.datasource" />
-    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.disco" />
-    <None Include="Service References\LogEntryWebserviceRepository\configuration91.svcinfo" />
-    <None Include="Service References\LogEntryWebserviceRepository\configuration.svcinfo" />
-    <None Include="Service References\LogEntryWebserviceRepository\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.wsdl" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService1.wsdl" />
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.wsdl" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService1.wsdl" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.wsdl" />
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService1.wsdl" />
+    <None Include="Service References\UserRepositoryService\UserRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.wsdl" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService1.wsdl" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService1.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -307,15 +387,12 @@
     <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
     <WCFMetadataStorage Include="Service References\HolidayRepositoryService\" />
     <WCFMetadataStorage Include="Service References\LogEntryWebserviceRepository\" />
+    <WCFMetadataStorage Include="Service References\ProjectInfoRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\VCSCredentialsService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
-    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.wsdl" />
-    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.xsd" />
-    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService1.wsdl" />
-    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService1.xsd" />
-    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService2.xsd" />
-    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService3.xsd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService.disco" />
@@ -358,6 +435,34 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.disco" />
+    <None Include="Service References\LogEntryWebserviceRepository\configuration91.svcinfo" />
+    <None Include="Service References\LogEntryWebserviceRepository\configuration.svcinfo" />
+    <None Include="Service References\LogEntryWebserviceRepository\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.disco" />
+    <None Include="Service References\ProjectInfoRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\ProjectInfoRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\ProjectInfoRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.disco" />
+    <None Include="Service References\UserRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\UserRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\UserRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.disco" />
+    <None Include="Service References\VCSCredentialsService\configuration91.svcinfo" />
+    <None Include="Service References\VCSCredentialsService\configuration.svcinfo" />
+    <None Include="Service References\VCSCredentialsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -392,7 +497,7 @@
     </None>
     <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService5.xsd" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

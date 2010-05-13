@@ -11,6 +11,8 @@ using NUnit.Framework;
 
 using TinyBDD.Specification.NUnit;
 
+using LogEntry = APD.DomainModel.Framework.Logging.LogEntry;
+
 
 namespace APD.Client.WebTests.Services.Integration.LogEntryRepositoryServiceSpecs
 {
@@ -23,7 +25,7 @@ namespace APD.Client.WebTests.Services.Integration.LogEntryRepositoryServiceSpec
             LogEntryRepositoryService.LogEntryRepositoryServiceClient client = new LogEntryRepositoryServiceClient();
 
             var guid = Guid.NewGuid();
-            client.Log(new InfoLogEntry()
+            client.Log(new APD.DomainModel.Framework.Logging.InfoLogEntry()
             {
                 Message = guid.ToString(),
                 TimeStamp = DateTime.Now,

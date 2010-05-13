@@ -14,6 +14,8 @@ using APD.DomainModel.Framework;
 
 using TinyBDD.Specification.NUnit;
 
+using Configuration = APD.DomainModel.Config.Configuration;
+
 
 namespace APD.Client.WebTests.Services.Integration.ConfigurationRepositoryServiceTests
 {

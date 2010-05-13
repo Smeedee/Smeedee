@@ -11,11 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 using APD.Client.Framework.SL;
+using APD.Client.Framework.SL.UserRepositoryService;
 using APD.DomainModel.Users;
 using APD.DomainModel.Framework;
 using System.Collections.Generic;
-using APD.Client.Widget.DeveloperInfo.SL.UserdbRepositoryService;
-using System.Threading;
+
+using User = APD.DomainModel.Users.User;
+using UserdbNameSpecification = APD.DomainModel.Users.UserdbNameSpecification;
+
 
 namespace APD.Client.Widget.DeveloperInfo.SL.Repositories
 {

@@ -40,6 +40,12 @@ using TinyBDD.Dsl.GivenWhenThen;
 using System.Runtime.Serialization;
 using APD.Client.WebTests.Services.Integration.CIRepositoryServiceTests.Metadata;
 
+using Build = APD.DomainModel.CI.Build;
+using BuildStatus = APD.DomainModel.CI.BuildStatus;
+using CIProject = APD.DomainModel.CI.CIProject;
+using CIServer = APD.DomainModel.CI.CIServer;
+using UnknownTrigger = APD.DomainModel.CI.UnknownTrigger;
+
 
 namespace APD.Client.WebTests.Services.Integration.CIRepositoryServiceTests
 {
@@ -109,10 +115,10 @@ namespace APD.Client.WebTests.Services.Integration.CIRepositoryServiceTests
                     And(Database_contains_CIData).
                     And(WebServiceClient_is_created).
                     And("CI data is fetched from database", () =>
-                        resultsetDB = databaseSession.CreateCriteria(typeof(CIServer)).List<CIServer>());
+                        resultsetDB = databaseSession.CreateCriteria(typeof(APD.DomainModel.CI.CIServer)).List<APD.DomainModel.CI.CIServer>());
                 
                 scenario.When("get all", () =>
-                    resultsetWS = webServiceClient.Get(new AllSpecification<CIServer>()));
+                    resultsetWS = webServiceClient.Get(new AllSpecification<APD.DomainModel.CI.CIServer>()));
 
                 scenario.Then("assure data is successfully serialized", () =>
                 {
@@ -146,7 +152,7 @@ namespace APD.Client.WebTests.Services.Integration.CIRepositoryServiceTests
             });
         }
 
-        private void AssertCIServers(IEnumerable<CIServer> actual, IEnumerable<CIServer> expected) 
+        private void AssertCIServers(IEnumerable<APD.DomainModel.CI.CIServer> actual, IEnumerable<APD.DomainModel.CI.CIServer> expected) 
         {
             actual.ShouldNotBeNull();
             expected.ShouldNotBeNull();
@@ -154,7 +160,7 @@ namespace APD.Client.WebTests.Services.Integration.CIRepositoryServiceTests
             actual.Count().ShouldBe(expected.Count());
         }
 
-        private void AssertCIBuild(Build expected, Build actual) 
+        private void AssertCIBuild(APD.DomainModel.CI.Build expected, APD.DomainModel.CI.Build actual) 
         {
             actual.ShouldNotBeNull();
             actual.Project.ShouldNotBeNull();
@@ -169,7 +175,7 @@ namespace APD.Client.WebTests.Services.Integration.CIRepositoryServiceTests
             actual.Duration.ShouldBe(expected.Duration);
         }
 
-        private void AssertCIProject(CIProject expected, CIProject actual) 
+        private void AssertCIProject(APD.DomainModel.CI.CIProject expected, APD.DomainModel.CI.CIProject actual) 
         {
             actual.ShouldNotBeNull();
             actual.ProjectName.ShouldBe(expected.ProjectName);
@@ -181,7 +187,7 @@ namespace APD.Client.WebTests.Services.Integration.CIRepositoryServiceTests
             actual.LatestBuild.SystemId.ShouldBe(expected.LatestBuild.SystemId);
         }
 
-        private static void AssertCIServer(CIServer expected, CIServer actual)
+        private static void AssertCIServer(APD.DomainModel.CI.CIServer expected, APD.DomainModel.CI.CIServer actual)
         {
             actual.ShouldNotBeNull();
             actual.Url.ShouldBe(expected.Url);

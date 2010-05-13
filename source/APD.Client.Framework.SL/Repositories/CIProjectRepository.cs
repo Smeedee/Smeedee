@@ -10,10 +10,12 @@ using APD.Client.Framework.SL.CIRepositoryService;
 using APD.DomainModel.CI;
 using APD.DomainModel.Framework;
 
+using CIServer = APD.DomainModel.CI.CIServer;
+
 
 namespace APD.Client.Framework.SL.Repositories
 {
-    public class CIProjectRepository : IRepository<CIServer>
+    public class CIProjectRepository : IRepository<APD.DomainModel.CI.CIServer>
     {
         private ManualResetEvent resetEvent = new ManualResetEvent(false);
         private List<CIServer> ciServers;
@@ -33,7 +35,7 @@ namespace APD.Client.Framework.SL.Repositories
 
         #region ICIProjectRepository Members
 
-        public IEnumerable<CIServer> Get(Specification<CIServer> specification)
+        public IEnumerable<APD.DomainModel.CI.CIServer> Get(Specification<APD.DomainModel.CI.CIServer> specification)
         {
             client.GetAsync(new AllSpecification<CIServer>());
             resetEvent.Reset();

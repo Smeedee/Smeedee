@@ -6,9 +6,10 @@ using System.Text;
 using APD.Client.WebTests.HolidayService;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Holidays;
-
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
+
+using HolidaySpecification = APD.DomainModel.Holidays.HolidaySpecification;
 
 
 namespace APD.Client.WebTests.Services.Integration.HolidayRepositoryServiceTests

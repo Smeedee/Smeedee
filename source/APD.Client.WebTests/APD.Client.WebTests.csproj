@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -20,6 +20,10 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -136,11 +140,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\SettingsService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\UserRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -178,6 +177,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset.datasource" />
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.wsdl" />
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService1.wsdl" />
+    <None Include="Service References\UserRepositoryService\UserRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ChangesetRepositoryService\" />
@@ -186,8 +199,134 @@
     <WCFMetadataStorage Include="Service References\HolidayService\" />
     <WCFMetadataStorage Include="Service References\LogEntryRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ProjectInfoService\" />
-    <WCFMetadataStorage Include="Service References\SettingsService\" />
     <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.wsdl" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayService\HolidayRepositoryService.wsdl" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayService\HolidayRepositoryService1.wsdl" />
+    <None Include="Service References\HolidayService\HolidayRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayService\HolidayRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayService\HolidayRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayService\HolidayRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.wsdl" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.wsdl" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService.wsdl" />
+    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService1.wsdl" />
+    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.CI.CIServer.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.CI.ContinuousIntegrationServer.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Users.User.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.Framework.Configuration.ConfigurationEntry.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.Framework.Settings.Settings.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Holidays.Holiday.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WebService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ChangesetRepositoryService\configuration91.svcinfo" />
@@ -202,69 +341,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\SettingsService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SettingsService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SettingsService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProjectInfoService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProjectInfoService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService2.wsdl" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.xsd" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService4.xsd" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService5.xsd" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService6.xsd" />
-    <None Include="Service References\ProjectInfoService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.disco" />
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\DataSources\APD.DomainModel.CI.CIServer.datasource" />
-    <None Include="Properties\DataSources\APD.DomainModel.CI.ContinuousIntegrationServer.datasource" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService.wsdl" />
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService.xsd" />
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService1.xsd" />
-    <None Include="Service References\SettingsService\SettingsService1.disco" />
-    <None Include="Service References\SettingsService\SettingsService2.wsdl" />
-    <None Include="Service References\SettingsService\SettingsService21.wsdl" />
-    <None Include="Service References\SettingsService\SettingsService4.xsd" />
-    <None Include="Service References\SettingsService\SettingsService41.xsd" />
-    <None Include="Service References\SettingsService\SettingsService42.xsd" />
-    <None Include="Service References\SettingsService\SettingsService43.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService1.wsdl" />
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService.disco" />
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService1.wsdl" />
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService2.xsd" />
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService3.xsd" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\CIRepositoryService\CIRepositoryService.disco" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService1.xsd" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService2.xsd" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService3.xsd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\CIRepositoryService\configuration91.svcinfo" />
@@ -273,25 +350,73 @@
     <None Include="Service References\CIRepositoryService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
     <None Include="Service References\CIRepositoryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService4.xsd" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\DataSources\APD.DomainModel.Users.User.datasource" />
-    <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\HolidayRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoService\ProjectInfoRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\UserRepositoryService\UserRepositoryService.disco" />
-    <None Include="Service References\UserRepositoryService\UserRepositoryService.wsdl" />
-    <None Include="Service References\UserRepositoryService\UserRepositoryService.xsd" />
-    <None Include="Service References\UserRepositoryService\UserRepositoryService1.wsdl" />
-    <None Include="Service References\UserRepositoryService\UserRepositoryService1.xsd" />
-    <None Include="Service References\UserRepositoryService\UserRepositoryService2.xsd" />
-    <None Include="Service References\UserRepositoryService\UserRepositoryService3.xsd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\UserRepositoryService\configuration91.svcinfo" />
@@ -304,85 +429,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\DataSources\APD.Framework.Configuration.ConfigurationEntry.datasource" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\DataSources\APD.Framework.Settings.Settings.datasource" />
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd" />
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.wsdl" />
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.xsd" />
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService2.xsd" />
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService3.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.disco" />
-    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService4.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ConfigurationRepositoryService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ConfigurationRepositoryService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
-    <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.wsdl" />
-    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.xsd" />
-    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.xsd" />
-    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService2.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.disco" />
-    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\LogEntryRepositoryService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\LogEntryRepositoryService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
-    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService3.xsd" />
-    <None Include="Service References\LogEntryRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\DataSources\APD.DomainModel.Holidays.Holiday.datasource" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\HolidayService\HolidayRepositoryService.disco" />
-    <None Include="Service References\HolidayService\HolidayRepositoryService.wsdl" />
-    <None Include="Service References\HolidayService\HolidayRepositoryService.xsd" />
-    <None Include="Service References\HolidayService\HolidayRepositoryService1.wsdl" />
-    <None Include="Service References\HolidayService\HolidayRepositoryService1.xsd" />
-    <None Include="Service References\HolidayService\HolidayRepositoryService2.xsd" />
-    <None Include="Service References\HolidayService\HolidayRepositoryService3.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\HolidayService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\HolidayService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\HolidayService\HolidayRepositoryService4.xsd" />
-    <None Include="Service References\HolidayService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WebService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
