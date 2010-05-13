@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7c802df8-8f4e-4d39-aa0a-c19779614c17" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/APD/Services/CIRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CIRepositoryService.xsd" MetadataType="Schema" ID="f20b4098-6d96-478d-9783-5b44d69d533b" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CIRepositoryService1.xsd" MetadataType="Schema" ID="48ccb222-6f97-45be-8877-d371811945bf" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CIRepositoryService.disco" MetadataType="Disco" ID="57f019d0-583d-4564-b509-fd730594887f" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/CIRepositoryService.svc?disco" />
+    <MetadataFile FileName="CIRepositoryService.wsdl" MetadataType="Wsdl" ID="400e0f29-2ce3-441f-b974-ebb5bcc94a14" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/CIRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="CIRepositoryService2.xsd" MetadataType="Schema" ID="2e377a67-47c5-45a7-bb93-4d65c7f47357" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CIRepositoryService1.wsdl" MetadataType="Wsdl" ID="181fdfca-e38f-4933-88ed-069b55330334" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/CIRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="CIRepositoryService3.xsd" MetadataType="Schema" ID="5cd5e69a-d6f3-4c4f-9c58-969173705b30" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/CIRepositoryService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

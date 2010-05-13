@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework.Logging" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework.Logging" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ErrorLogEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:LogEntry">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ErrorLogEntry" nillable="true" type="tns:ErrorLogEntry" />
+  <xs:complexType name="LogEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Severity" type="xs:int" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeStamp" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LogEntry" nillable="true" type="tns:LogEntry" />
+  <xs:complexType name="WarningLogEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:LogEntry">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WarningLogEntry" nillable="true" type="tns:WarningLogEntry" />
+  <xs:complexType name="InfoLogEntry">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:LogEntry">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InfoLogEntry" nillable="true" type="tns:InfoLogEntry" />
+  <xs:complexType name="ArrayOfLogEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LogEntry" nillable="true" type="tns:LogEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLogEntry" nillable="true" type="tns:ArrayOfLogEntry" />
+</xs:schema>

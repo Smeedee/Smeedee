@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/APD.DomainModel.Config" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Config" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/ConfigurationRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/ConfigurationRepositoryService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Configuration" nillable="true" type="tns:Configuration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConfiguration" nillable="true" type="tns:ArrayOfConfiguration" />
+  <xs:complexType name="Configuration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Settings" nillable="true" type="tns:ArrayOfSettingsEntry" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="Configuration" nillable="true" type="tns:Configuration" />
+  <xs:complexType name="ArrayOfSettingsEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SettingsEntry" nillable="true" type="tns:SettingsEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSettingsEntry" nillable="true" type="tns:ArrayOfSettingsEntry" />
+  <xs:complexType name="SettingsEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Configuration" nillable="true" type="tns:Configuration" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Vals" nillable="true" type="q1:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SettingsEntry" nillable="true" type="tns:SettingsEntry" />
+</xs:schema>

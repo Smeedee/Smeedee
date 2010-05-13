@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2b3f60b5-80df-49d7-bed4-85fcb01202fc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/APD/Services/HolidayRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="HolidayRepositoryService.xsd" MetadataType="Schema" ID="6b924e5c-2479-425d-93e6-056080c6e4c4" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd4" />
+    <MetadataFile FileName="HolidayRepositoryService1.xsd" MetadataType="Schema" ID="35a89ecf-c22a-42d3-a2c2-2f4efe4e0b05" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="HolidayRepositoryService2.xsd" MetadataType="Schema" ID="6aafecbd-0fe7-4126-92a2-2132aec03140" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="HolidayRepositoryService3.xsd" MetadataType="Schema" ID="f1531129-dcbd-45dd-960f-0e1ddd1254c1" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="HolidayRepositoryService.wsdl" MetadataType="Wsdl" ID="25afd49b-edc1-4efd-aa6f-020949ded201" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="HolidayRepositoryService1.wsdl" MetadataType="Wsdl" ID="e9252e5f-5b9f-48df-80da-a71142bae567" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="HolidayRepositoryService.disco" MetadataType="Disco" ID="55a3b268-10ef-40f8-817c-a946baf69975" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?disco" />
+    <MetadataFile FileName="HolidayRepositoryService4.xsd" MetadataType="Schema" ID="427ae481-3b2d-49d3-8541-3336e97d94e0" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

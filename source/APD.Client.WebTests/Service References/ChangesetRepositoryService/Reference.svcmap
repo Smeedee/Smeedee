@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="dcca090c-d4e4-4963-9960-63d41d33f749" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ChangesetRepositoryService.xsd" MetadataType="Schema" ID="f02d487f-06d8-4ea3-b84e-f72d1d2787ea" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ChangesetRepositoryService1.xsd" MetadataType="Schema" ID="4565ecf0-6357-45a3-9478-da4ce1c8e061" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ChangesetRepositoryService.wsdl" MetadataType="Wsdl" ID="c7145d50-8229-41ca-bc02-27290058711e" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="ChangesetRepositoryService2.xsd" MetadataType="Schema" ID="c2512db3-d9c9-4d70-94d0-c031f712786b" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ChangesetRepositoryService1.wsdl" MetadataType="Wsdl" ID="2fc45a77-5b44-4608-8793-99d47e1ebb60" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ChangesetRepositoryService3.xsd" MetadataType="Schema" ID="09e85e02-d6ea-4869-9fd0-267045c50fa0" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ChangesetRepositoryService.disco" MetadataType="Disco" ID="07bcc6ff-a98a-45a0-9d89-1a7b201a85ec" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/ChangesetRepositoryService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

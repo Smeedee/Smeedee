@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework.Logging" />
+  <xs:import schemaLocation="http://localhost:1155/APD/Services/LogEntryRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
+  <xs:element name="Log">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework.Logging" minOccurs="0" name="logEntry" nillable="true" type="q1:LogEntry" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Get">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" minOccurs="0" name="specification" nillable="true" type="q2:SpecificationOfLogEntrygZNj28aA" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework.Logging" minOccurs="0" name="GetResult" nillable="true" type="q3:ArrayOfLogEntry" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
