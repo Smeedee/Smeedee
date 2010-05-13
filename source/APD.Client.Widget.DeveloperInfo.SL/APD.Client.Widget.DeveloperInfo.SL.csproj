@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Widget.DeveloperInfo.SL</RootNamespace>
     <AssemblyName>APD.Client.Widget.DeveloperInfo.SL</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -33,6 +33,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,17 +70,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Controls.dll">
       <HintPath>c:\Program Files\Microsoft SDKs\Silverlight\v3.0\Libraries\Client\System.Windows.Controls.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
@@ -165,9 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />

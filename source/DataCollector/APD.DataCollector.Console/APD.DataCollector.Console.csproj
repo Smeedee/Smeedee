@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.DataCollector.Console</RootNamespace>
     <AssemblyName>APD.DataCollector.Console</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -24,6 +24,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -121,6 +122,9 @@
       <Project>{2010684E-AE16-4A45-B64A-252F807E7DB5}</Project>
       <Name>APD.Harvester</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

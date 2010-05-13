@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Silverlight</RootNamespace>
     <AssemblyName>APD.Client.Silverlight</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightApplication>true</SilverlightApplication>
     <SupportedCultures>
     </SupportedCultures>
@@ -47,6 +47,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

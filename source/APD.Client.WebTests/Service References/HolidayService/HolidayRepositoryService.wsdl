@@ -4,8 +4,8 @@
     <xsd:schema targetNamespace="/Imports">
       <xsd:import schemaLocation="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd4" />
       <xsd:import schemaLocation="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
-      <xsd:import schemaLocation="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Holidays" />
+      <xsd:import schemaLocation="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Holidays" />
+      <xsd:import schemaLocation="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/APD.DomainModel.Framework" />
       <xsd:import schemaLocation="http://localhost:1155/APD/Services/HolidayRepositoryService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>

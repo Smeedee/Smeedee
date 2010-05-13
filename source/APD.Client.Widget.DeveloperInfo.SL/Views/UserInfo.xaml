@@ -4,7 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-	xmlns:ControlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+	xmlns:ControlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows"
 	xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.UserDataSource"
 	xmlns:converter="clr-namespace:APD.Client.Widget.DeveloperInfo.SL.Converters"
 	xmlns:APDControls="clr-namespace:APD.Client.Framework.SL.Controls;assembly=APD.Client.Framework.SL"

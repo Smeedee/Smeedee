@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Widget.SourceControl.SL</RootNamespace>
     <AssemblyName>APD.Client.Widget.SourceControl.SL</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -48,6 +48,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Framework.SL</RootNamespace>
     <AssemblyName>APD.Client.Framework.SL</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -33,6 +33,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,7 +57,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\System.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Composite, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\tools\PRISM Feb 2009 Drop\Silverlight\Microsoft.Practices.Composite.dll</HintPath>
@@ -84,7 +88,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Interactivity, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Interactivity, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\tools\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
@@ -313,8 +320,15 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.CI.CIServer1.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration1.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry1.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.Holidays.Holiday1.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer1.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset1.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb1.datasource" />
     <None Include="Properties\DataSources\APD.Framework.Settings.Settings.datasource" />
     <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.wsdl" />
     <None Include="Service References\LogEntryWebserviceRepository\LogEntryRepositoryService.xsd">
