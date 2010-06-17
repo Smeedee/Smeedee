@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>APD.Client.Widget.Admin.SL</RootNamespace>
     <AssemblyName>APD.Client.Widget.Admin.SL</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <SilverlightApplication>true</SilverlightApplication>
     <SupportedCultures>
     </SupportedCultures>
@@ -47,7 +47,21 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +73,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,6 +84,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.Composite, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -197,7 +213,6 @@
     </Compile>
     <Compile Include="Plugins\CIConfigPlugin.cs" />
     <Compile Include="Plugins\DashboardConfigPlugin.cs" />
-    <Compile Include="Plugins\PIConfigPlugin.cs" />
     <Compile Include="Plugins\VCSConfigPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ConfigurationMockRepository.cs" />
@@ -209,6 +224,21 @@
     </Compile>
     <Compile Include="SampleData\UserSampleDataSource\UserSampleDataSource.xaml.cs">
       <DependentUpon>UserSampleDataSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ConfigurationRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserdbRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\VCSCredentialsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ServiceLocator.cs" />
     <Compile Include="Services\URLCheckerProxy.cs" />
@@ -339,6 +369,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
+    <None Include="Service References\ConfigurationRepositoryService\APD.Client.Widget.Admin.SL.ConfigurationRepositoryService.Configuration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserdbRepositoryService\APD.Client.Widget.Admin.SL.UserdbRepositoryService.Userdb.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserdbRepositoryService\UserRepositoryService.disco" />
+    <None Include="Service References\UserdbRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\UserdbRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\UserdbRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.disco" />
+    <None Include="Service References\ConfigurationRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\ConfigurationRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.disco" />
+    <None Include="Service References\VCSCredentialsService\configuration91.svcinfo" />
+    <None Include="Service References\VCSCredentialsService\configuration.svcinfo" />
+    <None Include="Service References\VCSCredentialsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
     <DesignTimeOnly Include="SampleData\UserSampleDataSource\UserSampleDataSource.xsd" />
     <DesignTimeOnly Include="SampleData\UserdbSampleDataSource\UserdbSampleDataSource.xsd" />
@@ -363,6 +420,45 @@
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
     <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService2.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService3.xsd" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService4.xsd" />
+    <None Include="Service References\UserdbRepositoryService\UserRepositoryService.wsdl" />
+    <None Include="Service References\UserdbRepositoryService\UserRepositoryService.xsd" />
+    <None Include="Service References\UserdbRepositoryService\UserRepositoryService1.wsdl" />
+    <None Include="Service References\UserdbRepositoryService\UserRepositoryService1.xsd" />
+    <None Include="Service References\UserdbRepositoryService\UserRepositoryService2.xsd" />
+    <None Include="Service References\UserdbRepositoryService\UserRepositoryService3.xsd" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.wsdl" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.xsd" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService1.wsdl" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService1.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\UserdbRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\VCSCredentialsService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

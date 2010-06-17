@@ -1,0 +1,5 @@
+﻿<System_Collections:ArrayList xmlns:System_Collections="clr-namespace:System.Collections;assembly=mscorlib" xmlns:DAL="clr-namespace:Smeedee.Client.Web.Services.DAL">
+	<DAL:User Firstname="Gøran" Surname="Hansen" ImageUrl="http://www.gravatar.com/avatar/0ca33046e6ce8c5d3a2d18c35db2e5cd.png"/>
+	<DAL:User Firstname="Jonas" Surname="Follesø" ImageUrl="http://lachstock.com.au/images/avatars/follesoe.png"/>
+	<DAL:User Firstname="Rune" Surname="Grothaug"/>
+</System_Collections:ArrayList>

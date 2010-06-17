@@ -1,0 +1,51 @@
+﻿using System.Collections.ObjectModel
+using System.ComponentModel.Composition
+using System.Windows
+using TinyMVVM.Framework
+
+viewmodel ApplicationContext:
+	oproperty Title as string
+	oproperty Subtitle as string
+	property Traybar as Traybar
+	property Slideshow as Slideshow
+
+viewmodel ErrorInfo:
+	oproperty HasError as bool
+	oproperty ErrorMessage as string
+
+viewmodel Widget:
+	property View as FrameworkElement
+	property ErrorInfo as ErrorInfo
+
+viewmodel TraybarWidget extends Widget
+
+viewmodel Traybar: 
+	[ImportMany(AllowRecomposition = true)]
+	property Widgets as ObservableCollection<TraybarWidget>
+	oproperty ErrorInfo as ErrorInfo
+
+viewmodel Slideshow:
+	[ImportMany(AllowRecomposition = true)]
+	property Slides as ObservableCollection<Slide>
+	property ErrorInfo as ErrorInfo
+	oproperty CurrentSlide as Slide
+	oproperty SlideshowInfo as string
+
+	command Start	
+	command Pause
+	command Next
+	command Previous
+
+viewmodel Slide extends Widget:
+	property Title as string
+	property SettingsView as FrameworkElement
+	oproperty IsInSettingsMode as bool
+
+	command Settings
+
+viewmodel Notifier:
+	property Notifications as ObservableCollection<Notification>
+
+viewmodel Notification:
+	oproperty Message as string
+	oproperty Displayed as bool

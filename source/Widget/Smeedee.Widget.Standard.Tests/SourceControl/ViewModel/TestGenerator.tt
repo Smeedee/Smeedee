@@ -1,0 +1,19 @@
+<#@ template language="C#" hostspecific="True" debug="True" #>
+<#@ output extension="txt" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="$(SolutionDir)..\Tools\TinyMVVM\CodeGen\ViewModelTestsTemplate.Silverlight.tt" #>
+<#
+// <copyright file="Tests.tt" company="Microsoft">
+//  Copyright © Microsoft. All Rights Reserved.
+// </copyright>
+
+	string dslFile = Host.ResolvePath(@"..\..\..\Smeedee.Widget.Standard\SourceControl\ViewModel\ViewModel.mvvm");
+	
+	ViewModelTestsTemplate viewModelTemplate = new ViewModelTestsTemplate();
+	viewModelTemplate.File = dslFile;
+	viewModelTemplate.Output.File = "ViewModels.cs";
+	viewModelTemplate.UsingNamespace = "Smeedee.Widget.Standard.SourceControl.ViewModel";
+	viewModelTemplate.Namespace = "Smeedee.Widget.Standard.Tests.SourceControl.ViewModel";
+	viewModelTemplate.Render();
+
+#>

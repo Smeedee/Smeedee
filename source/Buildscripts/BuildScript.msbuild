@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         DefaultTargets="Complete">
+
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>..\MSBuild.Community.Tasks.v1.2.0.306</MSBuildCommunityTasksPath>
+
+  </PropertyGroup>
+
+  <Import Project="..\Tools\MSBuild Extension Pack\MSBuild.ExtensionPack.tasks"/>
+  <Import Project="..\Tools\MSBuild.Community.Tasks.v1.2.0.306\MSBuild.Community.Tasks.Targets"/>
+
+  <PropertyGroup>
+    <TestRunnerDirectory>..\Tools\NUnit 2.2\</TestRunnerDirectory>
+    <TestRunnerCommand>nunit-console.exe</TestRunnerCommand>
+    <ExtensionTasksPath>..\..\Tools\MSBuild Extension Pack\</ExtensionTasksPath>
+    <MSBuildExtensionsPath>..\Tools\MSBuild.Community.Tasks.v1.2.0.306\</MSBuildExtensionsPath>
+    <CCNetLabel>0.1.0.1</CCNetLabel>
+    <CCNetArtifactDirectory>build\artifacts\</CCNetArtifactDirectory>
+    <ArtifactsDirectory>$(CCNetArtifactDirectory)</ArtifactsDirectory>
+    <BuildLabel>$(CCNetLabel)</BuildLabel>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+
+
+    <!--Installer-->
+
+    <!--Run these when WIX is installed on build server-->
+
+    <!--Installer END-->
+
+    <!--Harvester-->
+    <Project Include="DataCollector\APD.Harvester\APD.Harvester.csproj"/>
+    <Project Include="DataCollector\APD.HarvesterTests\APD.HarvesterTests.csproj"/>
+    <Project Include="DataCollector\APD.Harvester.Framework\APD.Harvester.Framework.csproj"/>
+    <!--Harvester END-->
+
+    <!--Agile Project Dashboard.Harvester-->
+
+    <Project Include="DataCollector\APD.DataCollector\APD.DataCollector.csproj"/>
+
+    <Project Include="DataCollector\APD.DataCollector.Console\APD.DataCollector.Console.csproj"/>
+
+    <Project Include="DataCollector\APD.DataCollector.Service\APD.DataCollector.Service.csproj"/>
+
+    <Project Include="DataCollector\APD.DataCollectorTests\APD.DataCollectorTests.csproj"/>
+
+    <!--Agile Project Dashboard.Harvester END-->
+
+
+
+
+    <!--Agile Project Dashboard-->
+
+    <!--Client-->
+
+    <Project Include="APD.Client\APD.Client.csproj"/>
+    <Project Include="APD.ClientTests\APD.ClientTests.csproj"/>
+
+    <Project Include="APD.Client.Framework\APD.Client.Framework.csproj"/>
+    <Project Include="APD.Client.FrameworkTests\APD.Client.Framework.Tests.csproj"/>
+
+    <Project Include="APD.Tests\APD.Tests.csproj"/>
+
+
+    <!-- Widgets -->
+
+    <!--SourceControl-->
+
+    <Project Include="APD.Client.Widget.SourceControl\APD.Client.Widget.SourceControl.csproj"/>
+    <Project Include="APD.Client.Widget.SourceControlTests\APD.Client.Widget.SourceControlTests.csproj"/>
+
+    <!--ProjectInfo-->
+
+    <Project Include="APD.Client.Widget.ProjectInfo\APD.Client.Widget.ProjectInfo.csproj"/>
+    <Project Include="APD.Client.Widget.ProjectInfoTests\APD.Client.Widget.ProjectInfoTests.csproj"/>
+
+    <!--ContrinuousIntegeration-->
+
+    <Project Include="APD.Client.Widget.CI\APD.Client.Widget.CI.csproj"/>
+    <Project Include="APD.Client.Widget.CI.Tests\APD.Client.Widget.CI.Tests.csproj"/>
+
+    <!--General-->
+
+    <Project Include="APD.Client.Widget.General\APD.Client.Widget.General.csproj"/>
+    <Project Include="APD.Client.Widget.GeneralTests\APD.Client.Widget.GeneralTests.csproj"/>
+
+
+    <!--BurndownChart-->
+
+    <Project Include="APD.Client.Widget.BurndownChart\APD.Client.Widget.BurndownChart.csproj"/>
+    <Project Include="APD.Client.Widget.BurndownChart.Tests\APD.Client.Widget.BurndownChart.Tests.csproj"/>
+
+    <!--TrayBar-->
+
+    <Project Include="APD.Client.Widget.TrayBar\APD.Client.Widget.TrayBar.csproj"/>
+    <Project Include="APD.Client.Widget.TrayBarTests\APD.Client.Widget.TrayBarTests.csproj"/>
+
+    <!--Admin-->
+
+    <Project Include="Widget\APD.Client.Widget.Admin\APD.Client.Widget.Admin.csproj"/>
+    <Project Include="Widget\APD.Client.Widget.AdminTests\APD.Client.Widget.AdminTests.csproj"/>
+
+    <!--Widget END-->
+
+    <!--Client END-->
+
+    <!--Common-->
+
+    <Project Include="APD.Framework\APD.Framework.csproj"></Project>
+    <Project Include="APD.Framework.Tests\APD.Framework.Tests.csproj"/>
+
+    <!--Common END-->
+
+    <!--Domainmodel-->
+
+    <Project Include="APD.DomainModel\APD.DomainModel.csproj"/>
+    <Project Include="APD.DomainModel.Tests\APD.DomainModel.Tests.csproj"/>
+
+    <Project Include="DomainModel\APD.DomainModel.Framework\APD.DomainModel.Framework.csproj"/>
+    <Project Include="DomainModel\APD.DomainModel.FrameworkTests\APD.DomainModel.FrameworkTests.csproj"/>
+
+    <!-- Integration -->
+    <Project Include="Integration\APD.Integration\APD.Integration.csproj"/>
+    <Project Include="Integration\APD.IntegrationTests\APD.IntegrationTests.csproj"/>
+    <!-- End: Integration -->
+
+    <!--Server-->
+
+    <Project Include="APD.Client.Web\APD.Client.Web.csproj"/>
+    <Project Include="APD.Client.WebTests\APD.Client.WebTests.csproj"/>
+
+    <!--Server END-->
+
+
+    <!-- Silverlight-->
+
+    <!--Client-->
+
+    <Project Include="APD.Client.Framework.SL\APD.Client.Framework.SL.csproj"/>
+
+    <Project Include="APD.Client.Silverlight\APD.Client.Silverlight.csproj"/>
+
+    <!--Widget-->
+
+    <!--SourceControl-->
+
+    <Project Include="APD.Client.Widget.SourceControl.SL\APD.Client.Widget.SourceControl.SL.csproj"/>
+
+    <!--ProjectInfo-->
+
+    <Project Include="APD.Client.Widget.ProjectInfo.SL\APD.Client.Widget.ProjectInfo.SL.csproj"/>
+
+    <!--ContrinuousIntegeration-->
+
+    <Project Include="APD.Client.Widget.CI.SL\APD.Client.Widget.CI.SL.csproj"/>
+
+    <!--General-->
+
+    <Project Include="APD.Client.Widget.General.SL\APD.Client.Widget.General.SL.csproj"/>
+
+    <!--DeveloperInfo-->
+
+    <Project Include="APD.Client.Widget.DeveloperInfo.SL\APD.Client.Widget.DeveloperInfo.SL.csproj"/>
+
+    <!--BurndownChart-->
+
+    <Project Include="APD.Client.Widget.BurndownChart.SL\APD.Client.Widget.BurndownChart.SL.csproj"/>
+
+    <!--TrayBar-->
+
+    <Project Include="APD.Client.Widget.TrayBar.SL\APD.Client.Widget.TrayBar.SL.csproj"/>
+
+    <!--Admin-->
+
+    <Project Include="Widget\APD.Client.Widget.Admin.SL\APD.Client.Widget.Admin.SL.csproj"/>
+
+    <!--Widget END-->
+
+    <!--Client END-->
+
+    <!--Common-->
+
+    <Project Include="APD.Framework.SL\APD.Framework.SL.csproj"/>
+
+    <!--Common END-->
+
+    <!--DomainModel-->
+
+    <Project Include="APD.DomainModel\APD.DomainModel.SL.csproj"/>
+    <Project Include="DomainModel\APD.DomainModel.Framework.SL\APD.DomainModel.Framework.SL.csproj"/>
+
+    <!--DomainModel END-->
+
+    <APDClientOutput Include="APD.Client\bin\debug\APD.*.dll"/>
+    <APDClientWebOutputBin Include="APD.Client.Web\bin\*.dll"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.aspx"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.config"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.asax"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.js"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.html"/>
+    <APDClientWebOutput Include="APD.Client.Web\*.html"/>
+    <APDClientWebOutputServices Include="APD.Client.Web\Services\*.svc"/>
+    <APDClientSilverlightOutput Include="APD.Client.Silverlight\bin\debug\*.*"/>
+
+    <!--Silverlight END-->
+
+    <!--Agile Project Dashboard END-->
+
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <!--Agile Project Dashboard.DataCollector-->
+
+    <TestProject Include="DataCollector\APD.DataCollectorTests\APD.DataCollectorTests.csproj">
+      <Assembly>DataCollector\APD.DataCollectorTests\bin\debug\APD.DataCollectorTests.dll</Assembly>
+      <Report>TestResults.APD.DataCollectorTests.xml</Report>
+    </TestProject>
+
+    <!--Harvester-->
+
+    <TestProject Include="DataCollector\APD.HarvesterTests\APD.HarvesterTests.csproj">
+      <Assembly>DataCollector\APD.HarvesterTests\bin\debug\APD.HarvesterTests.dll</Assembly>
+      <Report>TestResults.APD.HarvesterTests.xml</Report>
+    </TestProject>
+
+    <!--Harvester END-->
+
+    <!--Agile Project Dashboard.DataCollector END-->
+
+
+    <!--Agile Project Dashboard-->
+
+    <!--Client-->
+
+    <TestProject Include="APD.ClientTests\APD.ClientTests.csproj">
+      <Assembly>APD.ClientTests\bin\debug\APD.ClientTests.dll</Assembly>
+      <Report>TestResults.APD.ClientTests.xml</Report>
+    </TestProject>
+
+    <TestProject Include="APD.Client.FrameworkTests\APD.Client.Framework.Tests.csproj">
+      <Assembly>APD.Client.FrameworkTests\bin\debug\APD.Client.Framework.Tests.dll</Assembly>
+      <Report>TestResults.APD.Client.Framework.Tests.xml</Report>
+    </TestProject>
+
+    <TestProject Include="APD.Tests\APD.Tests.csproj">
+      <Assembly>APD.Tests\bin\debug\APD.Tests.dll</Assembly>
+      <Report>TestResults.APD.Tests.xml</Report>
+    </TestProject>
+
+
+    <!-- Widgets-->
+
+    <!--SourceControl-->
+
+    <TestProject Include="APD.Client.Widget.SourceControlTests\APD.Client.Widget.SourceControlTests.csproj">
+      <Assembly>APD.Client.Widget.SourceControlTests\bin\debug\APD.Client.Widget.SourceControlTests.dll</Assembly>
+      <Report>TestResults.APD.Client.Widget.SourceControlTests.xml</Report>
+    </TestProject>
+
+    <!--ProjectInfo-->
+
+    <TestProject Include="APD.Client.Widget.ProjectInfoTests\APD.Client.Widget.ProjectInfoTests.csproj">
+      <Assembly>APD.Client.Widget.ProjectInfoTests\bin\debug\APD.Client.Widget.ProjectInfoTests.dll</Assembly>
+      <Report>TestResults.APD.Client.Widget.ProjectInfoTests.xml</Report>
+    </TestProject>
+
+    <!--ContinuousIntegration-->
+
+    <TestProject Include="APD.Client.Widget.CI.Tests\APD.Client.Widget.CI.Tests.csproj">
+      <Assembly>APD.Client.Widget.CI.Tests\bin\debug\APD.Client.Widget.CI.Tests.dll</Assembly>
+      <Report>TestResults.APD.Client.Widget.CI.Tests.xml</Report>
+    </TestProject>
+
+    <!--General-->
+
+    <TestProject Include="APD.Client.Widget.GeneralTests\APD.Client.Widget.GeneralTests.csproj">
+      <Assembly>APD.Client.Widget.GeneralTests\bin\debug\APD.Client.Widget.GeneralTests.dll</Assembly>
+      <Report>TestResults.APD.Client.Widget.GeneralTests.xml</Report>
+    </TestProject>
+
+    <!--BurndownChart-->
+
+    <TestProject Include="APD.Client.Widget.BurndownChart.Tests\APD.Client.Widget.BurndownChart.Tests.csproj">
+      <Assembly>APD.Client.Widget.BurndownChart.Tests\bin\debug\APD.Client.Widget.BurndownChart.Tests.dll</Assembly>
+      <Report>TestResults.APD.Client.Widget.BurndownChart.Tests.xml</Report>
+    </TestProject>
+
+    <!--TrayBar-->
+
+    <TestProject Include="APD.Client.Widget.TrayBarTests\APD.Client.Widget.TrayBarTests.csproj">
+      <Assembly>APD.Client.Widget.TrayBarTests\bin\debug\APD.Client.Widget.TrayBarTests.dll</Assembly>
+      <Report>TestResults.APD.Client.Widget.TrayBarTests.xml</Report>
+    </TestProject>
+
+    <!--Admin-->
+
+    <TestProject Include="Widget\APD.Client.Widget.AdminTests\APD.Client.Widget.AdminTests.csproj">
+      <Assembly>Widget\APD.Client.Widget.AdminTests\bin\debug\APD.Client.Widget.AdminTests.dll</Assembly>
+      <Report>TestResults.APD.Client.Widget.AdminTests.xml</Report>
+    </TestProject>
+
+    <!--Widget END-->
+    <!--Client END-->
+
+    <!--Common-->
+
+    <TestProject Include="APD.Framework.Tests\APD.Framework.Tests.csproj">
+      <Assembly>APD.Framework.Tests\bin\debug\APD.Framework.Tests.dll</Assembly>
+      <Report>TestResults.APD.Framework.Tests.xml</Report>
+    </TestProject>
+
+    <!--Common END-->
+
+    <!-- DomainModel-->
+    <TestProject Include="DomainModel\APD.DomainModel.FrameworkTests\APD.DomainModel.FrameworkTests.csproj">
+      <Assembly>DomainModel\APD.DomainModel.FrameworkTests\bin\debug\APD.DomainModel.FrameworkTests.dll</Assembly>
+      <Report>TestResults.APD.DomainModel.FrameworkTests.xml</Report>
+    </TestProject>
+
+    <TestProject Include="APD.DomainModel.Tests\APD.DomainModel.Tests.csproj">
+      <Assembly>APD.DomainModel.Tests\bin\debug\APD.DomainModel.Tests.dll</Assembly>
+      <Report>TestResults.APD.DomainModel.Tests.xml</Report>
+    </TestProject>
+
+    <!--DomainModel END-->
+
+    <!-- Plugins -->
+    <TestProject Include="APD.Plugin.ProjectInfo.Tests\APD.Plugin.ProjectInfo.Tests.csproj">
+      <Assembly>APD.Plugin.ProjectInfo.Tests\bin\debug\APD.Plugin.ProjectInfo.Tests.dll</Assembly>
+      <Report>TestResults.APD.Plugin.ProjectInfo.Tests.xml</Report>
+    </TestProject>
+
+    <TestProject Include="Integration\APD.IntegrationTests\APD.IntegrationTests.csproj">
+      <Assembly>Integration\APD.IntegrationTests\bin\debug\APD.IntegrationTests.dll</Assembly>
+      <Report>TestResults.APD.IntegrationTests.xml</Report>
+    </TestProject>
+
+    <!--Plugin END-->
+
+    <!--Server-->
+    <!-- Disabled until deployment of the Web Services is set up
+			<TestProject Include="APD.Client.WebTests\APD.Client.WebTests.csproj">
+			  <Assembly>APD.Client.WebTests\bin\debug\APD.Client.WebTests.dll</Assembly>
+			  <Report>TestResults.APD.Client.WebTests.xml</Report>
+			</TestProject>-->
+
+    <!--Server END-->
+
+    <!--Agile Project Dashboard END-->
+
+  </ItemGroup>
+
+  <Target Name="Clean">
+    <Delete Files="$(ArtifactsDirectory)\TestResults*.xml"/>
+  </Target>
+
+  <Target Name="Labeling" DependsOnTargets="Clean">
+    <ItemGroup>
+      <AssemblyInfoFiles Include="**\AssemblyInfo.*" Exclude="**\.svn\**\*.*"/>
+    </ItemGroup>
+    <Message Text="@(AssemblyInfoFiles)"/>
+    <File TaskAction="Replace" RegexPattern='AssemblyVersion\("\d.\d.\d.\d"\)' Replacement='AssemblyVersion("$(BuildLabel)")'
+          Files="@(AssemblyInfoFiles)"/>
+    <File TaskAction="Replace" RegexPattern='AssemblyFileVersion\("\d.\d.\d.\d"\)' Replacement='AssemblyFileVersion("$(BuildLabel)")'
+          Files="@(AssemblyInfoFiles)"/>
+  </Target>
+
+  <Target Name="Compile" DependsOnTargets="Labeling">
+    <MSBuild Projects="@(Project)" Targets="Build"/>
+  </Target>
+
+  <Target Name="CreateOutputDirectories" DependsOnTargets="Compile">
+    <MakeDir Directories="Build"/>
+    <MakeDir Directories="Build\artifacts"/>
+    <MakeDir Directories="Build\bin"/>
+    <RemoveDir Directories="Build\bin\$(BuildLabel)" ContinueOnError="true"/>
+    <MakeDir Directories="Build\bin\$(BuildLabel)"/>
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="CreateOutputDirectories">
+    <NUnit Assemblies="%(TestProject.Assembly)"
+           ToolPath="$(TestRunnerDirectory)"
+           OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"/>
+  </Target>
+
+  <Target Name="DeployOutput" DependsOnTargets="Test">
+    <Exec WorkingDirectory="..\Source"
+          Command="xcopy APD.Client.Web\*.* build\bin\$(BuildLabel)\APD.Client.Web\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
+    <Exec Command="xcopy APD.Client.Silverlight\bin\debug\*.* Build\bin\$(BuildLabel)\APD.Client.Silverlight\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"
+          WorkingDirectory="..\Source"/>
+    <Exec WorkingDirectory="..\Source"
+      Command="xcopy DataCollector\APD.DataCollector.Console\bin\debug\*.* Build\bin\$(BuildLabel)\APD.DataCollector.Console\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
+
+    <Exec Command="xcopy Build\bin\$(BuildLabel)\*.* Build\bin\Latest\ /E /S /Y"
+          WorkingDirectory="../Source"
+          ContinueOnError="true"/>
+
+  </Target>
+
+  <Target Name="build-setup-kits" DependsOnTargets="DeployOutput">
+    <MSBuild Projects="BuildScript_Installer.msbuild" Properties="OutputDirectory=Build\bin\$(BuildLabel)\setup-kits;"/>
+  </Target>
+  
+  <Target Name="Complete" DependsOnTargets="build-setup-kits">
+    
+  </Target>
+</Project>

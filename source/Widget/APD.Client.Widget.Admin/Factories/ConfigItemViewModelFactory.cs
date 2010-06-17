@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using APD.Client.Widget.Admin.ViewModels.Configuration;
 using APD.Client.Framework.Factories;
 using APD.Client.Framework.Plugins;
@@ -14,17 +16,17 @@ namespace APD.Client.Widget.Admin.Factories
         private const string PLUGIN_SETTING_NAME = "plugin-class";
         private const string IS_EXPANDED_SETTING = "is-expanded";
 
-        private Configuration configurationToBeAssembled;
+        private APD.DomainModel.Config.Configuration configurationToBeAssembled;
         private ConfigurationItemViewModel configurationItem;
 
-        public ConfigurationItemViewModel Assemble(Configuration configuration)
+        public ConfigurationItemViewModel Assemble(APD.DomainModel.Config.Configuration configuration)
         {
             configurationItem = null;
 
             if (configuration == null)
                 throw new ArgumentNullException("configuration");
 
-            configurationToBeAssembled = configuration;
+            this.configurationToBeAssembled = configuration;
 
             AssembleConfiguration();
 

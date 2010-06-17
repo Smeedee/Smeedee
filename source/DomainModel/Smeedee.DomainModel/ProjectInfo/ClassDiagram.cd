@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Smeedee.DomainModel.ProjectInfo.Project">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Iterations" Type="Smeedee.DomainModel.ProjectInfo.Iteration">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.273" Y="0.071" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAEAEAAhAAAAAYAABAQAIAgAAAAAgAAAAA=</HashCode>
+      <FileName>Project.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentIteration" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Iterations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Smeedee.DomainModel.ProjectInfo.Iteration">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <AssociationLine Name="HolidayProvider" Type="Smeedee.DomainModel.ProjectInfo.HolidayProvider">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.11" Y="0.168" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAEAAAAAkAAACAQgCAARQIAgAAIIAEAAgAg=</HashCode>
+      <FileName>Iteration.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="HolidayProvider" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Tasks" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Smeedee.DomainModel.ProjectInfo.Task">
+    <Position X="5.5" Y="0.5" Width="2" />
+    <AssociationLine Name="WorkEffortHistory" Type="Smeedee.DomainModel.ProjectInfo.WorkEffortHistoryItem">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.315" Y="0.62" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAAQAgAAIAAQAACAQAIAAAAQAAAAAAAA=</HashCode>
+      <FileName>Task.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="WorkEffortHistory" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Smeedee.DomainModel.ProjectInfo.WorkEffortHistoryItem">
+    <Position X="5.5" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAQAgAAAAAAAAAAAAIAAAEAAEAAAAAA=</HashCode>
+      <FileName>WorkEffortHistoryItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.21" />
+  </Class>
+  <Class Name="Smeedee.DomainModel.ProjectInfo.Repositories.IterationUtilities" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAABAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Repositories\IterationUtilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.ProjectInfo.HolidayProvider">
+    <Position X="3.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAECAAABAIAQAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HolidayProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Smeedee.DomainModel.ProjectInfo.Repositories.IProjectRepository" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\IProjectRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

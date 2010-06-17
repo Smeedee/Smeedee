@@ -1,0 +1,139 @@
+<Smeedee_Client_Framework_ViewModel:Application xmlns:Smeedee_Client_Framework_ViewModel="clr-namespace:Smeedee.Client.Framework.ViewModel;assembly=Smeedee.Client.Framework.SL" xmlns:TinyMVVM_Framework="clr-namespace:TinyMVVM.Framework;assembly=TinyMVVM.SL" Title="Vestibulum adipiscing parturient vestibulum vestibulum">
+	<Smeedee_Client_Framework_ViewModel:Application.Slideshow>
+		<Smeedee_Client_Framework_ViewModel:Slideshow SlideshowInfo="Vestibulum vestibulum adipiscing parturient vestibulum">
+			<Smeedee_Client_Framework_ViewModel:Slideshow.CurrentSlide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Vestibulum adipiscing parturient vestibulum vestibulum">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Adipiscing parturient vestibulum vestibulum adipiscing" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+			</Smeedee_Client_Framework_ViewModel:Slideshow.CurrentSlide>
+			<Smeedee_Client_Framework_ViewModel:Slideshow.ErrorInfo>
+				<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+			</Smeedee_Client_Framework_ViewModel:Slideshow.ErrorInfo>
+			<Smeedee_Client_Framework_ViewModel:Slideshow.Next>
+				<TinyMVVM_Framework:DelegateCommand/>
+			</Smeedee_Client_Framework_ViewModel:Slideshow.Next>
+			<Smeedee_Client_Framework_ViewModel:Slideshow.Pause>
+				<TinyMVVM_Framework:DelegateCommand/>
+			</Smeedee_Client_Framework_ViewModel:Slideshow.Pause>
+			<Smeedee_Client_Framework_ViewModel:Slideshow.Previous>
+				<TinyMVVM_Framework:DelegateCommand/>
+			</Smeedee_Client_Framework_ViewModel:Slideshow.Previous>
+			<Smeedee_Client_Framework_ViewModel:Slideshow.Slides>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Vestibulum vestibulum adipiscing parturient vestibulum">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum adipiscing parturient vestibulum vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Adipiscing parturient vestibulum vestibulum adipiscing">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Vestibulum vestibulum adipiscing parturient vestibulum">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum adipiscing parturient vestibulum vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Adipiscing parturient vestibulum vestibulum adipiscing">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Vestibulum vestibulum adipiscing parturient vestibulum">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum adipiscing parturient vestibulum vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Adipiscing parturient vestibulum vestibulum adipiscing">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Vestibulum vestibulum adipiscing parturient vestibulum">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum adipiscing parturient vestibulum vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Adipiscing parturient vestibulum vestibulum adipiscing">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Vestibulum vestibulum adipiscing parturient vestibulum">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum adipiscing parturient vestibulum vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+				<Smeedee_Client_Framework_ViewModel:Slide Title="Adipiscing parturient vestibulum vestibulum adipiscing">
+					<Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:Slide.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:Slide>
+			</Smeedee_Client_Framework_ViewModel:Slideshow.Slides>
+			<Smeedee_Client_Framework_ViewModel:Slideshow.Start>
+				<TinyMVVM_Framework:DelegateCommand/>
+			</Smeedee_Client_Framework_ViewModel:Slideshow.Start>
+		</Smeedee_Client_Framework_ViewModel:Slideshow>
+	</Smeedee_Client_Framework_ViewModel:Application.Slideshow>
+	<Smeedee_Client_Framework_ViewModel:Application.Traybar>
+		<Smeedee_Client_Framework_ViewModel:Traybar>
+			<Smeedee_Client_Framework_ViewModel:Traybar.ErrorInfo>
+				<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Adipiscing parturient vestibulum vestibulum adipiscing" HasError="True"/>
+			</Smeedee_Client_Framework_ViewModel:Traybar.ErrorInfo>
+			<Smeedee_Client_Framework_ViewModel:Traybar.Widgets>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum vestibulum adipiscing parturient vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum adipiscing parturient vestibulum vestibulum" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Adipiscing parturient vestibulum vestibulum adipiscing" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum vestibulum adipiscing parturient vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum adipiscing parturient vestibulum vestibulum" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Adipiscing parturient vestibulum vestibulum adipiscing" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Parturient vestibulum vestibulum adipiscing parturient" HasError="False"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+				<Smeedee_Client_Framework_ViewModel:TraybarWidget>
+					<Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+						<Smeedee_Client_Framework_ViewModel:ErrorInfo ErrorMessage="Vestibulum vestibulum adipiscing parturient vestibulum" HasError="True"/>
+					</Smeedee_Client_Framework_ViewModel:TraybarWidget.ErrorInfo>
+				</Smeedee_Client_Framework_ViewModel:TraybarWidget>
+			</Smeedee_Client_Framework_ViewModel:Traybar.Widgets>
+		</Smeedee_Client_Framework_ViewModel:Traybar>
+	</Smeedee_Client_Framework_ViewModel:Application.Traybar>
+</Smeedee_Client_Framework_ViewModel:Application>

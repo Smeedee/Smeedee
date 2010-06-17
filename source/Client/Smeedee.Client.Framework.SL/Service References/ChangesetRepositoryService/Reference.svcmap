@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4b62a2b2-1ec8-4c37-a7f0-cd048e360543" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ChangesetRepositoryService.disco" MetadataType="Disco" ID="33c8f71a-1c74-4701-bc9f-adc700b710cd" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?disco" />
+    <MetadataFile FileName="ChangesetRepositoryService.wsdl" MetadataType="Wsdl" ID="8812a86d-06c5-46c8-8de9-a8c2ea264f9d" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ChangesetRepositoryService1.wsdl" MetadataType="Wsdl" ID="27d23e15-677b-403c-9371-c184d1246d42" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="ChangesetRepositoryService.xsd" MetadataType="Schema" ID="86f5d253-ccf2-4bbf-97fa-11b6855d2c72" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ChangesetRepositoryService1.xsd" MetadataType="Schema" ID="4d4eb7b9-e77c-4b00-a0a7-d41b417d1650" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ChangesetRepositoryService2.xsd" MetadataType="Schema" ID="4dbed2e4-56a3-4a9e-8fa3-78a64e863ebf" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ChangesetRepositoryService3.xsd" MetadataType="Schema" ID="a8f10623-7da9-46c0-8880-1359ea995e92" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

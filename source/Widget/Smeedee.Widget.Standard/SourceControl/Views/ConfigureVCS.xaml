@@ -1,0 +1,132 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModel="clr-namespace:Smeedee.Client.Widgets.SL.SourceControl.ViewModel" xmlns:dataFormToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Class="Smeedee.Client.Widgets.SL.SourceControl.Views.ConfigureVCS"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    <d:DataContext>
+        <ViewModel:VersionControlConfiguration/>
+    </d:DataContext>
+    <Grid x:Name="LayoutRoot">
+    	<Viewbox HorizontalAlignment="Left" Height="51" Margin="8,8,0,0" VerticalAlignment="Top" Width="52">
+    		<Canvas x:Name="Network_Server" Height="117" Width="124">
+    			<Path Data="M332.014,353.539L341.215,353.539L341.215,335.709L332.014,335.709z" Height="17.83" Canvas.Left="57.601" Stretch="Fill" Canvas.Top="81.63" Width="9.201">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF" Offset="0"/>
+    						<GradientStop Color="#FF747474" Offset="0.52809101343154907"/>
+    						<GradientStop Color="#FFD1D1D1" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M283.947,351.123C282.818,351.123,281.902,352.039,281.902,353.168L281.902,353.168L281.902,356.158C281.902,357.288,282.818,358.203,283.947,358.203L283.947,358.203L389.281,358.203C390.412,358.203,391.327,357.288,391.327,356.158L391.327,356.158L391.327,353.168C391.327,352.039,390.412,351.123,389.281,351.123L389.281,351.123z" Height="7.08" Canvas.Left="7.489" Stretch="Fill" Canvas.Top="97.044" Width="109.425">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFD1D1D1" Offset="0"/>
+    						<GradientStop Color="#FFA3A3A3" Offset="0.52809101343154907"/>
+    						<GradientStop Color="Gainsboro" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M332.014,349.504C330.367,349.504,329.032,350.838,329.032,352.486L329.032,352.486L329.032,356.84C329.032,358.486,330.367,359.822,332.014,359.822L332.014,359.822L341.214,359.822C342.86,359.822,344.196,358.486,344.196,356.84L344.196,356.84L344.196,352.486C344.196,350.838,342.86,349.504,341.214,349.504L341.214,349.504z" Height="10.318" Canvas.Left="54.619" Stretch="Fill" Canvas.Top="95.425" Width="15.164">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFAFAFAF" Offset="0"/>
+    						<GradientStop Color="#FF747474" Offset="0.52809101343154907"/>
+    						<GradientStop Color="#FFD1D1D1" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M371.404,329.579L301.827,329.579L301.827,273.669L371.404,273.669z" Fill="#FF4F4F4F" Height="55.91" Canvas.Left="27.414" Stretch="Fill" Canvas.Top="19.59" Width="69.577"/>
+    			<Path Data="F1M303.73,254.079C300.295,254.079,297.509,256.864,297.509,260.299L297.509,260.299L297.509,275.057C297.509,278.491,300.295,281.275,303.73,281.275L303.73,281.275L369.501,281.275C372.936,281.275,375.72,278.491,375.72,275.057L375.72,275.057L375.72,260.299C375.72,256.864,372.936,254.079,369.501,254.079L369.501,254.079z" Height="27.196" Canvas.Left="23.096" Stretch="Fill" Canvas.Top="0" Width="78.211">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFC7DAE1" Offset="0"/>
+    						<GradientStop Color="#FFB2BFC4" Offset="0.84831202030181885"/>
+    						<GradientStop Color="#FF85898B" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M314.549,254.079C311.115,254.079,308.327,256.864,308.327,260.299L308.327,260.299L308.327,275.057C308.327,278.491,311.115,281.275,314.549,281.275L314.549,281.275L324.785,281.275C323.067,281.275,321.674,278.491,321.674,275.057L321.674,275.057L321.674,260.299C321.674,256.864,323.067,254.079,324.785,254.079L324.785,254.079z" Height="27.196" Canvas.Left="33.914" Stretch="Fill" Canvas.Top="0" Width="16.458">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFC4DCE5" Offset="0"/>
+    						<GradientStop Color="#FFBCCACF" Offset="0.84831202030181885"/>
+    						<GradientStop Color="#FF85898B" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M303.73,255.812C301.256,255.812,299.243,257.824,299.243,260.299L299.243,260.299C299.243,260.299,301.249,257.728,303.73,257.728L303.73,257.728L369.501,257.728C372.524,257.728,373.987,260.299,373.987,260.299L373.987,260.299C373.987,257.824,371.975,255.812,369.501,255.812L369.501,255.812z" Height="4.487" Canvas.Left="24.83" Stretch="Fill" Canvas.Top="1.733" Width="74.744">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFD7F1FB" Offset="0"/>
+    						<GradientStop Color="#FFBBD1DA" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M303.73,283.058C300.295,283.058,297.509,285.844,297.509,289.28L297.509,289.28L297.509,304.036C297.509,307.471,300.295,310.256,303.73,310.256L303.73,310.256L369.501,310.256C372.936,310.256,375.72,307.471,375.72,304.036L375.72,304.036L375.72,289.28C375.72,285.844,372.936,283.058,369.501,283.058L369.501,283.058z" Height="27.198" Canvas.Left="23.096" Stretch="Fill" Canvas.Top="28.979" Width="78.211">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFC7DAE1" Offset="0"/>
+    						<GradientStop Color="#FFB2BFC4" Offset="0.84831202030181885"/>
+    						<GradientStop Color="#FF85898B" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M314.549,283.058C311.115,283.058,308.327,285.844,308.327,289.28L308.327,289.28L308.327,304.036C308.327,307.471,311.115,310.256,314.549,310.256L314.549,310.256L324.785,310.256C323.067,310.256,321.674,307.471,321.674,304.036L321.674,304.036L321.674,289.28C321.674,285.844,323.067,283.058,324.785,283.058L324.785,283.058z" Height="27.198" Canvas.Left="33.914" Stretch="Fill" Canvas.Top="28.979" Width="16.458">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFC4DCE5" Offset="0"/>
+    						<GradientStop Color="#FFBCCACF" Offset="0.84831202030181885"/>
+    						<GradientStop Color="#FF85898B" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M303.73,284.791C301.256,284.791,299.243,286.805,299.243,289.28L299.243,289.28C299.243,289.28,301.249,286.708,303.73,286.708L303.73,286.708L369.501,286.708C372.524,286.708,373.987,289.28,373.987,289.28L373.987,289.28C373.987,286.805,371.975,284.791,369.501,284.791L369.501,284.791z" Height="4.489" Canvas.Left="24.83" Stretch="Fill" Canvas.Top="30.712" Width="74.744">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFD7F1FB" Offset="0"/>
+    						<GradientStop Color="#FFBBD1DA" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M303.73,312.039C300.295,312.039,297.509,314.825,297.509,318.259L297.509,318.259L297.509,333.015C297.509,336.452,300.295,339.237,303.73,339.237L303.73,339.237L369.501,339.237C372.936,339.237,375.72,336.452,375.72,333.015L375.72,333.015L375.72,318.259C375.72,314.825,372.936,312.039,369.501,312.039L369.501,312.039z" Height="27.198" Canvas.Left="23.096" Stretch="Fill" Canvas.Top="57.96" Width="78.211">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFC7DAE1" Offset="0"/>
+    						<GradientStop Color="#FFB2BFC4" Offset="0.84831202030181885"/>
+    						<GradientStop Color="#FF85898B" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M314.549,312.039C311.115,312.039,308.327,314.825,308.327,318.259L308.327,318.259L308.327,333.015C308.327,336.452,311.115,339.237,314.549,339.237L314.549,339.237L324.785,339.237C323.067,339.237,321.674,336.452,321.674,333.015L321.674,333.015L321.674,318.259C321.674,314.825,323.067,312.039,324.785,312.039L324.785,312.039z" Height="27.198" Canvas.Left="33.914" Stretch="Fill" Canvas.Top="57.96" Width="16.458">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFC4DCE5" Offset="0"/>
+    						<GradientStop Color="#FFBCCACF" Offset="0.84831202030181885"/>
+    						<GradientStop Color="#FF85898B" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1M303.73,313.773C301.256,313.773,299.243,315.785,299.243,318.259L299.243,318.259C299.243,318.259,301.249,315.69,303.73,315.69L303.73,315.69L369.501,315.69C372.524,315.69,373.987,318.259,373.987,318.259L373.987,318.259C373.987,315.785,371.975,313.773,369.501,313.773L369.501,313.773z" Height="4.486" Canvas.Left="24.83" Stretch="Fill" Canvas.Top="59.694" Width="74.744">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    						<GradientStop Color="#FFD7F1FB" Offset="0"/>
+    						<GradientStop Color="#FFBBD1DA" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    		</Canvas>
+    	</Viewbox>
+    	<TextBlock Margin="64,8,8,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18.667" Height="30" d:LayoutOverrides="GridBox" Foreground="#7FFFFFFF"><Run Text="Configure Version Control System"/><LineBreak/><Run/></TextBlock>
+        <Grid>
+            <dataFormToolkit:DataForm Margin="0,59,0,55" x:Name="dataForm1" 
+                                      Background="{x:Null}" 
+                                      CurrentItem="{Binding VCSConfiguration}" 
+                                      CommitButtonContent="Save" 
+                                      Foreground="White" 
+                                      AutoCommit="False" />
+        </Grid>
+    </Grid>
+</UserControl>

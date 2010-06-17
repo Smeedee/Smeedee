@@ -1,0 +1,59 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:ViewModel="clr-namespace:Smeedee.Client.Framework.ViewModel;assembly=Smeedee.Client.Framework.SL" 
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+    x:Class="Smeedee.Client.Framework.SL.Views.ErrorInfoView"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    <d:DataContext>
+        <ViewModel:ErrorInfo />
+    </d:DataContext>
+    <Grid x:Name="LayoutRoot">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="VisualStateGroup">
+				<VisualState x:Name="ShowError">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="border">
+							<DiscreteObjectKeyFrame KeyTime="0">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Visible</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+							<EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="HideError">
+					<Storyboard>
+						<DoubleAnimation Duration="0:0:0.5" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border" d:IsOptimized="True"/>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="border">
+							<DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+								<DiscreteObjectKeyFrame.Value>
+									<Visibility>Collapsed</Visibility>
+								</DiscreteObjectKeyFrame.Value>
+							</DiscreteObjectKeyFrame>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+    	<Border x:Name="border" Background="{StaticResource ErrorMsgCanvasBackground}" BorderThickness="2" BorderBrush="White" CornerRadius="4" Margin="2" Opacity="0" Visibility="Collapsed">
+    		<i:Interaction.Behaviors>
+    			<ei:DataStateBehavior Binding="{Binding HasError}" TrueState="ShowError" Value="True" FalseState="HideError"/>
+    		</i:Interaction.Behaviors>
+    		<Grid Margin="4,0">
+    			<TextBlock TextWrapping="Wrap" Text="{Binding ErrorMessage}" Foreground="White" FontSize="8"/>
+    			<Viewbox HorizontalAlignment="Right" VerticalAlignment="Top" >
+    				<TextBlock TextWrapping="Wrap" Text="Error" Foreground="White" FontSize="16" d:IsHidden="True" Opacity="0.35"/>
+    			</Viewbox>
+    		</Grid>
+    	</Border>
+    </Grid>
+</UserControl>

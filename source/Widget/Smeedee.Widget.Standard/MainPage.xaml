@@ -1,0 +1,19 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Smeedee_Widget_Standard_SourceControl_Views="clr-namespace:Smeedee.Widget.Standard.SourceControl.Views" xmlns:ViewModel="clr-namespace:Smeedee.Widget.Standard.SourceControl.ViewModel" x:Class="Smeedee.Widget.Standard.MainPage"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot" Background="#99000000">
+
+        <Smeedee_Widget_Standard_SourceControl_Views:LatestChangesView Margin="0">
+            <Smeedee_Widget_Standard_SourceControl_Views:LatestChangesView.DataContext>
+                <ViewModel:SourceControlViewModel/>
+            </Smeedee_Widget_Standard_SourceControl_Views:LatestChangesView.DataContext>
+        </Smeedee_Widget_Standard_SourceControl_Views:LatestChangesView>
+
+    </Grid>
+</UserControl>

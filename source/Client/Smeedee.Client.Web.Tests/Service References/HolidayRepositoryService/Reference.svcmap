@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d1c57a01-813a-452d-aad6-a5cc90064a28" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="HolidayRepositoryService.xsd" MetadataType="Schema" ID="b276f158-c700-4561-91c8-e0a830c422bd" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="HolidayRepositoryService1.xsd" MetadataType="Schema" ID="4770a300-6354-43e3-a02d-f9a506f5ceff" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="HolidayRepositoryService.wsdl" MetadataType="Wsdl" ID="c1670f5d-940e-4476-ad25-b12c356d4193" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="HolidayRepositoryService1.wsdl" MetadataType="Wsdl" ID="402d3518-2c49-422a-a37e-162c617f6e92" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="HolidayRepositoryService2.xsd" MetadataType="Schema" ID="b395f997-4523-4b57-9860-e75ff9df6f23" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?xsd=xsd4" />
+    <MetadataFile FileName="HolidayRepositoryService3.xsd" MetadataType="Schema" ID="c3fb3116-18a5-48c6-8b15-6f69eedd22ba" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="HolidayRepositoryService4.xsd" MetadataType="Schema" ID="cdf53bdc-af2a-4b08-84ff-35dc65d267ea" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="HolidayRepositoryService.disco" MetadataType="Disco" ID="223c7344-a993-4022-8427-28b925d2d62c" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,116 @@
+﻿#region File header
+
+// <copyright>
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+// /copyright> 
+// 
+// <contactinfo>
+// The project webpage is located at http://agileprojectdashboard.org/
+// which contains all the neccessary information.
+// </contactinfo>
+
+#endregion
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.ServiceProcess;
+using Smeedee.DomainModel.Framework.Logging;
+using Smeedee.Integration.Database.DomainModel.Repositories;
+using Smeedee.Tasks.CI;
+using Smeedee.Tasks.Framework;
+using Smeedee.Tasks.SourceControl;
+
+namespace Smeedee.Scheduler.Service
+{
+    public partial class DataCollectorService : ServiceBase
+    {
+        private const string SERVICE_DESCRIPTION = "smeedee_dc_service";
+        private const string LOG_NAME = "smeedee_dc_Log";
+
+        private string databaseFile;
+        public string DatabaseFile
+        {
+            get
+            {
+                commonAppPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                return Path.Combine( commonAppPath, databaseFile);
+            }
+            set { databaseFile = value; }
+        }
+
+        private string commonAppPath;
+
+        public DataCollectorService()
+        {
+            InitializeComponent();
+
+            if (!EventLog.SourceExists(SERVICE_DESCRIPTION))
+            {
+                EventLog.CreateEventSource(SERVICE_DESCRIPTION, LOG_NAME);
+                EventLog.WriteEntry("Created smeedee Data Collector Service", EventLogEntryType.Information);
+            }
+            
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            EventLog.WriteEntry("Starting smeedee Data Collector Service", EventLogEntryType.Information);
+
+            if(args.Length < 1 || String.IsNullOrEmpty(args[0]))
+            {
+                DatabaseFile = "smeedeeDB.db";
+            }
+            else
+            {
+                DatabaseFile = args[0];
+            }
+
+            EventLog.WriteEntry("Using database file: " + DatabaseFile, EventLogEntryType.Information);
+
+            RunHarvesters();
+
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+
+            EventLog.WriteEntry("Stopping smeedee Data Collector Service", EventLogEntryType.Information);
+        }
+
+        private void RunHarvesters()
+        {
+            var sessionFactory = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
+
+            ILog logger = new Logger(new LogEntryDatabaseRepository(sessionFactory));
+
+            var harvesterScheduler = new Smeedee.Scheduler.Scheduler(logger);
+            var configRepository = new ConfigurationDatabaseRepository(sessionFactory);
+
+            var csDatabase = new ChangesetDatabaseRepository(sessionFactory);
+            var repositoryFactory = new ChangesetRepositoryFactory();
+            var csHarvester = new SourceControlTask(csDatabase, configRepository, csDatabase, repositoryFactory);
+
+            var ciPersister = new CIServerDatabaseRepository(sessionFactory);
+            var ciRepositoryFactory = new CIServerRepositoryFactory();
+            var ciHarvester = new CITask(ciRepositoryFactory, ciPersister, configRepository);
+
+            harvesterScheduler.RegisterTasks(new List<TaskBase> { csHarvester, ciHarvester });
+            EventLog.WriteEntry("Harvesters started", EventLogEntryType.Information);
+        }
+    }
+}

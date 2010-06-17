@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.ProjectInfo" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.ProjectInfo" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Iteration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Project" nillable="true" type="tns:Project" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SystemId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tasks" nillable="true" type="tns:ArrayOfTask" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Iteration" nillable="true" type="tns:Iteration" />
+  <xs:complexType name="Project">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Iterations" nillable="true" type="tns:ArrayOfIteration" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Server" nillable="true" type="tns:ProjectInfoServer" />
+      <xs:element minOccurs="0" name="SystemId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Project" nillable="true" type="tns:Project" />
+  <xs:complexType name="ArrayOfIteration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Iteration" nillable="true" type="tns:Iteration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIteration" nillable="true" type="tns:ArrayOfIteration" />
+  <xs:complexType name="ProjectInfoServer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Projects" nillable="true" type="tns:ArrayOfProject" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectInfoServer" nillable="true" type="tns:ProjectInfoServer" />
+  <xs:complexType name="ArrayOfProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Project" nillable="true" type="tns:Project" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProject" nillable="true" type="tns:ArrayOfProject" />
+  <xs:complexType name="ArrayOfTask">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Task" nillable="true" type="tns:Task" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTask" nillable="true" type="tns:ArrayOfTask" />
+  <xs:complexType name="Task">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Iteration" nillable="true" type="tns:Iteration" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SystemId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WorkEffortEstimate" type="xs:float" />
+      <xs:element minOccurs="0" name="WorkEffortHistory" nillable="true" type="tns:ArrayOfWorkEffortHistoryItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Task" nillable="true" type="tns:Task" />
+  <xs:complexType name="ArrayOfWorkEffortHistoryItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WorkEffortHistoryItem" nillable="true" type="tns:WorkEffortHistoryItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWorkEffortHistoryItem" nillable="true" type="tns:ArrayOfWorkEffortHistoryItem" />
+  <xs:complexType name="WorkEffortHistoryItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RemainingWorkEffort" type="xs:float" />
+      <xs:element minOccurs="0" name="Task" nillable="true" type="tns:Task" />
+      <xs:element minOccurs="0" name="TimeStampForUpdate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WorkEffortHistoryItem" nillable="true" type="tns:WorkEffortHistoryItem" />
+  <xs:complexType name="ArrayOfProjectInfoServer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProjectInfoServer" nillable="true" type="tns:ProjectInfoServer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProjectInfoServer" nillable="true" type="tns:ArrayOfProjectInfoServer" />
+</xs:schema>

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Smeedee.DomainModel.CI.CIProject">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAiAAAAAAAAAAQgAAAAAAAAgEAAAA=</HashCode>
+      <FileName>CIProject.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LatestBuild" />
+      <Property Name="Server" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Builds" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.CodeModifiedTrigger">
+    <Position X="4.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeModifiedTrigger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.Trigger">
+    <Position X="6.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAECAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Trigger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.EventTrigger">
+    <Position X="6.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EventTrigger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.UnknownTrigger">
+    <Position X="8.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UnknownTrigger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.BuildSpecification" Collapsed="true">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>BuildSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.AllBuildsSpecification">
+    <Position X="14.75" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>BuildSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.LatestBuildSpecification">
+    <Position X="12" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>BuildSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.AllBuildsByUser">
+    <Position X="17.25" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>BuildSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.CIServer">
+    <Position X="0.5" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAAAAAAAAQA=</HashCode>
+      <FileName>CIServer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Projects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Smeedee.DomainModel.CI.Build">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAACABQAgAAACAAAIAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Project" />
+      <Property Name="Trigger" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Smeedee.DomainModel.CI.Repositories.ICIProjectRepository">
+    <Position X="10" Y="0.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\ICIProjectRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Smeedee.DomainModel.CI.BuildStatus">
+    <Position X="9.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABABAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9a48c09d-e744-4ea1-9f72-e03bd1e01062" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LogEntryRepositoryService.xsd" MetadataType="Schema" ID="1dd227ea-61a6-40e5-bc54-0e0d3f6fc432" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="LogEntryRepositoryService.disco" MetadataType="Disco" ID="88b1a2e2-175a-4981-82d6-cafec64fa917" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?disco" />
+    <MetadataFile FileName="LogEntryRepositoryService.wsdl" MetadataType="Wsdl" ID="6ee0523a-4501-497e-b88a-8d7975bceaa5" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="LogEntryRepositoryService1.xsd" MetadataType="Schema" ID="cdde861e-02d7-4262-a8c7-2c00d8bd721d" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="LogEntryRepositoryService2.xsd" MetadataType="Schema" ID="75e0fd89-a603-42b1-b17f-3be08eafaa68" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="LogEntryRepositoryService1.wsdl" MetadataType="Wsdl" ID="3fafef11-2739-4904-8cd7-b776be8752d3" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="LogEntryRepositoryService3.xsd" MetadataType="Schema" ID="9835b469-8b21-49be-9b5f-1dbe93052404" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

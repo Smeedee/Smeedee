@@ -1,0 +1,12 @@
+<OutOfBrowserSettings ShortName="Smeedee" EnableGPUAcceleration="True" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>Smeedee.Client.SL Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
+  <OutOfBrowserSettings.WindowSettings>
+    <WindowSettings Title="Smeedee" />
+  </OutOfBrowserSettings.WindowSettings>
+  <OutOfBrowserSettings.Icons>
+    <Icon Size="16,16">Resources/Graphic/Smeedee-icon-16x16.png</Icon>
+    <Icon Size="32,32">Resources/Graphic/Smeedee-icon-32x32.png</Icon>
+    <Icon Size="48,48">Resources/Graphic/Smeedee-icon-48x48.png</Icon>
+    <Icon Size="128,128">Resources/Graphic/Smeedee-icon-128x128.png</Icon>
+  </OutOfBrowserSettings.Icons>
+</OutOfBrowserSettings>

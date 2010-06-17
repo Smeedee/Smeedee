@@ -142,15 +142,6 @@ namespace APD.Client.Widget.AdminTests.Controllers.ConfigurationControllerSpecs
             ciConfig.NewSetting("plugin-class", typeof(CIConfigPlugin).AssemblyQualifiedName);
             configurations.Add(ciConfig);
 
-            var piConfig = new Configuration("pi");
-            ciConfig.NewSetting("supported-providers", "Scrum for Team System (Conchango)");
-            ciConfig.NewSetting("provider", string.Empty);
-            ciConfig.NewSetting("url", string.Empty);
-            ciConfig.NewSetting("username", string.Empty);
-            ciConfig.NewSetting("password", string.Empty);
-            ciConfig.NewSetting("plugin-class", typeof(PIConfigPlugin).AssemblyQualifiedName);
-            configurations.Add(piConfig);
-
             var dashboardConfig = new Configuration("dashboard");
             dashboardConfig.NewSetting("slide-widgets", "");
             dashboardConfig.NewSetting("selected-slide-widgets");

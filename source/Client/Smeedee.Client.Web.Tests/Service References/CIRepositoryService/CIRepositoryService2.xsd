@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.CI" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.CI" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfCIServer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CIServer" nillable="true" type="tns:CIServer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCIServer" nillable="true" type="tns:ArrayOfCIServer" />
+  <xs:complexType name="CIServer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Projects" nillable="true" type="tns:ArrayOfCIProject" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="CIServer" nillable="true" type="tns:CIServer" />
+  <xs:complexType name="ArrayOfCIProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CIProject" nillable="true" type="tns:CIProject" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCIProject" nillable="true" type="tns:ArrayOfCIProject" />
+  <xs:complexType name="CIProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Builds" nillable="true" type="tns:ArrayOfBuild" />
+      <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Server" nillable="true" type="tns:CIServer" />
+      <xs:element minOccurs="0" name="SystemId" nillable="true" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="CIProject" nillable="true" type="tns:CIProject" />
+  <xs:complexType name="ArrayOfBuild">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Build" nillable="true" type="tns:Build" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBuild" nillable="true" type="tns:ArrayOfBuild" />
+  <xs:complexType name="Build">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FinishedTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Project" nillable="true" type="tns:CIProject" />
+      <xs:element minOccurs="0" name="StartTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" type="tns:BuildStatus" />
+      <xs:element minOccurs="0" name="SystemId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Trigger" nillable="true" type="tns:Trigger" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Build" nillable="true" type="tns:Build" />
+  <xs:simpleType name="BuildStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="Building" />
+      <xs:enumeration value="FinishedWithFailure" />
+      <xs:enumeration value="FinishedSuccefully" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BuildStatus" nillable="true" type="tns:BuildStatus" />
+  <xs:complexType name="Trigger">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cause" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvokedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Trigger" nillable="true" type="tns:Trigger" />
+  <xs:complexType name="UnknownTrigger">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Trigger">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UnknownTrigger" nillable="true" type="tns:UnknownTrigger" />
+  <xs:complexType name="CodeModifiedTrigger">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Trigger">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CodeModifiedTrigger" nillable="true" type="tns:CodeModifiedTrigger" />
+  <xs:complexType name="EventTrigger">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Trigger">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EventTrigger" nillable="true" type="tns:EventTrigger" />
+</xs:schema>

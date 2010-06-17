@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Smeedee.Client.Widgets.SL.CI.Views.BuildStatusView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100" d:DesignWidth="300">
+    
+    <Grid x:Name="LayoutRoot">
+    	<Viewbox Margin="0" d:LayoutOverrides="Height">
+    		<StackPanel Orientation="Vertical" Height="46" Width="100">
+    			<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+    				<Ellipse Fill="#FF09FF00" Stroke="Black" VerticalAlignment="Center" HorizontalAlignment="Center" Width="30" Height="30" Opacity="0.25"/>
+    				<Ellipse Fill="Yellow" Stroke="Black" VerticalAlignment="Center" Height="30" Width="30" HorizontalAlignment="Center" Margin="4,1,4,0"/>
+    				<Ellipse Fill="Red" Stroke="Black" VerticalAlignment="Center" Height="30" Width="30" HorizontalAlignment="Center" Opacity="0.25"/>
+    			</StackPanel>
+    			<TextBlock Height="15" Margin="0" TextWrapping="Wrap" Text="Building..." Foreground="White" HorizontalAlignment="Center" FontSize="9.333" Opacity="0.5"/>
+    		</StackPanel>
+    	</Viewbox>
+    </Grid>
+</UserControl>

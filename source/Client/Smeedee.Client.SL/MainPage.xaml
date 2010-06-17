@@ -1,0 +1,45 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Smeedee_Client_Resources_Graphic="clr-namespace:Smeedee.Client.Resources.Graphic" 
+    xmlns:ViewModel="clr-namespace:Smeedee.Client.Framework.ViewModel;assembly=Smeedee.Client.Framework.SL" xmlns:local="clr-namespace:Smeedee.Client.SL" x:Class="Smeedee.Client.SL.MainPage"
+    mc:Ignorable="d"
+    d:DesignHeight="600" d:DesignWidth="800">
+	<UserControl.Resources>
+		<DataTemplate x:Key="TraybarWidgetDataTemplate">
+			<Grid>
+				<ContentPresenter Margin="0" Grid.Row="1" Content="{Binding Control}"/>
+			</Grid>
+		</DataTemplate>
+	</UserControl.Resources>
+    <UserControl.DataContext>
+        <ViewModel:ApplicationContext Title="Smeedee Application"/>
+    </UserControl.DataContext>
+    <Grid x:Name="LayoutRoot">
+    	<Grid Margin="0,70,0,50" d:LayoutOverrides="GridBox">
+    		<Grid.Background>
+    			<LinearGradientBrush EndPoint="0.499,0" StartPoint="0.501,1">
+    				<GradientStop Color="#FF2B2B2B" Offset="0.451"/>
+    				<GradientStop Color="#FF575757" Offset="1"/>
+    				<GradientStop Color="#FF232323"/>
+    			</LinearGradientBrush>
+    		</Grid.Background>
+    		<local:SlideshowView Margin="0" DataContext="{Binding Slideshow}"/>
+    	</Grid>
+    	<Grid Margin="-4,0,0,0" Background="Black" Height="70" VerticalAlignment="Top">
+    		<Grid.Effect>
+    			<DropShadowEffect Opacity="0.5"/>
+    		</Grid.Effect>
+    		<TextBlock Margin="13,17,197,16" Foreground="#59FFFFFF" FontSize="26.667" Text="{Binding Title}"/>
+    		<TextBlock Margin="15,0,195,3" Foreground="#34FFFFFF" FontSize="10.667" Text="{Binding Subtitle}" Height="16" VerticalAlignment="Bottom"/>
+    	</Grid>
+    	<Viewbox HorizontalAlignment="Right" Width="180" Height="62" VerticalAlignment="Top" Margin="0,12,6,0" d:LayoutOverrides="VerticalAlignment">
+    		<Smeedee_Client_Resources_Graphic:Logo/>
+    	</Viewbox>
+    	<Grid Height="50" Margin="0" VerticalAlignment="Bottom" Background="Black">
+    		<local:TraybarView Margin="0" DataContext="{Binding Traybar}"/>
+    	</Grid>
+    </Grid>
+</UserControl>

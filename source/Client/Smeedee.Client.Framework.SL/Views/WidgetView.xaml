@@ -1,0 +1,16 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:ViewModel="clr-namespace:Smeedee.Client.Framework.ViewModel" xmlns:local="clr-namespace:Smeedee.Client.Framework.SL.Views" x:Class="Smeedee.Client.Framework.SL.Views.WidgetView"
+    mc:Ignorable="d"
+    d:DesignHeight="50" d:DesignWidth="150">
+    <d:UserControl.DataContext>
+    	<ViewModel:Widget/>   
+	</d:UserControl.DataContext>
+    <Grid x:Name="LayoutRoot">
+    	<ContentControl x:Name="contentControl" Content="" Margin="10,4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    	<local:ErrorInfoView Margin="0" DataContext="{Binding ErrorInfo}"/>
+    </Grid>
+</UserControl>

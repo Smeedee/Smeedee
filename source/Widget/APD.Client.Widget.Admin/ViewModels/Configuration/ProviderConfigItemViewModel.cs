@@ -11,7 +11,7 @@ namespace APD.Client.Widget.Admin.ViewModels.Configuration
 {
     public class ProviderConfigItemViewModel : ConfigurationItemViewModel
     {
-        private readonly List<String> PROVIDERS_USING_PROJECT = new List<String>() { "tfs", "Scrum for Team System (Conchango)" };
+        private const string TFS_PROVIDER_NAME = "tfs";
         private Config.Configuration configuration;
 
         public string Username
@@ -62,7 +62,7 @@ namespace APD.Client.Widget.Admin.ViewModels.Configuration
         {
             get
             {
-                return ( PROVIDERS_USING_PROJECT.Contains(SelectedProvider) );
+                return ( SelectedProvider == TFS_PROVIDER_NAME );
             }
         }
 

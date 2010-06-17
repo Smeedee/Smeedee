@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="26537cdd-8d56-4ea7-a9cf-e65685f36552" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ProjectInfoRepositoryService.disco" MetadataType="Disco" ID="a8d86328-45a9-4ba5-89cb-80530a845402" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?disco" />
+    <MetadataFile FileName="ProjectInfoRepositoryService.wsdl" MetadataType="Wsdl" ID="fbd4a2ef-f192-4cad-9722-5e2379021a07" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ProjectInfoRepositoryService1.wsdl" MetadataType="Wsdl" ID="5acfdae9-0727-4081-a657-f5fad7c3a934" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="ProjectInfoRepositoryService.xsd" MetadataType="Schema" ID="6f2b9ba7-7b8b-440e-9396-ccacd17925e7" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ProjectInfoRepositoryService1.xsd" MetadataType="Schema" ID="5b703139-6c4a-4962-87fa-4d82a22ce760" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ProjectInfoRepositoryService2.xsd" MetadataType="Schema" ID="adbc1215-b306-46a7-b469-ed49d722438b" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ProjectInfoRepositoryService3.xsd" MetadataType="Schema" ID="322c13b8-c70e-452d-9abe-7df4390a793e" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

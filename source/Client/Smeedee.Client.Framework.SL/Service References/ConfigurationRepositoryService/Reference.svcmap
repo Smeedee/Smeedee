@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c254bd88-977a-4612-8f70-66fb6bd7c98b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ConfigurationRepositoryService.disco" MetadataType="Disco" ID="8c9c5bbb-21f1-4468-a2d5-8f7485c0089a" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?disco" />
+    <MetadataFile FileName="ConfigurationRepositoryService.wsdl" MetadataType="Wsdl" ID="8e458aa0-e84d-4a68-a688-7b7fbb3fe8e8" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="ConfigurationRepositoryService.xsd" MetadataType="Schema" ID="991c1416-9f13-4360-b988-387f91124fe1" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ConfigurationRepositoryService1.xsd" MetadataType="Schema" ID="5afab8bc-3d15-4a49-b6c7-9a74ab5a8590" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ConfigurationRepositoryService2.xsd" MetadataType="Schema" ID="c7c535cd-10f5-44fd-8f64-9f3340e2a115" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ConfigurationRepositoryService1.wsdl" MetadataType="Wsdl" ID="943f1ff6-48f4-4e32-848a-0b14b57b3056" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ConfigurationRepositoryService3.xsd" MetadataType="Schema" ID="867b14c1-7b54-4349-b38c-ea36e5e1c160" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ConfigurationRepositoryService4.xsd" MetadataType="Schema" ID="1fdbbed3-1ce6-42c5-9209-9a890cd9aba9" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

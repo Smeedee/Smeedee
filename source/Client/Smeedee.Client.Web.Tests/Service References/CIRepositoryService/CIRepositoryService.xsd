@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://smeedee.org" elementFormDefault="qualified" targetNamespace="http://smeedee.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.CI" />
+  <xs:element name="Get">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" minOccurs="0" name="specification" nillable="true" type="q1:SpecificationOfCIServerVKkYY7as" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.CI" minOccurs="0" name="GetResult" nillable="true" type="q2:ArrayOfCIServer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

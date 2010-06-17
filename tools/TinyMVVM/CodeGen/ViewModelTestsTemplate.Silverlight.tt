@@ -1,0 +1,94 @@
+﻿<#@ assembly name="$(SolutionDir)..\Tools\TinyMVVM\TinyMVVM.dll" #>
+<#@ import namespace="TinyMVVM.DSL.TextParser" #>
+<#@ import namespace="TinyMVVM.SemanticModel" #>
+
+<#+
+// <copyright file="ViewModelTestsTemplate.tt" company="eXPerience">
+//  Copyright © eXPerience. All Rights Reserved.
+// </copyright>
+
+public class ViewModelTestsTemplate : Template
+{
+	public string File;
+	public string Namespace;
+	public string UsingNamespace;
+
+	public override string TransformText()
+	{
+		Parser parser = new Parser();
+		ModelSpecification modelSpec = parser.Parse(Code.FromFile(File));
+#>
+
+using <#= UsingNamespace#>;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TinyMVVM.Framework.Testing;
+using TestContext = TinyMVVM.Framework.Testing.TestContext;
+<#+ foreach (string Using in modelSpec.Usings) {#>
+using <#= Using #>;
+<#+ }#>
+
+namespace <#= Namespace #>
+{
+<#+ foreach (ViewModel viewModel in modelSpec.ViewModels){#>
+	public abstract class <#= viewModel.Name #>Context : TestContext
+	{
+		protected <#= viewModel.Name#> viewModel;
+
+		[TestInitialize]
+		public void Setup()
+		{
+			ServiceLocator.SetLocator(ServiceLocatorForTesting.GetServiceLocator());
+			
+			Context();
+		}
+
+		public abstract void Context();
+
+		public void Given_<#= viewModel.Name#>_is_created()
+		{
+			viewModel = new <#= viewModel.Name#>();
+            viewModel.PropertyChangeRecorder.Start();
+		}
+		
+	<#+ foreach (ViewModelProperty property in viewModel.Properties){#>
+	public void And_<#= property.Name#>_is_set(<#= property.Type#> value)
+		{
+			viewModel.<#= property.Name#> = value;
+		}
+	<#+ }#>	
+	
+		public void And_<#= viewModel.Name#>_PropertyChangeRecording_is_Started()
+		{
+			viewModel.PropertyChangeRecorder.Start();
+		}
+
+	<#+ foreach (ViewModelProperty property in viewModel.Properties){#>
+	public void When_<#= property.Name#>_is_set(<#= property.Type#> value)
+		{
+			viewModel.<#= property.Name#> = value;
+		}
+		
+	<#+ }#>
+	
+		public void When_<#= viewModel.Name#>_is_spawned()
+		{
+			viewModel = new <#= viewModel.Name#>();
+		} 
+		
+	<#+ foreach (ViewModelCommand command in viewModel.Commands) {#>
+	public void When_execute_<#= command.Name#>_Command()
+		{
+			viewModel.<#= command.Name#>.Execute(null);
+		}
+		
+	<#+ }#>
+}
+
+<#+ }#>
+}
+
+<#+
+        return this.GenerationEnvironment.ToString();
+	}
+}
+#>

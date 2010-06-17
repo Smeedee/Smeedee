@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="488de657-6359-40ab-a25c-1194bcd34af6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/APD/Services/UserRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="UserRepositoryService.disco" MetadataType="Disco" ID="54153786-4074-4b8a-83da-55b7154bc378" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/UserRepositoryService.svc?disco" />
+    <MetadataFile FileName="UserRepositoryService.wsdl" MetadataType="Wsdl" ID="aa5684d3-65b0-4a0a-ad25-c3e800dd047c" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/UserRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="UserRepositoryService1.wsdl" MetadataType="Wsdl" ID="8781d25f-21d8-41b8-9f13-6ab668c63fb7" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/UserRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="UserRepositoryService.xsd" MetadataType="Schema" ID="bb1a2c12-64e2-4cde-bc65-68c079017901" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/UserRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserRepositoryService1.xsd" MetadataType="Schema" ID="f0a76759-881e-4462-8481-ba40cbad4bee" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/UserRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="UserRepositoryService2.xsd" MetadataType="Schema" ID="366d8ffb-0b78-492b-977d-5de75fe1f029" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/UserRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="UserRepositoryService3.xsd" MetadataType="Schema" ID="5ebc310b-b569-486c-992a-ee661e959d8a" SourceId="1" SourceUrl="http://localhost:1155/APD/Services/UserRepositoryService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,80 @@
+﻿<#@ assembly name="$(SolutionDir)\TinyMVVM\$(OutDir)\TinyMVVM.dll" #>
+<#@ import namespace="TinyMVVM.DSL.TextParser" #>
+<#@ import namespace="TinyMVVM.SemanticModel" #>
+
+<#+
+// <copyright file="ViewModel.tt" company="eXPerience">
+//  Copyright © eXPerience. All Rights Reserved.
+// </copyright>
+
+public class ViewModelTemplate : Template
+{
+	public string File;
+	public string Namespace;
+
+	public override string TransformText()
+	{
+		Parser parser = new Parser();
+		ModelSpecification modelSpec = parser.Parse(Code.FromFile(File));
+
+	#>
+
+<#+ foreach (string Using in modelSpec.Usings) {#>
+using <#= Using #>;
+<#+ }#>
+
+namespace <#= Namespace #>
+{
+<#+ foreach (ViewModel viewModel in modelSpec.ViewModels) {#>
+	public partial class <#= viewModel.Name#> : <#= viewModel.Parent #>
+	{
+		//State
+	<#+ foreach (ViewModelProperty property in viewModel.Properties) {#>
+<#+ foreach (string attribute in property.Attributes) {#>
+	<#= attribute #>
+	<#+ }#>
+	<#+ if (property.IsObservable) {#>
+public <#= property.Type#> <#= property.Name#>
+		{
+			get { return _<#= property.Name#>; }
+			set
+			{
+				if (value != _<#= property.Name#>)
+				{
+					_<#= property.Name#> = value;
+					TriggerPropertyChanged("<#= property.Name#>");
+				}
+			}
+		}
+		private <#= property.Type#> _<#= property.Name#>;
+
+	<#+ }#>
+<#+ if (!property.IsObservable){#>
+public <#= property.Type#> <#= property.Name#> { get; set; } 
+	<#+ }#>
+<#+ }#>
+
+		
+		//Commands
+	<#+ foreach (ViewModelCommand command in viewModel.Commands) {#>
+	public DelegateCommand <#= command.Name#> { get; set; }
+	<#+ }#>
+	
+		public <#= viewModel.Name#>()
+		{
+	<#+ foreach (ViewModelCommand command in viewModel.Commands) {#>
+		<#= command.Name#> = new DelegateCommand();
+	<#+ }#>
+	
+			ServiceLocator.SetLocatorIfNotSet(() => ServiceLocator.GetServiceLocator());
+		
+			ApplyDefaultConventions();
+		}
+	}
+		
+<#+ }#>
+}<#+
+        return this.GenerationEnvironment.ToString();
+	}
+}
+#>

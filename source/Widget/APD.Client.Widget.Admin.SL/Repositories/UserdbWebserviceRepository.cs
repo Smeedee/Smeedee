@@ -12,12 +12,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 using APD.Client.Framework.SL;
-using APD.Client.Framework.SL.UserRepositoryService;
+using APD.Client.Widget.Admin.SL.UserdbRepositoryService;
 using APD.DomainModel.Framework;
 using APD.DomainModel.Users;
-
-using Userdb = APD.DomainModel.Users.Userdb;
-
 
 namespace APD.Client.Widget.Admin.SL.Repositories
 {

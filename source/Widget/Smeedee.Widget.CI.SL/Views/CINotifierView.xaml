@@ -1,0 +1,78 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/client/2007"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.CINotifierDataSource"
+             xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" xmlns:Converters="clr-namespace:Smeedee.Widget.CI.SL.Converters" x:Class="Smeedee.Widget.CI.SL.Views.CINotifierView"
+             d:DesignWidth="440"
+             d:DesignHeight="136">
+    <UserControl.Resources>
+        <Converters:BuildStatusToOpacityConverter x:Key="BuildStatusToOpacityConverter" />
+        <Converters:BuildStatusConverter x:Key="BuildStatusConverter" />
+        <SampleData:CINotifierDataSource x:Key="CINotifierDataSource" d:IsDataSource="True" />
+        <ControlTemplate x:Name="LargeNotifier" TargetType="ContentControl">
+            <controlsToolkit:Viewbox>
+                <Grid Margin="0,7,0,7"
+                      x:Name="LayoutRoot">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Grid.Column="0"
+                             x:Name="Green"
+                             Fill="{StaticResource GreenGradientBrush}"
+                             Stroke="Black"
+                             Height="50"
+                             Width="50"
+                             Margin="5,0,5,0"
+                             Opacity="{Binding Status, Converter={StaticResource BuildStatusToOpacityConverter}, ConverterParameter=Green, Mode=OneWay}"
+                             StrokeThickness="3">
+                    </Ellipse>
+                    <Ellipse Grid.Column="1"
+                             x:Name="Yellow"
+                             Fill="{StaticResource YellowGradientBrush}"
+                             Stroke="Black"
+                             Height="50"
+                             Width="50"
+                             Margin="5,0,5,0"
+                             Opacity="{Binding Status, Converter={StaticResource BuildStatusToOpacityConverter}, ConverterParameter=Yellow, Mode=OneWay}"
+                             StrokeThickness="3">
+                    </Ellipse>
+                    <Ellipse Grid.Column="2"
+                             x:Name="Red"
+                             Fill="{StaticResource RedGradientBrush}"
+                             Stroke="Black"
+                             Height="50"
+                             Width="50"
+                             Margin="5,0,5,0"
+                             Opacity="{Binding Status, Converter={StaticResource BuildStatusToOpacityConverter}, ConverterParameter=Red, Mode=OneWay}"
+                             StrokeThickness="3">
+                    </Ellipse>
+                </Grid>
+            </controlsToolkit:Viewbox>
+        </ControlTemplate>
+        <ControlTemplate x:Name="SmallNotifier" TargetType="ContentControl">
+            <controlsToolkit:Viewbox>
+                <StackPanel Margin="0,7,0,7">
+                    <Ellipse x:Name="Light"
+                             Fill="{Binding Status, Converter={StaticResource BuildStatusConverter}, Mode=OneWay}"
+                             Stroke="Black"
+                             Height="50"
+                             Width="50"
+                             Margin="5,7,5,7"
+                             Opacity="{Binding Status, Converter={StaticResource BuildStatusToOpacityConverter}, ConverterParameter=Multi, Mode=OneWay}"
+                             StrokeThickness="3">
+                    </Ellipse>
+                </StackPanel>
+            </controlsToolkit:Viewbox>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot"
+          d:DataContext="{Binding Source={StaticResource CINotifierDataSource}}"
+          SizeChanged="ResizeHandler"
+          Loaded="ResizeHandler"
+          Margin="0,1,0,-1">
+        <ContentControl x:Name="Content" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="SpecificationOfHolidayd0_SHrWKh">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="SpecificationOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Holiday" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Holidays" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="SpecificationOfHolidayd0_SHrWKh" nillable="true" type="tns:SpecificationOfHolidayd0_SHrWKh" />
+  <xs:complexType name="AllSpecificationOfHolidayd0_SHrWKh">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="AllSpecificationOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Holiday" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Holidays" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SpecificationOfHolidayd0_SHrWKh">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AllSpecificationOfHolidayd0_SHrWKh" nillable="true" type="tns:AllSpecificationOfHolidayd0_SHrWKh" />
+</xs:schema>

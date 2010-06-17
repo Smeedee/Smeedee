@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="47c900ea-1cdf-40a5-9802-9e163d1523f2" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CIRepositoryService.disco" MetadataType="Disco" ID="1133c1ad-315e-42e1-bf51-8fe601ed9468" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?disco" />
+    <MetadataFile FileName="CIRepositoryService.xsd" MetadataType="Schema" ID="50abaf63-4ac2-4b50-9e09-1dfdc4984a27" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CIRepositoryService.wsdl" MetadataType="Wsdl" ID="cd25bfbf-e0ea-4161-8e69-fcfd90c5b17c" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="CIRepositoryService1.xsd" MetadataType="Schema" ID="8102c285-3ff8-46b1-9f8e-56dbd83ffe31" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CIRepositoryService1.wsdl" MetadataType="Wsdl" ID="bf9ce231-7dd0-4766-8668-9ee66202e37a" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="CIRepositoryService2.xsd" MetadataType="Schema" ID="834e8109-aca1-43f4-a6c2-79c4ccbd64cd" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CIRepositoryService3.xsd" MetadataType="Schema" ID="f8205c86-1ad4-4e58-bcd4-a79d5fad6de6" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

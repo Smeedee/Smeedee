@@ -1,0 +1,19 @@
+﻿using System.Collections.ObjectModel
+using System.ComponentModel.DataAnnotations
+using TinyMVVM.Framework
+using System.ServiceModel.DomainServices.Client
+using APD.DomainModel.SourceControl
+using Smeedee.DomainModel.Config
+
+viewmodel ConfigurationViewModel:
+	oproperty VCSConfiguration as VCSConfiguration
+
+viewmodel SourceControlViewModel:
+	property Changesets as ObservableCollection<ChangesetViewModel>
+
+viewmodel ChangesetViewModel:
+	property Comment as string
+	property Name as string
+	property AvatarUrl as string
+	property Revision as string
+	property Time as string

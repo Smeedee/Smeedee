@@ -10,9 +10,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 using APD.Client.Framework.SL;
-using APD.Client.Framework.SL.VCSCredentialsService;
 using APD.DomainModel.Framework.Services;
 using System.Threading;
+using APD.Client.Widget.Admin.SL.VCSCredentialsService;
 
 namespace APD.Client.Widget.Admin.SL.Services
 {

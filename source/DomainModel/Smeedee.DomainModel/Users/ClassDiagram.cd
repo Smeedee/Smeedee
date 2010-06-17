@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Smeedee.DomainModel.Users.User">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAGAAAAAAAQAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Users\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Database" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Smeedee.DomainModel.Users.Userdb">
+    <Position X="5.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Users\Userdb.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Users" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

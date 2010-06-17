@@ -1,0 +1,41 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dal="clr-namespace:Smeedee.Client.Web.Services.DAL"
+    xmlns:riaControls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.DomainServices" xmlns:my="clr-namespace:Smeedee.Client.Web.Services.DAL" xmlns:my1="clr-namespace:Smeedee.Client.Web.Services" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" x:Class="Smeedee.Widget.Standard.ProjectInfo.Views.TeamMembersView"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+	<UserControl.Resources>
+		<DataTemplate x:Key="TeamMemberDataTemplate">
+			<Grid>
+				<Border Margin="0,0,4,4" HorizontalAlignment="Left" Background="#7F484848" BorderThickness="1" CornerRadius="2" Padding="4">
+					<Grid>
+						<Image Margin="0,0,0,20" Width="80" Source="{Binding ImageUrl}" HorizontalAlignment="Center" Height="80"/>
+						<StackPanel Margin="0,0,0,4" Orientation="Horizontal" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+							<TextBlock TextWrapping="Wrap" Text="{Binding Firstname}" Foreground="#59FFFFFF" Height="16"/>
+							<TextBlock TextWrapping="Wrap" Foreground="#59FFFFFF" Height="16" Text=" "/>
+							<TextBlock TextWrapping="Wrap" Text="{Binding Surname}" Foreground="#59FFFFFF" Height="16"/>
+						</StackPanel>
+					</Grid>
+				</Border>
+			</Grid>
+		</DataTemplate>
+		<ItemsPanelTemplate x:Key="TeamMembersWrapPanel">
+			<controlsToolkit:WrapPanel/>
+		</ItemsPanelTemplate>
+	</UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot" d:DataContext="{d:DesignData /SampleData/UsersSampleData.xaml}">
+        <ItemsControl ItemsSource="{Binding Data, ElementName=userDomainDataSource, Mode=OneWay}" 
+                      ItemTemplate="{StaticResource TeamMemberDataTemplate}" ItemsPanel="{StaticResource TeamMembersWrapPanel}"/>
+        <riaControls:DomainDataSource AutoLoad="True" Height="0" 
+                                      LoadedData="userDomainDataSource_LoadedData" 
+                                      x:Name="userDomainDataSource" 
+                                      QueryName="GetUserQuery" 
+                                      Width="0"
+                                      DomainContext="{Binding}" DesignData="{Binding}">
+        </riaControls:DomainDataSource>
+    </Grid>
+</UserControl>

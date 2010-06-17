@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{377B2C84-D2F4-4521-97A4-ADDDA50F53C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Smeedee.Client.Web.Tests</RootNamespace>
+    <AssemblyName>Smeedee.Client.Web.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_Bins\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_Bins\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_Bins\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_Bins\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Smeedee.DomainModel, Version=0.1.0.1, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Smeedee.DomainModel.Framework, Version=0.1.0.1, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\SQLite.NET.0.21_x68_dll\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TinyBDD, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\TinyBDD-v0.1.0.93\TinyBDD.dll</HintPath>
+    </Reference>
+    <Reference Include="TinyBDD.Specification.NUnit, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Learning\TypeDescriptorTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\CITests.cs" />
+    <Compile Include="Service References\ChangesetRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CIRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ConfigurationRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\HolidayRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LogEntryRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ProjectInfoRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\VCSCredentialsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Integration\CIRepositorySerivceTests.cs" />
+    <Compile Include="Services\Integration\ConfigurationRepositoryServiceTests.cs" />
+    <Compile Include="Services\Integration\HolidayRepositoryServiceTests.cs" />
+    <Compile Include="Services\Integration\LogEntryRepositoryServiceSpecs.cs" />
+    <Compile Include="Services\Integration\ProjectInfoRepositoryServiceTests.cs" />
+    <Compile Include="Services\Integration\ChangesetRepositoryServiceTests.cs" />
+    <Compile Include="Services\Integration\Shared.cs" />
+    <Compile Include="Services\Integration\UserRepositoryServiceTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.CI.CIServer.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Config.Configuration.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Framework.Logging.LogEntry.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Holidays.Holiday.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.SourceControl.Changeset.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Users.Userdb.datasource" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.wsdl" />
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.wsdl" />
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService.wsdl" />
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService1.wsdl" />
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.wsdl" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.wsdl" />
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.wsdl" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService1.wsdl" />
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.wsdl" />
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService1.wsdl" />
+    <None Include="Service References\UserRepositoryService\UserRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.wsdl" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService1.wsdl" />
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.CI.CIServer.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.CI.ContinuousIntegrationServer.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Users.User.datasource" />
+    <None Include="Properties\DataSources\APD.DomainModel.Users.Userdb.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.Framework.Configuration.ConfigurationEntry.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.Framework.Settings.Settings.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Config.Configuration.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Framework.Logging.LogEntry.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\APD.DomainModel.Holidays.Holiday.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WebService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ChangesetRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\CIRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\ConfigurationRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\HolidayRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\LogEntryRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\ProjectInfoRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\VCSCredentialsService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Integration\Smeedee.Integration\Smeedee.Integration.csproj">
+      <Project>{47431D6D-1824-41E1-87B8-D90872E4FA04}</Project>
+      <Name>Smeedee.Integration</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CIRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CIRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CIRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ConfigurationRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayRepositoryService\HolidayRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\HolidayRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\LogEntryRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LogEntryRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ProjectInfoRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UserRepositoryService\UserRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UserRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UserRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UserRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VCSCredentialsService\VCSCredentialsService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VCSCredentialsService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VCSCredentialsService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VCSCredentialsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

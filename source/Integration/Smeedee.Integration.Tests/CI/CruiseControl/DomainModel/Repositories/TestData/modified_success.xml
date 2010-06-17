@@ -1,0 +1,48 @@
+<cruisecontrol project="Agile Project Dashboard">
+  <request source="continuous" buildCondition="IfModificationExists">continuous triggered a build (IfModificationExists)</request>
+  <modifications>
+    <modification type="Modified">
+      <filename>ProjectIteration.cs</filename>
+      <project>/trunk/source/Smeedee.DomainModel.CIProject</project>
+      <date>2009-06-25 15:49:09</date>
+
+      <user>jaffe</user>
+      <comment>
+        Made year date more modular
+      </comment>
+      <changeNumber>329</changeNumber>
+    </modification>
+  </modifications>
+  <integrationProperties>
+    <CCNetArtifactDirectory>d:\ccnet\AgileProjectDashboard\Artifacts</CCNetArtifactDirectory>
+
+    <CCNetBuildCondition>IfModificationExists</CCNetBuildCondition>
+    <CCNetBuildDate>2009-06-25</CCNetBuildDate>
+    <CCNetBuildTime>15:49:45</CCNetBuildTime>
+    <CCNetFailureUsers />
+    <CCNetIntegrationStatus>Success</CCNetIntegrationStatus>
+    <CCNetLabel>0.1.0.207</CCNetLabel>
+
+    <CCNetLastIntegrationStatus>Success</CCNetLastIntegrationStatus>
+    <CCNetListenerFile>d:\ccnet\AgileProjectDashboard\Artifacts\Agile Project Dashboard_ListenFile.xml</CCNetListenerFile>
+    <CCNetModifyingUsers>
+      <user>jaffe</user>
+    </CCNetModifyingUsers>
+    <CCNetNumericLabel>207</CCNetNumericLabel>
+    <CCNetProject>Agile Project Dashboard</CCNetProject>
+
+    <CCNetProjectUrl>http://SUMMEROFCODE/ccnet</CCNetProjectUrl>
+    <CCNetRequestSource>continuous</CCNetRequestSource>
+    <CCNetWorkingDirectory>d:\ccnet\AgileProjectDashboard\WorkingDirectory</CCNetWorkingDirectory>
+    <LastChangeNumber>329</LastChangeNumber>
+    <LastIntegrationStatus>Success</LastIntegrationStatus>
+    <LastSuccessfulIntegrationLabel>0.1.0.207</LastSuccessfulIntegrationLabel>
+
+    <LastModificationDate>25.06.2009 15:49:09</LastModificationDate>
+  </integrationProperties>
+  <build date="2009-06-25 15:49:45" buildtime="00:01:34" buildcondition="IfModificationExists">
+
+    <msbuild startTime="06/25/2009 15:49:47" elapsedTime="00:00:32" success="true">
+    </msbuild>
+  </build>
+</cruisecontrol>

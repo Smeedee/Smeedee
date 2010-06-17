@@ -1,0 +1,64 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <customBinding>
+                <binding name="CustomBinding_ChangesetRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_CIRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_ConfigurationRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_HolidayRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_ProjectInfoRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_UserRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_LogEntryRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+            </customBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_ChangesetRepositoryService"
+                contract="ChangesetRepositoryService.ChangesetRepositoryService"
+                name="CustomBinding_ChangesetRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_CIRepositoryService"
+                contract="CIRepositoryService.CIRepositoryService" name="CustomBinding_CIRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_ConfigurationRepositoryService"
+                contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
+                name="CustomBinding_ConfigurationRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/HolidayRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_HolidayRepositoryService"
+                contract="HolidayRepositoryService.HolidayRepositoryService"
+                name="CustomBinding_HolidayRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_ProjectInfoRepositoryService"
+                contract="ProjectInfoRepositoryService.ProjectInfoRepositoryService"
+                name="CustomBinding_ProjectInfoRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/UserRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_UserRepositoryService"
+                contract="UserRepositoryService.UserRepositoryService" name="CustomBinding_UserRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_LogEntryRepositoryService"
+                contract="LogEntryRepositoryService.LogEntryRepositoryService"
+                name="CustomBinding_LogEntryRepositoryService" />
+        </client>
+    </system.serviceModel>
+</configuration>

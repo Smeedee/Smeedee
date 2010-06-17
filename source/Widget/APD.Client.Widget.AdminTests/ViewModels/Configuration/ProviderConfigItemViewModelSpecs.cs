@@ -100,7 +100,6 @@ namespace APD.Client.Widget.AdminTests.ViewModels.Configuration.ProviderConfigIt
         [Test]
         public void Assure_it_is_a_ConfigurationItemViewModel()
         {
-            Given(Dependencies_are_created());
             Then("assure it is a ConfigurationItemViewModel", () =>
                 (viewModel is ConfigurationItemViewModel).ShouldBeTrue());
         }

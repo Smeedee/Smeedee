@@ -1,0 +1,5 @@
+﻿using TinyMVVM.Framework
+using Smeedee.Client.Framework.ViewModel
+
+viewmodel Browser extends Slide:
+	oproperty Url as string

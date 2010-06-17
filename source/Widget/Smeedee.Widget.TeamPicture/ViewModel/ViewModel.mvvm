@@ -1,0 +1,11 @@
+﻿using TinyMVVM.Framework
+using System.Collections.ObjectModel
+using System.Windows.Media.Imaging
+
+viewmodel TeamPictureViewModel:
+	oproperty Snapshots as ObservableCollection<WriteableBitmap>
+	oproperty SelectedSnapshot as WriteableBitmap
+	oproperty Snapshot as WriteableBitmap
+
+	command Delete
+	command Select

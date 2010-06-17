@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+	<Product Id="8b83a6d1-d2ea-40b6-abd4-3170301cf5b0" Name="Smeedee" Language="1033" Version="0.3.1.1494"
+           Manufacturer="Capgemini" UpgradeCode="c1d9b230-54dc-4485-bc2c-af7f887da88e">
+    <Package InstallerVersion="200" Compressed="yes" />
+		<Media Id="1" Cabinet="APD.cab" EmbedCab="yes" />
+    <Property Id="IISUser">Network Service</Property>
+   
+		<Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id='ProgramFilesFolder' Name='ProgramFiles'>
+        <Directory Id="INSTALLLOCATION" Name="Smeedee">
+          <Directory Id="service" Name="bin">
+            <Component Id="DataCollectorServiceInstall" Guid="c462e427-41d7-4c9c-8767-56fd2dd83596">
+
+              <File Id="APD.DataCollector.Service.exe_service" Name="Data Collector Service.exe" KeyPath="yes" Source="..\..\Build\bin\temp\installer\bin\APD.DataCollector.Service.exe" />
+
+              <ServiceInstall Id="APD.DataCollector.Service.exe_service" Name="ServiceInstaller"
+                              DisplayName="Smeedee"
+                              Description="Populates the database for the Smeedee application"
+                              Type="ownProcess" Interactive="no" Start="auto" Vital="yes" ErrorControl="normal"/>
+
+              <ServiceControl Id="APD.DataCollector.Service.exe" Name="ServiceControl"
+                              Stop="uninstall" Remove="uninstall" Wait="yes"/>
+
+            </Component>
+          </Directory>
+          
+          
+          <Directory Id="ProgramMenuFolder" Name="Programs">
+            <!--<Directory Id="ProgramMenuDirLev1" Name="Smeedee">
+              <Component Id="ProgramMenuDataCollectorConsoleAppShortcut" Guid="{F68EFE5A-12D6-424D-970D-275CD783E09B}">
+                <RemoveFolder Id="ProgramMenuDirLev1" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="SOFTWARE\Capgemini\Smeedee\DataCollectorConsoleApp"
+                               Type="string" Value="ProgramMenuFolder" KeyPath="yes" />
+                <CreateFolder/>
+                <Shortcut Id="ProgramMenuDataCollectorConsoleAppShortcut" Directory="ProgramMenuDirLev1"
+                     Name="DataCollector.exe" Target="[INSTALLLOCATION]\DataCollector\DataCollector.exe"
+                     WorkingDirectory="INSTALLLOCATION" />
+                <Condition>1</Condition>
+              </Component>
+            </Directory>-->
+            <!--<Directory Id="StartupFolder" Name="Startup">
+              <Component Id="StartupDataCollectorConsoleAppShortcut" Guid="{F68EFE5A-12A6-484D-980E-215CD983E09B}">
+                <RegistryValue Root="HKCU" Key="SOFTWARE\Capgemini\Smeedee\DataCollectorConsoleApp"
+                               Type="string" Value="StartupFolder" KeyPath="yes" />
+                <Shortcut Id="StartupDataCollectorConsoleAppShortcut" Directory="StartupFolder"
+                     Name="DataCollector.exe" Target="[INSTALLLOCATION]\DataCollector\DataCollector.exe"
+                     WorkingDirectory='INSTALLLOCATION'/>
+                <Condition>1</Condition>
+              </Component>
+            </Directory>-->
+          </Directory>
+          <!--<Directory Id="DesktopFolder" Name="Desktop">
+            <Component Id="DesktopDataCollectorConsoleAppShortcut" Guid="{F68EFE5A-12F6-884F-980F-215FF983E09B}">
+              <RegistryValue Root="HKCU" Key="SOFTWARE\Capgemini\Smeedee\DataCollectorConsoleApp"
+                               Type="string" Value="DesktopFolder" KeyPath="yes" />
+              <Shortcut Id="DesktopDataCollectorConsoleAppShortcut" Directory="DesktopFolder"
+                     Name="DataCollector.exe" Target="[INSTALLLOCATION]\DataCollector\DataCollector.exe"
+                     WorkingDirectory='INSTALLLOCATION'/>
+              <Condition>1</Condition>
+            </Component>
+          </Directory>-->
+
+        </Directory>
+      </Directory>
+      
+      <Directory Id="CommonAppDataFolder" Name="CommonAppDataFolder">
+        <Component Id="SmeedeeDB" Guid="09de0156-a1f1-43f0-9016-3d8ec58e0a3d"
+                   Permanent="yes">
+          <File Id="SmeedeeDB.db_1" Name="SmeedeeDB.db"
+                Source="SmeedeeDB.db">
+            <Permission GenericAll="yes" User="[IISUser]"/>
+            <Permission GenericAll="yes" User="Users"/>
+            <Permission GenericAll="yes" User="Administrators"/>
+          </File>
+        </Component>
+
+
+
+      </Directory>
+
+      <Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
+        <iis:WebVirtualDir Id="SmeedeeVirtualDir" Alias="Smeedee" Directory="INSTALLLOCATION" WebSite="SmeedeeWebSite">
+          <iis:MimeMap Id="SilverligthMimeType" Extension=".xap" Type="application/x-silverlight-app"/>
+          <iis:WebApplication Id="SmeedeeWebApp" Name="Smeedee">
+            <iis:WebApplicationExtension Executable="%windir%\Microsoft.NET\Framework\v2.0.50727\aspnet_isapi.dll"
+                                         Extension="svc"
+                                         Script="yes"
+                                         CheckPath="yes"
+                                         Verbs="GET,HEAD,POST"/>
+          </iis:WebApplication>
+          <iis:WebDirProperties Id="APDWebDirProperties" Execute="yes" Script="yes" Read="yes" WindowsAuthentication="no"
+                                AnonymousAccess="yes" IIsControlledPassword="yes" />
+        </iis:WebVirtualDir>
+      </Component>
+
+    </Directory>
+    
+
+    
+    <iis:WebSite Id='SmeedeeWebSite' Description='Smeedee Web Site'>
+      <iis:WebAddress Id='SmeedeeWebSiteAddr' Port='80' />
+    </iis:WebSite>
+
+    <CustomAction Id="SetASPNETAsIISUser" Property="IISUsser" Value="ASPNET"/>
+
+    <InstallExecuteSequence>
+      <Custom Action="SetASPNETAsIISUser" After="InstallInitialize">VersionNT = 501</Custom>
+    </InstallExecuteSequence>
+
+    <CustomAction Id="OpenWebSite" Directory="INSTALLLOCATION"
+                  ExeCommand='"[SystemFolder]cmd.exe" /c "start http://localhost/smeedee/Default.htm?view=admin"' Return="asyncNoWait" />
+    
+    <CustomAction Directory="INSTALLLOCATION" Id="StartService" ExeCommand="sc start Smeedee" Return="asyncNoWait" />
+    
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <UIRef Id="InstallationUI"/>
+    <Feature Id="ProductFeature" Title="Smeedee Core Components" Level="1" TypicalDefault="install"
+             Description="This installs the needed components for Smeedee to work. It will install a website in IIS to host the Smeedee Silverligte client application and the Webservices it needs.">
+      <ComponentGroupRef Id="generated_components"/>
+      <!--<ComponentRef Id="ProgramMenuDataCollectorConsoleAppShortcut" />
+      <ComponentRef Id="StartupDataCollectorConsoleAppShortcut" />
+      <ComponentRef Id="DesktopDataCollectorConsoleAppShortcut" />-->
+      <ComponentRef Id="IISSmeedeeApplication" />
+      
+      <ComponentRef Id="SmeedeeDB"/>
+		</Feature>
+    <Feature Id="windows_service" Title="Windows Service Data Collector" Level="1" TypicalDefault="install"
+             Description="Installs the Smeedee Data Collector as a windows service. If you do not install this feature you will have to manually start the console based Data Collector to poulate the Smeedee database.">
+      <ComponentRef Id="DataCollectorServiceInstall" />
+    </Feature>
+	</Product>
+</Wix>

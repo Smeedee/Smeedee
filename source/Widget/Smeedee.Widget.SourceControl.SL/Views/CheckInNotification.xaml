@@ -1,0 +1,59 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:local="clr-namespace:Smeedee.Widget.SourceControl.SL"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.ChangesetsSampleDataSource"
+    xmlns:local1="clr-namespace:Smeedee.Widget.SourceControl.SL.Views"
+    xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" x:Class="Smeedee.Widget.SourceControl.SL.Views.CheckInNotification"
+	d:DesignHeight="654" d:DesignWidth="1280">
+	
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="FontColor" Color="#FFFFFFFF"/>
+        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    	<SampleData:ChangesetsSampleDataSource x:Key="ChangesetsSampleDataSource" d:IsDataSource="True"/>
+    	<DataTemplate x:Key="ChangesetDataTemplate">
+    		<Grid Margin="0,0,5,5">
+    			<local1:ChangesetView x:Name="changesetView" Height="127" Margin="0" Width="620"/>
+    		</Grid>
+    	</DataTemplate>
+    	<ItemsPanelTemplate x:Key="ItemsPanelLayoutTemplate">
+    		<Controls:WrapPanel HorizontalAlignment="Center"/>
+    	</ItemsPanelTemplate>
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot" d:DataContext="{Binding Source={StaticResource ChangesetsSampleDataSource}}">
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="VisualStateGroup">
+    			<VisualState x:Name="Loading">
+    				<Storyboard>
+    					<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="loadingAnimation" Storyboard.TargetProperty="(UIElement.Visibility)">
+    						<DiscreteObjectKeyFrame KeyTime="00:00:00">
+    							<DiscreteObjectKeyFrame.Value>
+    								<Visibility>Visible</Visibility>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    			<VisualState x:Name="Ready">
+    				<Storyboard>
+    					<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="loadingAnimation" Storyboard.TargetProperty="(UIElement.Visibility)">
+    						<DiscreteObjectKeyFrame KeyTime="00:00:00">
+    							<DiscreteObjectKeyFrame.Value>
+    								<Visibility>Collapsed</Visibility>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
+        
+        <ItemsControl 
+                ItemsSource="{Binding Changesets, Mode=OneWay}" 
+                ItemTemplate="{StaticResource ChangesetDataTemplate}" ItemsPanel="{StaticResource ItemsPanelLayoutTemplate}" HorizontalAlignment="Center"/>
+    </Grid>
+</UserControl>
