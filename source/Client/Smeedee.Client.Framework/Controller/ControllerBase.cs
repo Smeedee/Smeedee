@@ -25,6 +25,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.ViewModel;
@@ -44,13 +45,35 @@ namespace Smeedee.Client.Framework.Controller
 
         public ControllerBase(T viewModel, ITimer timer, IUIInvoker uiInvoker)
         {
+            ThrowIfNull(timer, "timer");
+            ThrowIfNull(uiInvoker, "uiInvoker");
+            
             this.refreshNotifier = timer;
             this.uiInvoker = uiInvoker;
 
             ViewModel = viewModel;
             refreshNotifier.Elapsed += OnNotifiedToRefresh;
         }
-        
+
+        private void ThrowIfNull(object obj, string parameterName)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentException("The" + parameterName + " argument cannot be null");
+            }
+        }
+
         protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
+
+
+        public void Start(int interval)
+        {
+            refreshNotifier.Start(interval);
+        }
+
+        public void Stop()
+        {
+            refreshNotifier.Stop();
+        }
     }
 }
