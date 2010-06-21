@@ -19,6 +19,7 @@ namespace Smeedee.Widget.TeamPicture.Tests
         [TestMethod]
         public void TestMethod1()
         {
+
         }
     }
 }

@@ -1,7 +1,7 @@
 <#@ template language="C#" hostspecific="True" debug="True" #>
 <#@ output extension="txt" #>
 <#@ include file="T4Toolbox.tt" #>
-<#@ include file="$(ProjectDir)..\Smeedee.Client.Framework\ViewModel\ViewModelTemplate.tt" #>
+<#@ include file="$(ProjectDir)..\..\Client\Smeedee.Client.Framework\ViewModel\ViewModelTemplate.tt" #>
 
 <#
 	string dslFile = Host.ResolvePath("ViewModel.mvvm");

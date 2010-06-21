@@ -8,13 +8,15 @@
         <ViewModel:TeamPictureViewModel/>
     </d:UserControl.DataContext>
     <Grid x:Name="LayoutRoot">
-    	<Border Margin="8" BorderThickness="2" BorderBrush="White" Visibility="Collapsed">
-    		<Border.Effect>
-    			<BlurEffect/>
-    		</Border.Effect>
-    	</Border>
-    	<Border Margin="8" BorderThickness="1" CornerRadius="4" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75*" />
+            <ColumnDefinition Width="25*" />
+        </Grid.ColumnDefinitions>
+    	<Border Grid.Column="0" Margin="8" BorderThickness="1" CornerRadius="4" >
     		<Image Margin="0" Source="{Binding Snapshot}"/>
     	</Border>
+        <Border Grid.Column="1" CornerRadius="6" BorderBrush="White" HorizontalAlignment="Stretch" BorderThickness="2">
+            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="White" FontSize="20" Text="{Binding Path=Message}" TextWrapping="Wrap"></TextBlock>
+        </Border>
     </Grid>
 </UserControl>

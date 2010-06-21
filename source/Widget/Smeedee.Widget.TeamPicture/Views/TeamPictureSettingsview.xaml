@@ -3,50 +3,74 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2010"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:ViewModel="clr-namespace:Smeedee.Widget.TeamPicture.ViewModel" 
-    xmlns:ec="http://schemas.microsoft.com/expression/2010/controls" 
-	xmlns:d1="http://schemas.microsoft.com/expression/blend/2008" 
-	xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="Smeedee.Widget.TeamPicture.Views.TeamPictureSettingsView"
+    xmlns:ViewModel="clr-namespace:Smeedee.Widget.TeamPicture.ViewModel" xmlns:d1="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" x:Class="Smeedee.Widget.TeamPicture.Views.TeamPictureSettingsView"
     mc:Ignorable="d d1"
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="800">
 	<UserControl.Resources>
 		<DataTemplate x:Key="snapshotDataTemplate">
 			<Grid>
-				<Image Margin="0" Source="{Binding Mode=OneWay}"/>
+				<Image Margin="0" MaxHeight="112" MaxWidth="150" MinHeight="75" MinWidth="100" Source="{Binding Mode=OneWay}"/>
 			</Grid>
 		</DataTemplate>
 		<ItemsPanelTemplate x:Key="snapshotLayoutTemplate">
-			<StackPanel Orientation="Horizontal"/>
+			<Controls:WrapPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 		</ItemsPanelTemplate>
 	</UserControl.Resources>
 <d:DataContext>
         <ViewModel:TeamPictureViewModel/>
     </d:DataContext>
-    <Grid x:Name="LayoutRoot" Height="388" Width="337">
-    	<Border Height="180" Margin="0,8,0,0" VerticalAlignment="Top" BorderThickness="2" BorderBrush="White">
-    		<Border.Effect>
-    			<BlurEffect/>
-    		</Border.Effect>
-    	</Border>
-    	<Grid Height="26" Margin="110,203,87,0" VerticalAlignment="Top" d1:LayoutOverrides="Width">
-    		<Button x:Name="btnTurnOnWebcam" Content="Webcam: On" Height="26" Margin="0,0,62,0" 
-    			VerticalAlignment="Top" 
-    			Click="btnTurnOnWebcam_Click"/>
-    		<Button x:Name="btnSnapshot" Content="Snapshot" Height="26" VerticalAlignment="Top" Click="btnSnapshot_Click" HorizontalAlignment="Right"/>
-    	</Grid>
-    	<ListBox Margin="8,233,8,32" ItemsSource="{Binding Snapshots}"
-    		ItemTemplate="{StaticResource snapshotDataTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource snapshotLayoutTemplate}" d:LayoutOverrides="GridBox" Background="{x:Null}" 
-			BorderBrush="{x:Null}" SelectedItem="{Binding SelectedSnapshot, Mode=TwoWay}"/>
-    	<Border Height="180" Margin="0,8,0,0" VerticalAlignment="Top" BorderThickness="2" >
-    		<Rectangle x:Name="videoCaptureRectangle" Fill="Black" Margin="0"/>
-    	</Border>
-    	<TextBlock HorizontalAlignment="Left" Height="15" Margin="8,215,0,0" TextWrapping="Wrap" Text="Snapshots" VerticalAlignment="Top" Width="71" Foreground="White"/>
-    	<Grid Margin="0,0,0,8" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-    		<StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-    			<Button Content="Delete" Command="{Binding Delete}" d:LayoutOverrides="VerticalAlignment" Height="22" Width="42" Margin="0,0,2,0"/>
-    			<Button Content="Select" d:LayoutOverrides="VerticalAlignment" Command="{Binding Select}" Height="22" Width="42"/>
-    		</StackPanel>
-    	</Grid>
-    	
+    <Grid x:Name="LayoutRoot">
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition Width="200*" />
+			<ColumnDefinition Width="200*" />
+		</Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+	    	<Border Margin="0,8,0,0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+                <Rectangle x:Name="videoCaptureRectangle" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Fill="{Binding Path=WebcamVideoBrush}" Margin="0"/>
+	    		
+				<Border.Effect>
+	    			<BlurEffect/>
+	    		</Border.Effect>
+	    	</Border>
+            <Grid Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" d1:LayoutOverrides="Width" Margin="0,30,20,0">
+                <Button x:Name="btnTurnOnWebcam" Content="Webcam: On" Height="26" Margin="0,0,62,0" VerticalAlignment="Top" Command="{Binding ToggleWebcamOnOff}" />
+                <Button x:Name="btnSnapshot" Content="Snapshot" Height="26" VerticalAlignment="Top" Command="{Binding TakePicture}" HorizontalAlignment="Right" />
+            </Grid>
+        </Grid>
+		
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+        
+        
+			<TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Height="15" TextWrapping="Wrap" Text="Snapshots" VerticalAlignment="Top" Width="71" Foreground="White"/>
+
+            <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Snapshots}" 
+                     MinHeight="400"
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+	    		ItemTemplate="{StaticResource snapshotDataTemplate}" 
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ItemsPanel="{StaticResource snapshotLayoutTemplate}" d:LayoutOverrides="GridBox" Background="{x:Null}" 
+				BorderBrush="{x:Null}" SelectedItem="{Binding SelectedSnapshot, Mode=TwoWay}">
+            </ListBox>
+            
+            <TextBlock Grid.Column="1" Grid.Row="2" Foreground="White">Message</TextBlock>
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Path=Message, Mode=TwoWay}" HorizontalAlignment="Stretch" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
+
+	    	<StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Top">
+	            <Button Content="Delete snapshot" Command="{Binding Delete}" d:LayoutOverrides="VerticalAlignment" Height="22" Width="42" Margin="0,0,2,0" IsEnabled="{Binding Path=HasSelectedSnapshot}"/>
+	    		<Button Content="Save" d:LayoutOverrides="VerticalAlignment" Command="{Binding Save}" Height="22" Width="42" IsEnabled="{Binding Path=HasSelectedSnapshot}"/>
+	    	</StackPanel>
+        </Grid>
+
     </Grid>
 </UserControl>

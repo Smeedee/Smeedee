@@ -18,18 +18,36 @@ namespace Smeedee.Widget.TeamPicture
     [Export(typeof(Slide))]
     public class TeamPictureSlide : Slide
     {
+        private TeamPictureViewModel _dataContext;
+
         public TeamPictureSlide()
         {
             Title = "Team Picture";
-            var viewModel = new TeamPictureViewModel();
+            _dataContext = new TeamPictureViewModel();
             SettingsView = new TeamPictureSettingsView()
             {
-                DataContext = viewModel
+                DataContext = _dataContext
             };
+
             View = new TeamPictureView()
             {
-                DataContext = viewModel
+                DataContext = _dataContext
             };
+
+            this.PropertyChanged += TeamPictureSlide_PropertyChanged;
+
+        }
+
+        void TeamPictureSlide_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if( e.PropertyName.Equals("IsInSettingsMode"))
+            {
+                if (IsInSettingsMode == false && _dataContext.CaptureState == CaptureState.Started)
+                    _dataContext.ToggleWebcamOnOff.Execute(null);
+                if (IsInSettingsMode == true && _dataContext.CaptureState == CaptureState.Stopped)
+                    _dataContext.ToggleWebcamOnOff.Execute(null);
+                
+            }
         }
     }
 }

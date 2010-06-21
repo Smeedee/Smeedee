@@ -7,5 +7,11 @@ viewmodel TeamPictureViewModel:
 	oproperty SelectedSnapshot as WriteableBitmap
 	oproperty Snapshot as WriteableBitmap
 
+	oproperty HasSelectedSnapshot as bool
+	oproperty WebcamVideoBrush as Brush
+	oproperty Message as string
+
 	command Delete
-	command Select
+	command Save
+	command TakePicture
+	command ToggleWebcamOnOff

@@ -23,8 +23,7 @@
           <AlwaysStartWebServerOnDebug>True</AlwaysStartWebServerOnDebug>
           <ProjectOutputReferences>
             <Ref Project="{82E89814-481B-48A7-9EBB-6717E47640EA}" Folder="ClientBin">Smeedee.Client.SL.xap</Ref>
-            <Ref Project="{5DE9E55F-AD3C-4217-85B2-F3C5971D03E5}" Folder="ClientBin">
-            </Ref>
+            <Ref Project="{5DE9E55F-AD3C-4217-85B2-F3C5971D03E5}" Folder="ClientBin">Smeedee.Widget.TeamPicture.xap</Ref>
             <Ref Project="{9886A595-ADFA-4E80-A383-64B567DB008C}" Folder="ClientBin">Smeedee.Widget.SourceControl.SL.xap</Ref>
             <Ref Project="{B84CF0E7-086A-4836-A317-7FF06AD0D52F}" Folder="ClientBin">Smeedee.Widget.CI.SL.xap</Ref>
             <Ref Project="{203A07E5-D01B-4241-B330-8BC91CFBE303}" Folder="ClientBin">Smeedee.Client.Widget.ProjectInfo.SL.xap</Ref>

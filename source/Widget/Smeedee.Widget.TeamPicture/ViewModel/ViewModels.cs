@@ -1,4 +1,5 @@
 
+using System.Windows.Media;
 using TinyMVVM.Framework.Services;
 using TinyMVVM.Framework;
 using System.Collections.ObjectModel;
@@ -62,16 +63,71 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 		}
 		private WriteableBitmap _Snapshot;
 
+		public bool HasSelectedSnapshot
+		{
+			get { return _HasSelectedSnapshot; }
+			set
+			{
+				if (value != _HasSelectedSnapshot)
+				{
+					UIInvoker.Invoke(() =>
+					{
+						_HasSelectedSnapshot = value;
+						TriggerPropertyChanged("HasSelectedSnapshot");
+					});
+				}
+			}
+		}
+		private bool _HasSelectedSnapshot;
+
+		public Brush WebcamVideoBrush
+		{
+			get { return _WebcamVideoBrush; }
+			set
+			{
+				if (value != _WebcamVideoBrush)
+				{
+					UIInvoker.Invoke(() =>
+					{
+						_WebcamVideoBrush = value;
+						TriggerPropertyChanged("WebcamVideoBrush");
+					});
+				}
+			}
+		}
+		private Brush _WebcamVideoBrush;
+
+		public string Message
+		{
+			get { return _Message; }
+			set
+			{
+				if (value != _Message)
+				{
+					UIInvoker.Invoke(() =>
+					{
+						_Message = value;
+						TriggerPropertyChanged("Message");
+					});
+				}
+			}
+		}
+		private string _Message;
+
 	
 		
 		//Commands
 		public DelegateCommand Delete { get; set; }
-		public DelegateCommand Select { get; set; }
+		public DelegateCommand Save { get; set; }
+		public DelegateCommand TakePicture { get; set; }
+		public DelegateCommand ToggleWebcamOnOff { get; set; }
 		
 		public TeamPictureViewModel()
 		{
 			Delete = new DelegateCommand();
-			Select = new DelegateCommand();
+			Save = new DelegateCommand();
+			TakePicture = new DelegateCommand();
+			ToggleWebcamOnOff = new DelegateCommand();
 		
 			ServiceLocator.SetLocatorIfNotSet(() => ServiceLocator.GetServiceLocator());
 			UIInvoker = ServiceLocator.Instance.GetInstance<IUIInvoker>();
