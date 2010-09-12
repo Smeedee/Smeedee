@@ -93,7 +93,10 @@ namespace Smeedee.Integration.VCS.SVN.DomainModel.Repositories
             if (specification is ChangesetsAfterRevisionSpecification)
             {
                 var revisionSpec = specification as ChangesetsAfterRevisionSpecification;
-                request.SvnLogArgs.Range = new SvnRevisionRange(revisionSpec.Revision, long.MaxValue);
+                if (revisionSpec.Revision != 0)
+                {
+                    request.SvnLogArgs.Range = new SvnRevisionRange(revisionSpec.Revision, long.MaxValue);
+                }
             }
         }
     }

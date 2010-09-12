@@ -36,9 +36,23 @@ using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Client.Framework.ViewModel
 {
-    public class AbstractViewModel : INotifyPropertyChanged
+    public class AbstractViewModel : ViewModelBase
     {
         public IUIInvoker Invoker { get; private set; }
+
+        private bool configIsChanged = false;
+        public bool ConfigIsChanged
+        {
+            get { return configIsChanged; }
+            set
+            {
+                if (value != configIsChanged)
+                {
+                    configIsChanged = value;
+                    TriggerPropertyChanged<AbstractViewModel>(vm => vm.ConfigIsChanged);
+                }
+            }
+        }
 
         private bool isLoading = false;
         public bool IsLoading
@@ -50,6 +64,34 @@ namespace Smeedee.Client.Framework.ViewModel
                 {
                     isLoading = value;
                     TriggerPropertyChanged<AbstractViewModel>(vm => vm.IsLoading);
+                }
+            }
+        }
+
+        private bool isLoadingConfig = true;
+        public bool IsLoadingConfig
+        {
+            get { return isLoadingConfig; }
+            set
+            {
+                if (value != isLoadingConfig)
+                {
+                    isLoadingConfig = value;
+                    TriggerPropertyChanged<AbstractViewModel>(vm => vm.IsLoadingConfig);
+                }
+            }
+        }
+
+        private bool isSaving = false;
+        public bool IsSaving
+        {
+            get { return isSaving; }
+            set
+            {
+                if (value != isSaving)
+                {
+                    isSaving = value;
+                    TriggerPropertyChanged<AbstractViewModel>(vm => vm.IsSaving);
                 }
             }
         }
@@ -71,37 +113,7 @@ namespace Smeedee.Client.Framework.ViewModel
         public AbstractViewModel()
         {
             //TODO: THis is a temporary hack to work around having to bootstrap a servicelocator for every test
-            if( ServiceLocator.Instance == null )
-            {
-                Invoker = new NoUIInvokation();
-            }
-            else
-            {
-            this.Invoker = ServiceLocator.Instance.GetInstance<IUIInvoker>();    
-            }
-            
-        }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        protected void TriggerPropertyChanged<T>(Expression<Func<T, Object>> exp)
-        {
-            string propertyName;
-            if (exp.Body is UnaryExpression)
-                propertyName = ((MemberExpression)((UnaryExpression)exp.Body).Operand).Member.Name;
-            else
-                propertyName = ((MemberExpression)exp.Body).Member.Name;
-
-            if (PropertyChanged != null)
-            {
-                Invoker.Invoke(() =>
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName))
-                );
-            }
+            Invoker = new NoUIInvokation();
         }
     }
 }

@@ -40,21 +40,20 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.CI.TFSBuild.Learning
 {
-    [TestFixture]
-    [Ignore("Un-ignore after getting a local TFS Server with license")]
+    [TestFixture][Category("IntegrationTest")]
     public class TFSApiLearningTests
     {
         private TeamFoundationServer tfsServer;
-        private String projectName = "ADPMockProject";
-        private String buildName = "TFS Integration Mock Project";
-        private NetworkCredential credentials = new NetworkCredential("dagolap", "gold1234.");
+        private String projectName = "Smeedee";
+        private String buildName = "Smeedee Builds";
+        private NetworkCredential credentials = new NetworkCredential("smeedee", "dlog4321.");
         private IBuildServer buildServer;
 
 
         [SetUp]
         public void SetUp()
         {
-            tfsServer = new TeamFoundationServer("http://80.203.160.221:8080", credentials);
+            tfsServer = new TeamFoundationServer("http://80.203.160.221:8080/tfs", credentials);
             tfsServer.Authenticate();
             buildServer = (IBuildServer) tfsServer.GetService(typeof (IBuildServer));
         }
@@ -73,6 +72,7 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.Learning
         }
 
         [Test]
+        [Ignore("TODO: Our TFS server doesn't want to build after user credentials for services got messed up. This should be fixed _server side_")]
         public void How_to_get_history_for_a_build_definition()
         {
             var buildDefinition = GetBuildDefinition();
@@ -84,12 +84,12 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.Learning
             while (
                 buildServer.QueryBuilds(buildDefinition).Where(
                     b => b.Status == BuildStatus.InProgress || b.Status == BuildStatus.NotStarted).Count() > 0)
-                Thread.Sleep(50);
+                Thread.Sleep(1000);
 
             var buildHistory = buildServer.QueryBuilds(buildDefinition).Reverse();
 
             ( buildHistory.Count() >= 2 ).ShouldBeTrue();
-            buildHistory.First().RequestedBy.ShouldBe("TFSX86\\dagolap");
+            buildHistory.First().RequestedBy.ShouldBe("WIN-GS9GMUJITS8\\smeedee");
             buildHistory.First().StartTime.Hour.ShouldBe(buildTime.Hour);
         }
 

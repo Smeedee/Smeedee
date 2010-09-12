@@ -61,6 +61,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,8 +102,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Smeedee.DomainModel, Version=0.1.0.1, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Smeedee.DomainModel.Framework, Version=0.1.0.1, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Smeedee.DomainModel.Framework, Version=0.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\DomainModel\Smeedee.DomainModel.Framework\obj\Debug\Smeedee.DomainModel.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -118,9 +127,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TinyBDD, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
+    <Reference Include="TinyBDD, Version=0.1.0.88, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\TinyBDD-v0.1.0.93\TinyBDD.dll</HintPath>
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
     </Reference>
     <Reference Include="TinyBDD.Specification.NUnit, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,6 +170,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\RetrospectiveNoteRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SlideConfigurationService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TaskConfigurationRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TaskDefRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TeamPictureService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\UserRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,11 +207,16 @@
     </Compile>
     <Compile Include="Services\Integration\CIRepositorySerivceTests.cs" />
     <Compile Include="Services\Integration\ConfigurationRepositoryServiceTests.cs" />
+    <Compile Include="Services\Integration\RetrospectiveNoteRepositoryServiceSpecs.cs" />
     <Compile Include="Services\Integration\HolidayRepositoryServiceTests.cs" />
     <Compile Include="Services\Integration\LogEntryRepositoryServiceSpecs.cs" />
     <Compile Include="Services\Integration\ProjectInfoRepositoryServiceTests.cs" />
     <Compile Include="Services\Integration\ChangesetRepositoryServiceTests.cs" />
     <Compile Include="Services\Integration\Shared.cs" />
+    <Compile Include="Services\Integration\SlideConfigurationRepositoryServiceSpecs.cs" />
+    <Compile Include="Services\Integration\TaskConfigurationRepositoryServiceSpecs.cs" />
+    <Compile Include="Services\Integration\TaskDefRepositoryServiceSpecs.cs" />
+    <Compile Include="Services\Integration\TeamPictureRepositoryServiceSpecs.cs" />
     <Compile Include="Services\Integration\UserRepositoryServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,10 +226,15 @@
     <None Include="Properties\DataSources\APD.DomainModel.SourceControl.Changeset.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.CI.CIServer.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Config.Configuration.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Config.SlideConfig.SlideConfiguration.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Corkboard.RetrospectiveNote.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Framework.Logging.LogEntry.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Holidays.Holiday.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.SourceControl.Changeset.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.TaskDefinition.TaskDefinition1.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.TaskInstanceConfiguration.TaskConfiguration.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.TeamPicture.TeamPicture.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Users.Userdb.datasource" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.xsd">
@@ -282,6 +326,76 @@
     <None Include="Service References\ProjectInfoRepositoryService\ProjectInfoRepositoryService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService.wsdl" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService1.wsdl" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService.wsdl" />
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService1.wsdl" />
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice.wsdl" />
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice1.wsdl" />
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefRepositoryService\TaskDefinitionRepositoryService.wsdl" />
+    <None Include="Service References\TaskDefRepositoryService\TaskDefinitionRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefRepositoryService\TaskDefinitionRepositoryService1.wsdl" />
+    <None Include="Service References\TaskDefRepositoryService\TaskDefinitionRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefRepositoryService\TaskDefinitionRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefRepositoryService\TaskDefinitionRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice.wsdl" />
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice1.wsdl" />
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\UserRepositoryService\UserRepositoryService.wsdl" />
     <None Include="Service References\UserRepositoryService\UserRepositoryService.xsd">
       <SubType>Designer</SubType>
@@ -310,7 +424,9 @@
     <None Include="Properties\DataSources\APD.DomainModel.CI.ContinuousIntegrationServer.datasource" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\APD.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
@@ -361,6 +477,11 @@
     <WCFMetadataStorage Include="Service References\HolidayRepositoryService\" />
     <WCFMetadataStorage Include="Service References\LogEntryRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ProjectInfoRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\RetrospectiveNoteRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\SlideConfigurationService\" />
+    <WCFMetadataStorage Include="Service References\TaskConfigurationRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\TaskDefRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\TeamPictureService\" />
     <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
     <WCFMetadataStorage Include="Service References\VCSCredentialsService\" />
   </ItemGroup>
@@ -380,9 +501,29 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>Smeedee.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>Smeedee.DomainModel.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>Smeedee.DomainModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Integration\Smeedee.Integration\Smeedee.Integration.csproj">
       <Project>{47431D6D-1824-41E1-87B8-D90872E4FA04}</Project>
       <Name>Smeedee.Integration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Tests\Smeedee.Tests.csproj">
+      <Project>{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}</Project>
+      <Name>Smeedee.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smeedee.Client.Web\Smeedee.Client.Web.csproj">
+      <Project>{98E0FA30-C35F-4AF4-99B9-7597F6A0F1A1}</Project>
+      <Name>Smeedee.Client.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -486,6 +627,81 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\VCSCredentialsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TeamPictureService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TeamPictureService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TeamPictureService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskDefRepositoryService\TaskDefinitionRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskDefRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskDefRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskDefRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskConfigurationRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskConfigurationRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TaskConfigurationRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SlideConfigurationService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SlideConfigurationService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SlideConfigurationService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

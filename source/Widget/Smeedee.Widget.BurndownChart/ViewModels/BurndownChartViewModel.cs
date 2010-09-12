@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.ProjectInfo;
 
@@ -32,48 +33,157 @@ namespace Smeedee.Widget.BurndownChart.ViewModel
 {
     public class BurndownChartViewModel : AbstractViewModel
     {
+        public readonly float BurndownUpperWarningLimitInPercent = 1.2f;
+        public readonly float BurndownLowerWarningLimitInPercent = 0.8f;
         private List<BurndownChartCoordinate> actualBurndown;
         private List<BurndownChartCoordinate> idealBurndown;
-        public bool ProjectsInRepository;
-        public bool IterationInProject;
-        public bool TasksInIteration;
-
+        
         public BurndownChartViewModel()
         {
             actualBurndown = new List<BurndownChartCoordinate>();
-            idealBurndown = new List<BurndownChartCoordinate>();
+            InitializeIdealBurndown();
+            InitializeUpperWarningLimit();
+            InitializeLowerWarningLimit();
 
-            idealBurndown.Add(new BurndownChartCoordinate(1, DateTime.Today));
-            idealBurndown.Add(new BurndownChartCoordinate(0, DateTime.Today.AddDays(1)));
-
-            ProjectsInRepository = false;
-            IterationInProject = false;
-            TasksInIteration = false;
-            errorMessage = "Burndown chart coordinates have not yet been set on the ViewModel";
+            ExistsProjectsInRepository = false;
+            ExistsIterationInProject = false;
+            ExistsTasksInIteration = false;
+            ExistsAvailableServer = false;
+            showErrorMessageInsteadOfChart = true;
+//            errorMessage = "Burndown chart coordinates have not yet been set on the ViewModel";
+            errorMessage = "Loading project...";
         }
 
-        
-        private string errorMessage;  
-        public string ErrorMessage   
+        private void InitializeIdealBurndown()
         {
-            get
+            idealBurndown = new List<BurndownChartCoordinate>
             {
-                if (!ProjectsInRepository)
+                new BurndownChartCoordinate(1, DateTime.Today),
+                new BurndownChartCoordinate(0, DateTime.Today.AddDays(1))
+            };
+        }
+
+        private void InitializeUpperWarningLimit()
+        {
+            upperWarningLimit = new List<BurndownChartCoordinate>
+            {
+                new BurndownChartCoordinate(BurndownUpperWarningLimitInPercent, DateTime.Today),
+                new BurndownChartCoordinate(0, DateTime.Today.AddDays(1))
+            };
+        }
+
+        private void InitializeLowerWarningLimit()
+        {
+            lowerWarningLimit = new List<BurndownChartCoordinate>
+            {
+                new BurndownChartCoordinate(BurndownLowerWarningLimitInPercent, DateTime.Today),
+                new BurndownChartCoordinate(0, DateTime.Today.AddDays(1))
+            };
+        }
+
+        private bool existsProjectsInRepository;
+
+        public bool ExistsProjectsInRepository
+        {
+            get { return existsProjectsInRepository; }
+            set
+            {
+                if (!value)
                 {
-                    errorMessage = "No projects with the given name exists in the repository";
-                    TriggerPropertyChanged<BurndownChartViewModel>(vm => vm.ErrorMessage);
-                }  
-                else if (!IterationInProject)
-                {
-                    errorMessage = "There are no iterations in the given project";
-                    TriggerPropertyChanged<BurndownChartViewModel>(vm => vm.ErrorMessage);
+                    ErrorMessage = "No projects with the given name exists in the repository";
                 }
-                else if (!TasksInIteration)
+                if (value != existsProjectsInRepository)
                 {
-                    errorMessage = "There are no tasks for the current iteration for the given project";
-                    TriggerPropertyChanged<BurndownChartViewModel>(vm => vm.ErrorMessage);
+                    existsProjectsInRepository = value;
+                    TriggerPropertyChanged("ExistsProjectsInRepository");
                 }
-                return errorMessage;
+            }
+        }
+
+        private bool existsIterationInProject;
+
+        public bool ExistsIterationInProject
+        {
+            get { return existsIterationInProject; }
+            set
+            {
+                if (!value)
+                {
+                    ErrorMessage = "There are no iterations in the given project";
+                }
+                if (value != existsIterationInProject)
+                {
+                    existsIterationInProject = value;
+                    TriggerPropertyChanged("ExistsIterationInProject");
+                }
+            }
+        }
+
+        private bool existsTasksInIteration;
+
+        public bool ExistsTasksInIteration
+        {
+            get { return existsTasksInIteration; }
+            set
+            {
+                if (!value)
+                {
+                    ErrorMessage = "There are no tasks for the current iteration for the given project";
+                }
+                if (value != existsTasksInIteration)
+                {
+                    existsTasksInIteration = value;
+                    TriggerPropertyChanged("ExistsTasksInIteration");
+                }
+            }
+        }
+
+        private bool existsAvailableServer;
+
+        public bool ExistsAvailableServer
+        {
+            get { return existsAvailableServer; }
+            set
+            {
+                if (!value)
+                {
+                    ErrorMessage = "There are no available servers";
+                }
+                if (value != existsAvailableServer)
+                {
+                    existsAvailableServer = value;
+                    TriggerPropertyChanged<BurndownChartViewModel>(t => t.ExistsAvailableServer);
+                }
+            }
+        }
+
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                if (value != errorMessage)
+                {
+                    errorMessage = value;
+                    TriggerPropertyChanged("ErrorMessage");
+                }
+            }
+        }
+
+        private bool showErrorMessageInsteadOfChart;
+
+        public bool ShowErrorMessageInsteadOfChart
+        {
+            get { return showErrorMessageInsteadOfChart; }
+            set
+            {
+                if (value != showErrorMessageInsteadOfChart)
+                {
+                    showErrorMessageInsteadOfChart = value;
+                    TriggerPropertyChanged("ShowErrorMessageInsteadOfChart");
+                }
             }
         }
 
@@ -86,7 +196,7 @@ namespace Smeedee.Widget.BurndownChart.ViewModel
                 if (value != projectName)
                 {
                     projectName = value;
-                    TriggerPropertyChanged<BurndownChartViewModel>(vm => vm.ProjectName);
+                    TriggerPropertyChanged("ProjectName");
                 }
             }
         }
@@ -100,7 +210,7 @@ namespace Smeedee.Widget.BurndownChart.ViewModel
                 if (value != iterationName)
                 {
                     iterationName = value;
-                    TriggerPropertyChanged<BurndownChartViewModel>(vm => vm.IterationName);
+                    TriggerPropertyChanged("IterationName");
                 }
             }
         }
@@ -116,7 +226,7 @@ namespace Smeedee.Widget.BurndownChart.ViewModel
                 if (value != actualBurndown)
                 {
                     actualBurndown = value;
-                    TriggerPropertyChanged<BurndownChartViewModel>(vm => vm.ActualBurndown);
+                    TriggerPropertyChanged("ActualBurndown");
                 }
             }
         }
@@ -132,12 +242,41 @@ namespace Smeedee.Widget.BurndownChart.ViewModel
                 if (value != idealBurndown)
                 {
                     idealBurndown = value;
-                    TriggerPropertyChanged<BurndownChartViewModel>(vm => vm.IdealBurndown);
+                    TriggerPropertyChanged("IdealBurndown");
+                }
+            }
+        }
+
+        private List<BurndownChartCoordinate> upperWarningLimit;
+
+        public List<BurndownChartCoordinate> UpperWarningLimit
+        {
+            get { return upperWarningLimit; }
+            set
+            {
+                if (value != upperWarningLimit)
+                {
+                    upperWarningLimit = value;
+                    TriggerPropertyChanged("UpperWarningLimit");
+                }
+            }
+        }
+
+        private List<BurndownChartCoordinate> lowerWarningLimit;
+
+        public List<BurndownChartCoordinate> LowerWarningLimit
+        {
+            get { return lowerWarningLimit; }
+            set
+            {
+                if (value != lowerWarningLimit)
+                {
+                    lowerWarningLimit = value;
+                    TriggerPropertyChanged("LowerWarningLimit");
                 }
             }
         }
     }
-
 
     public class BurndownChartCoordinate : IComparable<BurndownChartCoordinate>
     {

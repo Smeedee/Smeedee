@@ -30,9 +30,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
       <HintPath>..\..\..\tools\TinyMVVM\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\tools\Ninject\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\NUnit 2.5.3\nunit.framework.dll</HintPath>
@@ -61,19 +72,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerBaseSpecs.cs" />
-    <Compile Include="CustomServiceLocatorForTesting.cs" />
+    <Compile Include="Controller\SelectWidgetsDialogControllerSpecs.cs" />
+    <Compile Include="Controller\WidgetControllerSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\ApplicationTests.cs" />
-    <Compile Include="ViewModel\ErrorInfoTests.cs" />
+    <Compile Include="Repositories\WidgetConfigurationRepositorySpecs.cs" />
+    <Compile Include="ServiceLocatorForTesting.cs" />
+    <Compile Include="Services\Impl\ConfigurationManagerTests.cs" />
+    <Compile Include="Services\Impl\ModuleLoaderSpecs.cs" />
+    <Compile Include="Services\Impl\WidgetProgressbarSpecs.cs" />
+    <Compile Include="ViewModelBootstrapperForTests.cs" />
+    <Compile Include="ViewModel\Dialogs\DialogTests.cs" />
+    <Compile Include="ViewModel\Dialogs\EditSlideshowDialogTests.cs" />
+    <Compile Include="ViewModel\Dialogs\SelectWidgetsDialogTests.cs" />
+    <Compile Include="ViewModel\ApplicationContextTests.cs" />
+    <Compile Include="ViewModel\DockBarTests.cs" />
     <Compile Include="ViewModel\SlideshowTests.cs" />
     <Compile Include="ViewModel\SlideTests.cs" />
     <Compile Include="ViewModel\TraybarTests.cs" />
     <Compile Include="ViewModel\ViewModels.cs">
       <DependentUpon>Tests.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\WidgetMetadataTests.cs" />
     <Compile Include="ViewModel\WidgetTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ViewModel\Tests.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Tests.txt</LastGenOutput>
@@ -91,6 +116,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>Smeedee.DomainModel.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>Smeedee.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Tests\Smeedee.Tests.csproj">
+      <Project>{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}</Project>
+      <Name>Smeedee.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
       <Project>{F4DC446D-0F08-4D32-877D-CE4C6D84A497}</Project>
       <Name>Smeedee.Client.Framework</Name>

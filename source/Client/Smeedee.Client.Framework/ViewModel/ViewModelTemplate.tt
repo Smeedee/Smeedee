@@ -1,6 +1,6 @@
-﻿<#@ assembly name="$(ProjectDir)..\..\..\Tools\TinyMVVM\TinyMVVM.dll" #>
+﻿<#@ assembly name="$(SolutionDir)..\Tools\TinyMVVM\TinyMVVM.dll" #>
 <#@ import namespace="TinyMVVM.DSL.TextParser" #>
-<#@ import namespace="TinyMVVM.SemanticModel" #>
+<#@ import namespace="TinyMVVM.SemanticModel.MVVM" #>
 
 <#+
 // <copyright file="ViewModel.tt" company="eXPerience">
@@ -20,43 +20,66 @@ public class ViewModelTemplate : Template
 	#>
 
 using TinyMVVM.Framework.Services;
+using TinyMVVM.Framework.Conventions;
 <#+ foreach (string Using in modelSpec.Usings) {#>
 using <#= Using #>;
 <#+ }#>
 
-namespace <#= Namespace #>
-{
+
 <#+ foreach (ViewModel viewModel in modelSpec.ViewModels) {#>
+namespace <#= viewModel.Namespace #>
+{
 	public partial class <#= viewModel.Name#> : <#= viewModel.Parent#>
 	{
-		protected IUIInvoker UIInvoker { get; set; }
-
 		//State
 	<#+ foreach (ViewModelProperty property in viewModel.Properties) {#>
 <#+ foreach (string attribute in property.Attributes) {#>
 	<#= attribute #>
 	<#+ }#>
 	<#+ if (property.IsObservable) {#>
-public <#= property.Type#> <#= property.Name#>
+public virtual <#= property.Type#> <#= property.Name#>
 		{
-			get { return _<#= property.Name#>; }
+			get 
+			{
+				OnGet<#= property.Name#>(ref _<#= property.Name#>);
+				 
+				return _<#= property.Name#>; 
+			}
 			set
 			{
 				if (value != _<#= property.Name#>)
 				{
-					UIInvoker.Invoke(() =>
-					{
-						_<#= property.Name#> = value;
-						TriggerPropertyChanged("<#= property.Name#>");
-					});
+					OnSet<#= property.Name#>(ref value); 
+					_<#= property.Name#> = value;
+					TriggerPropertyChanged("<#= property.Name#>");
 				}
 			}
 		}
 		private <#= property.Type#> _<#= property.Name#>;
 
+		partial void OnGet<#= property.Name#>(ref <#= property.Type#> value);
+		partial void OnSet<#= property.Name#>(ref <#= property.Type#> value);
+
 	<#+ }#>
 <#+ if (!property.IsObservable){#>
-public <#= property.Type#> <#= property.Name#> { get; set; } 
+public virtual <#= property.Type#> <#= property.Name#> 
+		{ 
+			get
+			{
+				OnGet<#= property.Name#>(ref _<#= property.Name#>);
+				 
+				return _<#= property.Name#>; 
+			}
+			set 
+			{
+				OnSet<#= property.Name#>(ref value); 
+				_<#= property.Name #> = value; 
+			} 
+		}
+
+		private <#= property.Type#> _<#= property.Name#>;
+		partial void OnGet<#= property.Name#>(ref <#= property.Type#> value);
+		partial void OnSet<#= property.Name#>(ref <#= property.Type#> value);
 	<#+ }#>
 <#+ }#>
 
@@ -71,16 +94,17 @@ public <#= property.Type#> <#= property.Name#> { get; set; }
 	<#+ foreach (ViewModelCommand command in viewModel.Commands) {#>
 		<#= command.Name#> = new DelegateCommand();
 	<#+ }#>
-	
-			ServiceLocator.SetLocatorIfNotSet(() => ServiceLocator.GetServiceLocator());
-			UIInvoker = ServiceLocator.Instance.GetInstance<IUIInvoker>();
-		
-			ApplyDefaultConventions();
+
+			OnInitialize();
+			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}
+
+		partial void OnInitialize();
 	}
-		
+}
+
 <#+ }#>
-}<#+
+<#+
         return this.GenerationEnvironment.ToString();
 	}
 }

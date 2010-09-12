@@ -57,6 +57,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -75,6 +83,9 @@
   <ItemGroup>
     <Compile Include="..\Smeedee.DomainModel.Framework\AsyncRepositoryWrapperBase.cs">
       <Link>AsyncRepositoryWrapperBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.DomainModel.Framework\DSL\Specifications\All.cs">
+      <Link>DSL\Specifications\All.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.DomainModel.Framework\Factories\GenericFactory.cs">
       <Link>Factories\GenericFactory.cs</Link>

@@ -69,7 +69,7 @@ namespace Smeedee.IntegrationTests.PMT.RallyDev.XmlParserSpecs
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_spawned : Shared
     {
         [Test]
@@ -80,7 +80,7 @@ namespace Smeedee.IntegrationTests.PMT.RallyDev.XmlParserSpecs
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_loading : Shared
     {
         [Test]
@@ -109,7 +109,7 @@ namespace Smeedee.IntegrationTests.PMT.RallyDev.XmlParserSpecs
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_parsing : Shared
     {
         [Test]

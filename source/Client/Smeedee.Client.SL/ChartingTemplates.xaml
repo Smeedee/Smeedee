@@ -310,7 +310,7 @@
 					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="0">
 						<Grid>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto"/>
+								<RowDefinition />
 							</Grid.RowDefinitions>
 							<Grid Margin="0" Grid.Row="1">
 								<Grid.ColumnDefinitions>

@@ -22,7 +22,7 @@
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>Smeedee.Client.Widget.ProjectInfo.SL.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
-    <SilverlightAppEntry>Smeedee.Client.Widget.ProjectInfo.SL.App</SilverlightAppEntry>
+    <SilverlightAppEntry>Smeedee.Widget.ProjectInfo.SL.App</SilverlightAppEntry>
     <TestPageFileName>TestPage.html</TestPageFileName>
     <CreateTestPage>true</CreateTestPage>
     <ValidateXaml>true</ValidateXaml>
@@ -69,6 +69,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -78,6 +86,7 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Toolkit">
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
@@ -88,11 +97,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Smeedee.Widget.ProjectInfo\Controllers\WorkingDaysLeftController.cs">
-      <Link>Controllers\WorkingDaysLeftController.cs</Link>
+    <Compile Include="..\Smeedee.Widget.ProjectInfo\ViewModels\ViewModels.cs">
+      <Link>ViewModels\ViewModels.cs</Link>
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.ProjectInfo\ViewModels\WorkingDaysLeftSettingsViewModel.cs">
+      <Link>ViewModels\WorkingDaysLeftSettingsViewModel.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widget.ProjectInfo\ViewModels\WorkingDaysLeftViewModel.cs">
       <Link>ViewModels\WorkingDaysLeftViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.ProjectInfo\WorkingDaysLeftController.cs">
+      <Link>WorkingDaysLeftController.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -101,10 +117,13 @@
     <Compile Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xaml.cs">
       <DependentUpon>WorkingDaysLeftDataSource.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WorkingDaysLeftSettingsView.xaml.cs">
+      <DependentUpon>WorkingDaysLeftSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorkingDaysLeft.xaml.cs">
       <DependentUpon>WorkingDaysLeft.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WorkingDaysLeftModule.cs" />
+    <Compile Include="WorkingDaysLeftWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -115,6 +134,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Smeedee.Widget.ProjectInfo\ViewModels\ViewModel.mvvm">
+      <Link>ViewModels\ViewModel.mvvm</Link>
+    </None>
+    <None Include="..\Smeedee.Widget.ProjectInfo\ViewModels\ViewModel.tt">
+      <Link>ViewModels\ViewModel.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ViewModel1.txt</LastGenOutput>
+    </None>
     <None Include="Properties\AppManifest.xml" />
     <DesignTimeOnly Include="SampleData\WorkingDaysLeftDataSource\WorkingDaysLeftDataSource.xsd" />
   </ItemGroup>
@@ -129,6 +156,10 @@
       <Link>Styles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WorkingDaysLeftSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WorkingDaysLeft.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -158,6 +189,20 @@
       <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
       <Name>Smeedee.DomainModel.SL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Smeedee.Widget.ProjectInfo\ViewModels\ViewModel.txt">
+      <Link>ViewModels\ViewModel.txt</Link>
+    </Content>
+    <Content Include="..\Smeedee.Widget.ProjectInfo\ViewModels\ViewModel1.txt">
+      <Link>ViewModels\ViewModel1.txt</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

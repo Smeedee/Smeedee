@@ -4,5 +4,15 @@
              >
     <Application.Resources>
         
+    	<ResourceDictionary>
+    		<ResourceDictionary.MergedDictionaries>
+    			<ResourceDictionary Source="/Smeedee.Client.SL;component/Resources/Themes/Dark.xaml"/>
+    			<ResourceDictionary Source="/Smeedee.Client.SL;component/Colors.xaml"/>
+    			<ResourceDictionary Source="/Smeedee.Client.SL;component/Styles.xaml"/>
+    			<ResourceDictionary Source="/Smeedee.Client.SL;component/ChartingTemplates.xaml"/>
+    			<ResourceDictionary Source="/Smeedee.Client.SL;component/SettingsViewStyles.xaml"/>
+    		</ResourceDictionary.MergedDictionaries>
+    	</ResourceDictionary>
+        
     </Application.Resources>
 </Application>

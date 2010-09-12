@@ -111,7 +111,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.ProjectInfoRepositoryServ
         };
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_get_ProjectInfo_data_via_WebService : ProjectInfoRepositoryServiceTestsShared
     {
         [Test]
@@ -128,15 +128,8 @@ namespace Smeedee.Client.WebTests.Services.Integration.ProjectInfoRepositoryServ
                     And("ProjectInfo data is fetched from database", () =>
                         resultsetDB = databaseSession.CreateCriteria(typeof(ProjectInfoServer)).List<ProjectInfoServer>());
 
-                try
-                {
-                    scenario.When("get all", () =>
-                   resultsetWS = webServiceClient.Get(new AllSpecification<ProjectInfoServer>()));
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                scenario.When("get all", () =>
+                                         resultsetWS = webServiceClient.Get(new ProjectInfoServerByName("RallyDev")));
 
                 scenario.Then("assure all data is successfully serialized", () =>
                 {

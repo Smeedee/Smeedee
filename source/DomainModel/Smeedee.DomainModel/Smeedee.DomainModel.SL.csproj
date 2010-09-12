@@ -73,7 +73,18 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Silverlight">
+      <HintPath>..\..\..\tools\JSON\Silverlight\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
@@ -93,14 +104,25 @@
     <Compile Include="CI\Trigger.cs" />
     <Compile Include="CI\UnknownTrigger.cs" />
     <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Config\ConfigurationSpecifications.cs" />
     <Compile Include="Config\SettingsEntry.cs" />
-    <Compile Include="Config\SettingsSpecifications.cs" />
+    <Compile Include="Config\SlideConfig\IGetWidgetInfo.cs" />
+    <Compile Include="Config\SlideConfig\SlideConfiguration.cs" />
+    <Compile Include="Config\SlideConfig\SlideConfigurationSpecifications.cs" />
+    <Compile Include="Config\SlideConfig\WidgetInfo.cs" />
+    <Compile Include="Corkboard\RetrospectiveNote.cs" />
+    <Compile Include="Corkboard\RetrospectiveNoteSpecifications.cs" />
+    <Compile Include="Corkboard\RetrospectiveNoteType.cs" />
     <Compile Include="Holidays\Holiday.cs" />
     <Compile Include="Holidays\HolidaysSpecifications.cs" />
     <Compile Include="Holidays\IGenerateHolidays.cs" />
+    <Compile Include="NoSql\Collection.cs" />
+    <Compile Include="NoSql\Document.cs" />
+    <Compile Include="NoSql\NoSqlDatabase.cs" />
     <Compile Include="ProjectInfo\Iteration.cs" />
     <Compile Include="ProjectInfo\Project.cs" />
     <Compile Include="ProjectInfo\ProjectInfoServer.cs" />
+    <Compile Include="ProjectInfo\ProjectInfoServerSpecifications.cs" />
     <Compile Include="ProjectInfo\Repositories\IProjectRepository.cs" />
     <Compile Include="ProjectInfo\Repositories\IterationUtilities.cs" />
     <Compile Include="ProjectInfo\Task.cs" />
@@ -110,6 +132,12 @@
     <Compile Include="SourceControl\Changeset.cs" />
     <Compile Include="SourceControl\ChangesetSpecifications.cs" />
     <Compile Include="SourceControl\EmptyChangeset.cs" />
+    <Compile Include="TaskDefinition\TaskDefinition.cs" />
+    <Compile Include="TaskInstanceConfiguration\TaskConfiguration.cs" />
+    <Compile Include="TaskInstanceConfiguration\TaskConfigurationEntry.cs" />
+    <Compile Include="TaskInstanceConfiguration\TaskConfigurationException.cs" />
+    <Compile Include="TeamPicture\CurrentTeamPictureSpecification.cs" />
+    <Compile Include="TeamPicture\TeamPicture.cs" />
     <Compile Include="Users\User.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,6 +146,10 @@
     <Compile Include="Users\UserSpecifications.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Smeedee.Framework.SL\Smeedee.Framework.SL.csproj">
+      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
+      <Name>Smeedee.Framework.SL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Smeedee.DomainModel.Framework.SL\Smeedee.DomainModel.Framework.SL.csproj">
       <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
       <Name>Smeedee.DomainModel.Framework.SL</Name>
@@ -125,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CI\ClassDiagram.cd" />
+    <None Include="NoSql\ClassDiagram.cd" />
     <None Include="ProjectInfo\ClassDiagram.cd" />
     <None Include="SourceControl\ClassDiagram.cd" />
   </ItemGroup>

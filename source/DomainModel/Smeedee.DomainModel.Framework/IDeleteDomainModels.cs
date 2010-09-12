@@ -23,11 +23,36 @@
 
 #endregion
 
+using System;
+using System.ComponentModel;
 
 namespace Smeedee.DomainModel.Framework
 {
+    [Obsolete("This interface is obsolete in favor of the IDeleteDomainModelsAsync. Please use the new Async interface")]
     public interface IDeleteDomainModels<TDomainModel>
     {
         void Delete(Specification<TDomainModel> specification);
+    }
+
+    public interface IDeleteDomainModelsAsync<TDomainModel> : IDeleteDomainModels<TDomainModel>
+    {
+        event EventHandler<DeleteCompletedEventArgs<TDomainModel>> DeleteCompleted;
+    }
+
+    public class DeleteCompletedEventArgs<TDomainModel> : AsyncCompletedEventArgs
+    {
+        public Specification<TDomainModel> SpecificationUsed { get; private set; }
+
+        public DeleteCompletedEventArgs(Specification<TDomainModel> specificationUsed)
+            : this(null, specificationUsed)
+        {
+            SpecificationUsed = specificationUsed;
+        }
+
+        public DeleteCompletedEventArgs(Exception error, Specification<TDomainModel> specificationUsed) 
+            : base(error, false, null)
+        {
+            SpecificationUsed = specificationUsed;
+        }
     }
 }

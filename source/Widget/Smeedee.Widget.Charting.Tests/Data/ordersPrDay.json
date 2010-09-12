@@ -1,0 +1,54 @@
+﻿[{
+  Id: "637e4a80-d700-46c7-b35a-96061bacbefc",
+  "Date": "\/Date(1281304800000+0200)\/",
+  "NumberOfSales": 2
+}
+,
+{
+  Id: "8313306a-f60e-438e-b640-ce5888ed377f",
+  "Date": "\/Date(1281218400000+0200)\/",
+  "NumberOfSales": 6
+}
+,
+{
+  Id: "5edff443-fde9-4813-a87e-ec0d19dd912a",
+  "Date": "\/Date(1281132000000+0200)\/",
+  "NumberOfSales": 6
+}
+,
+{
+  Id: "6472648d-0edf-4ffd-8eeb-fe99bc30d2f8",
+  "Date": "\/Date(1281045600000+0200)\/",
+  "NumberOfSales": 4
+}
+,
+{
+  Id: "a56115e6-3083-492e-958e-2ce593acb8cd",
+  "Date": "\/Date(1280872800000+0200)\/",
+  "NumberOfSales": 2
+}
+,
+{
+  Id: "4053202f-dc87-4269-a0ce-c053072accc3",
+  "Date": "\/Date(1280786400000+0200)\/",
+  "NumberOfSales": 2
+}
+,
+{
+  Id: "330c4f2b-bbf6-46df-a2a4-cd3671d1b2c3",
+  "Date": "\/Date(1280613600000+0200)\/",
+  "NumberOfSales": 1
+}
+,
+{
+  Id: "a4453d36-7893-49d4-a56a-8119e8bff3e8",
+  "Date": "\/Date(1280527200000+0200)\/",
+  "NumberOfSales": 1
+}
+,
+{
+  Id: "c8a064ed-177a-4381-948c-6e4c04b8c624",
+  "Date": "\/Date(1280181600000+0200)\/",
+  "NumberOfSales": 3
+}
+]

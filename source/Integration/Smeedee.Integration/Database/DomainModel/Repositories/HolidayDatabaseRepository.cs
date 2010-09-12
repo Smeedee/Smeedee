@@ -62,7 +62,6 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
             {
                 using (session.BeginTransaction())
                 {
-                    session.CreateQuery("DELETE Holiday h").ExecuteUpdate();
                     session.SaveOrUpdate(domainModel);
                     session.Transaction.Commit();
                 }

@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using TinyMVVM.Framework;
+
+namespace Smeedee.Widget.Admin.Tasks.ViewModels:
+viewmodel TasksViewModel:
+	
+	oproperty AvailableTasks as ObservableCollection<TaskViewModel>
+	oproperty RunningTasks as ObservableCollection<TaskInstanceConfigurationViewModel>
+	
+	oproperty SelectedAvailableTask as TaskViewModel
+	oproperty RunningTaskIsSelected as bool
+	oproperty AvailableTaskIsSelected as bool
+	oproperty SelectedRunningTask as TaskInstanceConfigurationViewModel
+	oproperty HasChanges as bool
+
+	command ActivateSelectedTask
+	command DeactivateSelectedTask
+	command SaveChanges
+	command ReloadSettings
+
+namespace Smeedee.Widget.Admin.Tasks.ViewModels:
+viewmodel TaskViewModel:
+
+	property Author as string
+	property Description as string
+	property Version as long
+	property Webpage as string
+	
+	oproperty Name as string
+	oproperty ConfigurationEntries as ObservableCollection<ConfigurationEntryViewModel>
+
+namespace Smeedee.Widget.Admin.Tasks.ViewModels:
+viewmodel TaskInstanceConfigurationViewModel:
+	
+	oproperty AvailableTaskName as string
+	oproperty RunningTaskName as string
+	oproperty DispatchIntervalHours as int
+    oproperty DispatchIntervalMinutes as int
+    oproperty DispatchIntervalSeconds as int
+	oproperty ConfigurationEntries as ObservableCollection<ConfigurationEntryViewModel>
+
+namespace Smeedee.Widget.Admin.Tasks.ViewModels:
+viewmodel ConfigurationEntryViewModel:
+
+	property  OrderIndex as int
+	oproperty Name as string
+	oproperty Type as Type
+	oproperty Value as object

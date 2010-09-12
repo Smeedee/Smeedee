@@ -16,4 +16,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Save">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.CI" minOccurs="0" name="CIServers" nillable="true" type="q3:ArrayOfCIServer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

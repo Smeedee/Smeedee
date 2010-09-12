@@ -26,6 +26,7 @@
   <xs:complexType name="CIProject">
     <xs:sequence>
       <xs:element minOccurs="0" name="Builds" nillable="true" type="tns:ArrayOfBuild" />
+      <xs:element minOccurs="0" name="IsSelected" type="xs:boolean" />
       <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Server" nillable="true" type="tns:CIServer" />
       <xs:element minOccurs="0" name="SystemId" nillable="true" type="xs:string" />

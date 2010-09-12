@@ -17,11 +17,8 @@ namespace Smeedee.Widget.Browser.ViewModel
 			{
 				if (value != _Url)
 				{
-					UIInvoker.Invoke(() =>
-					{
-						_Url = value;
-						TriggerPropertyChanged("Url");
-					});
+					_Url = value;
+					TriggerPropertyChanged("Url");
 				}
 			}
 		}

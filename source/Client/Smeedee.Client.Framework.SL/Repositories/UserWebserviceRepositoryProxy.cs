@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Smeedee.Client.Framework.SL.UserRepositoryService;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Users;
-
+//Note: Obsolete, webservice needs a Userdb reference, so this will only ask for users in default. Use AsyncUserdbRepository instead!
 namespace Smeedee.Client.Framework.SL.Repositories
 {
     public class UserWebserviceRepositoryProxy : IRepository<User>

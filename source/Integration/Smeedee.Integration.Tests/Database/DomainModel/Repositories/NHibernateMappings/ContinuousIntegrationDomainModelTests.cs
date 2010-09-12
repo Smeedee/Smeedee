@@ -145,7 +145,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.NHibernateM
 
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_persisting_new_CIServer : Shared
     {
         [Test]
@@ -224,7 +224,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.NHibernateM
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_CIServer_is_persisted : Shared
     {
         [Test]
@@ -252,7 +252,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.NHibernateM
    
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_updating_CIServer : Shared
     {
         [Test]

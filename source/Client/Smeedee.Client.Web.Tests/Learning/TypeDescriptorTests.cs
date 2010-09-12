@@ -138,7 +138,7 @@ namespace Smeedee.Client.WebTests.Learning
         public string Name { get; set; }
     }
 
-    [TestFixture]
+    [TestFixture][NUnit.Framework.Category("IntegrationTest")]
     public class TypeDescriptorTests
     {
         [Test]

@@ -72,7 +72,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.ChangesetRepositoryServic
         };
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_get_changesets_data_via_WebService : ChangesetRepositoryServiceTestsShared
     {
         [Test]

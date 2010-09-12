@@ -28,18 +28,28 @@
 #endregion
 
 using System;
+using Smeedee.DomainModel.TaskInstanceConfiguration;
 
 namespace Smeedee.Tasks.Framework
 {
     public abstract class TaskBase
     {
+        private const int DEFAULT_INTERVAL_IN_MINUTES = 10;
+
         public abstract void Execute();
 
+        private TimeSpan _interval;
         public virtual TimeSpan Interval
         {
             get
             {
-                return new TimeSpan(0, 0, 10);
+                if (_interval == TimeSpan.Zero)
+                    _interval = new TimeSpan(0, DEFAULT_INTERVAL_IN_MINUTES, 0);
+                return _interval;
+            }
+            set
+            {
+                _interval = value;
             }
         }
 
@@ -49,6 +59,7 @@ namespace Smeedee.Tasks.Framework
             {
                 return "Default Task Name";
             }
+            set { }
         }
     }
 }

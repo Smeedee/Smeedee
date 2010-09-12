@@ -30,11 +30,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -49,10 +58,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingHelper.cs" />
     <Compile Include="Controller\ControllerBase.cs" />
+    <Compile Include="Controller\SelectWidgetsDialogController.cs" />
+    <Compile Include="Controller\WidgetController.cs" />
+    <Compile Include="Converters\BoolConverters.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\NullTestConverter.cs" />
     <Compile Include="Converters\DateTimeToPrettyStringConverter.cs" />
     <Compile Include="Converters\DateToStringConverter.cs" />
+    <Compile Include="Converters\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanToPrettyStringConverter.cs" />
     <Compile Include="Factories\ModuleLoaderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,27 +75,55 @@
     <Compile Include="ResourceParsing\XamlReader.cs" />
     <Compile Include="ResourceParsing\XamlResourceDictionary.cs" />
     <Compile Include="ServiceLocatorForClient.cs" />
+    <Compile Include="Services\IDockBarService.cs" />
+    <Compile Include="Services\IDownloadStringService.cs" />
+    <Compile Include="Services\IFullscreenService.cs" />
     <Compile Include="Services\IInvokeBackgroundWorker.cs" />
+    <Compile Include="Services\IManageConfigurations.cs" />
+    <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\IMetadataService.cs" />
+    <Compile Include="Services\IModalDialogService.cs" />
     <Compile Include="Services\IModuleLoader.cs" />
     <Compile Include="Services\Impl\BackgroundWorkers.cs" />
+    <Compile Include="Services\Impl\ConfigurationManager.cs" />
+    <Compile Include="Services\Impl\DockBarService.cs" />
+    <Compile Include="Services\Impl\ProgressbarDummy.cs" />
     <Compile Include="Services\Impl\ModuleLoader.cs" />
     <Compile Include="Services\Impl\NoUIInvokation.cs" />
     <Compile Include="Services\Impl\StandardTimer.cs" />
+    <Compile Include="Services\Impl\WidgetProgressbar.cs" />
+    <Compile Include="Services\IProgressbar.cs" />
     <Compile Include="Services\ITimer.cs" />
+    <Compile Include="ValidationHandler\ValidationHandler.cs" />
     <Compile Include="ViewModel\AbstractViewModel.cs" />
     <Compile Include="ViewModel\ApplicationContext.cs" />
     <Compile Include="ViewModel\BindableViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\Dialog.cs" />
+    <Compile Include="ViewModel\Dialogs\EditSlideshowDialog.cs" />
+    <Compile Include="ViewModel\DockBar.cs" />
+    <Compile Include="ViewModel\DockBarItems\FullScreen.cs" />
+    <Compile Include="ViewModel\DockBarItems\WidgetDockBarItem.cs" />
     <Compile Include="ViewModel\ErrorInfo.cs" />
     <Compile Include="ViewModel\ItemViewModelWrapper.cs" />
+    <Compile Include="ViewModel\IWidgetMetadata.cs" />
     <Compile Include="ViewModel\ObservableCollectionWrapper.cs" />
     <Compile Include="ViewModel\Person.cs" />
+    <Compile Include="ViewModel\Dialogs\SelectWidgetsDialog.cs" />
     <Compile Include="ViewModel\Slide.cs" />
     <Compile Include="ViewModel\Slideshow.cs" />
     <Compile Include="ViewModel\Traybar.cs" />
     <Compile Include="ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\WelcomeWidget.cs" />
     <Compile Include="ViewModel\Widget.cs" />
+    <Compile Include="Repositories\WidgetConfigurationRepository.cs" />
+    <Compile Include="ViewModel\Dialogs\WidgetDialog.cs" />
+    <Compile Include="ViewModel\WidgetInfoAttribute.cs" />
+    <Compile Include="ViewModel\WidgetMetadata.cs" />
+    <Compile Include="Views\Dialogs\EditSlideshowDialogView.xaml.cs">
+      <DependentUpon>EditSlideshowDialogView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ViewModel\ViewModel.mvvm">
@@ -100,13 +143,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ViewModel\ViewModel.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ViewModel.tt</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>Smeedee.DomainModel.Framework</Name>
@@ -115,6 +151,23 @@
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Framework\Smeedee.Framework.csproj">
+      <Project>{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}</Project>
+      <Name>Smeedee.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ViewModel\ViewModel.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Dialogs\EditSlideshowDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

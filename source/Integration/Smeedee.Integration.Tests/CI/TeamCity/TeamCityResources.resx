@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="GetBuildconfigurations" xml:space="preserve">
+    <value>&lt;project webUrl="http://smeedee.com:8111/project.html?projectId=project2" description="" archived="false" name="Smeedee" id="project2" href="/httpAuth/app/rest/projects/id:project2"&gt;&lt;buildTypes&gt;&lt;buildType id="bt5" name="Summer of Code 2010 - Oslo" href="/httpAuth/app/rest/buildTypes/id:bt5" projectName="Smeedee" projectId="project2" webUrl="http://smeedee.com:8111/viewType.html?buildTypeId=bt5"/&gt;&lt;buildType id="bt6" name="Summer of Code 2010 - Stavanger" href="/httpAuth/app/rest/buildTypes/id:bt6" projectName="Smeedee" projectId="project2" webUrl="http://smeedee.com:8111/viewType.html?buildTypeId=bt6"/&gt;&lt;buildType id="bt4" name="Summer of Code 2010 - Trondheim" href="/httpAuth/app/rest/buildTypes/id:bt4" projectName="Smeedee" projectId="project2" webUrl="http://smeedee.com:8111/viewType.html?buildTypeId=bt4"/&gt;&lt;buildType id="bt3" name="Trunk - Build only [Not Active]" href="/httpAuth/app/rest/buildTypes/id:bt3" projectName="Smeedee" projectId="project2" webUrl="http://smeedee.com:8111/viewType.html?buildTypeId=bt3"/&gt;&lt;/buildTypes&gt;&lt;/project&gt;</value>
+  </data>
+  <data name="GetBuildinfo" xml:space="preserve">
+    <value>&lt;build id="90" number="35" status="FAILURE" href="/httpAuth/app/rest/builds/id:90" webUrl="http://smeedee.com:8111/viewLog.html?buildId=90&amp;amp;buildTypeId=bt4" personal="false" history="false" pinned="false"&gt;&lt;statusText&gt;Tests failed: 2, passed: 427, ignored: 46&lt;/statusText&gt;&lt;buildType id="bt4" name="Summer of Code 2010 - Trondheim" href="/httpAuth/app/rest/buildTypes/id:bt4" projectName="Smeedee" projectId="project2" webUrl="http://smeedee.com:8111/viewType.html?buildTypeId=bt4"/&gt;&lt;startDate&gt;20100626T235650+0200&lt;/startDate&gt;&lt;finishDate&gt;20100626T235941+0200&lt;/finishDate&gt;&lt;agent name="summerofcode" id="1" href="/httpAuth/app/rest/agents/id:1"/&gt;&lt;tags/&gt;&lt;properties/&gt;&lt;revisions&gt;&lt;revision display-version="445"&gt;&lt;vcs-root href="/httpAuth/app/rest/vcs-roots/id:1,ver:1" name="svn: http://smeedee.googlecode.com/svn/"/&gt;&lt;/revision&gt;&lt;/revisions&gt;&lt;changes href="/httpAuth/app/rest/changes?build=id:90" count="0"/&gt;&lt;relatedIssues/&gt;&lt;/build&gt;</value>
+  </data>
+  <data name="GetBuilds" xml:space="preserve">
+    <value>&lt;builds count="25"&gt;&lt;build id="88" number="25" status="FAILURE" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:88" webUrl="http://smeedee.com:8111/viewLog.html?buildId=88&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="86" number="24" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:86" webUrl="http://smeedee.com:8111/viewLog.html?buildId=86&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="84" number="23" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:84" webUrl="http://smeedee.com:8111/viewLog.html?buildId=84&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="82" number="22" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:82" webUrl="http://smeedee.com:8111/viewLog.html?buildId=82&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="80" number="21" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:80" webUrl="http://smeedee.com:8111/viewLog.html?buildId=80&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="79" number="20" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:79" webUrl="http://smeedee.com:8111/viewLog.html?buildId=79&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="78" number="19" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:78" webUrl="http://smeedee.com:8111/viewLog.html?buildId=78&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="77" number="18" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:77" webUrl="http://smeedee.com:8111/viewLog.html?buildId=77&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="76" number="17" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:76" webUrl="http://smeedee.com:8111/viewLog.html?buildId=76&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="74" number="16" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:74" webUrl="http://smeedee.com:8111/viewLog.html?buildId=74&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="73" number="15" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:73" webUrl="http://smeedee.com:8111/viewLog.html?buildId=73&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="71" number="14" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:71" webUrl="http://smeedee.com:8111/viewLog.html?buildId=71&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="68" number="13" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:68" webUrl="http://smeedee.com:8111/viewLog.html?buildId=68&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="63" number="12" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:63" webUrl="http://smeedee.com:8111/viewLog.html?buildId=63&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="62" number="11" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:62" webUrl="http://smeedee.com:8111/viewLog.html?buildId=62&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="60" number="10" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:60" webUrl="http://smeedee.com:8111/viewLog.html?buildId=60&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="57" number="9" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:57" webUrl="http://smeedee.com:8111/viewLog.html?buildId=57&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="55" number="8" status="FAILURE" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:55" webUrl="http://smeedee.com:8111/viewLog.html?buildId=55&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="53" number="7" status="FAILURE" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:53" webUrl="http://smeedee.com:8111/viewLog.html?buildId=53&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="51" number="6" status="FAILURE" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:51" webUrl="http://smeedee.com:8111/viewLog.html?buildId=51&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="48" number="5" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:48" webUrl="http://smeedee.com:8111/viewLog.html?buildId=48&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="46" number="4" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:46" webUrl="http://smeedee.com:8111/viewLog.html?buildId=46&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="45" number="3" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:45" webUrl="http://smeedee.com:8111/viewLog.html?buildId=45&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="42" number="2" status="SUCCESS" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:42" webUrl="http://smeedee.com:8111/viewLog.html?buildId=42&amp;amp;buildTypeId=bt6"/&gt;&lt;build id="33" number="1" status="FAILURE" buildTypeId="bt6" href="/httpAuth/app/rest/builds/id:33" webUrl="http://smeedee.com:8111/viewLog.html?buildId=33&amp;amp;buildTypeId=bt6"/&gt;&lt;/builds&gt;</value>
+  </data>
+  <data name="GetChanges" xml:space="preserve">
+    <value>&lt;changes count="2"&gt;&lt;change version="445" id="114" href="/httpAuth/app/rest/changes/id:114"/&gt;&lt;change version="445" id="114" href="/httpAuth/app/rest/changes/id:114"/&gt;&lt;/changes&gt;</value>
+  </data>
+  <data name="GetChangesetInfo" xml:space="preserve">
+    <value>&lt;change username="d.nyvik" date="20100626T173216+0200" version="445" id="114" href="/httpAuth/app/rest/changes/id:114"&gt;&lt;comment&gt;Fixed some functionality and added comments for students. Save function overwrites every DB except the one that is changed, needs to be addressed. More tests need to be written and some modified to cover new functionality.
+&lt;/comment&gt;&lt;files&gt;&lt;file relative-file="branches/soc/stavanger/source/Widget/Smeedee.Widget.TeamMembers.SL/View/UserdbSettingsView.xaml" file="http://smeedee.googlecode.com:80/svn/branches/soc/stavanger/source/Widget/Smeedee.Widget.TeamMembers.SL/View/UserdbSettingsView.xaml" after-revision="445" before-revision="444"/&gt;&lt;file relative-file="branches/soc/stavanger/source/Widget/Smeedee.Widget.TeamMembers/Controllers/TeamMembersController.cs" file="http://smeedee.googlecode.com:80/svn/branches/soc/stavanger/source/Widget/Smeedee.Widget.TeamMembers/Controllers/TeamMembersController.cs" after-revision="445" before-revision="444"/&gt;&lt;/files&gt;&lt;/change&gt;</value>
+  </data>
+  <data name="GetChangesNoChanges" xml:space="preserve">
+    <value>&lt;changes count="0"/&gt;</value>
+  </data>
+  <data name="GetProjects" xml:space="preserve">
+    <value>&lt;projects&gt;&lt;project name="Smeedee" id="project2" href="/httpAuth/app/rest/projects/id:project2"/&gt;&lt;project name="Jon Terje" id="project3" href="/httpAuth/app/rest/projects/id:project3"/&gt;&lt;/projects&gt;</value>
+  </data>
+</root>

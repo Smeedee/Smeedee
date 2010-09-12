@@ -1,6 +1,7 @@
 ﻿using TinyMVVM.Framework
 using System.Collections.ObjectModel
 using System.Windows.Media.Imaging
+using System.Windows.Media
 
 viewmodel TeamPictureViewModel:
 	oproperty Snapshots as ObservableCollection<WriteableBitmap>
@@ -8,10 +9,15 @@ viewmodel TeamPictureViewModel:
 	oproperty Snapshot as WriteableBitmap
 
 	oproperty HasSelectedSnapshot as bool
-	oproperty WebcamVideoBrush as Brush
 	oproperty Message as string
+	oproperty ErrorMsg as string
+	
+	oproperty HasStoredImage as bool
+
+	oproperty CaptureBrush as Brush
 
 	command Delete
 	command Save
 	command TakePicture
 	command ToggleWebcamOnOff
+	command Refresh

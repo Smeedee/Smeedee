@@ -30,139 +30,266 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
+using Smeedee.DomainModel.TaskInstanceConfiguration;
+using Smeedee.Integration.Framework.Utils;
+using Smeedee.Scheduler.Services;
 using Smeedee.Tasks.Framework;
+using Smeedee.Tasks.Framework.TaskAttributes;
 
 namespace Smeedee.Scheduler
 {
-    public class Scheduler : IScheduler, IDisposable
+    public class Scheduler
     {
-        private class HarversterMetaData
+        private const int TASK_FAILURE_LIMIT = 3;
+        private const int TASK_FAILURE_COOLDOWN_INTERVAL_S = 60 * 10;
+
+        private readonly IDictionary<string, Type> taskNameToTypeMappings;
+        private readonly string taskDirectory;
+        private readonly IFileUtilities fileUtility;
+        private readonly IocContainerForScheduler iocContainer;
+        private readonly ILog logger;
+        private readonly ITimerWithTimestamp taskConfigurationTimer;
+        private readonly ITimerWithTimestamp dispatchTimer;
+        private IList<TaskConfiguration> taskConfigurations;
+
+        public IEnumerable<TaskBase> InstantiatedTasks
         {
-            public TaskBase Harvester { get; set; }
-            public DateTime LastDispatch { get; set; }
-            public bool IsRunning { get; set; }
-            public int FailureCounter { get; set; }
-            public DateTime CooldownPoint { get; set; }
-        }
-
-        public event Action OnFailedDispatch;
-
-        private const int HARVESTER_FAILURE_LIMIT = 3;
-        private const int HARVESTER_FAILURE_COOLDOWN_INTERVAL_S = 60 * 10;
-        private const int CHECK_DISPATCH_INTERVAL_MS = 500;
-
-        private ILog logger;
-        private List<HarversterMetaData> harvesterInformation;
-        private Timer dispatchWorkerTimer;
-
-
-        public Scheduler(ILog logger)
-        {
-            this.logger = logger;
-
-            harvesterInformation =  new List<HarversterMetaData>();
-
-            dispatchWorkerTimer = new Timer(new TimerCallback(DispatchHarvesters), null, CHECK_DISPATCH_INTERVAL_MS, CHECK_DISPATCH_INTERVAL_MS);
-
-            WriteInfoToLog("Scheduler loaded at " + DateTime.Now);
-        }
-
-        private void DispatchHarvesters(object state)
-        {
-
-            foreach (var harvesterInfo in harvesterInformation)
+            get
             {
-                if(!IsHarvesterDueToDispatch(harvesterInfo))
-                    continue;
-                
-                WriteInfoToLog("Dispatching '" + harvesterInfo.Harvester.Name + "'");
-                harvesterInfo.IsRunning = true;
+                return TaskMetaDatas.Select(t => t.Task);
+            }
+        }
 
-                var infoHolder = harvesterInfo;//Note: Do NOT remove this referance.
-                ThreadPool.QueueUserWorkItem((o) => {
-                    infoHolder.LastDispatch = DateTime.Now;
+        public IList<TaskMetaData> TaskMetaDatas { get; private set; }
+
+        private DateTime startDateTime;
+        public DateTime StartDateTime
+        {
+            get { return (startDateTime == DateTime.MinValue) ? DateTime.Now : startDateTime; }
+            set { startDateTime = value; }
+        }
+
+        public Scheduler(
+            IocContainerForScheduler iocContainer, 
+            string taskDirectory, 
+            IFileUtilities fileUtility, 
+            ITimerWithTimestamp taskConfigurationTimer, 
+            ITimerWithTimestamp dispatchTimer, 
+            ILog logger)
+        {
+            taskNameToTypeMappings = new Dictionary<string, Type>();
+            TaskMetaDatas = new List<TaskMetaData>();
+            this.logger = logger;
+            this.iocContainer = iocContainer;
+            this.taskDirectory = taskDirectory;
+            this.fileUtility = fileUtility;
+            this.taskConfigurationTimer = taskConfigurationTimer;
+            this.taskConfigurationTimer.Elapsed += (o, e) => GatherTaskConfigurations();
+            this.dispatchTimer = dispatchTimer;
+            this.dispatchTimer.Elapsed += (o, timerElapsedEventArgs) => DispatchTasks(timerElapsedEventArgs.Time);
+        }
+
+        public void Start()
+        {
+            WriteInfoToLog("Scheduler started at " + DateTime.Now);
+            GatherTaskConfigurations();
+            StartTimers();
+        }
+
+        private void GatherTaskConfigurations()
+        {
+            RegisterTaskConfigurationsFromRepository();
+            UpdateListOfInstantiatedTasks();
+        }
+
+        private void RegisterTaskConfigurationsFromRepository()
+        {
+            GetTaskConfigurations(); 
+            MapTaskNamesToTypes();
+        }
+
+        private void GetTaskConfigurations()
+        {
+            var configRepo = iocContainer.Get<IRepository<TaskConfiguration>>();
+            taskConfigurations = configRepo.Get(new AllSpecification<TaskConfiguration>()).ToList(); 
+        }
+
+        private void MapTaskNamesToTypes()
+        {
+            var availableTaskTypes = FetchAvailableTaskTypes();
+
+            foreach (var taskType in availableTaskTypes)
+            {
+                var taskAttribute = taskType.GetCustomAttributes(typeof (TaskAttribute), false).FirstOrDefault() as TaskAttribute;
+                if( taskAttribute != null )
+                    taskNameToTypeMappings[taskAttribute.Name] = taskType;
+            }
+        }
+
+        private IEnumerable<Type> FetchAvailableTaskTypes()
+        {
+            var availableTaskTypes = new List<Type>();
+
+            try
+            {
+                availableTaskTypes.AddRange(fileUtility.FindImplementationsOrSubclassesOf<TaskBase>(taskDirectory));
+            }
+            catch (Exception e)
+            {
+                WriteErrorToLog(e);
+            }
+
+            return availableTaskTypes;
+        }
+
+        private void UpdateListOfInstantiatedTasks()
+        {
+            RemoveUnreferencedTasks();
+
+            foreach (var config in taskConfigurations.Where(TaskCanBeCreated))
+            {
+                if (TaskAlreadyExists(config))
+                    UpdateExistingTaskMetaData(config);
+                else
+                    AddNewTask(config);
+            }
+        }
+
+        private void RemoveUnreferencedTasks()
+        {
+            var configNames = taskConfigurations.Select(t => t.Name);
+            TaskMetaDatas = TaskMetaDatas.TakeWhile(t => configNames.Contains(t.InstanceName)).ToList();
+        }
+
+        private bool TaskCanBeCreated(TaskConfiguration configuration)
+        {
+            return taskNameToTypeMappings.ContainsKey(configuration.TaskName);
+        }
+
+        private bool TaskAlreadyExists(TaskConfiguration config)
+        {
+            return TaskMetaDatas.Select(t => t.InstanceName).Contains(config.Name);
+        }
+
+        private void UpdateExistingTaskMetaData(TaskConfiguration config)
+        {
+            try
+            {
+                var taskMetaData = TaskMetaDatas.Single(t => t.InstanceName == config.Name);
+                taskMetaData.Task = CreateTask(taskNameToTypeMappings[config.TaskName], config);
+            }
+            catch (Exception e)
+            {
+                WriteErrorToLog(e);
+            }
+        }
+
+        private TaskBase CreateTask(Type type, TaskConfiguration configuration)
+        {
+            iocContainer.BindTo<TaskBase>(type);
+            iocContainer.BindToConstant(configuration);
+            
+            return iocContainer.Get<TaskBase>();
+        }
+
+        private void AddNewTask(TaskConfiguration config)
+        {
+            try
+            {
+                TaskMetaDatas.Add(new TaskMetaData
+                {
+                    Task = CreateTask(taskNameToTypeMappings[config.TaskName], config),
+                    InstanceName = config.Name,
+                    LastDispatch = DateTime.MinValue,
+                    IsRunning = false
+                });
+            }
+            catch (Exception e)
+            {
+                WriteErrorToLog(e);
+            }  
+        }
+
+        private void DispatchTasks(DateTime currentTime)
+        {
+            foreach (var taskInfo in TaskMetaDatas.Where(t => TaskIsDueToDispatch(t, currentTime)))
+            {
+                WriteInfoToLog("Dispatching '" + taskInfo.Task.Name + ": " + taskInfo.InstanceName + "'");
+                taskInfo.IsRunning = true;
+
+                var threadedTaskInfo = taskInfo; //Note: Do NOT remove this reference.
+                ThreadPool.QueueUserWorkItem((o) =>
+                {
+                    threadedTaskInfo.LastDispatch = currentTime;
                     try
                     {
-                        infoHolder.Harvester.Execute();
-                        infoHolder.FailureCounter = 0;
+                        threadedTaskInfo.Task.Execute();
+                        threadedTaskInfo.FailureCounter = 0;
                     }
-                    catch( TaskConfigurationException configException)
+                    catch (TaskConfigurationException configException)
                     {
-                        logger.WriteEntry(new WarningLogEntry()
-                        {
-                            Message = configException.Message,
-                            Source = "Scheduler"
-                        });
+                        logger.WriteEntry(new WarningLogEntry {Message = configException.Message, Source = "Scheduler"});
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                        InvokeOnFailedDispatch();
-                        HandleHarvesterException(infoHolder, ex);
+                        HandleTaskException(threadedTaskInfo, ex);
                     }
                     finally
                     {
-                        infoHolder.IsRunning = false;                            
+                        threadedTaskInfo.IsRunning = false;
                     }
                 });
             }
         }
 
-
-        private bool IsHarvesterDueToDispatch(HarversterMetaData harversterMetaData)
+        private bool TaskIsDueToDispatch(TaskMetaData taskMetaData, DateTime currentTime)
         {
-            bool isInCooldownMode = harversterMetaData.CooldownPoint > DateTime.Now;
-            DateTime nextDispatchTime = harversterMetaData.LastDispatch + harversterMetaData.Harvester.Interval;
-            bool hasNotPassedDueTime = nextDispatchTime > DateTime.Now;
+            bool isInCooldownMode = taskMetaData.CooldownPoint > currentTime;
+            DateTime nextDispatchTime = taskMetaData.LastDispatch + taskMetaData.Task.Interval;
+            bool hasNotPassedDueTime = nextDispatchTime > currentTime;
 
-            if (harversterMetaData.Harvester == null
-                || harversterMetaData.IsRunning
-                || isInCooldownMode
-                || hasNotPassedDueTime)
+            if (taskMetaData.Task == null || taskMetaData.IsRunning  || isInCooldownMode || hasNotPassedDueTime)
             {
                 return false;
             }
-            else
-                return true;
+            
+            return true;
         }
 
-        public void RegisterTasks(IEnumerable<TaskBase> harvesters)
+        private void HandleTaskException(TaskMetaData taskMetaData, Exception ex)
         {
-            foreach (TaskBase harvester in harvesters)
+            taskMetaData.FailureCounter++;
+
+            string logMessage = "The '" + taskMetaData.InstanceName + "' instance of '" +
+                                taskMetaData.Task.Name +
+                                "' threw an exception. Attempt number " + taskMetaData.FailureCounter +
+                                ". Exception details: \r\n" + ex;
+
+            if (taskMetaData.FailureCounter >= TASK_FAILURE_LIMIT)
             {
-                var harvesterMeta = new HarversterMetaData()
-                                    {
-                                        Harvester = harvester,
-                                        LastDispatch = DateTime.MinValue,
-                                        IsRunning = false
-                                    };
-                harvesterInformation.Add(harvesterMeta);
-            }
-        }
-
-
-
-        private void HandleHarvesterException(HarversterMetaData harversterMetaData, Exception ex)
-        {
-            harversterMetaData.FailureCounter++;
-
-            string logMessage = "Harvester '" + harversterMetaData.Harvester.Name + 
-                                "' threw an exception. Attempt number " + harversterMetaData.FailureCounter +
-                                ". Exception details: \r\n" + ex.ToString();
-            
-            
-            if (harversterMetaData.FailureCounter >= HARVESTER_FAILURE_LIMIT)
-            {
-                harversterMetaData.CooldownPoint = DateTime.Now + new TimeSpan(0, 0, HARVESTER_FAILURE_COOLDOWN_INTERVAL_S);
-                harversterMetaData.FailureCounter = 0;
+                PutTaskIntoCooldown(taskMetaData);
+                taskMetaData.FailureCounter = 0;
                 logMessage = "Going into Cooldown, will resume at " +
-                    harversterMetaData.CooldownPoint + ". " + logMessage;
+                         taskMetaData.CooldownPoint + ". " + logMessage;
             }
-            
+
             WriteErrorToLog(logMessage);
         }
 
+        private void PutTaskIntoCooldown(TaskMetaData taskMetaData)
+        {
+            taskMetaData.CooldownPoint = DateTime.Now + new TimeSpan(0, 0, TASK_FAILURE_COOLDOWN_INTERVAL_S);
+        }
+
+        private void StartTimers()
+        {
+            taskConfigurationTimer.Start();
+            dispatchTimer.Start();
+        }
 
         private void WriteInfoToLog(object message)
         {
@@ -170,34 +297,10 @@ namespace Smeedee.Scheduler
                 logger.WriteEntry(new InfoLogEntry("Scheduler", message.ToString()));
         }
 
-        private void WriteWarningToLog(object message)
-        {
-            if (logger != null)
-                logger.WriteEntry(new WarningLogEntry("Scheduler", message.ToString()));
-        }
-
         private void WriteErrorToLog(object message)
         {
             if (logger != null)
                 logger.WriteEntry(new ErrorLogEntry("Scheduler", message.ToString()));
         }
-
-        private void InvokeOnFailedDispatch()
-        {
-            Action dispatch = OnFailedDispatch;
-            if (dispatch != null)
-            {
-                dispatch();
-            }
-        }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            dispatchWorkerTimer.Dispose();
-        }
-
-        #endregion
     }
 }

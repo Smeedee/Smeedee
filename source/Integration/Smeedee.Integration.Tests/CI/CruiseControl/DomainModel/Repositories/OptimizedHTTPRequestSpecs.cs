@@ -40,7 +40,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class OptimizedHTTPRequestSpecs
     {
 
@@ -118,10 +118,10 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories
             return System.Text.Encoding.ASCII.GetBytes(data.ToString());
         }
     }
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class OpimizedHTTPRequestSpecs_Integration
     {
-        private readonly string LONGFILE_URL = "http://agileprojectdashboard.org/__utility/js/prototype.js";
+        private readonly string LONGFILE_URL = "http://smeedee.org/__utility/js/prototype.js";
         private readonly string PERMANENT_URL = "http://smeedee.org/default.aspx";
         private readonly string NONEXISTINGHOST_URL = "http://www.fakedomainserver1234AQWD.com";
         private readonly string NONEXISTINGFILE_URL = "http://www.google.com/SomeDumbFileIKnowsNotThere.dat";

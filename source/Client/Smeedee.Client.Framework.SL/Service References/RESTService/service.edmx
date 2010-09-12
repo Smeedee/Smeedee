@@ -1,0 +1,83 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
+    <Schema Namespace="Smeedee.Client.Web.Services.DTO.SourceControl" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+      <EntityType Name="ChangesetDTO">
+        <Key>
+          <PropertyRef Name="Revision" />
+        </Key>
+        <Property Name="Revision" Type="Edm.String" Nullable="false" />
+        <Property Name="Author" Type="Smeedee.Client.Web.Services.DTO.SourceControl.AuthorDTO" Nullable="false" />
+        <Property Name="Time" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="Comment" Type="Edm.String" Nullable="true" />
+      </EntityType>
+      <ComplexType Name="AuthorDTO">
+        <Property Name="Username" Type="Edm.String" Nullable="true" />
+      </ComplexType>
+    </Schema>
+    <Schema Namespace="Smeedee.Client.Web.Services.DTO.NoSql" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+      <EntityType Name="NoSqlDatabaseDTO">
+        <Key>
+          <PropertyRef Name="Name" />
+        </Key>
+        <Property Name="Name" Type="Edm.String" Nullable="false" />
+        <NavigationProperty Name="Collections" Relationship="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDatabaseDTO_Collections" FromRole="NoSqlDatabaseDTO" ToRole="Collections" />
+      </EntityType>
+      <EntityType Name="NoSqlCollectionDTO">
+        <Key>
+          <PropertyRef Name="Name" />
+        </Key>
+        <Property Name="Name" Type="Edm.String" Nullable="false" />
+        <NavigationProperty Name="Database" Relationship="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO_Database" FromRole="NoSqlCollectionDTO" ToRole="Database" />
+        <NavigationProperty Name="Documents" Relationship="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO_Documents" FromRole="NoSqlCollectionDTO" ToRole="Documents" />
+      </EntityType>
+      <EntityType Name="NoSqlDocumentDTO">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="JSON" Type="Edm.String" Nullable="true" />
+        <NavigationProperty Name="Collection" Relationship="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDocumentDTO_Collection" FromRole="NoSqlDocumentDTO" ToRole="Collection" />
+      </EntityType>
+      <Association Name="NoSqlDatabaseDTO_Collections">
+        <End Role="NoSqlDatabaseDTO" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDatabaseDTO" Multiplicity="*" />
+        <End Role="Collections" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO" Multiplicity="*" />
+      </Association>
+      <Association Name="NoSqlCollectionDTO_Database">
+        <End Role="NoSqlCollectionDTO" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO" Multiplicity="*" />
+        <End Role="Database" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDatabaseDTO" Multiplicity="0..1" />
+      </Association>
+      <Association Name="NoSqlCollectionDTO_Documents">
+        <End Role="NoSqlCollectionDTO" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO" Multiplicity="*" />
+        <End Role="Documents" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDocumentDTO" Multiplicity="*" />
+      </Association>
+      <Association Name="NoSqlDocumentDTO_Collection">
+        <End Role="NoSqlDocumentDTO" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDocumentDTO" Multiplicity="*" />
+        <End Role="Collection" Type="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO" Multiplicity="0..1" />
+      </Association>
+    </Schema>
+    <Schema Namespace="Smeedee.Client.Web.Services" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+      <EntityContainer Name="SmeedeeREST" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Changesets" EntityType="Smeedee.Client.Web.Services.DTO.SourceControl.ChangesetDTO" />
+        <EntitySet Name="NoSqlDatabases" EntityType="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDatabaseDTO" />
+        <EntitySet Name="NoSqlCollections" EntityType="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO" />
+        <EntitySet Name="NoSqlDocuments" EntityType="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDocumentDTO" />
+        <AssociationSet Name="NoSqlDatabaseDTO_Collections" Association="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDatabaseDTO_Collections">
+          <End Role="NoSqlDatabaseDTO" EntitySet="NoSqlDatabases" />
+          <End Role="Collections" EntitySet="NoSqlCollections" />
+        </AssociationSet>
+        <AssociationSet Name="NoSqlCollectionDTO_Database" Association="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO_Database">
+          <End Role="NoSqlCollectionDTO" EntitySet="NoSqlCollections" />
+          <End Role="Database" EntitySet="NoSqlDatabases" />
+        </AssociationSet>
+        <AssociationSet Name="NoSqlCollectionDTO_Documents" Association="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlCollectionDTO_Documents">
+          <End Role="NoSqlCollectionDTO" EntitySet="NoSqlCollections" />
+          <End Role="Documents" EntitySet="NoSqlDocuments" />
+        </AssociationSet>
+        <AssociationSet Name="NoSqlDocumentDTO_Collection" Association="Smeedee.Client.Web.Services.DTO.NoSql.NoSqlDocumentDTO_Collection">
+          <End Role="NoSqlDocumentDTO" EntitySet="NoSqlDocuments" />
+          <End Role="Collection" EntitySet="NoSqlCollections" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

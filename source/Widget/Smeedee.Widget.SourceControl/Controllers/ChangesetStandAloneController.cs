@@ -25,6 +25,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
@@ -32,6 +34,7 @@ using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
+using Smeedee.Framework;
 using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
 
@@ -43,17 +46,27 @@ namespace Smeedee.Widget.SourceControl.Controllers
     {
         protected IRepository<Changeset> changesetRepository;
         protected IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient;
-
         protected ILog logger;
+        protected bool configIsChanged;
 
-        protected ChangesetStandAloneController(BindableViewModel<T> viewModel, IRepository<Changeset> changesetRepo, IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient, ITimer timer, IUIInvoker uiInvoke, ILog logger)
-            : base(viewModel, timer, uiInvoke)
+        protected ChangesetStandAloneController(
+            BindableViewModel<T> viewModel, 
+            IRepository<Changeset> changesetRepo, 
+            IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient, 
+            ITimer timer, 
+            IUIInvoker uiInvoke,
+            ILog logger,
+            IProgressbar loadingNotifier)
+            : base(viewModel, timer, uiInvoke, loadingNotifier)
         {
+            Guard.ThrowExceptionIfNull(logger, "logger");
+            Guard.ThrowExceptionIfNull(changesetRepo, "changesetRepo");
+            Guard.ThrowExceptionIfNull(asyncClient, "asyncClient");
+            
             this.logger = logger;
             this.changesetRepository = changesetRepo;
             this.asyncClient = asyncClient;
         }
-
 
         protected void LoadData()
         {
@@ -64,29 +77,30 @@ namespace Smeedee.Widget.SourceControl.Controllers
         {
             if (!ViewModel.IsLoading)
             {
-                ViewModel.IsLoading = true;
-                asyncClient.RunAsyncVoid(() =>
-                {
-                    var changesets = QueryChangesets(specification);
-
-                    uiInvoker.Invoke(() =>
-                    {
-                        try
-                        {
-                            LoadDataIntoViewModel(changesets);
-                        }
-                        catch (Exception e)
-                        {
-                            LogErrorMsg(e);
-                            ViewModel.HasConnectionProblems = true;
-                        }
-                    });
-                    ViewModel.IsLoading = false;
-                });
+                asyncClient.RunAsyncVoid(() => LoadDataSync(specification));
             }
         }
 
-
+        protected void LoadDataSync(Specification<Changeset> specification)
+        {
+            //Loads the data synchronously, and invokes the UI asynchronusly
+            SetIsLoadingData();
+            var changesets = QueryChangesets(specification);
+            uiInvoker.Invoke(() =>
+            {
+                try
+                {
+                    LoadDataIntoViewModel(changesets);
+                }
+                catch (Exception e)
+                {
+                    LogErrorMsg(e);
+                    ViewModel.HasConnectionProblems = true;
+                }
+            });
+            SetIsNotLoadingData();
+        }
+        
         protected IEnumerable<Changeset> QueryChangesets(Specification<Changeset> specification)
         {
             IEnumerable<Changeset> changesets = null;
@@ -112,14 +126,20 @@ namespace Smeedee.Widget.SourceControl.Controllers
 
         }
 
+        protected void UpdateRevision(IEnumerable<Changeset> changesets)
+        {
+            if (changesets == null || changesets.Count() == 0) return;
+
+            var newMaxRevision = changesets.Max(c => c.Revision);
+            if (newMaxRevision > ViewModel.CurrentRevision || configIsChanged)
+            {
+                ViewModel.CurrentRevision = newMaxRevision;
+            }
+        }
+
         protected void LogErrorMsg(Exception exception)
         {
-            logger.WriteEntry(new ErrorLogEntry()
-            {
-                Message = exception.ToString(),
-                Source = this.GetType().ToString(),
-                TimeStamp = DateTime.Now
-            });
+            logger.WriteEntry(ErrorLogEntry.Create(this, exception.ToString()));
         }
 
         protected void LogWarningMsg (Exception exception)

@@ -52,10 +52,27 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    <Reference Include="System.CoreEx, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\Reactive Framework\Silverlight\System.CoreEx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Observable">
+      <HintPath>..\..\..\tools\Reactive Framework\Silverlight\System.Observable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\Reactive Framework\Silverlight\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -70,22 +87,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\WorkingDaysLeftController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ViewModels.cs">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\WorkingDaysLeftSettingsViewModel.cs" />
     <Compile Include="ViewModels\WorkingDaysLeftViewModel.cs" />
+    <Compile Include="WorkingDaysLeftController.cs" />
+    <Compile Include="WorkingDaysLeftRxController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
       <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
       <Name>Smeedee.Client.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>Smeedee.DomainModel.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
-      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
-      <Name>Smeedee.DomainModel.Framework</Name>
+    <ProjectReference Include="..\..\Scheduler\Smeedee.Tasks.Framework\Smeedee.Tasks.Framework.csproj">
+      <Project>{EB96EC6A-173A-4D65-A266-0E8F6776B394}</Project>
+      <Name>Smeedee.Tasks.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +130,29 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ViewModels\ViewModel.mvvm">
+      <Generator>T4ScriptFileGenerator</Generator>
+      <LastGenOutput>ViewModel.tt</LastGenOutput>
+    </None>
+    <None Include="ViewModels\ViewModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ViewModel.mvvm</DependentUpon>
+      <LastGenOutput>ViewModel.txt</LastGenOutput>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ViewModels\ViewModel.txt">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

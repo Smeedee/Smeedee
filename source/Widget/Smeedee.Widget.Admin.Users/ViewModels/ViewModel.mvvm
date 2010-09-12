@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using TinyMVVM.Framework;
+
+namespace Smeedee.Widget.Admin.Users.ViewModels:
+	viewmodel UsersViewModel:
+
+		oproperty HasDatabase as bool
+		oproperty SelectedUser as UserViewModel
+		oproperty EditedUser as UserViewModel
+		oproperty CurrentDBName as string
+		oproperty Users as ObservableCollection<UserViewModel>
+		oproperty Userdbs as ObservableCollection<string>
+		oproperty IsLoading as bool
+		oproperty IsSaving as bool	
+		oproperty HasConnectionProblems as bool			
+
+		property DeploymentPath as string
+	
+		command AddUser
+		command EditUser
+		command OpenUserEditWindow		
+		command CloseUserEditWindow
+		command DeleteSelectedUser
+		command Refresh
+		command Save	
+
+
+	viewmodel UserViewModel:
+
+		property DefaultPictureUri as string
+		property HasInvalidUsername as bool
+
+		oproperty Middlename as string
+		oproperty Surname as string
+		oproperty Email as string
+		oproperty ImageUrl as string

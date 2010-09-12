@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Smeedee.DomainModel"
+                   namespace="Smeedee.DomainModel.NoSql">
+  <class name="NoSqlDatabase" table="NoSqlDatabase">
+    <id name="Name">
+      <generator class="assigned"/>
+    </id>
+
+    <map name="Collections" cascade="all-delete-orphan" lazy="false" inverse="true">
+      <key column="NoSqlDatabase_fid"/>
+      <index column="Name" type="String"/>
+      <one-to-many class="Collection"/>
+    </map>
+  </class>
+
+  <class name="Collection" table="NoSqlCollection">
+    <composite-id>
+      <key-property name="Name"/>
+      <key-many-to-one name="NoSqlDatabase" class="NoSqlDatabase" column="NoSqlDatabase_fid" lazy="false"/>
+    </composite-id>
+
+    <bag name="Documents" cascade="all-delete-orphan" lazy="false" inverse="true">
+      <key>
+        <column name="Collection_fid"/>
+        <column name="NoSqlDatabase_fid"/>
+      </key> 
+      <one-to-many class="Document"/>
+    </bag>
+  </class>
+
+  <class name="Document" table="NoSqlDocument">
+    <composite-id>
+      <key-property name="Id"/>
+      <key-many-to-one name="Collection" class="Collection" lazy="false">
+        <column name="Collection_fid"/>
+        <column name="NoSqlDatabase_fid"/>
+      </key-many-to-one>
+    </composite-id>
+    
+    <property name="JSON" />
+  </class>
+</hibernate-mapping>

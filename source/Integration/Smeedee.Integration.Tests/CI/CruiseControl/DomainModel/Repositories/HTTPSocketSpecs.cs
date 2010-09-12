@@ -36,7 +36,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     [Ignore]
     public class HTTPSocketSpecs
     {

@@ -33,6 +33,7 @@ using Smeedee.Integration.VCS.Git.DomainModel;
 
 using GitSharp;
 using NUnit.Framework;
+using Smeedee.Integration.VCS.Git.DomainModel.Repositories;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 using Author = GitSharp.Author;
@@ -48,7 +49,7 @@ namespace Smeedee.IntegrationTests.VCS.Git
 
         protected void SetupContext()
         {
-            _localDirectory = "C:\\Smeedee_dummy\\";
+            _localDirectory = "C:\\Code\\CodeKataExercises\\";
             _repo = new Repository(_localDirectory);
         }
 
@@ -136,7 +137,7 @@ namespace Smeedee.IntegrationTests.VCS.Git
     }
 
     [Ignore]
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_query_all_changesets : ChangesetRepositorySpecs
     {
         #region Setup/Teardown
@@ -174,7 +175,7 @@ namespace Smeedee.IntegrationTests.VCS.Git
             {
                 scenario.Given(the_repository_contain_changesets);
                 scenario.When(changesets_are_requested);
-                scenario.Then("assure Author is loaded into over 50% of the rows in the _resultset", () =>
+                scenario.Then("assure Author is loaded into all rows in the resultset", () =>
                 {
                     IEnumerable<Changeset> q =
                         resultset.Where(c => c.Author != null && c.Author.Username != null);
@@ -212,10 +213,25 @@ namespace Smeedee.IntegrationTests.VCS.Git
                 });
             });
         }
+
+        [Test]
+        public void assure_revision_is_loaded_into_the_resultset()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(the_repository_contain_changesets);
+                scenario.When(changesets_are_requested);
+                scenario.Then("assure revision is loaded into all rows in _resultset", () =>
+                {
+                    foreach (Changeset changeset in resultset)
+                        changeset.Revision.ShouldNotBe(0);
+                });
+            });
+        }
  
     }
     [Ignore]
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_query_a_users_changesets : ChangesetRepositorySpecs
     {
         #region Setup/Teardown

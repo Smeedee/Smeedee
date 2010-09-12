@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace Smeedee.DomainModel.Framework
@@ -10,7 +8,7 @@ namespace Smeedee.DomainModel.Framework
     {
         private IAsyncRepository<TDomainModel> asyncRepository;
 
-        private static Dictionary<Specification<TDomainModel>, IEnumerable<TDomainModel>> cache = 
+        private static Dictionary<Specification<TDomainModel>, IEnumerable<TDomainModel>> cache =
             new Dictionary<Specification<TDomainModel>, IEnumerable<TDomainModel>>();
 
         private static List<Specification<TDomainModel>> getsInProgress =
@@ -32,20 +30,20 @@ namespace Smeedee.DomainModel.Framework
 
             cache[e.Specification] = e.Result;
         }
-        
+
 
         #region IRepository<TDomainModel> Members
 
         public IEnumerable<TDomainModel> Get(Specification<TDomainModel> specification)
         {
-            if( ! getsInProgress.Contains(specification) )
+            if (!getsInProgress.Contains(specification))
             {
-                lock( getsInProgress )
+                lock (getsInProgress)
                     getsInProgress.Add(specification);
 
                 asyncRepository.BeginGet(specification);
             }
-            
+
             IEnumerable<TDomainModel> result = null;
             cache.TryGetValue(specification, out result);
 

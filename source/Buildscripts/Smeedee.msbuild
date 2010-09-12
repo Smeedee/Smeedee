@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         DefaultTargets="CompileDeploy">
+
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>..\MSBuild.Community.Tasks.v1.2.0.306</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+
+  <Import Project="..\..\Tools\MSBuild Extension Pack\MSBuild.ExtensionPack.tasks"/>
+  <Import Project="..\..\Tools\MSBuild.Community.Tasks.v1.2.0.306\MSBuild.Community.Tasks.Targets"/>
+
+  <PropertyGroup>
+    <TestRunnerDirectory>..\..\tools\NUnit 2.2\</TestRunnerDirectory>
+    <TestRunnerCommand>nunit-console.exe</TestRunnerCommand>
+    <ExtensionTasksPath>..\..\Tools\MSBuild Extension Pack\</ExtensionTasksPath>
+    <MSBuildExtensionsPath>..\Tools\MSBuild.Community.Tasks.v1.2.0.306\</MSBuildExtensionsPath>
+    <CCNetLabel>0.1.0.1</CCNetLabel>
+    <CCNetArtifactDirectory>..\Build\artifacts\</CCNetArtifactDirectory>
+    <ArtifactsDirectory>$(CCNetArtifactDirectory)</ArtifactsDirectory>
+    <BuildLabel>$(CCNetLabel)</BuildLabel>
+  </PropertyGroup>
+
+  <Import Project="Smeedee.Projects.msbuild"/>
+  <Import Project="Smeedee.TestProjects.msbuild"/>
+  <Import Project="Smeedee.Targets.msbuild"/>
+  
+</Project>

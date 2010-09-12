@@ -29,24 +29,78 @@
 
 using System;
 using System.Collections.ObjectModel;
+using TinyMVVM.Framework;
 
 namespace Smeedee.Client.Framework.ViewModel
 {
     public class BindableViewModel<T> : AbstractViewModel
     {
+        public BindableViewModel()
+        {
+            Data = new ObservableCollection<T>();
+
+            SetupDelegateCommands();
+        }
+
+        public DelegateCommand SaveSettings { get; set; }
+        public DelegateCommand ReloadFromRepository { get; set; }
+
+        private void SetupDelegateCommands()
+        {
+            SaveSettings = new DelegateCommand();
+            ReloadFromRepository = new DelegateCommand();
+        }
+
         private ObservableCollection<T> data;
         public ObservableCollection<T> Data 
         { 
             get { return data; } 
             set
             {
-                data = value;
-                DuckTypedData = value;
+                if (data != value)
+                {
+                    data = value;
+                    DuckTypedData = value;
+                    TriggerPropertyChanged<BindableViewModel<T>>( vm => vm.Data);
+                }
+            }
+        }
+
+        private bool isUsingDate;
+        public bool IsUsingDate
+        {
+            get { return isUsingDate; }
+            set
+            {
+                if (value != isUsingDate)
+                {
+                    isUsingDate = value;
+
+                    if(isUsingTimespan == isUsingDate) { IsUsingTimespan = !IsUsingTimespan;}
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.IsUsingDate);
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.ActualDateUsed);
+                }
+            }
+        }
+
+        private bool isUsingTimespan;
+        public bool IsUsingTimespan
+        {
+            get { return isUsingTimespan; }
+            set
+            {
+                if (value != isUsingTimespan)
+                {
+                    isUsingTimespan = value;
+
+                    if (isUsingTimespan == isUsingDate) { IsUsingDate = !IsUsingDate; }
+
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.IsUsingTimespan);
+                }
             }
         }
 
         private DateTime sinceDate;
-
         public DateTime SinceDate
         {
             get { return sinceDate; }
@@ -54,17 +108,122 @@ namespace Smeedee.Client.Framework.ViewModel
             {
                 if (value != sinceDate)
                 {
-                    sinceDate = value;
+                    sinceDate = value.Date;
                     TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.SinceDate);
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.ActualDateUsed);
                 }
             }
-        } 
+        }
+
+        private int timeSpanInDays;
+        public int TimeSpanInDays
+        {
+            get { return timeSpanInDays; }
+            set
+            {
+                if (value != timeSpanInDays)
+                {
+                    const int minAllowedTimeSpan = 0;
+                    if (value < minAllowedTimeSpan) { value = minAllowedTimeSpan; }
+
+                    timeSpanInDays = value;
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.TimeSpanInDays);
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.ActualDateUsed);
+                }
+            }
+        }
+
+        private int maxNumOfCommiters;
+        public int MaxNumOfCommiters
+        {
+            get{ return maxNumOfCommiters; }
+            set
+            {
+                if(value != maxNumOfCommiters)
+                {
+                    maxNumOfCommiters = value;
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.MaxNumOfCommiters);
+                }
+            }
+        }
+
+        private bool acknowledgeOthers;
+        public bool AcknowledgeOthers
+        {
+            get { return acknowledgeOthers; }
+            set
+            {
+                if (value != acknowledgeOthers)
+                {
+                    acknowledgeOthers = value;
+                    TriggerPropertyChanged<BindableViewModel<T>>(vm => vm.AcknowledgeOthers);
+                    TriggerPropertyChanged<BindableViewModel<T>>(t => t.NumberOfCommitsAndRevision);
+                }
+            }
+        }
+
+        private long currentRevision;
+        public long CurrentRevision
+        {
+            get { return currentRevision; }
+            set
+            {
+                if (value != currentRevision)
+                {
+                    currentRevision = value;
+                    revisionIsChanged = true;
+                    TriggerPropertyChanged<BindableViewModel<T>>(t => t.NumberOfCommitsAndRevision);
+                    TriggerPropertyChanged<BindableViewModel<T>>(t => t.CurrentRevision);
+                }
+            }
+        }
+
+        private bool revisionIsChanged;
+
+        public bool RevisionIsChanged
+        {
+            get
+            {
+                if(revisionIsChanged)
+                {
+                    revisionIsChanged = false;
+                    return true;
+                }
+                return false;
+            }
+            
+        }
+
+        private int numberOfCommitsShown;
+        public int NumberOfCommitsShown
+        {
+            get { return numberOfCommitsShown; }
+            set
+            {
+                if (value != numberOfCommitsShown)
+                {
+                    numberOfCommitsShown = value;
+                    TriggerPropertyChanged<BindableViewModel<T>>(t => t.NumberOfCommitsShown);
+                    TriggerPropertyChanged<BindableViewModel<T>>(t => t.NumberOfCommitsAndRevision);
+                }
+            }
+        }
+
+        public DateTime ActualDateUsed
+        {
+            get { return isUsingDate ? sinceDate : DateTime.Now.AddDays(-timeSpanInDays).Date; }
+        }
+
+        public string NumberOfCommitsAndRevision
+        {
+            get
+            {
+                return string.Format(
+                    "Number of commits shown is {0} \nBased on revision {1}",
+                    numberOfCommitsShown, currentRevision);
+            }
+        }
 
         public Object DuckTypedData { get; set; }
-
-        public BindableViewModel()
-        {
-            Data = new ObservableCollection<T>();
-        }
     }
 }

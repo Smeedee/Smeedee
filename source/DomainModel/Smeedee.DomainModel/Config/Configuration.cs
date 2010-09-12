@@ -6,11 +6,15 @@ using System.Runtime.Serialization;
 namespace Smeedee.DomainModel.Config
 {
     [DataContract(IsReference = true)]
-    public class Configuration
+    public class Configuration 
     {
         [DataMember]
         public virtual string Name { get; set; }
 
+        [DataMember]
+        public virtual Guid Id { get; set; }
+
+        [DataMember]
         public virtual bool IsConfigured { get; set; }
 
         private List<SettingsEntry> settings;
@@ -31,7 +35,9 @@ namespace Smeedee.DomainModel.Config
 
         public Configuration()
         {
+            Name = "";
             settings = new List<SettingsEntry>();
+            Id = Guid.NewGuid();
         }
 
         public Configuration(string name) : this()
@@ -50,13 +56,23 @@ namespace Smeedee.DomainModel.Config
             if (values == null)
                 throw new ArgumentException("Value must be specified");
 
-            if (settings.Where(e => e.Name == name).Count() == 0)
-                settings.Add(new SettingsEntry(name, null));
+            NewSetting(new SettingsEntry(name, values));
+        }
 
-            var entry = settings.Where(e => e.Name == name).Single();
+        public virtual void NewSetting(SettingsEntry entry)
+        {
+            if (entry == null)
+                throw new ArgumentException("Cannot add null entry");
 
-            entry.Vals = values;
-            entry.Configuration = this;
+            var existing = settings.Where(e => e.Name == entry.Name).FirstOrDefault();
+            if (existing == null)
+            {
+                settings.Add(entry);
+                entry.Configuration = this;
+            } else
+            {
+                existing.Vals = entry.Vals;
+            }
         }
 
         public virtual SettingsEntry GetSetting(string settingName)
@@ -68,57 +84,38 @@ namespace Smeedee.DomainModel.Config
                 return new EntryNotFound();
         }
 
-        public virtual bool ContainSetting(string settingName)
+        public virtual bool ContainsSetting(string settingName)
         {
             return settings.Where(e => e.Name == settingName).Count() > 0;
         }
 
-        public static Configuration ProviderConfiguration(string configName, string username, string password, string url, string provider,
-            string project,
-            params string[] supportedProviders)
+        public virtual void ChangeSetting(string name, params string[] newValues)
         {
-            var configuration = new Configuration(configName);
-            configuration.NewSetting("supported-providers", supportedProviders);
-            configuration.NewSetting("provider", provider);
-            configuration.NewSetting("username", username);
-            configuration.NewSetting("password", password);
-            configuration.NewSetting("url", url);
-            configuration.NewSetting("is-expanded", "true");
-            configuration.NewSetting("project", project);
-            return configuration;
+            GetSetting(name).Vals = newValues;
         }
 
-        public static Configuration DefaultVCSConfiguration()
+        public virtual Configuration Clone()
         {
-            return ProviderConfiguration("vcs", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "svn", "tfs");
-        }
+            var copy = new Configuration();
+            copy.Name = Name;
+            copy.IsConfigured = IsConfigured;
+            copy.Id = Id;
 
+            foreach (var setting in Settings)
+            {
+                var settingCopy = new SettingsEntry();
+                settingCopy.Name = setting.Name;
 
-        public static Configuration DefaultCIConfiguration()
-        {
-            return ProviderConfiguration("ci", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "cc.net",
-                                         "tfs - vanilla", "tfs - scrum by conchango");
-        }
+                var vals = new List<string>();
+                foreach (var val in setting.Vals)
+                    vals.Add(val);
 
-        public static Configuration DefaultDashboardConfiguration()
-        {
-            var dashboardConfig = new Configuration("dashboard");
-            dashboardConfig.NewSetting("slide-widgets", "latest-commits", "ci", "commit-heroes", "commit-stats", "working-days-left");
-            dashboardConfig.NewSetting("selected-slide-widgets", "latest-commits", "ci", "commit-heroes", "commit-stats", "working-days-left");
-            dashboardConfig.NewSetting("tray-widgets", "working-days-left", "ci");
-            dashboardConfig.NewSetting("selected-tray-widgets", "working-days-left", "ci");
-            dashboardConfig.NewSetting("is-expanded", "false");
+                settingCopy.Vals = vals;
 
-            return dashboardConfig;
-        }
+                copy.settings.Add(settingCopy);
+            }
 
-        public static Configuration DefaultHolidayConfiguration()
-        {
-            var holidayConfiguration = new Configuration("holidays");
-            holidayConfiguration.NewSetting("saturdays-are-holidays", "true");
-            holidayConfiguration.NewSetting("sundays-are-holidays", "true");
-
-            return holidayConfiguration;
+            return copy;
         }
     }
 }

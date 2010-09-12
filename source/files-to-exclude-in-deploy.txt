@@ -1,2 +1,4 @@
 .pdb
 .cs
+.user
+.xaml

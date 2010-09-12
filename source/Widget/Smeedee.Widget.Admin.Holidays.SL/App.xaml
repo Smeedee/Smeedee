@@ -1,0 +1,20 @@
+﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" x:Class="Smeedee.Widget.Admin.Holidays.SL.App"
+             ><!--xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.UserdbSampleDataSource"
+              
+             xmlns:SampleData1="clr-namespace:Expression.Blend.SampleData.UserSampleDataSource"-->
+	<Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Smeedee.Client.SL;component/Styles.xaml"/>
+                <ResourceDictionary Source="/Smeedee.Client.Framework.SL;component/ProjectDataSources.xaml"/>
+                <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!--SampleData1:UserSampleDataSource x:Key="UserSampleDataSource" d:IsDataSource="True"/>
+            <SampleData:UserdbSampleDataSource x:Key="UserdbSampleDataSource" d:IsDataSource="True"/-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

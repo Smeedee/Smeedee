@@ -26,9 +26,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
@@ -36,194 +36,294 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.Users;
+using Smeedee.Framework;
 using Smeedee.Widget.SourceControl.ViewModels;
-using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
-
 
 namespace Smeedee.Widget.SourceControl.Controllers
 {
     public class TopCommitersController : ChangesetStandAloneController<CodeCommiterViewModel>
     {
         private IEnumerable<User> allUsers;
-        private IRepository<User> userRepository;
-        private readonly IRepository<Configuration> configRepository;
-        private readonly IPersistDomainModels<Configuration> configPersisterRepository;
-        private long lastRevision = 1;
-        public DateTime lastUpdated = DateTime.Now;   
-        private int commitTimespan;
-        private DateTime commitFromDate;
-        private bool useFromDate;
-        private bool configurationChanged;
+        private readonly IRepository<User> userRepository;
+        private readonly IAsyncRepository<Configuration> configRepository;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
 
+        private const string SETTINGS_ENTRY_NAME = "TopCommiters";
+        private const string DATE_ENTRY_NAME = "SinceDate";
+        private const string TIMESPAN_ENTRY_NAME = "TimeSpanInDays";
+        private const string IS_USING_DATE_ENTRY_NAME = "IsUsingDate";
+        private const string MAX_NUM_OF_COMMITERS_ENTRY_NAME = "MaxNumOfCommiters";
+        private const string ACKNOWLEDGE_OTHERS_ENTRY_NAME = "AcknowledgeOthers";
+
+        private readonly List<string> listOfSettings = new List<string>
+            {SETTINGS_ENTRY_NAME, DATE_ENTRY_NAME, TIMESPAN_ENTRY_NAME, IS_USING_DATE_ENTRY_NAME, 
+                MAX_NUM_OF_COMMITERS_ENTRY_NAME, ACKNOWLEDGE_OTHERS_ENTRY_NAME};
+
+        private static readonly CultureInfo dateFormatingRules = new CultureInfo("en-US");
+        public static readonly Configuration defaultConfig = CreateConfiguration(DateTime.Now.Date, 10, true, 15, true);
 
         public TopCommitersController(
             BindableViewModel<CodeCommiterViewModel> viewModel, 
             IRepository<Changeset> changesetRepo, 
             IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker, 
             ITimer timer, IUIInvoker uiInvoke, 
-            IRepository<Configuration> configRepo, 
-            IPersistDomainModels<Configuration> configPersister,
+            IAsyncRepository<Configuration> configRepo, 
+            IPersistDomainModelsAsync<Configuration> configPersister,
             IRepository<User> userRepo,
-            ILog logger)
-            : base(viewModel, changesetRepo, backgroundWorker, timer, uiInvoke, logger)
+            ILog logger,
+            IProgressbar loadingNotifier)
+            : base(viewModel, changesetRepo, backgroundWorker, timer, uiInvoke, logger, loadingNotifier)
         {
-            this.userRepository = userRepo;
-            this.configRepository = configRepo;
-            this.configPersisterRepository = configPersister;
+            Guard.ThrowExceptionIfNull(userRepo, "userRepo");
+            Guard.ThrowExceptionIfNull(configRepo, "configRepo");
+            Guard.ThrowExceptionIfNull(configPersister, "configPersister");
+            
+            userRepository = userRepo;
+            configRepository = configRepo;
+            configPersisterRepository = configPersister;
 
-            refreshNotifier.Start(60*5*1000);
+            ViewModel.SaveSettings.AfterExecute += (s, e) =>  SaveAndReload();
+            ViewModel.ReloadFromRepository.AfterExecute += (s, e) => LoadConfigAndData();
 
-            LoadConfig();
-            LoadData();
+            ViewModel.PropertyChanged += ViewModelPropertyChanged;
+            configPersisterRepository.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
+            configRepository.GetCompleted += ConfigRepositoryGetCompleted;
+
+            Start();
+
+            LoadDefaultValuesIntoViewModel();
+            LoadConfigAndData();
         }
 
-        private void LoadConfig()
+        private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs e)
         {
-            asyncClient.RunAsyncVoid(() =>
-            {
-                try
-                {
-                    var allConfigSpec = new AllSpecification<Configuration>();
-                    var config = configRepository
-                        .Get(allConfigSpec)
-                        .Where(c => c.Name.Equals(("Commit Heroes Slide")))
-                        .SingleOrDefault();
-
-                    LoadSettings(config);
-                }
-                catch (Exception exception)
-                {
-                    LogErrorMsg(exception);
-                }
-            });
+            SetIsNotSavingConfig();
         }
 
-       
-        private void LoadSettings(Configuration config)
+        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (config != null)
+            if (listOfSettings.Contains(e.PropertyName))
             {
-                LoadTimespanSetting(config.GetSetting("timespan"));
-                LoadFromDateSetting(config.GetSetting("from date"));
+                configIsChanged = true;
+            }
+        }
+
+        private void SaveAndReload()
+        {
+            SaveConfigToRepository();
+            ReloadViewModelData();
+        }
+
+        private void SaveConfigToRepository()
+        {
+            SetIsSavingConfig();
+
+            var newConfig = CreateConfiguration(ViewModel.SinceDate, ViewModel.TimeSpanInDays, ViewModel.IsUsingDate,
+                                                ViewModel.MaxNumOfCommiters, ViewModel.AcknowledgeOthers);
+
+            configPersisterRepository.Save(newConfig);
+        }
+
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        {
+            LoadConfigAndData();
+        }
+
+        private void UpdateViewModel()
+        {
+            if (configIsChanged)
+            {
+                ReloadViewModelData();
             }
             else
             {
-                CreateDefaultSetting();
+                LoadData(new ChangesetsAfterRevisionSpecification(ViewModel.CurrentRevision));
             }
         }
 
-        private void LoadFromDateSetting(SettingsEntry fromDateSetting)
+        private void ReloadViewModelData()
         {
-            if (fromDateSetting != null)
+            uiInvoker.Invoke(() =>
             {
-                try
-                {
-                    var newConfigValue = DateTime.Parse(fromDateSetting.Value.Trim(), new CultureInfo("en-US"));
-                    configurationChanged = commitFromDate != newConfigValue;
-                    commitFromDate = newConfigValue;
-                    useFromDate = true;
-                }
-                catch (Exception exception)
-                {
-                    LogWarningMsg(exception);
-                }
-            }
+                ViewModel.Data.Clear();
+                ViewModel.CurrentRevision = 0;
+            });
+            
+            LoadData();
         }
 
-        private void LoadTimespanSetting(SettingsEntry timespanSetting)
+        private void LoadDefaultValuesIntoViewModel()
         {
-            if (timespanSetting != null)
+            LoadSettings(defaultConfig);
+        }
+
+        private void LoadConfigAndData()
+        {
+            try
             {
-                try
-                {
-                    var newConfigValue = Int32.Parse(timespanSetting.Value.Trim());
-                    configurationChanged = commitTimespan != newConfigValue;
-                    commitTimespan = newConfigValue;
-                }
-                catch (Exception exception)
-                {
-                    LogWarningMsg(exception);
-                }
+                SetIsLoadingConfig();
+                configRepository.BeginGet(new ConfigurationByName(SETTINGS_ENTRY_NAME));
+            }
+            catch (Exception exception)
+            {
+                LogErrorMsg(exception);
+                SetIsNotLoadingConfig();
             }
         }
 
-        private void CreateDefaultSetting() 
+        private void ConfigRepositoryGetCompleted(object sender, GetCompletedEventArgs<Configuration> eventArgs)
         {
-            var newConfig = new Configuration("Commit Heroes Slide");
-            newConfig.NewSetting("from date", "");
-            newConfig.NewSetting("timespan", "0");
-            configPersisterRepository.Save(newConfig);
+            var config = eventArgs.Result.FirstOrDefault();
+
+            SetSettingsOnViewModel(config);
+
+            if(!ViewModel.IsLoadingConfig)
+                UpdateViewModel();
+        }
+
+        private void SetSettingsOnViewModel(Configuration config)
+        {
+            if (ConfigurationContainsSettings(config))
+            {
+                LoadSettings(config);
+            }
+            else
+            {
+                configPersisterRepository.Save(defaultConfig);
+                SetIsNotLoadingConfig();
+            }
+            
+        }
+
+        private static bool ConfigurationContainsSettings(Configuration config)
+        {
+            return config != null && config.Settings.Count() != 0;
+        }
+       
+        private void LoadSettings(Configuration config)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                TryToLoadSpecificSetting(config.GetSetting(DATE_ENTRY_NAME));
+                TryToLoadSpecificSetting(config.GetSetting(TIMESPAN_ENTRY_NAME));
+                TryToLoadSpecificSetting(config.GetSetting(IS_USING_DATE_ENTRY_NAME));
+                TryToLoadSpecificSetting(config.GetSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME));
+                TryToLoadSpecificSetting(config.GetSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME));
+
+                SetIsNotLoadingConfig();
+            });
+           
+        }
+
+        private void TryToLoadSpecificSetting(SettingsEntry setting)
+        {
+            try
+            {
+                LoadSpecificSetting(setting);
+            }
+            catch (Exception exception)
+            {
+                LogErrorMsg(exception);
+            }
+        }
+
+        private void LoadSpecificSetting(SettingsEntry setting)
+        {
+            switch (setting.Name)
+            {
+                case DATE_ENTRY_NAME:
+                    ViewModel.SinceDate = DateTime.Parse(setting.Value.Trim(), dateFormatingRules).Date;
+                    break;
+                case TIMESPAN_ENTRY_NAME:
+                    ViewModel.TimeSpanInDays = Int32.Parse(setting.Value.Trim());
+                    break;
+                case IS_USING_DATE_ENTRY_NAME:
+                    ViewModel.IsUsingDate = Boolean.Parse(setting.Value.Trim());
+                    break;
+                case MAX_NUM_OF_COMMITERS_ENTRY_NAME:
+                    ViewModel.MaxNumOfCommiters = Int32.Parse(setting.Value.Trim());
+                    break;
+                case ACKNOWLEDGE_OTHERS_ENTRY_NAME:
+                    ViewModel.AcknowledgeOthers = Boolean.Parse(setting.Value.Trim());
+                    break;
+            }
+        }
+
+        private static Configuration CreateConfiguration(DateTime date, int timespan, bool isUsingDate, int maxNumOfCommiters, bool acknowledgeOthers)
+        {
+            var newConfig = new Configuration(SETTINGS_ENTRY_NAME){IsConfigured = true};
+
+            newConfig.NewSetting(DATE_ENTRY_NAME, date.ToString(dateFormatingRules));
+            newConfig.NewSetting(TIMESPAN_ENTRY_NAME, timespan.ToString());
+            newConfig.NewSetting(IS_USING_DATE_ENTRY_NAME, isUsingDate.ToString());
+            newConfig.NewSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME, maxNumOfCommiters.ToString());
+            newConfig.NewSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME, acknowledgeOthers.ToString());
+
+            return newConfig;
         }
 
         protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets)
         {
-            qChangesets = qChangesets.Where(c => c != null && c.Author != null && c.Author.Username != null);
+            qChangesets = FilterChangesets(qChangesets);
 
-            if (qChangesets != null && qChangesets.Count() != 0)
-            {
-                lastRevision = qChangesets.OrderByDescending(c => c.Revision).First().Revision;
-            }
+            UpdateRevision(qChangesets);
+            if (!ViewModel.RevisionIsChanged && !configIsChanged) return;
+
+            UpdateCommitersInViewModel(qChangesets);
+
+            UpdateNumberOfCommitsShown();
+
+            configIsChanged = false;
+        }
+
+        private static IEnumerable<Changeset> FilterChangesets(IEnumerable<Changeset> qChangesets)
+        {
+            return qChangesets.Where(c => c != null && c.Author != null && c.Author.Username != null);
+        }
+
+        private void UpdateCommitersInViewModel(IEnumerable<Changeset> qChangesets)
+        {
+            if (qChangesets == null || qChangesets.Count() == 0) return;
 
             var committers = GetFilteredCommitters(qChangesets);
 
-            var mergedCommiters = GetMergedCommiters(committers);
+            committers = GetMergedCommiters(committers);
 
-            committers = mergedCommiters.OrderByDescending(c => c.NumberOfCommits);
-            
-            if (HasUpdatedChangesets((IOrderedEnumerable<CodeCommiterViewModel>) committers))
+            committers = OrderByDescending(committers);
+
+            committers = RestrictCommitersToMax(committers);
+
+            if (HasUpdatedChangesets(committers))
             {
                 ReloadCommitters(committers);
             }
             else
             {
-                UpdateNumberOfCommits((IOrderedEnumerable<CodeCommiterViewModel>) committers);
-            }
-
-            UpdateSinceDateValueInViewModel();
-        }
-
-        private void ReloadCommitters(IEnumerable<CodeCommiterViewModel> committers) {
-            
-            ViewModel.Data.Clear();
-
-            foreach (var committer in committers)
-            {
-                var userInfo = allUsers.Where(u => u.Username.Equals(committer.Username)).SingleOrDefault();
-                if (userInfo != null)
-                {
-                    committer.Firstname = userInfo.Firstname;
-                    committer.Middlename = userInfo.Middlename;
-                    committer.Surname = userInfo.Surname;
-                    committer.Email = userInfo.Email;
-                    committer.ImageUrl = userInfo.ImageUrl;
-                }
-
-                ViewModel.Data.Add(committer);
+                UpdateNumberOfCommits(committers);
             }
         }
 
         private IEnumerable<CodeCommiterViewModel> GetFilteredCommitters(IEnumerable<Changeset> qChangesets)
         {
-            var filterDate = useFromDate ? commitFromDate : DateTime.Today.AddDays(-commitTimespan);
-            
-            return ( from changeset in qChangesets
-                     where changeset.Time >= filterDate.Date
-                     group changeset by changeset.Author.Username
-                     into g
-                         select new CodeCommiterViewModel()
-                         {
-                             Username = g.Key, 
-                             Firstname = g.Key,
-                             NumberOfCommits = g.Count()
-                         });
+            return (from changeset in qChangesets
+                    where (changeset.Time >= ViewModel.ActualDateUsed.Date)
+                    group changeset by changeset.Author.Username
+                        into g
+                        select new CodeCommiterViewModel
+                        {
+                            Username = g.Key,
+                            Firstname = g.Key,
+                            NumberOfCommits = g.Count()
+                        });
         }
 
-        private ObservableCollection<CodeCommiterViewModel> GetMergedCommiters(IEnumerable<CodeCommiterViewModel> committers) {
+        private IEnumerable<CodeCommiterViewModel> GetMergedCommiters(IEnumerable<CodeCommiterViewModel> committers)
+        {
             var mergedCommiters = UpdateOldCommiters(committers);
 
             AddNewCommiters(committers, mergedCommiters);
-            
+
             return mergedCommiters;
         }
 
@@ -256,80 +356,91 @@ namespace Smeedee.Widget.SourceControl.Controllers
                         exists = true;
                     }
                 }
-             
+
                 if (!exists)
                 {
-                    mergedCommiters.Add(newCommiter);    
+                    mergedCommiters.Add(newCommiter);
                 }
             }
         }
 
-        protected void UpdateNumberOfCommits(IOrderedEnumerable<CodeCommiterViewModel> committers)
+        private static IEnumerable<CodeCommiterViewModel> OrderByDescending(IEnumerable<CodeCommiterViewModel> committers)
         {
-
-            var committersArray = committers.ToArray();
-
-            for (int i = 0; i < ViewModel.Data.Count; i++)
-                ViewModel.Data[i].NumberOfCommits = committersArray[i].NumberOfCommits;
-
+            return committers.OrderByDescending(c => c.NumberOfCommits);
         }
 
-        private void UpdateSinceDateValueInViewModel()
+        private IEnumerable<CodeCommiterViewModel> RestrictCommitersToMax(IEnumerable<CodeCommiterViewModel> commiters)
         {
-            if (useFromDate)
+            var restrictedCommiters = new List<CodeCommiterViewModel>();
+            var sumOfOtherCommiters = new CodeCommiterViewModel { Firstname = "Others", Username = "Others"};
+
+            var i = 0;
+
+            foreach (var codeCommiter in commiters)
             {
-                ViewModel.SinceDate = commitFromDate;
+                if (i < ViewModel.MaxNumOfCommiters)
+                {
+                    restrictedCommiters.Add(codeCommiter);
+                }
+                else
+                {
+                    sumOfOtherCommiters.NumberOfCommits += codeCommiter.NumberOfCommits;
+                }
+                i++;
             }
-            else
-            {
-                ViewModel.SinceDate = DateTime.Now.AddDays(-commitTimespan);
-            }
+
+            if(ViewModel.AcknowledgeOthers && sumOfOtherCommiters.NumberOfCommits != 0)
+                {
+                    restrictedCommiters.Add(sumOfOtherCommiters);
+                }
+
+            return restrictedCommiters;
         }
 
-        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        protected bool HasUpdatedChangesets(IEnumerable<CodeCommiterViewModel> committers)
         {
-            LoadConfig();
-
-            var newDayForTimespan = !useFromDate && lastUpdated.Date < DateTime.Now.Date;
-            
-            if (newDayForTimespan||configurationChanged)  
-            {
-                ReloadViewModelData();
-            }
-            else
-            {
-                LoadData(new ChangesetsAfterRevisionSpecification(lastRevision));    
-            }
-            
-        }
-
-        private void ReloadViewModelData()
-        {
-            uiInvoker.Invoke(() =>
-            {
-                ViewModel.Data.Clear();
-                LoadData();
-                lastUpdated = DateTime.Now;
-                configurationChanged = false;
-            });
-        }
-
-        protected bool HasUpdatedChangesets(IOrderedEnumerable<CodeCommiterViewModel> committers)
-        {
-           
             if (committers.Count() != ViewModel.Data.Count)
                 return true;
 
             var committersArray = committers.ToArray();
-            
-            for (int i = 0; i < ViewModel.Data.Count; i++)
+
+            var atLestOneUsernameDiffers = ViewModel.Data.Where((t, i) => !t.Username.Equals(committersArray[i].Username)).Any();
+
+            return atLestOneUsernameDiffers;
+        }
+
+        private void ReloadCommitters(IEnumerable<CodeCommiterViewModel> committers) 
+        {
+            ViewModel.Data.Clear();
+
+            foreach (var committer in committers)
             {
-                if (!ViewModel.Data[i].Username.Equals(committersArray[i].Username))
-                    return true;
+                var userInfo = allUsers.Where(u => u.Username.Equals(committer.Username)).SingleOrDefault();
+
+                if (userInfo != null)
+                {
+                    committer.Firstname = userInfo.Firstname;
+                    committer.Middlename = userInfo.Middlename;
+                    committer.Surname = userInfo.Surname;
+                    committer.Email = userInfo.Email;
+                    committer.ImageUrl = userInfo.ImageUrl;
+                }
+
+                ViewModel.Data.Add(committer);
             }
+        }
 
-            return false;
+        protected void UpdateNumberOfCommits(IEnumerable<CodeCommiterViewModel> committers)
+        {
+            var committersArray = committers.ToArray();
 
+            for (var i = 0; i < ViewModel.Data.Count; i++)
+                ViewModel.Data[i].NumberOfCommits = committersArray[i].NumberOfCommits;
+        }
+
+        private void UpdateNumberOfCommitsShown()
+        {
+            ViewModel.NumberOfCommitsShown = ViewModel.Data.Sum(commiter => commiter.NumberOfCommits);
         }
 
         protected override void AfterQueryAllChangesets()

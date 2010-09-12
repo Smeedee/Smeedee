@@ -47,7 +47,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_input_is_malformed : Shared
     {
         [Test]
@@ -58,7 +58,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_input_is_invalid : Shared
     {
         [Test]
@@ -69,7 +69,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_build_is_forced_and_failed : Shared
     {
         [Test]
@@ -81,7 +81,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_build_is_forced_and_successful : Shared
     {
         [Test]
@@ -93,7 +93,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_build_is_forced_and_has_unknown_result : Shared
     {
         [Test]
@@ -105,7 +105,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_build_is_forced_and_has_exception_result : Shared
     {
         [Test]
@@ -117,7 +117,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_build_is_modified_and_failed : Shared
     {
         [Test]
@@ -131,7 +131,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_build_is_modified_and_successful : Shared
     {
         [Test]
@@ -145,7 +145,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_build_is_unknown_and_successful : Shared
     {
         [Test]

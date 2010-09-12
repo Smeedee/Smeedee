@@ -19,6 +19,7 @@ namespace Smeedee.Client.Framework.SL.MEF
         public event EventHandler<AsyncCompletedEventArgs> DownloadCompleted;
         public event EventHandler<AsyncCompletedEventArgs> MetadataDownloadCompleted;
 
+        private int numberOfXapsDeployedOnServer, numberOfXapsDownloaded;
         private IDownloadService downloadService;
         private List<DeploymentCatalog> deploymentCatalogs = new List<DeploymentCatalog>();
 
@@ -75,13 +76,14 @@ namespace Smeedee.Client.Framework.SL.MEF
 
         private void addAndDownloadDeploymentCatalogs(IEnumerable<string> xapsDeployedOnServer)
         {
+            numberOfXapsDeployedOnServer = xapsDeployedOnServer.Count();
+
             deploymentCatalogs.Clear();
 
             foreach (var deployedXap in xapsDeployedOnServer)
             {
-                var deploymentCatalog = new DeploymentCatalog(deployedXap);
+                var deploymentCatalog = new DeploymentCatalog(new Uri(deployedXap, UriKind.Relative));
                 deploymentCatalogs.Add(deploymentCatalog);
-
                 deploymentCatalog.Changed += (o, ee) => OnChanged(ee);
                 deploymentCatalog.Changing += (o, ee) => OnChanging(ee);
                 deploymentCatalog.DownloadCompleted += (o, ee) => OnDownloadCompleted(ee);
@@ -150,11 +152,18 @@ namespace Smeedee.Client.Framework.SL.MEF
 
         protected virtual void OnDownloadCompleted(AsyncCompletedEventArgs e)
         {
+            numberOfXapsDownloaded++;
+
             if (DownloadCompleted != null)
                 DownloadCompleted(this, e);
+
+            if (numberOfXapsDownloaded == numberOfXapsDeployedOnServer &&
+                AllCompleted != null)
+                AllCompleted(this, EventArgs.Empty);
         }
 
         public event EventHandler<ComposablePartCatalogChangeEventArgs> Changed;
         public event EventHandler<ComposablePartCatalogChangeEventArgs> Changing;
+        public event EventHandler AllCompleted;
     }
 }

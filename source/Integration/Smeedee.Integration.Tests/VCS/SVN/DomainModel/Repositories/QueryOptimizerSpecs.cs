@@ -36,7 +36,7 @@ using Smeedee.DomainModel.Framework;
 
 namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.QueryOptimizerSpecs
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_query_changesets_after_a_given_revision
     {
         #region Setup/Teardown

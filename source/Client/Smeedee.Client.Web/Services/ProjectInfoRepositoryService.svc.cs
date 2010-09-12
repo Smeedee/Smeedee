@@ -25,7 +25,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using Smeedee.Client.Web.Serialization;
@@ -33,7 +32,6 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.ProjectInfo;
 using Smeedee.Integration.Database.DomainModel.Repositories;
-using NHibernate;
 
 
 namespace Smeedee.Client.Web.Services
@@ -56,6 +54,8 @@ namespace Smeedee.Client.Web.Services
         [ServiceKnownType(typeof(Task))]
         [ServiceKnownType(typeof(Iteration))]
         [ServiceKnownType(typeof(Specification<ProjectInfoServer>))]
+        [ServiceKnownType(typeof(ProjectInfoServerByName))]
+        [ServiceKnownType(typeof(ProjectInfoServerByUrl))]
         [ServiceKnownType(typeof(AllSpecification<ProjectInfoServer>))]
         public IEnumerable<ProjectInfoServer> Get(Specification<ProjectInfoServer> specification)
         {

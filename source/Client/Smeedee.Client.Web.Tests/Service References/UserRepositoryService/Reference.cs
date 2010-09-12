@@ -16,12 +16,12 @@ namespace Smeedee.Client.Web.Tests.UserRepositoryService {
     public interface UserRepositoryService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://smeedee.org/UserRepositoryService/Get", ReplyAction="http://smeedee.org/UserRepositoryService/GetResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.Users.Userdb>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Users.UserdbNameSpecification))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.Users.Userdb>))]
         Smeedee.DomainModel.Users.Userdb[] Get(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.Users.Userdb> specification);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://smeedee.org/UserRepositoryService/Save", ReplyAction="http://smeedee.org/UserRepositoryService/SaveResponse")]
-        void Save(Smeedee.DomainModel.Users.Userdb userdb);
+        void Save(Smeedee.DomainModel.Users.Userdb[] userdb);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,7 +55,7 @@ namespace Smeedee.Client.Web.Tests.UserRepositoryService {
             return base.Channel.Get(specification);
         }
         
-        public void Save(Smeedee.DomainModel.Users.Userdb userdb) {
+        public void Save(Smeedee.DomainModel.Users.Userdb[] userdb) {
             base.Channel.Save(userdb);
         }
     }

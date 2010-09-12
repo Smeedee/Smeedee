@@ -10,7 +10,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.CI.Hudson.Tests.DomainModel.Repositories
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_connecting_to_server
     {
         [Test]

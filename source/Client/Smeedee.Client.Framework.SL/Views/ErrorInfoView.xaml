@@ -44,7 +44,7 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-    	<Border x:Name="border" Background="{StaticResource ErrorMsgCanvasBackground}" BorderThickness="2" BorderBrush="White" CornerRadius="4" Margin="2" Opacity="0" Visibility="Collapsed">
+        <Border x:Name="border" Background="#FFEF8E00" BorderThickness="2" BorderBrush="White" CornerRadius="4" Margin="2" Opacity="0" Visibility="Collapsed">
     		<i:Interaction.Behaviors>
     			<ei:DataStateBehavior Binding="{Binding HasError}" TrueState="ShowError" Value="True" FalseState="HideError"/>
     		</i:Interaction.Behaviors>

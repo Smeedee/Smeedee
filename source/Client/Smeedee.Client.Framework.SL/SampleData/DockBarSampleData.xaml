@@ -1,0 +1,14 @@
+﻿<Smeedee_Client_Framework_ViewModel:DockBar xmlns:Smeedee_Client_Framework_ViewModel="clr-namespace:Smeedee.Client.Framework.ViewModel" xmlns:TinyMVVM_Framework="clr-namespace:TinyMVVM.Framework;assembly=TinyMVVM.SL" xmlns:Icons="clr-namespace:Smeedee.Client.Framework.SL.Resources.Graphic.Icons" IsVisible="True">
+    <Smeedee_Client_Framework_ViewModel:DockBar.Items>
+        <Smeedee_Client_Framework_ViewModel:DockBarItem Description="Settings">
+            <Smeedee_Client_Framework_ViewModel:DockBarItem.Icon>
+                    <Icons:SettingsIcon/>
+            </Smeedee_Client_Framework_ViewModel:DockBarItem.Icon>
+        </Smeedee_Client_Framework_ViewModel:DockBarItem>
+        <Smeedee_Client_Framework_ViewModel:DockBarItem Description="Show in fullscreen">
+            <Smeedee_Client_Framework_ViewModel:DockBarItem.Icon>
+                <Icons:FullScreenIcon/>
+            </Smeedee_Client_Framework_ViewModel:DockBarItem.Icon>
+        </Smeedee_Client_Framework_ViewModel:DockBarItem>
+    </Smeedee_Client_Framework_ViewModel:DockBar.Items>
+</Smeedee_Client_Framework_ViewModel:DockBar>

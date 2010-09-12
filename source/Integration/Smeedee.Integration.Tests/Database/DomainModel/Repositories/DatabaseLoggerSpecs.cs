@@ -40,7 +40,7 @@ using TinyBDD.Specification.NUnit;
 namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.DatabaseLoggerSpecs
 {
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class DatabaseLoggerSpecs : Shared
     {
         private Mock<IPersistDomainModels<LogEntry>> mockPersister;

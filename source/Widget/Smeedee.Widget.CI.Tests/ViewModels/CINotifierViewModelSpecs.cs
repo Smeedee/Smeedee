@@ -25,11 +25,13 @@
 
 using System.Linq;
 using Smeedee.Client.Framework;
+using Smeedee.Client.Framework.Tests;
 using Smeedee.Widget.CI;
 using Smeedee.Widget.CI.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
+using TinyMVVM.Framework;
 
 
 namespace Smeedee.Client.Widget.CI.Tests.ViewModels.CINotifierSpecs
@@ -155,7 +157,10 @@ namespace Smeedee.Client.Widget.CI.Tests.ViewModels.CINotifierSpecs
     [TestFixture]
     public class When_properties_change : Shared
     {
-
+        [SetUp]
+        public void SetUp()
+        {
+        }
         [Test]
         public void Should_set_status_to_successful()
         {

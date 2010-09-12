@@ -25,14 +25,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
-using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
+using Smeedee.Framework;
 using Smeedee.Widget.SourceControl.ViewModels;
 using TinyMVVM.Framework.Services;
 
@@ -41,35 +43,233 @@ namespace Smeedee.Widget.SourceControl.Controllers
 {
     public class CommitStatisticsController : ChangesetStandAloneController<CommitStatisticsForDate>
     {
-        private readonly IRepository<Configuration> configRepository;
-        private readonly IPersistDomainModels<Configuration> configPersisterRepository;
-        private int commitTimespan;
-        private bool configLoaded;
-        
+        private readonly IAsyncRepository<Configuration> configRepository;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
+        private readonly CommitStatisticsSettingsViewModel settingsViewModel;
+        private DateTime projectStart;
+        private DateTime dateToModelFrom;
+        private DateTime modelTimeStart;
+
+        private static readonly CultureInfo dateFormatingRules = new CultureInfo("en-US");
+        private static readonly Configuration defaultConfig = CreateConfig(DateTime.Now, 14, false, true);
+
+        private const string Commit_Statistics_Configuration_Name = "Commit Statistics";
+        private const string Date_Entry_Name = "SinceDate";
+        private const string Timespan_Entry_Name = "CommitTimespanDays";
+        private const string Using_Date_Entry_Name = "IsUsingDate";
+        private const string Using_Timespan_Entry_Name = "IsUsingTimespan";
+        private readonly IEnumerable<string> settingsEntryList = new List<string>() {
+                                                    Date_Entry_Name, 
+                                                    Timespan_Entry_Name,
+                                                    Using_Date_Entry_Name, 
+                                                    Using_Timespan_Entry_Name       };
+
         public CommitStatisticsController(
-            BindableViewModel<CommitStatisticsForDate> viewModel, 
-            IRepository<Changeset> changesetRepo, 
-            IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker, 
-            ITimer timer, 
+            BindableViewModel<CommitStatisticsForDate> viewModel,
+            CommitStatisticsSettingsViewModel settingsViewModel,
+            IRepository<Changeset> changesetRepo,
+            IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker,
+            ITimer timer,
             IUIInvoker uiInvoke,
-            IRepository<Configuration> configRepo,
-            IPersistDomainModels<Configuration> configPersister, ILog logger)
-            : base(viewModel, changesetRepo, backgroundWorker, timer, uiInvoke, logger)
+            IAsyncRepository<Configuration> configRepo,
+            IPersistDomainModelsAsync<Configuration> configPersister,
+            ILog logger,
+            IProgressbar loadingNotifier)
+            : base(viewModel, changesetRepo, backgroundWorker, timer, uiInvoke, logger, loadingNotifier)
         {
-            configRepository = configRepo;
-            configPersisterRepository = configPersister;
+            Guard.ThrowExceptionIfNull(configRepo, "configRepo");
+            Guard.ThrowExceptionIfNull(configPersister, "configPersister");
+            Guard.ThrowExceptionIfNull(settingsViewModel, "settingsViewModel");
 
+            this.configRepository = configRepo;
+            this.configPersisterRepository = configPersister;
+            this.settingsViewModel = settingsViewModel;
 
-            refreshNotifier.Start(30000);
+            configRepository.GetCompleted += GetCurrentSettingsCompleted;
+            configPersisterRepository.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
+
+            settingsViewModel.SaveClicked += SaveAndReload;
+            settingsViewModel.ReloadClicked += ReloadSettings;            
+
+            settingsViewModel.PropertyChanged += ViewModelPropertyChanged;
+
+            base.Start();
 
             LoadDummyDataIntoViewModel();
-            
-            LoadConfig();
-            LoadData();
+            LoadDefaultSettings();
+            LoadSettingsAndData();
         }
 
-        private void LoadDummyDataIntoViewModel() {
-            
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        {
+            LoadSettingsAndData();
+        }
+
+        private void SaveAndReload(object sender, EventArgs e)
+        {
+                SaveSettings(); 
+        }
+
+        private void SaveSettings()
+        {
+            var newSinceDate = settingsViewModel.SinceDate;
+            var newTimespan = settingsViewModel.CommitTimespanDays;
+            var newUsingDate = settingsViewModel.IsUsingDate;
+            var newUsingTimespan = settingsViewModel.IsUsingTimespan;
+            SetIsSavingConfig();
+                try
+                {
+                    var config = CreateConfig(
+                        newSinceDate,
+                        newTimespan,
+                        newUsingDate,
+                        newUsingTimespan);
+
+                    
+                    configPersisterRepository.Save(config);
+                }
+                catch (Exception exception)
+                {
+                    LogErrorMsg(exception);
+                }
+        }
+
+        private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs saveCompletedEventArgs)
+        {
+            SetIsNotSavingConfig();
+            if (configIsChanged)
+            {
+                LoadNewData();
+            }
+        }
+
+        private static Configuration CreateConfig(DateTime sinceDate, int timeSpan, bool isUsingDate, bool isUsingTimespan)
+        {
+            var newConfig = new Configuration(Commit_Statistics_Configuration_Name);
+
+            newConfig.NewSetting(Timespan_Entry_Name, timeSpan.ToString());
+            newConfig.NewSetting(Date_Entry_Name, sinceDate.ToString(dateFormatingRules));
+            newConfig.NewSetting(Using_Timespan_Entry_Name, isUsingTimespan.ToString());
+            newConfig.NewSetting(Using_Date_Entry_Name, isUsingDate.ToString());
+            return newConfig;
+        }
+
+        private void LoadSettingsAndData()
+        {
+            LoadSettingsSync();
+        }
+
+
+        private void LoadSettingsSync()
+        {
+            try
+            {
+                BeginGetCurrentSettings();
+
+            }
+            catch (Exception exception)
+            {
+                LogErrorMsg(exception);
+            }
+        }
+
+        private void BeginGetCurrentSettings()
+        {
+            SetIsLoadingConfig();
+            configRepository.BeginGet(new ConfigurationByName(Commit_Statistics_Configuration_Name));
+                                   
+        }
+        private void GetCurrentSettingsCompleted(object sender, GetCompletedEventArgs<Configuration> eventArgs)
+        {
+            if (eventArgs.Error != null)
+            {
+                LogErrorMsg(eventArgs.Error);
+            }
+            var configuration = eventArgs.Result.LastOrDefault() ?? defaultConfig;
+
+            SetSettingsOnViewModel(configuration);
+
+            LoadNewData();
+        }
+
+
+        private void SetSettingsOnViewModel(Configuration configuration)
+        {
+           uiInvoker.Invoke(() =>
+            {
+                foreach (var entry in settingsEntryList)
+                {
+                    TrySetSpecificSetting(configuration, entry);
+                }
+
+                SetIsNotLoadingConfig();
+            });
+        }
+
+        private void LoadNewData()
+        {
+            if (configIsChanged)
+            {
+                LoadData(new AllChangesetsSpecification());
+            }
+            else
+            {
+                LoadData(new ChangesetsAfterRevisionSpecification(ViewModel.CurrentRevision));
+            }
+        }
+
+        private void TrySetSpecificSetting(Configuration config, string entry)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                try
+                {
+                    LoadSpecificSetting(config.GetSetting(entry));
+                }
+                catch (Exception e)
+                {
+                    LogWarningMsg(e);
+                }
+            });
+        }
+
+        private void LoadSpecificSetting(SettingsEntry setting)
+        {
+            switch (setting.Name)
+            {
+                case Date_Entry_Name:
+                    settingsViewModel.SinceDate = DateTime.Parse(setting.Value.Trim(), dateFormatingRules).Date;
+                    break;
+                case Timespan_Entry_Name:
+                    settingsViewModel.CommitTimespanDays = Int32.Parse(setting.Value.Trim());
+                    break;
+                case Using_Date_Entry_Name:
+                    settingsViewModel.IsUsingDate = Boolean.Parse(setting.Value.Trim());
+                    break;
+                case Using_Timespan_Entry_Name:
+                    settingsViewModel.IsUsingTimespan = Boolean.Parse(setting.Value.Trim());
+                    break;
+            }
+        }
+
+        private void LoadDefaultSettings()
+        {
+            settingsViewModel.IsUsingTimespan = true;
+        }
+
+        private void ReloadSettings(object sender, EventArgs e)
+        {
+            LoadSettingsAndData();
+        }
+
+        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs propertyEvent)
+        {
+            configIsChanged |= settingsEntryList.Contains(propertyEvent.PropertyName);
+        }
+        
+        private void LoadDummyDataIntoViewModel()
+        {
+
             ViewModel.Data.Add(new CommitStatisticsForDate()
             {
                 Date = DateTime.Today,
@@ -82,140 +282,122 @@ namespace Smeedee.Widget.SourceControl.Controllers
             });
         }
 
-        private void LoadConfig()
-        {
-            asyncClient.RunAsyncVoid(() =>
-            {
-                try
-                {
-                    var allConfigSpec = new AllSpecification<Configuration>();
-                    var config = configRepository
-                        .Get(allConfigSpec)
-                        .Where(c => c.Name.Equals(("Commit Statistics")))
-                        .SingleOrDefault();
-
-                    LoadSettings(config);
-                }
-                catch (Exception exception)
-                {
-                    LogErrorMsg(exception);
-                }
-            });
-        }
-
-
-        private void LoadSettings(Configuration config)
-        {
-            if (config != null)
-            {
-                LoadTimespanSetting(config.GetSetting("timespan"));
-            }
-            else
-            {
-                CreateDefaultSetting();
-            }
-        }
-
-        private void LoadTimespanSetting(SettingsEntry timespanSetting)
-        {
-            try
-            {
-                commitTimespan = Int32.Parse(timespanSetting.Value.Trim());
-                configLoaded = true;
-            }
-            catch (Exception exception)
-            {
-                LogWarningMsg(exception);
-            }
-        }
-
-        private void CreateDefaultSetting()
-        {
-            var newConfig = new Configuration("Commit Statistics");
-            newConfig.NewSetting("timespan", "14");
-            configPersisterRepository.Save(newConfig);
-        }
-
-        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
-        {
-            LoadConfig();
-            LoadData();
-        }
-
         protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets)
         {
+            if (qChangesets == null || qChangesets.Count() == 0) return;
+
+            UpdateRevision(qChangesets);
+            if (!ViewModel.RevisionIsChanged && !configIsChanged) return;
+
+            modelTimeStart = settingsViewModel.ActualDateUsed.Date;
+            projectStart = qChangesets.Min(c => c.Time.Date).Date;
+            dateToModelFrom = projectStart > modelTimeStart ? projectStart.Date : modelTimeStart.Date;
             
-            var commitStatisticsForDates = (from changeset in qChangesets
-                                            where changeset.Time.Date > DateTime.Now.AddDays(-commitTimespan)
-                                            group changeset by changeset.Time.Date
-                                                into g
-                                                select new CommitStatisticsForDate()
-                                                       {
-                                                           Date = g.Key,
-                                                           NumberOfCommits = g.Count(),
-                                                       }).OrderBy(r => r.Date);
+            var commitStatisticsForDates = GetCommitStatisticsForDates(qChangesets);
 
-            ViewModel.Data.Clear();
+            if(configIsChanged)
+            {
+                ViewModel.Data.Clear();
+                configIsChanged = false;
+            }
 
-            if (commitTimespan <= 0)
+            InsertPointsToImproveTheGraph(commitStatisticsForDates);
+
+            foreach (var commit in commitStatisticsForDates)
+            {
+                AddDaysOfNoCommitsInBetween(commit);
+
+                var existingPointOnDate = ViewModel.Data.Where(c=> c.Date.Equals(commit.Date)).SingleOrDefault();
+
+                if(existingPointOnDate != null)
+                {
+                    existingPointOnDate.NumberOfCommits += commit.NumberOfCommits;
+                }
+                else
+                {
+                    ViewModel.Data.Add(commit);
+                }
+                
+            }
+
+            InsertPointTodayIfNeeded(commitStatisticsForDates);
+
+            if (ViewModel.Data.Count() == 0)
             {
                 LoadDummyDataIntoViewModel();
-
-                if(configLoaded)
-                    throw new InvalidOperationException("Start date must be before or at end date");
-
-                return;
             }
-        
-            foreach (var row in FillInMissingDates(commitStatisticsForDates))
-                ViewModel.Data.Add(row);
-
         }
 
-        private IOrderedEnumerable<CommitStatisticsForDate> FillInMissingDates(IEnumerable<CommitStatisticsForDate> commitStatistics)
+        private IEnumerable<CommitStatisticsForDate> GetCommitStatisticsForDates(IEnumerable<Changeset> changesets)
         {
-
-            if (commitStatistics == null)
-                throw new ArgumentNullException("commitStatistics");
-
-            var allCommits = new Dictionary<DateTime, CommitStatisticsForDate>();
-
-            foreach (DateTime date in GetDatesInRage(DateTime.Today.AddDays(-(commitTimespan-1)), DateTime.Today))
-            {
-                allCommits.Add(date, new CommitStatisticsForDate() { Date = date, NumberOfCommits =  0});
-            }
-
-            foreach (CommitStatisticsForDate commit in commitStatistics)
-            {
-                allCommits[commit.Date] = commit;
-            }
-
-            return allCommits.Values.OrderBy(r => r.Date);
-
+            return (from changeset in changesets
+                    where changeset.Time.Date >= modelTimeStart
+                    group changeset by changeset.Time.Date
+                        into g
+                        select new CommitStatisticsForDate()
+                        {
+                            Date = g.Key,
+                            NumberOfCommits = g.Count(),
+                        }).OrderBy(r => r.Date);
         }
 
-        private IEnumerable<DateTime> GetDatesInRage(DateTime startDate, DateTime endDate)
+//        private void UpdateLatestRevision(IEnumerable<Changeset> changesets)
+//        {
+//            ViewModel.CurrentRevision = changesets.Max(c => c.Revision);
+//        }
+
+        private void InsertPointsToImproveTheGraph(IEnumerable<CommitStatisticsForDate> commitStatisticsForDates)
         {
-            List<DateTime> allDates = new List<DateTime>();
-
-
-            DateTime currentDate = startDate;
-            allDates.Add(currentDate);
-            
-            if (startDate == endDate)  //Note: We do this because 1 data point looks wierd in the view
+            if (ThereAreNoCommitDataOnDate(dateToModelFrom, commitStatisticsForDates))
             {
-                allDates.Add(currentDate.AddDays(1));
-                return allDates;
+                ViewModel.Data.Add(new CommitStatisticsForDate() { Date = dateToModelFrom, NumberOfCommits = 0 });
             }
 
-            while (currentDate < endDate)
+            //Modelling one day is not pretty so in thoose cases this inserts a dummypoint on the next day
+            if(modelTimeStart.Date.Equals(DateTime.Today.Date))
             {
-                currentDate = currentDate.AddDays(1);
-                allDates.Add(currentDate);
+                ViewModel.Data.Add(new CommitStatisticsForDate() { Date = dateToModelFrom.AddDays(1), NumberOfCommits = 0 });
             }
+        }
 
-            return allDates;
+        private bool ThereAreNoCommitDataOnDate(DateTime date, IEnumerable<CommitStatisticsForDate> commitStatisticsForDates)
+        {
+            if (ViewModel.Data == null || commitStatisticsForDates == null) { return false; }
 
+            var noNewDataOnDate = commitStatisticsForDates.Where(c => c.Date.Equals(date)).Count() == 0;
+            var noOldDataOnDate = ViewModel.Data.Where(c => c.Date.Equals(date)).Count() == 0;
+
+            return noNewDataOnDate && noOldDataOnDate;
+        }
+
+        private void AddDaysOfNoCommitsInBetween(CommitStatisticsForDate commit)
+        {
+            int diff = GetTotalNumberOfDays(ViewModel.Data, commit);
+            while (diff > 1)
+            {
+                diff--;
+                ViewModel.Data.Add(new CommitStatisticsForDate() { Date = ViewModel.Data.Max(c => c.Date).AddDays(1), NumberOfCommits = 0 });
+            }
+        }
+
+        private static int GetTotalNumberOfDays(IEnumerable<CommitStatisticsForDate> timeData, CommitStatisticsForDate commit)
+        {
+            if (timeData.Count() <= 0) return 0;
+            var lastDay = timeData.Max(c => c.Date);
+            var thisDay = commit.Date;
+            TimeSpan difference = thisDay.Subtract(lastDay);
+            return difference.Days;
+        }
+
+        private void InsertPointTodayIfNeeded(IEnumerable<CommitStatisticsForDate> commitStatisticsForDates)
+        {
+            if (ThereAreNoCommitDataOnDate(DateTime.Today, commitStatisticsForDates))
+            {
+                var commitsToday = new CommitStatisticsForDate() { Date = DateTime.Today, NumberOfCommits = 0 };
+
+                AddDaysOfNoCommitsInBetween(commitsToday);
+                ViewModel.Data.Add(commitsToday);
+            }
         }
     }
 }

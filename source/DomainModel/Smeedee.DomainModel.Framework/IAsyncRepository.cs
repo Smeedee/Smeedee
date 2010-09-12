@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Smeedee.DomainModel.Framework
 {
@@ -13,22 +11,22 @@ namespace Smeedee.DomainModel.Framework
 
     public class GetCompletedEventArgs<TDomainModel> : EventArgs
     {
-        private IEnumerable<TDomainModel> result;
-        public IEnumerable<TDomainModel> Result
-        {
-            get { return result; }
-        }
-        
-        private Specification<TDomainModel> specification;
-        public Specification<TDomainModel> Specification
-        {
-            get { return specification; }
-        }
+        public Exception Error { get; protected set; }
+
+        public IEnumerable<TDomainModel> Result { get; protected set; }
+
+        public Specification<TDomainModel> Specification { get; protected set; }
 
         public GetCompletedEventArgs(IEnumerable<TDomainModel> result, Specification<TDomainModel> specification)
         {
-            this.result = result;
-            this.specification = specification;
+            Result = result;
+            Specification = specification;
+        }
+
+        public GetCompletedEventArgs(Specification<TDomainModel> specification, Exception error) 
+            : this(null, specification)
+        {
+            Error = error;
         }
 
     }

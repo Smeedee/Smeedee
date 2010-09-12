@@ -23,98 +23,85 @@
 
 #endregion
 
-using Smeedee.Client.Framework.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using Smeedee.DomainModel.Framework.Logging;
+using Smeedee.DomainModel.Holidays;
+using Smeedee.DomainModel.ProjectInfo;
 
 namespace Smeedee.Widget.ProjectInfo.ViewModels
 {
-    public class WorkingDaysLeftViewModel : AbstractViewModel
+    public partial class WorkingDaysLeftViewModel
     {
-        // Strings are public to support testing.
-        public const string NO_PROJECTS_STRING_LARGE = "No project with the given name exists in the repository";
-        public const string NO_ITERATIONS_STRING_LARGE = "There are no iterations in the given project";
-        public const string NO_PROJECTS_STRING = "No projects";
-        public const string NO_ITERATIONS_STRING = "No iterations";
-        public const string WORKING_DAYS_LEFT_STRING = " working days left";
-        public const string WORKING_DAYS_LEFT_SINGULAR_STRING = " working day left";
-        public const string DAYS_ON_OVERTIME_STRING = " days on overtime";
-        public const string DAYS_ON_OVERTIME_SINGULAR_STRING = " day on overtime";
-        public const string DAYS_LEFT_STRING = "Days left: ";
-        public const string CONNECTION_ERROR = "Problems with loading the data";
-        public const string ERROR_IN_CONFIG = "Configuration is invalid. Set correct end date";
-
-        public bool ProjectsInRepository;
-        public bool IterationInProject;
-        public bool IsOnOvertime;
-
-
-        public WorkingDaysLeftViewModel()
-        {
-            IterationInProject = false;
-            ProjectsInRepository = false;
-            DaysRemaining = 0;
-        }
-
-        private int? daysRemaining;
-        public int? DaysRemaining
-        {
-            // Background for nullable int:
-            // ----------------------------------------------------
-            // Logic for altering displayed text is complex
-            // View is hard to modify
-            // Must be handled in the "large" and "small" view...
-            // Will be fixed when this domain is given an overhaul!
+        public bool IsOnOvertime 
+        { 
             get
             {
-                if(ProjectsInRepository && IterationInProject && !HasConnectionProblems)
-                {
-                    return daysRemaining;
-                }
+                return DateTime.Now.Date > EndDate;
+            } 
+        }
+        public bool IsLoading { get; set; }
 
-                return null;
-            }
+        public void OnInitialize()
+        {
+            _EndDate = DateTime.Now.Date.AddMonths(1);
+            Holidays = new List<Holiday>();
+            DaysRemaining = string.Empty;
+            HasInformationToShow = false;
+
+        }
+        
+        private string daysRemaining;
+        public string DaysRemaining
+        {
+            get { return daysRemaining; }
             set
             {
-                if (value != daysRemaining && IterationInProject && ProjectsInRepository)
+                if (value != daysRemaining)
                 {
                     daysRemaining = value;
-                    TriggerPropertyChanged<WorkingDaysLeftViewModel>(vm => vm.DaysRemaining);
+                    TriggerPropertyChanged("DaysRemainingTextSmall");
+                    TriggerPropertyChanged("DaysRemainingTextLarge");
+                    TriggerPropertyChanged("DaysRemaining");
                 }
             }
         }
 
+        public void UpdateDaysRemaining(IEnumerable<DayOfWeek> nonWorkingDays)
+        {
+            var today = DateTime.Now.Date;
+            int calculatedDaysRemaning = new Iteration(today, EndDate).CalculateWorkingdaysLeft(today, Holidays, nonWorkingDays).Days;
+            DaysRemaining = calculatedDaysRemaning.ToString();
+        }
+        
         public string DaysRemainingTextLarge
         {
             get
             {
-                if (HasConnectionProblems)
+                if( IsLoading )
                 {
-                    return CONNECTION_ERROR;
+                    return MessageStrings.LOADING_DATA;
                 }
-                else if(HasConfigError)
+
+                if (!HasInformationToShow)
                 {
-                    return ERROR_IN_CONFIG;
+                    return MessageStrings.NO_INFORMATION_STRING_LARGE;
                 }
-                else if (!ProjectsInRepository)
+
+                if (DaysRemaining.Equals("1"))
                 {
-                    return NO_PROJECTS_STRING_LARGE;
-                }
-                else if (!IterationInProject)
-                {
-                    return NO_ITERATIONS_STRING_LARGE;
-                }
-                else if (IsOnOvertime)
-                {
-                    if (this.DaysRemaining != 1)
-                        return DAYS_ON_OVERTIME_STRING;
-                    else
-                        return DAYS_ON_OVERTIME_SINGULAR_STRING;
+                    return IsOnOvertime
+                               ? MessageStrings.DAYS_ON_OVERTIME_SINGULAR_STRING
+                               : MessageStrings.WORKING_DAYS_LEFT_SINGULAR_STRING;
                 }
                 else
                 {
-                    if (this.DaysRemaining != 1)
-                        return WORKING_DAYS_LEFT_STRING;
-                    else
-                        return WORKING_DAYS_LEFT_SINGULAR_STRING;
+                    return IsOnOvertime
+                               ? MessageStrings.DAYS_ON_OVERTIME_STRING
+                               : MessageStrings.WORKING_DAYS_LEFT_STRING;
                 }
             }
         }
@@ -123,33 +110,34 @@ namespace Smeedee.Widget.ProjectInfo.ViewModels
         {
             get
             {
-                if(HasConnectionProblems)
+                if( IsLoading )
                 {
-                    return ""; // Display no error on the statusbar
+                    return MessageStrings.LOADING_DATA;
                 }
-                else if(HasConfigError)
+
+                if (!HasInformationToShow)
                 {
-                    return "";
+                    return MessageStrings.NO_INFORMATION_STRING;
                 }
-                else if (!ProjectsInRepository)
+                if (IsOnOvertime)
                 {
-                    return NO_PROJECTS_STRING;
+                    return MessageStrings.DAYS_ON_OVERTIME_STRING;
                 }
-                else if (!IterationInProject)
-                {
-                    return NO_ITERATIONS_STRING;
-                }
-                else if (IsOnOvertime)
-                {
-                    return DAYS_ON_OVERTIME_STRING;
-                }
-                else
-                {
-                    return DAYS_LEFT_STRING;
-                }
+                return MessageStrings.DAYS_LEFT_STRING;
             }
         }
+    }
 
-        public bool HasConfigError { get; set; }
+    public class MessageStrings
+    {
+        public const string LOADING_DATA = "Loading...";
+        public const string NO_INFORMATION_STRING_LARGE = "No end date set. Please check the widget settings.";
+        public const string NO_INFORMATION_STRING = "No info/config";
+        public const string WORKING_DAYS_LEFT_STRING = " working days left";
+        public const string WORKING_DAYS_LEFT_SINGULAR_STRING = " working day left";
+        public const string DAYS_ON_OVERTIME_STRING = " days on overtime";
+        public const string DAYS_ON_OVERTIME_SINGULAR_STRING = " day on overtime";
+        public const string DAYS_LEFT_STRING = "Days left: ";
+        public const string CONNECTION_ERROR = "Problems with loading the data";
     }
 }

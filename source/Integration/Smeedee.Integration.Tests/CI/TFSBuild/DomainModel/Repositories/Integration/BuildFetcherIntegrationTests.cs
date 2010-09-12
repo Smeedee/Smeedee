@@ -45,10 +45,10 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
 {
     public class Shared : ScenarioClass
     {
-        protected static String serverAddress = "https://tfs08.codeplex.com";
+        protected static String serverAddress = "http://80.203.160.221:8080/tfs";
         protected static String projectName = "smeedee";
-        protected static String buildName = "TFS Integration Mock Project";
-        protected static NetworkCredential credentials = new NetworkCredential("smeedee_cp", "haldis", "snd");
+        protected static String buildName = "Smeedee Builds";
+        protected static NetworkCredential credentials = new NetworkCredential("smeedee", "dlog4321.");
 
         protected static BuildFetcher fetcher;
 
@@ -62,8 +62,7 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         }
     }
 
-    [TestFixture]
-    //[Ignore]
+    [TestFixture][Category("IntegrationTest")]
     public class BuildFetcherSpecs : Shared
     {
         [SetUp]
@@ -98,7 +97,6 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         }
 
         [Test]
-        [Ignore("There are no project on Codeplex. Set up local server and update connection info.")]
         public void Assure_list_of_all_build_definitions_in_the_project_has_content()
         {
             IEnumerable<IBuildDefinition> buildDefinitions = null;
@@ -113,7 +111,6 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         }
 
         [Test]
-        [Ignore("There are no project on Codeplex. Set up local server and update connection info.")]
         public void Assure_can_fetch_history_for_a_given_build_definition()
         {
             IEnumerable<IBuildDefinition> buildDefinitions = null;
@@ -135,7 +132,6 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         }
 
         [Test]
-        [Ignore("There are no project on Codeplex. Set up local server and update connection info.")]
         public void Assure_no_future_builds_will_be_returned()
         {
             var tfsServer = new TeamFoundationServer(serverAddress, credentials);

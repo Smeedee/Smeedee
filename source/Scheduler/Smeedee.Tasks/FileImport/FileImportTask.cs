@@ -24,7 +24,8 @@ namespace Smeedee.Tasks.FileImport
             recognizedFileEndings.Add(".userdb", null);
         }
 
-        public FileImportTask(IManageFileSystems fileSystemService, 
+        public FileImportTask(
+            IManageFileSystems fileSystemService, 
             IKnowTheFileImportQueue fileImportQueueService,
             IAssembleFileProcessors fileProcessorFactory)
         {

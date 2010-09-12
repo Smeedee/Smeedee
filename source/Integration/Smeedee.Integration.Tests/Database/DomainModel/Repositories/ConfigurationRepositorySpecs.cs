@@ -36,7 +36,7 @@ using Smeedee.DomainModel.Framework;
 using NHibernate;
 
 using NUnit.Framework;
-
+using Smeedee.DomainModel.Framework.DSL.Specifications;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 using Smeedee.Integration.Database.DomainModel.Repositories;
@@ -54,6 +54,26 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
             RecreateSessionFactory();
         };
 
+        protected void AssertAreEqual(Configuration result, Configuration expected)
+        {
+            result.Id.ShouldBe(expected.Id);
+            result.Name.ShouldBe(expected.Name);
+            result.Settings.Count().ShouldBe(expected.Settings.Count());
+            result.IsConfigured.ShouldBe(expected.IsConfigured);
+
+            for (int i = 0; i < result.Settings.Count(); i++)
+            {
+                result.Settings.ElementAt(i).Value.ShouldBe(expected.Settings.ElementAt(i).Value);
+                result.Settings.ElementAt(i).Name.ShouldBe(expected.Settings.ElementAt(i).Name);
+                result.Settings.ElementAt(i).Vals.Count().ShouldBe(expected.Settings.ElementAt(i).Vals.Count());
+                for (int j = 0; j < result.Settings.ElementAt(i).Vals.Count(); j++)
+                {
+                    result.Settings.ElementAt(i).Vals.ElementAt(j).ShouldBe(expected.Settings.ElementAt(i).Vals.ElementAt(j));
+                }
+            }
+        }
+
+
         protected Context Database_contains_configuration_data = () =>
         {
             using (var session = sessionFactory.OpenSession())
@@ -69,7 +89,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
                     Name = "ContinuousIntegration",
                 };
                 configuration2.NewSetting("url", new string[] { "http://continuousintegration" });
-
+                
                 session.Save(configuration1);
                 session.Save(configuration2);
                 session.Flush();
@@ -82,7 +102,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
         };
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_get : ConfigurationRepositoryShared
     {
         [Test]
@@ -115,7 +135,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_save : ConfigurationRepositoryShared
     {
         [Test]
@@ -123,12 +143,14 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
         {
             Scenario.StartNew(this, scenario =>
             {
+                Configuration configuration = null;
+
                 scenario.Given(Database_exists).
                     And(Repository_is_created);
 
                 scenario.When("a new Configuration is saved", () =>
                 {
-                    var configuration = new Configuration()
+                    configuration = new Configuration()
                     {
                         Name = "ProcessManagement",
                     };
@@ -138,11 +160,11 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
 
                 scenario.Then("assure a new record is created in the Configuration database table", () =>
                 {
-                    var configuration = sessionFactory.OpenSession().Get(typeof(Configuration), "ProcessManagement") as Configuration;
-                    configuration.ShouldNotBeNull();
-                    configuration.Name.ShouldBe("ProcessManagement");
-                    (configuration.Settings.Count() > 0).ShouldBeTrue();
-                    var setting = configuration.Settings.Where(s => s.Name == "username").SingleOrDefault();
+                    var returnedConfig = sessionFactory.OpenSession().Get(typeof(Configuration), configuration.Id) as Configuration;
+                    returnedConfig.ShouldNotBeNull();
+                    returnedConfig.Name.ShouldBe("ProcessManagement");
+                    (returnedConfig.Settings.Count() > 0).ShouldBeTrue();
+                    var setting = returnedConfig.Settings.Where(s => s.Name == "username").SingleOrDefault();
                     setting.Name.ShouldBe("username");
                     (setting.Vals != null).ShouldBeTrue();
                     (setting.Vals.Count() > 0).ShouldBeTrue();
@@ -150,9 +172,43 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
                 });
             });
         }
+
+        [Test]
+        public void Assure_existing_configuration_is_updated()
+        {
+            DeleteDatabaseIfExists();
+            RecreateSessionFactory();
+            var configuration = new Configuration("Name");
+            configuration.Settings = new List<SettingsEntry>
+                 {
+                     new SettingsEntry("test", "Changed", "Changed")
+
+                 };
+
+            var dbRepo = new ConfigurationDatabaseRepository(sessionFactory);
+            dbRepo.Save(configuration);
+
+            configuration.Name = "newName";
+            configuration.NewSetting("new", "value");
+
+
+            RecreateSessionFactory();
+            dbRepo = new ConfigurationDatabaseRepository(sessionFactory);
+
+            dbRepo.Save(configuration);
+                
+            RecreateSessionFactory();
+            dbRepo = new ConfigurationDatabaseRepository(sessionFactory);
+
+            var result = dbRepo.Get(All.ItemsOf<Configuration>());
+
+            result.Count().ShouldBe(1);
+            AssertAreEqual(result.ElementAt(0), configuration);
+
+        }
         
         [Test]
-        public void Assure_not_possible_to_save_two_Configurations_with_same_name()
+        public void  Assure_possible_to_save_two_Configurations_with_same_name()
         {
             Scenario.StartNew(this, scenario =>
             {
@@ -169,17 +225,14 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.Configurati
                     session.Save(configuration);
                 });
 
-                scenario.Then("assure an exception is thrown when creating a new Configuration with the same name", () =>
+                scenario.Then("assure no exception is thrown when creating a new Configuration with the same name", () =>
                 {
                     var configuration = new Configuration()
                     {
                         Name = "ProcessManagement"
                     };
-                    this.ShouldThrowException<NonUniqueObjectException>(
-                        () =>
-                        session.Save(configuration),
-                        exception => { exception.ShouldNotBeNull(); }
-                        );
+                        
+                    session.Save(configuration);
                 });
             });
         }

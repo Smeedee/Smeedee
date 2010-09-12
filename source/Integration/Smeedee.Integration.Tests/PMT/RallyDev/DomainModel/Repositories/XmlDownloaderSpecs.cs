@@ -34,7 +34,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.PMT.RallyDev.XmlDownloaderSpecs
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_downloading_xml
     {
         protected static string webServiceUrl;

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Test projects -->
+  <ItemGroup>
+    <!-- TODO: Is there any way we can set up tests for the client.web project? -->
+
+    <!-- Client -->
+    <TestProject Include="..Client\Smeedee.Client.Framework.Tests\Smeedee.Client.Framework.Tests.csproj">
+      <Assembly>..\Client\Smeedee.Client.Framework.Tests\bin\debug\Smeedee.Client.Framework.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Client.Framework.xml</Report>
+    </TestProject>
+
+
+    <!-- Widgets -->
+    <TestProject Include="..\Widget\Smeedee.Widget.BurndownChart.Tests\Smeedee.Widget.BurndownChart.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.BurndownChart.Tests\bin\debug\Smeedee.Widget.BurndownChart.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.BurndownChart.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Widget\Smeedee.Widget.CI.Tests\Smeedee.Widget.CI.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.CI.Tests\bin\debug\Smeedee.Widget.CI.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.CI.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Widget\Smeedee.Widget.Corkboard.Tests\Smeedee.Widget.Corkboard.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.Corkboard.Tests\bin\debug\Smeedee.Widget.Corkboard.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.Corkboard.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Widget\Smeedee.Widget.ProjectInfo.Tests\Smeedee.Widget.ProjectInfo.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.ProjectInfo.Tests\bin\debug\Smeedee.Widget.ProjectInfo.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.ProjectInfo.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Widget\Smeedee.Widget.SourceControl.Tests\Smeedee.Widget.SourceControl.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.SourceControl.Tests\bin\debug\Smeedee.Widget.SourceControl.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.SourceControl.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Widget\Smeedee.Widget.TeamMembers.Test\Smeedee.Widget.TeamMembers.Test.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.TeamMembers.Test\bin\debug\Smeedee.Widget.TeamMembers.Test.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.TeamMembers.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Widget\Smeedee.Widget.Admin.Tasks.Tests\Smeedee.Widget.Admin.Tasks.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.Admin.Tasks.Tests\bin\debug\Smeedee.Widget.Widget.Admin.Tasks.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.Admin.Tasks.xml</Report>
+    </TestProject>
+
+    <!-- TODO: Can not be loaded here, these are Silverlight/MStest tests. Keeping them here to remember them though.
+    <TestProject Include="..\Widget\Smeedee.Widget.Twitter.Tests\Smeedee.Widget.Twitter.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.Twitter.Tests\bin\debug\Smeedee.Widget.Twitter.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.Twitter.xml</Report>
+    </TestProject>-->
+
+
+    <!-- Common -->
+    <TestProject Include="..\Smeedee.Framework.Tests\Smeedee.Framework.Tests.csproj">
+      <Assembly>..\Smeedee.Framework.Tests\bin\debug\Smeedee.Framework.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Framework.xml</Report>
+    </TestProject>
+
+    <!-- DomainModels -->
+    <TestProject Include="..\DomainModel\Smeedee.DomainModel.Tests\Smeedee.DomainModel.Tests.csproj">
+      <Assembly>..\DomainModel\Smeedee.DomainModel.Tests\bin\debug\Smeedee.DomainModel.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.DomainModel.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\DomainModel\Smeedee.DomainModel.FrameworkTests\Smeedee.DomainModel.FrameworkTests.csproj">
+      <Assembly>..\DomainModel\Smeedee.DomainModel.FrameworkTests\bin\debug\Smeedee.DomainModel.FrameworkTests.dll</Assembly>
+      <Report>TestResults.Smeedee.DomainModel.Framework.xml</Report>
+    </TestProject>
+
+    <!-- Scheduler -->
+    <TestProject Include="..\Scheduler\Smeedee.Scheduler.Tests\Smeedee.Scheduler.Tests.csproj">
+      <Assembly>..\Scheduler\Smeedee.Scheduler.Tests\bin\debug\Smeedee.Scheduler.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Scheduler.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Scheduler\Smeedee.Tasks.Tests\Smeedee.Tasks.Tests.csproj">
+      <Assembly>..\Scheduler\Smeedee.Tasks.Tests\bin\debug\Smeedee.Tasks.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Tasks.xml</Report>
+    </TestProject>
+
+    <!-- Integration -->
+   
+    <TestProject Include="..\Integration\Smeedee.Integration.Tests\Smeedee.Integration.Tests.csproj">
+      <Assembly>..\Integration\Smeedee.Integration.Tests\bin\debug\Smeedee.Integration.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Integration.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Integration\Smeedee.Integration.Framework.Tests\Smeedee.Integration.Framework.Tests.csproj">
+      <Assembly>..\Integration\Smeedee.Integration.Framework.Tests\bin\debug\Smeedee.Integration.Framework.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Integration.Framework.xml</Report>
+    </TestProject>
+  </ItemGroup>
+</Project>

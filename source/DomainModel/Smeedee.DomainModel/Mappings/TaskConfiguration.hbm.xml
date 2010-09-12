@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Smeedee.DomainModel"
+                   namespace="Smeedee.DomainModel.TaskInstanceConfiguration">
+  <class name="TaskConfiguration" table="TaskConfiguration">
+    
+    <id name="Name">
+      <generator class="assigned"/>
+    </id>
+    
+    <property name="TaskName" />
+    <property name="DispatchInterval" />
+    
+    <bag name="Entries" cascade="All" lazy="false" inverse="true">
+      <key column="TaskConfiguration_fid"/>
+      <one-to-many class="TaskConfigurationEntry"/>
+    </bag>
+    
+  </class>
+
+  <class name="TaskConfigurationEntry" table="TaskConfigurationEntry">
+
+    <composite-id>
+      <key-property name="Name" />
+      <key-many-to-one name="TaskConfiguration" class="TaskConfiguration" column="TaskConfiguration_fid"/>
+    </composite-id>
+    
+    <property name="PersistableValue" />
+    <property name="PersistableType" />
+
+  </class>
+</hibernate-mapping>

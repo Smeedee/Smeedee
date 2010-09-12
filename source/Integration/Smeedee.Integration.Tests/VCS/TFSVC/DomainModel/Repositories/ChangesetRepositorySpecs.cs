@@ -45,19 +45,13 @@ using Changeset=Smeedee.DomainModel.SourceControl.Changeset;
 using MSChangeset = Microsoft.TeamFoundation.VersionControl.Client.Changeset;
 
 
-/*
- * TODO:
- * Since we only have a local ip for the TFS server this class can only
- * be used in Trondheim at the moment.
- */
-
 namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
 {
     public class Shared
     {
-        public static NetworkCredential credentials = new NetworkCredential("smeedee_cp", "haldis", "snd");
-        public static string repositoryUrl = "https://tfs08.codeplex.com";
-        public static string repositoryPath = "$/smeedee";
+        public static NetworkCredential credentials = new NetworkCredential("smeedee", "dlog4321.");
+        public static string repositoryUrl = "http://80.203.160.221:8080/tfs";
+        public static string repositoryPath = "$/Smeedee";
 
         protected IEnumerable<MSChangeset> QueryAllChangesets()
         {
@@ -88,7 +82,7 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_query_all_changesets : Shared
     {
         private static TFSChangesetRepository repository;
@@ -105,7 +99,6 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
 
 
         [Test]
-        //[Ignore]
         public void Assure_all_changesets_are_recieved()
         {
             Scenario.StartNew(this, scenario =>
@@ -126,7 +119,6 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
 
 
         [Test]
-        //[Ignore]
         public void Assure_Author_is_loaded_into_the_resultset()
         {
             Scenario.StartNew(this, scenario =>
@@ -145,7 +137,6 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
         }
 
         [Test]
-        //[Ignore]
         public void Assure_LogMessage_is_loaded_into_the_resultset()
         {
             Scenario.StartNew(this, scenario =>
@@ -164,7 +155,6 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
         }
 
         [Test]
-        //[Ignore]
         public void Assure_Revision_is_loaded_into_the_resultset()
         {
             Scenario.StartNew(this, scenario =>
@@ -183,7 +173,6 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
         }
 
         [Test]
-        //[Ignore]
         public void Assure_Time_is_loaded_into_the_resultset()
         {
             Scenario.StartNew(this, scenario =>
@@ -202,12 +191,10 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
         }
     }
     
-    [TestFixture]
-    //[Ignore]
+    [TestFixture][Category("IntegrationTest")]
     public class When_query_all_changesets_after_a_given_revision : Shared
     {
         [Test]
-        //[Ignore]
         public void Assert_changesets_are_recieved()
         {
             Scenario.StartNew(this, scenario =>
@@ -226,14 +213,12 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
         }
     }
 
-    [TestFixture]
-    //[Ignore]
+    [TestFixture][Category("IntegrationTest")]
     public class When_query_all_changesets_from_user : Shared
     {
-        private static string username = "tnicolaysen";
+        private static string username = "Administrator";
 
         [Test]
-        [Ignore("Unexpected error. Does Codeplex support this? Research needed.")]
         public void Assert_changesets_can_be_filtered_on_user()
         {
             Scenario.StartNew(this, scenario =>
@@ -253,7 +238,6 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
         }
 
         [Test]
-        [Ignore("Unexpected error. Does Codeplex support this? Research needed.")]
         public void Assert_no_changesets_from_other_autors_are_returned()
         {
             Scenario.StartNew(this, scenario =>

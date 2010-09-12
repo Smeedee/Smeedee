@@ -34,7 +34,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.ConfigurationRepositorySe
 
         protected Context database_contains_Configurations = () =>
         {
-            var configuration = new Configuration("source control");
+            configuration = new Configuration("source control");
             configuration.NewSetting("provider", "svn");
             configuration.NewSetting("username", "goeran");
             configuration.NewSetting("password", "hansen");
@@ -49,6 +49,8 @@ namespace Smeedee.Client.WebTests.Services.Integration.ConfigurationRepositorySe
             webServiceClient = new ConfigurationRepositoryServiceClient();
         };
 
+        protected static Configuration configuration;
+
         [TearDown]
         public void Teardown()
         {
@@ -56,7 +58,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.ConfigurationRepositorySe
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_get_Configurations_via_Webservice : Shared
     {
         [Test]
@@ -75,7 +77,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.ConfigurationRepositorySe
             {
                 result.Count().ShouldNotBe(0);
 
-                var configDb = databaseSession.Get<Configuration>("source control");
+                var configDb = databaseSession.Get<Configuration>(configuration.Id);
 
                 var config = result.Where(c => c.Name == "source control").FirstOrDefault();
                 config.ShouldNotBeNull();

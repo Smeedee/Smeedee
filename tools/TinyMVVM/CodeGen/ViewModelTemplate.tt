@@ -1,6 +1,6 @@
 ﻿<#@ assembly name="$(SolutionDir)\TinyMVVM\$(OutDir)\TinyMVVM.dll" #>
 <#@ import namespace="TinyMVVM.DSL.TextParser" #>
-<#@ import namespace="TinyMVVM.SemanticModel" #>
+<#@ import namespace="TinyMVVM.SemanticModel.MVVM" #>
 
 <#+
 // <copyright file="ViewModel.tt" company="eXPerience">
@@ -66,8 +66,6 @@ public <#= property.Type#> <#= property.Name#> { get; set; }
 		<#= command.Name#> = new DelegateCommand();
 	<#+ }#>
 	
-			ServiceLocator.SetLocatorIfNotSet(() => ServiceLocator.GetServiceLocator());
-		
 			ApplyDefaultConventions();
 		}
 	}

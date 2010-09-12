@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="183986da-bc2b-40b3-85cd-4ebf6e5d0bad" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TaskDefinitionRepositoryService.wsdl" MetadataType="Wsdl" ID="2e35dfb7-49a4-446b-b3a0-e286e7b03578" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="TaskDefinitionRepositoryService.xsd" MetadataType="Schema" ID="c07c4a3a-bcf2-45a1-a11d-675b18adcb05" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="TaskDefinitionRepositoryService1.xsd" MetadataType="Schema" ID="bc2906c3-093a-4464-a3f7-04790fe054a6" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TaskDefinitionRepositoryService1.wsdl" MetadataType="Wsdl" ID="3b54fd5f-4e62-4106-8441-cd822bf7a4ac" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="TaskDefinitionRepositoryService2.xsd" MetadataType="Schema" ID="6f8c6b84-84da-4c9b-9687-b13021fe733e" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TaskDefinitionRepositoryService.disco" MetadataType="Disco" ID="dc41bc37-a3b9-4545-bb12-ccb9aec4e7db" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc?disco" />
+    <MetadataFile FileName="TaskDefinitionRepositoryService3.xsd" MetadataType="Schema" ID="402abe0d-0029-45f1-a25b-86436cdd5b17" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic
+using System.Collections.ObjectModel
+using System.ComponentModel.Composition
+using System.Windows
+using System.Windows.Input
+using TinyMVVM.Framework
+using Smeedee.Client.Framework.Services
+using Smeedee.Client.Framework.ViewModel
+
+viewmodel SelectWidgetsDialog extends Dialog:
+	property AvailableWidgets as ObservableCollection<WidgetMetadata>
+	property Progressbar as Progressbar
+	oproperty SearchTerm as string
+	
+	command SelectAll
+	command DeselectAll
+
+viewmodel EditSlideshowDialog extends Dialog:
+	oproperty Slideshow as Slideshow
+	oproperty SelectedSlide as Slide
+
+	command Delete
+	command MoveLeft
+	command MoveRight

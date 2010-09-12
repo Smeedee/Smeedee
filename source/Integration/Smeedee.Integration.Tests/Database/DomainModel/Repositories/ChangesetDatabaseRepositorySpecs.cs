@@ -90,7 +90,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.ChangesetDa
 
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_get : ChangesetDatabaseRepositoryShared
     {
         [SetUp]
@@ -123,7 +123,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.ChangesetDa
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_saved : ChangesetDatabaseRepositoryShared
     {
         [SetUp]
@@ -197,7 +197,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.ChangesetDa
 
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_saving : Shared
     {
         protected const string TEST_USERNAME = "Kim Bjarne me Musa";

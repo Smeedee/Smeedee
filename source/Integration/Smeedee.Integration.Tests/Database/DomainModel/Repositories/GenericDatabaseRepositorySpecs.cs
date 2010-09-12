@@ -31,7 +31,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.GenericData
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_spawning : Shared
     {
         [Test]
@@ -49,7 +49,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.GenericData
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_spawned : Shared
     {
         private GenericDatabaseRepository<CIServer> repository;

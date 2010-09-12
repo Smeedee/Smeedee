@@ -22,6 +22,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="Save">
+      <soap12:operation soapAction="http://smeedee.org/CIRepositoryService/Save" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="CIRepositoryService">
     <wsdl:port name="CustomBinding_CIRepositoryService" binding="tns:CustomBinding_CIRepositoryService">

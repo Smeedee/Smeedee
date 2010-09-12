@@ -34,7 +34,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.SourceControl.Repositories
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class SpecificationHandlerSpecs
     {
         private static RevisionHandler handler;

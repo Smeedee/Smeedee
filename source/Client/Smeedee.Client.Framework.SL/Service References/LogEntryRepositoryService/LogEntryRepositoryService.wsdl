@@ -22,6 +22,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="LogAll">
+      <soap12:operation soapAction="http://smeedee.org/LogEntryRepositoryService/LogAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="Get">
       <soap12:operation soapAction="http://smeedee.org/LogEntryRepositoryService/Get" style="document" />
       <wsdl:input>

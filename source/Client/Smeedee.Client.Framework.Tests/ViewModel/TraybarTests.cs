@@ -6,6 +6,7 @@ using System.Threading;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.Tests;
 using Smeedee.Client.Framework.ViewModel;
 using TinyBDD.Specification.NUnit;
 
@@ -14,10 +15,12 @@ namespace Smeedee.Client.Tests.ViewModel
     class TraybarTests
     {
         [TestFixture]
-        public class When_spawned : TraybarTestContext
+        public class When_spawned : Shared
         {
             public override void Context()
             {
+				base.Context();
+
                 Given_Traybar_is_created();
             }
 
@@ -42,13 +45,14 @@ namespace Smeedee.Client.Tests.ViewModel
         }
 
         [TestFixture]
-        public class When_loading_widgets_and_fail : TraybarTestContext
+        public class When_loading_widgets_and_fail : Shared
         {
-            private Mock<IModuleLoader> moduleLoaderFake;
-            private string ERROR_MSG = "something happend during initialization of the widgets";
+        	private string ERROR_MSG = "something happend during initialization of the widgets";
 
             public override void Context()
             {
+				base.Context();
+
                 Given_ModuleLoaderFake_is_created_and_configured_to_fail();
 
                 When_Traybar_is_spawned();
@@ -56,7 +60,6 @@ namespace Smeedee.Client.Tests.ViewModel
 
             private void Given_ModuleLoaderFake_is_created_and_configured_to_fail()
             {
-                moduleLoaderFake = GetFakeFor<IModuleLoader>();
                 moduleLoaderFake.Setup(s => s.LoadTraybarWidgets(It.IsAny<Traybar>())).
                     Throws(new Exception(ERROR_MSG));
             }
@@ -73,5 +76,16 @@ namespace Smeedee.Client.Tests.ViewModel
                 viewModel.ErrorInfo.ErrorMessage.ShouldBe(ERROR_MSG);
             }
         }
+
+		public class Shared : TraybarTestContext
+		{
+			protected Mock<IModuleLoader> moduleLoaderFake;
+
+			public override void Context()
+			{
+				ViewModelBootstrapperForTests.Initialize();
+				moduleLoaderFake = ViewModelBootstrapperForTests.ModuleLoaderFake;
+			}
+		}
     }
 }

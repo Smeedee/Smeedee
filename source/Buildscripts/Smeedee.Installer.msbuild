@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         DefaultTargets="DeployInstaller">
+
+  <Import Project="..\..\tools\MSBuild Extension Pack\MSBuild.ExtensionPack.tasks"/>
+  <Import Project="Smeedee.msbuild"/>
+
+  <PropertyGroup>
+    <ExtensionTasksPath>..\..\tools\MSBuild Extension Pack\</ExtensionTasksPath>
+    <WorkingDirectory>..\Build\installer</WorkingDirectory>
+    <OutputDirectory>$(WorkingDirectory)</OutputDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SmeedeeSolution Include="..\Smeedee.sln"/>
+    <InstallerProject Include="..\Installers\Smeedee.Client.Web.Installer\Smeedee.Client.Web.Installer.sln"/>
+
+    <APDClientWebClientBinOutput Include="..\Client\Smeedee.Client.Web\ClientBin\*.xap"/>
+
+    <APDClientWebOutputBin Include="..\Client\Smeedee.Client.Web\bin\*.dll"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.asax"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.aspx"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.aspx.cs"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.config"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.htm"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.js"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.ashx"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.ashx.cs"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.xml"/>
+    
+    <APDClientWebOutputSplash Include="..\Client\Smeedee.Client.Web\Splash\*"/>
+    <APDClientWebOutputUserImages Include="..\Client\Smeedee.Client.Web\UserImages\*.jpg"/>
+    
+    <APDClientWebOutputServices Include="..\Client\Smeedee.Client.Web\Services\*.svc"/>
+
+    <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\*.dll"/>
+    <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\Smeedee.Scheduler.Service.exe"/>
+    <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\Smeedee.Scheduler.Service.exe.config"/>
+
+    <DataCollectorConsoleOutput Include="..\Scheduler\Smeedee.Scheduler.Console\bin\Debug\*.dll"/>
+    <DataCollectorConsoleOutput Include="..\Scheduler\Smeedee.Scheduler.Console\bin\Debug\Smeedee.Scheduler.Console.exe"/>
+    <DataCollectorConsoleOutput Include="..\Scheduler\Smeedee.Scheduler.Console\bin\Debug\Smeedee.Scheduler.Console.exe.config"/>
+
+    <APDIntegrationOutputBin Include="..\Integration\Smeedee.Integration\bin\Debug\*.dll"/>
+    
+    <APDInstallerOutput Include="..\Installers\Smeedee.Client.Web.Installer\bin\Debug\*.msi"/>
+  </ItemGroup>
+
+
+  <Target Name="Change_port_before_compile">
+    <ItemGroup>
+      <ServiceReferences Include="..\**\ServiceReferences.ClientConfig"/>
+    </ItemGroup>
+    <Message Text="@(ServiceReferences)"/>
+    <File TaskAction="Replace" RegexPattern=':1155' Replacement='' Files="@(ServiceReferences)"/>
+  </Target>
+
+  <Target Name="Compile_smeedee" DependsOnTargets="Change_port_before_compile">
+      <MSBuild Projects="@(SmeedeeSolution)" Targets="Build" Properties="Configuration=Debug"/>
+  </Target>
+
+  <Target Name="Change_port_back_after_compile" DependsOnTargets="Compile_smeedee">
+    <ItemGroup>
+      <ServiceReferences Include="..\**\ServiceReferences.ClientConfig" Exclude="Build\**\ServiceReferences.ClientConfig"/>
+    </ItemGroup>
+    <Message Text="@(ServiceReferences)"/>
+    <File TaskAction="Replace" RegexPattern='http://localhost/' Replacement='http://localhost:1155/'
+          Files="@(ServiceReferences)"/>
+  </Target>
+
+  <Target Name="CreateOutputDirectories" DependsOnTargets="Change_port_back_after_compile">
+    <RemoveDir Directories="$(WorkingDirectory)" ContinueOnError="true"/>
+    <MakeDir Directories="$(WorkingDirectory)"/>
+    <MakeDir Directories="$(WorkingDirectory)\bin"/>
+    <MakeDir Directories="$(WorkingDirectory)\ClientBin"/>
+    <MakeDir Directories="$(WorkingDirectory)\UserImages"/>
+    <MakeDir Directories="$(WorkingDirectory)\Services"/>
+	<MakeDir Directories="$(WorkingDirectory)\Splash"/>
+  </Target>
+
+
+  <Target Name="DeployInstallerOutput" DependsOnTargets="CreateOutputDirectories">
+    <Copy SourceFiles="@(DataCollectorOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(APDClientWebOutput)" DestinationFolder="$(WorkingDirectory)"/>
+    <Copy SourceFiles="@(APDClientWebOutputSplash)" DestinationFolder="$(WorkingDirectory)\Splash"/>
+    <Copy SourceFiles="@(APDClientWebOutputUserImages)" DestinationFolder="$(WorkingDirectory)\UserImages"/>
+    <Copy SourceFiles="@(APDClientWebOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(APDClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
+    <Copy SourceFiles="@(APDClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
+    <Copy SourceFiles="@(DataCollectorConsoleOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(APDIntegrationOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
+  </Target>
+
+
+  <Target Name="generate_install_file_list" DependsOnTargets="DeployInstallerOutput" >
+    <Delete Files="..\Installers\Smeedee.Client.Web.Installer\Files.wxs"/>
+    <Exec WorkingDirectory="..\..\tools\WiX v3 binaries" Command=".\heat.exe dir ..\..\source\Build\installer\ -cg generated_components -gg -suid -sfrag -srd -scom -sreg -dr INSTALLLOCATION -out ..\..\source\Installers\Smeedee.Client.Web.Installer\Files.wxs"></Exec>
+  </Target>
+
+  <Target Name="change_sourceDir_in_install_file_list" DependsOnTargets="generate_install_file_list">
+    <ItemGroup>
+      <InstallFileList Include="..\**\Files.wxs"/>
+    </ItemGroup>
+    <Message Text="@(InstallFileList)"/>
+    <File TaskAction="Replace" RegexPattern='SourceDir' Replacement='..\$(WorkingDirectory)' Files="@(InstallFileList)"/>
+  </Target>
+
+  <!---->
+  <Target Name="CompileInstaller" DependsOnTargets="change_sourceDir_in_install_file_list">
+    <MSBuild Projects="@(InstallerProject)" Targets="Build" Properties="Configuration=Debug"/>
+  </Target>
+
+  <Target Name="DeployInstaller">
+      <Copy SourceFiles="@(APDInstallerOutput)" DestinationFolder="$(OutputDirectory)\"/>
+  </Target>
+
+  <Target Name="BuildSetupKit" DependsOnTargets="CompileInstaller;DeployInstaller">
+  </Target>
+</Project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+   Currently we compile all projects made available in the Smeedee solution.
+   
+   We need basically all the projects to create the runable product, as
+   well as all the test projects to be able to run tests later on.
+  -->
+  <ItemGroup>
+    <Project Include="..\Smeedee.sln" />
+  </ItemGroup>  
+</Project>

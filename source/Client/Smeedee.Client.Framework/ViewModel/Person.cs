@@ -55,19 +55,20 @@ namespace Smeedee.Client.Framework.ViewModel
             get
             {
                 string combinedName = Firstname +
-                                        (Middlename != null ? " " + Middlename : string.Empty) +
-                                        (Surname != null ? " " + Surname : string.Empty);
-
+                        (Middlename != null ? " " + Middlename : string.Empty) +
+                        (Surname != null ? " " + Surname : string.Empty);
+       
                 if (string.IsNullOrEmpty(combinedName))
                     return Username;
                 else
                     return combinedName;
+
             }
         }
 
         public virtual string Firstname
         {
-            get { return _firstname; }
+            get { return _firstname ?? Username; }
             set
             {
                 _firstname = value;

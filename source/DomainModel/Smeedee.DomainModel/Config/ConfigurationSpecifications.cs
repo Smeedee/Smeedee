@@ -9,16 +9,33 @@ namespace Smeedee.DomainModel.Config
 {
     public class ConfigurationByName : Specification<Configuration>
     {
-        private string name;
+        public string Name { get; set; }
+
+        public ConfigurationByName() { }
 
         public ConfigurationByName(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
         public override Expression<Func<Configuration, bool>> IsSatisfiedByExpression()
         {
-            return c => c.Name == name;
+            return c => c.Name == Name;
+        }
+    }
+
+    public class ConfigurationById : Specification<Configuration>
+    {
+        public Guid Id { get; set; }
+
+        public ConfigurationById(Guid id)
+        {
+            Id = id;
+        }
+
+        public override Expression<Func<Configuration, bool>> IsSatisfiedByExpression()
+        {
+            return c => c.Id.Equals(Id);
         }
     }
 }

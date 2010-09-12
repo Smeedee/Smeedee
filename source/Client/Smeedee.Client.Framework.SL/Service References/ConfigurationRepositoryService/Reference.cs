@@ -19,6 +19,7 @@ namespace Smeedee.Client.Framework.SL.ConfigurationRepositoryService {
     public interface ConfigurationRepositoryService {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/ConfigurationRepositoryService/Get", ReplyAction="http://smeedee.org/ConfigurationRepositoryService/GetResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Config.ConfigurationByName))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.Config.Configuration>))]
         System.IAsyncResult BeginGet(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.Config.Configuration> specification, System.AsyncCallback callback, object asyncState);
         

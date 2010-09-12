@@ -40,9 +40,9 @@ namespace Smeedee.Scheduler.Service
         {
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
-			{ 
-				new DataCollectorService() 
-			};
+		    { 
+			    new DataCollectorService() 
+		    };
             ServiceBase.Run(ServicesToRun);
         }
     }

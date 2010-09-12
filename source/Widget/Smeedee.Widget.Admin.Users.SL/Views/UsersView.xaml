@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="Smeedee.Widget.Admin.Users.SL.Views.UsersView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Data"
+    xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+    xmlns:Controls1="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>                
+                <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml" />
+                <ResourceDictionary Source="/Smeedee.Widget.Admin.Users.SL;Component/Styles/UserDataGridCellStyleTemplate.xaml" />
+                <ResourceDictionary Source="/Smeedee.Widget.Admin.Users.SL;Component/Styles/UserDataGridColumnHeaderStyleTemplate.xaml" />
+                <ResourceDictionary Source="/Smeedee.Widget.Admin.Users.SL;Component/Styles/UserDataGridRowStyleTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>       
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Border>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource SettingsViewBorder}">
+                    <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource SettingsViewTopGrid}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource SettingsViewH1}" Text="Administrate Users" />                      
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" x:Name="labelUserDB" Style="{StaticResource SettingsViewText}" Text="Select database" />
+                        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbUserDB" Style="{StaticResource SettingsViewComboBox}" ItemsSource="{Binding Userdbs}" SelectedItem="{Binding CurrentDBName, Mode=TwoWay}" />
+
+                        <TextBlock Grid.Row="4" Style="{StaticResource SettingsViewText}" Grid.Column="0" Text="Add new user" />
+                        <StackPanel Style="{StaticResource SettingsViewButtonWrapper}" Grid.Row="4" Grid.Column="1">
+                            <Button Style="{StaticResource SettingsViewButton}" Click="AddUserClick" x:Name="btnNewUser" Content="Add..." Command="{Binding OpenUserEditWindow}" />
+                        </StackPanel>
+
+                        <TextBlock Style="{StaticResource SettingsViewText}" Grid.Row="5" Grid.Column="0" Text="Delete user" />
+                        <StackPanel Grid.Row="5" Grid.Column="1" Style="{StaticResource SettingsViewButtonWrapper}">
+                            <Button Grid.Column="1" x:Name="btnDelete" Style="{StaticResource SettingsViewButton}" Content="Delete..." Command="{Binding DeleteSelectedUser}" />
+                        </StackPanel>
+
+                        <TextBlock Style="{StaticResource SettingsViewText}" Grid.Row="6" Grid.Column="0" Text="Edit user" />
+                        <StackPanel Grid.Row="6" Grid.Column="1" Style="{StaticResource SettingsViewButtonWrapper}">
+                            <Button Grid.Column="1" x:Name="btEdit" Style="{StaticResource SettingsViewButton}" Command="{Binding EditUser}" Content="Edit..." Click="EditUserClick"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Background="White" CornerRadius="2" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0">
+                    <Controls:DataGrid 
+						x:Name="userDataGrid"                                       
+                        CurrentCellChanged="ResizeColumns"
+                        VerticalAlignment="Stretch"
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Auto" 
+                        BorderBrush="{x:Null}"
+                        AutoGenerateColumns="False" 
+                        AlternatingRowBackground="WhiteSmoke"
+                        Background="White" 
+                        HorizontalGridLinesBrush="{x:Null}" 
+                        ItemsSource="{Binding Users, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" 
+                        RowBackground="White"
+                        RowDetailsVisibilityMode="Visible"
+                        SelectedItem="{Binding SelectedUser, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" 
+                        VerticalGridLinesBrush="{x:Null}" 										
+						ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyleTemplate}" 
+                        RowStyle="{StaticResource RowStyle}" 
+                        CellStyle="{StaticResource CellStyle}"                                            
+                        FontSize="14"
+                        >
+                        <Controls:DataGrid.Columns>
+                            <Controls:DataGridTextColumn x:Name="usernameColumn" Binding="{Binding Username, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Header="Username" Width="SizeToCells" MinWidth="120">
+                                <Controls:DataGridTextColumn.Foreground>
+                                    <SolidColorBrush Color="Black" />
+                                </Controls:DataGridTextColumn.Foreground>
+                            </Controls:DataGridTextColumn>
+                            <Controls:DataGridTextColumn x:Name="firstnameColumn" Binding="{Binding Firstname, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Header="Firstname" Width="SizeToCells" MinWidth="120">
+                                <Controls:DataGridTextColumn.Foreground>
+                                    <SolidColorBrush Color="Black" />
+                                </Controls:DataGridTextColumn.Foreground>
+                            </Controls:DataGridTextColumn>
+                            <Controls:DataGridTextColumn x:Name="middlenameColumn" Binding="{Binding Middlename}" Header="Middlename" Width="SizeToCells" MinWidth="120">
+                                <Controls:DataGridTextColumn.Foreground>
+                                    <SolidColorBrush Color="Black" />
+                                </Controls:DataGridTextColumn.Foreground>
+                            </Controls:DataGridTextColumn>
+                            <Controls:DataGridTextColumn x:Name="surnameColumn" Binding="{Binding Surname}" Header="Surname" Width="SizeToCells" MinWidth="120">
+                                <Controls:DataGridTextColumn.Foreground>
+                                    <SolidColorBrush Color="Black" />
+                                </Controls:DataGridTextColumn.Foreground>
+                            </Controls:DataGridTextColumn>
+                            <Controls:DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email}" Header="Email" Width="SizeToCells" MinWidth="120">
+                                <Controls:DataGridTextColumn.Foreground>
+                                    <SolidColorBrush Color="Black" />
+                                </Controls:DataGridTextColumn.Foreground>
+                            </Controls:DataGridTextColumn>
+                            <Controls:DataGridTextColumn x:Name="imageUrlColumn" Binding="{Binding ImageUrl}" Header="Image Url" Width="SizeToCells" MinWidth="120">
+                                <Controls:DataGridTextColumn.Foreground>
+                                    <SolidColorBrush Color="Black" />
+                                </Controls:DataGridTextColumn.Foreground>
+                            </Controls:DataGridTextColumn>
+                        </Controls:DataGrid.Columns>
+                    </Controls:DataGrid>
+                </Border>
+
+                <Controls1:ValidationSummary Grid.Row="2" x:Name="ValidationSummery" HorizontalAlignment="Left" d:LayoutOverrides="Height" />
+
+                <StackPanel Grid.Column="1" Grid.Row="3" Style="{StaticResource SettingsViewControlButtonsWrapper}" Margin="0,10,0,20">
+                    <Button Style="{StaticResource SettingsViewSaveButton}" Command="{Binding Save}"/>
+                    <Button Style="{StaticResource SettingsViewButton}" Command="{Binding Refresh}" Content="Reload user data" Margin="10,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+
+    </Grid>
+</UserControl>

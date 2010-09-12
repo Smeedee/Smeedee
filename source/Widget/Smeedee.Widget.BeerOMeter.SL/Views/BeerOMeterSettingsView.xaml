@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Smeedee.Widget.BeerOMeter.SL.Views.BeerOMeterSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="295" d:DesignWidth="410" VerticalAlignment="Center" HorizontalAlignment="Center">
+    
+    
+
+    <Grid x:Name="LayoutRoot" VerticalAlignment="Center" HorizontalAlignment="Center">
+    	<Grid Margin="107,91,54,98" Width="204" Height="103">
+    		<Grid.RowDefinitions>
+    			<RowDefinition Height="0.311*"/>
+    			<RowDefinition Height="0.262*"/>
+    			<RowDefinition Height="0.427*"/>
+    		</Grid.RowDefinitions>
+    		<Grid.ColumnDefinitions>
+    			<ColumnDefinition Width="0.588*"/>
+    			<ColumnDefinition Width="0.412*"/>
+    		</Grid.ColumnDefinitions>
+
+
+            <TextBlock Margin="0,11,0,-1" x:Name="tRate" Width="40" RenderTransformOrigin="1.643,0.449" TextWrapping="Wrap" d:LayoutOverrides="Width, Height" HorizontalAlignment="Right" FontFamily="/Smeedee.Widget.BeerOMeter.SL;component/Fonts/impact.ttf#Impact" FontSize="14" Text="Rate"/>
+            <TextBlock Margin="0,4,0,0" x:Name="tPrice" Width="40" TextWrapping="Wrap" RenderTransformOrigin="0.75,0.55" Grid.Row="1" HorizontalAlignment="Right" d:LayoutOverrides="Width" Text="Price" FontFamily="/Smeedee.Widget.BeerOMeter.SL;component/Fonts/impact.ttf#Impact" FontSize="14"/>
+            <Button Content="Reset # Beers" Command="{Binding Reset}" x:Name="reset" FontFamily="/Smeedee.Widget.BeerOMeter.SL;component/Fonts/impact.ttf#Impact" FontSize="10" d:IsStaticText="True" Margin="0,7,6,13" Grid.Row="2" HorizontalAlignment="Right" Width="64" Grid.ColumnSpan="2"/>
+            <Button Content="Save" x:Name="save" FontFamily="/Smeedee.Widget.BeerOMeter.SL;component/Fonts/impact.ttf#Impact" FontSize="10" d:IsStaticText="True" Margin="0,7,10,13" Grid.Row="2" HorizontalAlignment="Right" Width="54" Command="{Binding Save}"/>
+            <TextBox Margin="2,5,22,1"  TextWrapping="Wrap" x:Name="valuePrice" FontFamily="/Smeedee.Widget.BeerOMeter.SL;component/Fonts/impact.ttf#Impact" FontSize="10" Text="{Binding Price, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Grid.Column="1" Grid.Row="1" Height="20" />
+            <TextBox Margin="2,0,22,1" TextWrapping="Wrap" x:Name="valueRate" FontFamily="/Smeedee.Widget.BeerOMeter.SL;component/Fonts/impact.ttf#Impact" FontSize="10" Text="{Binding Rate, Mode=TwoWay,  ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Grid.Column="1" VerticalAlignment="Bottom" Height="20" />
+    	</Grid>
+        <TextBlock FontFamily="/Smeedee.Widget.BeerOMeter.SL;component/Fonts/impact.ttf#Impact" FontSize="22" HorizontalAlignment="Right" Margin="0,59,59,211" Name="textBlock1" RenderTransformOrigin="1.643,0.449" Text="BeerOMeter Settings" TextWrapping="Wrap" Width="194" />
+    </Grid>
+</UserControl>

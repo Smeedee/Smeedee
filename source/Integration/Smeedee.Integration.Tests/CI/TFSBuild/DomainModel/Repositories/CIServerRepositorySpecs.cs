@@ -43,7 +43,7 @@
 //{
     
 
-//    [TestFixture]
+//    [TestFixture][Category("IntegrationTest")]
 //    public class CIProjectRepositoryUnitTests
 //    {
 //        [Test]

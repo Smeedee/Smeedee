@@ -50,7 +50,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_parsing_xml_data_is_malformed : Shared
     {
         [Test]
@@ -61,7 +61,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_parsing_xml_data_is_invalid : Shared
     {
         [Test]
@@ -72,7 +72,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class whem_parsing_valid_xml : Shared
     {
         [Test]
@@ -128,7 +128,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Xml
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_building_continues_across_two_parses
     {
         [Test]

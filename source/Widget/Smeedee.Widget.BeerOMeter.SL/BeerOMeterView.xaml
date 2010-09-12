@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Smeedee.Widget.BeerOMeter.SL.BeerOMeterView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Height="650" Width="898">
+
+    <UserControl.Resources>
+        
+        <Storyboard x:Name="Animation" RepeatBehavior="Forever">
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="BeerCollumn">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        		<EasingDoubleKeyFrame x:Name="EndPoint" KeyTime="0:0:9.0" Value="-259"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Path Stretch="Fill" StrokeThickness="5" StrokeLineJoin="Round" Stroke="#67000000" Data="F1 M 282.834,83.5005L 282.834,145.552L 296.61,352.549L 425.695,352.549L 439.47,144.131L 439.981,83.5005L 282.834,83.5005 Z " x:Name="Glass" Margin="344.424,40.061,389.636,0" UseLayoutRounding="False" d:LayoutOverrides="HorizontalAlignment" Height="275.273" VerticalAlignment="Top">
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="-0.0121754,0.5" EndPoint="1.01218,0.5">
+                    <GradientStop Color="#67FFFFFF" Offset="0"/>
+                    <GradientStop Color="#33D2C9C9" Offset="0.188869"/>
+                    <GradientStop Color="#338B8B8B" Offset="0.564781"/>
+                    <GradientStop Color="#67B6B6B6" Offset="0.718066"/>
+                    <GradientStop Color="#67979797" Offset="0.820255"/>
+                    <GradientStop Color="#67AFAFAF" Offset="0.915146"/>
+                    <GradientStop Color="#67AFAFAF" Offset="1"/>
+                </LinearGradientBrush>
+            </Path.Fill>
+        </Path>
+        <Canvas Margin="348,41,391,140" x:Name="Canvas" Clip="M5.0499907,4.8349986 L5.0499907,65.798248 L18.365995,269.16498 L143.14101,269.16498 L156.45607,64.402168 L156.95,4.8349986 z" RenderTransformOrigin="0.5,0.5">
+        	<Canvas.RenderTransform>
+        		<CompositeTransform ScaleX="-1"/>
+        	</Canvas.RenderTransform>
+            <Image Width="263" Source="Images/btexture.jpg" Stretch="Fill" Height="514" x:Name="BeerCollumn" RenderTransformOrigin="0.5,0.5" Canvas.Top="198" Canvas.Left="-55">
+                <Image.RenderTransform>
+                	<CompositeTransform ScaleX="0.85" ScaleY="0.85"/>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
+        <!--
+        <Image Height="167.239" HorizontalAlignment="Left" Margin="0,0,0,-0.345" Width="111" Source="img_beer.jpg" Stretch="Fill" VerticalAlignment="Bottom"/>
+        <TextBlock Height="57.112" HorizontalAlignment="Left" Margin="30,0,0,273" x:Name="X" VerticalAlignment="Bottom" Width="37" TextWrapping="Wrap"><Run FontFamily="./Fonts.zip#Impact" FontSize="36" Text="X"/></TextBlock>
+        <TextBlock Height="73.138" Margin="179,0,0,0" x:Name="BeerOMeeter" VerticalAlignment="Top" TextWrapping="Wrap"><Run FontFamily="./Fonts.zip#Impact" FontSize="64" Text="BeerO'Meter"/></TextBlock>
+        -->
+        <Path Data="M0,0 L344,0" Height="4" Margin="0,72,429,0" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Stroke="#FF624810" StrokeMiterLimit="10" StrokeLineJoin="Miter" UseLayoutRounding="False" VerticalAlignment="Top" Stretch="Fill" Opacity="0.4" StrokeThickness="2" HorizontalAlignment="Right" Width="20"/>
+        <TextBlock Height="20" Margin="0,62,391,0" TextWrapping="Wrap" Text="50 cl" VerticalAlignment="Top" Foreground="#FF624810" Opacity="0.595" HorizontalAlignment="Right" Width="35"/>
+    </Grid>
+
+</UserControl>

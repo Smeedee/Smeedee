@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Files to be deleted by clean target -->
+    <ItemGroup>
+	<!--
+        <TempFiles Include="..\**\bin\**\*" />
+        <TempFiles Include="..\**\obj\**\*" />
+        <TempFiles Include="..\**\Release" />
+	-->
+        <TempDirs Include="..\Build" />
+    </ItemGroup>
+
+  
+    <!-- Build Targets -->
+  <Target Name="Clean">
+	<!--
+    <Delete Files="@(TempFiles)" />
+	-->
+    <Delete Files="$(ArtifactsDirectory)\TestResults*.xml"/>
+	<RemoveDir Directories="@(TempDirs)" />
+  </Target>
+
+  
+  
+  <!-- TODO: Use later on -->
+  <Target Name="Labeling" DependsOnTargets="Clean">
+    <ItemGroup>
+      <AssemblyInfoFiles Include="**\AssemblyInfo.*" Exclude="**\.svn\**\*.*"/>
+    </ItemGroup>
+    <Message Text="@(AssemblyInfoFiles)"/>
+    <File TaskAction="Replace" RegexPattern='AssemblyVersion\("\d.\d.\d.\d"\)' Replacement='AssemblyVersion("$(BuildLabel)")'
+          Files="@(AssemblyInfoFiles)"/>
+    <File TaskAction="Replace" RegexPattern='AssemblyFileVersion\("\d.\d.\d.\d"\)' Replacement='AssemblyFileVersion("$(BuildLabel)")'
+          Files="@(AssemblyInfoFiles)"/>
+  </Target>
+
+
+  <Target Name="CreateOutputDirectories">
+    <MakeDir Directories="..\Build"/>
+    <MakeDir Directories="..\Build\artifacts"/>
+    <MakeDir Directories="..\Build\bin"/>
+    <RemoveDir Directories="..\Build\bin\$(BuildLabel)" ContinueOnError="true"/>
+    <MakeDir Directories="..\Build\bin\$(BuildLabel)"/>
+  </Target>
+
+
+  <Target Name="Compile" DependsOnTargets="Clean;CreateOutputDirectories">
+    <MSBuild Projects="@(Project)" Targets="Build"/>
+  </Target>
+
+  
+  <Target Name="IntegrationTests">
+    <NUnit ContinueOnError="true" 
+           Assemblies="%(TestProject.Assembly)"
+           ToolPath="$(TestRunnerDirectory)"
+           OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"
+		       IncludeCategory="IntegrationTest" />
+  </Target>
+
+  <Target Name="UnitTests">
+  		<NUnit ContinueOnError="true" 
+           Assemblies="%(TestProject.Assembly)"
+           ToolPath="$(TestRunnerDirectory)"
+           OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"
+		       ExcludeCategory="IntegrationTest" />
+  </Target>
+
+  
+  
+  <Target Name="DeployOutput" DependsOnTargets="CreateOutputDirectories">
+    <Exec WorkingDirectory="..\"
+          Command="xcopy Client\Smeedee.Client.Web\*.* Build\bin\$(BuildLabel)\Smeedee.Client.Web\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
+    
+    <Exec WorkingDirectory="..\"
+          Command="xcopy Client\Smeedee.Client.SL\bin\Release\*.* Build\bin\$(BuildLabel)\Smeedee.Client.SL\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
+    
+    <Exec WorkingDirectory="..\"
+          Command="xcopy Scheduler\Smeedee.Scheduler.Console\bin\Release\*.* Build\bin\$(BuildLabel)\Smeedee.Scheduler.Console\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
+
+    <Exec WorkingDirectory="..\"
+          Command="xcopy Build\bin\$(BuildLabel)\*.* Build\bin\Latest\ /E /S /Y"
+          ContinueOnError="true"/>
+  </Target>
+  
+  <Target Name="TestDeploy" DependsOnTargets="Test;DeployOutput" />
+</Project>

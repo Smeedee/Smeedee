@@ -25,113 +25,183 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.CI;
+using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.Users;
 using Smeedee.Widget.CI.ViewModels;
 using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
+using TinyMVVM.Framework.Services.Impl;
 
 namespace Smeedee.Widget.CI.Controllers
 {
-    public enum CIProjectBuildStatusChangeEvents
-    {
-        ABuildFailed,
-        AllBuildsSuccessful,
-    }
-
     public class CIController : ControllerBase<CIViewModel>
     {
-        private const int INACTIVE_PROJECT_THRESHOLD = 90;
-        private readonly IRepository<CIServer> ciProjectRepository;
+        private const int DB_CACHE_EXPIRATION_IN_MS = 33 * 1000;
+
         private readonly IRepository<User> userRepository;
+        private CISettingsViewModel settingsViewModel;
 
         private IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient;
+        private IEnumerable<CIProject> projects = new List<CIProject>();
         private readonly ILog logger;
+        private IRepository<CIServer> ciServerRepository;
+        private IRepository<Configuration> ciConfigRepository;
+        private IPersistDomainModelsAsync<Configuration> ciConfigPersister;
+        private SettingsHandler settings;
+        private DateTime lastDbCheck = DateTime.MinValue;
 
         private bool isSoundEnabled = false;
-        private bool isFrozen = false;
-        private bool isLoading = false;
 
         #region Constructor
 
-        public CIController(CIViewModel viewModel, IRepository<CIServer> ciProjectRepository, IRepository<User> userRepository, IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient, ITimer timer, IUIInvoker uiInvoke, ILog logger)
-            : base(viewModel, timer, uiInvoke)
+        public CIController(CIViewModel viewModel, 
+            CISettingsViewModel settingsViewModel, 
+            IRepository<User> userRepository, 
+            IRepository<CIServer> ciServerRepository,
+            IRepository<Configuration> ciConfigRepository,
+            IPersistDomainModelsAsync<Configuration> ciConfigPersister,
+            IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient, 
+            ITimer timer, 
+            IUIInvoker uiInvoke, 
+            ILog logger, 
+            IProgressbar progressbar)
+            : base(viewModel, timer, uiInvoke, progressbar)
         {
-            this.ciProjectRepository = ciProjectRepository;
-            this.asyncClient = asyncClient;
+            this.settingsViewModel = settingsViewModel;
             this.userRepository = userRepository;
+            this.asyncClient = asyncClient;
+            this.ciServerRepository = ciServerRepository;
+            this.ciConfigRepository = ciConfigRepository;
+            this.ciConfigPersister = ciConfigPersister;
             this.logger = logger;
 
-            refreshNotifier.Start(10000);
+            settings = new SettingsHandler(settingsViewModel);
 
+            settingsViewModel.SaveSettings.AfterExecute += (o, e) => LoadData();
+
+            ciConfigPersister.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
+            settingsViewModel.SaveSettings.ExecuteDelegate = Save;
+            settingsViewModel.ReloadSettings = new DelegateCommand(() => settings.Reset());
+
+            var dummyServers = new List<CIServer>() { new CIServer("Loading server list", "") };
+            var dummyConfig = settings.GetDummyConfig(dummyServers);
+            settingsViewModel.Servers = WrapServersAndConfig(dummyServers, dummyConfig);
+            settings.LoadIntoViewModel(dummyConfig);
+
+            Start();
             LoadData();
         }
 
         #endregion
-
-        private bool IsLoading()
-        {
-            return isLoading;
-        }
-
-        private void FlagIsLoading()
-        {
-            isLoading = true;
-        }
-
-        private void UnflagIsLoading()
-        {
-            isLoading = false;
-        }
-
+        
         private void LoadData()
         {
             asyncClient.RunAsyncVoid(() =>
             {
-                FlagIsLoading();
-                ViewModel.IsLoading = true;
-                IEnumerable<CIProject> projects = TryGetProjects();
-                bool gotProjects = projects != null;
-                if (gotProjects)
-                {
-                    LoadDataIntoViewModel(projects);
-                    ViewModel.IsLoading = false;
-                    //CheckProjectBuildStatusAndNotify(projects);
-                }
-                UnflagIsLoading();
+                SetIsLoadingData();
+
+                projects = TryGetProjects();
+                LoadDataIntoViewModel(projects);
+
+                SetIsNotLoadingData();
             });
         }
 
+        public IEnumerable<CIProject> GetSelectedAndActiveProjects()
+        {
+            GetServersFromDbOrCache();
+            settingsViewModel.EachProject(project => MakePlaceholderBuildIfNeeded(project.Project));
+
+            return from server in settingsViewModel.Servers
+                   from project in server.Projects
+                   where project.IsSelected && ProjectIsActive(project)
+                   select project.Project;
+        }
+
+        private void GetServersFromDbOrCache()
+        {
+            bool cacheHasExpired = (DateTime.Now - lastDbCheck).TotalMilliseconds > DB_CACHE_EXPIRATION_IN_MS;
+            if (cacheHasExpired)
+            {
+                lastDbCheck = DateTime.Now;
+                var newServers = ciServerRepository.Get(new AllSpecification<CIServer>());
+                var config = settings.LoadConfigFromDb(ciConfigRepository, newServers);
+
+                uiInvoker.Invoke(() =>
+                {
+                    settingsViewModel.Servers = WrapServersAndConfig(newServers, config);
+                    settings.LoadIntoViewModel(config);
+                    settings.SetResetPoint();
+                });
+            }
+        }
+
+        private bool ProjectIsActive(ProjectConfigViewModel projectWrap)
+        {
+            if (!settingsViewModel.FilterInactiveProjects)
+                return true;
+            return projectWrap.Project.LatestBuild.StartTime > DateTime.Now.AddDays(-settingsViewModel.InactiveProjectThreshold);
+        }
+
+        private void MakePlaceholderBuildIfNeeded(CIProject project)
+        {
+            //We want to display projects with no builds - presumably such a project is brand new.
+            if (project.LatestBuild == null)
+            {
+                project.AddBuild(new Build()
+                {
+                    Status = DomainModel.CI.BuildStatus.Unknown,
+                    StartTime = DateTime.Now,
+                    FinishedTime = DateTime.Now
+                });
+            }
+        }
+
+        private void Save()
+        {
+            settings.SetResetPoint();
+            lastDbCheck = DateTime.Now;
+
+            SetIsSavingConfig();
+
+            ciConfigPersister.Save(settings.GetUpdatedConfig());
+        }
+
+        private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs e)
+        {
+            SetIsNotSavingConfig();
+        }
+
+        private ObservableCollection<ServerConfigViewModel> WrapServersAndConfig(IEnumerable<CIServer> servers, Configuration config)
+        {
+            var wrapped = (from server in servers select new ServerConfigViewModel(server, config));
+            return new ObservableCollection<ServerConfigViewModel>(wrapped);
+        }
+
+
+
+
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
-            if (!IsLoading())
+            if (!ViewModel.IsLoading)
                 LoadData();
         }
 
         private IEnumerable<CIProject> TryGetProjects()
         {
-            IEnumerable<CIProject> projects = null;
-
             try
             {
-                var qServers = ciProjectRepository.Get(new AllSpecification<CIServer>());
-                if (qServers.Count() > 0)
-                    projects = qServers.First().Projects;
+                projects = GetSelectedAndActiveProjects();
                 ViewModel.HasConnectionProblems = false;
-
-                if (projects != null)
-                {
-                    var activeProjects = RemoveInactiveProjects(projects);
-                    projects = SortProjects(activeProjects);
-                }
-
             }
             catch( Exception exception )
             {
@@ -143,74 +213,36 @@ namespace Smeedee.Widget.CI.Controllers
                                           TimeStamp = DateTime.Now
                                       });
             }
+            projects = SortProjects(projects);
+
             return projects;
         }
 
         private IOrderedEnumerable<CIProject> SortProjects(IEnumerable<CIProject> activeProjects)
         {
-            return from c in activeProjects
-                   orderby c
-                   select c;
-        }
-
-        private IEnumerable<CIProject> RemoveInactiveProjects(IEnumerable<CIProject> projects)
-        {
-            return projects.Where(
-                p => p.LatestBuild.StartTime > DateTime.Now.AddDays(-INACTIVE_PROJECT_THRESHOLD));
+            return from project in activeProjects
+                   orderby project
+                   select project;
         }
 
         private void LoadDataIntoViewModel(IEnumerable<CIProject> projects)
         {
             uiInvoker.Invoke(() =>
             {
+                ViewModel.Data.Clear();
                 foreach (var projectInfo in projects)
-                    LoadProjectInfoIntoView(projectInfo);
+                    AddProject(projectInfo);
             });
         }
 
-        //private void CheckProjectBuildStatusAndNotify(IEnumerable<CIProject> projects)
-        //{
-        //    var projectsWithBrokenBuild =
-        //        projects.Where(pi => pi.LatestBuild.Status == DomainModel.CI.BuildStatus.FinishedWithFailure);
-
-        //    bool foundBrokenBuild = projectsWithBrokenBuild.Count() > 0;
-
-        //    if (foundBrokenBuild && !isFrozen)
-        //    {
-        //        isFrozen = true;
-        //        freezeViewCmdPublisher.Notify();
-        //    }
-        //    else if (!foundBrokenBuild && isFrozen)
-        //    {
-        //        Thread.Sleep(3000);
-        //        isFrozen = false;
-        //        unFreezeViewCmdPublisher.Notify();
-        //    }
-        //}
-
-        private void LoadProjectInfoIntoView(CIProject CIProject)
-        {
-            ProjectInfoViewModel existingProjectInfoViewModel = TryFindProjectInView(CIProject.ProjectName);
-            bool projectExistsInView = existingProjectInfoViewModel != null;
-
-            if (projectExistsInView)
-            {
-                UpdateExistingProject(existingProjectInfoViewModel, CIProject);
-            }
-            else
-            {
-                AddNewProject(CIProject);
-            }
-        }
-
-        private void AddNewProject(CIProject CIProject)
+        private void AddProject(CIProject CIProject)
         {
             var model = new ProjectInfoViewModel();
-            UpdateExistingProject(model, CIProject);
+            AddProjectInfo(model, CIProject);
             ViewModel.Data.Add(model);
         }
 
-        private void UpdateExistingProject(ProjectInfoViewModel model, CIProject CIProject)
+        private void AddProjectInfo(ProjectInfoViewModel model, CIProject CIProject)
         {
             BuildViewModel buildModel = model.LatestBuild;
 
@@ -220,19 +252,6 @@ namespace Smeedee.Widget.CI.Controllers
             buildModel.FinishedTime = CIProject.LatestBuild.FinishedTime;
             buildModel.Status = (BuildStatus) CIProject.LatestBuild.Status;
             SetBuildTrigger(CIProject.LatestBuild.Trigger, ref buildModel);
-        }
-
-        private ProjectInfoViewModel TryFindProjectInView(string projectName)
-        {
-            foreach (ProjectInfoViewModel exisitingProjects in ViewModel.Data)
-            {
-                if (exisitingProjects.ProjectName == projectName)
-                {
-                    return exisitingProjects;
-                }
-            }
-
-            return null;
         }
 
         private void SetBuildTrigger(Trigger trigger, ref BuildViewModel buildViewModel)
@@ -283,5 +302,88 @@ namespace Smeedee.Widget.CI.Controllers
             return returnPerson;
         }
 
+        private class SettingsHandler
+        {
+            private const string CONFIG_NAME = "CIWidgetSettings";
+
+            private const string THRESHOLD_SETTING_NAME = "InactiveProjectThreshold";
+            private const int THRESHOLD_SETTING_DEFAULT = 90;
+            private const string FILTER_SETTING_NAME = "FilterInactiveProjects";
+            private const bool FILTER_SETTING_DEFAULT = false;
+
+            private int initialInactiveProjectThreshold = THRESHOLD_SETTING_DEFAULT;
+            private bool initialFilterInactiveProjects = FILTER_SETTING_DEFAULT;
+
+            private CISettingsViewModel settingsViewModel;
+            private CIController controller;
+
+            public SettingsHandler(CISettingsViewModel viewModel)
+            {
+                this.settingsViewModel = viewModel;
+            }
+
+            public Configuration GetUpdatedConfig()
+            {
+                var config = new Configuration(CONFIG_NAME);
+                settingsViewModel.EachProject(project => config.NewSetting(project.SelectedSetting));
+                config.NewSetting(THRESHOLD_SETTING_NAME, settingsViewModel.InactiveProjectThreshold.ToString());
+                config.NewSetting(FILTER_SETTING_NAME, settingsViewModel.FilterInactiveProjects.ToString());
+                config.IsConfigured = true;
+                return config;
+            }
+
+            public Configuration GetDummyConfig(IEnumerable<CIServer> servers)
+            {
+                return FillInMissingValues(new Configuration(CONFIG_NAME), servers);
+            }
+
+            public void LoadIntoViewModel(Configuration config)
+            {
+                settingsViewModel.InactiveProjectThreshold = int.Parse(config.GetSetting(THRESHOLD_SETTING_NAME).Value);
+                settingsViewModel.FilterInactiveProjects = bool.Parse(config.GetSetting(FILTER_SETTING_NAME).Value);
+            }
+
+            public Configuration LoadConfigFromDb(IRepository<Configuration> configRepo, IEnumerable<CIServer> servers)
+            {
+                var spec = new AllSpecification<Configuration>();
+                var config = configRepo.Get(spec).Where(c => c.Name == CONFIG_NAME).FirstOrDefault();
+                config = config ?? new Configuration(CONFIG_NAME);
+                return FillInMissingValues(config, servers);
+            }
+
+            private Configuration FillInMissingValues(Configuration config, IEnumerable<CIServer> servers)
+            {
+                foreach (var server in servers)
+                    foreach (var project in server.Projects)
+                        AddIfNotExists(config, CISettingsViewModel.GetProjectSelectedSettingName(project), true.ToString());
+
+                AddIfNotExists(config, THRESHOLD_SETTING_NAME, THRESHOLD_SETTING_DEFAULT.ToString());
+                AddIfNotExists(config, FILTER_SETTING_NAME, FILTER_SETTING_DEFAULT.ToString());
+                return config;
+            }
+
+            private void AddIfNotExists(Configuration config, string name, string value)
+            {
+                if (!config.ContainsSetting(name))
+                    config.NewSetting(name, value);
+            }
+
+            public void SetResetPoint()
+            {
+                initialInactiveProjectThreshold = settingsViewModel.InactiveProjectThreshold;
+                initialFilterInactiveProjects = settingsViewModel.FilterInactiveProjects;
+                settingsViewModel.EachProject(project => project.SetResetPoint());
+            }
+
+            public void Reset()
+            {
+                settingsViewModel.InactiveProjectThreshold = initialInactiveProjectThreshold;
+                settingsViewModel.FilterInactiveProjects = initialFilterInactiveProjects;
+                settingsViewModel.EachProject(project => project.ResetSelectedState());
+            }
+        }
     }
+
+    
+    
 }

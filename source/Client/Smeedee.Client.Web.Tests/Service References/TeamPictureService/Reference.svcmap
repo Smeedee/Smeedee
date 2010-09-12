@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="590b703a-95fd-41aa-8bc4-1bbb6cab4a03" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TeamPictureRepositoryWebservice.disco" MetadataType="Disco" ID="8afef287-b7c5-4910-aa41-d8235c2de6ab" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc?disco" />
+    <MetadataFile FileName="TeamPictureRepositoryWebservice.xsd" MetadataType="Schema" ID="1e445e50-6e46-49ac-b567-c450949e006e" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc?xsd=xsd0" />
+    <MetadataFile FileName="TeamPictureRepositoryWebservice1.xsd" MetadataType="Schema" ID="386f5266-576f-4bf9-8724-c4167d5b42c7" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc?xsd=xsd3" />
+    <MetadataFile FileName="TeamPictureRepositoryWebservice.wsdl" MetadataType="Wsdl" ID="bfb5ccf9-6dca-491a-922b-a2ab91020815" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="TeamPictureRepositoryWebservice2.xsd" MetadataType="Schema" ID="f185f160-a791-47e9-8118-5b608fea27d5" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc?xsd=xsd1" />
+    <MetadataFile FileName="TeamPictureRepositoryWebservice3.xsd" MetadataType="Schema" ID="1ca2b747-a28a-4db0-a94f-2abc4aaa5f63" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc?xsd=xsd2" />
+    <MetadataFile FileName="TeamPictureRepositoryWebservice1.wsdl" MetadataType="Wsdl" ID="a1ce0a40-f4f7-401b-ba47-bc2711690464" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

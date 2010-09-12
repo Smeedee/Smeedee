@@ -1,0 +1,98 @@
+﻿<controls:ChildWindow x:Class="Smeedee.Widget.Admin.Users.SL.Views.UserEditWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" 
+    xmlns:dataFormToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit" 
+	xmlns:sdk="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" 
+    xmlns:SL="clr-namespace:Smeedee.Client.Framework.SL;assembly=Smeedee.Client.Framework.SL" mc:Ignorable="d"
+    d:DesignHeight="350" 
+	d:DesignWidth="400">
+
+    <controls:ChildWindow.Resources>
+    	<ResourceDictionary>
+    		<ResourceDictionary.MergedDictionaries>
+    			<ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml" />
+				<ResourceDictionary Source="/Smeedee.Client.SL;Component/Styles.xaml" />
+    			<ResourceDictionary Source="/Smeedee.Widget.Admin.Users.SL;Component/Styles/NewUserWindowStyle.xaml"/>
+				<ResourceDictionary Source="/Smeedee.Widget.Admin.Users.SL;Component/Styles/NewUserTextBoxStyle.xaml"/>
+				<ResourceDictionary Source="/Smeedee.Widget.Admin.Users.SL;Component/Styles/NewUserDataFormStyle.xaml"/>
+    		</ResourceDictionary.MergedDictionaries>
+    		
+    	</ResourceDictionary>
+        
+    </controls:ChildWindow.Resources>
+	<controls:ChildWindow.Style>
+		<StaticResource ResourceKey="ChildWindowStyle"/>
+	</controls:ChildWindow.Style>
+    <!--
+    <controls:ChildWindow.BorderBrush>
+        <StaticResource ResourceKey="BackgroundBrush"/>
+    </controls:ChildWindow.BorderBrush>
+    <controls:ChildWindow.Background>
+        <StaticResource ResourceKey="BackgroundBrush"/>
+    </controls:ChildWindow.Background>
+    <controls:ChildWindow.Foreground>
+        <StaticResource ResourceKey="FontBrush"/>
+    </controls:ChildWindow.Foreground>
+    -->
+
+    <Grid x:Name="LayoutRoot" DataContext="{Binding}" Margin="2" Background="Silver">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button 
+			x:Name="CancelButton" 
+			Content="Cancel" 
+			Click="CancelButton_Click" 
+			Command="{Binding CloseUserEditWindow}"  
+			Height="23" 
+			Margin="0,21,0,8" 
+			Grid.Row="1" 
+			Grid.Column="3" HorizontalAlignment="Right" Width="94" 
+			Style="{StaticResource SettingsViewButton}"
+			/>
+        <Button 
+			x:Name="OKButton" 
+			Background="{StaticResource GreyGradientBrush}" 
+			Content="OK" 
+			Click="OKButton_Click" 
+			Command="{Binding AddUser}" 
+			Height="23" 
+			Margin="0,21,10,8" 
+			Grid.Row="1" 
+			Grid.Column="2" 
+			Style="{StaticResource SettingsViewButton}"
+			/>
+		    <dataFormToolkit:DataForm AutoGenerateFields="True" AutoCommit="True" CurrentItem="{Binding EditedUser, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" x:Name="dataForm" HorizontalAlignment="Right" Margin="0,2,5,0" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="270" Width="364" BorderThickness="1" Background="Silver" Style="{StaticResource NewUserDataFormStyle}">
+            <dataFormToolkit:DataForm.EditTemplate>
+                <DataTemplate ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <Grid Height="183" Width="367" Background="Silver">
+                        <SL:SelectAllOnFocusTextBox x:Name="Username" Text="{Binding Username, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="24" Margin="98,8,12,0" VerticalAlignment="Top" Style="{StaticResource NewUserTextBoxStyle}"/>
+                        <SL:SelectAllOnFocusTextBox x:Name="Firstname" Text="{Binding Firstname, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="24" Margin="98,36,8,0" VerticalAlignment="Top" Style="{StaticResource NewUserTextBoxStyle}"/>
+                        <SL:SelectAllOnFocusTextBox x:Name="Middlename" Text="{Binding Middlename, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="24" Margin="98,64,8,0" VerticalAlignment="Top" Style="{StaticResource NewUserTextBoxStyle}"/>
+                        <SL:SelectAllOnFocusTextBox x:Name="Surname" Text="{Binding Surname, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="24" Margin="98,92,8,0" VerticalAlignment="Top" Style="{StaticResource NewUserTextBoxStyle}"/>
+                        <SL:SelectAllOnFocusTextBox x:Name="Email" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="24" Margin="98,120,8,0" VerticalAlignment="Top" Style="{StaticResource NewUserTextBoxStyle}"/>
+                        <SL:SelectAllOnFocusTextBox x:Name="ImageUrl" Text="{Binding ImageUrl, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="24" Margin="98,148,8,0" VerticalAlignment="Top" Style="{StaticResource NewUserTextBoxStyle}"/>
+                        <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Height="24" Margin="8,8,0,0" Content="Username" />
+                        <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Height="24" Margin="8,36,0,0" Content="Firstname"/>
+                        <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Height="24" Margin="8,64,0,0" Content="Middlename"  />
+                        <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Height="24" Margin="8,92,0,0" Content="Surname"  />
+                        <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Height="24" Margin="8,120,0,0" Content="Email"   />
+                        <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Height="24" Margin="8,148,0,0" Content="ImageUrl"/>
+                    </Grid>
+                </DataTemplate>
+            </dataFormToolkit:DataForm.EditTemplate>
+        </dataFormToolkit:DataForm>
+        <sdk:ValidationSummary x:Name="ValidationSummery" Grid.ColumnSpan="2" Margin="0,-14,79,-41" Grid.Row="1" d:LayoutOverrides="Height"/>
+    </Grid>
+</controls:ChildWindow>

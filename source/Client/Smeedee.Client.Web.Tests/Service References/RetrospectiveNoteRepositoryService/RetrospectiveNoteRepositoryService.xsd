@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Corkboard" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Corkboard" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+  <xs:complexType name="RetrospectivePositiveNoteSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q1:SpecificationOfRetrospectiveNotesZIAfdsV">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RetrospectivePositiveNoteSpecification" nillable="true" type="tns:RetrospectivePositiveNoteSpecification" />
+  <xs:complexType name="RetrospectiveNegativeNoteSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q2:SpecificationOfRetrospectiveNotesZIAfdsV">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RetrospectiveNegativeNoteSpecification" nillable="true" type="tns:RetrospectiveNegativeNoteSpecification" />
+  <xs:complexType name="RetrospectiveNoteByDescriptionSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q3:SpecificationOfRetrospectiveNotesZIAfdsV">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RetrospectiveNoteByDescriptionSpecification" nillable="true" type="tns:RetrospectiveNoteByDescriptionSpecification" />
+  <xs:complexType name="ArrayOfRetrospectiveNote">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RetrospectiveNote" nillable="true" type="tns:RetrospectiveNote" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRetrospectiveNote" nillable="true" type="tns:ArrayOfRetrospectiveNote" />
+  <xs:complexType name="RetrospectiveNote">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsNegative" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrospectiveNote" nillable="true" type="tns:RetrospectiveNote" />
+</xs:schema>

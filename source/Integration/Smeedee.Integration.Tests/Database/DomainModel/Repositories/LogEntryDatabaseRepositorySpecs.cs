@@ -16,7 +16,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.LogEntryDatabaseRepositorySpecs
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_saving : Shared
     {
         private LogEntryDatabaseRepository logRepo;

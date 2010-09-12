@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="SpecificationOfSlideConfigurationNus8YO64">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="SpecificationOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="SlideConfiguration" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Config.SlideConfig" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="SpecificationOfSlideConfigurationNus8YO64" nillable="true" type="tns:SpecificationOfSlideConfigurationNus8YO64" />
+  <xs:complexType name="AllSpecificationOfSlideConfigurationNus8YO64">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="AllSpecificationOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="SlideConfiguration" Namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Config.SlideConfig" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SpecificationOfSlideConfigurationNus8YO64">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AllSpecificationOfSlideConfigurationNus8YO64" nillable="true" type="tns:AllSpecificationOfSlideConfigurationNus8YO64" />
+</xs:schema>

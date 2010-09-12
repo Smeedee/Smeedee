@@ -1,0 +1,7 @@
+﻿<SampleData:userDomainDataSource xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.userDomainDataSource" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <SampleData:userDomainDataSource.TeamMembers>
+        <SampleData:TeamMembersItem ImageUrl="http://media.linkedin.com/mpr/mpr/shrink_80_80/p/3/000/04e/03c/223bc2e.jpg" Surname="Hansen" Username="jensr" Middlename="Ronald" Email="jensr@smeedee.com" Firstname="Jens" />
+        <SampleData:TeamMembersItem ImageUrl="http://media.linkedin.com/mpr/mpr/shrink_80_80/p/3/000/04e/03c/223bc2e.jpg" Surname="Karlsen" Username="hannek" Middlename="" Email="hannek@smeedee.com" Firstname="Hanne" />
+        <SampleData:TeamMembersItem ImageUrl="http://media.linkedin.com/mpr/mpr/shrink_80_80/p/3/000/04e/03c/223bc2e.jpg" Surname="Olsen" Username="janneo" Middlename="Moe" Email="janneo@smeedee.com" Firstname="Janne" />
+    </SampleData:userDomainDataSource.TeamMembers>
+</SampleData:userDomainDataSource>

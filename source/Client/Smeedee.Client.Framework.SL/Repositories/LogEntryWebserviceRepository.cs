@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows;
@@ -55,12 +56,18 @@ namespace Smeedee.Client.Framework.SL.Repositories
             client.LogAsync(domainModel);
         }
 
-        public void Save(System.Collections.Generic.IEnumerable<LogEntry> domainModels)
+        public void Save(IEnumerable<LogEntry> domainModels)
         {
-            foreach (var model in domainModels)
-            {
-                client.LogAsync(model);
-            }
+            //Have to convert to the base class LogEntry, because serializing subclasses fail (ErrorLogEntry, etc)
+            var entries = from d in domainModels
+                                 select new LogEntry()
+                                            {
+                                                Message = d.Message, 
+                                                Severity = d.Severity, 
+                                                Source = d.Source, 
+                                                TimeStamp = d.TimeStamp
+                                            };
+            client.LogAllAsync(entries.ToList());
         }
 
         #endregion

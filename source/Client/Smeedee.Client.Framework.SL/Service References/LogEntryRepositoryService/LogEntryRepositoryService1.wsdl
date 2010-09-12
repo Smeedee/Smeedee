@@ -4,8 +4,8 @@
     <xsd:schema targetNamespace="http://smeedee.org/Imports">
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd3" namespace="http://smeedee.org" />
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
-      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework.Logging" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework.Logging" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/LogEntryRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="LogEntryRepositoryService_Log_InputMessage">
@@ -13,6 +13,12 @@
   </wsdl:message>
   <wsdl:message name="LogEntryRepositoryService_Log_OutputMessage">
     <wsdl:part name="parameters" element="tns:LogResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogEntryRepositoryService_LogAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:LogAll" />
+  </wsdl:message>
+  <wsdl:message name="LogEntryRepositoryService_LogAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogAllResponse" />
   </wsdl:message>
   <wsdl:message name="LogEntryRepositoryService_Get_InputMessage">
     <wsdl:part name="parameters" element="tns:Get" />
@@ -24,6 +30,10 @@
     <wsdl:operation name="Log">
       <wsdl:input wsaw:Action="http://smeedee.org/LogEntryRepositoryService/Log" message="tns:LogEntryRepositoryService_Log_InputMessage" />
       <wsdl:output wsaw:Action="http://smeedee.org/LogEntryRepositoryService/LogResponse" message="tns:LogEntryRepositoryService_Log_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogAll">
+      <wsdl:input wsaw:Action="http://smeedee.org/LogEntryRepositoryService/LogAll" message="tns:LogEntryRepositoryService_LogAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://smeedee.org/LogEntryRepositoryService/LogAllResponse" message="tns:LogEntryRepositoryService_LogAll_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Get">
       <wsdl:input wsaw:Action="http://smeedee.org/LogEntryRepositoryService/Get" message="tns:LogEntryRepositoryService_Get_InputMessage" />

@@ -19,6 +19,12 @@ namespace Smeedee.Client.Web.Services
     [ServiceKnownType(typeof(ErrorLogEntry))]
     [ServiceKnownType(typeof(WarningLogEntry))]
     [ServiceKnownType(typeof(InfoLogEntry))]
+
+    [ServiceKnownType(typeof(List<LogEntry>))]
+    [ServiceKnownType(typeof(List<ErrorLogEntry>))]
+    [ServiceKnownType(typeof(List<WarningLogEntry>))]
+    [ServiceKnownType(typeof(List<InfoLogEntry>))]
+
     [ServiceKnownType(typeof(Specification<LogEntry>))]
     [ServiceKnownType(typeof(AllSpecification<LogEntry>))]
     public class LogEntryRepositoryService
@@ -28,6 +34,12 @@ namespace Smeedee.Client.Web.Services
 
         [OperationContract]
         public void Log(LogEntry logEntry)
+        {
+            repo.Save(logEntry);
+        }
+
+        [OperationContract]
+        public void LogAll(IEnumerable<LogEntry> logEntry)
         {
             repo.Save(logEntry);
         }

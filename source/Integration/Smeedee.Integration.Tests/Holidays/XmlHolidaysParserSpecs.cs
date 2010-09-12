@@ -39,7 +39,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Integration.Tests.Holidays
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_parsing_xml_data_is_malformed
     {
         private string errorMessage = "";
@@ -73,7 +73,7 @@ namespace Smeedee.Integration.Tests.Holidays
         }
     }
     
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_parsing_valid_xml
     {
         private XmlHolidayParser parser;

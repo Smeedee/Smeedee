@@ -58,7 +58,7 @@ namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.Specificatio
         };
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_specifying_successor : Shared
     {
         [Test]
@@ -84,7 +84,7 @@ namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.Specificatio
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_making_request : Shared
     {
         [Test]
@@ -110,7 +110,7 @@ namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.Specificatio
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_making_request_and_successor_is_specified : Shared
     {
         [Test]

@@ -19,14 +19,14 @@ namespace Smeedee.Client.Framework.SL.UserRepositoryService {
     public interface UserRepositoryService {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/UserRepositoryService/Get", ReplyAction="http://smeedee.org/UserRepositoryService/GetResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.Users.Userdb>))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Users.UserdbNameSpecification))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.Users.Userdb>))]
         System.IAsyncResult BeginGet(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.Users.Userdb> specification, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb> EndGet(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/UserRepositoryService/Save", ReplyAction="http://smeedee.org/UserRepositoryService/SaveResponse")]
-        System.IAsyncResult BeginSave(Smeedee.DomainModel.Users.Userdb userdb, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSave(System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb> userdb, System.AsyncCallback callback, object asyncState);
         
         void EndSave(System.IAsyncResult result);
     }
@@ -178,7 +178,7 @@ namespace Smeedee.Client.Framework.SL.UserRepositoryService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Smeedee.Client.Framework.SL.UserRepositoryService.UserRepositoryService.BeginSave(Smeedee.DomainModel.Users.Userdb userdb, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult Smeedee.Client.Framework.SL.UserRepositoryService.UserRepositoryService.BeginSave(System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb> userdb, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginSave(userdb, callback, asyncState);
         }
         
@@ -188,7 +188,7 @@ namespace Smeedee.Client.Framework.SL.UserRepositoryService {
         }
         
         private System.IAsyncResult OnBeginSave(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            Smeedee.DomainModel.Users.Userdb userdb = ((Smeedee.DomainModel.Users.Userdb)(inValues[0]));
+            System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb> userdb = ((System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb>)(inValues[0]));
             return ((Smeedee.Client.Framework.SL.UserRepositoryService.UserRepositoryService)(this)).BeginSave(userdb, callback, asyncState);
         }
         
@@ -204,11 +204,11 @@ namespace Smeedee.Client.Framework.SL.UserRepositoryService {
             }
         }
         
-        public void SaveAsync(Smeedee.DomainModel.Users.Userdb userdb) {
+        public void SaveAsync(System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb> userdb) {
             this.SaveAsync(userdb, null);
         }
         
-        public void SaveAsync(Smeedee.DomainModel.Users.Userdb userdb, object userState) {
+        public void SaveAsync(System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb> userdb, object userState) {
             if ((this.onBeginSaveDelegate == null)) {
                 this.onBeginSaveDelegate = new BeginOperationDelegate(this.OnBeginSave);
             }
@@ -311,7 +311,7 @@ namespace Smeedee.Client.Framework.SL.UserRepositoryService {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSave(Smeedee.DomainModel.Users.Userdb userdb, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginSave(System.Collections.Generic.List<Smeedee.DomainModel.Users.Userdb> userdb, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = userdb;
                 System.IAsyncResult _result = base.BeginInvoke("Save", _args, callback, asyncState);

@@ -35,6 +35,19 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 {
     public class ChangesetViewModel : AbstractViewModel
     {
+        public ChangesetViewModel()
+        {
+            developer = new Person();
+        }
+
+        public bool ShouldBlink { get; set; }
+
+        private Person developer;
+        public Person Developer
+        {
+            get { return developer; }
+        }
+
         private string message;
         public string Message
         {
@@ -89,18 +102,5 @@ namespace Smeedee.Widget.SourceControl.ViewModels
                 }
             }
         }
-
-        private Person developer;
-        public Person Developer
-        {
-            get { return developer; }
-        }
-
-
-        public ChangesetViewModel()
-        {
-            developer = new Person();
-        }
-
     }
 }

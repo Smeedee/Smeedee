@@ -1,0 +1,17 @@
+﻿[{
+	Name: "Webshop",
+	Collections: [
+		{ Name: "orders"},
+		{ Name: "ordersPrDay"},
+		{ Name: "revenuePrDay"}	]
+},
+{
+	Name: "Source Control",
+	Collections: [
+		{ Name: "commitsPrDay" },
+		{ Name: "commitsPrUserLastMonth" },
+		{ Name: "commitsPrUserOverall" },
+		{ Name: "commitsPrUserLastSevenDays" },
+		{ Name: "commitsPrWeek" }
+	]
+}]

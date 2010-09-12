@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Threading;
 using Smeedee.Client.Framework.SL.UserRepositoryService;
 using Smeedee.DomainModel.Framework;
@@ -50,12 +51,12 @@ namespace Smeedee.Client.Framework.SL.Repositories
 
         public void Save(Userdb domainModel)
         {
-            serviceClient.SaveAsync(domainModel);
+            serviceClient.SaveAsync(new List<Userdb> {domainModel});
         }
 
         public void Save(IEnumerable<Userdb> domainModels)
         {
-            throw new NotImplementedException();
+            serviceClient.SaveAsync(domainModels.ToList());
         }
 
         #endregion

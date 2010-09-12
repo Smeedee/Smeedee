@@ -18,6 +18,9 @@
           <Publish Event="DoAction" Value="OpenWebSite">
             <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change")]]>
           </Publish>
+          <Publish Event="DoAction" Value="RegisterAspInIIS">
+            <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change")]]>
+          </Publish>
           <Publish Event="DoAction" Value="StartService">
             <![CDATA[(InstallMode<>"Remove") AND(InstallMode<>"Repair") AND (InstallMode<>"Change")]]> AND (START_SERVICE = 1)
           </Publish>

@@ -24,15 +24,15 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.ServiceProcess;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.Integration.Database.DomainModel.Repositories;
-using Smeedee.Tasks.CI;
+using Smeedee.Integration.Framework.Utils;
+using Smeedee.Scheduler.Services;
 using Smeedee.Tasks.Framework;
-using Smeedee.Tasks.SourceControl;
 
 namespace Smeedee.Scheduler.Service
 {
@@ -56,6 +56,7 @@ namespace Smeedee.Scheduler.Service
 
         public DataCollectorService()
         {
+
             InitializeComponent();
 
             if (!EventLog.SourceExists(SERVICE_DESCRIPTION))
@@ -63,6 +64,7 @@ namespace Smeedee.Scheduler.Service
                 EventLog.CreateEventSource(SERVICE_DESCRIPTION, LOG_NAME);
                 EventLog.WriteEntry("Created smeedee Data Collector Service", EventLogEntryType.Information);
             }
+
             
         }
 
@@ -70,7 +72,7 @@ namespace Smeedee.Scheduler.Service
         {
             EventLog.WriteEntry("Starting smeedee Data Collector Service", EventLogEntryType.Information);
 
-            if(args.Length < 1 || String.IsNullOrEmpty(args[0]))
+            if (args.Length < 1 || String.IsNullOrEmpty(args[0]))
             {
                 DatabaseFile = "smeedeeDB.db";
             }
@@ -81,8 +83,7 @@ namespace Smeedee.Scheduler.Service
 
             EventLog.WriteEntry("Using database file: " + DatabaseFile, EventLogEntryType.Information);
 
-            RunHarvesters();
-
+            RunTasks();
         }
 
         protected override void OnStop()
@@ -92,25 +93,16 @@ namespace Smeedee.Scheduler.Service
             EventLog.WriteEntry("Stopping smeedee Data Collector Service", EventLogEntryType.Information);
         }
 
-        private void RunHarvesters()
+        private void RunTasks()
         {
             var sessionFactory = NHibernateFactory.AssembleSessionFactory(DatabaseFile);
+            var logger = new Logger(new LogEntryDatabaseRepository(sessionFactory)) { VerbosityLevel = 1 };
+            var iocContaier = new IocContainerForScheduler();
+            iocContaier.BindToConstant(sessionFactory);
+            var taskDirectory = new DirectoryInfo(Assembly.GetExecutingAssembly().Location).Parent.FullName;
 
-            ILog logger = new Logger(new LogEntryDatabaseRepository(sessionFactory));
-
-            var harvesterScheduler = new Smeedee.Scheduler.Scheduler(logger);
-            var configRepository = new ConfigurationDatabaseRepository(sessionFactory);
-
-            var csDatabase = new ChangesetDatabaseRepository(sessionFactory);
-            var repositoryFactory = new ChangesetRepositoryFactory();
-            var csHarvester = new SourceControlTask(csDatabase, configRepository, csDatabase, repositoryFactory);
-
-            var ciPersister = new CIServerDatabaseRepository(sessionFactory);
-            var ciRepositoryFactory = new CIServerRepositoryFactory();
-            var ciHarvester = new CITask(ciRepositoryFactory, ciPersister, configRepository);
-
-            harvesterScheduler.RegisterTasks(new List<TaskBase> { csHarvester, ciHarvester });
-            EventLog.WriteEntry("Harvesters started", EventLogEntryType.Information);
+            var taskScheduler = new Scheduler(iocContaier, taskDirectory, new FileUtilities(), new TimerWithTimestamp(0, 10000), new TimerWithTimestamp(0, 2000), logger);
+            taskScheduler.Start();
         }
     }
 }

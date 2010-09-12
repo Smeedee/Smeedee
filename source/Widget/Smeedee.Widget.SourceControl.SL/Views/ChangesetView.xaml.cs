@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Smeedee.Widget.SourceControl.ViewModels;
 
 namespace Smeedee.Widget.SourceControl.SL.Views
@@ -25,24 +16,26 @@ namespace Smeedee.Widget.SourceControl.SL.Views
         void ChangesetView_Loaded(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "IdleState", true);
-
-            CheckIfCommentIsBad();
+            
+            if (ChangeSetShouldBlink())
+            {
+                GoToCommentIsBadState();
+            }
         }
 
-        private void CheckIfCommentIsBad()
+        public bool ChangeSetShouldBlink()
         {
             var viewModel = DataContext as ChangesetViewModel;
             if (viewModel != null)
             {
-                if (viewModel.CommentIsBad)
-                    GoToCommentIsBadState();
+                return viewModel.ShouldBlink && viewModel.CommentIsBad;
             }
+            return false;
         }
 
         private void GoToCommentIsBadState()
         {
             VisualStateManager.GoToState(this, "CommentIsBad", true);
-            
         }
     }
 }

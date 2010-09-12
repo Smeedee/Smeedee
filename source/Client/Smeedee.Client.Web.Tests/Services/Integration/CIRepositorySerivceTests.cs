@@ -70,7 +70,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.CIRepositoryServiceTests
         };
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")][Category("IntegrationTest")]
     public class When_get_Continuous_Integration_data_via_WebService : CIRepositoryServiceTestsShared
     {
         [Test]

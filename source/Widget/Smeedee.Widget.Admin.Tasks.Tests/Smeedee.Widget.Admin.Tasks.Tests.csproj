@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6D9506E2-A655-4A52-936D-F17638931E23}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Smeedee.Widget.Admin.Tasks.Tests</RootNamespace>
+    <AssemblyName>Smeedee.Widget.Admin.Tasks.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\tools\Moq.3.1.416.3-bin\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TinyBDD, Version=0.1.0.88, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
+    </Reference>
+    <Reference Include="TinyBDD.Specification.NUnit">
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.dll</HintPath>
+    </Reference>
+    <Reference Include="TinyMVVM">
+      <HintPath>..\..\..\tools\TinyMVVM\TinyMVVM.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\TasksControllerSpecs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ConfigurationEntryViewModelSpecs.cs" />
+    <Compile Include="ViewModels\TaskInstanceConfigurationViewModelSpecs.cs" />
+    <Compile Include="ViewModels\TasksViewModelSpecs.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework.Tests\Smeedee.Client.Framework.Tests.csproj">
+      <Project>{1E77D895-A0E6-4DC9-82FF-3379D65836C1}</Project>
+      <Name>Smeedee.Client.Framework.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
+      <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
+      <Name>Smeedee.Client.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>Smeedee.DomainModel.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>Smeedee.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Tests\Smeedee.Tests.csproj">
+      <Project>{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}</Project>
+      <Name>Smeedee.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smeedee.Widget.Admin.Tasks\Smeedee.Widget.Admin.Tasks.csproj">
+      <Project>{91F7D534-224D-4F93-885D-FC46C84A1210}</Project>
+      <Name>Smeedee.Widget.Admin.Tasks</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

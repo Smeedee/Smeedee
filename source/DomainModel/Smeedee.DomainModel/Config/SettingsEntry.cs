@@ -23,6 +23,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -35,12 +36,11 @@ namespace Smeedee.DomainModel.Config
     {
         [DataMember]
         public virtual string Name { get; set; }
-
         public virtual string Value
         {
             get
             {
-                return Vals.AsEnumerable().FirstOrDefault();
+                return Vals == null ? null : Vals.AsEnumerable().FirstOrDefault();
             }
         }
 
@@ -58,12 +58,16 @@ namespace Smeedee.DomainModel.Config
             }
         }
 
-        public SettingsEntry() {}
+        public SettingsEntry()
+        {
+            Name = "";
+            Vals = new string[0];
+        }
 
         public SettingsEntry(string name, params string[] values)
         {
             Name = name;
-            Vals = values;
+            Vals = values ?? new string[0];
         }
 
         public override bool Equals(object obj)
@@ -80,5 +84,20 @@ namespace Smeedee.DomainModel.Config
     public class EntryNotFound : SettingsEntry
     {
         
+    }
+
+    public static class SettingsEntryEx
+    {
+        public static int ValueAsInt(this SettingsEntry settingsEntry)
+        {
+            try
+            {
+                return int.Parse(settingsEntry.Value);
+            }
+            catch (Exception exception)
+            {
+                throw  new ArgumentException("The value was not convertable to int: " + settingsEntry.Value, exception);
+            }
+        }
     }
 }

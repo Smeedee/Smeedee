@@ -14,7 +14,7 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace Smeedee.IntegrationTests.Database.Learning
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     [Ignore]
     public class NHibernateLearningTests
     {

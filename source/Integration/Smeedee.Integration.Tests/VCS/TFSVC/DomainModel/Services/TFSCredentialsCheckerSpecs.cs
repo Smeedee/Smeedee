@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 using TinyBDD.Dsl.GivenWhenThen;
 using Smeedee.Integration.VCS.TFSVC.DomainModel.Services;
@@ -16,6 +11,9 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Services.TFSCredentials
     public class Shared : ScenarioClass
     {
         protected const string SVN = "svn";
+        protected const string CORRECT_USERNAME = "smeedee";
+        protected const string CORRECT_PASSWORD = "dlog4321.";
+        protected const string REPOSITORY_URL = "http://80.203.160.221:8080/tfs";
         protected static string repositoryUrl;
         protected static string username;
         protected static string password;
@@ -28,13 +26,13 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Services.TFSCredentials
 
         protected Context Repository_URL_is_valid = () =>
         {
-            repositoryUrl = "https://tfs08.codeplex.com";
+            repositoryUrl = REPOSITORY_URL;
         };
 
         protected Context Credentials_are_valid = () =>
         {
-            username = "smeedee_cp";
-            password = "haldis.";
+            username = CORRECT_USERNAME;
+            password = CORRECT_PASSWORD;
         };
 
         protected Context Credentials_are_invalid = () =>
@@ -55,8 +53,7 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Services.TFSCredentials
         }
     }
 
-    [TestFixture]
-    //[Ignore]
+    [TestFixture][Category("IntegrationTest")]
     public class When_testing_Credentials : Shared
     {
         [SetUp]
@@ -74,7 +71,7 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Services.TFSCredentials
         {
             Then("assure valid Credentials return true", () =>
             {
-                credentialsChecker.Check(SVN, repositoryUrl, "smeedee_cp", "haldis").ShouldBeTrue();
+                credentialsChecker.Check(SVN, repositoryUrl, CORRECT_USERNAME, CORRECT_PASSWORD).ShouldBeTrue();
             });
         }
 

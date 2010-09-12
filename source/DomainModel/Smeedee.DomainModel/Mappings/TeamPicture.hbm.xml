@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class  name="Smeedee.DomainModel.TeamPicture.TeamPicture, Smeedee.DomainModel" table="teamPicture">
+    <id name="Message">
+      <generator class="assigned"/>
+    </id>
+    <property name="Picture" type="BinaryBlob"/>
+    <property name="PictureHeight"/>
+    <property name="PictureWidth"/>
+  </class>
+</hibernate-mapping>

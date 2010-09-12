@@ -11,9 +11,7 @@ namespace Smeedee.Client.Framework.Converters
             if (value is DateTime && targetType == typeof(string))
             {
                 var dateObject = (DateTime)value;
-                var resultString = "Since ";
-                resultString += dateObject.ToString("dd MMM yyyy");
-                return resultString;
+                return dateObject.ToString("dd.MM.yyyy");
             }
                 return "No end-date set or wrong format!";
             

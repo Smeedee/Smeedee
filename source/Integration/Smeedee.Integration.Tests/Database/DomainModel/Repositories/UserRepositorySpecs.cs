@@ -54,7 +54,7 @@
 //        };
 //    }
 
-//    [TestFixture]
+//    [TestFixture][Category("IntegrationTest")]
 //    public class When_get_Users : UserRepositoryShared
 //    {
 //        [Test]
@@ -108,7 +108,7 @@
 //        }
 //    }
 
-//    [TestFixture]
+//    [TestFixture][Category("IntegrationTest")]
 //    public class When_save_User : UserRepositoryShared
 //    {   
 //        [Test]

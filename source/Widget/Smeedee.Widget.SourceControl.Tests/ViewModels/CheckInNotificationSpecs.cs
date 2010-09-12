@@ -27,7 +27,10 @@
 
 #endregion
 
+using System;
+using Moq;
 using Smeedee.Client.Framework;
+using Smeedee.Client.Framework.Tests;
 using Smeedee.Tests;
 using NUnit.Framework;
 using Smeedee.Widget.SourceControl.ViewModels;
@@ -37,16 +40,25 @@ using TinyBDD.Dsl.GivenWhenThen;
 
 namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificationSpecs
 {
-    public class Shared
+    public class Shared : ScenarioClass
     {
-        protected static CheckInNotificationViewModel viewModel;
+        protected static LatestCommitsViewModel viewModel;
         protected static PropertyChangedRecorder changeRecorder;
 
         protected Context the_object_is_created = () =>
+                    {
+                        ViewModelBootstrapperForTests.Initialize();
+                        viewModel = new LatestCommitsViewModel(new Client.Framework.ViewModel.Widget());
+                        changeRecorder = new PropertyChangedRecorder(viewModel);
+                    };
+
+        protected When numberOfCommitts_field_in_view_is_set_to_5 = () => viewModel.NumberOfCommits = 5;
+
+        [TearDown]
+        public void TearDown()
         {
-            viewModel = new CheckInNotificationViewModel();
-            changeRecorder = new PropertyChangedRecorder(viewModel);
-        };
+            StartScenario();
+        }
     }
 
     [TestFixture]
@@ -56,12 +68,6 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificatio
         public void Setup()
         {
             the_object_is_created();
-        }
-
-        [Test]
-        public void Should_have_a_NoChangesets_property()
-        {
-            viewModel.NoChangesets.ShouldBe(false);
         }
 
         [Test]
@@ -76,47 +82,40 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificatio
             viewModel.Changesets.ShouldNotBeNull();
             viewModel.Changesets.Count.ShouldBe(0);
         }
-        
     }
 
     [TestFixture]
     public class When_properties_change : Shared
     {
         [Test]
-        public void Should_notify_observers_when_NoChangesets_changes()
+        public void Should_notify_observers_when_Loading_changes()
         {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(the_object_is_created);
+            Given(the_object_is_created);
+            When("IsLoading property changes", () => viewModel.IsLoading = true);
+            Then("the observers should be notified about the change", () =>
+                    changeRecorder.ChangedProperties.ShouldContain( "IsLoading" )).
+                And("the value should be updated", () => viewModel.IsLoading.ShouldBeTrue());
+        }
+    }
 
-                scenario.When("NoChangesets property changes", () =>
-                    viewModel.NoChangesets = true);
+    [TestFixture]
+    public class When_Settings_change : Shared
 
-                scenario.
-                    Then("the observers should be notified about the change", () =>
-                        changeRecorder.ChangedProperties.ShouldContain("NoChangesets")).
-                    And("the value should be updated", () =>
-                        viewModel.NoChangesets.ShouldBeTrue());
-            });
+    {
+        [Test]
+        public void assure_number_of_committs_is_changed_when_the_field_in_the_viewModel_is_set()
+        {
+            Given(the_object_is_created);
+            When(numberOfCommitts_field_in_view_is_set_to_5);
+            Then(() => changeRecorder.ChangedProperties.Count.ShouldBe(1));
         }
 
         [Test]
-        public void Should_notify_observers_when_Loading_changes()
+        public void assure_that_the_ViewModels_badComment_is_set_by_bad_comments()
         {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(the_object_is_created);
-
-                scenario.When("IsLoading property changes", () =>
-                    viewModel.IsLoading = true);
-
-                scenario.
-                    Then("the observers should be notified about the change", () =>
-                        changeRecorder.ChangedProperties.ShouldContain("IsLoading")).
-                    And("the value should be updated", () =>
-                        viewModel.IsLoading.ShouldBeTrue());
-
-            });
+            Given(the_object_is_created);
+            When("a_bad_comment_is_uploaded");
+            Then("() => ");
         }
-    }    
+    }
 }

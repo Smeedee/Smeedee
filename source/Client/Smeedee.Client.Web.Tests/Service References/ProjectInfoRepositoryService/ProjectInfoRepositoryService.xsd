@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://smeedee.org" elementFormDefault="qualified" targetNamespace="http://smeedee.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
-  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.ProjectInfo" />
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/ProjectInfoRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.ProjectInfo" />
   <xs:element name="Get">
     <xs:complexType>
       <xs:sequence>

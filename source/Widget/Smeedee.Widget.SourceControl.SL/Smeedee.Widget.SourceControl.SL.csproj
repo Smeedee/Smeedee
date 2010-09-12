@@ -48,6 +48,8 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20421.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,6 +74,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.ComponentModel.DataAnnotations.dll">
@@ -84,13 +94,22 @@
     <Reference Include="mscorlib" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls" />
     <Reference Include="System.Windows.Controls.Data.DataForm.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Data.DataForm.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Data.Input" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,11 +126,11 @@
     <Compile Include="..\Smeedee.Widget.SourceControl\Controllers\ChangesetStandAloneController.cs">
       <Link>Controllers\ChangesetStandAloneController.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Widget.SourceControl\Controllers\CheckInNotificationController.cs">
-      <Link>Controllers\CheckInNotificationController.cs</Link>
-    </Compile>
     <Compile Include="..\Smeedee.Widget.SourceControl\Controllers\CommitStatisticsController.cs">
       <Link>Controllers\CommitStatisticsController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.SourceControl\Controllers\LatestCommitsController.cs">
+      <Link>Controllers\LatestCommitsController.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widget.SourceControl\Controllers\TopCommitersController.cs">
       <Link>Controllers\TopCommitersController.cs</Link>
@@ -119,14 +138,17 @@
     <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\ChangesetViewModel.cs">
       <Link>ViewModels\ChangesetViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\CheckInNotification.cs">
-      <Link>ViewModels\CheckInNotification.cs</Link>
-    </Compile>
     <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\CodeCommiterViewModel.cs">
       <Link>ViewModels\CodeCommiterViewModel.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\CommitStatisticsForDate.cs">
       <Link>ViewModels\CommitStatisticsForDate.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\CommitStatisticsSettingsViewModel.cs">
+      <Link>ViewModels\CommitStatisticsSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\LatestCommitsViewModel.cs">
+      <Link>ViewModels\LatestCommitsViewModel.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\TopCommitersViewModel.cs">
       <Link>ViewModels\TopCommitersViewModel.cs</Link>
@@ -134,7 +156,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CommitStatisticsModule.cs" />
+    <Compile Include="CommitStatisticsWidget.cs" />
+    <Compile Include="Converters\DayCountToChartLegendIntervalConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleData\ChangesetSampleData\ChangesetSampleData.xaml.cs">
       <DependentUpon>ChangesetSampleData.xaml</DependentUpon>
@@ -145,19 +168,28 @@
     <Compile Include="SampleData\TopCommittersDataSource\TopCommittersDataSource.xaml.cs">
       <DependentUpon>TopCommittersDataSource.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SourceControlModule.cs" />
-    <Compile Include="TopCommitersModule.cs" />
+    <Compile Include="SourceControlWidget.cs" />
+    <Compile Include="TopCommitersWidget.cs" />
     <Compile Include="Views\ChangesetView.xaml.cs">
       <DependentUpon>ChangesetView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CheckInNotification.xaml.cs">
       <DependentUpon>CheckInNotification.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CommitStatisticsSettingsView.xaml.cs">
+      <DependentUpon>CommitStatisticsSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CheckInNotificationSettingsView.xaml.cs">
+      <DependentUpon>CheckInNotificationSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CommitStatisticsView.xaml.cs">
       <DependentUpon>CommitStatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TopCommiters.xaml.cs">
       <DependentUpon>TopCommiters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TopCommitersSettings.xaml.cs">
+      <DependentUpon>TopCommitersSettings.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +209,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Properties\DesignTimeResources1.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
     <Page Include="SampleData\ChangesetSampleData\ChangesetSampleData.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -195,6 +232,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\CommitStatisticsSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CheckInNotificationSettingsView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\CommitStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -206,6 +251,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TopCommitersSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +301,11 @@
       <Project>{DB3A158F-D0F2-46F2-BC90-1BB163EA76AB}</Project>
       <Name>Smeedee.Client.Framework.SL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.SL\Smeedee.Client.SL.csproj" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Project>{82E89814-481B-48A7-9EBB-6717E47640EA}</Project>
+      <Name>Smeedee.Client.SL</Name>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework.SL\Smeedee.DomainModel.Framework.SL.csproj">
       <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
       <Name>Smeedee.DomainModel.Framework.SL</Name>
@@ -259,6 +313,10 @@
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.SL.csproj">
       <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
       <Name>Smeedee.DomainModel.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Framework.SL\Smeedee.Framework.SL.csproj">
+      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
+      <Name>Smeedee.Framework.SL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Smeedee.Widget.DeveloperInfo.SL\Smeedee.Widget.DeveloperInfo.SL.csproj">
       <Project>{754C1232-CD79-474B-B21C-B3243015C1DC}</Project>

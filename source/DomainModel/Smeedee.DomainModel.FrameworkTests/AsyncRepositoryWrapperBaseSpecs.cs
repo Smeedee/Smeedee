@@ -23,17 +23,17 @@ namespace Smeedee.DomainModel.FrameworkTests.AsyncRepositoryWrapperBaseSpecs
     {
         static protected Context the_asyncRepo_is_valid = () =>
         {
-            asyncRepoMock.Setup(asr => asr.BeginGet(new AllChangesetsSpecification())).Callback(()=>
+            asyncRepoMock.Setup(asr => asr.BeginGet(new AllChangesetsSpecification())).Callback(() =>
             {
-                ThreadPool.QueueUserWorkItem( o =>
+                ThreadPool.QueueUserWorkItem(o =>
                     {
                         Thread.Sleep(500);
                         asyncRepoMock.Raise(asr => asr.GetCompleted += null,
-                            new GetCompletedEventArgs<Changeset>(new List<Changeset> {new Changeset()}, new AllChangesetsSpecification()));
+                            new GetCompletedEventArgs<Changeset>(new List<Changeset> { new Changeset() }, new AllChangesetsSpecification()));
 
                     });
             });
-            
+
             asyncRepository = asyncRepoMock.Object;
         };
 
@@ -46,7 +46,7 @@ namespace Smeedee.DomainModel.FrameworkTests.AsyncRepositoryWrapperBaseSpecs
         {
             AsyncRepositoryWrapperBase = new AsyncRepositoryWrapperBase<Changeset>(asyncRepository);
         };
-        
+
         static protected IAsyncRepository<Changeset> asyncRepository = null;
         static protected AsyncRepositoryWrapperBase<Changeset> AsyncRepositoryWrapperBase = null;
         static protected Mock<IAsyncRepository<Changeset>> asyncRepoMock = new Mock<IAsyncRepository<Changeset>>();
@@ -63,7 +63,7 @@ namespace Smeedee.DomainModel.FrameworkTests.AsyncRepositoryWrapperBaseSpecs
 
             Given(the_asyncRepo_is_null);
             When(the_genericRepository_is_spawned);
-            Then("It should throw an argumentexception", ()=>
+            Then("It should throw an argumentexception", () =>
                 new AsyncRepositoryWrapperBase<Changeset>(null));
 
             StartScenario();

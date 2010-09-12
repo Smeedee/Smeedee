@@ -41,8 +41,8 @@
             // serviceInstaller
             // 
             this.serviceInstaller.Description = "Retrieves and stores data for smeedee.";
-            this.serviceInstaller.DisplayName = "smeedee Data Collector";
-            this.serviceInstaller.ServiceName = "smeedee Data Collector";
+            this.serviceInstaller.DisplayName = "Smeedee Data Collector";
+            this.serviceInstaller.ServiceName = "Smeedee Data Collector";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             this.serviceInstaller.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.serviceInstaller1_AfterInstall);
             // 

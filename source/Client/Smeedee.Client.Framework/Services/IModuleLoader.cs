@@ -10,5 +10,6 @@ namespace Smeedee.Client.Framework.Services
     {
         void LoadTraybarWidgets(Traybar traybarViewModel);
         void LoadSlides(Slideshow slideshowViewModel);
+        void LoadAdminWidgets(DockBar dockBarViewModel);
     }
 }

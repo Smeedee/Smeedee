@@ -13,8 +13,8 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
     public class WorkItemFetcher : IFetchWorkItems
     {
         // Defaulting to the values used by Conchango's Scrum for Team System
-        private readonly string WORK_REMAINING_FIELD = "Conchango.TeamSystem.Scrum.WorkRemaining";
-        private readonly string ESTIMATED_EFFORT_FIELD = "Conchango.TeamSystem.Scrum.EstimatedEffort";
+        private readonly string WORK_REMAINING_FIELD = "Work Remaining (Scrum v3)";
+        private readonly string ESTIMATED_EFFORT_FIELD = "Estimated Effort (Scrum v3)";
         
         private readonly TeamFoundationServer tfsServer;
         private readonly WorkItemStore workItemStore;
@@ -50,13 +50,11 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
             return ConvertWorkItemsToTasks(allRevisions);
         }
 
-
         public List<Task> GetAllWorkEffort()
         {
             var allWorkItemRevisions = GetWorkItemRevisions(GetAllCurrentWorkItems());
             return ConvertWorkItemsToTasks(allWorkItemRevisions);
         }
-
 
         public IEnumerable<String> GetAllIterations()
         {
@@ -79,19 +77,17 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
             return ConvertWorkItemsToTasks(GetCurrentWorkItemsInSprint(iterationPath));
         }
 
-
         private WorkItemCollection GetCurrentWorkItemsInSprint(string iterationPath)
         {
             string wiqlQuery =
-                @"SELECT [Conchango.TeamSystem.Scrum.EstimatedEffort], " +
-                @"[Conchango.TeamSystem.Scrum.WorkRemaining] " +
+                @"SELECT [Estimated Effort (Scrum v3)], " +
+                @"[Work Remaining (Scrum v3)] " +
                 @"FROM [WorkItems] " +
-                @"WHERE [System.TeamProject] = '" + projectName + "'" +
-                @"AND [System.IterationPath] = '" + iterationPath + "'" +
-                @"AND [Work Item Type] = 'Sprint Backlog Item'";
+                @"WHERE [Team Project] = '" + projectName + "'" +
+                @"AND [Iteration Path] = '" + iterationPath + "'" +
+                @"AND [Work Item Type] = 'Sprint Backlog Task'";
             return workItemStore.Query(wiqlQuery);
         }
-
 
         // NOTE: Horrible run time. We should probably look into other ways to talk with TFS.
         private List<WorkItem> GetWorkItemRevisions(WorkItemCollection allWorkItems)
@@ -111,7 +107,6 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
 
             return allWorkItemRevisions;
         }
-
 
         private List<Task> ConvertWorkItemsToTasks(IEnumerable workItems)
         {
@@ -146,7 +141,6 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
             return tasks;
         }
 
-
         public List<Task> GetAllCurrentTasks()
         {
             return ConvertWorkItemsToTasks(GetAllCurrentWorkItems());
@@ -155,14 +149,13 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         private WorkItemCollection GetAllCurrentWorkItems()
         {
             var wiqlQuery =
-                @"SELECT [Conchango.TeamSystem.Scrum.EstimatedEffort], " +
-                @"[Conchango.TeamSystem.Scrum.WorkRemaining] " +
+                @"SELECT [Estimated Effort (Scrum v3)], " +
+                @"[Work Remaining (Scrum v3)] " +
                 @"FROM [WorkItems] " +
                 @"WHERE [System.TeamProject] = '" + projectName + "'" +
-                @"AND [Work Item Type] = 'Sprint Backlog Item'";
+                @"AND [Work Item Type] = 'Sprint Backlog Task'";
             return workItemStore.Query(wiqlQuery);
         }
-
 
         private static int ParseFieldToInt(Field field)
         {

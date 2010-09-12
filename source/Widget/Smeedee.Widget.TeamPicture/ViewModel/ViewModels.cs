@@ -1,16 +1,14 @@
 
-using System.Windows.Media;
 using TinyMVVM.Framework.Services;
 using TinyMVVM.Framework;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Smeedee.Widget.TeamPicture.ViewModel
 {
 	public partial class TeamPictureViewModel : TinyMVVM.Framework.ViewModelBase
 	{
-		protected IUIInvoker UIInvoker { get; set; }
-
 		//State
 		public ObservableCollection<WriteableBitmap> Snapshots
 		{
@@ -19,11 +17,8 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 			{
 				if (value != _Snapshots)
 				{
-					UIInvoker.Invoke(() =>
-					{
-						_Snapshots = value;
-						TriggerPropertyChanged("Snapshots");
-					});
+					_Snapshots = value;
+					TriggerPropertyChanged("Snapshots");
 				}
 			}
 		}
@@ -36,11 +31,8 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 			{
 				if (value != _SelectedSnapshot)
 				{
-					UIInvoker.Invoke(() =>
-					{
-						_SelectedSnapshot = value;
-						TriggerPropertyChanged("SelectedSnapshot");
-					});
+					_SelectedSnapshot = value;
+					TriggerPropertyChanged("SelectedSnapshot");
 				}
 			}
 		}
@@ -53,11 +45,8 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 			{
 				if (value != _Snapshot)
 				{
-					UIInvoker.Invoke(() =>
-					{
-						_Snapshot = value;
-						TriggerPropertyChanged("Snapshot");
-					});
+					_Snapshot = value;
+					TriggerPropertyChanged("Snapshot");
 				}
 			}
 		}
@@ -70,32 +59,12 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 			{
 				if (value != _HasSelectedSnapshot)
 				{
-					UIInvoker.Invoke(() =>
-					{
-						_HasSelectedSnapshot = value;
-						TriggerPropertyChanged("HasSelectedSnapshot");
-					});
+					_HasSelectedSnapshot = value;
+					TriggerPropertyChanged("HasSelectedSnapshot");
 				}
 			}
 		}
 		private bool _HasSelectedSnapshot;
-
-		public Brush WebcamVideoBrush
-		{
-			get { return _WebcamVideoBrush; }
-			set
-			{
-				if (value != _WebcamVideoBrush)
-				{
-					UIInvoker.Invoke(() =>
-					{
-						_WebcamVideoBrush = value;
-						TriggerPropertyChanged("WebcamVideoBrush");
-					});
-				}
-			}
-		}
-		private Brush _WebcamVideoBrush;
 
 		public string Message
 		{
@@ -104,15 +73,54 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 			{
 				if (value != _Message)
 				{
-					UIInvoker.Invoke(() =>
-					{
-						_Message = value;
-						TriggerPropertyChanged("Message");
-					});
+					_Message = value;
+					TriggerPropertyChanged("Message");
 				}
 			}
 		}
 		private string _Message;
+
+		public string ErrorMsg
+		{
+			get { return _ErrorMsg; }
+			set
+			{
+				if (value != _ErrorMsg)
+				{
+					_ErrorMsg = value;
+					TriggerPropertyChanged("ErrorMsg");
+				}
+			}
+		}
+		private string _ErrorMsg;
+
+		public bool HasStoredImage
+		{
+			get { return _HasStoredImage; }
+			set
+			{
+				if (value != _HasStoredImage)
+				{
+					_HasStoredImage = value;
+					TriggerPropertyChanged("HasStoredImage");
+				}
+			}
+		}
+		private bool _HasStoredImage;
+
+		public Brush CaptureBrush
+		{
+			get { return _CaptureBrush; }
+			set
+			{
+				if (value != _CaptureBrush)
+				{
+					_CaptureBrush = value;
+					TriggerPropertyChanged("CaptureBrush");
+				}
+			}
+		}
+		private Brush _CaptureBrush;
 
 	
 		
@@ -121,6 +129,7 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 		public DelegateCommand Save { get; set; }
 		public DelegateCommand TakePicture { get; set; }
 		public DelegateCommand ToggleWebcamOnOff { get; set; }
+		public DelegateCommand Refresh { get; set; }
 		
 		public TeamPictureViewModel()
 		{
@@ -128,10 +137,8 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 			Save = new DelegateCommand();
 			TakePicture = new DelegateCommand();
 			ToggleWebcamOnOff = new DelegateCommand();
-		
-			ServiceLocator.SetLocatorIfNotSet(() => ServiceLocator.GetServiceLocator());
-			UIInvoker = ServiceLocator.Instance.GetInstance<IUIInvoker>();
-		
+			Refresh = new DelegateCommand();
+	
 			ApplyDefaultConventions();
 		}
 	}

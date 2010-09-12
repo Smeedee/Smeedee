@@ -43,7 +43,7 @@ using TinyBDD.Dsl.GivenWhenThen;
 namespace Smeedee.IntegrationTests.PMT.RallyDev.RallyDevReaderSpecs
 {
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_reading_from_RallyDev
     {
 

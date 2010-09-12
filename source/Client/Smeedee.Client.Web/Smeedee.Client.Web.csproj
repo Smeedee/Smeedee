@@ -13,7 +13,10 @@
     <AssemblyName>Smeedee.Client.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <SilverlightApplicationList>{82E89814-481B-48A7-9EBB-6717E47640EA}|..\Client\Smeedee.Client.SL\Smeedee.Client.SL.csproj|ClientBin|False,{5DE9E55F-AD3C-4217-85B2-F3C5971D03E5}|..\Widget\Smeedee.Widget.TeamPicture\Smeedee.Widget.TeamPicture.csproj|ClientBin|False,{9886A595-ADFA-4E80-A383-64B567DB008C}|..\..\Widget\Smeedee.Widget.SourceControl.SL\Smeedee.Widget.SourceControl.SL.csproj|ClientBin|False,{B84CF0E7-086A-4836-A317-7FF06AD0D52F}|..\..\Widget\Smeedee.Widget.CI.SL\Smeedee.Widget.CI.SL.csproj|ClientBin|False,{203A07E5-D01B-4241-B330-8BC91CFBE303}|..\..\Widget\Smeedee.Widget.ProjectInfo.SL\Smeedee.Widget.ProjectInfo.SL.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{82E89814-481B-48A7-9EBB-6717E47640EA}|..\Client\Smeedee.Client.SL\Smeedee.Client.SL.csproj|ClientBin|False,{9886A595-ADFA-4E80-A383-64B567DB008C}|..\..\Widget\Smeedee.Widget.SourceControl.SL\Smeedee.Widget.SourceControl.SL.csproj|ClientBin|False,{B84CF0E7-086A-4836-A317-7FF06AD0D52F}|..\..\Widget\Smeedee.Widget.CI.SL\Smeedee.Widget.CI.SL.csproj|ClientBin|False,{203A07E5-D01B-4241-B330-8BC91CFBE303}|..\..\Widget\Smeedee.Widget.ProjectInfo.SL\Smeedee.Widget.ProjectInfo.SL.csproj|ClientBin|False,{5C71697A-3647-4061-9B58-155F02B22CEB}|..\..\Widget\Smeedee.Widget.Corkboard.SL\Smeedee.Widget.Corkboard.SL.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{9886A595-ADFA-4E80-A383-64B567DB008C}|..\..\Widget\Smeedee.Widget.SourceControl.SL\Smeedee.Widget.SourceControl.SL.csproj|ClientBin|False,{B84CF0E7-086A-4836-A317-7FF06AD0D52F}|..\..\Widget\Smeedee.Widget.CI.SL\Smeedee.Widget.CI.SL.csproj|ClientBin|False,{203A07E5-D01B-4241-B330-8BC91CFBE303}|..\..\Widget\Smeedee.Widget.ProjectInfo.SL\Smeedee.Widget.ProjectInfo.SL.csproj|ClientBin|False,{82E89814-481B-48A7-9EBB-6717E47640EA}|..\Smeedee.Client.SL\Smeedee.Client.SL.csproj|ClientBin|False,{5C71697A-3647-4061-9B58-155F02B22CEB}|..\..\Widget\Smeedee.Widget.Corkboard.SL\Smeedee.Widget.Corkboard.SL.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{82E89814-481B-48A7-9EBB-6717E47640EA}|..\Client\Smeedee.Client.SL\Smeedee.Client.SL.csproj|ClientBin|False,{9886A595-ADFA-4E80-A383-64B567DB008C}|..\..\Widget\Smeedee.Widget.SourceControl.SL\Smeedee.Widget.SourceControl.SL.csproj|ClientBin|False,{B84CF0E7-086A-4836-A317-7FF06AD0D52F}|..\..\Widget\Smeedee.Widget.CI.SL\Smeedee.Widget.CI.SL.csproj|ClientBin|False,{203A07E5-D01B-4241-B330-8BC91CFBE303}|..\..\Widget\Smeedee.Widget.ProjectInfo.SL\Smeedee.Widget.ProjectInfo.SL.csproj|ClientBin|False,{3031A8CA-BF0E-425B-B432-9299661651FB}|..\..\Widget\Smeedee.Widget.TeamMembers.SL\Smeedee.Widget.TeamMembers.SL.csproj|ClientBin|False,{5C71697A-3647-4061-9B58-155F02B22CEB}|..\..\Widget\Smeedee.Widget.Corkboard.SL\Smeedee.Widget.Corkboard.SL.csproj|ClientBin|False,{B0154EE6-DE54-449A-9B3C-57F4FC43A602}|..\..\Widget\Smeedee.Widget.Twitter\Smeedee.Widget.Twitter.csproj|ClientBin|False,{5DE9E55F-AD3C-4217-85B2-F3C5971D03E5}|..\..\Widget\Smeedee.Widget.TeamPicture\Smeedee.Widget.TeamPicture.csproj|ClientBin|False,{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}|..\..\Widget\Smeedee.Widget.BurndownChart.SL\Smeedee.Widget.BurndownChart.SL.csproj|ClientBin|False,{3488E062-2B64-4654-B506-B7A064E9EF4E}|..\..\Widget\Smeedee.Widget.Admin.Tasks.SL\Smeedee.Widget.Admin.Tasks.SL.csproj|ClientBin|False,{CB63CF9D-C082-4B70-8706-C60E48FB1A2A}|..\..\Widget\Smeedee.Widget.Admin.Tasks.SL.Tests\Smeedee.Widget.Admin.Tasks.SL.Tests.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{9886A595-ADFA-4E80-A383-64B567DB008C}|..\..\Widget\Smeedee.Widget.SourceControl.SL\Smeedee.Widget.SourceControl.SL.csproj|ClientBin|False,{B84CF0E7-086A-4836-A317-7FF06AD0D52F}|..\..\Widget\Smeedee.Widget.CI.SL\Smeedee.Widget.CI.SL.csproj|ClientBin|False,{3031A8CA-BF0E-425B-B432-9299661651FB}|..\..\Widget\Smeedee.Widget.TeamMembers.SL\Smeedee.Widget.TeamMembers.SL.csproj|ClientBin|False,{5C71697A-3647-4061-9B58-155F02B22CEB}|..\..\Widget\Smeedee.Widget.Corkboard.SL\Smeedee.Widget.Corkboard.SL.csproj|ClientBin|False,{B0154EE6-DE54-449A-9B3C-57F4FC43A602}|..\..\Widget\Smeedee.Widget.Twitter\Smeedee.Widget.Twitter.csproj|ClientBin|False,{5DE9E55F-AD3C-4217-85B2-F3C5971D03E5}|..\..\Widget\Smeedee.Widget.TeamPicture\Smeedee.Widget.TeamPicture.csproj|ClientBin|False,{A93BB217-B5AA-4465-B61A-AEE9D25D73AE}|..\..\Widget\Smeedee.Widget.BurndownChart.SL\Smeedee.Widget.BurndownChart.SL.csproj|ClientBin|False,{203A07E5-D01B-4241-B330-8BC91CFBE303}|..\..\Widget\Smeedee.Widget.ProjectInfo.SL\Smeedee.Widget.ProjectInfo.SL.csproj|ClientBin|False,{B462D2F5-B13F-41FD-907C-02343087FF13}|..\Smeedee.Client.Framework.SL.Tests\Smeedee.Client.Framework.SL.Tests.csproj|ClientBin|False,{3488E062-2B64-4654-B506-B7A064E9EF4E}|..\..\Widget\Smeedee.Widget.Admin.Tasks.SL\Smeedee.Widget.Admin.Tasks.SL.csproj|ClientBin|False,{95DF63D4-D4A0-4D14-A83C-3DC7896A5602}|..\..\Widget\Smeedee.Widget.Admin.Users.SL\Smeedee.Widget.Admin.Users.SL.csproj|ClientBin|False,{3600462F-DDE6-41BC-9616-6F5D0465260B}|..\..\Widget\Smeedee.Widget.Admin.Holidays.SL\Smeedee.Widget.Admin.Holidays.SL.csproj|ClientBin|False,{82E89814-481B-48A7-9EBB-6717E47640EA}|..\Smeedee.Client.SL\Smeedee.Client.SL.csproj|ClientBin|False,{366E9F59-AA7E-4059-8176-20FFF07F7EF4}|..\..\Widget\Smeedee.Widget.Charting.SL\Smeedee.Widget.Charting.SL.csproj|ClientBin|False</SilverlightApplicationList>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -48,6 +51,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,9 +80,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
+    <Reference Include="Norm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NoRM MongoDB Driver\Norm.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\SQLite.NET.0.21_x68_dll\System.Data.SQLite.dll</HintPath>
@@ -82,19 +102,29 @@
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Log.aspx.cs">
+      <DependentUpon>Log.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Log.aspx.designer.cs">
+      <DependentUpon>Log.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChangesetRepositoryService.svc.cs">
       <DependentUpon>ChangesetRepositoryService.svc</DependentUpon>
@@ -104,6 +134,23 @@
     </Compile>
     <Compile Include="Services\ConfigurationRepositoryService.svc.cs">
       <DependentUpon>ConfigurationRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DTO\NoSql.cs" />
+    <Compile Include="Services\DTO\SourceControl.cs" />
+    <Compile Include="Services\NoSqlService.svc.cs">
+      <DependentUpon>NoSqlService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\NoSql\Databases.ashx.cs">
+      <DependentUpon>Databases.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\NoSql\Documents.ashx.cs">
+      <DependentUpon>Documents.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\rest.svc.cs">
+      <DependentUpon>rest.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\RetrospectiveNoteRepositoryService.svc.cs">
+      <DependentUpon>RetrospectiveNoteRepositoryService.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\DefaultSessionFactory.cs" />
     <Compile Include="Services\HolidayRepositoryService.svc.cs">
@@ -117,6 +164,18 @@
     </Compile>
     <Compile Include="Services\Serialization\ReferenceTrackingSerializer.cs" />
     <Compile Include="Services\Serialization\ReferenceTrackingSerializerProvider.cs" />
+    <Compile Include="Services\SlideConfigurationRepositoryService.svc.cs">
+      <DependentUpon>SlideConfigurationRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\TaskConfigurationRepositoryWebservice.svc.cs">
+      <DependentUpon>TaskConfigurationRepositoryWebservice.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\TaskDefinitionRepositoryService.svc.cs">
+      <DependentUpon>TaskDefinitionRepositoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\TeamPictureRepositoryWebservice.svc.cs">
+      <DependentUpon>TeamPictureRepositoryWebservice.svc</DependentUpon>
+    </Compile>
     <Compile Include="Services\UserRepositoryService.svc.cs">
       <DependentUpon>UserRepositoryService.svc</DependentUpon>
     </Compile>
@@ -126,23 +185,57 @@
     <Compile Include="SilverlightDeploymentMetadata.ashx.cs">
       <DependentUpon>SilverlightDeploymentMetadata.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\JSONPSupportBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientBin\Smeedee.Client.Framework.SL.Tests.xap" />
     <Content Include="ClientBin\Smeedee.Client.SL.xap" />
     <Content Include="ClientBin\Smeedee.Client.Widget.ProjectInfo.SL.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.Admin.Holidays.SL.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.Admin.Tasks.SL.Tests.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.Admin.Tasks.SL.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.Admin.Users.SL.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.BurndownChart.xap" />
     <Content Include="ClientBin\Smeedee.Widget.CI.SL.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.Corkboard.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widget.SourceControl.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widget.TeamPicture.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.Twitter.xap" />
+    <Content Include="ClientBin\Smeedee.Widget.TeamMembers.SL.xap" />
+    <Content Include="ClientBin\Tskjortebutikken.Widgets.xap" />
     <Content Include="Default.htm" />
+    <Content Include="Log.aspx" />
     <Content Include="Services\ChangesetRepositoryService.svc" />
     <Content Include="Services\CIRepositoryService.svc" />
     <Content Include="Services\ConfigurationRepositoryService.svc" />
+    <Content Include="Services\NoSqlService.svc" />
+    <Content Include="Services\rest.svc" />
+    <Content Include="Services\RetrospectiveNoteRepositoryService.svc" />
     <Content Include="Services\HolidayRepositoryService.svc" />
     <Content Include="Services\LogEntryRepositoryService.svc" />
     <Content Include="Services\ProjectInfoRepositoryService.svc" />
+    <Content Include="Services\SlideConfigurationRepositoryService.svc" />
+    <Content Include="Services\TaskConfigurationRepositoryWebservice.svc" />
+    <Content Include="Services\TaskDefinitionRepositoryService.svc" />
+    <Content Include="Services\TeamPictureRepositoryWebservice.svc" />
     <Content Include="Services\UserRepositoryService.svc" />
     <Content Include="Services\VCSCredentialsService.svc" />
     <Content Include="Silverlight.js" />
+    <Content Include="Smeedee-icon-48x48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Smeedee.Client.Framework.SL.TestsTestPage.aspx" />
+    <Content Include="Smeedee.Client.Framework.SL.TestsTestPage.html" />
+    <Content Include="Smeedee.Widget.Admin.Tasks.SL.TestsTestPage.aspx" />
+    <Content Include="Smeedee.Widget.Admin.Tasks.SL.TestsTestPage.html" />
+    <Content Include="Smeedee.Widget.Admin.Tasks.SLTestPage.aspx" />
+    <Content Include="Smeedee.Widget.Admin.Tasks.SLTestPage.html" />
+    <Content Include="Smeedee.Widget.BurndownChart.SLTestPage.aspx" />
+    <Content Include="Smeedee.Widget.BurndownChart.SLTestPage.html" />
+    <Content Include="Splash\logo.png" />
+    <Content Include="Smeedee.Widget.TwitterTestPage.aspx" />
+    <Content Include="Smeedee.Widget.TwitterTestPage.html" />
+    <Content Include="Splash\Splash.js" />
     <Content Include="UserImages\default_user.jpg" />
     <Content Include="UserImages\system_user.jpg" />
     <Content Include="UserImages\unknown_user.jpg" />
@@ -151,17 +244,21 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
-      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
-      <Name>Smeedee.DomainModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>Smeedee.DomainModel.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>Smeedee.DomainModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Integration\Smeedee.Integration\Smeedee.Integration.csproj">
       <Project>{47431D6D-1824-41E1-87B8-D90872E4FA04}</Project>
       <Name>Smeedee.Integration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Scheduler\Smeedee.Tasks.Framework\Smeedee.Tasks.Framework.csproj">
+      <Project>{EB96EC6A-173A-4D65-A266-0E8F6776B394}</Project>
+      <Name>Smeedee.Tasks.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Smeedee.Framework\Smeedee.Framework.csproj">
       <Project>{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}</Project>
@@ -173,6 +270,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SilverlightDeploymentMetadata.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Splash\Splash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Services\NoSql\Databases.ashx" />
+    <Content Include="Services\NoSql\Documents.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\tools\MSBuild Targets\Microsoft.WebApplication.targets" />

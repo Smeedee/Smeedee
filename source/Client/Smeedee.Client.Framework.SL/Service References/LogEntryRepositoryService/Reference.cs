@@ -26,6 +26,11 @@ namespace Smeedee.Client.Framework.SL.LogEntryRepositoryService {
         
         void EndLog(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/LogEntryRepositoryService/LogAll", ReplyAction="http://smeedee.org/LogEntryRepositoryService/LogAllResponse")]
+        System.IAsyncResult BeginLogAll(System.Collections.Generic.List<Smeedee.DomainModel.Framework.Logging.LogEntry> logEntry, System.AsyncCallback callback, object asyncState);
+        
+        void EndLogAll(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/LogEntryRepositoryService/Get", ReplyAction="http://smeedee.org/LogEntryRepositoryService/GetResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.Framework.Logging.LogEntry>))]
         System.IAsyncResult BeginGet(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.Framework.Logging.LogEntry> specification, System.AsyncCallback callback, object asyncState);
@@ -65,6 +70,12 @@ namespace Smeedee.Client.Framework.SL.LogEntryRepositoryService {
         private EndOperationDelegate onEndLogDelegate;
         
         private System.Threading.SendOrPostCallback onLogCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginLogAllDelegate;
+        
+        private EndOperationDelegate onEndLogAllDelegate;
+        
+        private System.Threading.SendOrPostCallback onLogAllCompletedDelegate;
         
         private BeginOperationDelegate onBeginGetDelegate;
         
@@ -127,6 +138,8 @@ namespace Smeedee.Client.Framework.SL.LogEntryRepositoryService {
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> LogCompleted;
         
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> LogAllCompleted;
+        
         public event System.EventHandler<GetCompletedEventArgs> GetCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
@@ -176,6 +189,51 @@ namespace Smeedee.Client.Framework.SL.LogEntryRepositoryService {
             }
             base.InvokeAsync(this.onBeginLogDelegate, new object[] {
                         logEntry}, this.onEndLogDelegate, this.onLogCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Smeedee.Client.Framework.SL.LogEntryRepositoryService.LogEntryRepositoryService.BeginLogAll(System.Collections.Generic.List<Smeedee.DomainModel.Framework.Logging.LogEntry> logEntry, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLogAll(logEntry, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void Smeedee.Client.Framework.SL.LogEntryRepositoryService.LogEntryRepositoryService.EndLogAll(System.IAsyncResult result) {
+            base.Channel.EndLogAll(result);
+        }
+        
+        private System.IAsyncResult OnBeginLogAll(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.List<Smeedee.DomainModel.Framework.Logging.LogEntry> logEntry = ((System.Collections.Generic.List<Smeedee.DomainModel.Framework.Logging.LogEntry>)(inValues[0]));
+            return ((Smeedee.Client.Framework.SL.LogEntryRepositoryService.LogEntryRepositoryService)(this)).BeginLogAll(logEntry, callback, asyncState);
+        }
+        
+        private object[] OnEndLogAll(System.IAsyncResult result) {
+            ((Smeedee.Client.Framework.SL.LogEntryRepositoryService.LogEntryRepositoryService)(this)).EndLogAll(result);
+            return null;
+        }
+        
+        private void OnLogAllCompleted(object state) {
+            if ((this.LogAllCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.LogAllCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void LogAllAsync(System.Collections.Generic.List<Smeedee.DomainModel.Framework.Logging.LogEntry> logEntry) {
+            this.LogAllAsync(logEntry, null);
+        }
+        
+        public void LogAllAsync(System.Collections.Generic.List<Smeedee.DomainModel.Framework.Logging.LogEntry> logEntry, object userState) {
+            if ((this.onBeginLogAllDelegate == null)) {
+                this.onBeginLogAllDelegate = new BeginOperationDelegate(this.OnBeginLogAll);
+            }
+            if ((this.onEndLogAllDelegate == null)) {
+                this.onEndLogAllDelegate = new EndOperationDelegate(this.OnEndLogAll);
+            }
+            if ((this.onLogAllCompletedDelegate == null)) {
+                this.onLogAllCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLogAllCompleted);
+            }
+            base.InvokeAsync(this.onBeginLogAllDelegate, new object[] {
+                        logEntry}, this.onEndLogAllDelegate, this.onLogAllCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -310,6 +368,18 @@ namespace Smeedee.Client.Framework.SL.LogEntryRepositoryService {
             public void EndLog(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 base.EndInvoke("Log", _args, result);
+            }
+            
+            public System.IAsyncResult BeginLogAll(System.Collections.Generic.List<Smeedee.DomainModel.Framework.Logging.LogEntry> logEntry, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = logEntry;
+                System.IAsyncResult _result = base.BeginInvoke("LogAll", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndLogAll(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("LogAll", _args, result);
             }
             
             public System.IAsyncResult BeginGet(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.Framework.Logging.LogEntry> specification, System.AsyncCallback callback, object asyncState) {

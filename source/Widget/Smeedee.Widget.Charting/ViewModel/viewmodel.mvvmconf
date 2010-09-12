@@ -1,0 +1,8 @@
+﻿#if you don't want to generate Views or something else, you can remove the line(s) in the configure section
+
+configure do
+  #generate "views"
+  generate "controllers"
+  generate "tests"
+  generate "partial viewmodels"  
+end

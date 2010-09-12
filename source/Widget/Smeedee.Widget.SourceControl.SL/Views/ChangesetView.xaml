@@ -1,14 +1,16 @@
 ﻿<UserControl
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    x:Class="Smeedee.Widget.SourceControl.SL.Views.ChangesetView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.ChangesetSampleData" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" 
     xmlns:di="clr-namespace:Smeedee.Widget.DeveloperInfo.SL.Views;assembly=Smeedee.Widget.DeveloperInfo.SL"
     xmlns:APD_Client_Framework_Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL"
-    x:Class="Smeedee.Widget.SourceControl.SL.Views.ChangesetView"
-	d:DesignWidth="600" d:DesignHeight="180">
+    xmlns:i ="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+	mc:Ignorable="d" 
+    d:DesignWidth="600" d:DesignHeight="180">
+	
     
     <UserControl.Resources>
     	<APD_Client_Framework_Converters:DateTimeToPrettyStringConverter x:Key="DateTimeToPrettyStringConverter"/>
@@ -22,8 +24,8 @@
     			<GradientStop Color="#FF505050" Offset="0.82"/>
     		</RadialGradientBrush>
     	</Border.Background>
-			
         <VisualStateManager.VisualStateGroups>
+        	
             <VisualStateGroup x:Name="VisualStateGroup">
         		<VisualStateGroup.Transitions>
         			<VisualTransition GeneratedDuration="00:00:02" To="CommentIsBad">
@@ -36,14 +38,14 @@
         			</VisualTransition>
         		</VisualStateGroup.Transitions>
         		<VisualState x:Name="CommentIsBad">
-        			<Storyboard AutoReverse="True" RepeatBehavior="Forever">
+        			<Storyboard x:Name="test" AutoReverse="True" RepeatBehavior="Forever">
         				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
         					<EasingColorKeyFrame KeyTime="00:00:00" Value="#00AD1717">
         						<EasingColorKeyFrame.EasingFunction>
         							<CubicEase EasingMode="EaseInOut"/>
         						</EasingColorKeyFrame.EasingFunction>
         					</EasingColorKeyFrame>
-        					<EasingColorKeyFrame KeyTime="00:00:02" Value="#7FAD1717">
+        					<EasingColorKeyFrame KeyTime="00:00:01" Value="#7FAD1717">
         						<EasingColorKeyFrame.EasingFunction>
         							<CubicEase EasingMode="EaseInOut"/>
         						</EasingColorKeyFrame.EasingFunction>
@@ -121,4 +123,5 @@
 
         </Grid>
     </Border>
+	
 </UserControl>

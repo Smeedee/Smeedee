@@ -29,6 +29,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 using Smeedee.DomainModel.Holidays;
@@ -116,6 +117,27 @@ namespace Smeedee.DomainModel.ProjectInfo
             }
 
             return new TimeSpan(workingDaysLeft, 0,0,0);
+        }
+
+        public virtual TimeSpan CalculateWorkingdaysLeft(DateTime dayToCalculateFrom, 
+                                                         IEnumerable<Holiday> holidays,
+                                                         IEnumerable<DayOfWeek> nonWorkingDays)
+        {
+            return CalculateWorkingdaysLeft(dayToCalculateFrom, Merge(holidays, nonWorkingDays));
+        }
+
+        private List<Holiday> Merge(IEnumerable<Holiday> holidays, IEnumerable<DayOfWeek> nonWorkingDays)
+        {
+            var holidaysDateSet = new HashSet<DateTime>(holidays.Select(holiday => holiday.Date));
+            var holidaysCopy = new List<Holiday>(holidays);
+            for (var day = StartDate; day <= EndDate; day = day.AddDays(1))
+            {
+                if (nonWorkingDays.Contains(day.DayOfWeek) && !holidaysDateSet.Contains(day))
+                {
+                    holidaysCopy.Add(new Holiday { Date = day, Description = day.DayOfWeek.ToString() });
+                }
+            }
+            return holidaysCopy;
         }
 
         public virtual bool IsOvertime(DateTime dayToCalculateFrom)

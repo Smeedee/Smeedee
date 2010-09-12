@@ -1,6 +1,6 @@
 ﻿<#@ assembly name="$(ProjectDir)..\..\..\Tools\TinyMVVM\TinyMVVM.dll" #>
 <#@ import namespace="TinyMVVM.DSL.TextParser" #>
-<#@ import namespace="TinyMVVM.SemanticModel" #>
+<#@ import namespace="TinyMVVM.SemanticModel.MVVM" #>
 
 <#+
 // <copyright file="ViewModelTestsTemplate.tt" company="eXPerience">
@@ -21,8 +21,12 @@ public class ViewModelTestsTemplate : Template
 
 using System;
 using NUnit.Framework;
+using Moq;
 using <#= UsingNamespace#>;
-using TinyMVVM.Framework.Testing;
+using TinyMVVM.IoC;
+using TinyMVVM.Repositories;
+using TinyMVVM.Framework.Services;
+using TinyMVVM.Framework.Testing.Services;
 <#+ foreach (string Using in modelSpec.Usings) {#>
 using <#= Using #>;
 <#+ }#>
@@ -30,21 +34,40 @@ using <#= Using #>;
 namespace <#= Namespace #>
 {
 <#+ foreach (ViewModel viewModel in modelSpec.ViewModels){#>
-	public abstract class <#= viewModel.Name #>TestContext : TestContext
+	public abstract class <#= viewModel.Name #>TestContext 
 	{
 		protected <#= viewModel.Name#> viewModel;
+
+	<#+ foreach (ViewModel vm in modelSpec.ViewModels) {#>
+	protected Mock<IRepository<<#= vm.Name#>>> <#= vm.Name#>RepositoryFake = new Mock<IRepository<<#= vm.Name#>>>();
+	<#+ }#>
 
 		[SetUp]
 		public void Setup()
 		{
-			ServiceLocator.SetLocator(ServiceLocatorForTesting.GetServiceLocator());
-			
+			RemoveAllGlobalDependencies.ForAllViewModels();
+			ConfigureGlobalDependencies.ForAllViewModels(config =>
+			{
+				config.Bind<IUIInvoker>().To<UIInvokerForTesting>();
+
+		<#+ foreach (ViewModel vm in modelSpec.ViewModels) {#>
+		config.Bind<IRepository<<#= vm.Name#>>>().ToInstance(<#= vm.Name#>RepositoryFake.Object);
+		<#+ }#>
+
+			});
+
+
 			Context();
+		}
+
+		public Mock<T> GetFakeFor<T>() where T: class
+		{
+			return null;
 		}
 
 		public abstract void Context();
 
-		public void Given_<#= viewModel.Name#>_is_created()
+		public virtual void Given_<#= viewModel.Name#>_is_created()
 		{
 			viewModel = new <#= viewModel.Name#>();
 		}
@@ -53,9 +76,14 @@ namespace <#= Namespace #>
 		{
 			viewModel = new <#= viewModel.Name#>();
 		}
+
+		public void And_PropertychangedRecorder_is_started()
+		{
+		    viewModel.PropertyChangeRecorder.Start();
+		}
 		
 	<#+ foreach (ViewModelProperty property in viewModel.Properties){#>
-	public void And_<#= property.Name#>_is_set(<#= property.Type#> value)
+	public virtual void And_<#= property.Name#>_is_set(<#= property.Type#> value)
 		{
 			viewModel.<#= property.Name#> = value;
 		}
@@ -63,7 +91,7 @@ namespace <#= Namespace #>
 	<#+ if (property.Type.Contains("Collection")) { 
 		String possibleTypeName = property.Name.Substring(0, property.Name.Length - 1); 
 	#>
-	public void When_add_<#= possibleTypeName#>(Action unitOfWork)
+	public virtual void When_add_<#= possibleTypeName#>(Action unitOfWork)
 		{
 			unitOfWork.Invoke();
 		}
@@ -71,42 +99,42 @@ namespace <#= Namespace #>
 
 	<#+ }#>	
 	
-		public void And_<#= viewModel.Name#>_PropertyChangeRecording_is_Started()
+		public virtual void And_<#= viewModel.Name#>_PropertyChangeRecording_is_Started()
 		{
 			viewModel.PropertyChangeRecorder.Start();
 		}
 
 	<#+ foreach (ViewModelProperty property in viewModel.Properties){#>
-	public void When_<#= property.Name#>_is_set(<#= property.Type#> value)
+	public virtual void When_<#= property.Name#>_is_set(<#= property.Type#> value)
 		{
 			viewModel.<#= property.Name#> = value;
 		}
 		
 	<#+ }#>
 	
-		public void When_<#= viewModel.Name#>_is_spawned()
+		public virtual void When_<#= viewModel.Name#>_is_spawned()
 		{
 			viewModel = new <#= viewModel.Name#>();
 		} 
 		
 	<#+ foreach (ViewModelCommand command in viewModel.Commands) {#>
-	public void And_<#= command.Name#>_Command_is_executed()
+	public virtual void And_<#= command.Name#>_Command_is_executed()
 		{
 			viewModel.<#= command.Name#>.Execute(null);
 		}
 
-		public void When_execute_<#= command.Name#>_Command()
+		public virtual void When_execute_<#= command.Name#>_Command()
 		{
 			viewModel.<#= command.Name#>.Execute(null);
 		}
 	<#+ }#>
 		
-		public void And(string description, Action unitOfWork)
+		public virtual void And(string description, Action unitOfWork)
 		{
 			unitOfWork.Invoke();
 		}
 
-		public void When(string description, Action unitOfWork)
+		public virtual void When(string description, Action unitOfWork)
 		{
 			unitOfWork.Invoke();
 		}

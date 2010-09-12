@@ -19,7 +19,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.PMT.ScrumForTFS.DomainModel.Repositories
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class ScrumForTFSRepositorySpecsShared
     {
         static IFetchWorkItems fetcher;

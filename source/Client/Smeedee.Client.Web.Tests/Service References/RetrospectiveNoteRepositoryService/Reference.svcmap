@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="096c6666-5bcb-4349-8eb4-f7739872fbf2" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RetrospectiveNoteRepositoryService.wsdl" MetadataType="Wsdl" ID="0e8c41ff-d252-44a0-93e0-0a5552e49f6a" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="RetrospectiveNoteRepositoryService.xsd" MetadataType="Schema" ID="eecf4148-ca13-4fcb-9a6b-fc4f0527797c" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="RetrospectiveNoteRepositoryService1.xsd" MetadataType="Schema" ID="ac06fba2-5904-4a68-86b7-08d6a4ca83f5" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="RetrospectiveNoteRepositoryService2.xsd" MetadataType="Schema" ID="d48f13ae-2b79-4081-b004-798f24fe3af1" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="RetrospectiveNoteRepositoryService3.xsd" MetadataType="Schema" ID="35a34773-a012-4e2e-859f-60a921dfe4a3" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RetrospectiveNoteRepositoryService1.wsdl" MetadataType="Wsdl" ID="4b9440e0-5d88-4ac8-bf06-d38aa5effda1" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="RetrospectiveNoteRepositoryService.disco" MetadataType="Disco" ID="5991a70e-22a1-43c4-9381-5a986a0d179d" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

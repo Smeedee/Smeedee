@@ -3,9 +3,10 @@
                    assembly="Smeedee.DomainModel"
                    namespace="Smeedee.DomainModel.Config">
   <class name="Configuration" table="Configuration">
-    <id name="Name">
+    <id name="Id">
       <generator class="assigned"/>
     </id>
+    <property name="Name"/>
     <property name="IsConfigured"/>
     <bag name="Settings" cascade="All" lazy="false" inverse="true">
       <key column="Configuration_fid"/>

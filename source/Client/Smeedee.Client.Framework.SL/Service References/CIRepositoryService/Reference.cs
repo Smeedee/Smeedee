@@ -23,6 +23,11 @@ namespace Smeedee.Client.Framework.SL.CIRepositoryService {
         System.IAsyncResult BeginGet(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.CI.CIServer> specification, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> EndGet(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/CIRepositoryService/Save", ReplyAction="http://smeedee.org/CIRepositoryService/SaveResponse")]
+        System.IAsyncResult BeginSave(System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> CIServers, System.AsyncCallback callback, object asyncState);
+        
+        void EndSave(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -57,6 +62,12 @@ namespace Smeedee.Client.Framework.SL.CIRepositoryService {
         private EndOperationDelegate onEndGetDelegate;
         
         private System.Threading.SendOrPostCallback onGetCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSaveDelegate;
+        
+        private EndOperationDelegate onEndSaveDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -113,6 +124,8 @@ namespace Smeedee.Client.Framework.SL.CIRepositoryService {
         
         public event System.EventHandler<GetCompletedEventArgs> GetCompleted;
         
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SaveCompleted;
+        
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
@@ -161,6 +174,51 @@ namespace Smeedee.Client.Framework.SL.CIRepositoryService {
             }
             base.InvokeAsync(this.onBeginGetDelegate, new object[] {
                         specification}, this.onEndGetDelegate, this.onGetCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Smeedee.Client.Framework.SL.CIRepositoryService.CIRepositoryService.BeginSave(System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> CIServers, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSave(CIServers, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void Smeedee.Client.Framework.SL.CIRepositoryService.CIRepositoryService.EndSave(System.IAsyncResult result) {
+            base.Channel.EndSave(result);
+        }
+        
+        private System.IAsyncResult OnBeginSave(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> CIServers = ((System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer>)(inValues[0]));
+            return ((Smeedee.Client.Framework.SL.CIRepositoryService.CIRepositoryService)(this)).BeginSave(CIServers, callback, asyncState);
+        }
+        
+        private object[] OnEndSave(System.IAsyncResult result) {
+            ((Smeedee.Client.Framework.SL.CIRepositoryService.CIRepositoryService)(this)).EndSave(result);
+            return null;
+        }
+        
+        private void OnSaveCompleted(object state) {
+            if ((this.SaveCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveAsync(System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> CIServers) {
+            this.SaveAsync(CIServers, null);
+        }
+        
+        public void SaveAsync(System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> CIServers, object userState) {
+            if ((this.onBeginSaveDelegate == null)) {
+                this.onBeginSaveDelegate = new BeginOperationDelegate(this.OnBeginSave);
+            }
+            if ((this.onEndSaveDelegate == null)) {
+                this.onEndSaveDelegate = new EndOperationDelegate(this.OnEndSave);
+            }
+            if ((this.onSaveCompletedDelegate == null)) {
+                this.onSaveCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveDelegate, new object[] {
+                        CIServers}, this.onEndSaveDelegate, this.onSaveCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -250,6 +308,18 @@ namespace Smeedee.Client.Framework.SL.CIRepositoryService {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> _result = ((System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer>)(base.EndInvoke("Get", _args, result)));
                 return _result;
+            }
+            
+            public System.IAsyncResult BeginSave(System.Collections.Generic.List<Smeedee.DomainModel.CI.CIServer> CIServers, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = CIServers;
+                System.IAsyncResult _result = base.BeginInvoke("Save", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndSave(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("Save", _args, result);
             }
         }
     }

@@ -42,9 +42,13 @@ namespace Smeedee.Client.Framework.SL.Repositories
         {
             
             var returnedChangesets = e.Result;
-            if (returnedChangesets != null && returnedChangesets.Count > 0)
+            if (returnedChangesets != null)
             {
                 changesets = returnedChangesets;
+            }
+            else
+            {
+                changesets = new List<Changeset>();
             }
 
             invocationException = e.Error;

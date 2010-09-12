@@ -79,7 +79,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.CIServerDat
 
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_created : CIServerRepositoryShared
     {
 
@@ -114,7 +114,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.CIServerDat
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_accessed : CIServerRepositoryShared
     {
 
@@ -145,7 +145,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.CIServerDat
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_saving_identical_projects_on_different_servers : CIServerRepositoryShared
     {
         private ISession session;
@@ -194,7 +194,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.CIServerDat
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_saving : CIServerRepositoryShared
     {
         private CIServer server;

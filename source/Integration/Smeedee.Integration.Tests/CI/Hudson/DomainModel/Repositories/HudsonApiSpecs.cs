@@ -23,7 +23,7 @@ namespace Smeedee.IntegrationTests.CI.Hudson.Tests.DomainModel.Repositories
         };
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_retreiving_data : Shared
     {
         [Test]

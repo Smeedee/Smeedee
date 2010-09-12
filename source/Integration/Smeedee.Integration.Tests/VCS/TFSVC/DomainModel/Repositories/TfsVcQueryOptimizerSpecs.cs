@@ -34,7 +34,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_pre_optimizing_fields_in_query_models
     {
         protected static QueryModel query;

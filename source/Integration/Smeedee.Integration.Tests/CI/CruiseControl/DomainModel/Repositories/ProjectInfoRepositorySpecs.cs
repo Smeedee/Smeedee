@@ -46,7 +46,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Pro
         protected CCServerRepository repository = new CCServerRepository(ciUrl, new SocketXMLBuildlogRequester());
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_queried_for_CIServers : Shared
     {
         private IEnumerable<CIServer> ciServers;
@@ -98,6 +98,7 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Pro
         }
 
         [Test]
+        [Ignore("We are testing against a broken system. Consider enabling after setting up CCNet properly.")]
         public void all_servers_should_have_projects()
         {
             foreach (var server in ciServers)

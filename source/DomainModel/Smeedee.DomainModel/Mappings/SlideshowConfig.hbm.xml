@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Smeedee.DomainModel"
+                   namespace="Smeedee.DomainModel.Config.SlideConfig">
+  
+  <class name="SlideConfiguration" table="Slides" lazy="false" >
+    <id name="Id">
+      <generator class="assigned"/>
+    </id>
+    <property name="Title"/>
+    <property name="Duration"/>
+    <property name="SlideNumberInSlideshow" />
+
+    <property name="WidgetConfigurationId" />
+    <property name="WidgetType" />
+    <property name="WidgetXapName" />
+    
+  </class>  
+</hibernate-mapping>

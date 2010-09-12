@@ -50,14 +50,30 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
 {
     public class Shared : ScenarioClass
     {
-        protected static String SERVER_ADDRESS = "https://tfs08.codeplex.com";
+        protected static String SERVER_ADDRESS = "http://80.203.160.221:8080/tfs";
         protected static String PROJECT_NAME = "smeedee";
-        protected static ICredentials credentials = new NetworkCredential("smeedee_cp", "haldis", "snd");
+        protected static ICredentials credentials = new NetworkCredential("smeedee", "dlog4321.");
 
         protected static TFSCIServerRepository repository;
 
         protected readonly Context repository_is_instantiated =
             () => { repository = new TFSCIServerRepository(SERVER_ADDRESS, PROJECT_NAME, credentials); };
+
+        public void ExpectException<TException> (Action fn) where TException : Exception
+        {
+            bool hasThrownException = false;
+            try
+            {
+                fn.Invoke();
+            }
+            catch (TException e)
+            {
+                hasThrownException = true;
+            } finally
+            {
+                if (!hasThrownException) Assert.Fail("Did not throw expected exception");
+            }
+        }
 
         [TearDown]
         public void TearDown()
@@ -66,8 +82,7 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         }
     }
 
-    [TestFixture]
-    
+    [TestFixture][Category("IntegrationTest")]
     public class CIProjectRepositoryIntegrationTests : Shared
     {
         [SetUp]
@@ -136,36 +151,39 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         }
 
         [Test]
-        [ExpectedException("TeamFoundationInvalidServerNameException")]
-        [Ignore("For some reason this does not recognize the exception.")]
         public void Assure_wrong_url_throws_exception()
         {
             TFSCIServerRepository repository;
 
-            Given("a repository is instantiated with a wrong server address", () =>
-                repository = new TFSCIServerRepository("idonotexist48123", PROJECT_NAME, credentials));
-            
+            Given("a repository is instantiated with a wrong server address");
             When("it is instantiated");
-            
-            Then("and exception should be thrown");
+            Then("an exception should be thrown", () =>
+            {
+                ExpectException<Exception>(() =>
+                    repository = new TFSCIServerRepository("idonotexist48123", PROJECT_NAME, credentials)
+                );
+            });
         }
 
         [Test]
-        [ExpectedException("TeamFoundationServerUnauthorizedException")]
-        [Ignore("For some reason this does not recognize the exception.")]
         public void Assure_wrong_credentials_throws_exception()
         {
             TFSCIServerRepository repository;
             
-            Given("a repository is instantiated with wrong credentials", () =>
-                repository = new TFSCIServerRepository(SERVER_ADDRESS, PROJECT_NAME, new NetworkCredential("foo", "bar")));
+            Given("a repository is instantiated with wrong credentials");
             
             When("it is instantiated");
-            
-            Then("and exception should be thrown");
+
+            Then("and exception should be thrown", () =>
+            {
+                ExpectException<TeamFoundationServerUnauthorizedException>(() =>
+                    repository = new TFSCIServerRepository(SERVER_ADDRESS, PROJECT_NAME, new NetworkCredential("foo", "bar"))
+                );
+            });
         }
 
         [Test]
+        [Ignore("This works locally, but not on our specific build server. Should be looked into.")]
         public void Assure_the_ammount_of_returned_projects_corresponds_with_server()
         {
             TeamFoundationServer tfsServer;
@@ -191,7 +209,7 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         }
 
         [Test]
-        [Ignore("Fails since there are no projects on Codeplex. Un-ignore after creating builds on Codeplex")]
+        [Ignore("This works locally, but not on our specific build server. Should be looked into.")]
         public void Assure_the_ammount_of_returned_builds_in_a_project_corresponds_with_server()
         {
             TeamFoundationServer tfsServer;

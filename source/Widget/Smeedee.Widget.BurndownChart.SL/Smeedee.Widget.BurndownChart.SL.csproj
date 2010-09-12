@@ -15,10 +15,11 @@
     <RootNamespace>Smeedee.Widget.BurndownChart.SL</RootNamespace>
     <AssemblyName>Smeedee.Widget.BurndownChart.SL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplication>false</SilverlightApplication>
+    <SilverlightApplication>true</SilverlightApplication>
+    <XapOutputs>true</XapOutputs>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <ExpressionBlendVersion>3.0.1921.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20421.0</ExpressionBlendVersion>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -35,6 +36,13 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <SilverlightAppEntry>Smeedee.Widget.BurndownChart.SL.App</SilverlightAppEntry>
+    <XapFilename>Smeedee.Widget.BurndownChart.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <LinkedServerProject>
+    </LinkedServerProject>
+    <Utf8Output>true</Utf8Output>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,10 +67,22 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Client, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel.DomainServices.Client.Web, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel.Web.Extensions, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
@@ -74,6 +94,7 @@
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
@@ -85,13 +106,22 @@
     <Compile Include="..\Smeedee.Widget.BurndownChart\Controllers\BurndownChartController.cs">
       <Link>Controllers\BurndownChartController.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widget.BurndownChart\ViewModels\BurndownChartSettingsViewModel.cs">
+      <Link>ViewModels\BurndownChartSettingsViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widget.BurndownChart\ViewModels\BurndownChartViewModel.cs">
       <Link>ViewModels\BurndownChartViewModel.cs</Link>
     </Compile>
-    <Compile Include="BurndownChartModule.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BurndownChartWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleData\SampleDataSource\SampleDataSource.xaml.cs">
       <DependentUpon>SampleDataSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BurndownChartSettingsView.xaml.cs">
+      <DependentUpon>BurndownChartSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BurndownChartView.xaml.cs">
       <DependentUpon>BurndownChartView.xaml</DependentUpon>
@@ -104,6 +134,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignTimeOnly>
+    <Page Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Properties\DesignTimeResources1.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Views\BurndownChartSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BurndownChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:MarkupCompilePass1</Generator>
@@ -126,6 +169,11 @@
       <Project>{DB3A158F-D0F2-46F2-BC90-1BB163EA76AB}</Project>
       <Name>Smeedee.Client.Framework.SL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.SL\Smeedee.Client.SL.csproj" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Project>{82E89814-481B-48A7-9EBB-6717E47640EA}</Project>
+      <Name>Smeedee.Client.SL</Name>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework.SL\Smeedee.DomainModel.Framework.SL.csproj">
       <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
       <Name>Smeedee.DomainModel.Framework.SL</Name>
@@ -134,6 +182,13 @@
       <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
       <Name>Smeedee.DomainModel.SL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Framework.SL\Smeedee.Framework.SL.csproj">
+      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
+      <Name>Smeedee.Framework.SL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,7 +15,7 @@ namespace Smeedee.Client.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class CIRepositoryService
     {
-         private IRepository<CIServer> repository;
+        private CIServerDatabaseRepository repository;
 
         public CIRepositoryService()
         {
@@ -24,6 +24,7 @@ namespace Smeedee.Client.Web.Services
 
         [OperationContract]
         [ServiceKnownType(typeof (AllSpecification<CIServer>))]
+        [ServiceKnownType(typeof(Specification<CIServer>))]
         public IEnumerable<CIServer> Get(Specification<CIServer> specification)
         {
             IEnumerable<CIServer> result = new List<CIServer>();
@@ -39,7 +40,19 @@ namespace Smeedee.Client.Web.Services
 
             return result;
         }
-    
 
+        [OperationContract]
+        public void Save(IEnumerable<CIServer> CIServers)
+        {
+            try
+            {
+                repository.Save(CIServers); 
+            }
+            catch(Exception exception)
+            {
+               ILog logger = new Logger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance));
+               logger.WriteEntry(new ErrorLogEntry(GetType().ToString(), exception.ToString()));
+            }
+        }
     }
 }

@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{366E9F59-AA7E-4059-8176-20FFF07F7EF4}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tskjortebutikken.Widgets.SL</RootNamespace>
+    <AssemblyName>Tskjortebutikken.Widgets.SL</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>Tskjortebutikken.Widgets.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Tskjortebutikken.Widgets.App</SilverlightAppEntry>
+    <TestPageFileName>Tskjortebutikken.WidgetsTestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <EnableOutOfBrowser>false</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <LinkedServerProject>
+    </LinkedServerProject>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json.Silverlight">
+      <HintPath>..\..\..\tools\JSON\Silverlight\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="system" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="TinyMVVM.SL">
+      <HintPath>..\..\..\tools\TinyMVVM-Silverlight\TinyMVVM.SL.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Smeedee.Widget.Charting\Controllers\CollectionViewModelController.cs">
+      <Link>Controllers\CollectionViewModelController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\Controllers\DatabaseViewModelController.cs">
+      <Link>Controllers\DatabaseViewModelController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\Controllers\DataPointController.cs">
+      <Link>Controllers\DataPointController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\Controllers\GraphConfig.cs">
+      <Link>Controllers\GraphConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\Controllers\GraphController.cs">
+      <Link>Controllers\GraphController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\Controllers\GraphSettingsController.cs">
+      <Link>Controllers\GraphSettingsController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\CollectionViewModel.cs">
+      <Link>ViewModel\CollectionViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\CollectionViewModel.mvvm.cs">
+      <Link>ViewModel\CollectionViewModel.mvvm.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\DatabaseViewModel.cs">
+      <Link>ViewModel\DatabaseViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\DatabaseViewModel.mvvm.cs">
+      <Link>ViewModel\DatabaseViewModel.mvvm.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\DataPoint.cs">
+      <Link>ViewModel\DataPoint.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\DataPoint.mvvm.cs">
+      <Link>ViewModel\DataPoint.mvvm.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\Graph.cs">
+      <Link>ViewModel\Graph.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\Graph.mvvm.cs">
+      <Link>ViewModel\Graph.mvvm.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\GraphSettings.cs">
+      <Link>ViewModel\GraphSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widget.Charting\ViewModel\GraphSettings.mvvm.cs">
+      <Link>ViewModel\GraphSettings.mvvm.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GraphWidget.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleData\GraphSampleDataSource\GraphSampleDataSource.xaml.cs">
+      <DependentUpon>GraphSampleDataSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SampleData\GraphSettingsSampleDataSource\GraphSettingsSampleDataSource.xaml.cs">
+      <DependentUpon>GraphSettingsSampleDataSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphSettingsView.xaml.cs">
+      <DependentUpon>GraphSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphView.xaml.cs">
+      <DependentUpon>GraphView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleData\GraphSampleDataSource\GraphSampleDataSource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SampleData\GraphSettingsSampleDataSource\GraphSettingsSampleDataSource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GraphSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="SampleData\GraphSampleDataSource\GraphSampleDataSource.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SampleData\GraphSettingsSampleDataSource\GraphSettingsSampleDataSource.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework.SL\Smeedee.Client.Framework.SL.csproj">
+      <Project>{DB3A158F-D0F2-46F2-BC90-1BB163EA76AB}</Project>
+      <Name>Smeedee.Client.Framework.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework.SL\Smeedee.DomainModel.Framework.SL.csproj">
+      <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
+      <Name>Smeedee.DomainModel.Framework.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.SL.csproj">
+      <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
+      <Name>Smeedee.DomainModel.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Framework.SL\Smeedee.Framework.SL.csproj">
+      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
+      <Name>Smeedee.Framework.SL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

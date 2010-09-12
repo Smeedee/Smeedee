@@ -29,36 +29,26 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-
 using Smeedee.DomainModel.Framework;
-
 using NHibernate;
-using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
-
-using Environment=System.Environment;
-using Smeedee.DomainModel.SourceControl;
-
+using Environment = System.Environment;
 
 namespace Smeedee.Integration.Database.DomainModel.Repositories
 {
-    public abstract class GenericDatabaseRepository<TDomainModelType> : IRepository<TDomainModelType>, IPersistDomainModels<TDomainModelType>
+    public abstract class GenericDatabaseRepository<TDomainModelType> : IRepository<TDomainModelType>, IPersistDomainModels<TDomainModelType>, IDeleteDomainModels<TDomainModelType>
     {
         public static readonly string DatabaseFilePath =
-        Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-            "smeedeeDB.db");
+            Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "smeedeeDB.db");
 
         protected readonly ISessionFactory sessionFactory;
 
         public GenericDatabaseRepository() :
             this(NHibernateFactory.AssembleSessionFactory(DatabaseFilePath))
         {
-            
         }
 
         public GenericDatabaseRepository(ISessionFactory sessionFactory)
@@ -73,10 +63,11 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
         {
             using (var session = sessionFactory.OpenSession())
             {
-                return session.CreateCriteria(typeof(TDomainModelType)).List<TDomainModelType>().
-                    Where(cs => specification.IsSatisfiedBy(cs));
+                var results = session.CreateCriteria(typeof(TDomainModelType))
+                                     .List<TDomainModelType>()
+                                     .Where(cs => specification.IsSatisfiedBy(cs));
+                return results;
             }
-
         }
 
         public virtual void Save(IEnumerable<TDomainModelType> domainModels)
@@ -103,6 +94,22 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
                     session.SaveOrUpdate(domainModel);
                     session.Transaction.Commit();
                     session.Flush();
+                }
+            }
+        }
+
+        public virtual void Delete(Specification<TDomainModelType> specification)
+        {
+            using (var session = sessionFactory.OpenSession())
+            {
+                using (session.BeginTransaction())
+                {
+                    var result = Get(specification);
+                    foreach (var domainModel in result)
+                    {
+                        session.Delete(domainModel);
+                    }
+                    session.Transaction.Commit();
                 }
             }
         }

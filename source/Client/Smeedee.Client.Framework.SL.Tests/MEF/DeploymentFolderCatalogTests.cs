@@ -30,13 +30,19 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
     {
         public class Context : SilverlightTest
         {
-            protected static Uri serverUrl = new Uri(HtmlPage.Document.DocumentUri.ToString().Replace(HtmlPage.Document.DocumentUri.AbsolutePath, string.Empty));
+            protected static Uri serverUrl = GetServerUrl();
             protected static Uri silverlightDeploymentMetadataUrl = new Uri(string.Format("{0}SilverlightDeploymentMetadata.ashx", serverUrl));
             protected CustomDeploymentFolderCatalog catalog;
             protected int xapDownloadCounter;
             protected DownloadStringCompletedEventArgs testDownloadMetadataEventArgs;
             protected AsyncCompletedEventArgs metadataDownloadCompletedArgs;
             protected List<string> assembliesDeployedOnServer = new List<string>();
+
+            private static Uri GetServerUrl()
+            {
+                var url = new string(HtmlPage.Document.DocumentUri.ToString().Reverse().SkipWhile(c => c != '/').Reverse().ToArray());
+                return new Uri(url);
+            }
 
             protected void DownloadDeploymentMetadata()
             {
@@ -113,6 +119,7 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
         public class When_downloaded : Context
         {
             private int chaningEventCounter;
+            private bool AllCompletedEventIsTriggered = false;
 
             [TestInitialize]
             public void Setup()
@@ -123,6 +130,7 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
                 assembliesDeployedOnServer.Clear();
 
                 catalog = new CustomDeploymentFolderCatalog();
+                catalog.AllCompleted += (o, e) => AllCompletedEventIsTriggered = true;
                 catalog.DownloadCompleted += (o, e) =>
                 {
                     xapDownloadCounter++;
@@ -141,6 +149,22 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
 
             [TestMethod]
             [Asynchronous]
+            public void Then_assure_AllCompleted_is_triggered()
+            {
+                EnqueueCallback(() => DownloadDeploymentMetadata());
+                EnqueueConditional(() => WaitUntilAllXapsAreDownloaded());
+                EnqueueDelay(200);
+
+                EnqueueCallback(() =>
+                {
+                    Assert.IsTrue(AllCompletedEventIsTriggered);
+                });
+
+                EnqueueTestComplete();
+            }
+
+            [TestMethod]
+            [Asynchronous]
             public void assure_MetadataDownloadCompleted_event_is_triggered()
             {
                 EnqueueConditional(() => WaitUntilAllXapsAreDownloaded());
@@ -152,7 +176,7 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
                     Assert.IsNull(metadataDownloadCompletedArgs.UserState);
                 });
 
-                EnqueueTestComplete();                
+                EnqueueTestComplete();
             }
 
 
@@ -233,7 +257,7 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
 
                 EnqueueCallback(() =>
                 {
-                    Assert.IsNotNull(metadataDownloadCompletedArgs.Error);                    
+                    Assert.IsNotNull(metadataDownloadCompletedArgs.Error);
                 });
 
                 EnqueueTestComplete();
@@ -270,7 +294,6 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
 
                 EnqueueTestComplete();
             }
-
         }
 
         public class CustomDeploymentFolderCatalog : DeploymentFolderCatalog

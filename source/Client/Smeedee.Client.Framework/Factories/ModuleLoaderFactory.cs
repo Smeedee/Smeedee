@@ -13,7 +13,9 @@ namespace Smeedee.Client.Framework.Factories
     {
         public IModuleLoader NewModuleLoader()
         {
-            return ServiceLocator.Instance.GetInstance<IModuleLoader>();
+            //return ServiceLocator.Instance.GetInstance<IModuleLoader>();
+
+        	return null;
         }
     }
 }

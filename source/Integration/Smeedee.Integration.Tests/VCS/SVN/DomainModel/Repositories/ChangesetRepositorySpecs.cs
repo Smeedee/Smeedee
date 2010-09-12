@@ -58,7 +58,7 @@ namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetRep
         protected void SetupSharedContext()
         {
             SetupContext();
-            repositoryUrl = "https://agileprojectdashboard.org:8443/svn/CPMonitor";
+            repositoryUrl = "http://smeedee.googlecode.com/svn/trunk";
             //repository = new ChangesetRepository(repositoryUrl);
             repository = new StaticRepositoryCache<Changeset>(new SVNChangesetRepository(repositoryUrl), 99000);
         }
@@ -90,7 +90,8 @@ namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetRep
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")][Category("IntegrationTest")]
+    [Ignore("Integration specific")]
     public class When_query_all_changesets : Shared
     {
         #region Setup/Teardown
@@ -192,7 +193,8 @@ namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetRep
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")][Category("IntegrationTest")]
+    [Ignore("Integration specific")]
     public class When_query_all_changesets_after_a_given_revision : Shared
     {
         #region Setup/Teardown
@@ -226,7 +228,8 @@ namespace Smeedee.IntegrationTests.VCS.SVN.DomainModel.Repositories.ChangesetRep
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")][Category("IntegrationTest")]
+    [Ignore("Integration specific")]
     public class When_query_a_users_changesets : Shared
     {
         #region Setup/Teardown

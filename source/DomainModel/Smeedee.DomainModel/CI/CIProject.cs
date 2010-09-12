@@ -35,6 +35,7 @@ namespace Smeedee.DomainModel.CI
     public class CIProject : IComparable<CIProject>
     {
         private IList<Build> internalBuilds;
+
         public CIProject()
         {
             internalBuilds = new List<Build>();
@@ -68,6 +69,7 @@ namespace Smeedee.DomainModel.CI
                 SetAllBuildsToProjectLinks();
             }
         }
+
         private void SetAllBuildsToProjectLinks()
         {
             foreach (var build in internalBuilds)
@@ -131,7 +133,7 @@ namespace Smeedee.DomainModel.CI
             {
                 if (internalBuilds.Count > 0)
                 {
-                    return internalBuilds.LastOrDefault();
+                    return internalBuilds.OrderBy((build) => build.FinishedTime).LastOrDefault();
                 }
                 else
                 {

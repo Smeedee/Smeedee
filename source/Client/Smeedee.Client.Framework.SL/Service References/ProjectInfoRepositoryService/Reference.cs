@@ -20,6 +20,8 @@ namespace Smeedee.Client.Framework.SL.ProjectInfoRepositoryService {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/ProjectInfoRepositoryService/Get", ReplyAction="http://smeedee.org/ProjectInfoRepositoryService/GetResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.ProjectInfo.ProjectInfoServerByUrl))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.ProjectInfo.ProjectInfoServerByName))]
         System.IAsyncResult BeginGet(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> specification, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> EndGet(System.IAsyncResult result);

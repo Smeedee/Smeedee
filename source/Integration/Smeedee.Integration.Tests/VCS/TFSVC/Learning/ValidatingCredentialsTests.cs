@@ -14,10 +14,10 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.VCS.TFSVC.Learning
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class ValidatingCredentialsTests
     {
-        protected static string serverUrl = "https://tfs08.codeplex.com";
+        protected static string serverUrl = "http://80.203.160.221:8080/tfs";
         private TeamFoundationServer tfsClient;
 
         [SetUp]
@@ -29,7 +29,7 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.Learning
         public void How_to_check_if_Credentials_are_valid()
         {
             TryCredentials("gronn", "genser").ShouldBeFalse();
-            TryCredentials("smeedee_cp", "haldis").ShouldBeTrue();
+            TryCredentials("smeedee", "dlog4321.").ShouldBeTrue();
         }
 
         private bool TryCredentials(string username, string password)

@@ -6,5 +6,6 @@ namespace Smeedee.Tasks.Framework.Services
     {
         IEnumerable<string> GetFiles(string directory);
         void Move(string fromFile, string toFile);
+        string Read(string filePath);
     }
 }

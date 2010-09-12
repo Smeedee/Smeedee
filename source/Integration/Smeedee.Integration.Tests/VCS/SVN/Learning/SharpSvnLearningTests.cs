@@ -114,7 +114,7 @@ namespace Smeedee.IntegrationTests.VCS.SVN.Learning
 
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     [Ignore]
     public class SharpSvnLearningTests : SharpSVNContext
     {

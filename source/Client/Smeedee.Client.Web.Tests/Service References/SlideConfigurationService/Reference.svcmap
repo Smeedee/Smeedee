@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cde4fe06-6a7d-4b55-b1eb-2649c1dee817" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SlideConfigurationRepositoryService.wsdl" MetadataType="Wsdl" ID="74063197-9938-4d22-9a8a-8a9862797165" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?wsdl" />
+    <MetadataFile FileName="SlideConfigurationRepositoryService1.xsd" MetadataType="Schema" ID="00c88ef2-d4d0-45ca-bca0-240861c30777" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?xsd=xsd3" />
+    <MetadataFile FileName="SlideConfigurationRepositoryService2.xsd" MetadataType="Schema" ID="18d821c9-7f70-4686-b933-a50e692f439c" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SlideConfigurationRepositoryService3.xsd" MetadataType="Schema" ID="02c08e67-61d2-4a48-8fa0-84a495618adc" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SlideConfigurationRepositoryService1.wsdl" MetadataType="Wsdl" ID="1f5e29a6-699b-49eb-a464-540422767da3" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="SlideConfigurationRepositoryService4.xsd" MetadataType="Schema" ID="e687e52e-13d8-4c0c-b11d-412f07ced3b5" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SlideConfigurationRepositoryService.disco" MetadataType="Disco" ID="f49d8fb1-0c88-4a32-8a06-95a4af2cd7b3" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

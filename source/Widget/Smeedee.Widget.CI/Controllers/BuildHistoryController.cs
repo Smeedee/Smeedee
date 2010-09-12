@@ -15,8 +15,8 @@ namespace Smeedee.Widget.CI.Controllers
     {
         private IRepository<CIServer> ciRepository;
 
-        public BuildHistoryController(BuildHistoryViewModel viewModel, ITimer timer, IUIInvoker uiInvoke, IRepository<CIServer> ciRepo)
-            : base(viewModel, timer, uiInvoke)
+        public BuildHistoryController(BuildHistoryViewModel viewModel, ITimer timer, IUIInvoker uiInvoke, IRepository<CIServer> ciRepo, IProgressbar loadingNotifier)
+            : base(viewModel, timer, uiInvoke, loadingNotifier)
         {
             this.ciRepository = ciRepo;
         }

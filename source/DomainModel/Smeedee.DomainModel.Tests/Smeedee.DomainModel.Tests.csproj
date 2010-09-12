@@ -45,7 +45,19 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\tools\JSON\DotNet\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
@@ -76,8 +88,17 @@
     <Compile Include="CI\CIProjectSpecs.cs" />
     <Compile Include="CI\TriggerSpecs.cs" />
     <Compile Include="Config\ConfigurationSpecs.cs" />
+    <Compile Include="Config\SettingsEntryExSpecs.cs" />
+    <Compile Include="Corkboard\RetrospectiveNoteSpecificationSpecs.cs" />
+    <Compile Include="Corkboard\RetrospectiveNoteSpecs.cs" />
+    <Compile Include="Config\SlideConfig\SlideConfigurationSpecs.cs" />
+    <Compile Include="Config\SlideConfig\WidgetInfoSpecs.cs" />
     <Compile Include="Holidays\HolidaySpecificationSpecs.cs" />
     <Compile Include="Holidays\HolidaysSpecs.cs" />
+    <Compile Include="Learning\JSONLearningTests.cs" />
+    <Compile Include="NoSql\NoSqlDatabaseSpecs.cs" />
+    <Compile Include="NoSql\CollectionSpecs.cs" />
+    <Compile Include="NoSql\DocumentSpecs.cs" />
     <Compile Include="ProjectInfo\IterationSpecs.cs" />
     <Compile Include="ProjectInfo\ProjectInfoServerSpecs.cs" />
     <Compile Include="ProjectInfo\ProjectSpecs.cs" />
@@ -88,6 +109,7 @@
     <Compile Include="SourceControl\ChangesetSpecs.cs" />
     <Compile Include="SourceControl\EmptyChangesetSpecs.cs" />
     <Compile Include="SpecificationExtensionMethods.cs" />
+    <Compile Include="TaskInstanceConfiguration\TaskConfigurationEntrySpecs.cs" />
     <Compile Include="Users\SpecificationSpecs.cs" />
     <Compile Include="Users\UserdbSpecs.cs" />
     <Compile Include="Users\UserSpecs.cs" />

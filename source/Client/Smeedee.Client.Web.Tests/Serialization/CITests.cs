@@ -38,7 +38,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Client.WebTests.Serialization
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_Serializing
     {
         [Test]

@@ -25,6 +25,7 @@ namespace Smeedee.Client.Web.Services
         }
 
         [OperationContract]
+        [ServiceKnownType(typeof(ConfigurationByName))]
         [ServiceKnownType(typeof(Specification<Configuration>))]
         [ServiceKnownType(typeof(AllSpecification<Configuration>))]
         public IEnumerable<Configuration> Get(Specification<Configuration> specification)

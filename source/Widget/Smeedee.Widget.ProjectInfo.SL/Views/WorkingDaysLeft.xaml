@@ -4,11 +4,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" 
+    xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" 
     x:Class="Smeedee.Widget.ProjectInfo.SL.Views.WorkingDaysLeft"
     >
     
     <UserControl.Resources>
+        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <ControlTemplate x:Name="RemainingDays" TargetType="ContentControl">
             <controlsToolkit:Viewbox>
                 <Grid 
@@ -29,6 +31,7 @@
                     <TextBlock
                         Grid.Column="1"
                         VerticalAlignment="Center"
+                        Visibility="{Binding HasInformationToShow, Converter={StaticResource BoolToVisibilityConverter}}"
                         Text="{Binding DaysRemaining, Mode=OneWay}" 
                         HorizontalAlignment="Center" 
                         FontFamily="{StaticResource FontFamily}"
@@ -50,6 +53,7 @@
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Text="{Binding DaysRemaining, Mode=OneWay}" 
+                            Visibility="{Binding HasInformationToShow, Converter={StaticResource BoolToVisibilityConverter}}"
                             FontWeight="Bold"
                             HorizontalAlignment="Center" 
                             FontSize="32"
@@ -68,9 +72,11 @@
                 </controlsToolkit:Viewbox>
         </ControlTemplate>
     </UserControl.Resources>
-    
-    
-    <Grid x:Name="LayoutRoot" d:DataContext="{Binding Source={StaticResource WorkingDaysLeftDataSource}}" SizeChanged="ResizeHandler" Loaded="ResizeHandler">
+    <Grid 
+        x:Name="LayoutRoot" 
+        d:DataContext="{Binding Source={StaticResource WorkingDaysLeftDataSource}}" 
+        SizeChanged="ResizeHandler" 
+        Loaded="ResizeHandler">
         <ContentControl x:Name="Content" />
    </Grid>         
 </UserControl> 

@@ -11,7 +11,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Client.WebTests.Services.Integration.HolidayRepositoryServiceTests
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class HolidayRepositoryServiceTests
     {
         private HolidayRepositoryServiceClient client;

@@ -79,7 +79,7 @@ namespace Smeedee.Plugin.DatabaseTests.ProjectInfoServerRepositorySpecs
 
     }
    
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_spawned : ProjectInfoServerRepositorySpecsShared
     {
         [SetUp]
@@ -117,7 +117,7 @@ namespace Smeedee.Plugin.DatabaseTests.ProjectInfoServerRepositorySpecs
     }
 
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_accessed : ProjectInfoServerRepositorySpecsShared
     {
         [SetUp]
@@ -147,7 +147,7 @@ namespace Smeedee.Plugin.DatabaseTests.ProjectInfoServerRepositorySpecs
 
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_saving : Shared
     {
         protected new const string TESTPROJECTNAME_ONE = "Project 1";

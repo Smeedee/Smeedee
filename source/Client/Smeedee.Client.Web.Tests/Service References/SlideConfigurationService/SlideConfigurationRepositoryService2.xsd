@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Config.SlideConfig" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Config.SlideConfig" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+  <xs:complexType name="SlideConfigurationByIdSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q1:SpecificationOfSlideConfigurationNus8YO64">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SlideConfigurationByIdSpecification" nillable="true" type="tns:SlideConfigurationByIdSpecification" />
+  <xs:complexType name="ArrayOfSlideConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SlideConfiguration" nillable="true" type="tns:SlideConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSlideConfiguration" nillable="true" type="tns:ArrayOfSlideConfiguration" />
+  <xs:complexType name="SlideConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Duration" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="SlideNumberInSlideshow" type="xs:int" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WidgetConfigurationId" type="ser:guid" />
+      <xs:element minOccurs="0" name="WidgetType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WidgetXapName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SlideConfiguration" nillable="true" type="tns:SlideConfiguration" />
+</xs:schema>

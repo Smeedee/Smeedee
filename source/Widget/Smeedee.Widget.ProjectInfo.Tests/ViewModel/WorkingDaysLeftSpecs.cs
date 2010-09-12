@@ -27,8 +27,7 @@ using NUnit.Framework;
 using Smeedee.Tests;
 using Smeedee.Widget.ProjectInfo.ViewModels;
 
-
-namespace Smeedee.Widget.ProjectInfoTests.ViewModels
+namespace Smeedee.Widget.ProjectInfo.Tests.ViewModel
 {
     public class Shared
     {

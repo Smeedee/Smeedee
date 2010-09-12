@@ -12,7 +12,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Client.WebTests.Services.Integration.LogEntryRepositoryServiceSpecs
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class LogEntryRepositoryServiceSpecs
     {
         [Test]

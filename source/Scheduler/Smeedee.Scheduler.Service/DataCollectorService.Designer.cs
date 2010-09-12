@@ -61,7 +61,7 @@ namespace Smeedee.Scheduler.Service
             // 
             // DataCollectorService
             // 
-            this.ServiceName = "smeedee Data Collector";
+            this.ServiceName = "Smeedee Data Collector";
         }
 
         #endregion

@@ -25,10 +25,17 @@
 
 //TODO: use tinyBDD if class gets any bigger
 
+using System;
 using NUnit.Framework;
+using Smeedee.Client.Framework.Services.Impl;
+using Smeedee.Client.Framework.Tests;
+using Smeedee.Client.Tests;
 using Smeedee.Tests;
 using Smeedee.Widget.CI.ViewModels;
 using TinyBDD.Specification.NUnit;
+using TinyMVVM.Framework;
+using TinyMVVM.Framework.Services;
+using TinyMVVM.Framework.Services.Impl;
 
 namespace Smeedee.Client.Widget.CI.Tests.ProjectInfoViewModelSpecs
 {
@@ -37,13 +44,18 @@ namespace Smeedee.Client.Widget.CI.Tests.ProjectInfoViewModelSpecs
         protected ProjectInfoViewModel viewModel;
         public Shared()
         {
-            viewModel = new ProjectInfoViewModel();
         }
     }
 
     [TestFixture]
     public class when_spawned : Shared
     {
+        [SetUp]
+        public void SetUp()
+        {
+            viewModel = new ProjectInfoViewModel();
+        }
+
         [Test]
         public void should_have_IsLoading_property()
         {
@@ -71,7 +83,13 @@ namespace Smeedee.Client.Widget.CI.Tests.ProjectInfoViewModelSpecs
 
     [TestFixture]
     public class when_properties_change : Shared
-    {
+    {       
+        [SetUp]
+        public void SetUp()
+        {
+            viewModel = new ProjectInfoViewModel();
+        }
+
         [Test]
         public void assure_listeners_are_notified_when_latest_build_changes()
         {

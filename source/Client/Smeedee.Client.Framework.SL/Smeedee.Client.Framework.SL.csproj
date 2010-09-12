@@ -18,7 +18,7 @@
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.20310.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -47,7 +47,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing" />
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\..\..\tools\Expression Blend\Silverlight\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -60,12 +69,25 @@
     </Reference>
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.ComponentModel.Composition.Initialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.Data.Services.Client, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\..\..\tools\Expression Blend\Silverlight\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -77,8 +99,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Smeedee.Client.Framework\BindingHelper.cs">
+      <Link>BindingHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Controller\ControllerBase.cs">
       <Link>Controller\ControllerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Controller\SelectWidgetsDialogController.cs">
+      <Link>Controller\SelectWidgetsDialogController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Controller\WidgetController.cs">
+      <Link>Controller\WidgetController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Converters\BoolConverters.cs">
+      <Link>Converters\BoolConverters.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Converters\BoolToVisibilityConverter.cs">
       <Link>Converters\BoolToVisibilityConverter.cs</Link>
@@ -89,11 +123,20 @@
     <Compile Include="..\Smeedee.Client.Framework\Converters\DateToStringConverter.cs">
       <Link>Converters\DateToStringConverter.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Converters\InvertedBoolToVisibilityConverter.cs">
+      <Link>Converters\InvertedBoolToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Converters\NullTestConverter.cs">
+      <Link>Converters\NullTestConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Converters\TimeSpanToPrettyStringConverter.cs">
       <Link>Converters\TimeSpanToPrettyStringConverter.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Factories\ModuleLoaderFactory.cs">
       <Link>Factories\ModuleLoaderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Repositories\WidgetConfigurationRepository.cs">
+      <Link>Repositories\WidgetConfigurationRepository.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ResourceParsing\IXamlReader.cs">
       <Link>ResourceReading\IXamlReader.cs</Link>
@@ -101,8 +144,29 @@
     <Compile Include="..\Smeedee.Client.Framework\ResourceParsing\XamlResourceDictionary.cs">
       <Link>ResourceReading\XamlResourceDictionary.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IDockBarService.cs">
+      <Link>Services\IDockBarService.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IDownloadStringService.cs">
+      <Link>Services\IDownloadStringService.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IFullScreenService.cs">
+      <Link>Services\IFullScreenService.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\IInvokeBackgroundWorker.cs">
       <Link>Services\IInvokeBackgroundWorker.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IManageConfigurations.cs">
+      <Link>Services\IManageConfigurations.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IMessageBoxService.cs">
+      <Link>Services\IMessageBoxService.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IMetadataService.cs">
+      <Link>Services\IMetadataService.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IModalDialogService.cs">
+      <Link>Services\IModalDialogService.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\IModuleLoader.cs">
       <Link>Services\IModuleLoader.cs</Link>
@@ -110,14 +174,35 @@
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\BackgroundWorkers.cs">
       <Link>Services\Impl\BackgroundWorkers.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\ConfigurationManager.cs">
+      <Link>Services\Impl\ConfigurationManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\DockBarService.cs">
+      <Link>Services\Impl\DockBarService.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\ModuleLoader.cs">
+      <Link>Services\Impl\ModuleLoader.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\NoUIInvokation.cs">
       <Link>Services\Impl\NoUIInvokation.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\ProgressbarDummy.cs">
+      <Link>Services\Impl\ProgressbarDummy.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\StandardTimer.cs">
       <Link>Services\Impl\StandardTimer.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\WidgetProgressbar.cs">
+      <Link>Services\Impl\WidgetProgressbar.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IProgressbar.cs">
+      <Link>Services\IProgressbar.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\ITimer.cs">
       <Link>Services\ITimer.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ValidationHandler\ValidationHandler.cs">
+      <Link>ValidationHandler\ValidationHandler.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\AbstractViewModel.cs">
       <Link>ViewModel\AbstractViewModel.cs</Link>
@@ -128,11 +213,35 @@
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\BindableViewModel.cs">
       <Link>ViewModel\BindableViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\Dialogs\Dialog.cs">
+      <Link>ViewModel\Dialogs\Dialog.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\Dialogs\EditSlideshowDialog.cs">
+      <Link>ViewModel\Dialogs\EditSlideshowDialog.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\Dialogs\SelectWidgetsDialog.cs">
+      <Link>ViewModel\Dialogs\SelectWidgetsDialog.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\Dialogs\WidgetDialog.cs">
+      <Link>ViewModel\Dialogs\WidgetDialog.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\DockBar.cs">
+      <Link>ViewModel\DockBar.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\DockBarItems\FullScreen.cs">
+      <Link>ViewModel\DockBaritems\FullScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\DockBarItems\WidgetDockBarItem.cs">
+      <Link>ViewModel\DockBaritems\WidgetDockBarItem.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\ErrorInfo.cs">
       <Link>ViewModel\ErrorInfo.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\ItemViewModelWrapper.cs">
       <Link>ViewModel\ItemViewModelWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\IWidgetMetadata.cs">
+      <Link>ViewModel\IWidgetMetadata.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\ObservableCollectionWrapper.cs">
       <Link>ViewModel\ObservableCollectionWrapper.cs</Link>
@@ -155,6 +264,12 @@
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\Widget.cs">
       <Link>ViewModel\Widget.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\WidgetInfoAttribute.cs">
+      <Link>ViewModel\WidgetInfoAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\WidgetMetadata.cs">
+      <Link>ViewModel\WidgetMetadata.cs</Link>
+    </Compile>
     <Compile Include="Controls\DataTemplateMapping.cs" />
     <Compile Include="Controls\DefaultImage.xaml.cs">
       <DependentUpon>DefaultImage.xaml</DependentUpon>
@@ -166,15 +281,63 @@
     <Compile Include="MEF\Services\HttpDownloadService.cs" />
     <Compile Include="MEF\Services\IDownloadService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Async\AsyncChangesetRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncCIServerRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncConfigurationRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncHolidayRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncLogEntryRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncProjectInfoRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncRetrospectiveNoteRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncSlideConfigurationRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncTaskConfigurationRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncTaskDefinitionRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncTeamPictureRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncUserdbRepository.cs" />
+    <Compile Include="Repositories\Async\AsyncUserRepository.cs" />
     <Compile Include="Repositories\ChangesetWebserviceRepository.cs" />
     <Compile Include="Repositories\CIServerWebserviceRepository.cs" />
     <Compile Include="Repositories\ConfigurationWebserviceRepository.cs" />
     <Compile Include="Repositories\HolidayWebserviceRepository.cs" />
     <Compile Include="Repositories\LogEntryWebserviceRepository.cs" />
     <Compile Include="Repositories\ProjectInfoRepository.cs" />
+    <Compile Include="Repositories\RetrospectiveNoteWebServiceRepository.cs" />
+    <Compile Include="Repositories\TaskConfigurationWebserviceRepository.cs" />
+    <Compile Include="Repositories\TaskDefinitionWebserviceRepository.cs" />
+    <Compile Include="Repositories\TeamPictureWebserviceRepository.cs" />
     <Compile Include="Repositories\UserdbWebserviceRepository.cs" />
     <Compile Include="Repositories\UserWebserviceRepositoryProxy.cs" />
+    <Compile Include="Resources\Graphic\Icons\FullScreenIcon.xaml.cs">
+      <DependentUpon>FullScreenIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Graphic\Icons\SettingsIcon.xaml.cs">
+      <DependentUpon>SettingsIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource.xaml.cs">
+      <DependentUpon>EditSlideshowDialogSampleDataSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SampleData\SelectWidgetsDialogSampleSource\SelectWidgetsDialogSampleSource.xaml.cs">
+      <DependentUpon>SelectWidgetsDialogSampleSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectAllOnFocusTextBox.cs" />
+    <Compile Include="Service References\RESTService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.datasvcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SlideConfigurationService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Impl\MetadataService.cs" />
+    <Compile Include="Services\Impl\SLFullScreenService.cs" />
+    <Compile Include="Services\Impl\SLMessageBoxService.cs" />
+    <Compile Include="Services\Impl\WebClientDownloadStringService.cs" />
+    <Compile Include="ViewModel\Repositories\WidgetMetadataRepository.cs" />
     <Compile Include="ResourceReading\SLXamlReader.cs" />
+    <Compile Include="SampleData\LoadingNotificationSampleDataSource\LoadingNotificationSampleDataSource.xaml.cs">
+      <DependentUpon>LoadingNotificationSampleDataSource.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ChangesetRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,18 +368,65 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\RetrospectiveNoteRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TaskConfigurationRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TaskDefinitionRepositoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TeamPictureService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\UserRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ServiceLocatorForSLClient.cs" />
-    <Compile Include="Services\Impl\ModuleLoader.cs" />
+    <Compile Include="FrameworkBootstrapper.cs" />
+    <Compile Include="Services\Impl\SLModalDialogService.cs" />
+    <Compile Include="Views\Dialogs\WidgetSelectionPreviewView.xaml.cs">
+      <DependentUpon>WidgetSelectionPreviewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DockBarView.xaml.cs">
+      <DependentUpon>DockBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\EditSlideshowDialogView.xaml.cs">
+      <DependentUpon>EditSlideshowDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ModalDialog.xaml.cs">
+      <DependentUpon>ModalDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SelectWidgetsDialogView.xaml.cs">
+      <DependentUpon>SelectWidgetsDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ErrorInfoView.xaml.cs">
       <DependentUpon>ErrorInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoadingNotificationView.xaml.cs">
+      <DependentUpon>LoadingNotificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SlideshowView.xaml.cs">
+      <DependentUpon>SlideshowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SlideView.xaml.cs">
       <DependentUpon>SlideView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraybarView.xaml.cs">
+      <DependentUpon>TraybarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomeWidgetView.xaml.cs">
+      <DependentUpon>WelcomeWidgetView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WidgetView.xaml.cs">
       <DependentUpon>WidgetView.xaml</DependentUpon>
@@ -229,11 +439,19 @@
     </None>
     <None Include="Properties\DataSources\Smeedee.DomainModel.CI.CIServer.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Config.Configuration.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Config.SlideConfig.SlideConfiguration.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.Corkboard.RetrospectiveNote.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Framework.Logging.LogEntry.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Holidays.Holiday.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.ProjectInfo.ProjectInfoServer.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.SourceControl.Changeset.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.TaskDefinition.TaskDefinition1.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.TaskInstanceConfiguration.TaskConfiguration.datasource" />
+    <None Include="Properties\DataSources\Smeedee.DomainModel.TeamPicture.TeamPicture.datasource" />
     <None Include="Properties\DataSources\Smeedee.DomainModel.Users.Userdb.datasource" />
+    <DesignTimeOnly Include="SampleData\LoadingNotificationSampleDataSource\LoadingNotificationSampleDataSource.xsd" />
+    <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource.xsd" />
+    <DesignTimeOnly Include="SampleData\SelectWidgetsDialogSampleSource\SelectWidgetsDialogSampleSource.xsd" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.xsd">
       <SubType>Designer</SubType>
@@ -248,12 +466,19 @@
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CIRepositoryService\CIRepositoryService.disco" />
-    <None Include="Service References\CIRepositoryService\configuration91.svcinfo" />
-    <None Include="Service References\CIRepositoryService\configuration.svcinfo" />
-    <None Include="Service References\CIRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.wsdl" />
+    <None Include="Service References\CIRepositoryService\CIRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService3.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.disco" />
     <None Include="Service References\ConfigurationRepositoryService\configuration91.svcinfo" />
@@ -290,6 +515,77 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\RESTService\service.edmx" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService.wsdl" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService1.wsdl" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService.wsdl" />
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService1.wsdl" />
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice.wsdl" />
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice1.wsdl" />
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefinitionRepositoryService\TaskDefinitionRepositoryService.wsdl" />
+    <None Include="Service References\TaskDefinitionRepositoryService\TaskDefinitionRepositoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefinitionRepositoryService\TaskDefinitionRepositoryService1.wsdl" />
+    <None Include="Service References\TaskDefinitionRepositoryService\TaskDefinitionRepositoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefinitionRepositoryService\TaskDefinitionRepositoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TaskDefinitionRepositoryService\TaskDefinitionRepositoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice.wsdl" />
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice1.wsdl" />
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\UserRepositoryService\UserRepositoryService.disco" />
     <None Include="Service References\UserRepositoryService\configuration91.svcinfo" />
     <None Include="Service References\UserRepositoryService\configuration.svcinfo" />
@@ -304,21 +600,60 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\RetrospectiveNoteRepositoryService.disco" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\RetrospectiveNoteRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TeamPictureService\TeamPictureRepositoryWebservice.disco" />
+    <None Include="Service References\TeamPictureService\configuration91.svcinfo" />
+    <None Include="Service References\TeamPictureService\configuration.svcinfo" />
+    <None Include="Service References\TeamPictureService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TaskDefinitionRepositoryService\TaskDefinitionRepositoryService.disco" />
+    <None Include="Service References\TaskDefinitionRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\TaskDefinitionRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\TaskDefinitionRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\TaskConfigurationRepositoryService\TaskConfigurationRepositoryWebservice.disco" />
+    <None Include="Service References\TaskConfigurationRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\TaskConfigurationRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\TaskConfigurationRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\SlideConfigurationService\SlideConfigurationRepositoryService.disco" />
+    <None Include="Service References\SlideConfigurationService\configuration91.svcinfo" />
+    <None Include="Service References\SlideConfigurationService\configuration.svcinfo" />
+    <None Include="Service References\SlideConfigurationService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\RESTService\Reference.datasvcmap">
+      <Generator>DataServiceClientGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
     <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CIRepositoryService\CIRepositoryService1.wsdl" />
-    <None Include="Service References\CIRepositoryService\CIRepositoryService1.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Service References\CIRepositoryService\CIRepositoryService.disco" />
+    <None Include="Service References\CIRepositoryService\configuration91.svcinfo" />
+    <None Include="Service References\CIRepositoryService\configuration.svcinfo" />
+    <None Include="Service References\CIRepositoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\CIRepositoryService\CIRepositoryService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\CIRepositoryService\CIRepositoryService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
     <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd">
       <SubType>Designer</SubType>
@@ -390,13 +725,74 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <DesignTimeOnly Include="SampleData\LoadingNotificationSampleDataSource\LoadingNotificationSampleDataSource.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DesignTimeOnly>
+    <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DesignTimeOnly>
+    <Page Include="ProjectDataSources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDataSources>True</ContainsDataSources>
+    </Page>
+    <DesignTimeOnly Include="SampleData\SelectWidgetsDialogSampleSource\SelectWidgetsDialogSampleSource.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DesignTimeOnly>
+    <Page Include="Resources\Graphic\Icons\FullScreenIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Graphic\Icons\SettingsIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\WidgetSelectionPreviewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DockBarView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\EditSlideshowDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\ModalDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SelectWidgetsDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ErrorInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LoadingNotificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SlideshowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SlideView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TraybarView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WelcomeWidgetView.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\WidgetView.xaml">
       <SubType>Designer</SubType>
@@ -412,6 +808,10 @@
       <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
       <Name>Smeedee.DomainModel.SL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Framework.SL\Smeedee.Framework.SL.csproj">
+      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
+      <Name>Smeedee.Framework.SL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -423,6 +823,11 @@
     <WCFMetadataStorage Include="Service References\HolidayRepositoryService\" />
     <WCFMetadataStorage Include="Service References\LogEntryRepositoryService\" />
     <WCFMetadataStorage Include="Service References\ProjectInfoRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\RetrospectiveNoteRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\SlideConfigurationService\" />
+    <WCFMetadataStorage Include="Service References\TaskConfigurationRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\TaskDefinitionRepositoryService\" />
+    <WCFMetadataStorage Include="Service References\TeamPictureService\" />
     <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
   </ItemGroup>
   <ItemGroup>
@@ -440,7 +845,27 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource_Files\image01.png" />
+    <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource_Files\image02.png" />
+    <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource_Files\image03.png" />
+    <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource_Files\image04.png" />
+    <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource_Files\image05.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Dialogs\Smeedee-icon-32x32.png" />
+    <Resource Include="Views\Smeedee-icon-128x128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <DesignData Include="SampleData\DockBarSampleData.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DesignData>
+  </ItemGroup>
+  <ItemGroup>
+    <ServiceReferenceMetadataStorage Include="Service References\RESTService\">
+      <Type>datasvcmap</Type>
+    </ServiceReferenceMetadataStorage>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

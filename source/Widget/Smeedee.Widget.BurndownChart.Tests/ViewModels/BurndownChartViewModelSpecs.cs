@@ -30,7 +30,7 @@ using Smeedee.Tests;
 using Smeedee.Widget.BurndownChart.ViewModel;
 using TinyBDD.Specification.NUnit;
 
-namespace APD.Client.Widget.BurndownChart.BurndownChartViewModelSpecs
+namespace Smeedee.Client.Widget.BurndownChart.BurndownChartViewModelSpecs
 {   
     public class Shared
     {
@@ -83,17 +83,17 @@ namespace APD.Client.Widget.BurndownChart.BurndownChartViewModelSpecs
         [Test]
         public void should_have_error_flag_properties()
         {
-            viewModel.ProjectsInRepository.ShouldBeInstanceOfType<Boolean>();
-            viewModel.IterationInProject.ShouldBeInstanceOfType<Boolean>();
-            viewModel.TasksInIteration.ShouldBeInstanceOfType<Boolean>();
+            viewModel.ExistsProjectsInRepository.ShouldBeInstanceOfType<Boolean>();
+            viewModel.ExistsIterationInProject.ShouldBeInstanceOfType<Boolean>();
+            viewModel.ExistsTasksInIteration.ShouldBeInstanceOfType<Boolean>();
         }
 
         [Test]
         public void should_have_all_error_flags_set_to_false()
         {
-            viewModel.ProjectsInRepository.ShouldBe(false);
-            viewModel.IterationInProject.ShouldBe(false);
-            viewModel.TasksInIteration.ShouldBe(false);
+            viewModel.ExistsProjectsInRepository.ShouldBe(false);
+            viewModel.ExistsIterationInProject.ShouldBe(false);
+            viewModel.ExistsTasksInIteration.ShouldBe(false);
         }
     }
 
@@ -109,24 +109,24 @@ namespace APD.Client.Widget.BurndownChart.BurndownChartViewModelSpecs
         [Test]
         public void should_notify_user_when_there_are_no_projects_in_repository()
         {
+            viewModel.ExistsProjectsInRepository = false;
             Assert.AreSame("No projects with the given name exists in the repository", viewModel.ErrorMessage);
         }
 
         [Test]
         public void should_notify_user_when_there_are_no_iterations_for_given_project()
         {
-            viewModel.ProjectsInRepository = true;
-            viewModel.IterationInProject = false;
-            viewModel.TasksInIteration = false;
+            viewModel.ExistsProjectsInRepository = true;
+            viewModel.ExistsIterationInProject = false;
             Assert.AreSame("There are no iterations in the given project", viewModel.ErrorMessage);
         }
 
         [Test]
         public void should_notify_user_when_there_are_no_tasks_for_userStory()
         {
-            viewModel.ProjectsInRepository = true;
-            viewModel.IterationInProject = true;
-            viewModel.TasksInIteration = false;
+            viewModel.ExistsProjectsInRepository = true;
+            viewModel.ExistsIterationInProject = true;
+            viewModel.ExistsTasksInIteration = false;
             Assert.AreSame("There are no tasks for the current iteration for the given project", viewModel.ErrorMessage);
         }
     }

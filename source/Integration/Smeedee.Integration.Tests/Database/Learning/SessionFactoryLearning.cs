@@ -12,7 +12,7 @@ using Smeedee.IntegrationTests.Database.DomainModel.Repositories;
 
 namespace Smeedee.IntegrationTests.Database.Learning
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class SessionFactoryLearning : Shared
     {
         protected const string DATABASE_TEST_FILE = "TestDB.db";

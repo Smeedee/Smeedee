@@ -56,9 +56,8 @@ namespace Smeedee.DomainModel.CI.CIProjectSpecs
             testProject = new CIProject(projectName)
                           {
                               SystemId = "ProjectNr.1",
-                              Server = testServer
+                              Server = testServer, 
                           };
-        
         }
     }
 
@@ -115,6 +114,13 @@ namespace Smeedee.DomainModel.CI.CIProjectSpecs
             var build = new Build { Project = new CIProject() };
             testProject.AddBuild(build);
             testProject.Builds.First().Project.ShouldBe(testProject);
+        }
+
+
+        [Test]
+        public void isChecked_should_by_defaul_be_true()
+        {
+
         }
     }
 

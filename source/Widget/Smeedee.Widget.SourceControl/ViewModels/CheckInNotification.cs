@@ -23,32 +23,107 @@
 
 #endregion
 
+using System;
 using System.Collections.ObjectModel;
 using Smeedee.Client.Framework.ViewModel;
+using TinyMVVM.Framework;
 
 namespace Smeedee.Widget.SourceControl.ViewModels
 {
     public class CheckInNotificationViewModel : AbstractViewModel
     {
-        private bool noChangesets;
-        public bool NoChangesets
+        public DelegateCommand SaveSettings { get; set; }
+        public DelegateCommand ReloadSettings { get; set; }
+
+        public const int NUMBER_OF_COMMITS_DEFAULT = 8;
+        public const bool BLINK_WHEN_NO_COMMENT_DEFAULT = false;
+
+        public CheckInNotificationViewModel(Client.Framework.ViewModel.Widget widget)
         {
-            get { return noChangesets; }
+            Changesets = new ObservableCollection<ChangesetViewModel>();
+            BlinkWhenNoComment = true;
+
+            SaveSettings = new DelegateCommand();
+            ReloadSettings = new DelegateCommand();
+
+            ReloadSettings.ExecuteDelegate += Reset;
+            widget.PropertyChanged += (o, e) =>
+                {
+                    if (e.PropertyName == "IsInSettingsMode") 
+                        Reset();
+                };
+            
+            NumberOfCommits = NUMBER_OF_COMMITS_DEFAULT;
+            BlinkWhenNoComment = BLINK_WHEN_NO_COMMENT_DEFAULT;
+            SetResetPoint();
+        }
+
+        public ObservableCollection<ChangesetViewModel> Changesets { get; private set; }
+        
+        private int numberOfCommits;
+        private int numberOfCommitsResetPoint;
+        public int NumberOfCommits
+        {
+            get { return numberOfCommits; }
             set
             {
-                if (value != noChangesets)
+                if (ReturnNumberOfCommitsIfValid(value) != numberOfCommits) 
                 {
-                    noChangesets = value;
-                    TriggerPropertyChanged<CheckInNotificationViewModel>(vm => vm.NoChangesets);
+                    numberOfCommits = value;
+                    TriggerPropertyChanged<CheckInNotificationViewModel>(t => t.NumberOfCommits);
                 }
             }
         }
 
-        public ObservableCollection<ChangesetViewModel> Changesets { get; private set; }
-
-        public CheckInNotificationViewModel()
+        private static int ReturnNumberOfCommitsIfValid(int value)
         {
-            Changesets = new ObservableCollection<ChangesetViewModel>();
+            if ( value > 0)
+            {
+                return value;
+            }
+            throw new Exception("Must be positive number");
+        }
+
+        private bool blinkWhenNoComment;
+        private bool blinkWhenNoCommentResetPoint;
+        public bool BlinkWhenNoComment
+        {
+            get { return blinkWhenNoComment; }
+            set
+            {
+                if (value != blinkWhenNoComment)
+                {
+                    blinkWhenNoComment = value;
+                    TriggerPropertyChanged<CheckInNotificationViewModel>(t => t.BlinkWhenNoComment);
+                }
+            }
+        }
+
+        private bool isSaving;
+
+        public bool IsSaving
+        {
+            get { return isSaving; }
+            set
+            {
+                if (value != isSaving)
+                {
+                    isSaving = value;
+                    TriggerPropertyChanged<CheckInNotificationViewModel>(t => t.IsSaving);
+                }
+            }
+        }
+
+        public void SetResetPoint()
+        {
+            blinkWhenNoCommentResetPoint = BlinkWhenNoComment;
+            numberOfCommitsResetPoint = NumberOfCommits;
+        }
+
+        public void Reset()
+        {
+            BlinkWhenNoComment = blinkWhenNoCommentResetPoint;
+            NumberOfCommits = numberOfCommitsResetPoint;
         }
     }
 }

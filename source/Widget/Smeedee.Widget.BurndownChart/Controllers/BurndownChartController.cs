@@ -25,78 +25,283 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
+using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.ProjectInfo;
+using Smeedee.Framework;
 using Smeedee.Widget.BurndownChart.ViewModel;
+using Smeedee.Widget.BurndownChart.ViewModels;
 using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widget.BurndownChart.Controllers
 {
     public class BurndownChartController : ControllerBase<BurndownChartViewModel>
     {
-        public Project CurrentProject { get; private set; }
+
+        public const string INCLUDE_WORK_ITEMS_BEFORE_ITERATION_STARTDATE = "IncludeWorkItemsBeforeIterationStartdate";
+        public const string SELECTED_PROJECT_NAME = "SelectedProjectName";
+        public const string DEFAULT_PROJECT_NAME = "Default Project";
+        public const bool DEFAULT_INCLUDE_WORK_ITEMS_PRE_ITERATION_VALUE = false;
+
+        private const string SETTINGS_ENTRY_NAME = "BurndownChartController";
+        
+        public readonly BurndownChartSettingsViewModel settingsViewModel;
+
         private readonly IRepository<ProjectInfoServer> repository;
         private readonly IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> asyncClient;
+        private readonly ILog logger;
+        private readonly TimeSpan oneDay = new TimeSpan(1, 0, 0, 0);
 
-        public BurndownChartController(BurndownChartViewModel viewModel,
-                                        IRepository<ProjectInfoServer> repository,
-                                       ITimer refreshNotifier, IUIInvoker uiInvoker,
-                                       IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> backgroundWorkerInvoker)
-            : base(viewModel, refreshNotifier, uiInvoker)
+        public Project CurrentProject { get; private set; }
+
+        protected bool HasValidConfig { get { return currentConfig != null && currentConfig.IsConfigured; } }
+
+        private List<DateTime> allDatesWithWorkItems;
+        private Configuration currentConfig;
+        
+        public BurndownChartController(
+            BurndownChartViewModel viewModel,
+            BurndownChartSettingsViewModel settingsViewModel,
+            IRepository<ProjectInfoServer> repository,
+            Configuration configuration,
+            ITimer refreshNotifier,
+            IUIInvoker uiInvoker,
+            IInvokeBackgroundWorker<IEnumerable<ProjectInfoServer>> asyncClient,
+            ILog logger,
+            IProgressbar loadingNotifier)
+            : base(viewModel, refreshNotifier, uiInvoker, loadingNotifier)
         {
-            this.repository = repository;
-            asyncClient = backgroundWorkerInvoker;
+            Guard.ThrowExceptionIfNull(settingsViewModel, "settingsViewModel");
+            Guard.ThrowExceptionIfNull(repository, "projectInfoServerRepository");
+            Guard.ThrowExceptionIfNull(configuration, "configuration");
+            Guard.ThrowExceptionIfNull(asyncClient, "asyncClient");
+            Guard.ThrowExceptionIfNull(logger, "logger");
 
-            LoadData();
+            this.settingsViewModel = settingsViewModel;
+            this.repository = repository;
+            currentConfig = configuration;
+            this.asyncClient = asyncClient;
+            this.logger = logger;
+
+            settingsViewModel.ReloadSettings.AfterExecute += (s, e) => LoadConfigAndData();
+
+            LoadConfigAndData();
+            Start();
+        }
+
+        public void LoadConfigAndData()
+        {
+            try
+            {
+                SetIsLoadingConfig();
+                if (HasValidConfig)
+                {
+                    UpdateSettingsViewModelFromConfiguration(currentConfig);
+                }
+                SetIsNotLoadingConfig();
+                UpdateViewModel();
+            }
+            catch (Exception exception)
+            {
+                LogErrorMsg(exception);
+                SetIsNotLoadingConfig();
+            }
+        }
+
+        private void UpdateSettingsViewModelFromConfiguration(Configuration configuration)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                settingsViewModel.SelectedProjectName = currentConfig.GetSetting(SELECTED_PROJECT_NAME).Value;
+                settingsViewModel.IncludeWorkItemsBeforeIterationStartdate =
+                    bool.Parse(configuration.GetSetting(INCLUDE_WORK_ITEMS_BEFORE_ITERATION_STARTDATE).Value);
+                settingsViewModel.HasChanges = false;                
+            });
+        }
+        
+        private void UpdateViewModel()
+        {
+            if (settingsViewModel.HasChanges)
+            {
+                ReloadViewModel();
+            }
+            else
+            {
+                TryToLoadData();
+            }
+        }
+
+        private void ReloadViewModel()
+        {
+            ClearViewModel();
+            TryToLoadData();
+        }
+
+        private void ClearViewModel()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.ActualBurndown.Clear();
+                ViewModel.IdealBurndown.Clear();
+                ViewModel.UpperWarningLimit.Clear();
+                ViewModel.LowerWarningLimit.Clear();
+                ViewModel.ProjectName = "";
+                ViewModel.IterationName = "";
+            });
+        }
+
+        private void TryToLoadData()
+        {
+            if (!ViewModel.IsLoading)
+            {
+                try
+                {
+                    LoadData();
+                }
+                catch (Exception e)
+                {
+                    uiInvoker.Invoke(() =>
+                    {
+                        ViewModel.HasConnectionProblems = true;
+                    });
+                    LogErrorMsg(e);
+                }
+            }
         }
 
         private void LoadData()
         {
-            ViewModel.IsLoading = true;
+            SetIsLoadingData();
             asyncClient.RunAsyncVoid(() =>
             {
                 var servers = TryGetProjectInfoServers();
 
-                if (servers == null || servers.Count() == 0)
+                if (NoServerExists(servers))
                 {
-                    ViewModel.ProjectsInRepository = false;
+                    SetNoServerExists();
                 }
-                else if (servers.Count() > 0)
+                else if (CurrentServerHasNoProject(servers))
                 {
-                    CurrentProject = servers.First().Projects.First();
+                    SetCurrentServerHasNoProject();
+                }
+                else
+                {
+                    PopulateAvailableProjects(servers);
+                    if (settingsViewModel.SelectedProjectName == null || settingsViewModel.SelectedProjectName.Equals(DEFAULT_PROJECT_NAME))
+                    {
+                        SetSelectedProjectToFirstAvailableAndSave();
+                    }
+
+                    CurrentProject = GetSelectedProjectFromRepository(servers);
+
                     SetProjectStatus();
                 }
-                ViewModel.IsLoading = false;
+                SetIsNotLoadingData();
             });
         }
 
-        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        private static bool NoServerExists(IEnumerable<ProjectInfoServer> servers)
         {
-            LoadData();
+            return servers == null || servers.Count() == 0;
         }
 
-        private static bool IterationHasTasks(Iteration iteration)
+        private void SetNoServerExists()
         {
-            return iteration.Tasks.Count() > 0;
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.ExistsAvailableServer = false;
+                ViewModel.ShowErrorMessageInsteadOfChart = true;
+            });
+        }
+
+        private static bool CurrentServerHasNoProject(IEnumerable<ProjectInfoServer> servers)
+        {
+            return servers.First().Projects.Count() == 0;
+        }
+
+        private void SetCurrentServerHasNoProject()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.ExistsProjectsInRepository = false;
+                ViewModel.ShowErrorMessageInsteadOfChart = true;
+            });
+        }
+
+        private Project GetSelectedProjectFromRepository(IEnumerable<ProjectInfoServer> inputServer)
+        {
+            var servers = inputServer ?? TryGetProjectInfoServers();
+
+            var matchingProject = new Project("");
+
+            if (!NoServerExists(servers))
+            {
+                var listOfProjects = servers.First().Projects.ToList();
+                foreach (var project in
+                    listOfProjects.Where(project => project.Name.Equals(settingsViewModel.SelectedProjectName)))
+                {
+                    matchingProject = project;
+                    matchingProject.Iterations = project.Iterations;
+                }
+            }
+            return matchingProject;
         }
 
         private IEnumerable<ProjectInfoServer> TryGetProjectInfoServers()
         {
             IEnumerable<ProjectInfoServer> servers = null;
+
             try
             {
                 servers = repository.Get(new AllSpecification<ProjectInfoServer>());
-                ViewModel.HasConnectionProblems = false;
+                uiInvoker.Invoke(() =>
+                {
+                    ViewModel.HasConnectionProblems = false;
+                });
             }
             catch (Exception)
             {
-                ViewModel.HasConnectionProblems = true;
+                uiInvoker.Invoke(() =>
+                {
+                    ViewModel.HasConnectionProblems = true;
+                });
             }
 
             return servers;
+        }
+
+        private void PopulateAvailableProjects(IEnumerable<ProjectInfoServer> servers)
+        {
+            var newProjects = servers.First().Projects.Select(r => r.Name).ToList();
+            var oldProjects = new List<string>(settingsViewModel.AvailableProjects);
+
+            uiInvoker.Invoke(() =>
+            {
+                foreach (var oldProject in oldProjects.Where(oldProject => !newProjects.Contains(oldProject)))
+                {
+                    settingsViewModel.AvailableProjects.Remove(oldProject);
+                }
+
+                foreach (var newProject in newProjects.Where(newProject => !oldProjects.Contains(newProject)))
+                {
+                    settingsViewModel.AvailableProjects.Add(newProject);
+                }
+            });
+        }
+
+        private void SetSelectedProjectToFirstAvailableAndSave()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                settingsViewModel.SelectedProjectName = settingsViewModel.AvailableProjects.First();
+            });
+            currentConfig.ChangeSetting(SELECTED_PROJECT_NAME, settingsViewModel.SelectedProjectName);
         }
 
         private void SetProjectStatus()
@@ -112,46 +317,118 @@ namespace Smeedee.Widget.BurndownChart.Controllers
             else
             {
                 SetCurrentProjectAndIterationName();
+                SetProjectIterationAndTaskExistsPropertiesOnViewModel();
                 SetCurrentProjectIterationBurndownCoordinates();
             }
         }
 
         private void SetCurrentProjectHasNoIteration()
         {
-            ViewModel.ProjectsInRepository = true;
-            ViewModel.IterationInProject = false;
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.ExistsIterationInProject = false;
+                ViewModel.ShowErrorMessageInsteadOfChart = true;
+            });
+        }
+
+        private static bool IterationHasTasks(Iteration iteration)
+        {
+            return iteration.Tasks.Count() > 0;
         }
 
         private void SetCurrentProjectIterationHasNoTasks()
         {
-            ViewModel.ProjectsInRepository = true;
-            ViewModel.IterationInProject = true;
-            ViewModel.TasksInIteration = false;
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.ExistsTasksInIteration = false;
+                ViewModel.ShowErrorMessageInsteadOfChart = true;
+            });
         }
 
         private void SetCurrentProjectAndIterationName()
         {
-            ViewModel.ProjectName = CurrentProject.Name;
-            ViewModel.IterationName = CurrentProject.CurrentIteration.Name;
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.ShowErrorMessageInsteadOfChart = false;
+                ViewModel.ProjectName = CurrentProject.Name;
+                ViewModel.IterationName = CurrentProject.CurrentIteration.Name;
+            });
+        }
+
+        private void SetProjectIterationAndTaskExistsPropertiesOnViewModel()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.ExistsProjectsInRepository = true;
+                ViewModel.ExistsIterationInProject = true;
+                ViewModel.ExistsTasksInIteration = true;
+            });
         }
 
         private void SetCurrentProjectIterationBurndownCoordinates()
         {
-            ViewModel.ProjectsInRepository = true;
-            ViewModel.IterationInProject = true;
-            ViewModel.TasksInIteration = true;
+            PopulateAndSortAllDatesWithWorkItems();
 
-            SetIdealRegressionOnViewModel();
-            SetAcutalRegressionOnViewModel();
+            SetBurndownCoordinatesOnViewModel();
         }
 
-        private void SetIdealRegressionOnViewModel()
+        private void PopulateAndSortAllDatesWithWorkItems()
         {
-            var idealRegression = new List<BurndownChartCoordinate>();
-            idealRegression.Add(GetIdealStartCoordinate());
-            idealRegression.Add(GetIdealEndCoordinate());
+            allDatesWithWorkItems = GetAllDatesWithWorkItems(CurrentProject.CurrentIteration).ToList();
+            allDatesWithWorkItems.Sort();
+        }
 
-            ViewModel.IdealBurndown = idealRegression;
+        private static IEnumerable<DateTime> GetAllDatesWithWorkItems(Iteration iteration)
+        {
+            var distinctDates = (from task in iteration.Tasks
+                                 from workEffortItem in task.WorkEffortHistory
+                                 select workEffortItem.TimeStampForUpdate.Date).Distinct();
+
+            return distinctDates;
+        }
+
+        private void SetBurndownCoordinatesOnViewModel()
+        {
+            SetIdealBurndownOnViewModel();
+            SetUpperWarningLimitOnViewModel();
+            SetLowerWarningLimitOnViewModel();
+            SetAcutalBurndownOnViewModel();
+        }
+
+        private void SetIdealBurndownOnViewModel()
+        {
+            var idealBurndown = new List<BurndownChartCoordinate>
+            {
+                GetStartCoordinate(),
+                GetIdealEndCoordinate()
+            };
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.IdealBurndown = idealBurndown;
+            });
+        }
+
+        private BurndownChartCoordinate GetStartCoordinate()
+        {
+            var iteration = CurrentProject.CurrentIteration;
+            if (settingsViewModel.IncludeWorkItemsBeforeIterationStartdate && allDatesWithWorkItems.Count != 0)
+            {
+                return new BurndownChartCoordinate(iteration.GetWorkEffortEstimateForTasks(), GetCorrectStartDateOnIncludeWorkItemsBeforeIteration(iteration));
+            }
+            var workEffort = GetWorkEffortFromStartDate(iteration);
+            return new BurndownChartCoordinate(workEffort, iteration.StartDate);
+        }
+
+        private DateTime GetCorrectStartDateOnIncludeWorkItemsBeforeIteration(Iteration iteration)
+        {
+            var workItemDate = allDatesWithWorkItems.First().Date;
+            var iterationDate = iteration.StartDate.Date;
+            return workItemDate < iterationDate ? workItemDate : iterationDate;
+        }
+
+        private float GetWorkEffortFromStartDate(Iteration iteration)
+        {
+            return GetHoursRemainingForDay(iteration, iteration.StartDate.Subtract(oneDay));
         }
 
         private BurndownChartCoordinate GetIdealEndCoordinate()
@@ -159,39 +436,81 @@ namespace Smeedee.Widget.BurndownChart.Controllers
             return new BurndownChartCoordinate(0, CurrentProject.CurrentIteration.EndDate);
         }
 
-        private BurndownChartCoordinate GetIdealStartCoordinate()
+        private void SetUpperWarningLimitOnViewModel()
         {
-            var startEstimatedWorkEffort = CurrentProject.CurrentIteration.GetWorkEffortEstimateForTasks();
+            var tempListOfCoordinates = new List<BurndownChartCoordinate>();
 
-            return new BurndownChartCoordinate(startEstimatedWorkEffort, CurrentProject.CurrentIteration.StartDate);
+            var tempCoordinate = GetStartCoordinate();
+
+            tempListOfCoordinates.Add(
+                new BurndownChartCoordinate(
+                    CalculateUpperRemainingWorkEffort(tempCoordinate),
+                    tempCoordinate.TimeStampForUpdate)
+            );
+
+            tempCoordinate = GetIdealEndCoordinate();
+
+            tempListOfCoordinates.Add(
+                new BurndownChartCoordinate(
+                    CalculateUpperRemainingWorkEffort(tempCoordinate),
+                    tempCoordinate.TimeStampForUpdate)
+            );
+
+            uiInvoker.Invoke(() => { ViewModel.UpperWarningLimit = tempListOfCoordinates; });
         }
 
-        private void SetAcutalRegressionOnViewModel()
+        private float CalculateUpperRemainingWorkEffort(BurndownChartCoordinate tempCoordinate)
         {
-            var coordinates = new List<BurndownChartCoordinate>();
-            var allDatesInHistory = GetAllDatesWithHistory(CurrentProject.CurrentIteration);
+            return tempCoordinate.RemainingWorkEffort *
+                    ViewModel.BurndownUpperWarningLimitInPercent;
+        }
 
-            foreach (DateTime day in allDatesInHistory)
-            {
-                float hoursRemaining = GetHoursRemainingForDay(CurrentProject.CurrentIteration, day);
-                coordinates.Add(new BurndownChartCoordinate(hoursRemaining, day));
-            }
+        private void SetLowerWarningLimitOnViewModel()
+        {
+            var tempListOfCoordinates = new List<BurndownChartCoordinate>();
+
+            var tempCoordinate = GetStartCoordinate();
+
+            tempListOfCoordinates.Add(
+                new BurndownChartCoordinate(
+                    CalculateLowerRemainingWorkEffort(tempCoordinate),
+                    tempCoordinate.TimeStampForUpdate));
+
+            tempCoordinate = GetIdealEndCoordinate();
+
+            tempListOfCoordinates.Add(
+                new BurndownChartCoordinate(
+                    CalculateLowerRemainingWorkEffort(tempCoordinate),
+                    tempCoordinate.TimeStampForUpdate
+                )
+             );
+            uiInvoker.Invoke(() => { ViewModel.LowerWarningLimit = tempListOfCoordinates; });
+        }
+
+        private float CalculateLowerRemainingWorkEffort(BurndownChartCoordinate tempCoordinate)
+        {
+            return tempCoordinate.RemainingWorkEffort *
+                    ViewModel.BurndownLowerWarningLimitInPercent;
+        }
+
+        private void SetAcutalBurndownOnViewModel()
+        {
+            var coordinates = CreateListOfActualCoordinatesToUse();
 
             MovePointsOneStepToTheRight(coordinates);
-            coordinates.Add(GetStartCoordiante());
+            coordinates.Add(GetStartCoordinate());
             coordinates.Sort();
             AssureLastCoordinateIsNow(coordinates);
-            
-            ViewModel.ActualBurndown = coordinates;
+
+            uiInvoker.Invoke(() => ViewModel.ActualBurndown = coordinates);
         }
 
-        private static IEnumerable<DateTime> GetAllDatesWithHistory(Iteration iteration)
+        private List<BurndownChartCoordinate> CreateListOfActualCoordinatesToUse()
         {
-            var distinctDates = (from task in iteration.Tasks
-                                 from workEffortItem in task.WorkEffortHistory
-                                 select workEffortItem.TimeStampForUpdate.Date).Distinct();
-            
-            return distinctDates;
+            return (from day in allDatesWithWorkItems
+                    where (day.Date >= CurrentProject.CurrentIteration.StartDate.Date) || (settingsViewModel.IncludeWorkItemsBeforeIterationStartdate)
+                    let hoursRemaining = GetHoursRemainingForDay(CurrentProject.CurrentIteration, day)
+                    select new BurndownChartCoordinate(hoursRemaining, day)).ToList();
         }
 
         private static float GetHoursRemainingForDay(Iteration iteration, DateTime day)
@@ -212,6 +531,7 @@ namespace Smeedee.Widget.BurndownChart.Controllers
                     var previousDay = GetPreviousDayInHistoryForDay(task, day);
                     hoursRemaining += GetLastRemainingHoursForDay(task, previousDay);
                 }
+
             }
             return hoursRemaining;
         }
@@ -222,6 +542,14 @@ namespace Smeedee.Widget.BurndownChart.Controllers
                 .Any(x => x.TimeStampForUpdate.Date.Equals(day.Date));
         }
 
+        private static float GetLastRemainingHoursForDay(Task task, DateTime day)
+        {
+            return (from workEffort in task.WorkEffortHistory
+                    orderby workEffort.TimeStampForUpdate
+                    where workEffort.TimeStampForUpdate.Date.Equals(day.Date)
+                    select workEffort.RemainingWorkEffort).Last();
+        }
+
         private static bool IsDayBeforeHistory(Task task, DateTime day)
         {
             return task.WorkEffortHistory.All(w => w.TimeStampForUpdate.Date >= day.Date);
@@ -229,24 +557,32 @@ namespace Smeedee.Widget.BurndownChart.Controllers
 
         private static DateTime GetPreviousDayInHistoryForDay(Task task, DateTime day)
         {
-            return ( from workEffort in task.WorkEffortHistory
-                     orderby workEffort.TimeStampForUpdate
-                     where workEffort.TimeStampForUpdate.Date < day.Date
-                     select workEffort.TimeStampForUpdate.Date ).Last();
+            return (from workEffort in task.WorkEffortHistory
+                    orderby workEffort.TimeStampForUpdate
+                    where workEffort.TimeStampForUpdate.Date < day.Date
+                    select workEffort.TimeStampForUpdate.Date).Last();
         }
 
-        private static float GetLastRemainingHoursForDay(Task task, DateTime day)
+        private void MovePointsOneStepToTheRight(IEnumerable<BurndownChartCoordinate> actualCoordinates)
         {
-            return ( from workEffort in task.WorkEffortHistory
-                     orderby workEffort.TimeStampForUpdate
-                     where workEffort.TimeStampForUpdate.Date.Equals(day.Date)
-                     select workEffort.RemainingWorkEffort ).Last();
+            var iteration = CurrentProject.CurrentIteration;
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.IdealBurndown.Last().TimeStampForUpdate = iteration.EndDate.AddDays(1);
+                ViewModel.LowerWarningLimit.Last().TimeStampForUpdate = iteration.EndDate.AddDays(1);
+                ViewModel.UpperWarningLimit.Last().TimeStampForUpdate = iteration.EndDate.AddDays(1);
+            });
+
+            foreach (BurndownChartCoordinate coordinate in actualCoordinates)
+            {
+                coordinate.TimeStampForUpdate = coordinate.TimeStampForUpdate.AddDays(1);
+            }
         }
 
         private static void AssureLastCoordinateIsNow(ICollection<BurndownChartCoordinate> coordinates)
         {
             if (coordinates.Count == 0) return;
-            
+
             var lastCoord = coordinates.Last();
             if (lastCoord.TimeStampForUpdate.Date == DateTime.Now.Date)
             {
@@ -259,23 +595,54 @@ namespace Smeedee.Widget.BurndownChart.Controllers
             }
         }
 
-        private BurndownChartCoordinate GetStartCoordiante()
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
-            var iteration = CurrentProject.CurrentIteration;
-            var startCoordinate = new BurndownChartCoordinate(iteration.GetWorkEffortEstimateForTasks(), iteration.StartDate);
-            
-            return startCoordinate;
+            ReloadViewModel();
         }
 
-        private void MovePointsOneStepToTheRight(IEnumerable<BurndownChartCoordinate> actualCoordinates)
+        public void ConfigurationChanged(Configuration newConfig)
         {
-            var iteration = CurrentProject.CurrentIteration;
-            ViewModel.IdealBurndown.Last().TimeStampForUpdate = iteration.EndDate.AddDays(1);
+            currentConfig = newConfig;
+            UpdateSettingsViewModelFromConfiguration(newConfig);
+            ReloadViewModel();
+        }
 
-            foreach (BurndownChartCoordinate coordinate in actualCoordinates)
+        public void BeforeSaving()
+        {
+            currentConfig.ChangeSetting(INCLUDE_WORK_ITEMS_BEFORE_ITERATION_STARTDATE,
+                                                        settingsViewModel.IncludeWorkItemsBeforeIterationStartdate.ToString());
+            currentConfig.ChangeSetting(SELECTED_PROJECT_NAME, settingsViewModel.SelectedProjectName);
+            currentConfig.IsConfigured = true;
+        }
+
+
+        public void AfterSave(object sender, EventArgs e)
+        {
+            uiInvoker.Invoke(() =>
             {
-                coordinate.TimeStampForUpdate = coordinate.TimeStampForUpdate.AddDays(1);
-            }
+                settingsViewModel.HasChanges = false;
+            });
+            UpdateSettingsViewModelFromConfiguration(currentConfig);
+            ReloadViewModel();
+        }
+
+        public static Configuration GetDefaultConfiguration()
+        {
+            var config = new Configuration(SETTINGS_ENTRY_NAME);
+            config.NewSetting(INCLUDE_WORK_ITEMS_BEFORE_ITERATION_STARTDATE, "false");
+            config.NewSetting(SELECTED_PROJECT_NAME, DEFAULT_PROJECT_NAME);
+            config.IsConfigured = false;
+            return config;
+        }
+
+        private void LogErrorMsg(Exception exception)
+        {
+            logger.WriteEntry(new ErrorLogEntry
+            {
+                Message = exception.ToString(),
+                Source = GetType().ToString(),
+                TimeStamp = DateTime.Now
+            });
         }
     }
 }

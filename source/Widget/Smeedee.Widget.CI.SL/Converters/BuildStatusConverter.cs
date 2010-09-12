@@ -46,7 +46,7 @@ namespace Smeedee.Widget.CI.SL.Converters
 
             if (targetType == typeof (Brush))
             {
-                var xrd = new XamlResourceDictionary("Smeedee.Client.Framework.SL;component/Styles.xaml", new SLXamlReader());
+                var xrd = new XamlResourceDictionary("Smeedee.Client.SL;component/Styles.xaml", new SLXamlReader());
                 
                 switch (buildValue)
                 {

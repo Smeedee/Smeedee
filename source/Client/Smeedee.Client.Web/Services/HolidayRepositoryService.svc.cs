@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Collections.Generic;
-using System.Text;
-
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.Holidays;
@@ -53,6 +49,5 @@ namespace Smeedee.Client.Web.Services
                 logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
             }
         }
-
     }
 }

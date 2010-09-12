@@ -27,97 +27,223 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
+using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.Users;
 using Smeedee.Widget.SourceControl.ViewModels;
-using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widget.SourceControl.Controllers
 {
-    public class CheckInNotificationController : ControllerBase<CheckInNotificationViewModel>
+    public class CheckInNotificationController : ControllerBase<LatestCommitsViewModel>
     {
-        private const int NUMBER_OF_CHANGESETS_TO_DISPLAY = 10;
-        private const int NUMBER_OF_CHANGESETS_TO_GET = 10;
 
-        private IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient;
+        private const string BlinkIsCheckedEntryName = "blinkOnBlankComment";
+        private const string NumberOfCommittsEntryName = "numberOfCommits";
+        private const string SettingsEntryName = "CheckInNotification";
+
+        public static readonly int defaultNumberOfCommits = 10;
+        
         private long lastRevision = 1;
         private IRepository<Changeset> repository;
         private IRepository<User> userRepository;
-
+        private readonly IRepository<Configuration> configRepo;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersister;
+        private IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient;
         private ILog logger;
 
-        public CheckInNotificationController(CheckInNotificationViewModel viewModel, IUIInvoker uiInvoke, ITimer timer, IRepository<Changeset> changesetRepo, IRepository<User> userRepository, IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient, ILog logger)
-            : base(viewModel, timer, uiInvoke)
+        public CheckInNotificationController(
+            LatestCommitsViewModel viewModel, 
+            IUIInvoker uiInvoke, 
+            ITimer timer, 
+            IRepository<Changeset> changesetRepo, 
+            IRepository<User> userRepository, 
+            IRepository<Configuration> configRepo, 
+            IPersistDomainModelsAsync<Configuration> configPersister, 
+            IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient, 
+            ILog logger, 
+            IProgressbar loadingNotifier)
+            : base(viewModel, timer, uiInvoke, loadingNotifier)
         {
-            this.asyncClient = asyncClient;
-
             this.repository = changesetRepo;
             this.userRepository = userRepository;
+            this.configRepo = configRepo;
+            this.configPersister = configPersister;
+            this.asyncClient = asyncClient;
             this.logger = logger;
 
-            LoadData();
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.NumberOfCommits = defaultNumberOfCommits;
+            });
+            ViewModel.SaveSettings.ExecuteDelegate = SaveSettings;
+
+            configPersister.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
+
+            Start();
+            LoadSettingsAndData();
         }
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
+            LoadSettingsAndData();
+        }
+
+        private void  SaveSettings()
+        {
+            SetIsSavingConfig();
+
+            ViewModel.SetResetPoint();
+
+            var configToSave = new Configuration(SettingsEntryName);
+            configToSave.NewSetting(NumberOfCommittsEntryName, ViewModel.NumberOfCommits.ToString());
+            configToSave.NewSetting(BlinkIsCheckedEntryName,ViewModel.BlinkWhenNoComment.ToString());
+
+            configPersister.Save(configToSave);
+            ReloadViewModel();
+        }
+
+        private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs e)
+        {
+            SetIsNotSavingConfig();
+        }
+
+        private void ReloadViewModel()
+        {
+            ClearChangesets();
+            lastRevision = 1;
             LoadData();
+        }
+
+        private void ClearChangesets()
+        {
+            var count = ViewModel.Changesets.Count;
+            for (int i = 0; i < count; i++)
+            {
+                ViewModel.Changesets.RemoveAt(0);
+            }
+        }
+
+        private void LoadSettingsAndData()
+        {
+            asyncClient.RunAsyncVoid(() => Try(() =>
+            {
+                LoadSettingsSync();
+                LoadDataSync();
+            }));
+        }
+
+        private void LoadSettingsSync()
+        {
+            SetIsLoadingConfig();
+            var currentSettings = configRepo.Get(new AllSpecification<Configuration>()).
+                Where(c => c.Name.Equals(SettingsEntryName)).
+                SingleOrDefault();
+
+            if (currentSettings != null && DbSettingsIsChanged(currentSettings)) 
+            {
+                SetSettings(currentSettings);
+            }
+            ViewModel.SetResetPoint();
+            SetIsNotLoadingConfig();
         }
 
         private void LoadData()
         {
             if (!ViewModel.IsLoading)
             {
-                ViewModel.IsLoading = true;
-
-                asyncClient.RunAsyncVoid(() =>
-                {
-                    IEnumerable<User> allUsers = GetAllUsers(); //new List<User>(); // GetAllUsers();
-                    IEnumerable<Changeset> latestChangesets = GetLatestChangesets(NUMBER_OF_CHANGESETS_TO_GET);
-                    LoadChangesetIntoViewModel(latestChangesets);
-                    LoadUserInfoIntoViewModel(allUsers);
-
-                    if (latestChangesets.Count() == 0)
-                    {
-                        ViewModel.NoChangesets = true;
-                    }
-
-                    ViewModel.IsLoading = false;
-                });
+                asyncClient.RunAsyncVoid(LoadDataSync);
             }
         }
 
-        private IEnumerable<Changeset> GetLatestChangesets(int count)
+        private void LoadDataSync()
         {
-            IEnumerable<Changeset> changeSets = null;
+            SetIsLoadingData();
+            var allUsers = GetAllUsers();
+            var latestChangesets = GetLatestChangesets(ViewModel.NumberOfCommits);
+
+            LoadChangesetIntoViewModel(latestChangesets);
+            LoadUserInfoIntoViewModel(allUsers);
+
+            SetIsNotLoadingData();
+        }
+
+        public bool DbSettingsIsChanged(Configuration dbSettings)
+        {
+            var dbNumberOfCommits = Int32.Parse(dbSettings.GetSetting(NumberOfCommittsEntryName).Value.Trim());
+            var dbBlinkIsChecked = Boolean.Parse(dbSettings.GetSetting(BlinkIsCheckedEntryName).Value.Trim());
+            
+            return (dbNumberOfCommits != ViewModel.NumberOfCommits) || (dbBlinkIsChecked != ViewModel.BlinkWhenNoComment);
+        }
+
+        private void SetSettings(Configuration settings)
+        {
+            if (settings == null)
+                return;
+
+            Try(() => LoadSpecificSetting(settings.GetSetting(NumberOfCommittsEntryName)));
+            Try(() => LoadSpecificSetting(settings.GetSetting(BlinkIsCheckedEntryName)));
+        }
+        
+        delegate void VoidDelegate();
+        private void Try(VoidDelegate fn)
+        {
             try
             {
-                changeSets = repository.Get(new ChangesetsAfterRevisionSpecification(lastRevision));
-                ViewModel.HasConnectionProblems = false;
+                fn();
             }
-            catch(Exception e)
+            catch (Exception exception)
             {
-                logger.WriteEntry(new LogEntry()
-                {
-                    Message = e.ToString(),
-                    Source = this.GetType().ToString(),
-                    TimeStamp = DateTime.Now
-                });
-                ViewModel.HasConnectionProblems = true;
+                LogErrorMsg(exception);
             }
+        }
 
+        private void LoadSpecificSetting(SettingsEntry setting)
+        {
+            switch (setting.Name)
+            {
+                case NumberOfCommittsEntryName:
+                    uiInvoker.Invoke(() =>
+                    {
+                        ViewModel.NumberOfCommits = Int32.Parse(setting.Value.Trim());
+                    });
+                    break;
+                case BlinkIsCheckedEntryName:
+                    uiInvoker.Invoke(() =>
+                    {
+                        ViewModel.BlinkWhenNoComment = Boolean.Parse(setting.Value.Trim());
+                    });
+                    break;
+            }
+        }
+
+        private void LogErrorMsg(Exception exception)
+        {
+            logger.WriteEntry(new ErrorLogEntry()
+            {
+                Message = exception.ToString(),
+                Source = this.GetType().ToString(),
+                TimeStamp = DateTime.Now
+            });
+        }
+
+        private IEnumerable<Changeset> GetLatestChangesets(int numberOfChangesets)
+        {
+            IEnumerable<Changeset> changeSets = null;
+            Try(() => 
+                changeSets = repository.Get(new ChangesetsAfterRevisionSpecification(lastRevision)));
+            
             if (changeSets == null)
             {
                 throw new Exception(
                     "Violation of IChangesetRepository. Does not accept a null reference as a return value.");
             }
 
-            return changeSets.Take(count).ToList();
+            return changeSets.Take(numberOfChangesets).ToList();
         }
 
         private void LoadChangesetIntoViewModel(IEnumerable<Changeset> changesets)
@@ -127,37 +253,38 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 lastRevision = changesets.Max(c => c.Revision);
             }
 
-            uiInvoker.Invoke(() =>
+            uiInvoker.Invoke(() => LoadChangesetsIntoViewModelSync(changesets));
+        }
+
+        private void LoadChangesetsIntoViewModelSync(IEnumerable<Changeset> changesets)
+        {
+            foreach (var changeset in changesets.Reverse())
             {
-                ChangesetViewModel newChangeset;
+                var newChangeset = new ChangesetViewModel()
+                                   {
+                                       Message = changeset.Comment,
+                                       Date = changeset.Time.ToLocalTime(),
+                                       Revision = changeset.Revision,
+                                       CommentIsBad = !changeset.IsValidComment(),
+                                       ShouldBlink = ViewModel.BlinkWhenNoComment
+                                   };
 
-                foreach (Changeset changeset in changesets.Reverse())
+                newChangeset.Developer.Username = changeset.Author.Username;
+
+                //check if newChangeset is in list already
+                bool newChangesetExistsInList =
+                    ViewModel.Changesets.Any(c => c.Revision.Equals(newChangeset.Revision));
+
+                if (!newChangesetExistsInList)
                 {
-                    newChangeset = new ChangesetViewModel()
+                    ViewModel.Changesets.Insert(0, newChangeset);
+
+                    if (ViewModel.Changesets.Count > ViewModel.NumberOfCommits)
                     {
-                        Message = changeset.Comment,
-                        Date = changeset.Time.ToLocalTime(),
-                        Revision = changeset.Revision,
-                        CommentIsBad = !changeset.IsValidComment(),
-                    };
-
-                    newChangeset.Developer.Username = changeset.Author.Username;
-
-                    //check if newChangeset is in list already
-                    bool newChangesetExistsInList =
-                        ViewModel.Changesets.Any(c => c.Revision.Equals(newChangeset.Revision));
-
-                    if (!newChangesetExistsInList)
-                    {
-                        ViewModel.Changesets.Insert(0, newChangeset);
-
-                        if (ViewModel.Changesets.Count > NUMBER_OF_CHANGESETS_TO_DISPLAY)
-                        {
-                            ViewModel.Changesets.RemoveAt(ViewModel.Changesets.Count - 1);
-                        }
+                        ViewModel.Changesets.RemoveAt(ViewModel.Changesets.Count - 1);
                     }
                 }
-            });
+            }
         }
 
         private IEnumerable<User> GetAllUsers()

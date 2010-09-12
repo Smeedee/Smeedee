@@ -23,18 +23,35 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 
 namespace Smeedee.DomainModel.Framework
 {
-    /// <summary>
-    /// Repository interface for:
-    /// Save and Update operations
-    /// </summary>
+    [Obsolete("This interface is obsolete in favor of the IPersistDomainModelsAsync. Please use the new Async interface")]
     public interface IPersistDomainModels<TDomainModel>
     {
         void Save(TDomainModel domainModel);
         void Save(IEnumerable<TDomainModel> domainModels);
+    }
+
+    public interface IPersistDomainModelsAsync<TDomainModel> : IPersistDomainModels<TDomainModel>
+    {
+        event EventHandler<SaveCompletedEventArgs> SaveCompleted;
+    }
+
+    public class SaveCompletedEventArgs : AsyncCompletedEventArgs
+    {
+        public SaveCompletedEventArgs()
+            : this(null)
+        {
+        }
+
+        public SaveCompletedEventArgs(Exception error) 
+            : base(error, false, null)
+        {
+        }
     }
 }

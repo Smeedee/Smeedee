@@ -1,4 +1,4 @@
-﻿#region File header
+#region File header
 
 // <copyright>
 // This library is free software; you can redistribute it and/or
@@ -28,17 +28,13 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using NHibernate;
+using System.Reflection;
 using Smeedee.DomainModel.Framework.Logging;
-using Smeedee.Integration.CI.CruiseControl.DomainModel.Repositories;
 using Smeedee.Integration.Database.DomainModel.Repositories;
-using Smeedee.Tasks.CI;
+using Smeedee.Integration.Framework.Utils;
+using Smeedee.Scheduler.Services;
 using Smeedee.Tasks.Framework;
-using Smeedee.Tasks.ProjectInfo;
-using Smeedee.Tasks.SourceControl;
-
 
 namespace Smeedee.Scheduler.Console
 {
@@ -52,39 +48,37 @@ namespace Smeedee.Scheduler.Console
         static void Main(string[] args)
         {
             System.Console.WriteLine("Application started -  Esc to quit");
-            
-            ISessionFactory sesFact = null;
 
-            sesFact = NHibernateFactory.AssembleSessionFactory(DATABASE_FILE);
-
-            ILog consoleLogger = new ConsoleLogger();
-            consoleLogger.VerbosityLevel = 2;
-            ILog databaseLogger = new Logger(new LogEntryDatabaseRepository(sesFact));
-            databaseLogger.VerbosityLevel = 1;
+            var sessionFactory = NHibernateFactory.AssembleSessionFactory(DATABASE_FILE);
+            ILog consoleLogger = new ConsoleLogger {VerbosityLevel = 2};
+            ILog databaseLogger = new Logger(new LogEntryDatabaseRepository(sessionFactory)) {VerbosityLevel = 1};
             ILog log = new CompositeLogger(consoleLogger, databaseLogger);
 
-            var harvesterScheduler = new Scheduler(log);
+            #region Unncomment to fill up the database with some task configurations. Used for TESTING ONLY
 
-            var configRepository = new HardcodedConfigurationRepository();
-            var csDatabase = new ChangesetDatabaseRepository(sesFact);
+            //var dbRepository = new TaskConfigurationDatabaseRepository();
+            //var hardCodedTaskConfigurations = new HardCodedTaskConfigurationRepository();
+            //dbRepository.Save(hardCodedTaskConfigurations.Get(new AllSpecification<TaskConfiguration>()));
 
-            var repositoryFactory = new ChangesetRepositoryFactory();
-            var csHarvester = new SourceControlTask(csDatabase, configRepository, csDatabase, repositoryFactory);
+            #endregion
 
-            var ciRep = new CCServerRepository("http://agileprojectdashboard.org/ccnet/", new SocketXMLBuildlogRequester());
-            var ciPersister = new CIServerDatabaseRepository(sesFact);
-            var ciRepositoryFactory = new CIServerRepositoryFactory();
-            var ciHarvester = new CITask(ciRepositoryFactory, ciPersister, configRepository);
+            var iocContainer = new IocContainerForScheduler();
+            iocContainer.BindToConstant(sessionFactory);
+            var taskDirectory = new DirectoryInfo(Assembly.GetExecutingAssembly().Location).Parent.FullName;
 
-            var piRepositoryFactory = new ProjectInfoRepositoryFactory();
-            var piPersister = new ProjectInfoServerDatabaseRepository(sesFact);
-            var piHarvester = new ProjectInfoTask(piRepositoryFactory, piPersister, configRepository);
-            
-            harvesterScheduler.RegisterTasks(new List<TaskBase> { csHarvester });
+            var taskScheduler = new Scheduler(iocContainer, taskDirectory, new FileUtilities(), new TimerWithTimestamp(0, 10000), new TimerWithTimestamp(0, 2000), log);
+            taskScheduler.Start();
 
-            //new TaskLoader(harvesterScheduler, catalog, log, factory);
-
-            while (System.Console.ReadKey().Key != ConsoleKey.Escape) {}
+            try
+            {
+                while (System.Console.ReadKey().Key != ConsoleKey.Escape) { }
+            }
+            catch (Exception e)
+            {
+                //TODO: Replace this with some proper logging
+                System.Console.WriteLine(e);
+            }
         }
+
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://smeedee.org" elementFormDefault="qualified" targetNamespace="http://smeedee.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/UserRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
-  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/UserRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Users" />
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/UserRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/UserRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Users" />
   <xs:element name="Get">
     <xs:complexType>
       <xs:sequence>
@@ -19,7 +19,7 @@
   <xs:element name="Save">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Users" minOccurs="0" name="userdb" nillable="true" type="q3:Userdb" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Users" minOccurs="0" name="userdb" nillable="true" type="q3:ArrayOfUserdb" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

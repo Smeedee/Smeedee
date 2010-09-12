@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using Tskjortebutikken.Widgets.ViewModel;
+
+namespace Tskjortebutikken.Widgets.ViewModel:
+	viewmodel Graph:
+		property Data as ObservableCollection<DataPoint>
+
+		command Refresh
+
+	viewmodel DataPoint:
+		property X as Object
+		property Y as Object
+
+	viewmodel GraphSettings
+		property Databases as ObservableCollection<DatabaseViewModel>
+		oproperty SelectedDatabase as DatabaseViewModel
+		oproperty SelectedCollection as CollectionViewModel
+		oproperty AvailableProperties as ObservableCollection<string>
+		oproperty SelectedPropertyForXAxis as string
+		oproperty SelectedPropertyForYAxis as string
+		oproperty NumberOfDataPoints as int
+		oproperty Graph as Graph
+
+		command Save
+		command Refresh
+		command Test
+		command Cancel
+	
+	viewmodel DatabaseViewModel:
+		property Name as string
+		property Collections as ObservableCollection<CollectionViewModel>
+	
+	viewmodel CollectionViewModel:
+		property Name as string
+		

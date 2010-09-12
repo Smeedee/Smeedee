@@ -21,6 +21,7 @@ namespace Smeedee.Client.Widget.CI.Tests.Controllers.BuildHistoryControllerSpecs
         protected IUIInvoker invoker = new NoUIInvokation();
         protected Mock<ITimer> refresher = new Mock<ITimer>();
         protected Mock<IRepository<CIServer>> repository = new Mock<IRepository<CIServer>>();
+        protected Mock<IProgressbar> progressbarMock = new Mock<IProgressbar>();
         protected DateTime firstDate;
         protected DateTime secondDate;
         protected Build failedBuild1;
@@ -68,7 +69,7 @@ namespace Smeedee.Client.Widget.CI.Tests.Controllers.BuildHistoryControllerSpecs
         public void Assure_controller_inherits_from_abstractController()
         {
             var viewModel = new BuildHistoryViewModel();
-            var controller = new BuildHistoryController(viewModel, refresher.Object, invoker, repository.Object);
+            var controller = new BuildHistoryController(viewModel, refresher.Object, invoker, repository.Object, progressbarMock.Object);
             var castedController = controller as ControllerBase<BuildHistoryViewModel>;
         }
     }
@@ -82,7 +83,7 @@ namespace Smeedee.Client.Widget.CI.Tests.Controllers.BuildHistoryControllerSpecs
         public void Setup()
         {
             var viewModel = new BuildHistoryViewModel();
-            controller = new BuildHistoryController(viewModel, refresher.Object, invoker, repository.Object);
+            controller = new BuildHistoryController(viewModel, refresher.Object, invoker, repository.Object, progressbarMock.Object);
         }
 
         [Test]

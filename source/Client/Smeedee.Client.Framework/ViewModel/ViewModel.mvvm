@@ -1,51 +1,143 @@
-﻿using System.Collections.ObjectModel
+﻿using System;
+using System.Collections.Generic
+using System.Collections.ObjectModel
 using System.ComponentModel.Composition
 using System.Windows
+using System.Windows.Input
 using TinyMVVM.Framework
+using Smeedee.Client.Framework.Services
+using Smeedee.Client.Framework.ViewModel.Dialogs
+using Smeedee.DomainModel.Config;
 
-viewmodel ApplicationContext:
-	oproperty Title as string
-	oproperty Subtitle as string
-	property Traybar as Traybar
-	property Slideshow as Slideshow
+namespace Smeedee.Client.Framework.ViewModel:
+	viewmodel ApplicationContext:
+		property DockBar as DockBar
+		property Traybar as Traybar
+		property Slideshow as Slideshow
 
-viewmodel ErrorInfo:
-	oproperty HasError as bool
-	oproperty ErrorMessage as string
+	viewmodel ErrorInfo:
+		oproperty HasError as bool
+		oproperty ErrorMessage as string
 
-viewmodel Widget:
-	property View as FrameworkElement
-	property ErrorInfo as ErrorInfo
+	viewmodel Widget:
+		oproperty Title as string
+		oproperty View as FrameworkElement
+		oproperty SettingsView as FrameworkElement
+		property ErrorInfo as ErrorInfo
+		oproperty IsInSettingsMode as bool
+	 
+		property ViewProgressbar as Progressbar
+		property SettingsProgressbar as Progressbar
+		property ProgressbarService as IProgressbar
+	
+		command Settings
+		command SaveSettings
 
-viewmodel TraybarWidget extends Widget
+	viewmodel Traybar: 
+		property Widgets as ObservableCollection<Widget>
+		oproperty ErrorInfo as ErrorInfo
 
-viewmodel Traybar: 
-	[ImportMany(AllowRecomposition = true)]
-	property Widgets as ObservableCollection<TraybarWidget>
-	oproperty ErrorInfo as ErrorInfo
+	viewmodel Slideshow:
+		property Slides as ObservableCollection<Slide>
+		property ErrorInfo as ErrorInfo
+		oproperty CurrentSlide as Slide
+		oproperty SlideshowInfo as string
+		oproperty IsRunning as bool
+		oproperty TimeLeftOfSlideInPercent as double
 
-viewmodel Slideshow:
-	[ImportMany(AllowRecomposition = true)]
-	property Slides as ObservableCollection<Slide>
-	property ErrorInfo as ErrorInfo
-	oproperty CurrentSlide as Slide
-	oproperty SlideshowInfo as string
+		command Start	
+		command Pause
+		command Next
+		command Previous
+		command AddSlide
+		command Edit
 
-	command Start	
-	command Pause
-	command Next
-	command Previous
+	viewmodel Slide extends Widget:
+		oproperty Title as string
+		oproperty SecondsOnScreen as int
+		property Widget as Widget
 
-viewmodel Slide extends Widget:
-	property Title as string
-	property SettingsView as FrameworkElement
-	oproperty IsInSettingsMode as bool
+	viewmodel SettingsViewModelBase extends ViewModelBase:
+		oproperty HasChanges as bool
 
-	command Settings
+		command Save
+		command ReloadSettings
 
-viewmodel Notifier:
-	property Notifications as ObservableCollection<Notification>
+	viewmodel Notifier:
+		property Notifications as ObservableCollection<Notification>
 
-viewmodel Notification:
-	oproperty Message as string
-	oproperty Displayed as bool
+	viewmodel Notification:
+		oproperty Message as string
+		oproperty Displayed as bool
+
+	viewmodel Progressbar:
+		oproperty Message as string
+		oproperty IsVisible as bool
+
+	viewmodel WidgetMetadata:
+		property Name as string
+		property Description as string
+		property Author as string
+		property Tags as string[]
+		property Version as string
+		property XAPName as string
+		property Type as Type
+		property UserSelectedTitle as string
+
+		oproperty SecondsOnScreen as int
+		oproperty IsSelected as bool
+		oproperty IsDescriptionCapped as bool
+
+	viewmodel DockBar:
+		oproperty IsVisible as bool
+		property Items as ObservableCollection<DockBarItem>
+
+	viewmodel DockBarItem:
+		oproperty Description as string
+		oproperty Icon as FrameworkElement
+
+		command Click
+
+	viewmodel WelcomeWidget extends Widget:
+
+namespace Smeedee.Client.Framework.ViewModel.DockBarItems:
+	viewmodel WidgetDockBarItem extends DockBarItem:
+		oproperty Widget as Widget
+		property ItemName as string
+		
+namespace Smeedee.Client.Framework.ViewModel.Dialogs:
+	viewmodel Dialog:
+		property Progressbar as Progressbar
+		property Width as int
+		property Height as int
+		
+		oproperty DisplayOkButton as bool
+		oproperty DisplayCancelButton as bool
+
+		oproperty Title as string
+		oproperty View as FrameworkElement
+		property ButtonBarCommands as ObservableCollection<DelegateCommand>
+
+		command Ok
+		command Cancel
+
+	viewmodel WidgetDialog extends Dialog:
+		property Widget as Widget
+
+	viewmodel SelectWidgetsDialog extends Dialog:
+		property AvailableWidgets as ObservableCollection<WidgetMetadata>
+		property Progressbar as Progressbar
+		oproperty SearchTerm as string
+		property NewSlides as List<Slide>
+
+		command SelectAll
+		command DeselectAll
+
+	viewmodel EditSlideshowDialog extends Dialog:
+		oproperty Slideshow as Slideshow
+
+		command Delete
+		command MoveLeft
+		command MoveRight
+
+	

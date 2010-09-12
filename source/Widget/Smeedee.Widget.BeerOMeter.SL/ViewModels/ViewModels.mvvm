@@ -1,0 +1,11 @@
+﻿using TinyMVVM.Framework
+using Smeedee.Client.Framework.ViewModel
+
+namespace Smeedee.Widget.BeerOMeter.SL.ViewModels:
+viewmodel BeerOMeterViewModel:
+	oproperty NumberOfBeers as int	
+
+	command Reset
+	command AnimationCompleted
+	command Save
+	

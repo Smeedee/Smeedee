@@ -2,60 +2,84 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using NUnit.Framework;
+using Smeedee.Client.Framework.ViewModel;
+using Smeedee.Client.Tests.ViewModel;
 using TinyBDD.Specification.NUnit;
 
-namespace Smeedee.Client.Tests.ViewModel
+namespace Smeedee.Client.Framework.Tests.ViewModel
 {
-    class SlideTests
+    public class SlideTests
     {
         [TestFixture]
-        public class When_spawned : SlideTestContext
-        {
-            public override void Context()
-            {
-                When_Slide_is_spawned();
-            }
-
-            [Test]
-            public void assure_it_has_a_IsInSettingsMode_flag()
-            {
-                viewModel.IsInSettingsMode.ShouldBe(false);
-            }
-
-            [Test]
-            public void assure_Settings_command_can_be_executed()
-            {
-                viewModel.Settings.CanExecute(null).ShouldBeTrue();
-            }
-        }
-
-        [TestFixture]
-        public class When_Settings_Command_is_executed : SlideTestContext
+        public class when_spawned : SlideTestContext
         {
             public override void Context()
             {
                 Given_Slide_is_created();
-
-                When_execute_Settings_Command();
             }
 
             [Test]
-            public void assure_is_in_settings_mode()
+            public void Assure_SecondsOnScreen_is_initialized()
             {
-                viewModel.IsInSettingsMode.ShouldBeTrue();
+                viewModel.SecondsOnScreen.ShouldBe(Slide.DEFAULT_SECONDSONSCREEN);
             }
-
-
-            [Test]
-            public void assure_it_goes_back_to_view_mode_when_executed_againt()
-            {
-                When_execute_Settings_Command();
-
-                viewModel.IsInSettingsMode.ShouldBeFalse();
-            }
-
         }
 
+
+
+        [TestFixture]
+        public class When_Widget_is_set : SlideTestContext
+        {
+            public override void Context()
+            {
+                Given_Slide_is_created();
+                And_Widget_is_set(new Widget() { View = new Grid() });
+            }
+
+            [Test]
+            public void Then_assure_Thumbnail_can_be_generated()
+            {
+                viewModel.Thumbnail.ShouldNotBeNull();
+            }
+        }
+
+        [TestFixture]
+        public class When_Widget_is_set_but_has_no_View : SlideTestContext
+        {
+            public override void Context()
+            {
+                Given_Slide_is_created();
+                And_Widget_is_set(new Widget() { View = null });
+            }
+
+            [Test]
+            public void Then_assure_Thumbnail_can_not_be_generated()
+            {
+                viewModel.Thumbnail.ShouldBeNull();
+            }
+        }
+
+        [TestFixture]
+        public class When_Widget_is_not_set : SlideTestContext
+        {
+            public override void Context()
+            {
+                Given_Slide_is_created();
+                And_Widget_is_not_set();
+            }
+
+            private void And_Widget_is_not_set()
+            {
+                viewModel.Widget = null;
+            }
+
+            [Test]
+            public void Then_assure_Thumbnail_can_not_be_generated()
+            {
+                viewModel.Thumbnail.ShouldBeNull();
+            }
+        }
     }
 }

@@ -14,10 +14,20 @@
   <wsdl:message name="CIRepositoryService_Get_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetResponse" />
   </wsdl:message>
+  <wsdl:message name="CIRepositoryService_Save_InputMessage">
+    <wsdl:part name="parameters" element="tns:Save" />
+  </wsdl:message>
+  <wsdl:message name="CIRepositoryService_Save_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveResponse" />
+  </wsdl:message>
   <wsdl:portType name="CIRepositoryService">
     <wsdl:operation name="Get">
       <wsdl:input wsaw:Action="http://smeedee.org/CIRepositoryService/Get" message="tns:CIRepositoryService_Get_InputMessage" />
       <wsdl:output wsaw:Action="http://smeedee.org/CIRepositoryService/GetResponse" message="tns:CIRepositoryService_Get_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Save">
+      <wsdl:input wsaw:Action="http://smeedee.org/CIRepositoryService/Save" message="tns:CIRepositoryService_Save_InputMessage" />
+      <wsdl:output wsaw:Action="http://smeedee.org/CIRepositoryService/SaveResponse" message="tns:CIRepositoryService_Save_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

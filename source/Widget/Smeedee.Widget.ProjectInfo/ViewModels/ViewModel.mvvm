@@ -1,0 +1,24 @@
+﻿using System
+using TinyMVVM.Framework
+using System.Collections.ObjectModel
+using System.Windows.Media.Imaging
+using System.Collections.Generic;
+using Smeedee.DomainModel.Holidays;
+using Smeedee.Client.Framework.ViewModel;
+
+viewmodel WorkingDaysLeftViewModel:
+	oproperty HasInformationToShow as bool
+	oproperty EndDate as DateTime
+	property Holidays as IEnumerable<Holiday>
+
+viewmodel WorkingDaysLeftSettingsViewModel extends SettingsViewModelBase:
+	oproperty IsLoading as bool
+	oproperty IsManuallyConfigured as bool
+	oproperty SelectedEndDate as DateTime
+	oproperty AvailableServers as List<string>
+	oproperty AvailableProjects as List<string>
+	oproperty SelectedServer as string
+	oproperty SelectedProject as string
+
+	command ReloadSettings
+	command RefreshAvailableServers

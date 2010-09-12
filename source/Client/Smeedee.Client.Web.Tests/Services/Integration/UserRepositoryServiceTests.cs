@@ -49,7 +49,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.UserRepositoryServiceTest
         };
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_get_User_data_via_WebService : UserRepositoryServiceTestsShared
     {
         [Test]
@@ -81,7 +81,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.UserRepositoryServiceTest
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_save_via_WebService : UserRepositoryServiceTestsShared
     {
         [Test]
@@ -103,7 +103,7 @@ namespace Smeedee.Client.WebTests.Services.Integration.UserRepositoryServiceTest
                         Surname = "Hansen",
                         ImageUrl = "http://goeran.no/avatar.jpg"
                     });
-                    userRepositoryServiceClient.Save(userdb);
+                    userRepositoryServiceClient.Save(new [] {userdb});
                 });
 
                 scenario.Then("assure data is persisted", () =>

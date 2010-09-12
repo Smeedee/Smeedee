@@ -35,7 +35,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
 {
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class QueryModelSpecs
     {
         protected static QueryModel qm;

@@ -34,28 +34,32 @@ using System.Threading;
 
 namespace Smeedee.Integration.CI.CruiseControl.DomainModel.Repositories
 {
-    public class OptimizedHTTPRequest 
+    public class OptimizedHTTPRequest
     {
-        private const int NUMBER_OF_RETRIES = 10;
-        private const int COOLDOWN_MS = 5000;
-        private static Timer doSCoodownTimer = null;
-        private static Random randomGenerator = new Random();
+        private const int NUMBER_OF_RETRIES = 1;
+        private const int COOLDOWN_MS = 10;
+        private static Timer dosCooldownTimer = null;
 
         private IHTTPSocket httpConnection;
         private string httpResponse;
 
-        public  OptimizedHTTPRequest(IHTTPSocket httpSocket)
+        public int NumberOfRetries { get; set; }
+        public int CooldownMS { get; set; }
+
+        public OptimizedHTTPRequest(IHTTPSocket httpSocket)
         {
             this.httpConnection = httpSocket;
+            NumberOfRetries = NUMBER_OF_RETRIES;
+            CooldownMS = COOLDOWN_MS;
         }
 
         public String RequestURL(String fileURL, int port, int maxLength)
         {
-            for (int i = 0; i < NUMBER_OF_RETRIES; i++)
+            for (int i = 0; i < NumberOfRetries; i++)
             {
-                if (doSCoodownTimer!=null)
+                if (dosCooldownTimer != null)
                 {
-                    Thread.Sleep(COOLDOWN_MS);
+                    Thread.Sleep(CooldownMS);
                     continue;
                 }
                 try
@@ -64,29 +68,25 @@ namespace Smeedee.Integration.CI.CruiseControl.DomainModel.Repositories
                 }
                 catch (Exception ex)
                 {
-                    if(ex.GetType() == typeof(HTTPSockectRejectedByHostException))
+                    if (ex.GetType() == typeof(HTTPSockectRejectedByHostException))
                         DenialOfServiceCooldown();
-
-                    Console.WriteLine("Failed download file attempt #{0},", i);
                 }
             }
 
-            throw new WebException("Failed to read after " + NUMBER_OF_RETRIES + " retries");
+            throw new WebException("Failed to read after " + NumberOfRetries + " retries");
         }
 
-        private static void DenialOfServiceCooldown()
+        private void DenialOfServiceCooldown()
         {
-            if (doSCoodownTimer == null)
+            if (dosCooldownTimer == null)
             {
-                Console.WriteLine("++STARTING cooldown++");
-                doSCoodownTimer = new Timer(new TimerCallback(cooldownTimer_callback), null, COOLDOWN_MS, int.MaxValue);
+                dosCooldownTimer = new Timer(cooldownTimer_callback, null, CooldownMS, int.MaxValue);
             }
         }
 
         private static void cooldownTimer_callback(object state)
         {
-            Console.WriteLine("--Cooldown complete--");
-            doSCoodownTimer = null;
+            dosCooldownTimer = null;
         }
 
         private string GetDataFromUrl(String fileURL, int port, int maxLength)

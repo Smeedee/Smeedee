@@ -39,7 +39,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.GenericDoma
             : base(sessionFactory) {}
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class when_saving : Shared
     {
         [SetUp]

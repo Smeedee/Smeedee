@@ -63,7 +63,7 @@ namespace Smeedee.IntegrationTests.PMT.RallyDev.XmlProjectParserSpecs
         }
     }
     
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_XmlTaskParser_is_spawned :Shared
     {
         [Test]
@@ -74,7 +74,7 @@ namespace Smeedee.IntegrationTests.PMT.RallyDev.XmlProjectParserSpecs
         }
     }
 
-    [TestFixture]
+    [TestFixture][Category("IntegrationTest")]
     public class When_parsing_XML : Shared
     {
         [Test]

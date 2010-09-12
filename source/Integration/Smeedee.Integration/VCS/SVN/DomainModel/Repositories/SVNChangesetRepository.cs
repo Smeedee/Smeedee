@@ -53,9 +53,6 @@ namespace Smeedee.Integration.VCS.SVN.DomainModel.Repositories
         public SVNChangesetRepository(string repositoryUrl, string username, string password)
         {
             this.repositoryUrl = repositoryUrl;
-
-            // TODO: Add new constructor that takes username/password for SVN
-            // TODO: Get configuration from configuration system (database or whatever)
             var credentials = new System.Net.NetworkCredential(username, password);
 
             svnClient = new SvnClient();

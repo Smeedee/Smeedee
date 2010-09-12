@@ -7,29 +7,11 @@ namespace Smeedee.Client.Framework.ViewModel
 {
     public partial class ApplicationContext
     {
-        public void OnInitialize()
+        partial void OnInitialize()
         {
             Traybar = new Traybar();
             Slideshow = new Slideshow();
-            Slideshow.PropertyChanged += Slideshow_PropertyChanged;
-
-            if (Slideshow.CurrentSlide != null)
-                Title = Slideshow.CurrentSlide.Title;
+            DockBar = new DockBar();
         }
-
-       void Slideshow_PropertyChanged(object sender, PropertyChangedEventArgs e)
-       {
-           if (Slideshow.CurrentSlide != null)
-           {
-               if (e.PropertyName == "CurrentSlide")
-               {
-                   Title = Slideshow.CurrentSlide.Title;
-               }
-               else if (e.PropertyName == "SlideshowInfo")
-               {
-                   Subtitle = Slideshow.SlideshowInfo;
-               }
-           }
-       }
     }
 }

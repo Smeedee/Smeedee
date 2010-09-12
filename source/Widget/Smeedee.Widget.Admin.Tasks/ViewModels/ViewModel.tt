@@ -1,0 +1,14 @@
+<#@ template language="C#" hostspecific="True" debug="True" #>
+<#@ output extension="txt" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="$(ProjectDir)..\..\Client\Smeedee.Client.Framework\ViewModel\ViewModelTemplate.tt" #>
+
+<#
+	string dslFile = Host.ResolvePath("ViewModel.mvvm");
+	
+	ViewModelTemplate viewModelTemplate = new ViewModelTemplate();
+	viewModelTemplate.File = dslFile;
+	viewModelTemplate.Output.File = "ViewModel.cs";
+	viewModelTemplate.Namespace = "Smeedee.Widget.Admin.Tasks.ViewModels";
+	viewModelTemplate.Render();
+#>

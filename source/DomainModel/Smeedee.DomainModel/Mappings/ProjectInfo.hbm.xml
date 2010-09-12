@@ -37,12 +37,11 @@
     <property name="StartDate"/>
     <property name="EndDate"/>
     <property name="Name"/>
-
     <bag name="Tasks" cascade="All" lazy="false" inverse="true">
       <key>
+        <column name="Iteration_fid"/>
         <column name="ProjectInfoProject_fid"/>
         <column name="ProjectInfoServer_fid"/>
-        <column name="Iteration_fid"/>
       </key>
       <one-to-many class="Task"/>
     </bag>
@@ -52,9 +51,9 @@
     <composite-id>
       <key-property name="SystemId"/>
       <key-many-to-one name="Iteration" class="Iteration" lazy="false">
+        <column name="Iteration_fid"/>
         <column name="ProjectInfoProject_fid"/>
         <column name="ProjectInfoServer_fid"/>
-        <column name="Iteration_fid"/>
       </key-many-to-one>
     </composite-id>
     <property name="Name"/>
@@ -62,10 +61,10 @@
     <property name="WorkEffortEstimate"/>
     <bag name="WorkEffortHistory" cascade="All" lazy="false" inverse="true">
       <key>
+        <column name="Task_fid"/>
+        <column name="Iteration_fid"/>
         <column name="ProjectInfoProject_fid"/>
         <column name="ProjectInfoServer_fid"/>
-        <column name="Iteration_fid"/>
-        <column name="Task_fid"/>
       </key>
       <one-to-many class="WorkEffortHistoryItem"/>
     </bag>
@@ -75,10 +74,10 @@
     <composite-id>
       <key-property name="TimeStampForUpdate"/>
       <key-many-to-one name="Task" class="Task" lazy="false">
-        <column name="ProjectInfoProject_fid"/>
-        <column name="ProjectInfoServer_fid"/>
-        <column name="Iteration_fid"/>
         <column name="Task_fid"/>
+        <column name="Iteration_fid"/>
+        <column name="ProjectInfoProject_fid"/>
+        <column name="ProjectInfoServer_fid"/>   
       </key-many-to-one>
     </composite-id>
     <property name="RemainingWorkEffort"/>

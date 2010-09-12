@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Threading;
 using Smeedee.Client.Framework.SL.CIRepositoryService;
 using Smeedee.DomainModel.CI;
 using Smeedee.DomainModel.Framework;
+using CIServer = Smeedee.DomainModel.CI.CIServer;
 
 namespace Smeedee.Client.Framework.SL.Repositories
 {
-    public class CIServerWebserviceRepository : IRepository<CIServer>
+    public class CIServerWebserviceRepository : IRepository<CIServer>, IPersistDomainModels<CIServer>
     {
         private ManualResetEvent resetEvent = new ManualResetEvent(false);
         private List<CIServer> ciServers;
@@ -53,6 +55,18 @@ namespace Smeedee.Client.Framework.SL.Repositories
             invocationException = e.Error;
 
             resetEvent.Set();
+        }
+
+        public void Save(CIServer domainModel)
+        {
+            var CIServers = new List<CIServer>();
+            CIServers.Add(domainModel);
+            client.SaveAsync(CIServers);
+        }
+
+        public void Save(IEnumerable<CIServer> domainModels)
+        {
+            client.SaveAsync(domainModels.ToList());
         }
 
         #endregion

@@ -61,6 +61,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
       <HintPath>..\..\..\tools\Moq.3.1.416.3-bin\Moq.dll</HintPath>
@@ -102,9 +110,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\CheckInNotificationControllerSpecs.cs" />
+    <Compile Include="Controllers\LatestCommitsControllerSpecs.cs" />
     <Compile Include="Controllers\CommitStatisticsControllerSpecs.cs" />
     <Compile Include="Controllers\TopCommitersControllerSpecs.cs" />
+    <Compile Include="Integration\CommitStatisticsSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ChangesetSpecs.cs" />
     <Compile Include="ViewModels\CheckInNotificationSpecs.cs" />
@@ -131,6 +140,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework.Tests\Smeedee.Client.Framework.Tests.csproj">
+      <Project>{1E77D895-A0E6-4DC9-82FF-3379D65836C1}</Project>
+      <Name>Smeedee.Client.Framework.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
       <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
       <Name>Smeedee.Client.Framework</Name>

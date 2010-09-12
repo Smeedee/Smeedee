@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="Smeedee.Client.Framework.SL.Resources.Graphic.Icons.FullScreenIcon"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" Width="32" Height="32" Margin="0">
+    
+    <Grid x:Name="LayoutRoot" Background="#FF5C5C5C">
+    	<TextBlock TextWrapping="Wrap" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" FontSize="8"><Run Text="Full"/><LineBreak/><Run Text="screen"/></TextBlock>
+
+    </Grid>
+</UserControl>

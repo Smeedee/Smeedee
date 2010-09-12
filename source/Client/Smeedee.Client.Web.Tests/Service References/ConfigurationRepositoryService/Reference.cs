@@ -16,6 +16,7 @@ namespace Smeedee.Client.Web.Tests.ConfigurationRepositoryService {
     public interface ConfigurationRepositoryService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://smeedee.org/ConfigurationRepositoryService/Get", ReplyAction="http://smeedee.org/ConfigurationRepositoryService/GetResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Config.ConfigurationByName))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.Config.Configuration>))]
         Smeedee.DomainModel.Config.Configuration[] Get(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.Config.Configuration> specification);
         

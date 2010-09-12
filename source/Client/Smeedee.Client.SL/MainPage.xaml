@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Smeedee_Client_Resources_Graphic="clr-namespace:Smeedee.Client.Resources.Graphic" 
-    xmlns:ViewModel="clr-namespace:Smeedee.Client.Framework.ViewModel;assembly=Smeedee.Client.Framework.SL" xmlns:local="clr-namespace:Smeedee.Client.SL" x:Class="Smeedee.Client.SL.MainPage"
+    xmlns:ViewModel="clr-namespace:Smeedee.Client.Framework.ViewModel;assembly=Smeedee.Client.Framework.SL" xmlns:local="clr-namespace:Smeedee.Client.SL" xmlns:Views="clr-namespace:Smeedee.Client.Framework.SL.Views;assembly=Smeedee.Client.Framework.SL" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="Smeedee.Client.SL.MainPage"
     mc:Ignorable="d"
     d:DesignHeight="600" d:DesignWidth="800">
 	<UserControl.Resources>
@@ -15,9 +15,34 @@
 		</DataTemplate>
 	</UserControl.Resources>
     <UserControl.DataContext>
-        <ViewModel:ApplicationContext Title="Smeedee Application"/>
+        <ViewModel:ApplicationContext/>
     </UserControl.DataContext>
     <Grid x:Name="LayoutRoot">
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="AdminDock">
+    			<VisualState x:Name="ShowAdminDock">
+    				<Storyboard>
+    					<DoubleAnimation Duration="0:0:0.6" To="39.627" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView" d:IsOptimized="True">
+    						<DoubleAnimation.EasingFunction>
+    							<QuarticEase EasingMode="EaseOut"/>
+    						</DoubleAnimation.EasingFunction>
+    					</DoubleAnimation>
+    				</Storyboard>
+    			</VisualState>
+    			<VisualState x:Name="HideAdminDock">
+    				<Storyboard>
+    					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView">
+    						<EasingDoubleKeyFrame KeyTime="0" Value="39.96"/>
+    						<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-0.333">
+    							<EasingDoubleKeyFrame.EasingFunction>
+    								<QuinticEase EasingMode="EaseInOut"/>
+    							</EasingDoubleKeyFrame.EasingFunction>
+    						</EasingDoubleKeyFrame>
+    					</DoubleAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
     	<Grid Margin="0,70,0,50" d:LayoutOverrides="GridBox">
     		<Grid.Background>
     			<LinearGradientBrush EndPoint="0.499,0" StartPoint="0.501,1">
@@ -26,20 +51,60 @@
     				<GradientStop Color="#FF232323"/>
     			</LinearGradientBrush>
     		</Grid.Background>
-    		<local:SlideshowView Margin="0" DataContext="{Binding Slideshow}"/>
+    		<Views:SlideshowView Margin="0" DataContext="{Binding Slideshow}"/>
     	</Grid>
     	<Grid Margin="-4,0,0,0" Background="Black" Height="70" VerticalAlignment="Top">
     		<Grid.Effect>
     			<DropShadowEffect Opacity="0.5"/>
     		</Grid.Effect>
-    		<TextBlock Margin="13,17,197,16" Foreground="#59FFFFFF" FontSize="26.667" Text="{Binding Title}"/>
-    		<TextBlock Margin="15,0,195,3" Foreground="#34FFFFFF" FontSize="10.667" Text="{Binding Subtitle}" Height="16" VerticalAlignment="Bottom"/>
-    	</Grid>
+    		<TextBlock Margin="13,17,197,16" Foreground="#59FFFFFF" FontSize="26.667" Text="{Binding Slideshow.CurrentSlide.Title}"/>
+            <TextBlock Margin="15,0,195,3" Foreground="#34FFFFFF" FontSize="10.667" Text="{Binding Slideshow.SlideshowInfo}" Height="16" VerticalAlignment="Bottom"/>
+            <Rectangle Margin="4,68,0,0" Height="1" Opacity="0.7" RadiusX="7">
+            	<Rectangle.Fill>
+            		<LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+            			<GradientStop Color="#FFFD9C00" Offset="0"/>
+            			<GradientStop Color="#FFEF3700" Offset="1"/>
+            		</LinearGradientBrush>
+            	</Rectangle.Fill>
+            	<Rectangle.RenderTransform>
+            		<CompositeTransform ScaleX="{Binding Slideshow.TimeLeftOfSlideInPercent}"/>
+            	</Rectangle.RenderTransform>
+            </Rectangle>
+        </Grid>
     	<Viewbox HorizontalAlignment="Right" Width="180" Height="62" VerticalAlignment="Top" Margin="0,12,6,0" d:LayoutOverrides="VerticalAlignment">
     		<Smeedee_Client_Resources_Graphic:Logo/>
     	</Viewbox>
     	<Grid Height="50" Margin="0" VerticalAlignment="Bottom" Background="Black">
-    		<local:TraybarView Margin="0" DataContext="{Binding Traybar}"/>
+    		<Views:TraybarView Margin="0" DataContext="{Binding Traybar}"/>
     	</Grid>
+    	<Ellipse x:Name="ShowAdminDockArea" Fill="#FFF4F4F5" Stroke="Black" Width="440" HorizontalAlignment="Center" Margin="0,-194,0,0" Opacity="0" Height="294" VerticalAlignment="Top">
+    		<i:Interaction.Triggers>
+    			<i:EventTrigger EventName="MouseEnter">
+    				<ei:GoToStateAction StateName="ShowAdminDock"/>
+    			</i:EventTrigger>
+    			<i:EventTrigger EventName="MouseLeave">
+    				<ei:GoToStateAction StateName="HideAdminDock"/>
+    			</i:EventTrigger>
+    		</i:Interaction.Triggers>
+    	</Ellipse>
+        <Views:DockBarView x:Name="adminDockView" 
+                           HorizontalAlignment="Center"
+                           Height="40" Margin="0,-40,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="200" 
+                           RenderTransformOrigin="0.5,0.5"
+                           DataContext="{Binding DockBar}">
+            <Views:DockBarView.Effect>
+                <DropShadowEffect Color="#FF3B3B3B" ShadowDepth="3"/>
+            </Views:DockBarView.Effect>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseEnter">
+                    <ei:GoToStateAction StateName="ShowAdminDock"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Views:DockBarView.RenderTransform>
+                <CompositeTransform/>
+            </Views:DockBarView.RenderTransform>
+        </Views:DockBarView>
     </Grid>
 </UserControl>

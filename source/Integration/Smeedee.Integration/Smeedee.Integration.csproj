@@ -45,6 +45,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DiffieHellman, Version=0.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
@@ -62,40 +70,41 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.TeamFoundation.Build.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Include="Microsoft.TeamFoundation, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Build.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Build.Client.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.TeamFoundation.Build.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Include="Microsoft.TeamFoundation.Build.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Build.Common.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.TeamFoundation.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Include="Microsoft.TeamFoundation.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Client.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.TeamFoundation.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Include="Microsoft.TeamFoundation.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Common.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.TeamFoundation.VersionControl.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Include="Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.Common.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.VersionControl.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Client.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.TeamFoundation.VersionControl.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Include="Microsoft.TeamFoundation.VersionControl.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Common.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Client, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TfsPrivateAssemblies\Microsoft.TeamFoundation.WorkItemTracking.Client.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -104,6 +113,9 @@
     <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\tools\NUnit 2.5.3\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Org.Mentalis.Security, Version=1.0.13.715, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
@@ -117,7 +129,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.60.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+    <Reference Include="System.Data.SQLite, Version=1.0.66.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\SQLite.NET.0.21_x68_dll\System.Data.SQLite.dll</HintPath>
     </Reference>
@@ -153,6 +165,11 @@
     <Compile Include="CI\CruiseControl\DomainModel\Repositories\SocketXMLBuildlogRequester.cs" />
     <Compile Include="CI\CruiseControl\DomainModel\Repositories\XmlBuildLogParser.cs" />
     <Compile Include="CI\CruiseControl\DomainModel\Repositories\XmlServerReportParser.cs" />
+    <Compile Include="CI\HudsonXML\DomainModel\Repositories\HudsonCIServerRepository.cs" />
+    <Compile Include="CI\HudsonXML\DomainModel\Repositories\HudsonXMLFetcher.cs" />
+    <Compile Include="CI\HudsonXML\DomainModel\Repositories\HudsonXMLParser.cs" />
+    <Compile Include="CI\HudsonXML\DomainModel\Repositories\IFetchHudsonXML.cs" />
+    <Compile Include="CI\HudsonXML\Helper classes\URL.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\Data\Build.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\Data\Job.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\Data\Project.cs" />
@@ -162,12 +179,18 @@
     <Compile Include="CI\Hudson\DomainModel\Repositories\HudsonRepositoryException.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\IRequestProxy.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\RequestProxy.cs" />
+    <Compile Include="CI\TeamCity\DomainModel\Repositories\TeamCityCIServerRepository.cs" />
+    <Compile Include="CI\TeamCity\DomainModel\Repositories\IFetchTeamCityXML.cs" />
+    <Compile Include="CI\TeamCity\DomainModel\Repositories\TeamCityXmlFetcher.cs" />
+    <Compile Include="CI\TeamCity\DomainModel\Repositories\TeamCityXmlParser.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildFetcher.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildRepository.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\TFSCIServerRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ChangesetDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\CIServerDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ConfigurationDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\SqliteNoSqlDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\RetrospectiveNoteDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\GenericDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\HolidayDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\LogEntryDatabaseRepository.cs" />
@@ -175,6 +198,9 @@
     <Compile Include="Database\DomainModel\Repositories\NHibernateFactory.cs" />
     <Compile Include="Database\DomainModel\Repositories\ProjectInfoDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ProjectInfoServerDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\SlideConfigurationRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\TaskConfigurationDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\TeamPictureDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\UserdbDatabaseRepository.cs" />
     <Compile Include="Holidays\HolidayXmlMalformedException.cs" />
     <Compile Include="Holidays\Resource.Designer.cs">
@@ -195,8 +221,6 @@
     <Compile Include="PMT\ScrumForTFS\DomainModel\Repositories\IFetchWorkItems.cs" />
     <Compile Include="PMT\ScrumForTFS\DomainModel\Repositories\ScrumForTFSRepository.cs" />
     <Compile Include="PMT\ScrumForTFS\DomainModel\Repositories\WorkItemFetcher.cs" />
-    <Compile Include="PMT\TFS\DomainModel\Repositories\IterationUpdater.cs" />
-    <Compile Include="PMT\TFS\DomainModel\Repositories\WorkItemFetcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -204,7 +228,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="VCS\ClearCase\DomainModels\Repositories\ChangesetRepository.cs" />
-    <Compile Include="VCS\Git\DomainModel\GitChangesetRepository.cs" />
+    <Compile Include="VCS\Git\DomainModel\Repositories\GitChangesetRepository.cs" />
+    <Compile Include="VCS\Git\DomainModel\Services\GitCommandService.cs" />
+    <Compile Include="VCS\Git\DomainModel\Services\IRunGitCommands.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationHandler.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SpecificationRequest.cs" />
     <Compile Include="VCS\SVN\DomainModel\Repositories\SVNChangesetRepository.cs" />
@@ -216,6 +242,9 @@
     <Compile Include="VCS\TFSVC\DomainModel\Repositories\TFSChangesetRepository.cs" />
     <Compile Include="VCS\TFSVC\DomainModel\Repositories\TfsVvQueryOptimizer.cs" />
     <Compile Include="VCS\TFSVC\DomainModel\Services\TFSCredentialsChecker.cs" />
+    <Compile Include="WidgetDiscovery\IGetAssembliesFromXAP.cs" />
+    <Compile Include="WidgetDiscovery\WidgetMetadataLoader.cs" />
+    <Compile Include="WidgetDiscovery\XapUnpacker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">

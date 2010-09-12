@@ -10,16 +10,19 @@ using System.Threading;
 using System.Windows.Controls;
 using Smeedee.Client.Framework.Factories;
 using Smeedee.Client.Framework.Services;
+using TinyMVVM.IoC;
 
 namespace Smeedee.Client.Framework.ViewModel
 {
     public partial class Traybar : IPartImportsSatisfiedNotification
     {
-        private IModuleLoader moduleLoader = new ModuleLoaderFactory().NewModuleLoader();
+        private IModuleLoader moduleLoader;
 
-        public void OnInitialize()
+        partial void OnInitialize()
         {
-            Widgets = new ObservableCollection<TraybarWidget>();
+        	moduleLoader = this.GetDependency<IModuleLoader>();
+
+            Widgets = new ObservableCollection<Widget>();
             ErrorInfo = new ErrorInfo();
 
             LoadTraybarWidgets();

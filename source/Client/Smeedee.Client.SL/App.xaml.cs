@@ -4,6 +4,10 @@ using System.Threading;
 using System.Windows;
 using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.SL.MEF;
+using Smeedee.Client.Framework.SL.ViewModel.Repositories;
+using Smeedee.Client.Framework.ViewModel;
+using Smeedee.DomainModel.Framework.DSL.Specifications;
+using Smeedee.DomainModel.Framework.Logging;
 using TinyMVVM.Framework;
 
 namespace Smeedee.Client.SL
@@ -22,32 +26,11 @@ namespace Smeedee.Client.SL
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            ServiceLocator.SetLocator(new ServiceLocatorForSLClient());
-            
-            var aggregateCatalog = new AggregateCatalog();
-            var deploymentFolderCatalog = new DeploymentFolderCatalog();
-            deploymentFolderCatalog.DownloadAsync();
+            FrameworkBootstrapper.Initialize();
+       
+            WidgetMetadataRepository.Instance.BeginGet(All.ItemsOf<WidgetMetadata>());
 
-            aggregateCatalog.Catalogs.Add(deploymentFolderCatalog);
-
-            foreach (var catalog in aggregateCatalog.Catalogs)
-            {
-                if (catalog is DeploymentCatalog)
-                {
-                    var deploymentCatalog = catalog as DeploymentCatalog;
-                    deploymentCatalog.DownloadCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(catalog_DownloadCompleted);
-                    deploymentCatalog.DownloadAsync();
-                }
-            }
-
-            CompositionHost.Initialize(aggregateCatalog);
-            Thread.Sleep(10000);
-
-            this.RootVisual = new MainPage();
-        }
-
-        void catalog_DownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
+            RootVisual = new MainPage();
         }
 
         private void Application_Exit(object sender, EventArgs e)
@@ -57,18 +40,33 @@ namespace Smeedee.Client.SL
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
-            // If the app is running outside of the debugger then report the exception using
-            // the browser's exception mechanism. On IE this will display it a yellow alert 
-            // icon in the status bar and Firefox will display a script error.
-            if (!System.Diagnostics.Debugger.IsAttached)
+            try
             {
+                ILog logger = new Logger(new Framework.SL.Repositories.LogEntryWebserviceRepository());
+                ErrorLogEntry error = new ErrorLogEntry()
+                {
+                    Message = e.ExceptionObject.ToString(),
+                    Source = "UNHANDLED IN: " + sender.GetType().ToString(),
+                    TimeStamp = DateTime.Now
+                };
 
-                // NOTE: This will allow the application to continue running after an exception has been thrown
-                // but not handled. 
-                // For production applications this error handling should be replaced with something that will 
-                // report the error to the website and stop the application.
+                logger.WriteEntry(error);
                 e.Handled = true;
-                Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
+            }
+            catch (Exception logException)
+            {
+                // If the app is running outside of the debugger then report the exception using
+                // the browser's exception mechanism. On IE this will display it a yellow alert 
+                // icon in the status bar and Firefox will display a script error.
+                if (!System.Diagnostics.Debugger.IsAttached)
+                {
+                    // NOTE: This will allow the application to continue running after an exception has been thrown
+                    // but not handled. 
+                    // For production applications this error handling should be replaced with something that will 
+                    // report the error to the website and stop the application.
+                    e.Handled = true;
+                    Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
+                }
             }
         }
 

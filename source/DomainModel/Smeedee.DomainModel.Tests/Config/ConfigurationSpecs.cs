@@ -15,7 +15,7 @@ namespace Smeedee.DomainModel.Tests.Config.ConfigurationSpecs
     public class Configuration_specification
     {
         private Configuration configuration;
-
+        
         [SetUp]
         public void Setup()
         {
@@ -40,6 +40,12 @@ namespace Smeedee.DomainModel.Tests.Config.ConfigurationSpecs
         {
             configuration.IsConfigured.ShouldBeFalse();
         }
+
+        [Test]
+        public void Assure_name_is_not_null()
+        {
+            configuration.Name.ShouldNotBeNull();
+        }
     }
 
     [TestFixture]
@@ -59,236 +65,13 @@ namespace Smeedee.DomainModel.Tests.Config.ConfigurationSpecs
             var config = new Configuration("source control");
             config.Name.ShouldBe("source control");
         }
-    }
-
-    [TestFixture]
-    public class When_spawning_default_CI_Configuration
-    {
-        private Configuration configuration;
-
-        [SetUp]
-        public void Setup()
-        {
-            configuration = Configuration.DefaultCIConfiguration();
-        }
 
         [Test]
-        public void Assure_it_has_Supported_Providers()
+        public void Assure_new_Id_is_created()
         {
-            configuration.GetSetting("supported-providers").ShouldNotBeInstanceOfType<EntryNotFound>();
+            var config = new Configuration();
+            config.Id.ShouldNotBe(Guid.Empty);
         }
-
-        [Test]
-        public void Assure_it_has_Provider()
-        {
-            configuration.GetSetting("provider").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_Username()
-        {
-            configuration.GetSetting("username").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_Password()
-        {
-            configuration.GetSetting("password").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_URL()
-        {
-            configuration.GetSetting("url").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_IsExpanded()
-        {
-            configuration.GetSetting("is-expanded").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_Project()
-        {
-            configuration.GetSetting("project").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-    }
-
-    [TestFixture]
-    public class When_spawning_Provider_Configuration
-    {
-        private Configuration configuration;
-
-        [SetUp]
-        public void Setup()
-        {
-            configuration = Configuration.ProviderConfiguration(
-                "vcs",
-                "goeran",
-                "hansen",
-                "http://smeedee.org/ccnet",
-                "svn",
-                string.Empty,
-                "svn", "tfs");
-        }
-
-        [Test]
-        public void Assure_Configuration_Name_is_set()
-        {
-            configuration.Name.ShouldBe("vcs");
-        }
-
-        [Test]
-        public void Assure_SupportedProviders_is_set()
-        {
-            configuration.GetSetting("supported-providers").Vals.ShouldHave("svn");
-            configuration.GetSetting("supported-providers").Vals.ShouldHave("tfs");
-        }
-
-        [Test]
-        public void Assure_Provider_is_set()
-        {
-            configuration.GetSetting("provider").Value.ShouldBe("svn");
-        }
-
-        [Test]
-        public void Assure_Username_is_set()
-        {
-            configuration.GetSetting("username").Value.ShouldBe("goeran");
-        }
-
-        [Test]
-        public void Assure_Password_is_set()
-        {
-            configuration.GetSetting("password").Value.ShouldBe("hansen");
-        }
-
-        [Test]
-        public void Assure_URL_is_set()
-        {
-            configuration.GetSetting("url").Value.ShouldBe("http://smeedee.org/ccnet");
-        }
-
-        [Test]
-        public void Assure_it_has_Project()
-        {
-            configuration.GetSetting("project").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-    }
-
-    [TestFixture]
-    public class When_spawning_default_Dashboard_Configuration
-    {
-        private Configuration configuration;
-        
-        [SetUp]
-        public void Setup()
-        {
-            configuration = Configuration.DefaultDashboardConfiguration();
-        }
-
-        [Test]
-        public void Assure_it_has_SlideWidgets()
-        {
-            var slideWidgets = configuration.GetSetting("slide-widgets").Vals;
-            slideWidgets.ShouldHave("latest-commits");
-            slideWidgets.ShouldHave("ci");
-            slideWidgets.ShouldHave("commit-heroes");
-            slideWidgets.ShouldHave("commit-stats");
-            slideWidgets.ShouldHave("working-days-left");
-        }
-
-        [Test]
-        public void Assure_it_has_SelectedSlideWidgets()
-        {
-            var slideWidgets = configuration.GetSetting("selected-slide-widgets").Vals;
-            slideWidgets.ShouldHave("latest-commits");
-            slideWidgets.ShouldHave("ci");
-            slideWidgets.ShouldHave("commit-heroes");
-            slideWidgets.ShouldHave("commit-stats");
-            slideWidgets.ShouldHave("working-days-left");
-        }
-
-        [Test]
-        public void Assure_it_has_TrayWidgets()
-        {
-            var trayWidgets = configuration.GetSetting("tray-widgets").Vals;
-            trayWidgets.ShouldHave("working-days-left");
-            trayWidgets.ShouldHave("ci");
-        }
-
-        [Test]
-        public void Assure_it_has_SelectedTrayWidgets()
-        {
-            var trayWidgets = configuration.GetSetting("selected-tray-widgets").Vals;
-            trayWidgets.ShouldHave("working-days-left");
-            trayWidgets.ShouldHave("ci");
-        }
-
-        [Test]
-        public void Assure_it_has_IsExpanded()
-        {
-            configuration.GetSetting("is-expanded").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-    }
-
-    [TestFixture]
-    public class When_spawning_default_VCS_Configuration
-    {
-        private Configuration configuration;
-
-        [SetUp]
-        public void Setup()
-        {
-            configuration = Configuration.DefaultVCSConfiguration();
-        }
-        
-        [Test]
-        public void Assure_it_has_Supported_Providers()
-        {
-            configuration.GetSetting("supported-providers").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_Provider()
-        {
-            configuration.GetSetting("provider").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_Username()
-        {
-            configuration.GetSetting("username").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_Password()
-        {
-            configuration.GetSetting("password").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_URL()
-        {
-            configuration.GetSetting("url").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_IsExpanded()
-        {
-            configuration.GetSetting("is-expanded").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
-        [Test]
-        public void Assure_it_has_Project()
-        {
-            configuration.GetSetting("project").ShouldNotBeInstanceOfType<EntryNotFound>();
-        }
-
     }
 
     [TestFixture]
@@ -400,20 +183,20 @@ namespace Smeedee.DomainModel.Tests.Config.ConfigurationSpecs
         [Test]
         public void Assure_its_possible_to_find_out_if_an_setting_does_not_exist()
         {
-            configuration.ContainSetting("does not exists").ShouldBeFalse();
+            configuration.ContainsSetting("does not exists").ShouldBeFalse();
         }
         
         [Test]
         public void Assure_its_possible_to_find_out_if_an_setting_exist()
         {
-            configuration.ContainSetting("provider").ShouldBeTrue();   
+            configuration.ContainsSetting("provider").ShouldBeTrue();   
         }
 
         [Test]
         public void Assure_its_possible_to_check_if_setting_exist_when_there_are_no_settings()
         {
             configuration = new Configuration("new config");
-            configuration.ContainSetting("does not exist").ShouldBeFalse();
+            configuration.ContainsSetting("does not exist").ShouldBeFalse();
         }
     }
 
@@ -443,4 +226,108 @@ namespace Smeedee.DomainModel.Tests.Config.ConfigurationSpecs
             entry.ShouldBeInstanceOfType<SettingsEntry>();
         }
     }
+
+
+    [TestFixture]
+    public class when_changing_a_setting
+    {
+        [Test]
+        public void Assure_value_is_changed()
+        {
+            var configuration = new Configuration();
+            configuration.NewSetting("hello", "world");
+            configuration.ChangeSetting("hello", "moon");
+
+            configuration.GetSetting("hello").Value.ShouldBe("moon");
+        }
+    }
+
+    [TestFixture]
+    public class When_clone_config_without_settings
+    {
+        private Configuration configuration;
+        private Configuration copy;
+
+        [SetUp]
+        public void Setup()
+        {
+            configuration = new Configuration("source control");
+            configuration.Id = Guid.NewGuid();
+
+            copy = configuration.Clone();
+        }
+
+        [Test]
+        public void Then_assure_no_settings_are_cloned()
+        {
+            copy.Settings.Count().ShouldBe(0);
+        }
+    }
+
+    [TestFixture]
+    public class When_clone
+    {
+        private Configuration configuration;
+        private Configuration copy;
+
+        [SetUp]
+        public void Setup()
+        {
+            configuration = new Configuration("source control");
+            configuration.Id = Guid.NewGuid();
+            configuration.NewSetting("supported providers", "svn", "tfs", "clear case");
+            configuration.NewSetting("selected provider", "svn");
+            configuration.IsConfigured = true;
+
+            copy = configuration.Clone();
+        }
+
+        [Test]
+        public void Then_assure_Name_is_cloned()
+        {
+            copy.Name.ShouldBe(configuration.Name);
+        }
+
+        [Test]
+        public void Then_assure_Id_is_cloned()
+        {
+            copy.Id.ShouldBe(configuration.Id);
+        }
+
+        [Test]
+        public void Then_assure_IsConfigured_flag_is_cloned()
+        {
+            copy.IsConfigured.ShouldBe(configuration.IsConfigured);
+        }
+
+        [Test]
+        public void Then_assure_Settings_are_cloned()
+        {
+            copy.Settings.Count().ShouldBe(configuration.Settings.Count());
+        }
+
+        [Test]
+        public void Then_assure_Setting_Name_is_cloned()
+        {
+            copy.ContainsSetting("selected provider").ShouldBeTrue();
+            copy.ContainsSetting("supported providers").ShouldBeTrue();
+        }
+
+        [Test]
+        public void Then_assure_Setting_Values_are_cloned()
+        {
+            var selectedProviderSetting = copy.GetSetting("selected provider");
+            selectedProviderSetting.Name.ShouldBe("selected provider");
+            selectedProviderSetting.Value.ShouldBe("svn");
+            selectedProviderSetting.HasMultipleValues.ShouldBeFalse();
+
+            var supportedProvidersSetting = copy.GetSetting("supported providers");
+            supportedProvidersSetting.Name.ShouldBe("supported providers");
+            supportedProvidersSetting.Vals.ShouldContain("svn");
+            supportedProvidersSetting.Vals.ShouldContain("clear case");
+            supportedProvidersSetting.Vals.ShouldContain("tfs");
+            supportedProvidersSetting.Vals.Count().ShouldBe(3);
+        }
+    }
+
 }

@@ -17,7 +17,9 @@ namespace Smeedee.Client.Web.Tests.ProjectInfoRepositoryService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://smeedee.org/ProjectInfoRepositoryService/Get", ReplyAction="http://smeedee.org/ProjectInfoRepositoryService/GetResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer>))]
-        Smeedee.DomainModel.ProjectInfo.ProjectInfoServer[] Get(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> specification);
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.ProjectInfo.ProjectInfoServerByUrl))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.ProjectInfo.ProjectInfoServerByName))]
+        System.Collections.Generic.List<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> Get(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> specification);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -47,7 +49,7 @@ namespace Smeedee.Client.Web.Tests.ProjectInfoRepositoryService {
                 base(binding, remoteAddress) {
         }
         
-        public Smeedee.DomainModel.ProjectInfo.ProjectInfoServer[] Get(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> specification) {
+        public System.Collections.Generic.List<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> Get(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.ProjectInfo.ProjectInfoServer> specification) {
             return base.Channel.Get(specification);
         }
     }

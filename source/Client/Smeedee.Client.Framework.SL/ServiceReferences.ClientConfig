@@ -1,12 +1,14 @@
 ﻿<configuration>
     <system.serviceModel>
         <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_TeamPictureRepositoryWebservice"
+                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
             <customBinding>
                 <binding name="CustomBinding_ChangesetRepositoryService">
-                    <binaryMessageEncoding />
-                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
-                </binding>
-                <binding name="CustomBinding_CIRepositoryService">
                     <binaryMessageEncoding />
                     <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
                 </binding>
@@ -30,6 +32,26 @@
                     <binaryMessageEncoding />
                     <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
                 </binding>
+                <binding name="CustomBinding_RetrospectiveNoteRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_CIRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_TaskDefinitionRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_TaskConfigurationRepositoryWebservice">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_SlideConfigurationRepositoryService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
             </customBinding>
         </bindings>
         <client>
@@ -37,9 +59,6 @@
                 binding="customBinding" bindingConfiguration="CustomBinding_ChangesetRepositoryService"
                 contract="ChangesetRepositoryService.ChangesetRepositoryService"
                 name="CustomBinding_ChangesetRepositoryService" />
-            <endpoint address="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc"
-                binding="customBinding" bindingConfiguration="CustomBinding_CIRepositoryService"
-                contract="CIRepositoryService.CIRepositoryService" name="CustomBinding_CIRepositoryService" />
             <endpoint address="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc"
                 binding="customBinding" bindingConfiguration="CustomBinding_ConfigurationRepositoryService"
                 contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
@@ -59,6 +78,29 @@
                 binding="customBinding" bindingConfiguration="CustomBinding_LogEntryRepositoryService"
                 contract="LogEntryRepositoryService.LogEntryRepositoryService"
                 name="CustomBinding_LogEntryRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/RetrospectiveNoteRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_RetrospectiveNoteRepositoryService"
+                contract="RetrospectiveNoteRepositoryService.RetrospectiveNoteRepositoryService"
+                name="CustomBinding_RetrospectiveNoteRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/CIRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_CIRepositoryService"
+                contract="CIRepositoryService.CIRepositoryService" name="CustomBinding_CIRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/TeamPictureRepositoryWebservice.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_TeamPictureRepositoryWebservice"
+                contract="TeamPictureService.TeamPictureRepositoryWebservice"
+                name="BasicHttpBinding_TeamPictureRepositoryWebservice" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/TaskDefinitionRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_TaskDefinitionRepositoryService"
+                contract="TaskDefinitionRepositoryService.TaskDefinitionRepositoryService"
+                name="CustomBinding_TaskDefinitionRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/TaskConfigurationRepositoryWebservice.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_TaskConfigurationRepositoryWebservice"
+                contract="TaskConfigurationRepositoryService.TaskConfigurationRepositoryWebservice"
+                name="CustomBinding_TaskConfigurationRepositoryWebservice" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/SlideConfigurationRepositoryService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_SlideConfigurationRepositoryService"
+                contract="SlideConfigurationService.SlideConfigurationRepositoryService"
+                name="CustomBinding_SlideConfigurationRepositoryService" />
         </client>
     </system.serviceModel>
 </configuration>

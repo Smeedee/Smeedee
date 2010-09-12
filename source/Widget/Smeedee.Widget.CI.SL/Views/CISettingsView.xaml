@@ -1,0 +1,369 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" 
+	xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" 
+	xmlns:Windows="clr-namespace:System.Windows;assembly=System.Windows.Controls" 
+	xmlns:CI="clr-namespace:Smeedee.DomainModel.CI;assembly=Smeedee.DomainModel.SL" 
+	xmlns:System="clr-namespace:System;assembly=mscorlib" 
+	xmlns:controlsInputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+    xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL"
+	x:Class="Smeedee.Widget.CI.SL.Views.CISettingsView"
+    d:DesignHeight="640" d:DesignWidth="800" mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+
+        <ResourceDictionary x:Key="settingsViewResourceDictionary">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+		
+
+
+
+
+        <!--Auto generated2 start-->
+        <ControlTemplate x:Key="CommonValidationToolTipTemplate2" TargetType="ToolTip">
+            <Grid x:Name="Root" Margin="5,0" Opacity="0" RenderTransformOrigin="0,0">
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="Translation" X="-25"/>
+                </Grid.RenderTransform>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="OpenStates">
+                        <VisualStateGroup.Transitions>
+                            <VisualTransition GeneratedDuration="0"/>
+                            <VisualTransition GeneratedDuration="0:0:0.2" To="Open">
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="Translation">
+                                        <DoubleAnimation.EasingFunction>
+                                            <BackEase Amplitude=".3" EasingMode="EaseOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                    <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+                                </Storyboard>
+                            </VisualTransition>
+                        </VisualStateGroup.Transitions>
+                        <VisualState x:Name="Closed">
+                            <Storyboard>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Open">
+                            <Storyboard>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="Translation"/>
+                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Border Background="#052A2E31" CornerRadius="5" Margin="4,4,-4,-4"/>
+                <Border Background="#152A2E31" CornerRadius="4" Margin="3,3,-3,-3"/>
+                <Border Background="#252A2E31" CornerRadius="3" Margin="2,2,-2,-2"/>
+                <Border Background="#352A2E31" CornerRadius="2" Margin="1,1,-1,-1"/>
+                <Border Background="#FFDC000C" CornerRadius="2">
+                    <TextBlock Foreground="White" MaxWidth="250" Margin="8,4,8,4" TextWrapping="Wrap" Text="{Binding (Validation.Errors)[0].ErrorContent}" UseLayoutRounding="false"/>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+        
+        
+        <ControlTemplate x:Key="ToggleButtonControlTemplateCustom" TargetType="ToggleButton">
+            <Grid x:Name="Root" Background="Transparent">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation Duration="0" To="#FF1BBBFA" Storyboard.TargetProperty="(Path.Stroke).Color" Storyboard.TargetName="UncheckedVisual"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <Storyboard>
+                                <DoubleAnimation Duration="0" To=".7" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckStates">
+                        <VisualState x:Name="Unchecked"/>
+                        <VisualState x:Name="Checked">
+                            <Storyboard>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="UncheckedVisual"/>
+                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedVisual"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Grid HorizontalAlignment="Right" Margin="2 2 5 2">
+                    <Path x:Name="UncheckedVisual" Data="M 0,0 L 0,9 L 5,4.5 Z" Fill="#FFFFFFFF" HorizontalAlignment="Right" Height="9" Stroke="#FF989898" StrokeThickness="1" StrokeLineJoin="Miter" VerticalAlignment="Center" Width="6"/>
+                    <Path x:Name="CheckedVisual" Data="M 6,0 L 6,6 L 0,6 Z" Fill="Black" HorizontalAlignment="Center" Height="6" Opacity="0" StrokeLineJoin="Miter" VerticalAlignment="Center" Width="6"/>
+                </Grid>
+            </Grid>
+        </ControlTemplate>
+        
+        
+        
+        <Style x:Key="TreeViewItemStyleCustom" TargetType="Controls:TreeViewItem">
+            <Setter Property="IsExpanded" Value="True"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Arrow"/>
+            <Setter Property="IsTabStop" Value="True"/>
+            <Setter Property="TabNavigation" Value="Once"/>
+            <Setter Property="Margin" Value="0 1 0 0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Controls:TreeViewItem">
+                        <Grid Background="{x:Null}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Pressed"/>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Header">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="#FF999999"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected"/>
+                                    <VisualState x:Name="Selected">
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedInactive">
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="HasItemsStates">
+                                    <VisualState x:Name="HasItems"/>
+                                    <VisualState x:Name="NoItems">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ExpanderButton">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="ExpansionStates">
+                                    <VisualState x:Name="Collapsed"/>
+                                    <VisualState x:Name="Expanded">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ItemsHost">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="ValidationStates">
+                                    <VisualState x:Name="Valid"/>
+                                    <VisualState x:Name="InvalidUnfocused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="Validation">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="InvalidFocused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="Validation">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen" Storyboard.TargetName="ValidationToolTip">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <System:Boolean>True</System:Boolean>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ToggleButton x:Name="ExpanderButton" HorizontalAlignment="Stretch" IsTabStop="False" TabNavigation="Once" VerticalAlignment="Stretch" Template="{StaticResource ToggleButtonControlTemplateCustom}"/>
+                            <Rectangle x:Name="Selection" Grid.Column="1" IsHitTestVisible="False" Opacity="0" RadiusY="2" RadiusX="2" StrokeThickness="1">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush x:Name="SelectionFill" Color="#FFBADDE9"/>
+                                </Rectangle.Fill>
+                                <Rectangle.Stroke>
+                                    <SolidColorBrush x:Name="SelectionStroke" Color="#FF6DBDD1"/>
+                                </Rectangle.Stroke>
+                            </Rectangle>
+                            <Button x:Name="Header" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Cursor="{TemplateBinding Cursor}" ClickMode="Hover" Grid.Column="1" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="False" TabNavigation="Once" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid Background="{TemplateBinding Background}">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="Pressed">
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0" To=".5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Hover"/>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled">
+                                                        <Storyboard>
+                                                            <DoubleAnimation Duration="0" To=".55" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Content"/>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            <Rectangle x:Name="Hover" Fill="#FFBADDE9" IsHitTestVisible="False" Opacity="0" RadiusY="2" RadiusX="2" Stroke="#FF6DBDD1" StrokeThickness="1"/>
+                                            <ContentPresenter x:Name="Content" Cursor="{TemplateBinding Cursor}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}"/>
+                            </Button>
+                            <Border x:Name="Validation" BorderBrush="#FFDB000C" BorderThickness="{TemplateBinding BorderThickness}" Grid.Column="1" CornerRadius="2" Visibility="Collapsed">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Name="ValidationToolTip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" IsHitTestVisible="True" Placement="Right" PlacementTarget="{Binding ElementName=Header}"/>
+                                </ToolTipService.ToolTip>
+                                <Grid Background="Transparent" HorizontalAlignment="Right" Height="10" Margin="0,-4,-4,0" VerticalAlignment="Top" Width="10">
+                                    <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 Z" Fill="#FFDC000C" Margin="-1,3,0,0"/>
+                                    <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="#FFFFFFFF" Margin="-1,3,0,0"/>
+                                </Grid>
+                            </Border>
+                            <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Visibility="Collapsed"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--Auto generated2 end-->
+
+
+
+
+
+        <DataTemplate x:Key="ProjectTemplate">
+            <CheckBox 
+				IsChecked="{Binding IsSelected, Mode=TwoWay}" 
+				Content="{Binding ProjectName}"/>
+        </DataTemplate>
+        
+        <Windows:HierarchicalDataTemplate 
+            x:Key="ServersTemplate" 
+            ItemsSource="{Binding Projects}" 
+            ItemTemplate="{StaticResource ProjectTemplate}">
+            <TextBlock Text="{Binding Name}" />
+        </Windows:HierarchicalDataTemplate>
+        
+        <Converters:BoolToDoubleConverter x:Key="BoolToDouble" TrueValue="1" FalseValue="0.4"/>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Border Style="{StaticResource SettingsViewBorder}">
+            <Grid Style="{StaticResource SettingsViewGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Column="0" 
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource SettingsViewH1}"
+                    Text="Configure Build Status"/>
+
+                <TextBlock 
+                    Grid.Column="0" 
+                    Grid.Row="1"
+                    Style="{StaticResource SettingsViewText}"
+                    Text="Filter inactive projects "/>
+                <CheckBox 
+                    Grid.Column="1" 
+                    Grid.Row="1"
+                    Margin="10,0,0,0"
+                    FontSize="14" 
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding FilterInactiveProjects, Mode=TwoWay}" />
+
+                <TextBlock 
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Style="{StaticResource SettingsViewText}"
+                    Text="Number of days to hide projects after"
+                    Margin="10,0,0,0" 
+                    Opacity="{Binding FilterInactiveProjects, Converter={StaticResource BoolToDouble}}"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                    <Slider
+                        Style="{StaticResource SettingsViewSlider}"
+                        Margin="20,0,10,0"
+                        Value="{Binding InactiveProjectThreshold, Mode=TwoWay}"
+                        IsEnabled="{Binding FilterInactiveProjects}"
+                        Minimum="1"
+                        Maximum="100"/>
+                    <controlsInputToolkit:NumericUpDown
+                        Style="{StaticResource SettingsViewNumericUpDown}"
+                        HorizontalAlignment="Left"
+                        Value="{Binding InactiveProjectThreshold, Mode=TwoWay}"
+                        IsEnabled="{Binding FilterInactiveProjects}"
+                        Opacity="{Binding FilterInactiveProjects, Converter={StaticResource BoolToDouble}}"
+                        Minimum="1"
+                        Maximum="1000"/>
+                </StackPanel>
+
+                
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="200*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                        Style="{StaticResource SettingsViewText}"
+                        Text="Select projects to display:"/>
+                    <Border Background="White" Grid.Row="1" CornerRadius="2">
+                        <Controls:TreeView
+                            Margin="2,2,2,2"
+                            ItemTemplate="{StaticResource ServersTemplate}" 
+                            ItemsSource="{Binding Servers}" 
+                            BorderBrush="{x:Null}"
+                            MinHeight="100" 
+                            Background="White"
+                            ItemContainerStyle="{StaticResource TreeViewItemStyleCustom}" />
+                    </Border>
+                </Grid>
+
+                <StackPanel 
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    Style="{StaticResource SettingsViewControlButtonsWrapper}">
+                    <Button
+                        Style="{StaticResource SettingsViewSaveButton}"
+                        Command="{Binding SaveSettings}"  />
+                    <Button 
+                        Style="{StaticResource SettingsViewReloadSettingsButton}"
+                        Command="{Binding ReloadSettings}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

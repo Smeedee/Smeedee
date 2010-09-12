@@ -44,7 +44,7 @@ namespace Smeedee.Client.Web.Services
         }
 
         [OperationContract]
-        public void Save(Userdb userdb)
+        public void Save(IEnumerable<Userdb> userdb)
         {
             try
             {

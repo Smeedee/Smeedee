@@ -35,11 +35,11 @@ namespace Smeedee.Integration.CI.CruiseControl.DomainModel.Repositories
 {
     public class SocketXMLBuildlogRequester : IHTTPRequest
     {
-        private const int DEFAULT_LOG_SIZE_TO_FETCH_BYTES = 5000;
+        private const int DEFAULT_BYTES_TO_FETCH = 5000;
 
         public string Request(string fileURL, int port)
         {
-            return ReadDataFromSocket(fileURL, port, DEFAULT_LOG_SIZE_TO_FETCH_BYTES);
+            return ReadDataFromSocket(fileURL, port, DEFAULT_BYTES_TO_FETCH);
         }
 
         private string ReadDataFromSocket(string buildLogXmlUrl, int port, int fetchLogSize)
@@ -47,24 +47,24 @@ namespace Smeedee.Integration.CI.CruiseControl.DomainModel.Repositories
             if (fetchLogSize > 160000)
                 throw new Exception("Read data request was too large");
 
-            string webResult = "";
-            var request = new OptimizedHTTPRequest(new HTTPSocket());
+            var webResult = "";
+            var request = new OptimizedHTTPRequest(new HTTPSocket())
+                              {
+                                  CooldownMS = 5000,
+                                  NumberOfRetries = 10
+                              };
             webResult = request.RequestURL(buildLogXmlUrl, port, fetchLogSize);
-            
-            //System.Diagnostics.Debug.WriteLine("Got report of length " + webResult.Length);
 
             if (string.IsNullOrEmpty(webResult))
                 throw new Exception("HTTP request did not return any data");
 
-            
+
             if (Regex.IsMatch(webResult, @"\<build .*\>") == false)
             {
-                //System.Diagnostics.Debug.WriteLine("Not long enough, trying size " + fetchLogSize*2);
                 return ReadDataFromSocket(buildLogXmlUrl, port, fetchLogSize * 2);
             }
-            //System.Diagnostics.Debug.WriteLine("Accepted result");
 
-            string xmlData = Regex.Match(webResult, ".+(<cruisecontrol.*<build .+?>)", RegexOptions.Singleline | RegexOptions.IgnoreCase).Groups[1].Value;
+            var xmlData = Regex.Match(webResult, ".+(<cruisecontrol.*<build .+?>)", RegexOptions.Singleline | RegexOptions.IgnoreCase).Groups[1].Value;
 
             xmlData += " </build>\n</cruisecontrol>\n";
 

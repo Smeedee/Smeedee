@@ -1,0 +1,56 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d"
+	x:Class="Smeedee.Client.Framework.SL.WelcomeWidgetView"
+	d:DesignWidth="640" d:DesignHeight="480">
+
+    <Grid x:Name="LayoutRoot" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,20,20,35">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" Source="Smeedee-icon-128x128.png" />
+                <TextBlock Text="Welcome to Smeedee" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White" FontSize="48" FontWeight="Bold" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="50,30,0,0" x:Name="help4" Visibility="Collapsed">
+                <TextBlock Text="Learn More:" Foreground="White" FontSize="20"/>
+                <HyperlinkButton Content="Smeedee Wiki" TargetName="_blank" HorizontalAlignment="Left" NavigateUri="http://wiki.smeedee.com/display/apd/Home" FontSize="16"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel x:Name="help" Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Visibility="Collapsed" HorizontalAlignment="Left">
+            <!--<Shapes:BlockArrow Orientation="Down" Width="20" Height="20" VerticalAlignment="Bottom" Fill="White" Margin="0,0,5,2" Stroke="LightGray"/>-->
+            <TextBlock   VerticalAlignment="Bottom" Text="▼"  FontSize="20" Foreground="White" FontWeight="ExtraBold" Margin="0,0,3,0"/>
+            <TextBlock   VerticalAlignment="Bottom" Text="Add and Edit slides"  FontSize="20" Foreground="White"/>
+        </StackPanel>
+
+        <StackPanel x:Name="help2" Visibility="Collapsed" Orientation="Horizontal" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right">
+            <TextBlock   FontSize="20" Foreground="White" Text="Configure current slide" />
+            <TextBlock   FontSize="20" Foreground="White" Text="▲" FontWeight="ExtraBold" Margin="3,0,0,3"/>
+            <!--<Shapes:BlockArrow Orientation="Up" Width="20" Height="20" VerticalAlignment="Top" Fill="White" Margin="5,2,0,0" Stroke="LightGray"/>-->
+        </StackPanel>
+        <StackPanel x:Name="help3" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed" Orientation="Horizontal">
+            <TextBlock  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="20"  Text="Change settings"/>
+            <TextBlock  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="20" Margin="3,0,0,3" Text="▲" FontWeight="ExtraBold"/>
+            <!--<Shapes:BlockArrow Orientation="Up" Width="20" Height="20" VerticalAlignment="Top" Fill="White" Margin="5,2,0,0" Stroke="LightGray"/>-->
+        </StackPanel>
+
+
+
+
+    </Grid>
+
+</UserControl>
