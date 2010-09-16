@@ -182,6 +182,9 @@
     <Compile Include="Services\VCSCredentialsService.svc.cs">
       <DependentUpon>VCSCredentialsService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Services\WidgetMetadataRepositoryService.svc.cs">
+      <DependentUpon>WidgetMetadataRepositoryService.svc</DependentUpon>
+    </Compile>
     <Compile Include="SilverlightDeploymentMetadata.ashx.cs">
       <DependentUpon>SilverlightDeploymentMetadata.ashx</DependentUpon>
     </Compile>
@@ -220,6 +223,7 @@
     <Content Include="Services\TeamPictureRepositoryWebservice.svc" />
     <Content Include="Services\UserRepositoryService.svc" />
     <Content Include="Services\VCSCredentialsService.svc" />
+    <Content Include="Services\WidgetMetadataRepositoryService.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Smeedee-icon-48x48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
