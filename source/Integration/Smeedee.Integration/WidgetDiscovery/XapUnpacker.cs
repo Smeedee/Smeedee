@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,34 +11,21 @@ namespace Smeedee.Integration.WidgetDiscovery
     {
         public IEnumerable<Assembly> GetAssemblies(string xapFilePath)
         {
-            using (var fileStream = File.Open(xapFilePath, FileMode.Open)) 
-            {
-                return GetAssemblies(fileStream);
-            }
+            var extractPath = Path.Combine(Path.GetTempPath(), Path.GetFileName(xapFilePath));
+
+
+
+            UnZipXap( xapFilePath, extractPath );
+            DirectoryInfo extractDirInfo = new DirectoryInfo(extractPath);
+
+            return extractDirInfo.GetFiles("*.dll", SearchOption.AllDirectories)
+                .Select(af => Assembly.ReflectionOnlyLoadFrom(af.FullName));
         }
 
-        public IEnumerable<Assembly> GetAssemblies(Stream xapFile)
+        private void UnZipXap(string xapFilePath, string unzipToFolderPath)
         {
-            try
-            {
-                ZipFile zipFile = new ZipFile(xapFile);
-                return zipFile.Cast<ZipEntry>()
-                    .Where(f => f.Name.EndsWith(".dll"))
-                    .Select(entry => CreateAssembly(zipFile, entry))
-                    .ToList();
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Unable to get assemblies", e);
-            }
-        }
-
-        private Assembly CreateAssembly(ZipFile zipFile, ZipEntry assemblyFile)
-        {
-            byte[] buffer = new byte[assemblyFile.Size];
-            var unZipStream = zipFile.GetInputStream(assemblyFile);
-            unZipStream.Read(buffer, 0, buffer.Length);
-            return Assembly.Load(buffer);
+            FastZip zip = new FastZip();
+            zip.ExtractZip(xapFilePath, unzipToFolderPath, FastZip.Overwrite.Always, null, "", "", true);
         }
     }
 }

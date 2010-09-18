@@ -18,41 +18,22 @@ namespace Smeedee.Integration.Tests.WidgetDiscovery
         }
 
         [TestFixture][Category("IntegrationTest")]
-        public class When_getting_assemblies_from_stream : Shared
-        {
-            [Test]
-            public void Assure_all_assemblies_are_returned()
-            {
-                MemoryStream memoryStream = new MemoryStream(TestResources.Smeedee_Widget_SourceControl_SL);
-                var assemblies = unpacker.GetAssemblies(memoryStream);
-                assemblies.Count().ShouldBe(24);
-            }
-
-
-            [Test]
-            public void Assure_corrupt_stream_throws_ArgumentException()
-            {
-                byte[] corrupt = new byte[] {23, 5, 123, 128, 255};
-                MemoryStream memoryStream = new MemoryStream(corrupt);
-
-                this.ShouldThrowException<ArgumentException>(() => unpacker.GetAssemblies(memoryStream));
-            }
-        }
-
-
-        [TestFixture][Category("IntegrationTest")]
         public class When_getting_assemblies_from_file : Shared
         {
+            private FileInfo validTestXap;
+
+            [SetUp]
+            public void Setup()
+            {
+                validTestXap = new FileInfo(@"..\..\Resources\Smeedee.Widget.SourceControl.SL.xap");
+            }
+
             [Test]
             public void Assure_all_assemblies_are_returned()
             {
-                var testXap = new FileInfo(@"..\..\Resources\Smeedee.Widget.SourceControl.SL.xap");
-                testXap.Exists.ShouldBeTrue();
-
-                var assembliesFound = unpacker.GetAssemblies(testXap.FullName);
-                
+                validTestXap.Exists.ShouldBeTrue();
+                var assembliesFound = unpacker.GetAssemblies(validTestXap.FullName);
                 assembliesFound.Count().ShouldBe(24);
-
             }
 
             [Test]
@@ -64,11 +45,23 @@ namespace Smeedee.Integration.Tests.WidgetDiscovery
             [Test]
             public void Assure_file_is_closed()
             {
-                var testXap = new FileInfo(@"..\..\Resources\Smeedee.Widget.SourceControl.SL.xap");
-                testXap.Exists.ShouldBeTrue();
+                validTestXap.Exists.ShouldBeTrue();
 
-                var assembliesFound = unpacker.GetAssemblies(testXap.FullName);
-                var secondRun = unpacker.GetAssemblies(testXap.FullName);
+                var assembliesFound = unpacker.GetAssemblies(validTestXap.FullName);
+                var secondRun = unpacker.GetAssemblies(validTestXap.FullName);
+            }
+
+
+            [Test]
+            [Ignore]
+            public void Assure_types_can_be_loaded_from_assemblies()
+            {
+                var assembliesInXap = unpacker.GetAssemblies(validTestXap.FullName);
+                foreach (var assembly in assembliesInXap)
+                {
+                    var types = assembly.GetTypes();
+                    (types.Length > 0).ShouldBeTrue();
+                }
             }
         }
     }

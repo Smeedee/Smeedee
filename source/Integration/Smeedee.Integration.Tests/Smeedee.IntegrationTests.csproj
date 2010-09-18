@@ -269,7 +269,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WidgetDiscovery\WidgetMetadataLoaderSpecs.cs" />
+    <Compile Include="WidgetDiscovery\WidgetInfoLoaderSpecs.cs" />
     <Compile Include="WidgetDiscovery\XapUnpackerTests.cs" />
   </ItemGroup>
   <ItemGroup>

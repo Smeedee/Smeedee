@@ -126,6 +126,7 @@
       <HintPath>..\..\..\tools\SharpSvn\SharpSvn.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -147,6 +148,9 @@
     <Reference Include="Tamir.SharpSSH, Version=1.1.1.13, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\Tamir.SharpSSH.dll</HintPath>
+    </Reference>
+    <Reference Include="TinyMVVM">
+      <HintPath>..\..\..\tools\TinyMVVM\TinyMVVM.dll</HintPath>
     </Reference>
     <Reference Include="Winterdom.IO.FileMap, Version=2.0.2.0, Culture=neutral, PublicKeyToken=4982617362e1edb5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -243,10 +247,14 @@
     <Compile Include="VCS\TFSVC\DomainModel\Repositories\TfsVvQueryOptimizer.cs" />
     <Compile Include="VCS\TFSVC\DomainModel\Services\TFSCredentialsChecker.cs" />
     <Compile Include="WidgetDiscovery\IGetAssembliesFromXAP.cs" />
-    <Compile Include="WidgetDiscovery\WidgetMetadataLoader.cs" />
+    <Compile Include="WidgetDiscovery\WidgetInfoLoader.cs" />
     <Compile Include="WidgetDiscovery\XapUnpacker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
+      <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
+      <Name>Smeedee.Client.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>
