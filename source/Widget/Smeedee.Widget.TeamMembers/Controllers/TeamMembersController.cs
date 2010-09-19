@@ -24,7 +24,7 @@ namespace Smeedee.Widget.TeamMembers.Controllers
         private const String MIDDLENAME_ENTRY_NAME = "middlenameIsChecked";
         private const String USERNAME_ENTRY_NAME = "usernameIsChecked";
         protected const String SELECTED_USERDB_ENTRY_NAME = "selectedUserdb";
-        private const int REFRESH_INTERVAL = 25 * 1000;
+        private const int REFRESH_INTERVAL = 60 * 60 * 1000;
         private const string LOADING_DATA_MESSAGE = "Loading data from server...";
         private const string SAVING_CONFIG_MESSAGE = "Saving...";
         

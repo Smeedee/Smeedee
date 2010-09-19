@@ -16,7 +16,7 @@ namespace Smeedee.Widget.Admin.Holidays.SL
     ]
     public class HolidaysWidget : Client.Framework.ViewModel.Widget
     {
-        private const int REFRESH_INTERVAL_IN_MS = 1000 * 10;
+        private const int REFRESH_INTERVAL_IN_MS = 60 * 60 * 1000;   //Needs this at all?
 
         public HolidaysWidget()
         {

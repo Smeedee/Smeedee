@@ -19,7 +19,7 @@ namespace Smeedee.Widget.Corkboard.SL
     public class RetrospectiveCorkboardWidget : Client.Framework.ViewModel.Widget
     {
         private CorkboardController controller;
-        private const int REFRESH_INTERVAL_MS = 1000  * 60; 
+        private const int REFRESH_INTERVAL_MS = 20 * 60 * 1000; 
 
         public RetrospectiveCorkboardWidget()
         {

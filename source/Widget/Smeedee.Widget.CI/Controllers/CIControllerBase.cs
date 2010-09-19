@@ -50,8 +50,10 @@ namespace Smeedee.Widget.CI.Controllers
         where T : AbstractViewModel
     {
         private const int INACTIVE_PROJECT_THRESHOLD = 90;
+        private const int REFREASH_INTERVAL = 3 * 60 * 1000;
         private readonly IRepository<CIServer> ciProjectRepository;
         protected readonly IRepository<User> userRepository;
+
 
         private IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient;
         private readonly ILog logger;
@@ -69,7 +71,7 @@ namespace Smeedee.Widget.CI.Controllers
             this.userRepository = userRepository;
             this.logger = logger;
 
-            refreshNotifier.Start(10000);
+            refreshNotifier.Start(REFREASH_INTERVAL);
 
             LoadData();
         }

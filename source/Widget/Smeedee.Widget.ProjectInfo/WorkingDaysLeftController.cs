@@ -23,7 +23,7 @@ namespace Smeedee.Widget.ProjectInfo
         public const string SETTING_PROJECT = "project";
         public const string SETTING_NON_WORK_DAYS = "non-work-days";
 
-        private const int REFRESH_INTERVAL = 10 * 1000;
+        private const int REFRESH_INTERVAL = 60 * 60 * 1000;
 
         private bool gotHolidays;
         private bool gotProjectInfo;
