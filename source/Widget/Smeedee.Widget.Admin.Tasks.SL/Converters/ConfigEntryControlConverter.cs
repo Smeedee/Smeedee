@@ -30,7 +30,7 @@ namespace Smeedee.Widget.Admin.Tasks.SL.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return "converted back";
+            throw new NotImplementedException();
         }
 
         private string CreateXaml(ConfigurationEntryViewModel configEntry)
@@ -38,7 +38,9 @@ namespace Smeedee.Widget.Admin.Tasks.SL.Converters
             switch (configEntry.Type.FullName)
             {
                 case "System.String":
-                    return "<SL:SelectAllOnFocusTextBox xmlns:SL='" + CUSTOM_TEXTBOX_NAMESPACE + "' Text='{Binding Value, Mode=TwoWay}' Width='150' />";
+                    return configEntry.Name.ToLower().Contains("password") ?
+                        "<PasswordBox Password='{Binding Value, Mode=TwoWay}' Width='150' />" :
+                        "<SL:SelectAllOnFocusTextBox xmlns:SL='" + CUSTOM_TEXTBOX_NAMESPACE + "' Text='{Binding Value, Mode=TwoWay}' Width='150' />";
                 case "System.Boolean":
                     return "<CheckBox IsChecked='{Binding Value, Mode=TwoWay}' />";
             }

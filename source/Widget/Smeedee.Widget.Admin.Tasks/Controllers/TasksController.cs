@@ -58,11 +58,8 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
 
         private void UpdateViewModels()
         {
-            
-
             _asyncClient.RunAsyncVoid(() =>
             {
-                
                 var tasksFromDB = _taskDefinitionRepository.Get(new AllSpecification<TaskDefinition>());
                 _uiInvoker.Invoke(() => CreateViewModelTasks(tasksFromDB));
             });
@@ -81,7 +78,6 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
 
                 _progressbar.HideInBothViews();
             });
-
         }
 
         private void CreateViewModelTasks(IEnumerable<TaskDefinition> tasksFromDb)
@@ -151,7 +147,6 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
                                                                         Value = entry.Value
                                                                     }).ToList()
                                           }).ToArray();
-
 
             _domainModelPersister.Save(taskConfigs);
         }
