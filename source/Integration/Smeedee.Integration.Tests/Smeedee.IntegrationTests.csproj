@@ -193,9 +193,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="CI\HudsonXML\Helper Classes\FakeHudsonXmlFetcher.cs" />
+    <Compile Include="CI\HudsonXML\Helper Classes\URLGeneratorTests.cs" />
     <Compile Include="CI\HudsonXML\HudsonCiServerRepositoryTests.cs" />
     <Compile Include="CI\HudsonXML\HudsonXMLFetcherTests.cs" />
     <Compile Include="CI\HudsonXML\HudsonXMLParserTests.cs" />
+    <Compile Include="CI\HudsonXML\IntegrationTests.cs" />
     <Compile Include="CI\HudsonXML\URLTests.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\HudsonApiSpecs.cs" />
     <Compile Include="CI\Hudson\DomainModel\Repositories\MockRequestProxy.cs" />
