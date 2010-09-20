@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CI\CITaskBaseSpecs.cs" />
+    <Compile Include="CI\HudsonXMLTask\HudsonXMLTaskSpecs.cs" />
     <Compile Include="CI\Integration\CIHarvesterSpecs.cs" />
     <Compile Include="CI\TeamCity\TeamCityCITaskSpecs.cs" />
     <Compile Include="CI\TeamFoundationServer\TeamFoundationServerCITaskSpecs.cs" />
