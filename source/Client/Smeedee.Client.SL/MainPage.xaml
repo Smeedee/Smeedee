@@ -22,7 +22,7 @@
     		<VisualStateGroup x:Name="AdminDock">
     			<VisualState x:Name="ShowAdminDock">
     				<Storyboard>
-    					<DoubleAnimation Duration="0:0:0.6" To="39.627" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView" d:IsOptimized="True">
+    					<DoubleAnimation Duration="0:0:0.6" To="60" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView" d:IsOptimized="True">
     						<DoubleAnimation.EasingFunction>
     							<QuarticEase EasingMode="EaseOut"/>
     						</DoubleAnimation.EasingFunction>
@@ -32,7 +32,7 @@
     			<VisualState x:Name="HideAdminDock">
     				<Storyboard>
     					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView">
-    						<EasingDoubleKeyFrame KeyTime="0" Value="39.96"/>
+    						<EasingDoubleKeyFrame KeyTime="0" Value="60"/>
     						<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-0.333">
     							<EasingDoubleKeyFrame.EasingFunction>
     								<QuinticEase EasingMode="EaseInOut"/>
@@ -89,9 +89,9 @@
     	</Ellipse>
         <Views:DockBarView x:Name="adminDockView" 
                            HorizontalAlignment="Center"
-                           Height="40" Margin="0,-40,0,0" 
+                           Height="60" Margin="0,-60,0,0" 
                            VerticalAlignment="Top" 
-                           Width="200" 
+                           Width="300" 
                            RenderTransformOrigin="0.5,0.5"
                            DataContext="{Binding DockBar}">
             <Views:DockBarView.Effect>

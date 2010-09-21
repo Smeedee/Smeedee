@@ -14,12 +14,12 @@
 			<StackPanel Orientation="Horizontal"/>
 		</ItemsPanelTemplate>
 		<DataTemplate x:Key="DockBarItemDataTemplate">
-			<Grid Width="32" Height="32" Margin="1,0,0,0">
+			<Grid Width="48" Height="48" Margin="1,0,0,0">
                 <Button Command="{Binding Click}"
                         ToolTipService.ToolTip="{Binding Description}">
                     <Button.Template>
                         <ControlTemplate>
-                            <ContentControl Content="{Binding Icon}"/>
+                            <ContentControl Content="{Binding Icon}" Cursor="Hand"/>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
