@@ -37,7 +37,7 @@ namespace Smeedee.Client.Framework.Controller
         public T ViewModel { get; private set; }
         protected ITimer refreshNotifier;
         protected IUIInvoker uiInvoker;
-        protected int REFRESH_INTERVAL = 20 * 1000;
+        protected int REFRESH_INTERVAL = 2 * 60 * 1000;
         protected readonly IProgressbar loadingNotifier;
 
         protected const string SAVING_DATA_MESSAGE = "Saving data...";
