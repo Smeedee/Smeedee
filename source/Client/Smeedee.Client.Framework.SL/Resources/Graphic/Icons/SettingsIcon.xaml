@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Width="32" Height="32">
+    d:DesignHeight="300" d:DesignWidth="400" Width="48" Height="48">
     
     <Grid x:Name="LayoutRoot" Background="#FF747474">
     	<TextBlock x:Name="settingsIconText" TextWrapping="Wrap" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" Text="Admin View" FontSize="8"/>

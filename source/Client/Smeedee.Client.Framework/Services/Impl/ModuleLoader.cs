@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Windows;
 using Smeedee.Client.Framework.SL;
+#if SILVERLIGHT
+using Smeedee.Client.Framework.SL.Resources.Graphic.Icons;
+#endif
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.Client.Framework.ViewModel.DockBarItems;
 using Smeedee.DomainModel.Config;
@@ -192,10 +196,25 @@ namespace Smeedee.Client.Framework.Services.Impl
                     dockBarViewModel.Items.Add(new WidgetDockBarItem(title)
                     {
                         Description = adminWidget.Metadata.Name,
-                        Widget = Activator.CreateInstance(adminWidget.Value.GetType()) as Widget
+                        Widget = Activator.CreateInstance(adminWidget.Value.GetType()) as Widget,
+                        //TODO: Refactor this hack. Now resolving the Icon based on the Title of the Widget
+                        //We want to handle AdminDockbar plugins in a better way. A suggestion is to
+                        //provide an API for the Widget devs so that they can add items programatically
+                        //or use MEF and attributes. 
+                        Icon = GetIcon(title)
                     });
                 }
             }
+        }
+
+        private FrameworkElement GetIcon(string title)
+        {
+#if SILVERLIGHT
+            if (title == "Holidays") return new HolidaysIcon();
+            return new SettingsIcon(title);
+#endif
+
+            return null;
         }
     }
 }

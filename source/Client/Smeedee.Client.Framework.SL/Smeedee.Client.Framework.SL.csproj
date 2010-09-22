@@ -309,6 +309,9 @@
     <Compile Include="Resources\Graphic\Icons\FullScreenIcon.xaml.cs">
       <DependentUpon>FullScreenIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Graphic\Icons\HolidaysIcon.xaml.cs">
+      <DependentUpon>HolidaysIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Graphic\Icons\Icons.xaml.cs">
       <DependentUpon>Icons.xaml</DependentUpon>
     </Compile>
@@ -746,6 +749,10 @@
       <SubType>Designer</SubType>
     </DesignTimeOnly>
     <Page Include="Resources\Graphic\Icons\FullScreenIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Graphic\Icons\HolidaysIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
