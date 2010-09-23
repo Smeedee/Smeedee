@@ -211,6 +211,7 @@ namespace Smeedee.Client.Framework.Services.Impl
         {
 #if SILVERLIGHT
             if (title == "Holidays") return new HolidaysIcon();
+            if (title == "Task Administration") return new TaskAdministrationIcon();
             return new SettingsIcon(title);
 #endif
 

@@ -8,26 +8,32 @@
 	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
 	xmlns:Smeedee_Client_SL_Views="clr-namespace:Smeedee.Client.Framework.SL.Views;assembly=Smeedee.Client.Framework.SL" mc:Ignorable="d"
 	x:Class="Smeedee.Client.Framework.SL.Views.DockBarView"
-	d:DesignWidth="640" d:DesignHeight="60">
+	d:DesignWidth="300" d:DesignHeight="40" Height="40" Width="300">
 	<UserControl.Resources>
 		<ItemsPanelTemplate x:Key="DockBarLayout">
 			<StackPanel Orientation="Horizontal"/>
 		</ItemsPanelTemplate>
 		<DataTemplate x:Key="DockBarItemDataTemplate">
-			<Grid Width="48" Height="48" Margin="1,0,0,0">
-                <Button Command="{Binding Click}"
-                        ToolTipService.ToolTip="{Binding Description}">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <ContentControl Content="{Binding Icon}" Cursor="Hand"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-			</Grid>
+            <Button Command="{Binding Click}"
+                    ToolTipService.ToolTip="{Binding Description}"
+                    Cursor="Hand"
+                    Height="32"
+                    Margin="3,0,0,0">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid>
+                            <Viewbox Height="32">
+                                <ContentControl Content="{Binding Icon}"/>
+                            </Viewbox>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 		</DataTemplate>
 	</UserControl.Resources>
 	<Grid x:Name="LayoutRoot" d:DataContext="{d:DesignData /SampleData/DockBarSampleData.xaml}">
-		<Border BorderThickness="1" Background="{StaticResource BackgroundBrush}" CornerRadius="2" Margin="0,-52,0,0" BorderBrush="#7FA3A3A3"/>
-		<ItemsControl Margin="4" ItemsSource="{Binding Items}" ItemsPanel="{StaticResource DockBarLayout}" ItemTemplate="{StaticResource DockBarItemDataTemplate}" HorizontalAlignment="Center"/>
+		<Border BorderThickness="1" Background="{StaticResource BackgroundBrush}" CornerRadius="2" Margin="0" BorderBrush="#7FA3A3A3"/>
+		<ItemsControl Margin="4" ItemsSource="{Binding Items}" ItemsPanel="{StaticResource DockBarLayout}" 
+                      ItemTemplate="{StaticResource DockBarItemDataTemplate}" HorizontalAlignment="Center"/>
 	</Grid>
 </UserControl>

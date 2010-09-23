@@ -6,8 +6,8 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Width="48" Height="48" Margin="0">
     
-    <Grid x:Name="LayoutRoot">
-    	<Viewbox Margin="0" Width="48" Height="48">
+    <Grid x:Name="LayoutRoot" Height="40.3529434204102">
+    	<Viewbox Margin="0">
     		<Canvas Height="49" Width="60">
     			<Path Data="F1M127.639,270.276C123.643,270.276,120.39,273.526,120.39,277.522L120.39,277.522L120.39,311.881C120.39,315.878,123.643,319.127,127.639,319.127L127.639,319.127L173.507,319.127C177.503,319.127,180.753,315.878,180.753,311.881L180.753,311.881L180.753,277.522C180.753,273.526,177.503,270.276,173.507,270.276L173.507,270.276z" Height="48.851" Stretch="Fill" Width="60.363">
     				<Path.Fill>

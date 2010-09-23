@@ -22,7 +22,7 @@
     		<VisualStateGroup x:Name="AdminDock">
     			<VisualState x:Name="ShowAdminDock">
     				<Storyboard>
-    					<DoubleAnimation Duration="0:0:0.6" To="60" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView" d:IsOptimized="True">
+    					<DoubleAnimation Duration="0:0:0.6" To="40" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView" d:IsOptimized="True">
     						<DoubleAnimation.EasingFunction>
     							<QuarticEase EasingMode="EaseOut"/>
     						</DoubleAnimation.EasingFunction>
@@ -32,7 +32,7 @@
     			<VisualState x:Name="HideAdminDock">
     				<Storyboard>
     					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="adminDockView">
-    						<EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+    						<EasingDoubleKeyFrame KeyTime="0" Value="40"/>
     						<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-0.333">
     							<EasingDoubleKeyFrame.EasingFunction>
     								<QuinticEase EasingMode="EaseInOut"/>
@@ -87,13 +87,11 @@
     			</i:EventTrigger>
     		</i:Interaction.Triggers>
     	</Ellipse>
-        <Views:DockBarView x:Name="adminDockView" 
-                           HorizontalAlignment="Center"
-                           Height="60" Margin="0,-60,0,0" 
+        <Views:DockBarView x:Name="adminDockView"
+                           Height="40" Margin="0,-40,0,0" 
                            VerticalAlignment="Top" 
-                           Width="300" 
                            RenderTransformOrigin="0.5,0.5"
-                           DataContext="{Binding DockBar}">
+                           DataContext="{Binding DockBar}" HorizontalAlignment="Center" Width="300">
             <Views:DockBarView.Effect>
                 <DropShadowEffect Color="#FF3B3B3B" ShadowDepth="3"/>
             </Views:DockBarView.Effect>
