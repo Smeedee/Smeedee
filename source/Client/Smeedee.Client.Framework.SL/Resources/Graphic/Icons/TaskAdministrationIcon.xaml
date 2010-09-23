@@ -7,7 +7,7 @@
     d:DesignHeight="300" d:DesignWidth="400" Width="48" Height="48">
     
     <Grid x:Name="LayoutRoot">
-    	<Viewbox Margin="-1,0,0,-1" Width="40" Height="48">
+    	<Viewbox Margin="0" Width="48" Height="48">
     		<Grid Height="49" Width="49">
     			<Path Data="F1M290.862,63.322C285.87,63.322,281.804,67.387,281.804,72.382L281.804,72.382L281.804,102.958C281.804,107.953,285.87,112.02,290.862,112.02L290.862,112.02L321.438,112.02C326.432,112.02,330.497,107.953,330.497,102.958L330.497,102.958L330.497,72.382C330.497,67.387,326.432,63.322,321.438,63.322L321.438,63.322z" Stretch="Fill" Margin="0,0,0.307,0.302" UseLayoutRounding="False">
     				<Path.Fill>

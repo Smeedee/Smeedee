@@ -321,6 +321,9 @@
     <Compile Include="Resources\Graphic\Icons\TaskAdministrationIcon.xaml.cs">
       <DependentUpon>TaskAdministrationIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Graphic\Icons\UserAdministrationIcon.xaml.cs">
+      <DependentUpon>UserAdministrationIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource.xaml.cs">
       <DependentUpon>EditSlideshowDialogSampleDataSource.xaml</DependentUpon>
     </Compile>
@@ -768,6 +771,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Graphic\Icons\TaskAdministrationIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Graphic\Icons\UserAdministrationIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
