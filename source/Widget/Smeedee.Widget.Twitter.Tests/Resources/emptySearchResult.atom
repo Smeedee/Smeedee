@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns:google="http://base.google.com/ns/1.0" xml:lang="en-US" xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/" xmlns="http://www.w3.org/2005/Atom" xmlns:twitter="http://api.twitter.com/">
-  <id>tag:search.twitter.com,2005:search/fdsfdsfsdfsfdsfdsfds</id>
-  <link type="text/html" href="http://search.twitter.com/search?q=fdsfdsfsdfsfdsfdsfds" rel="alternate"/>
-  <link type="application/atom+xml" href="http://search.twitter.com/search.atom?q=fdsfdsfsdfsfdsfdsfds&amp;rpp=10" rel="self"/>
-  <title>fdsfdsfsdfsfdsfdsfds - Twitter Search</title>
-  <link type="application/opensearchdescription+xml" href="http://search.twitter.com/opensearch.xml" rel="search"/>
-  <updated>2010-06-28T12:51:37+00:00</updated>
-</feed>
