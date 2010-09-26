@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using Smeedee.Widget.Twitter.ViewModel;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 
-namespace Smeedee.Widget.Twitter.View
+namespace Smeedee.Widgets.SL.Twitter.View
 {
     public partial class TwitterSettingsView : UserControl
     {

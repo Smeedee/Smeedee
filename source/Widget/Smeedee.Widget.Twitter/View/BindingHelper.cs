@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Smeedee.Widget.Twitter.View
+namespace Smeedee.Widgets.SL.Twitter.View
 {
     public class BindingHelper
     {
