@@ -92,6 +92,7 @@ namespace Smeedee.Widget.BurndownChart.Controllers
             settingsViewModel.ReloadSettings.AfterExecute += (s, e) => LoadConfigAndData();
 
             LoadConfigAndData();
+            REFRESH_INTERVAL = 30 * 60 * 1000;
             Start();
         }
 

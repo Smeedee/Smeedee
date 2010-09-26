@@ -150,7 +150,6 @@ namespace Smeedee.Widget.Admin.Tasks.Tests.Controllers
                                               _domainModelPersisterMock.Object,
                                               new NoUIInvokation(),
                                               _loadingNotifierMock.Object,
-                                              _refreshNotifierMock.Object,
                                               new NoBackgroundWorkerInvocation<IEnumerable<TaskConfiguration>>());
         }
 

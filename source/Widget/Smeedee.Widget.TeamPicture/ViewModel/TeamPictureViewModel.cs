@@ -14,7 +14,7 @@ namespace Smeedee.Widget.TeamPicture.ViewModel
 {
     public partial class TeamPictureViewModel
     {
-        private const int REFRESH_INTERVAL = 5 * 60 * 1000;
+        private const int REFRESH_INTERVAL = 60 * 60 * 1000;
         private const string LOADING_DATA_MESSAGE = "Loading picture from server...";
         private const string SAVING_CONFIG_MESSAGE = "Saving...";
 

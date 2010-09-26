@@ -21,9 +21,6 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
         private readonly IUIInvoker _uiInvoker;
         private readonly IInvokeBackgroundWorker<IEnumerable<TaskConfiguration>> _asyncClient;
         private readonly IProgressbar _progressbar;
-        private readonly ITimer _refreshNotifier;
-
-        private const int REFRESH_INTERVAL = 1000 * 60 * 20;
 
         public TasksController(TasksViewModel viewModel,
                                IRepository<TaskDefinition> taskDefinitionRepository,
@@ -31,7 +28,6 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
                                IPersistDomainModels<TaskConfiguration> domainModelPersister,
                                IUIInvoker uiInvoker, 
                                IProgressbar progressbar,
-                               ITimer refreshNotifier,
                                IInvokeBackgroundWorker<IEnumerable<TaskConfiguration>> asyncClient)
         {
             _viewModel = viewModel;
@@ -42,9 +38,6 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
             _uiInvoker = uiInvoker;
             _asyncClient = asyncClient;
             _progressbar = progressbar;
-            _refreshNotifier = refreshNotifier;
-
-            _refreshNotifier.Elapsed += (o, e) => UpdateViewModels();
 
             _viewModel.SaveChanges.AfterExecute += SaveChanges;
 
@@ -53,7 +46,6 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
         public void Start()
         {
             UpdateViewModels();
-            _refreshNotifier.Start(REFRESH_INTERVAL);
         }
 
         private void UpdateViewModels()

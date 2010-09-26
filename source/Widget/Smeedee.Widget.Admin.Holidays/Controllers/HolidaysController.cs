@@ -45,11 +45,6 @@ namespace Smeedee.Widget.Admin.Holidays.Controllers
             BeginLoadData();
         }
 
-        protected override void OnNotifiedToRefresh(object sender, EventArgs eventArgs)
-        {
-            BeginLoadData();
-        }
-
         private void OnSaveCompleted(object sender, SaveCompletedEventArgs eventArgs)
         {
             SetIsNotSavingData();
@@ -141,5 +136,8 @@ namespace Smeedee.Widget.Admin.Holidays.Controllers
         {
             return viewModelHolidays != null && viewModelHolidays.Count() != 0;
         }
+
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e) {}
+
     }
 }

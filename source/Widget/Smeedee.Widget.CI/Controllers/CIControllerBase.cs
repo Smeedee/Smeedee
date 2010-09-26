@@ -50,7 +50,7 @@ namespace Smeedee.Widget.CI.Controllers
         where T : AbstractViewModel
     {
         private const int INACTIVE_PROJECT_THRESHOLD = 90;
-        private const int REFREASH_INTERVAL = 3 * 60 * 1000;
+        private const int REFREASH_INTERVAL = 1 * 60 * 1000;
         private readonly IRepository<CIServer> ciProjectRepository;
         protected readonly IRepository<User> userRepository;
 
