@@ -1,6 +1,6 @@
 ﻿using Smeedee.Client.Framework.ViewModel;
 
-namespace Smeedee.Widget.Twitter.ViewModel
+namespace Smeedee.Widgets.SL.Twitter.ViewModel
 {
     public class TwitterViewModel : BindableViewModel<TweetViewModel>
     {

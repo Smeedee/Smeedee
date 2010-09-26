@@ -3,7 +3,7 @@ using System.ComponentModel;
 using Smeedee.Client.Framework.ViewModel;
 using TinyMVVM.Framework;
 
-namespace Smeedee.Widget.Twitter.ViewModel
+namespace Smeedee.Widgets.SL.Twitter.ViewModel
 {
     public class TwitterSettingsViewModel : SettingsViewModelBase, IDataErrorInfo
     {
