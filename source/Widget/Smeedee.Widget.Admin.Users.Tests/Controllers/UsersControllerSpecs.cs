@@ -234,7 +234,7 @@ namespace Smeedee.Widget.Admin.Users.Tests.Controllers
 
             Then("the loadingNotifyer should be shown", () =>
             {
-                loadingNotifierMock.Verify(l => l.ShowInSettingsView(It.IsAny<string>()), Times.Exactly(1));
+                loadingNotifierMock.Verify(l => l.ShowInView(It.IsAny<string>()), Times.Exactly(1));
             });
         }
 
@@ -247,7 +247,7 @@ namespace Smeedee.Widget.Admin.Users.Tests.Controllers
 
             Then(() =>
             {
-                loadingNotifierMock.Verify(l => l.HideInSettingsView(), Times.Exactly(2));
+                loadingNotifierMock.Verify(l => l.HideInView(), Times.Exactly(2));
                 viewModel.IsLoading.ShouldBeFalse();
             });
         }
@@ -261,7 +261,7 @@ namespace Smeedee.Widget.Admin.Users.Tests.Controllers
 
             Then("the loadingNotifier should be shown", () =>
                 {
-                    loadingNotifierMock.Verify(l => l.ShowInSettingsView(It.IsAny<string>()), Times.Exactly(2));
+                    loadingNotifierMock.Verify(l => l.ShowInView(It.IsAny<string>()), Times.Exactly(2));
                     viewModel.IsSaving.ShouldBeTrue();
                 });
         }
@@ -276,7 +276,7 @@ namespace Smeedee.Widget.Admin.Users.Tests.Controllers
 
             Then(() =>
             {
-                loadingNotifierMock.Verify(l => l.HideInSettingsView(), Times.Exactly(3));
+                loadingNotifierMock.Verify(l => l.HideInView(), Times.Exactly(3));
                 viewModel.IsSaving.ShouldBeFalse();
             });
         }

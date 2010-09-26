@@ -159,25 +159,25 @@ namespace Smeedee.Widget.Admin.Users.Controllers
         private void SetIsNotLoadingData()
         {
             uiInvoker.Invoke(() => viewModel.IsLoading = false );
-            loadingNotifier.HideInSettingsView();
+            loadingNotifier.HideInView();
         }
 
         private void SetIsLoadingData()
         {
             uiInvoker.Invoke(() =>  viewModel.IsLoading = true );
-            loadingNotifier.ShowInSettingsView(LOADING_DATA_MESSAGE);
+            loadingNotifier.ShowInView(LOADING_DATA_MESSAGE);
         }
 
         protected void SetIsNotSavingData()
         {
             uiInvoker.Invoke(() => viewModel.IsSaving = false );
-            loadingNotifier.HideInSettingsView();
+            loadingNotifier.HideInView();
         }
 
         private void SetIsSavingData()
         {
             uiInvoker.Invoke(() => viewModel.IsSaving = true );
-            loadingNotifier.ShowInSettingsView(SAVING_DATA_MESSAGE);
+            loadingNotifier.ShowInView(SAVING_DATA_MESSAGE);
         }
 
         private IEnumerable<Userdb> GetAllUserdbs()
