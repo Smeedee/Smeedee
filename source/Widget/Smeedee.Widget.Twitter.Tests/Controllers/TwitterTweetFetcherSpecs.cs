@@ -4,9 +4,10 @@ using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Smeedee.Client.Framework.Services;
-using Smeedee.Widget.Twitter.Controllers;
+using Smeedee.Widgets.SL.Twitter.Controllers;
+using Smeedee.Widgets.SL.Tests.Twitter;
 
-namespace Smeedee.Widget.Twitter.Tests.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Tests.Controllers
 {
     [TestClass]
     public class TwitterTweetFetcherSpecs

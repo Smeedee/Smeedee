@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Smeedee.Widget.Twitter.Controllers;
+using Smeedee.Widgets.SL.Twitter.Controllers;
 
-namespace Smeedee.Widget.Twitter.Tests.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Tests.Controllers
 {
     [TestClass]
     public class XmlFetcherSpecs

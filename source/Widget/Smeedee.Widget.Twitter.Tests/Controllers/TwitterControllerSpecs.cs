@@ -5,11 +5,10 @@ using Moq;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.DomainModel.Config;
-using Smeedee.DomainModel.Framework;
-using Smeedee.Widget.Twitter.Controllers;
-using Smeedee.Widget.Twitter.ViewModel;
+using Smeedee.Widgets.SL.Twitter.Controllers;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 
-namespace Smeedee.Widget.Twitter.Tests.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Tests.Controllers
 {
     [TestClass]
     public class TwitterControllerSpecs
