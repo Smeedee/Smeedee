@@ -65,7 +65,8 @@ namespace Smeedee.Client.SL
                     // For production applications this error handling should be replaced with something that will 
                     // report the error to the website and stop the application.
                     e.Handled = true;
-                    Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
+                    //MessageBox.Show(e.ExceptionObject.Message);
+                    //Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
                 }
             }
         }

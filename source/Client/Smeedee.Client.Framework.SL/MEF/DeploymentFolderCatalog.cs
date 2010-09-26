@@ -118,7 +118,8 @@ namespace Smeedee.Client.Framework.SL.MEF
         protected virtual Uri GetDeploymentMetadataUrl()
         {
             string basePath = new string(
-                HtmlPage.Document.DocumentUri.AbsoluteUri.
+                Application.Current.Host.Source.AbsoluteUri.
+                    Replace("ClientBin/", "").
                     Reverse().
                     SkipWhile(c => c != '/').
                     Reverse().ToArray());

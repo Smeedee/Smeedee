@@ -18,7 +18,7 @@ namespace Smeedee.Client.Framework.SL
         public static EndpointAddress ResolveDynamicEndpointAddress(EndpointAddress configuredEndpoint)
         {
             Uri appUri = Application.Current.Host.Source;
-            string virtualPath = Regex.Match(appUri.OriginalString,
+            string virtualPath = Regex.Match(appUri.AbsoluteUri.Replace("ClientBin/", ""),
                                  "http[s]?://[^/]+?/(?<VirtualPath>[^/]+)").Groups["VirtualPath"].Value;
 
             string serviceUrl = string.Format("{0}://{1}:{2}{4}",
