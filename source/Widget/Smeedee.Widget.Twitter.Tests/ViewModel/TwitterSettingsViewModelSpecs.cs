@@ -1,16 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Smeedee.Tests;
-using Smeedee.Widget.Twitter.ViewModel;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 
-namespace Smeedee.Widget.Twitter.Tests.ViewModel
+namespace Smeedee.Widgets.SL.Twitter.Tests.ViewModel
 {
-
-
     [TestClass]
     public class TwitterSettingsViewModelSpecs
     {
-
         [TestClass]
         public class OnPropertyChange : Shared
         {

@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Smeedee.Tests;
-using Smeedee.Widget.Twitter.ViewModel;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 
-namespace Smeedee.Widget.Twitter.Tests.ViewModel
+namespace Smeedee.Widgets.SL.Twitter.Tests.ViewModel
 {
     [TestClass]
     public class TwitterViewModelSpecs
@@ -38,6 +29,5 @@ namespace Smeedee.Widget.Twitter.Tests.ViewModel
             PropertyTester.TestChange(_twitterViewModel, (t) => t.ErrorMessage);
             Assert.IsTrue(PropertyTester.WasNotified);
         }
-
     }
 }

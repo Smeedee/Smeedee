@@ -1,10 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Tests;
-using Smeedee.Widget.Twitter.ViewModel;
-using TinyMVVM.Framework;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 
-namespace Smeedee.Widget.Twitter.Tests.ViewModel
+namespace Smeedee.Widgets.SL.Twitter.Tests.ViewModel
 {
     [TestClass]
     public class TweetViewModelSpecs
