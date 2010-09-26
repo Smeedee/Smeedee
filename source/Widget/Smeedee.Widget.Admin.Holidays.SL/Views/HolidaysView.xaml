@@ -206,6 +206,10 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+			<Style x:Key="SettingsViewH1" TargetType="TextBlock">
+				<Setter Property="FontSize" Value="24"/>
+				<Setter Property="Margin" Value="0,0,0,10"/>
+			</Style>
         </ResourceDictionary>
 		
     </UserControl.Resources>
@@ -304,6 +308,7 @@
                     			d:LayoutOverrides="VerticalAlignment" Margin="0"
                 			/>
                     	</StackPanel>
+                    	<TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource SettingsViewH1}" Text="Holidays" HorizontalAlignment="Left" Height="35" Margin="8,-49,0,0" VerticalAlignment="Top" Width="242" />
     </Grid>
 	</Border>
 	</Grid>
