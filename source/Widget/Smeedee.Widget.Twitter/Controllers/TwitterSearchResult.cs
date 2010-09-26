@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Smeedee.Widget.Twitter.ViewModel;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 
-namespace Smeedee.Widget.Twitter.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Controllers
 {
     public class TwitterSearchResult
     {

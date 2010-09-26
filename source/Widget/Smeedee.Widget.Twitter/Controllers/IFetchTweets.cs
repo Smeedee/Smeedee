@@ -1,7 +1,7 @@
 ﻿using System;
 using Smeedee.Client.Framework.Services;
 
-namespace Smeedee.Widget.Twitter.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Controllers
 {
     public interface IFetchTweets
     {

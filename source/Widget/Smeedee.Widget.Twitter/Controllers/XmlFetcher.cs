@@ -3,7 +3,7 @@ using System.Net;
 using System.Xml.Linq;
 using Smeedee.Client.Framework.Services;
 
-namespace Smeedee.Widget.Twitter.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Controllers
 {
     public class XmlFetcher : IFetchXml
     {

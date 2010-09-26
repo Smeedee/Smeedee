@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Smeedee.Client.Framework.Services;
-using Smeedee.Widget.Twitter.ViewModel;
 using System.Xml.Linq;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 
-namespace Smeedee.Widget.Twitter.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Controllers
 {
     public class TwitterTweetFetcher : IFetchTweets
     {
@@ -88,7 +88,7 @@ namespace Smeedee.Widget.Twitter.Controllers
 
         private TweetViewModel MakeTweetViewModel(XElement entry)
         {
-            return new TweetViewModel()
+            return new TweetViewModel
             {
                 Date = DateTime.Parse(entry.Element(XName.Get("published", XML_NAMESPACE)).Value),
                 Message = entry.Element(XName.Get("title", XML_NAMESPACE)).Value,

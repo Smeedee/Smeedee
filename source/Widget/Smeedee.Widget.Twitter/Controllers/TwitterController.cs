@@ -7,10 +7,10 @@ using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.DomainModel.Config;
 using Smeedee.Framework;
-using Smeedee.Widget.Twitter.ViewModel;
+using Smeedee.Widgets.SL.Twitter.ViewModel;
 using TinyMVVM.Framework.Services;
 
-namespace Smeedee.Widget.Twitter.Controllers
+namespace Smeedee.Widgets.SL.Twitter.Controllers
 {
     public class TwitterController : ControllerBase<TwitterViewModel>
     {
