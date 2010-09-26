@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Smeedee.Widget.Twitter.Converters
+namespace Smeedee.Widgets.SL.Twitter.Converters
 {
     public class TimeSpanToDateTimeConverter : IValueConverter
     {
