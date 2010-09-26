@@ -39,7 +39,7 @@ namespace Smeedee.Client.Framework.ViewModel.DockBarItems
             {
                 Click = new DelegateCommand(() =>
                 {
-                    dialogService.Show(new WidgetDialog{ Widget = Widget}, (result) => { });
+                    dialogService.Show(new WidgetDialog{ Widget = Widget , Progressbar = Widget.ViewProgressbar}, (result) => { });
                 });
             }
         }
