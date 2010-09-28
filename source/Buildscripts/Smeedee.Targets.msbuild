@@ -59,7 +59,7 @@
   </Target>
 
   <Target Name="UnitTests">
-  		<NUnit ContinueOnError="true" 
+  		<NUnit ContinueOnError="false" 
            Assemblies="%(TestProject.Assembly)"
            ToolPath="$(TestRunnerDirectory)"
            OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"
