@@ -124,7 +124,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
                         newTimespan,
                         newUsingDate,
                         newUsingTimespan);
-
+                    config.IsConfigured = true;
                     
                     configPersisterRepository.Save(config);
                 }

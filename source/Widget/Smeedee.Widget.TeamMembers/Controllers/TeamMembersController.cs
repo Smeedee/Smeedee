@@ -114,7 +114,7 @@ namespace Smeedee.Widget.TeamMembers.Controllers
             var newConfig = CreateConfiguration(teamMembersSettingsViewModel.FirstnameIsChecked, teamMembersSettingsViewModel.SurnameIsChecked,
                                                 teamMembersSettingsViewModel.MiddlenameIsChecked, teamMembersSettingsViewModel.UsernameIsChecked, 
                                                 teamMembersSettingsViewModel.CurrentDBName);
-
+            newConfig.IsConfigured = true;
             configPersisterRepository.Save(newConfig);
         }
 

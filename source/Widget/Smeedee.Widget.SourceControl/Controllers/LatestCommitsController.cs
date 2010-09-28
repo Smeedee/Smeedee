@@ -102,6 +102,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
             var configToSave = new Configuration(SettingsEntryName);
             configToSave.NewSetting(NumberOfCommittsEntryName, ViewModel.NumberOfCommits.ToString());
             configToSave.NewSetting(BlinkIsCheckedEntryName,ViewModel.BlinkWhenNoComment.ToString());
+            configToSave.IsConfigured = true;
 
             configPersister.Save(configToSave);
             ReloadViewModel();
