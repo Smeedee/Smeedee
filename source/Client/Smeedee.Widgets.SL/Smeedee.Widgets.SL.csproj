@@ -124,10 +124,6 @@
       <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
       <Name>Smeedee.DomainModel.SL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Smeedee.Framework.SL\Smeedee.Framework.SL.csproj">
-      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
-      <Name>Smeedee.Framework.SL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Smeedee.Client.Framework.SL\Smeedee.Client.Framework.SL.csproj">
       <Project>{DB3A158F-D0F2-46F2-BC90-1BB163EA76AB}</Project>
       <Name>Smeedee.Client.Framework.SL</Name>

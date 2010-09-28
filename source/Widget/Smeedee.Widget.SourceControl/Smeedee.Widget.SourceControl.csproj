@@ -140,10 +140,6 @@
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Smeedee.Framework\Smeedee.Framework.csproj">
-      <Project>{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}</Project>
-      <Name>Smeedee.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -95,6 +95,9 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\Classes\Guard.cs">
+      <Link>Guard.cs</Link>
+    </Compile>
     <Compile Include="CI\Build.cs" />
     <Compile Include="CI\BuildSpecification.cs" />
     <Compile Include="CI\CIProject.cs" />
@@ -146,10 +149,6 @@
     <Compile Include="Users\UserSpecifications.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Smeedee.Framework.SL\Smeedee.Framework.SL.csproj">
-      <Project>{7425F0CA-91CE-4102-BF89-3259220B3C6E}</Project>
-      <Name>Smeedee.Framework.SL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Smeedee.DomainModel.Framework.SL\Smeedee.DomainModel.Framework.SL.csproj">
       <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
       <Name>Smeedee.DomainModel.Framework.SL</Name>

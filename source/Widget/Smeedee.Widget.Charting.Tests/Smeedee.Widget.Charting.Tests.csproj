@@ -89,7 +89,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Smeedee.Widget.Charting\Smeedee.Widget.Charting.csproj">
       <Project>{97E9523B-DB3B-46AA-A7F9-9716FDA63A3C}</Project>
-      <Name>Tskjortebutikken.Widgets</Name>
+      <Name>Smeedee.Widget.Charting</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

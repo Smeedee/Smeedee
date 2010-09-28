@@ -156,10 +156,6 @@
       <Project>{47431D6D-1824-41E1-87B8-D90872E4FA04}</Project>
       <Name>Smeedee.Integration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Smeedee.Framework\Smeedee.Framework.csproj">
-      <Project>{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}</Project>
-      <Name>Smeedee.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Smeedee.Tests\Smeedee.Tests.csproj">
       <Project>{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}</Project>
       <Name>Smeedee.Tests</Name>

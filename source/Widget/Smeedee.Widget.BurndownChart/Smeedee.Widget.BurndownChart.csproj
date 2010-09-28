@@ -112,10 +112,6 @@
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>Smeedee.DomainModel.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Smeedee.Framework\Smeedee.Framework.csproj">
-      <Project>{273AC02B-F852-40E5-BEA6-7BDE2D98C48B}</Project>
-      <Name>Smeedee.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
