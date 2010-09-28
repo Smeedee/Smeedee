@@ -77,9 +77,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client-3.5">
-      <HintPath>..\..\tools\RavenDB-Build-97\Client-3.5\Raven.Client-3.5.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
