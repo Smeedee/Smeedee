@@ -90,7 +90,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="TinyBDD">
-      <HintPath>..\..\..\tools\TinyBDD-v0.1.0.93\TinyBDD.dll</HintPath>
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
     </Reference>
     <Reference Include="TinyBDD.Specification.NUnit, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

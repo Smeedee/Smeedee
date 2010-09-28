@@ -60,7 +60,7 @@
       <HintPath>..\..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
     </Reference>
     <Reference Include="TinyBDD.Specification.NUnit.2.5.3">
-      <HintPath>..\..\..\tools\TinyBDD-v0.1.0.93\TinyBDD.Specification.NUnit.2.5.3.dll</HintPath>
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.2.5.3.dll</HintPath>
     </Reference>
     <Reference Include="TinyMVVM">
       <HintPath>..\..\..\tools\TinyMVVM\TinyMVVM.dll</HintPath>

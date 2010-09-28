@@ -63,8 +63,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
     </Reference>
-    <Reference Include="TinyBDD.Specification.NUnit.2.5.3, Version=0.1.0.93, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="TinyBDD.Specification.NUnit.2.5.3">
       <HintPath>..\..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.2.5.3.dll</HintPath>
     </Reference>
     <Reference Include="TinyMVVM">
