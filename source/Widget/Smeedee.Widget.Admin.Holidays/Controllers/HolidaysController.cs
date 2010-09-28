@@ -26,8 +26,8 @@ namespace Smeedee.Widget.Admin.Holidays.Controllers
             IPersistDomainModelsAsync<Holiday> holidaysPersister)
             : base(viewModel, timer, uiInvoker, progressbar)
         {
-            Guard.ThrowExceptionIfNull(holidaysPersister, "holidaysPersister");
-            Guard.ThrowExceptionIfNull(holidaysRepository, "holidaysRepository");
+            Guard.Requires<ArgumentException>(holidaysPersister != null, "holidaysPersister");
+            Guard.Requires<ArgumentException>(holidaysRepository != null, "holidaysRepository");
             
             this.holidaysPersister = holidaysPersister;
             this.holidaysRepository = holidaysRepository;

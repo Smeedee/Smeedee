@@ -27,7 +27,8 @@ namespace Smeedee.Tasks.CI.TeamFoundationServerCITask
         public TeamFoundationServerCITask(IPersistDomainModels<CIServer> databasePersister, TaskConfiguration configuration)
             : base(databasePersister, configuration)
         {
-            Guard.ThrowIfNull<ArgumentNullException>(databasePersister, configuration);
+            Guard.Requires<ArgumentNullException>(databasePersister != null);
+            Guard.Requires<ArgumentNullException>(configuration != null);
             Guard.Requires<TaskConfigurationException>(configuration.Entries.Count() >= 4);
 
             _configuration = configuration;

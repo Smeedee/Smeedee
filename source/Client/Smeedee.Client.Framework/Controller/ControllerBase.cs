@@ -54,10 +54,10 @@ namespace Smeedee.Client.Framework.Controller
             IUIInvoker uiInvoker, 
             IProgressbar loadingNotifier)
         {
-            Guard.ThrowExceptionIfNull(timer, "timer");
-            Guard.ThrowExceptionIfNull(uiInvoker, "uiInvoker");
-            Guard.ThrowExceptionIfNull(viewModel, "viewModel");
-            Guard.ThrowExceptionIfNull(loadingNotifier, "loadingNotifyer");
+            Guard.Requires<ArgumentException>(timer != null, "timer");
+            Guard.Requires<ArgumentException>(uiInvoker != null, "uiInvoker");
+            Guard.Requires<ArgumentException>(viewModel != null, "viewModel");
+            Guard.Requires<ArgumentException>(loadingNotifier != null, "loadingNotifyer");
             
             this.refreshNotifier = timer;
             this.uiInvoker = uiInvoker;

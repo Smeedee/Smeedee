@@ -59,9 +59,9 @@ namespace Smeedee.Widget.SourceControl.Controllers
             IProgressbar loadingNotifier)
             : base(viewModel, timer, uiInvoke, loadingNotifier)
         {
-            Guard.ThrowExceptionIfNull(logger, "logger");
-            Guard.ThrowExceptionIfNull(changesetRepo, "changesetRepo");
-            Guard.ThrowExceptionIfNull(asyncClient, "asyncClient");
+            Guard.Requires<ArgumentException>(logger != null, "logger");
+            Guard.Requires<ArgumentException>(changesetRepo != null, "changesetRepo");
+            Guard.Requires<ArgumentException>(asyncClient != null, "asyncClient");
             
             this.logger = logger;
             this.changesetRepository = changesetRepo;

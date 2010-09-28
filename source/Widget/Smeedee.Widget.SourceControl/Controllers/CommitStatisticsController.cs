@@ -77,9 +77,9 @@ namespace Smeedee.Widget.SourceControl.Controllers
             IProgressbar loadingNotifier)
             : base(viewModel, changesetRepo, backgroundWorker, timer, uiInvoke, logger, loadingNotifier)
         {
-            Guard.ThrowExceptionIfNull(configRepo, "configRepo");
-            Guard.ThrowExceptionIfNull(configPersister, "configPersister");
-            Guard.ThrowExceptionIfNull(settingsViewModel, "settingsViewModel");
+            Guard.Requires<ArgumentException>(configRepo != null, "configRepo");
+            Guard.Requires<ArgumentException>(configPersister != null, "configPersister");
+            Guard.Requires<ArgumentException>(settingsViewModel != null, "settingsViewModel");
 
             this.configRepository = configRepo;
             this.configPersisterRepository = configPersister;

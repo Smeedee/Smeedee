@@ -86,7 +86,9 @@ namespace Smeedee.Tasks.SourceControl.Git
                                          TaskConfiguration config) 
             : base(changesetDbRepository, databasePersister)
         {
-            Guard.ThrowIfNull<ArgumentNullException>(changesetDbRepository, databasePersister, config);
+            Guard.Requires<ArgumentNullException>(changesetDbRepository != null);
+            Guard.Requires<ArgumentNullException>(databasePersister != null);
+            Guard.Requires<ArgumentNullException>(config != null);
             Guard.Requires<TaskConfigurationException>(config.Entries.Count() == 5);
             this.config = config;
             Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);

@@ -77,11 +77,11 @@ namespace Smeedee.Widget.BurndownChart.Controllers
             IProgressbar loadingNotifier)
             : base(viewModel, refreshNotifier, uiInvoker, loadingNotifier)
         {
-            Guard.ThrowExceptionIfNull(settingsViewModel, "settingsViewModel");
-            Guard.ThrowExceptionIfNull(repository, "projectInfoServerRepository");
-            Guard.ThrowExceptionIfNull(configuration, "configuration");
-            Guard.ThrowExceptionIfNull(asyncClient, "asyncClient");
-            Guard.ThrowExceptionIfNull(logger, "logger");
+            Guard.Requires<ArgumentException>(settingsViewModel != null, "settingsViewModel");
+            Guard.Requires<ArgumentException>(repository != null, "projectInfoServerRepository");
+            Guard.Requires<ArgumentException>(configuration != null, "configuration");
+            Guard.Requires<ArgumentException>(asyncClient != null, "asyncClient");
+            Guard.Requires<ArgumentException>(logger != null, "logger");
 
             this.settingsViewModel = settingsViewModel;
             this.repository = repository;

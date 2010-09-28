@@ -37,7 +37,8 @@ namespace Smeedee.Tasks.ProjectInfo
         public TFSProjectInfoTask(IPersistDomainModels<ProjectInfoServer> databasePersister,
                                   TaskConfiguration config)
         {
-            Guard.ThrowIfNull<ArgumentNullException>(databasePersister, config);
+            Guard.Requires<ArgumentNullException>(databasePersister != null);
+            Guard.Requires<ArgumentNullException>(config != null);
             Guard.Requires<TaskConfigurationException>(config.Entries.Count() >= 5);
 
             this.databasePersister = databasePersister;

@@ -142,10 +142,10 @@ namespace Smeedee.Widgets.SL.Twitter.Controllers
 
         private void ThrowIfAnyArgumentIsNull(TwitterViewModel viewModel, TwitterSettingsViewModel settingsViewModel, IFetchTweets tweetFetcher, Configuration configuration)
         {
-            Guard.ThrowExceptionIfNull(viewModel, "viewModel");
-            Guard.ThrowExceptionIfNull(settingsViewModel, "settingsViewModel");
-            Guard.ThrowExceptionIfNull(tweetFetcher, "tweetFetcher");
-            Guard.ThrowExceptionIfNull(configuration, "configuration");
+            Guard.Requires<ArgumentException>(viewModel != null, "viewModel");
+            Guard.Requires<ArgumentException>(settingsViewModel != null, "settingsViewModel");
+            Guard.Requires<ArgumentException>(tweetFetcher != null, "tweetFetcher");
+            Guard.Requires<ArgumentException>(configuration != null, "configuration");
         }
 
         public override void ToggleRefreshInSettingsMode(object sender, PropertyChangedEventArgs e)

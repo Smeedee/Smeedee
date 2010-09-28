@@ -54,11 +54,11 @@ namespace Smeedee.Widget.TeamMembers.Controllers
             IProgressbar loadingNotifier, IMetadataService metadataService)
             
         {
-            Guard.ThrowExceptionIfNull(userdbRepository, "userdbRepository");
-            Guard.ThrowExceptionIfNull(configRepo, "configRepository");
-            Guard.ThrowExceptionIfNull(configPersister, "configPersisterRepository");
-            Guard.ThrowExceptionIfNull(asyncClient, "asyncClient");
-            Guard.ThrowExceptionIfNull(logger, "logger");
+            Guard.Requires<ArgumentException>(userdbRepository != null, "userdbRepository");
+            Guard.Requires<ArgumentException>(configRepo != null, "configRepository");
+            Guard.Requires<ArgumentException>(configPersister != null, "configPersisterRepository");
+            Guard.Requires<ArgumentException>(asyncClient != null, "asyncClient");
+            Guard.Requires<ArgumentException>(logger != null, "logger");
 
             this.teamMembersViewModel = teamMembersViewModel;
             this.teamMembersSettingsViewModel = teamMembersSettingsViewModel;

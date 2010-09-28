@@ -39,10 +39,10 @@ namespace Smeedee.Widget.Admin.Users.Controllers
             IProgressbar loadingNotifier, 
             IMetadataService metadataService)
         {
-            Guard.ThrowExceptionIfNull(userdbRepository, "userdbRepository");
-            Guard.ThrowExceptionIfNull(userdbPersisterRepository, "userdbPersisterRepository");
-            Guard.ThrowExceptionIfNull(asyncClient, "asyncClient");
-            Guard.ThrowExceptionIfNull(logger, "logger");
+            Guard.Requires<ArgumentException>(userdbRepository != null, "userdbRepository");
+            Guard.Requires<ArgumentException>(userdbPersisterRepository != null, "userdbPersisterRepository");
+            Guard.Requires<ArgumentException>(asyncClient != null, "asyncClient");
+            Guard.Requires<ArgumentException>(logger != null, "logger");
 
             this.userdbRepository = userdbRepository;
             this.metadataService = metadataService;
