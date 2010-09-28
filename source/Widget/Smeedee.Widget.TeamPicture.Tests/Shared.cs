@@ -5,7 +5,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Ninject;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.DomainModel.Framework;

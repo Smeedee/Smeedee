@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Ninject;
+﻿using System.Collections.Generic;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.SL.Repositories;
