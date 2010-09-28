@@ -44,7 +44,7 @@
     </TestProject>
 
     <TestProject Include="..\Widget\Smeedee.Widget.Admin.Tasks.Tests\Smeedee.Widget.Admin.Tasks.Tests.csproj">
-      <Assembly>..\Widget\Smeedee.Widget.Admin.Tasks.Tests\bin\debug\Smeedee.Widget.Widget.Admin.Tasks.Tests.dll</Assembly>
+      <Assembly>..\Widget\Smeedee.Widget.Admin.Tasks.Tests\bin\debug\Smeedee.Widget.Admin.Tasks.Tests.dll</Assembly>
       <Report>TestResults.Smeedee.Widget.Admin.Tasks.xml</Report>
     </TestProject>
 
@@ -56,10 +56,6 @@
 
 
     <!-- Common -->
-    <TestProject Include="..\Smeedee.Framework.Tests\Smeedee.Framework.Tests.csproj">
-      <Assembly>..\Smeedee.Framework.Tests\bin\debug\Smeedee.Framework.Tests.dll</Assembly>
-      <Report>TestResults.Smeedee.Framework.xml</Report>
-    </TestProject>
 
     <!-- DomainModels -->
     <TestProject Include="..\DomainModel\Smeedee.DomainModel.Tests\Smeedee.DomainModel.Tests.csproj">
