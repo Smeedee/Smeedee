@@ -78,7 +78,6 @@
     <Compile Include="Controller\WidgetControllerSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\WidgetConfigurationRepositorySpecs.cs" />
-    <Compile Include="ServiceLocatorForTesting.cs" />
     <Compile Include="Services\Impl\ConfigurationManagerTests.cs" />
     <Compile Include="Services\Impl\ModuleLoaderSpecs.cs" />
     <Compile Include="Services\Impl\WidgetProgressbarSpecs.cs" />
