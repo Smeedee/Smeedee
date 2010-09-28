@@ -27,6 +27,7 @@
 
 #endregion
 
+using System.Linq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.Widget.SourceControl.ViewModels;
@@ -80,7 +81,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CodeCommiterViewMo
 
                 scenario.
                     Then("assure observers are notified", () =>
-                        changeRecorder.ChangedProperties.ShouldContain("NumberOfCommits")).
+                        changeRecorder.ChangedProperties.Any(p => p == "NumberOfCommits").ShouldBeTrue()).
                     And("assure the value is changed", () =>
                         viewModel.NumberOfCommits.ShouldBe(10));
             });

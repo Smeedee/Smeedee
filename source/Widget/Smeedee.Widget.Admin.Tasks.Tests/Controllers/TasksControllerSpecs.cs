@@ -73,7 +73,8 @@ namespace Smeedee.Widget.Admin.Tasks.Tests.Controllers
         }
 
         [Test]
-        public void assure_that_the_refreshnotifier_has_started()
+        [Ignore("Seems like this logic isn't used anymore")]
+        public void assure_that_the_Timer_has_been_started()
         {
             Given("A controller");
 

@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.Linq;
 using Moq;
 using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.Tests;
@@ -93,8 +94,9 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificatio
             Given(the_object_is_created);
             When("IsLoading property changes", () => viewModel.IsLoading = true);
             Then("the observers should be notified about the change", () =>
-                    changeRecorder.ChangedProperties.ShouldContain( "IsLoading" )).
-                And("the value should be updated", () => viewModel.IsLoading.ShouldBeTrue());
+                changeRecorder.ChangedProperties.Any(p => p == "IsLoading").ShouldBeTrue());
+            And("the value should be updated", () => 
+                viewModel.IsLoading.ShouldBeTrue());
         }
     }
 
