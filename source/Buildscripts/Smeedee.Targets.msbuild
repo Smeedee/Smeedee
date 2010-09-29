@@ -64,8 +64,7 @@
            Assemblies="%(TestProject.Assembly)"
            ToolPath="$(TestRunnerDirectory)"
            OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"
-		       ExcludeCategory="IntegrationTest"
-           ExcludeCategory="Todo"/>
+		       ExcludeCategory="IntegrationTest,Todo"/>
   </Target>
 
   
