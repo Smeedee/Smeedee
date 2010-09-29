@@ -116,12 +116,12 @@
     <UIRef Id="InstallationUI" />
     
     <!-- Defines the possible features we have to choose from when installing -->
-    <Feature Id="ProductFeature" Title="Smeedee Core Components" Level="1" TypicalDefault="install" Description="This installs the needed components for Smeedee to work. It will install a website in IIS to host the Smeedee Silverligte client application and the Webservices it needs.">
+    <Feature Id="ProductFeature" Title="Smeedee Core Components" Level="1" TypicalDefault="install" Description="Installs a website in IIS to host the Smeedee Silverlight client application and required web services.">
       <ComponentGroupRef Id="generated_components" />
       <ComponentRef Id="IISSmeedeeApplication" />
       <ComponentRef Id="SmeedeeDB" />
     </Feature>
-    <Feature Id="windows_service" Title="Task Scheduler" Level="1" TypicalDefault="install" Description="Installs the Smeedee Task Scheduler as a windows service. If you do not install this feature you will have to manually start the console based Task Scheduler to poulate the Smeedee database.">
+    <Feature Id="windows_service" Title="Task Scheduler" Level="1" TypicalDefault="install" Description="Installs the Smeedee Task Scheduler as a Windows service. If you do not install this you have to manually start the console based Task Scheduler to populate the database.">
       <ComponentRef Id="DataCollectorServiceInstall" />
     </Feature>
   </Product>
