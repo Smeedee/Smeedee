@@ -154,8 +154,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smeedee.Tasks.Framework", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smeedee.Tasks.Tests", "Scheduler\Smeedee.Tasks.Tests\Smeedee.Tasks.Tests.csproj", "{E63B0802-67A6-4B3E-B8D3-C3EFB4FEB03E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smeedee.Tasks.Framework.Tests", "Smeedee.Tasks.Framework.Tests\Smeedee.Tasks.Framework.Tests.csproj", "{8C68335F-4C05-4939-ACFE-830836E59A66}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{5A6EF1DD-D358-4907-859B-111F3A45A9EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smeedee.Widget.Admin.Users", "Widget\Smeedee.Widget.Admin.Users\Smeedee.Widget.Admin.Users.csproj", "{6B428B15-70F8-4C17-85B7-328DB8273948}"
@@ -192,6 +190,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Classes", "Classes", "{1F90
 	ProjectSection(SolutionItems) = preProject
 		Common\Classes\Guard.cs = Common\Classes\Guard.cs
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smeedee.Tasks.Framework.Tests", "Scheduler\Smeedee.Tasks.Framework.Tests\Smeedee.Tasks.Framework.Tests.csproj", "{8C68335F-4C05-4939-ACFE-830836E59A66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -897,16 +897,6 @@ Global
 		{E63B0802-67A6-4B3E-B8D3-C3EFB4FEB03E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E63B0802-67A6-4B3E-B8D3-C3EFB4FEB03E}.Release|x86.ActiveCfg = Release|x86
 		{E63B0802-67A6-4B3E-B8D3-C3EFB4FEB03E}.Release|x86.Build.0 = Release|x86
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Client.Framework - Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Client.Framework - Debug|x86.ActiveCfg = Debug|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.DomainModel - Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.DomainModel - Debug|x86.ActiveCfg = Debug|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C68335F-4C05-4939-ACFE-830836E59A66}.Release|x86.ActiveCfg = Release|Any CPU
 		{6B428B15-70F8-4C17-85B7-328DB8273948}.Client.Framework - Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B428B15-70F8-4C17-85B7-328DB8273948}.Client.Framework - Debug|x86.ActiveCfg = Debug|Any CPU
 		{6B428B15-70F8-4C17-85B7-328DB8273948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -1054,6 +1044,18 @@ Global
 		{8D16BD2B-1251-48EA-9349-145EF4BCB5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D16BD2B-1251-48EA-9349-145EF4BCB5FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D16BD2B-1251-48EA-9349-145EF4BCB5FA}.Release|x86.ActiveCfg = Release|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Client.Framework - Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Client.Framework - Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Client.Framework - Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.DomainModel - Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.DomainModel - Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.DomainModel - Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C68335F-4C05-4939-ACFE-830836E59A66}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

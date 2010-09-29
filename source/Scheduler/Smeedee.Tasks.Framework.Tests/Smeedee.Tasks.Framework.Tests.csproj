@@ -34,9 +34,9 @@
     <Reference Include="Moq">
       <HintPath>..\..\tools\Moq.3.1.416.3-bin\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=2.5.5.10112, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,19 +59,19 @@
     <Compile Include="TaskDefinitions\TaskDefinitionLoaderSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>Smeedee.DomainModel.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Scheduler\Smeedee.Tasks.Framework\Smeedee.Tasks.Framework.csproj">
+    <ProjectReference Include="..\Smeedee.Tasks.Framework\Smeedee.Tasks.Framework.csproj">
       <Project>{EB96EC6A-173A-4D65-A266-0E8F6776B394}</Project>
       <Name>Smeedee.Tasks.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Smeedee.Tests\Smeedee.Tests.csproj">
+    <ProjectReference Include="..\..\Smeedee.Tests\Smeedee.Tests.csproj">
       <Project>{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}</Project>
       <Name>Smeedee.Tests</Name>
     </ProjectReference>

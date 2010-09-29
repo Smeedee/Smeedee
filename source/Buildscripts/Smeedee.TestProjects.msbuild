@@ -94,6 +94,11 @@
       <Report>TestResults.Smeedee.Tasks.xml</Report>
     </TestProject>
 
+    <TestProject Include="..\Scheduler\Smeedee.Tasks.Framework.Tests\Smeedee.Tasks.Framework.Tests.csproj">
+      <Assembly>..\Scheduler\Smeedee.Tasks.Framework.Tests\bin\debug\Smeedee.Tasks.Framework.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Tasks.Framework.xml</Report>
+    </TestProject>
+
     <!-- Integration -->
    
     <TestProject Include="..\Integration\Smeedee.Integration.Tests\Smeedee.Integration.Tests.csproj">
