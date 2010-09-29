@@ -51,12 +51,11 @@
 
   
   <Target Name="IntegrationTests">
-    <NUnit ContinueOnError="true" 
+    <NUnit ContinueOnError="false" 
            Assemblies="%(TestProject.Assembly)"
            ToolPath="$(TestRunnerDirectory)"
            OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"
-		       IncludeCategory="IntegrationTest" 
-           ExcludeCategory="Todo"/>
+		       IncludeCategory="IntegrationTest"/>
   </Target>
 
   <Target Name="UnitTests">
