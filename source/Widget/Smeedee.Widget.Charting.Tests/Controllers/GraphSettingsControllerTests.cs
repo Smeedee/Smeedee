@@ -7,9 +7,9 @@ using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
+using Smeedee.Widget.Charting.Tests.Properties;
 using TinyBDD.Specification.NUnit;
 using Tskjortebutikken.Widgets.Controllers;
-using Tskjortebutikken.Widgets.Tests.Properties;
 using Tskjortebutikken.Widgets.ViewModel;
 
 namespace Tskjortebutikken.Widgets.Tests.Controllers

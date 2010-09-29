@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
+using Smeedee.Widget.Charting.Tests.Properties;
 using TinyBDD.Specification.NUnit;
 using Tskjortebutikken.Widgets.Controllers;
-using Tskjortebutikken.Widgets.Tests.Properties;
 using Tskjortebutikken.Widgets.ViewModel;
 
 namespace Tskjortebutikken.Widgets.Tests.Controllers

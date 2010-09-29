@@ -48,6 +48,21 @@
       <Report>TestResults.Smeedee.Widget.Admin.Tasks.xml</Report>
     </TestProject>
 
+    <TestProject Include="..\Widget\Smeedee.Widget.Admin.Holidays.Tests\Smeedee.Widget.Admin.Holidays.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.Admin.Holidays.Tests\bin\debug\Smeedee.Widget.Admin.Holidays.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.Admin.Holidays.xml</Report>
+    </TestProject>
+
+    <TestProject Include="..\Widget\Smeedee.Widget.Admin.Users.Tests\Smeedee.Widget.Admin.Users.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.Admin.Users.Tests\bin\debug\Smeedee.Widget.Admin.Users.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.Admin.Users.xml</Report>
+    </TestProject>
+
+    <!--<TestProject Include="..\Widget\Smeedee.Widget.Charting.Tests\Smeedee.Widget.Charting.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.Charting.Tests\bin\debug\Smeedee.Widget.Charting.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.Charting.xml</Report>
+    </TestProject>-->
+
     <!-- TODO: Can not be loaded here, these are Silverlight/MStest tests. Keeping them here to remember them though.
     <TestProject Include="..\Widget\Smeedee.Widget.Twitter.Tests\Smeedee.Widget.Twitter.Tests.csproj">
       <Assembly>..\Widget\Smeedee.Widget.Twitter.Tests\bin\debug\Smeedee.Widget.Twitter.Tests.dll</Assembly>

@@ -8,8 +8,8 @@
     <ProjectGuid>{97E9523B-DB3B-46AA-A7F9-9716FDA63A3C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tskjortebutikken.Widgets</RootNamespace>
-    <AssemblyName>Tskjortebutikken.Widgets</AssemblyName>
+    <RootNamespace>Smeedee.Widget.Charting</RootNamespace>
+    <AssemblyName>Smeedee.Widget.Charting</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
