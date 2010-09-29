@@ -49,7 +49,6 @@
     <MSBuild Projects="@(Project)" Targets="Build"/>
   </Target>
 
-  
   <Target Name="IntegrationTests">
     <NUnit ContinueOnError="false" 
            Assemblies="%(TestProject.Assembly)"
