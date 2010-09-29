@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
-      <HintPath>..\..\tools\Moq.3.1.416.3-bin\Moq.dll</HintPath>
+      <HintPath>..\..\..\tools\Moq.3.1.416.3-bin\Moq.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.5.5.10112, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -45,12 +45,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TinyBDD, Version=0.1.0.88, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
+    <Reference Include="TinyBDD">
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
     </Reference>
     <Reference Include="TinyBDD.Specification.NUnit">
-      <HintPath>..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.dll</HintPath>
+      <HintPath>..\..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
