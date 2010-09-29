@@ -46,7 +46,9 @@ namespace Smeedee.IntegrationTests.CI.CruiseControl.DomainModel.Repositories.Pro
         protected CCServerRepository repository = new CCServerRepository(ciUrl, new SocketXMLBuildlogRequester());
     }
 
-    [TestFixture][Category("IntegrationTest")]
+    [TestFixture]
+    //[Category("IntegrationTest")]
+    [Category("Todo")]
     public class when_queried_for_CIServers : Shared
     {
         private IEnumerable<CIServer> ciServers;

@@ -55,7 +55,8 @@
            Assemblies="%(TestProject.Assembly)"
            ToolPath="$(TestRunnerDirectory)"
            OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"
-		       IncludeCategory="IntegrationTest" />
+		       IncludeCategory="IntegrationTest" 
+           ExcludeCategory="Todo"/>
   </Target>
 
   <Target Name="UnitTests">
@@ -63,7 +64,8 @@
            Assemblies="%(TestProject.Assembly)"
            ToolPath="$(TestRunnerDirectory)"
            OutputXmlFile="$(ArtifactsDirectory)\%(TestProject.Report)"
-		       ExcludeCategory="IntegrationTest" />
+		       ExcludeCategory="IntegrationTest"
+           ExcludeCategory="Todo"/>
   </Target>
 
   
