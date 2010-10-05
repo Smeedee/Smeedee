@@ -26,7 +26,7 @@ namespace Smeedee.Widgets.SL.WebPage
         {
             var viewModel = new WebPageViewModel();
 
-            View = new WebPageView() {DataContext = viewModel};
+            View = new WebPageView() {DataContext = null};
             SettingsView = new WebPageSettingsView() {DataContext = viewModel};
         }
     }

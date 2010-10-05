@@ -7,7 +7,7 @@ namespace Smeedee.Widgets.WebPage.ViewModel
     {
         partial void OnInitialize()
         {
-            InputUrl = string.Empty;
+            InputUrl = "Enter URL here";
             ValidatedUrl = string.Empty;
             RefreshInterval = 30;
 

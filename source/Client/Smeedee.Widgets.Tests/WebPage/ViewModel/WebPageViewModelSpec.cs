@@ -14,9 +14,9 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         public class When_created : Shared
         {
             [Test]
-            public void Then_there_should_be_an_input_URL()
+            public void Then_assure_input_URL_has_some_default_text()
             {
-                webPageViewModel.InputUrl.ShouldBe("");
+                webPageViewModel.InputUrl.ShouldBe("Enter URL here");
             }
 
             [Test]
