@@ -14,9 +14,15 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         public class When_created : Shared
         {
             [Test]
-            public void Then_there_should_be_a_URL()
+            public void Then_there_should_be_an_input_URL()
             {
-                webPageViewModel.Url.ShouldBe("");
+                webPageViewModel.InputUrl.ShouldBe("");
+            }
+
+            [Test]
+            public void Then_there_should_be_a_validated_URL()
+            {
+                webPageViewModel.ValidatedUrl.ShouldBe("");
             }
 
             [Test]
@@ -33,12 +39,12 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         }
 
         [TestFixture]
-        public class When_Url_has_not_been_specified : Shared
+        public class When_Url_is_not_specified : Shared
         {
             [Test]
             public void Then_assure_GoTo_command_is_disabled()
             {
-                webPageViewModel.Url = "";
+                webPageViewModel.InputUrl = "";
                 webPageViewModel.GoTo.CanExecute().ShouldBe(false);
             }
         }
@@ -47,9 +53,9 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         public class When_Url_is_specified : Shared
         {
             [Test]
-            public void Then_assure_GoTo_command_is_specified()
+            public void Then_assure_GoTo_command_is_enabled()
             {
-                webPageViewModel.Url = "http://www.smeedee.org";
+                webPageViewModel.InputUrl = "http://smeedee.org";
                 webPageViewModel.GoTo.CanExecute().ShouldBeTrue();
             }
         }
@@ -63,19 +69,32 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
                 var truth_table = new List<string>
                 {
                     "this % is N0T a valid 33 ## URL",
-                    "htp://doesntExist",
                     "http",
-                    "http://smeedee.#",
                     "http:///smeedee.org",
-                    "http://smee_dee.org",
-                    //"http://www.smeedee#org",
                 };
 
                 foreach (var url in truth_table)
                 {
-                    webPageViewModel.Url = url;
+                    webPageViewModel.InputUrl = url;
                     Assert.IsFalse(webPageViewModel.GoTo.CanExecute(), url);
                 }
+            }
+
+            [Test]
+            public void Then_assure_error_message_is_set()
+            {
+                webPageViewModel.InputUrl = "an invalid URL % ||";
+                webPageViewModel.ErrorMessage.ShouldBe("Invalid URL!");
+            }
+
+            [Test]
+            public void Then_assure_the_validated_URL_is_not_set()
+            {
+                webPageViewModel.InputUrl = "http://www.smeedee.org/";
+                webPageViewModel.ValidatedUrl.ShouldBe("http://www.smeedee.org/");
+
+                webPageViewModel.InputUrl = "foo bar";
+                webPageViewModel.ValidatedUrl.ShouldBe("");
             }
         }
 
@@ -91,6 +110,7 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
                     "http://subdomain.smeedee.org/",
                     "http://subdomain.smeedee.com",
                     "http://smeedee.co.uk",
+                    "http://smeedee.org",
                     "http://www.smeedee.co.uk",
                     "http://www.smeedee.info",
                     "http://www.to.smeedee.co.uk",
@@ -98,14 +118,36 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
                     "http://www.smeedee.org/default.aspx.js",
                     "http://www.smeedee.org/default.htm",
                     "http://www.smeedee.org/downloads",
+                    "http://www.smeedee.org/downloads/",
                     "http://www.smeedee.org/downloads/top.aspx",
+                    "http://www.smeedee.org/downloads/top.aspx/",
+                    "http://www.smeedee.org/downloads/top.aspx?size=100",
+                    "http://buildserver/buildstatus",
                 };
 
                 foreach (var url in truth_table)
                 {
-                    webPageViewModel.Url = url;
+                    webPageViewModel.InputUrl = url;
                     Assert.IsTrue(webPageViewModel.GoTo.CanExecute(), url);
                 }
+            }
+
+            [Test]
+            public void Then_assure_ErrorMessage_is_removed_after_url_is_fixed()
+            {
+                webPageViewModel.InputUrl = "invalid";
+                webPageViewModel.ErrorMessage.ShouldNotBeNull();
+                webPageViewModel.ErrorMessage.ShouldNotBe(string.Empty);
+
+                webPageViewModel.InputUrl = "http://smeedee.org";
+                webPageViewModel.ErrorMessage.ShouldBe(string.Empty);
+            }
+
+            [Test]
+            public void Then_assure_Validated_Url_is_set()
+            {
+                webPageViewModel.InputUrl = "http://www.smeedee.org/";
+                webPageViewModel.ValidatedUrl.ShouldBe("http://www.smeedee.org/");
             }
         }
 

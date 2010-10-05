@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace Smeedee.Widgets.WebPage.ViewModel
@@ -10,23 +7,30 @@ namespace Smeedee.Widgets.WebPage.ViewModel
     {
         partial void OnInitialize()
         {
-            Url = string.Empty;
+            InputUrl = string.Empty;
+            ValidatedUrl = string.Empty;
             RefreshInterval = 30;
+
+            PropertyChanged += WebPageViewModel_PropertyChanged;
+        }
+
+        void WebPageViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "InputUrl")
+            {
+                ErrorMessage = IsValidInputUrl() ? "" : "Invalid URL!";
+                ValidatedUrl = IsValidInputUrl() ? InputUrl : string.Empty;
+            }
         }
 
         public bool CanGoTo()
         {
-            return !string.IsNullOrEmpty(Url) && IsValidUrl();
+            return !string.IsNullOrEmpty(InputUrl) && IsValidInputUrl();
         }
 
-        private bool IsValidUrl()
+        private bool IsValidInputUrl()
         {
-            var protocol = "^(http|https)://";
-            var domains = "([a-zA-Z1-9]*\\.{0,1}){1,}";
-            var topLevelDomain = "\\.[a-zA-Z]{2,4}";
-            var resource = "/{0,1}[a-zA-Z]*";
-
-            return Regex.IsMatch(Url, protocol + domains + topLevelDomain + resource);
+            return Regex.IsMatch(InputUrl, "^https?://[a-zA-Z1-9]");
         }
     }
 }

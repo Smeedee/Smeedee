@@ -4,7 +4,9 @@ using TinyMVVM.Framework
 namespace Smeedee.Widgets.WebPage.ViewModel
 	
 	viewmodel WebPageViewModel
-		oproperty Url as string
+		oproperty InputUrl as string
+		oproperty ValidatedUrl as string
 		oproperty RefreshInterval as int
+		oproperty ErrorMessage as string
 
 		command GoTo

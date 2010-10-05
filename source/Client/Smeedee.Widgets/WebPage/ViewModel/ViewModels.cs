@@ -8,28 +8,51 @@ namespace Smeedee.Widgets.WebPage.ViewModel
 	public partial class WebPageViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual string Url
+		public virtual string InputUrl
 		{
 			get 
-			{   
-				OnGetUrl(ref _Url);
+			{
+				OnGetInputUrl(ref _InputUrl);
 				 
-				return _Url; 
+				return _InputUrl; 
 			}
 			set
 			{
-				if (value != _Url)
+				if (value != _InputUrl)
 				{
-					OnSetUrl(ref value); 
-					_Url = value;
-					TriggerPropertyChanged("Url");
+					OnSetInputUrl(ref value); 
+					_InputUrl = value;
+					TriggerPropertyChanged("InputUrl");
 				}
 			}
 		}
-		private string _Url;
+		private string _InputUrl;
 
-		partial void OnGetUrl(ref string value);
-		partial void OnSetUrl(ref string value);
+		partial void OnGetInputUrl(ref string value);
+		partial void OnSetInputUrl(ref string value);
+
+		public virtual string ValidatedUrl
+		{
+			get 
+			{
+				OnGetValidatedUrl(ref _ValidatedUrl);
+				 
+				return _ValidatedUrl; 
+			}
+			set
+			{
+				if (value != _ValidatedUrl)
+				{
+					OnSetValidatedUrl(ref value); 
+					_ValidatedUrl = value;
+					TriggerPropertyChanged("ValidatedUrl");
+				}
+			}
+		}
+		private string _ValidatedUrl;
+
+		partial void OnGetValidatedUrl(ref string value);
+		partial void OnSetValidatedUrl(ref string value);
 
 		public virtual int RefreshInterval
 		{
@@ -53,6 +76,29 @@ namespace Smeedee.Widgets.WebPage.ViewModel
 
 		partial void OnGetRefreshInterval(ref int value);
 		partial void OnSetRefreshInterval(ref int value);
+
+		public virtual string ErrorMessage
+		{
+			get 
+			{
+				OnGetErrorMessage(ref _ErrorMessage);
+				 
+				return _ErrorMessage; 
+			}
+			set
+			{
+				if (value != _ErrorMessage)
+				{
+					OnSetErrorMessage(ref value); 
+					_ErrorMessage = value;
+					TriggerPropertyChanged("ErrorMessage");
+				}
+			}
+		}
+		private string _ErrorMessage;
+
+		partial void OnGetErrorMessage(ref string value);
+		partial void OnSetErrorMessage(ref string value);
 
 	
 		
