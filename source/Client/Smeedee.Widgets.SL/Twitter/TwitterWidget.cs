@@ -9,7 +9,7 @@ using TinyMVVM.Framework;
 namespace Smeedee.Widgets.SL.Twitter
 {
     [WidgetInfo(Name = "Twitter",
-                Description = "FooBar. A simple widget that let you specify a search on twitter and displays the returned tweets!",
+                Description = "Allows you to display a twitter search",
                 Author = "Smeedee team",
                 Version = "1.0",
                 Tags = new[] { CommonTags.TeamCommunication, CommonTags.Fun })]
