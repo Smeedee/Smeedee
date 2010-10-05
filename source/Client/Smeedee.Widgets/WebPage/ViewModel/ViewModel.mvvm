@@ -1,0 +1,10 @@
+﻿using System
+using TinyMVVM.Framework
+
+namespace Smeedee.Widgets.WebPage.ViewModel
+	
+	viewmodel WebPageViewModel
+		oproperty Url as string
+		oproperty RefreshInterval as int
+
+		command GoTo
