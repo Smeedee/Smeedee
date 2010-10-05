@@ -23,7 +23,7 @@ namespace Smeedee.Client.Framework.ViewModel.Dialogs
         {
             Title = "Select Widgets";
             Width = 600;
-            Height = 600;
+            Height = 500;
             NewSlides = new List<Slide>();
 
             AvailableWidgets = new ObservableCollection<WidgetMetadata>();
