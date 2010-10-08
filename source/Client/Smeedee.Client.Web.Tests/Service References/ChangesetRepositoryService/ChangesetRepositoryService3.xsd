@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.SourceControl" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.SourceControl" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ChangesetsAfterRevisionSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q1:SpecificationOfChangesetj2kd_Pkf2">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Revision" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ChangesetsAfterRevisionSpecification" nillable="true" type="tns:ChangesetsAfterRevisionSpecification" />
+  <xs:complexType name="ChangesetsForUserSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q2:SpecificationOfChangesetj2kd_Pkf2">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ChangesetsForUserSpecification" nillable="true" type="tns:ChangesetsForUserSpecification" />
+  <xs:complexType name="AllChangesetsSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q3:SpecificationOfChangesetj2kd_Pkf2">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AllChangesetsSpecification" nillable="true" type="tns:AllChangesetsSpecification" />
+  <xs:complexType name="ArrayOfChangeset">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Changeset" nillable="true" type="tns:Changeset" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChangeset" nillable="true" type="tns:ArrayOfChangeset" />
+  <xs:complexType name="Changeset">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Author" nillable="true" type="tns:Author" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Revision" type="xs:long" />
+      <xs:element minOccurs="0" name="Server" nillable="true" type="tns:ChangesetServer" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="Changeset" nillable="true" type="tns:Changeset" />
+  <xs:complexType name="Author">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Author" nillable="true" type="tns:Author" />
+  <xs:complexType name="ChangesetServer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Changesets" nillable="true" type="tns:ArrayOfChangeset" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
+  </xs:complexType>
+  <xs:element name="ChangesetServer" nillable="true" type="tns:ChangesetServer" />
+</xs:schema>
