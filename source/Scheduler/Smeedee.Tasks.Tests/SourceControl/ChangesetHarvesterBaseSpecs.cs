@@ -27,6 +27,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Moq;
@@ -49,7 +50,7 @@ namespace Smeedee.Tasks.Tests.SourceControl
         protected static ChangesetHarvesterBase SourceControlTask;
         protected static Mock<IRepository<Changeset>> changesetRepository;
         protected static Mock<IRepository<Changeset>> changesetDbRepository;
-        protected static Mock<TaskConfiguration> config;
+        protected static TaskConfiguration config;
         protected static Mock<IPersistDomainModels<Changeset>> database;
 
         protected static List<Changeset> savedChangesets;
@@ -135,6 +136,20 @@ namespace Smeedee.Tasks.Tests.SourceControl
             });
         }
 
+        [Test]
+        public void Assure_changeset_server_is_set_from_task_configuration()
+        {
+            Scenario.StartNew(this, scenario =>
+            {
+                scenario.Given(sourceControlTask_is_created).
+                    And(changesets_have_different_revision_in_repository_than_what_is_saved_in_db);
+                scenario.When(sourceControlTask_is_dispatched);
+                scenario.Then("the changesets have the correct server values from the config", () =>
+                {
+                    database.Verify(d => d.Save(It.Is<IEnumerable<Changeset>>(cs => cs.All(c => c.Server.Url == changesetServerUrl))));
+                });
+            });
+        }
 
         [Test]
         public void assure_changesets_are_saved_if_revision_has_changed()
@@ -175,13 +190,19 @@ namespace Smeedee.Tasks.Tests.SourceControl
         protected Context sourceControlTask_is_created = () =>
         {
             var changesets = new List<Changeset>();
+            changesetServerUrl = "http://www.testurl.com";
+            changesetServerName = "My main server for sourcecontrol";
 
             changesetRepository = new Mock<IRepository<Changeset>>();
             changesetDbRepository = new Mock<IRepository<Changeset>>();
             database = new Mock<IPersistDomainModels<Changeset>>();
 
-            config = new Mock<TaskConfiguration>();
-            config.Setup(c => c.Entries).Returns(new List<TaskConfigurationEntry>() {null, null, null, null});
+            config = new TaskConfiguration();
+            config.Entries.Add(new TaskConfigurationEntry()
+                                   {Name = ChangesetHarvesterBase.URL_SETTING_NAME, Value = changesetServerUrl, Type = typeof(string)});
+            config.Entries.Add(new TaskConfigurationEntry()
+                                   {Name = ChangesetHarvesterBase.SOURCECONTROL_SERVER_NAME, Value = changesetServerName, Type = typeof(string)});
+            
 
             changesetRepository.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
             changesetDbRepository.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
@@ -197,7 +218,8 @@ namespace Smeedee.Tasks.Tests.SourceControl
 
             SourceControlTask = new MockHarvesterTask(changesetDbRepository.Object,
                                                      database.Object,
-                                                     changesetRepository.Object);
+                                                     changesetRepository.Object,
+                                                     config);
         };
 
         private class MockHarvesterTask : ChangesetHarvesterBase
@@ -205,8 +227,9 @@ namespace Smeedee.Tasks.Tests.SourceControl
             private IRepository<Changeset> changesetRepositoryMock;
             public MockHarvesterTask(IRepository<Changeset> changesetDbRepository,
                                 IPersistDomainModels<Changeset> databasePersister,
-                                IRepository<Changeset> changesetRepositoryMock)
-                : base(changesetDbRepository, databasePersister)
+                                IRepository<Changeset> changesetRepositoryMock, 
+                                TaskConfiguration config)
+                : base(changesetDbRepository, databasePersister, config)
             {
                 this.changesetRepositoryMock = changesetRepositoryMock;
             }
@@ -284,7 +307,10 @@ namespace Smeedee.Tasks.Tests.SourceControl
 
         private Context empty_configuration_is_given = () =>
         {
-            config.Setup(c => c.Entries).Returns(new List<TaskConfigurationEntry>() {});
+            config = new TaskConfiguration();
         };
+
+        private static string changesetServerUrl;
+        private static string changesetServerName;
     }
 }

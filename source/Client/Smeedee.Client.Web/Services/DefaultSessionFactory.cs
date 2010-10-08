@@ -23,7 +23,7 @@ namespace Smeedee.Client.Web.Services
             {
                 if (instance == null)
                     instance =
-                        NHibernateFactory.AssembleSessionFactory(ChangesetDatabaseRepository.DatabaseFilePath);
+                        NHibernateFactory.AssembleSessionFactory(NHibernateFactory.DatabaseFilePath);
 
                 return instance;
             } 

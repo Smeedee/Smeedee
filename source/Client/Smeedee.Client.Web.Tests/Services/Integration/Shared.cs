@@ -40,15 +40,15 @@ namespace Smeedee.Client.WebTests.Services.Integration
     {
         protected const string DATE_FORMAT = "dd.MM.yyyy hh:mm:ss";
 
-        private static ISessionFactory sessionfactory;
+        protected static ISessionFactory sessionfactory;
         protected static ISession databaseSession;
 
         protected Context Database_is_created = () =>
         {
-            if (File.Exists(GenericDatabaseRepository<User>.DatabaseFilePath))
-                File.Delete(GenericDatabaseRepository<User>.DatabaseFilePath);
+            if (File.Exists(NHibernateFactory.DatabaseFilePath))
+                File.Delete(NHibernateFactory.DatabaseFilePath);
 
-            sessionfactory = NHibernateFactory.AssembleSessionFactory(GenericDatabaseRepository<User>.DatabaseFilePath);
+            sessionfactory = NHibernateFactory.AssembleSessionFactory(NHibernateFactory.DatabaseFilePath);
 
             databaseSession = sessionfactory.OpenSession();
         };

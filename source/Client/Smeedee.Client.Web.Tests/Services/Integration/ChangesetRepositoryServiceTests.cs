@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Smeedee.Client.Web.Tests.ChangesetRepositoryService;
+using Smeedee.DomainModel.Framework.DSL.Specifications;
 using Smeedee.DomainModel.SourceControl;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
@@ -50,26 +51,34 @@ namespace Smeedee.Client.WebTests.Services.Integration.ChangesetRepositoryServic
 
         protected Context Database_contains_changesets = () =>
         {
-            var changeset = new Changeset()
-            {
-                Author = new Author("goeran"),
-                Comment = "Yet another post",
-                Revision = 1,
-                Time = DateTime.Now
-            };
+            changeset1 = new Changeset()
+                             {
+                                 Author = new Author("goeran"),
+                                 Comment = "Yet another post",
+                                 Revision = 1,
+                                 Time = DateTime.Now,
+                                 Server = ChangesetServer.Default
+                             };
 
-            var changeset2 = new Changeset()
-            {
-                Author = new Author("jonas"),
-                Comment = "Added tests",
-                Revision = 2,
-                Time = DateTime.Now.AddDays(1)
-            };
+            changeset2 = new Changeset()
+                             {
+                                 Author = new Author("jonas"),
+                                 Comment = "Added tests",
+                                 Revision = 2,
+                                 Time = DateTime.Now.AddDays(1),
+                                 Server = ChangesetServer.Default
+                             };
 
-            databaseSession.Save(changeset);
+            ChangesetServer.Default.Changesets = new[] {changeset1, changeset2};
+
+            databaseSession.Save(ChangesetServer.Default);
+            databaseSession.Save(changeset1);
             databaseSession.Save(changeset2);
             databaseSession.Flush();
         };
+
+        protected static Changeset changeset1;
+        protected static Changeset changeset2;
     }
 
     [TestFixture][Category("IntegrationTest")]
@@ -86,24 +95,23 @@ namespace Smeedee.Client.WebTests.Services.Integration.ChangesetRepositoryServic
                     And(Database_contains_changesets).
                     And(WebServiceClient_is_created);
 
-                scenario.When("get all", () =>
-                    changesetsFromWS = webServiceClient.Get(new AllChangesetsSpecification()));
+                    scenario.When("get all", () =>
+                    changesetsFromWS = webServiceClient.Get(All.ItemsOf<Changeset>()));
 
                 scenario.Then("assure all data is successfully serialized", () =>
                 {
-                    var changesetsFromDB = databaseSession.CreateCriteria(typeof(Changeset)).
-                        List<Changeset>();
+                    var changesetsFromDB = new[] {changeset1, changeset2};
 
                     AssertResultsets(changesetsFromWS, changesetsFromDB);
                 });
             });
         }
 
-        private void AssertResultsets(IEnumerable<Changeset> changesetsFromWS, IList<Changeset> changesetsFromDB)
+        private void AssertResultsets(IEnumerable<Changeset> changesetsFromWS, IEnumerable<Changeset> changesetsFromDB)
         {
             changesetsFromWS.ShouldNotBeNull();
 
-            changesetsFromWS.Count().ShouldBe(changesetsFromDB.Count);
+            changesetsFromWS.Count().ShouldBe(changesetsFromDB.Count());
 
             foreach (var changesetDB in changesetsFromDB)
             {

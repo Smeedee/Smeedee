@@ -24,20 +24,41 @@
 #endregion
 
 using System;
+using System.Runtime.Serialization;
 
 
 namespace Smeedee.DomainModel.SourceControl
 {
+    [DataContract(IsReference = true, Name = "Changeset", Namespace = "Smeedee.DomainModel.SourceControl")]
     public class Changeset
     {
+        [DataMember(Order = 1)]
         public virtual long Revision { get; set; }
+        [DataMember(Order = 2)]
         public virtual Author Author { get; set; }
+        [DataMember(Order = 3)]
         public virtual DateTime Time { get; set; }
+        [DataMember(Order = 4)]
         public virtual string Comment { get; set; }
+        [DataMember(Order = 5)]
+        public virtual ChangesetServer Server { get; set; }
 
         public virtual bool IsValidComment()
         {
             return !string.IsNullOrEmpty(Comment);
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Changeset;
+            return other != null &&
+                   other.Revision == this.Revision &&
+                   other.Server == this.Server;
+        }
+
+        public override int GetHashCode()
+        {
+            return string.Format("{0}.{1}", Server, Revision).GetHashCode();
         }
     }
 }

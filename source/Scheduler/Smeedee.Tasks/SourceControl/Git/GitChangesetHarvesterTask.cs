@@ -18,15 +18,14 @@ namespace Smeedee.Tasks.SourceControl.Git
           Webpage = "http://smeedee.org")]
     [TaskSetting(1, USERNAME_SETTING_NAME, typeof(string), "guest")]
     [TaskSetting(2, PASSWORD_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(3, URL_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(4, GIT_PULL_COMMAND, typeof(string), "pull origin master")]
-    [TaskSetting(5, GIT_EXECUTABLE_LOCATION, typeof(string), "")]
+    [TaskSetting(3, SOURCECONTROL_SERVER_NAME, typeof(string), "Main Sourcecontrol Server")]
+    [TaskSetting(4, URL_SETTING_NAME, typeof(string), "")]
+    [TaskSetting(5, GIT_PULL_COMMAND, typeof(string), "pull origin master")]
+    [TaskSetting(6, GIT_EXECUTABLE_LOCATION, typeof(string), "")]
     public class GitChangesetHarvesterTask : ChangesetHarvesterBase
     {
         public const string GIT_PULL_COMMAND = "GitPullCommand";
         public const string GIT_EXECUTABLE_LOCATION = "GitExecutableLocation";
-
-        private readonly TaskConfiguration config;
 
         public override string Name
         {
@@ -84,12 +83,12 @@ namespace Smeedee.Tasks.SourceControl.Git
         public GitChangesetHarvesterTask(IRepository<Changeset> changesetDbRepository,
                                          IPersistDomainModels<Changeset> databasePersister,
                                          TaskConfiguration config) 
-            : base(changesetDbRepository, databasePersister)
+            : base(changesetDbRepository, databasePersister, config)
         {
             Guard.Requires<ArgumentNullException>(changesetDbRepository != null);
             Guard.Requires<ArgumentNullException>(databasePersister != null);
             Guard.Requires<ArgumentNullException>(config != null);
-            Guard.Requires<TaskConfigurationException>(config.Entries.Count() == 5);
+            Guard.Requires<TaskConfigurationException>(config.Entries.Count() == 6);
             this.config = config;
             Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);
         }

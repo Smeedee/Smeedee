@@ -24,10 +24,10 @@ namespace Smeedee.Client.WebTests.Services.Integration.ConfigurationRepositorySe
 
         protected Context Database_is_created = () =>
         {
-            if (File.Exists(GenericDatabaseRepository<User>.DatabaseFilePath))
-                File.Delete(GenericDatabaseRepository<User>.DatabaseFilePath);
+            if (File.Exists(NHibernateFactory.DatabaseFilePath))
+                File.Delete(NHibernateFactory.DatabaseFilePath);
 
-            sessionfactory = NHibernateFactory.AssembleSessionFactory(GenericDatabaseRepository<User>.DatabaseFilePath);
+            sessionfactory = NHibernateFactory.AssembleSessionFactory(NHibernateFactory.DatabaseFilePath);
 
             databaseSession = sessionfactory.OpenSession();
         };

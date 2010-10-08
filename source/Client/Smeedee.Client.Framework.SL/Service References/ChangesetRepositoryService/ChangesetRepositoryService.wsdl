@@ -6,6 +6,7 @@
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.SourceControl" />
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd4" namespace="Smeedee.DomainModel.SourceControl" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ChangesetRepositoryService_Get_InputMessage">

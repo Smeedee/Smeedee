@@ -33,7 +33,7 @@ using Smeedee.Integration.Database.DomainModel.Repositories;
 
 namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.GenericDomainModelPersisterSpecs
 {
-    public class TestPersister : GenericDatabaseRepository<Changeset>
+    public class TestPersister : GenericDatabaseRepository<ChangesetServer>
     {
         public TestPersister(ISessionFactory sessionFactory)
             : base(sessionFactory) {}
@@ -52,17 +52,16 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.GenericDoma
         public void should_save_domain_model_to_database()
         {
             TestPersister persister = new TestPersister(sessionFactory);
-            persister.Save(new Changeset()
+            persister.Save(new ChangesetServer()
                            {
-                               Revision = 1067,
-                               Author = new Author() {Username = "fardin2"},
-                               Comment = "testass333333",
-                               Time = DateTime.Now
+                               Name="Testname",
+                               Url = "http://www.testurl.com"
+
                            });
 
             ISessionFactory newSessionFactory = NHibernateFactory.AssembleSessionFactory(DATABASE_TEST_FILE);
 
-            var result = DatabaseRetriever.GetDatamodelFromDatabase<Changeset>(newSessionFactory);
+            var result = DatabaseRetriever.GetDatamodelFromDatabase<ChangesetServer>(newSessionFactory);
 
             result.Count.ShouldBe(1);
         }

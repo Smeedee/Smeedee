@@ -478,6 +478,9 @@
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\CIRepositoryService\CIRepositoryService.wsdl" />
     <None Include="Service References\CIRepositoryService\CIRepositoryService.xsd">
       <SubType>Designer</SubType>

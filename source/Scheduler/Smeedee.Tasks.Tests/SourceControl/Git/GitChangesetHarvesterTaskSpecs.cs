@@ -11,6 +11,7 @@ using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.Integration.VCS.Git.DomainModel.Services;
 using Smeedee.Tasks.Framework.TaskAttributes;
+using Smeedee.Tasks.SourceControl;
 using Smeedee.Tasks.SourceControl.Git;
 using TinyBDD.Specification.NUnit;
 
@@ -22,11 +23,11 @@ namespace Smeedee.Tasks.Tests.SourceControl.Git
         private const bool do_not_inherit = false;
 
         [Test]
-        public void should_have_5_configuration_attributes()
+        public void should_have_6_configuration_attributes()
         {
             var settingAttributes = GetGitChangesetHarvesterTaskAttributes<TaskSettingAttribute>();
 
-            settingAttributes.Count().ShouldBe(5);
+            settingAttributes.Count().ShouldBe(6);
         }
 
         [Test]
@@ -360,7 +361,8 @@ namespace Smeedee.Tasks.Tests.SourceControl.Git
                                          new TaskConfigurationEntry { Name = "Username", Type = typeof(string), Value = "" },
                                          new TaskConfigurationEntry { Name = "Password", Type = typeof(string), Value = "" },
                                          new TaskConfigurationEntry { Name = "GitPullCommand", Type = typeof(string), Value = "pull origin master" },
-                                         new TaskConfigurationEntry { Name = "GitExecutableLocation", Type = typeof(string), Value = "" }
+                                         new TaskConfigurationEntry { Name = "GitExecutableLocation", Type = typeof(string), Value = "" },
+                                         new TaskConfigurationEntry {Name = ChangesetHarvesterBase.SOURCECONTROL_SERVER_NAME, Type = typeof(string), Value = "Main Sourceontrol"}
                                      };
 
             gitTask = CreateGitTask(taskConfig);

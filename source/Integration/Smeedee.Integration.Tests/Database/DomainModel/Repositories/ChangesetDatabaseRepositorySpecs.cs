@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Smeedee.DomainModel.Framework;
+using Smeedee.DomainModel.Framework.DSL.Specifications;
 using Smeedee.DomainModel.SourceControl;
 using Smeedee.Integration.Database.DomainModel.Repositories;
 
@@ -72,7 +73,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.ChangesetDa
                                                     Time = new DateTime(1970, 1, 3)
                                                 };
 
-        protected static GenericDatabaseRepository<Changeset> repository;
+        protected static ChangesetDatabaseRepository repository;
         protected static ChangesetDatabaseRepository persister;
 
         protected Context a_ChangesetDatabaseRepository_is_created = () =>
@@ -198,7 +199,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.ChangesetDa
     }
 
     [TestFixture][Category("IntegrationTest")]
-    public class When_saving : Shared
+    public class When_saving : ChangesetDatabaseRepositoryShared
     {
         protected const string TEST_USERNAME = "Kim Bjarne me Musa";
         protected const string TEST_COMMENT = "What what in the butt butt æøå norsk test";
@@ -210,14 +211,47 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.ChangesetDa
         {
             DeleteDatabaseIfExists();
             RecreateSessionFactory();
+            repository = new ChangesetDatabaseRepository(sessionFactory);
         }
+
+
+        [Test]
+        public void Assure_list_of_changesets_with_no_server_gets_default_server_assigned()
+        {
+            changeset1.Server = null;
+            changeset2.Server = null;
+            repository.Save(new [] {changeset1, changeset2});
+            changeset1.Server.ShouldNotBeNull();
+            changeset2.Server.ShouldNotBeNull();
+        }
+
+        [Test]
+        public void Assure_server_that_does_not_exist_in_db_gets_added()
+        {
+            changeset1.Server = new ChangesetServer("http://svn.temo.com", "main");
+            repository.Save(changeset1);
+            var results = repository.Get(All.ItemsOf<Changeset>());
+
+            results.Count().ShouldBe(1);
+            results.ElementAt(0).Server.Name.ShouldBe("main");
+            results.ElementAt(0).Server.Url.ShouldBe("http://svn.temo.com");
+        }
+
+
+        [Test]
+        public void Assure_single_changesets_with_no_server_gets_default_server_assigned()
+        {
+            changeset1.Server = null;
+            repository.Save(changeset1);
+            changeset1.Server.ShouldNotBeNull();
+            changeset1.Server.Name.ShouldBe(ChangesetServer.Default.Name);
+            changeset1.Server.Url.ShouldBe(ChangesetServer.Default.Url);
+        }
+
 
         [Test]
         public void Assure_Changeset_is_saved()
         {
-
-            var changesetPersister = new ChangesetDatabaseRepository(sessionFactory);
-
             var changeset = new Changeset
                             {
                                 Author = new Author { Username = TEST_USERNAME },
@@ -226,7 +260,7 @@ namespace Smeedee.IntegrationTests.Database.DomainModel.Repositories.ChangesetDa
                                 Time = TEST_TIME
                             };
 
-            changesetPersister.Save(changeset);
+            repository.Save(changeset);
 
             ISessionFactory newSessionFactory = NHibernateFactory.AssembleSessionFactory(DATABASE_TEST_FILE);
 

@@ -39,15 +39,10 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
 {
     public abstract class GenericDatabaseRepository<TDomainModelType> : IRepository<TDomainModelType>, IPersistDomainModels<TDomainModelType>, IDeleteDomainModels<TDomainModelType>
     {
-        public static readonly string DatabaseFilePath =
-            Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "smeedeeDB.db");
-
         protected readonly ISessionFactory sessionFactory;
 
         public GenericDatabaseRepository() :
-            this(NHibernateFactory.AssembleSessionFactory(DatabaseFilePath))
+            this(NHibernateFactory.AssembleSessionFactory(NHibernateFactory.DatabaseFilePath))
         {
         }
 

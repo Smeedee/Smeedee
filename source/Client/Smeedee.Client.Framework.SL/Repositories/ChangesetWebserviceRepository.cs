@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Threading;
 using Smeedee.Client.Framework.SL.ChangesetRepositoryService;
 using Smeedee.DomainModel.Framework;
@@ -40,7 +39,6 @@ namespace Smeedee.Client.Framework.SL.Repositories
 
         private void Client_GetCompleted(object sender, GetCompletedEventArgs e)
         {
-            
             var returnedChangesets = e.Result;
             if (returnedChangesets != null)
             {

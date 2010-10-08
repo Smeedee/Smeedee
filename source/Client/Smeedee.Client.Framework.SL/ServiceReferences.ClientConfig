@@ -6,12 +6,12 @@
                     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
+                <binding name="BasicHttpBinding_ChangesetRepositoryService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
             </basicHttpBinding>
             <customBinding>
-                <binding name="CustomBinding_ChangesetRepositoryService">
-                    <binaryMessageEncoding />
-                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
-                </binding>
                 <binding name="CustomBinding_ConfigurationRepositoryService">
                     <binaryMessageEncoding />
                     <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
@@ -55,10 +55,6 @@
             </customBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc"
-                binding="customBinding" bindingConfiguration="CustomBinding_ChangesetRepositoryService"
-                contract="ChangesetRepositoryService.ChangesetRepositoryService"
-                name="CustomBinding_ChangesetRepositoryService" />
             <endpoint address="http://localhost:1155/Smeedee/Services/ConfigurationRepositoryService.svc"
                 binding="customBinding" bindingConfiguration="CustomBinding_ConfigurationRepositoryService"
                 contract="ConfigurationRepositoryService.ConfigurationRepositoryService"
@@ -101,6 +97,10 @@
                 binding="customBinding" bindingConfiguration="CustomBinding_SlideConfigurationRepositoryService"
                 contract="SlideConfigurationService.SlideConfigurationRepositoryService"
                 name="CustomBinding_SlideConfigurationRepositoryService" />
+            <endpoint address="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ChangesetRepositoryService"
+                contract="ChangesetRepositoryService.ChangesetRepositoryService"
+                name="BasicHttpBinding_ChangesetRepositoryService" />
         </client>
     </system.serviceModel>
 </configuration>

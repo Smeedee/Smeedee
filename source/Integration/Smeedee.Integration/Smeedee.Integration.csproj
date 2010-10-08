@@ -193,6 +193,7 @@
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\BuildRepository.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\TFSCIServerRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ChangesetDatabaseRepository.cs" />
+    <Compile Include="Database\DomainModel\Repositories\ChangesetServerDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\CIServerDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\ConfigurationDatabaseRepository.cs" />
     <Compile Include="Database\DomainModel\Repositories\SqliteNoSqlDatabaseRepository.cs" />

@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-
-using Smeedee.DomainModel.CI;
 using Smeedee.DomainModel.Framework.Logging;
 
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.Users;
-using Smeedee.DomainModel.ProjectInfo;
 
 
 namespace Smeedee.Integration.Database.DomainModel.Repositories

@@ -113,6 +113,7 @@
     <Compile Include="Config\SettingsEntry.cs" />
     <Compile Include="SourceControl\Author.cs" />
     <Compile Include="SourceControl\Changeset.cs" />
+    <Compile Include="SourceControl\ChangesetServer.cs" />
     <Compile Include="SourceControl\ChangesetSpecifications.cs" />
     <Compile Include="SourceControl\EmptyChangeset.cs" />
     <Compile Include="TaskDefinition\TaskDefinition.cs" />

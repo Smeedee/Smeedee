@@ -20,22 +20,22 @@ namespace Smeedee.Tasks.SourceControl
        Webpage = "http://smeedee.org")]
     [TaskSetting(1, USERNAME_SETTING_NAME, typeof(string), "guest")]
     [TaskSetting(2, PASSWORD_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(3, URL_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(4, PROJECT_SETTING_NAME, typeof(string), "")]
+    [TaskSetting(3, SOURCECONTROL_SERVER_NAME, typeof(string), "Main Sourcecontrol Server")]
+    [TaskSetting(4, URL_SETTING_NAME, typeof(string), "")]
+    [TaskSetting(5, PROJECT_SETTING_NAME, typeof(string), "")]
     public class TFSChangesetHarvesterTask : ChangesetHarvesterBase
     {
-        private readonly TaskConfiguration config;
         protected const string PROJECT_SETTING_NAME = "Project";
         public override string Name { get { return "TFS Changeset Harvester"; } }
 
         public TFSChangesetHarvesterTask(IRepository<Changeset> changesetDbRepository, IPersistDomainModels<Changeset> databasePersister, TaskConfiguration config) 
-            : base(changesetDbRepository, databasePersister)
+            : base(changesetDbRepository, databasePersister, config)
         {
             Guard.Requires<ArgumentNullException>(changesetDbRepository != null);
             Guard.Requires<ArgumentNullException>(databasePersister != null);
             Guard.Requires<ArgumentNullException>(config != null);
             Guard.Requires<TaskConfigurationException>(config.Entries.Count() >= 4);
-            this.config = config;
+
             Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);
         }
 

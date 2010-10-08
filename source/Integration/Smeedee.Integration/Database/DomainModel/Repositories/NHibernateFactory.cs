@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using NHibernate;
@@ -17,5 +18,10 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
                 return NHibConfig.CreateConfiguration(databaseFile).BuildSessionFactory();
             }
         }
+
+        public static readonly string DatabaseFilePath =
+            Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "smeedeeDB.db");
     }
 }

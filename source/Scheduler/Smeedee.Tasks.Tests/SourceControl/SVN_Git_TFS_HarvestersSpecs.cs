@@ -39,9 +39,9 @@ namespace Smeedee.Tasks.Tests.SourceControl
         {
             var changesetDbRepo = new Mock<IRepository<Changeset>>().Object;
             var configMock = new Mock<TaskConfiguration>();
-            configMock.Setup((c) => c.Entries).Returns(new List<TaskConfigurationEntry> {null, null, null, null});
+            configMock.Setup((c) => c.Entries).Returns(new List<TaskConfigurationEntry> {null, null, null, null,null});
             var config = configMock.Object;
-            var gitConfigWithFiveEntries = new TaskConfiguration {Entries = new List<TaskConfigurationEntry>() {null, null, null, null, null}};
+            var gitConfigWithFiveEntries = new TaskConfiguration {Entries = new List<TaskConfigurationEntry>() {null, null, null, null, null,null}};
             var changesetDbPersister = new Mock<IPersistDomainModels<Changeset>>().Object;
             tasks = new ChangesetHarvesterBase[]
             {

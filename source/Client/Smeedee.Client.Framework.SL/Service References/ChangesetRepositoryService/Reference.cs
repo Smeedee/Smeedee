@@ -19,9 +19,10 @@ namespace Smeedee.Client.Framework.SL.ChangesetRepositoryService {
     public interface ChangesetRepositoryService {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://smeedee.org/ChangesetRepositoryService/Get", ReplyAction="http://smeedee.org/ChangesetRepositoryService/GetResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.Framework.AllSpecification<Smeedee.DomainModel.SourceControl.Changeset>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.SourceControl.ChangesetsAfterRevisionSpecification))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.SourceControl.ChangesetsForUserSpecification))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.SourceControl.AllChangesetsSpecification))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Smeedee.DomainModel.SourceControl.ChangesetsAfterRevisionSpecification))]
         System.IAsyncResult BeginGet(Smeedee.DomainModel.Framework.Specification<Smeedee.DomainModel.SourceControl.Changeset> specification, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<Smeedee.DomainModel.SourceControl.Changeset> EndGet(System.IAsyncResult result);

@@ -24,6 +24,7 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="ChangesetRepositoryService.disco" MetadataType="Disco" ID="33c8f71a-1c74-4701-bc9f-adc700b710cd" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?disco" />
+    <MetadataFile FileName="ChangesetRepositoryService4.xsd" MetadataType="Schema" ID="e76918ca-d763-4ae7-8941-b863c1bdb3be" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd4" />
     <MetadataFile FileName="ChangesetRepositoryService.wsdl" MetadataType="Wsdl" ID="8812a86d-06c5-46c8-8de9-a8c2ea264f9d" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?wsdl=wsdl0" />
     <MetadataFile FileName="ChangesetRepositoryService1.wsdl" MetadataType="Wsdl" ID="27d23e15-677b-403c-9371-c184d1246d42" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?wsdl" />
     <MetadataFile FileName="ChangesetRepositoryService.xsd" MetadataType="Schema" ID="86f5d253-ccf2-4bbf-97fa-11b6855d2c72" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/ChangesetRepositoryService.svc?xsd=xsd2" />

@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="Learning\TypeDescriptorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\ChangesetTests.cs" />
     <Compile Include="Serialization\CITests.cs" />
     <Compile Include="Service References\ChangesetRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -487,21 +488,6 @@
     <WCFMetadataStorage Include="Service References\VCSCredentialsService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChangesetRepositoryService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChangesetRepositoryService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ChangesetRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>
@@ -703,6 +689,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\SlideConfigurationService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChangesetRepositoryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
