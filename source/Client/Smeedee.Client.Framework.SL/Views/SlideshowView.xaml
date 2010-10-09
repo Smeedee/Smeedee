@@ -7,11 +7,9 @@
 	         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
              xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib" 
              x:Class="Smeedee.Client.Framework.SL.Views.SlideshowView"
 	         d:DesignWidth="640" d:DesignHeight="480" mc:Ignorable="d">
-	<d:UserControl.DataContext>
-		<ViewModel:Slideshow />
-	</d:UserControl.DataContext>
 	<UserControl.Resources>
 		<ControlTemplate x:Key="playButtonTemplate" TargetType="Button">
 			<Grid>
@@ -333,26 +331,54 @@
         <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <Converters:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter"/>
 	</UserControl.Resources>
+	<d:DataContext>
+		<ViewModel:Slideshow />
+	</d:DataContext>
     <Grid x:Name="LayoutRoot">
+    	<VisualStateManager.CustomVisualStateManager>
+    		<ei:ExtendedVisualStateManager/>
+    	</VisualStateManager.CustomVisualStateManager>
     	<VisualStateManager.VisualStateGroups>
     		<VisualStateGroup x:Name="VisualStateGroup">
     			<VisualState x:Name="ShowSlideshowControls">
     				<Storyboard>
-    					<DoubleAnimation Duration="0:0:0.4" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border" d:IsOptimized="True">
+    					<DoubleAnimation Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border" d:IsOptimized="True">
     						<DoubleAnimation.EasingFunction>
     							<PowerEase EasingMode="EaseOut" Power="3"/>
     						</DoubleAnimation.EasingFunction>
     					</DoubleAnimation>
+                        <DoubleAnimation Duration="0:0:0.5" To="150" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="border">
+                            <DoubleAnimation.EasingFunction>
+                                <PowerEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <DoubleAnimation Duration="0:0:0.5" To="50" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="border">
+                            <DoubleAnimation.EasingFunction>
+                                <PowerEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <ColorAnimation Duration="0:0:0.5" From="#AAF03E00" To="#AA000000" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border"/> 
     				</Storyboard>
     			</VisualState>
     			<VisualState x:Name="HideSlideshowControls">
     				<Storyboard>
+                        <ColorAnimation Duration="0:0:0.5" From="#AA000000" To="#AAF03E00" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border"/> 
     					<DoubleAnimation Duration="0:0:0.2" To="0.2" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border" d:IsOptimized="True">
     						<DoubleAnimation.EasingFunction>
     							<PowerEase EasingMode="EaseOut"/>
     						</DoubleAnimation.EasingFunction>
     					</DoubleAnimation>
-    				</Storyboard>
+                        <DoubleAnimation To="20" Duration="0:0:0.5" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="border">
+                            <DoubleAnimation.EasingFunction>
+                                <PowerEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <DoubleAnimation To="20" Duration="0:0:0.5" Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="border">
+                            <DoubleAnimation.EasingFunction>
+                                <PowerEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
     			</VisualState>
     		</VisualStateGroup>
     	</VisualStateManager.VisualStateGroups>
@@ -360,7 +386,7 @@
     	<ContentControl HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
                         d:IsHidden="True" Visibility="Collapsed" Margin="0" />
     	<TextBlock Margin="0,-17,16,0" TextWrapping="Wrap" Text="{Binding SlideshowInfo}" VerticalAlignment="Top" Foreground="White" Height="13" Opacity="0.35" FontSize="9.333"/>
-    	<Border x:Name="border" HorizontalAlignment="Left" Margin="14,0,14,11" VerticalAlignment="Bottom" Background="#33000000" BorderBrush="#4CFFFFFF" BorderThickness="1" CornerRadius="4" Opacity="0.2">
+        <Border x:Name="border" Width="20" Height="20" HorizontalAlignment="Left" Background="#AAF03E00" Padding="3,3,3,3" Margin="14,0,14,11" VerticalAlignment="Bottom" BorderBrush="#4CFFFFFF" BorderThickness="1" CornerRadius="4" Opacity="0.2">
     		<i:Interaction.Triggers>
     			<i:EventTrigger EventName="MouseEnter">
                     <ei:GoToStateAction x:Name="gotoShowSlideshowControl" StateName="ShowSlideshowControls" 
@@ -370,8 +396,8 @@
     				<ei:GoToStateAction x:Name="gotoHideSlideshowControl" StateName="HideSlideshowControls"/>
     			</i:EventTrigger>
     		</i:Interaction.Triggers>
-    		<Viewbox Margin="15,4" Width="80" Height="24">
-    			<Grid Height="42">
+    		<Viewbox>
+    			<Grid>
                     <StackPanel Orientation="Horizontal" d:LayoutOverrides="Width">
                         
                         <Button Content="Previous" Command="{Binding Previous}"
@@ -397,14 +423,17 @@
                                 IsEnabled="{Binding CurrentSlide.Widget.IsInSettingsMode, Converter={StaticResource BoolNegationConverter}}" 
                                 Margin="0"   Width="32" Template="{StaticResource nextButtonTemplate}" ToolTipService.ToolTip="Next slide" 
                                 Height="32" Canvas.ZIndex="1"/>
-                        
-                        <Button Content="Add" Margin="8,8,0,8" Command="{Binding AddSlide}" 
+
+                        <Button Margin="8,8,0,8" Height="32" Width="32" Command="{Binding AddSlide}"
                                 IsEnabled="{Binding CurrentSlide.Widget.IsInSettingsMode, Converter={StaticResource BoolNegationConverter}}"
-                                ToolTipService.ToolTip="Add a slide to the slideshow" Cursor="Hand"/>
-                        
-                        <Button Content="Edit" Margin="5,8,0,8"  Command="{Binding Edit}" 
+                                ToolTipService.ToolTip="Add a slide to the slideshow" Cursor="Hand">
+                            <Image Source="add_widget.png" />
+                        </Button>
+                        <Button Margin="5,8,0,8" Height="32" Width="32"  Command="{Binding Edit}" 
                                 IsEnabled="{Binding CurrentSlide.Widget.IsInSettingsMode, Converter={StaticResource BoolNegationConverter}}"  
-                                ToolTipService.ToolTip="Edit slideshow" Cursor="Hand"/>
+                                ToolTipService.ToolTip="Edit slideshow" Cursor="Hand">
+                        	<Image Source="edit_slideshow.png" />	
+						</Button>
                         
     				</StackPanel>
     			</Grid>

@@ -18,7 +18,7 @@
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.20421.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -880,7 +880,9 @@
     <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource_Files\image05.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Views\add_widget.png" />
     <Resource Include="Views\Dialogs\Smeedee-icon-32x32.png" />
+    <Resource Include="Views\edit_slideshow.png" />
     <Resource Include="Views\Smeedee-icon-128x128.png" />
   </ItemGroup>
   <ItemGroup>

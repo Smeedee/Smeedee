@@ -92,10 +92,7 @@
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\..\..\tools\Expression Blend\Silverlight\System.Windows.Interactivity.dll</HintPath>
     </Reference>
