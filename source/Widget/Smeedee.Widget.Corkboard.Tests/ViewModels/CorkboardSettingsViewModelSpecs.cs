@@ -2,7 +2,8 @@
 using System.Linq;
 using NUnit.Framework;
 using Smeedee.DomainModel.Corkboard;
-using Smeedee.Widget.Corkboard.ViewModels;
+using Smeedee.Widgets.Corkboard.ViewModel;
+using Smeedee.Widgets.Tests.Corkboard.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 

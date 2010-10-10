@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Smeedee.Client.Framework.Tests;
 using Smeedee.DomainModel.Corkboard;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
-using TinyMVVM.Framework;
-using Smeedee.Widget.Corkboard.ViewModels;
+using Smeedee.Widgets.Corkboard.ViewModel;
 
-namespace Smeedee.Widget.Corkboard.Tests.ViewModels
+namespace Smeedee.Widgets.Tests.Corkboard.ViewModels
 {
     [TestFixture]
     public class When_notes_are_added : ViewModelShared

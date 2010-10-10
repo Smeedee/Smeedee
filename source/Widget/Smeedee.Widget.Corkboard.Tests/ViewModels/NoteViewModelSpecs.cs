@@ -1,17 +1,14 @@
 ﻿using NUnit.Framework;
-using Smeedee.Client.Framework.Tests;
 using Smeedee.DomainModel.Corkboard;
-using Smeedee.Widget.Corkboard.ViewModels;
+using Smeedee.Widgets.Corkboard.ViewModel;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
-using TinyMVVM.Framework;
 
-namespace Smeedee.Widget.Corkboard.Tests.ViewModels
+namespace Smeedee.Widgets.Tests.Corkboard.ViewModels
 {
     [TestFixture]
     public class When_move_command_is_triggered : SharedTestFixture
     {
-
         [Test]
         public void assure_move_event_is_triggered_when_moving_up()
         {
@@ -44,7 +41,6 @@ namespace Smeedee.Widget.Corkboard.Tests.ViewModels
             Then("the move arguments should specify up as direction", () => moveargs.MoveDirection.ShouldBe(MoveArgs.Direction.UP));
         }
     }
-
 
     [TestFixture]
     public class SharedTestFixture : ScenarioClass
