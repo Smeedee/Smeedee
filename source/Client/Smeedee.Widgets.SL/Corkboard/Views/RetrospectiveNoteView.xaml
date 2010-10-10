@@ -1,0 +1,199 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Framework="clr-namespace:Smeedee.Client.Framework;assembly=Smeedee.Client.Framework.SL" mc:Ignorable="d"
+	x:Class="Smeedee.Widgets.SL.Corkboard.Views.RetrospectiveNoteView"
+	d:DesignWidth="640" d:DesignHeight="480">
+    
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ButtonControlTemplate1" TargetType="Button">
+            <Grid x:Name="grid" Cursor="Hand">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Disabled">
+                            <Storyboard>
+                                <DoubleAnimation Duration="0" To="0.495" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ColorAnimation Duration="0" To="#FFC81717" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="#FFC81717" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="#FFC81717" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="#FFA51818" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path2" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="#008F0E0E" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="Red" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path3" d:IsOptimized="True"/>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="canvas" d:IsOptimized="True"/>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="canvas1" d:IsOptimized="True"/>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="canvas2" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Rectangle x:Name="rectangle" Stretch="Fill" Fill="#003F3434">
+                    <Rectangle.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="18.8976" Opacity="0.6" Color="#FF000000" Direction="315"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+                <Viewbox>
+                    <Canvas x:Name="canvas" Width="459.84" Height="461.76">
+                        <Canvas.Effect>
+                            <DropShadowEffect BlurRadius="8" ShadowDepth="18.8976" Opacity="0.6" Color="#FF000000" Direction="315"/>
+                        </Canvas.Effect>
+                        <Path Width="320" Height="332" Canvas.Left="57.08" Canvas.Top="60.12" Stretch="Fill" Fill="#FF5C1F1F" Data="F1 M 57.08,60.12C 94.408,119.845 145.746,169.855 195.08,220.12C 253.549,279.693 311.899,339.976 377.08,392.12"/>
+                        <Path x:Name="path" Width="334.465" Height="340.751" Canvas.Left="45.8032" Canvas.Top="54.0393" Stretch="Fill" Fill="#FFB12929" Data="F1 M 217.815,281.718C 243.863,305.556 270.132,329.216 297.658,351.331C 309.196,360.601 320.92,369.678 333.174,377.978C 338.708,381.726 344.336,385.377 350.256,388.48C 356.402,391.702 363.202,395.331 370.114,394.723C 374.523,394.336 379.938,390.574 380.262,386.16C 380.465,383.385 375.998,382.264 375.033,379.654C 373.798,376.314 373.36,372.663 371.745,369.49C 369.279,364.644 365.511,360.506 361.653,356.674C 349.675,344.778 337.609,332.97 325.724,320.981C 302.046,297.096 277.701,273.876 254.176,249.84C 239.576,234.922 225.425,219.568 211.32,204.181C 181.824,172.117 152.5,139.877 124.067,106.867C 114.033,95.2164 104.176,83.4107 93.9867,71.8954C 90.1724,67.5848 86.3009,63.3235 82.3487,59.1391C 79.6494,56.2813 75.6232,53.7651 71.7034,54.0634C 66.6365,54.449 61.8865,57.6519 58.2127,61.1626C 51.123,67.9377 45.2407,78.0688 45.8462,87.8565C 46.2374,94.1806 51.2358,99.4084 54.9425,104.547C 60.4335,112.16 66.1395,119.622 72.05,126.913C 104.114,166.468 140.405,202.436 176.008,238.839C 189.941,253.134 203.855,267.448 217.815,281.718 Z "/>
+                    </Canvas>
+                </Viewbox>
+                <Viewbox>
+                    <Canvas x:Name="canvas1" Width="316.32" Height="410.4">
+                        <Canvas.Effect>
+                            <DropShadowEffect BlurRadius="8" ShadowDepth="18.8976" Opacity="0.6" Color="#FF000000" Direction="315"/>
+                        </Canvas.Effect>
+                        <Path x:Name="path2" Width="239" Height="288" Canvas.Left="21.16" Canvas.Top="64.76" Stretch="Fill" Fill="#FFB12424" Data="F1 M 21.16,352.76C 21.16,328.261 43.9497,308.149 62.16,291.76C 81.2957,274.538 101.148,258.119 120.16,240.76C 175.52,190.214 221.591,129.041 260.16,64.76"/>
+                        <Path x:Name="path1" Width="263.599" Height="289.851" Canvas.Left="1.22266" Canvas.Top="62.2421" Stretch="Fill" Fill="#FFB12929" Data="F1 M 188.959,209.082C 202.636,191.736 215.328,173.597 227.334,155.055C 234.409,144.129 241.107,132.942 247.267,121.474C 253.762,109.384 260.12,96.967 263.674,83.7108C 264.925,79.046 265.559,73.5515 263.414,69.2241C 261.869,66.1066 258.749,63.5738 255.446,62.481C 254.317,62.1076 252.752,62.108 251.91,62.9471C 250.725,64.1273 250.51,66.3622 248.97,67.0123C 246.098,68.2238 242.889,68.6839 240.205,70.2683C 236.339,72.5509 233.205,76.0142 230.46,79.5669C 220.638,92.276 210.937,105.081 200.955,117.665C 185.299,137.401 170.347,157.763 153.402,176.403C 138.165,193.165 121.547,208.71 104.222,223.304C 84.3792,239.654 63.9796,255.35 44.6848,272.343C 32.4783,283.25 20.5108,294.953 11.786,308.804C 7.83917,315.07 4.83264,322.026 2.95685,329.19C 1.5845,334.431 0.22525,340.404 2.25464,345.427C 3.3504,348.14 6.11395,350.173 8.84427,351.223C 12.4038,352.592 16.4934,352.046 20.2796,351.589C 26.0341,350.894 31.6976,349.582 37.4193,348.655C 41.1316,348.053 45.3098,348.481 48.488,346.471C 50.2247,345.372 50.7953,343.068 51.8901,341.329C 53.5425,338.704 55.4523,336.24 57.451,333.868C 64.2604,325.787 72.1949,318.707 80.0066,311.59C 99.2079,294.345 118.931,277.688 138.133,260.444C 155.867,244.145 172.841,226.981 188.959,209.082 Z "/>
+                    </Canvas>
+                </Viewbox>
+                <Viewbox>
+                    <Canvas x:Name="canvas2" Width="591.84" Height="567.36">
+                        <Canvas.Effect>
+                            <DropShadowEffect BlurRadius="8" ShadowDepth="18.8976" Opacity="0.6" Color="#FF000000" Direction="315"/>
+                        </Canvas.Effect>
+                        <Path x:Name="path3" Width="571.153" Height="548.391" Canvas.Left="0.893071" Canvas.Top="0.694548" Stretch="Fill" Fill="#FFB12929" Data="F1 M 563.362,395.927C 571.733,364.768 574.478,331.256 569.717,299.346C 565.517,274.364 557.633,249.819 547.022,226.816C 529.931,189.763 506.401,155.752 481.593,123.355C 461.198,97.4932 437.376,74.2487 412.191,53.0231C 390.811,35.2339 368.282,17.215 342.163,7.65936C 322.515,0.935486 301.001,0.343201 280.24,0.820984C 245.312,2.04785 210.504,7.20013 176.225,14.0169C 159.626,17.2553 142.851,19.6121 126.348,23.3094C 121.878,24.3137 117.384,25.264 113.011,26.6285C 108.336,28.0869 103.54,30.1735 100.125,33.6831C 98.2238,35.6372 96.8539,39.5942 98.5694,41.7134C 101.08,44.8151 106.543,43.483 110.485,42.8644C 116.271,41.9568 122.13,41.0178 127.981,41.2668C 135.429,41.5755 142.786,43.0659 150.218,43.6418C 160.271,44.4208 170.402,44.3077 180.467,43.7061C 213.722,41.6309 246.922,37.2943 280.24,37.6046C 296.458,37.954 313.314,38.392 328.454,44.2162C 349.856,52.9614 367.619,69.1535 384.933,84.474C 407.19,104.412 428.327,125.953 446.274,149.844C 467.216,178.583 487.329,208.361 502.374,240.58C 512.087,261.38 519.512,283.579 523.116,306.25C 528.154,342.09 520.252,380.297 505.65,413.413C 496.959,432.661 488.265,453.788 471.728,466.923C 460.849,475.097 448.592,481.263 436.813,488.075C 428.987,492.615 420.853,497.549 411.899,498.845C 398.117,500.552 384.125,499.419 370.24,499.174C 337.022,498.555 303.304,493.99 271.836,483.332C 239.236,471.817 209.313,453.697 179.026,437.021C 159.338,426.345 139.393,415.904 121.084,403.006C 107.243,393.255 94.2537,381.256 85.4936,366.768C 73.8721,346.629 65.8007,324.429 59.4128,302.072C 49.9591,266.648 54.516,228.783 55.7831,192.142C 56.1703,176.682 55.9129,161.18 57.2171,145.771C 58.2618,133.428 60.5274,120.768 66.0236,109.666C 71.134,99.8853 78.7216,91.2674 87.239,84.2502C 92.7971,79.6711 98.9985,75.9228 105.085,72.0741C 110.626,68.595 116.585,65.6497 121.55,61.3892C 124.697,58.6891 128.242,54.3453 127.233,50.3235C 126.024,45.5069 120.308,42.739 115.696,40.8979C 107.366,37.5728 97.8948,36.4943 88.9935,37.5918C 75.1515,39.2706 61.2155,44.4087 49.9668,52.648C 38.4206,61.1052 29.0893,72.7769 21.9395,85.1753C 14.9039,98.0133 10.1891,112.306 7.76297,126.743C 4.2577,147.601 4.20487,168.911 3.46997,190.049C 2.33733,215.538 0.0940323,241.066 1.18385,266.556C 1.90006,283.308 4.20439,300.119 8.53662,316.317C 16.2279,343.171 26.3013,369.709 40.4002,393.824C 50.5186,410.32 64.2346,424.768 79.2812,436.938C 102.135,455.422 128.764,468.802 154.721,482.594C 187.648,500.369 220.405,519.299 255.818,531.387C 292.488,543.379 331.66,548.476 370.24,548.826C 386.567,548.982 403.026,549.755 419.208,547.571C 434.427,545.121 448.747,537.925 462.02,530.087C 475.51,522.167 489.391,514.72 501.818,505.219C 511.075,497.721 519.249,488.712 525.967,478.874C 535.679,464.651 542.802,448.772 549.847,433.056C 555.122,420.988 559.769,408.598 563.362,395.927 Z "/>
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="Uparrow2" TargetType="Button">
+            <Grid x:Name="grid" Cursor="Hand">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Disabled">
+                            <Storyboard>
+                                <DoubleAnimation Duration="0" To="0.495" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation Duration="0" To="#FF0014FF" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="#FF0014FF" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="#00F9F9F9" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimation Duration="0" To="#FF0014FF" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+                                <ColorAnimation Duration="0" To="#FF0014FF" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path1" d:IsOptimized="True"/>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="canvas" d:IsOptimized="True"/>
+                                <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="canvas1" d:IsOptimized="True"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Rectangle x:Name="rectangle" Stretch="Fill" Fill="#00CECFDC"/>
+                <Viewbox>
+                    <Canvas x:Name="canvas1" Width="62.88" Height="697.92">
+                        <Canvas.Effect>
+                            <DropShadowEffect BlurRadius="8" ShadowDepth="18.8976" Opacity="0.6" Color="#FF000000" Direction="315"/>
+                        </Canvas.Effect>
+                        <Path x:Name="path" Width="44.4741" Height="409.52" Canvas.Left="0.669592" Canvas.Top="135.455" Stretch="Fill" Fill="#FF1E2BC0" Data="F1 M 36.3743,142.695C 35.7886,139.928 34.0699,136.695 31.3739,135.84C 28.2848,134.86 24.7063,135.906 21.7526,137.24C 19.7177,138.158 17.5395,139.144 16.1242,140.871C 15.4897,141.645 15.8498,142.857 15.8021,143.857C 15.6893,146.222 15.5744,148.587 15.4595,150.952C 15.206,156.172 14.9503,161.393 14.7083,166.614C 13.3578,195.75 12.0839,224.891 10.9166,254.035C 8.37292,317.542 6.10437,381.06 3.71515,444.573C 2.91595,465.818 2.1001,487.063 1.3924,508.311C 1.21655,513.592 1.04883,518.873 0.91687,524.155C 0.836426,527.375 0.441284,530.623 0.856018,533.817C 1.15286,536.103 1.72809,538.504 3.09561,540.36C 4.52087,542.293 6.84988,543.601 9.16348,544.248C 13.1729,545.371 17.5692,545.052 21.6547,544.248C 25.709,543.451 29.7079,542.315 33.5894,540.898C 34.7182,540.485 35.8607,540.102 36.9536,539.602C 37.265,539.46 37.5457,539.24 37.7744,538.985C 39.5992,536.951 40.0221,533.958 40.5843,531.283C 41.3318,527.727 41.7975,524.114 42.2263,520.505C 43.3047,511.428 43.793,502.285 44.1618,493.152C 45.3822,462.931 45.2636,432.661 44.8767,402.418C 44.1758,347.63 42.2371,292.862 40.1769,238.109C 38.9801,206.302 38.6654,174.443 36.3743,142.695 Z "/>
+                    </Canvas>
+                </Viewbox>
+                <Viewbox>
+                    <Canvas x:Name="canvas" Width="292" Height="299">
+                        <Canvas.Effect>
+                            <DropShadowEffect BlurRadius="8" ShadowDepth="18.8976" Opacity="0.6" Color="#FF000000" Direction="315"/>
+                        </Canvas.Effect>
+                        <Path x:Name="path1" Width="165.012" Height="96.906" Canvas.Left="56.326" Canvas.Top="17.228" Stretch="Fill" Fill="#FF1B28C0" Data="F1 M 44.6376,147.996C 38.1086,148.407 32.1203,143.252 27.2624,138.871C 23.8228,135.769 19.7499,132.513 18.5621,128.036C 17.6592,124.632 19.4832,120.54 21.954,118.031C 32.9488,106.868 48.4075,101.224 61.8584,93.1876C 66.6947,90.2981 71.4603,87.2707 76.0154,83.9556C 82.0995,79.5276 87.8479,74.541 94.4382,70.9091C 102.416,66.5125 111.87,64.7081 119.139,59.2181C 125.468,54.4376 129.891,47.4525 134.188,40.7852C 137.433,35.465 140.49,29.8522 144.945,25.4948C 147.819,22.6836 151.713,21.0903 155.388,19.4597C 154.897,20.592 153.703,22.5784 154.814,23.1168C 155.343,23.3737 155.725,22.3486 156.059,21.8637C 156.19,21.6736 156.295,21.4666 156.413,21.2682C 156.62,20.9217 156.829,20.5769 157.033,20.2291C 158.02,18.5501 159.019,16.8755 160.129,15.2756C 161.107,15.2518 161.749,14.1419 162.385,13.399C 163.494,12.1046 164.553,10.7647 165.72,9.52307C 168.669,6.38757 172.366,3.77393 176.394,2.25659C 180.814,0.687714 185.932,0.460541 190.454,1.70551C 194.981,2.95154 199.177,5.75302 202.398,9.16821C 205.905,13.4577 208.153,18.8499 209.38,24.2531C 214.55,35.7909 221.096,47.3137 230.513,55.7489C 236.269,61.1704 242.478,66.4396 246.587,73.1953C 250.561,79.7282 251.471,87.8645 255.646,94.271C 260.632,101.923 268.82,107.073 276.422,112.136C 285.586,117.344 295.98,120.266 304.904,125.876C 310.254,129.239 315.748,133.152 318.963,138.591C 320.41,141.643 321.095,145.37 320.255,148.642C 318.341,156.095 312.155,162.709 305.32,166.242C 301.069,168.44 295.172,168.872 290.967,166.587C 284.429,163.971 279.775,157.957 274.87,152.903C 268.431,146.269 261.989,139.64 255.596,132.962C 246.341,122.785 236.286,113.364 226.783,103.42C 218.72,94.9832 211.35,85.8568 202.787,77.93C 197.489,72.6363 191.952,67.5146 185.872,63.1413C 179.663,58.6754 172.573,54.5761 168.594,48.0446C 167.711,46.5124 166.934,44.9173 166.229,43.2955C 165.767,42.232 164.933,41.0017 165.365,39.9255C 165.55,39.4638 166.284,40.3342 166.672,40.6451C 167.461,41.2762 168.242,41.9195 169.071,42.4956C 171.888,44.8722 175.373,46.6691 178.988,47.3875C 184.214,48.4259 190.018,47.5636 194.834,45.2822C 197.949,43.6485 200.931,41.2953 202.716,38.264C 202.808,38.1087 202.894,37.9503 202.978,37.7906C 203.045,37.6615 203.109,37.5305 203.169,37.3978C 203.401,36.8864 204.017,35.9153 203.483,35.7422C 202.432,35.4019 201.779,37.1696 201.084,38.0285C 201.287,37.3398 201.932,36.1952 201.285,35.8846C 201.17,35.8293 201.003,35.8393 200.903,35.919C 200.653,36.1187 200.477,36.4006 200.302,36.6686C 199.798,37.4373 199.386,38.2623 198.951,39.0714C 197.71,41.375 196.346,43.6278 194.754,45.7038C 183.149,56.2791 170.353,65.5917 159.483,76.9213C 152.356,84.1047 145.88,93.2161 136.326,96.5501C 125.844,100.208 114.494,100.594 103.608,102.766C 96.1436,104.255 88.917,107.193 82.2776,110.914C 77.1208,113.804 72.2053,117.649 68.8862,122.54C 65.4627,127.586 63.6561,133.741 59.6217,138.313C 55.687,142.772 50.3561,146.364 44.6376,147.996 Z " UseLayoutRounding="False"/>
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Resources>
+	
+            <Grid Margin="0,0,20,20" RenderTransformOrigin="0.5,0.5">
+            	<Grid.Effect>
+            		<DropShadowEffect Opacity="0.695" ShadowDepth="4"/>
+            	</Grid.Effect>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.882*" />
+                    <ColumnDefinition Width="0.118*" />
+                </Grid.ColumnDefinitions>
+                
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFFFFF66" Offset="0"/>
+                        <GradientStop Color="#FFFFFF8C" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+        <Grid.RenderTransform>
+            <CompositeTransform Rotation="{Binding RandomAngle}"/>
+        </Grid.RenderTransform>
+
+        <TextBox
+                 Name="Description"
+                 MaxLength="110" 
+                 Background="Transparent" 
+                 TextWrapping="Wrap" 
+                 Text="{Binding Description, Mode=TwoWay}" 
+                 Framework:BindingHelper.UpdateSourceOnChange="True" 
+                 FontSize="12" 
+                 FontWeight="Bold"
+                 Margin="8,8,3,4"/>
+                
+                <StackPanel 
+                    Grid.Column="1" 
+                    Margin="6,0,0,0" 
+                    Orientation="Vertical" 
+                    RenderTransformOrigin="0.54,0.46">
+                	
+                    <Button 
+                        x:Name="DeleteButton" 
+                        Content="Button" 
+                        Margin="0" 
+                        MinHeight="20" 
+                        Padding="0" 
+                        Opacity="0.6" 
+                        Command="{Binding Delete}" 
+                        Template="{StaticResource ButtonControlTemplate1}"/>
+                    
+                	<Button 
+                        x:Name="UpArrow" 
+                        Margin="0" 
+                        Template="{StaticResource Uparrow2}" 
+                        MaxHeight="45" 
+                        Command="{Binding MoveUp}"/>
+                        
+                	<Button 
+                        x:Name="DownArrow" 
+                        Margin="0" 
+                        Template="{StaticResource Uparrow2}" 
+                        RenderTransformOrigin="0.5,0.5" 
+                        MaxHeight="45" 
+                        Command="{Binding MoveDown}">
+                        
+                		<Button.RenderTransform>
+                			<CompositeTransform Rotation="180.17"/>
+                		</Button.RenderTransform>
+                        
+                	</Button>
+					
+                </StackPanel>
+            </Grid>
+</UserControl>
