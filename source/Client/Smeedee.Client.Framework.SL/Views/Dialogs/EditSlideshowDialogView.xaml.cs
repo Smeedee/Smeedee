@@ -23,28 +23,33 @@ namespace Smeedee.Client.Framework.SL.Views.Dialogs
                 var scrollviewer = sender as ScrollViewer;
                 scrollviewer.ScrollIntoView(element);
 
-                //Todo: This was done by experimentation and is by all accounts an ugly hack! Research into a better solution should be undertaken!
-                var slideshowDialog = this.DataContext as EditSlideshowDialog;
-                
-                if(slideshowDialog != null && slideshowDialog.Slideshow != null)
-                {
-                    var slideShow = slideshowDialog.Slideshow;
-                    var currentSlide = slideShow.CurrentSlide;
-                    var index = slideShow.Slides.IndexOf(currentSlide);
-
-                    if (index <= 1)
-                    {
-                        scrollviewer.ScrollToHorizontalOffset(1);
-                    }
-                    else
-                    {
-                        scrollviewer.ScrollToHorizontalOffset( 138 * (index-1));
-                    }
-                }
+                ScrollToCurrentSlide(scrollviewer);
             }
         }
 
-        private void Slides_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //Todo: This was done by experimentation and is by all accounts an ugly hack! Research into a better solution should be undertaken!
+	    private void ScrollToCurrentSlide(ScrollViewer scrollviewer)
+	    {
+	        var slideshowDialog = this.DataContext as EditSlideshowDialog;
+                
+	        if(slideshowDialog != null && slideshowDialog.Slideshow != null)
+	        {
+	            var slideShow = slideshowDialog.Slideshow;
+	            var currentSlide = slideShow.CurrentSlide;
+	            var index = slideShow.Slides.IndexOf(currentSlide);
+
+	            if (index <= 1)
+	            {
+	                scrollviewer.ScrollToHorizontalOffset(1);
+	            }
+	            else
+	            {
+	                scrollviewer.ScrollToHorizontalOffset( 138 * (index-1));
+	            }
+	        }
+	    }
+
+	    private void Slides_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
            Slides.ScrollIntoView(Slides.SelectedItem);
         }
