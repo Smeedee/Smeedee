@@ -99,24 +99,23 @@ namespace Smeedee.Widget.Admin.Users.Controllers
                 if (!viewModel.IsLoading)
                 {
                     SetIsLoadingData();
+
                     var allUserdbs = GetAllUserdbs();
+
+                    var hasUserdb = allUserdbs != null && allUserdbs.Count() != 0;
+
+                    SetHasUserdb(hasUserdb);
 
                     try
                     {
-                        if (!viewModel.HasDatabase)
+                        if (hasUserdb)
                         {
-                            /*Note: 
-                             * Temp fix to deal with the process of getting widget type in
-                             *  MEF which results in at least two widgets, 
-                             *  where one widget will not get Userdbs and subsequently create a default userdb overwriting 
-                             *  any other userdbs named default. Todo: Remove quote when MEF metadata loading is fixed
-                             */
-                            //CreateDefaultUserdb();
-
-                            SetDefaultDbOnViewModel();
+                            UpdateViewModel(allUserdbs);
                         }
                         else
-                            UpdateViewModel(allUserdbs);
+                        {
+                            SetDefaultDbOnViewModel();
+                        }
                     }
                     catch (Exception e)
                     {
@@ -126,6 +125,11 @@ namespace Smeedee.Widget.Admin.Users.Controllers
 
                 SetIsNotLoadingData();
             });
+        }
+
+        private void SetHasUserdb(bool hasUserdb)
+        {
+            uiInvoker.Invoke(() => viewModel.HasDatabase = hasUserdb);
         }
 
         private void CreateDefaultUserdb()
@@ -194,8 +198,6 @@ namespace Smeedee.Widget.Admin.Users.Controllers
                 viewModel.HasConnectionProblems = true;
                 LogError(exception);
             }
-
-           uiInvoker.Invoke(()=> viewModel.HasDatabase = allUserdbs != null && allUserdbs.Count() != 0);
 
             return allUserdbs;
         }

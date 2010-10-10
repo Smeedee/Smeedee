@@ -63,6 +63,19 @@ namespace Smeedee.Widget.Admin.Users.Tests.Controllers
         }
 
         [Test]
+        public void Assure_default_user_database_is_set_on_viewModel_if_there_are_no_user_databases()
+        {
+            Given(there_are_no_dbs);
+            When(controller_is_created);
+            Then("default user database should not yet have been set on viewModel", () =>
+            {
+                viewModel.HasDatabase.ShouldBe(true);
+                viewModel.Userdbs.Count.ShouldBe(1);
+                viewModel.Userdbs.First().ShouldBe("default");
+            });
+        }
+
+        [Test]
         public void Assure_viewModel_stores_correct_db_name()
         {
             Given(db_with_3_users_has_been_created);
