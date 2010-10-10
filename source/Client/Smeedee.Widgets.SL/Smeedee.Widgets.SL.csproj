@@ -81,11 +81,45 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Smeedee.Widgets\Corkboard\Controllers\CorkboardController.cs">
+      <Link>Corkboard\Controllers\CorkboardController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\CorkboardSettingsViewModel.cs">
+      <Link>Corkboard\ViewModel\CorkboardSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\CorkboardViewModel.cs">
+      <Link>Corkboard\ViewModel\CorkboardViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\INoteCollection.cs">
+      <Link>Corkboard\ViewModel\INoteCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\NoteViewModel.cs">
+      <Link>Corkboard\ViewModel\NoteViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\ViewModels.cs">
+      <Link>Corkboard\ViewModel\ViewModels.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\ViewModels.cs">
       <Link>WebPage\ViewModel\ViewModels.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
+    </Compile>
+    <Compile Include="Corkboard\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corkboard\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corkboard\RetrospectiveCorkboardWidget.cs" />
+    <Compile Include="Corkboard\Views\CorkboardSettingsView.xaml.cs">
+      <DependentUpon>CorkboardSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corkboard\Views\CorkboardView.xaml.cs">
+      <DependentUpon>CorkboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Corkboard\Views\RetrospectiveNoteView.xaml.cs">
+      <DependentUpon>RetrospectiveNoteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Twitter\Controllers\IFetchTweets.cs" />
@@ -116,6 +150,30 @@
     <Compile Include="WebPage\WebPageWidget.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Corkboard\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corkboard\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corkboard\Views\CorkBoardGraphics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corkboard\Views\CorkboardSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corkboard\Views\CorkboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Corkboard\Views\RetrospectiveNoteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Twitter\View\TwitterSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

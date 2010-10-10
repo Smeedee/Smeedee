@@ -44,6 +44,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Corkboard\Controllers\CorkboardController.cs" />
+    <Compile Include="Corkboard\ViewModel\CorkboardSettingsViewModel.cs" />
+    <Compile Include="Corkboard\ViewModel\CorkboardViewModel.cs" />
+    <Compile Include="Corkboard\ViewModel\INoteCollection.cs" />
+    <Compile Include="Corkboard\ViewModel\NoteViewModel.cs" />
+    <Compile Include="Corkboard\ViewModel\ViewModels.cs">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebPage\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
@@ -51,6 +59,17 @@
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Corkboard\ViewModel\ViewModel.mvvm">
+      <Generator>T4ScriptFileGenerator</Generator>
+      <LastGenOutput>ViewModel.tt</LastGenOutput>
+    </None>
+    <None Include="Corkboard\ViewModel\ViewModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ViewModel.mvvm</DependentUpon>
+      <LastGenOutput>ViewModel.txt</LastGenOutput>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </None>
     <None Include="WebPage\ViewModel\ViewModel.mvvm">
       <Generator>T4ScriptFileGenerator</Generator>
       <LastGenOutput>ViewModel.tt</LastGenOutput>
@@ -67,11 +86,30 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Corkboard\ViewModel\ViewModel.txt">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
     <Content Include="WebPage\ViewModel\ViewModel.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
+      <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
+      <Name>Smeedee.DomainModel.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
+      <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
+      <Name>Smeedee.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
+      <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
+      <Name>Smeedee.Client.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

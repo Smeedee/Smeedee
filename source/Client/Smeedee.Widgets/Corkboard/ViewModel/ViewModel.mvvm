@@ -1,0 +1,27 @@
+﻿using TinyMVVM.Framework
+using System.Collections.ObjectModel
+using Smeedee.DomainModel.Corkboard
+using Smeedee.Client.Framework.ViewModel
+
+namespace Smeedee.Widgets.Corkboard.ViewModel
+
+	viewmodel CorkboardViewModel:
+		oproperty PositiveNotes as ObservableCollection<NoteViewModel>
+		oproperty NegativeNotes as ObservableCollection<NoteViewModel>
+
+	viewmodel CorkboardSettingsViewModel extends SettingsViewModelBase:
+		oproperty PositiveNotes as ObservableCollection<NoteViewModel>
+		oproperty NegativeNotes as ObservableCollection<NoteViewModel>
+		oproperty CanAddPositive as bool
+		oproperty CanAddNegative as bool
+
+		command AddPositiveNote
+		command AddNegativeNote
+
+	viewmodel NoteViewModel:
+		oproperty Description as string
+		oproperty Type as NoteType
+
+		command Delete
+		command MoveUp
+		command MoveDown
