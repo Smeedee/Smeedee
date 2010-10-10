@@ -7,10 +7,10 @@ using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Corkboard;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
-using Smeedee.Widget.Corkboard.ViewModels;
+using Smeedee.Widgets.Corkboard.ViewModel;
 using TinyMVVM.Framework.Services;
 
-namespace Smeedee.Widget.Corkboard.Controllers
+namespace Smeedee.Widgets.Corkboard.Controllers
 {
     public class CorkboardController
     {
