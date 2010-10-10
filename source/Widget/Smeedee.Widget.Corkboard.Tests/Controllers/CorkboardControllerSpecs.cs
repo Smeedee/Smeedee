@@ -9,12 +9,12 @@ using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Corkboard;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
-using Smeedee.Widget.Corkboard.Controllers;
-using Smeedee.Widget.Corkboard.ViewModels;
+using Smeedee.Widgets.Corkboard.Controllers;
+using Smeedee.Widgets.Corkboard.ViewModel;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 
-namespace Smeedee.Widget.Corkboard.Tests.Controllers 
+namespace Smeedee.Widgets.Tests.Corkboard.Controllers 
 {
     [TestFixture]
     public class When_notified_to_refresh : Shared
