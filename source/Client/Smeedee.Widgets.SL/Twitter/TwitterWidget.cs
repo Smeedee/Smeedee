@@ -13,7 +13,7 @@ namespace Smeedee.Widgets.SL.Twitter
                 Author = "Smeedee team",
                 Version = "1.0",
                 Tags = new[] { CommonTags.TeamCommunication, CommonTags.Fun })]
-    public class TwitterWidget : Widget
+    public class TwitterWidget : Client.Framework.ViewModel.Widget
     {
         public TwitterWidget()
         {

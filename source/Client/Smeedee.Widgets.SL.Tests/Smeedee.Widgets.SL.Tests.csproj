@@ -89,6 +89,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamPicture\Shared.cs" />
+    <Compile Include="TeamPicture\TeamPictureWidgetSpecs.cs" />
+    <Compile Include="TeamPicture\ViewModel\TeamPictureViewModelTests.cs" />
+    <Compile Include="TeamPicture\WriteableBitmapHelperSpecs.cs" />
     <Compile Include="Twitter\Controllers\TwitterControllerSpecs.cs" />
     <Compile Include="Twitter\Controllers\TwitterTweetFetcherSpecs.cs" />
     <Compile Include="Twitter\Controllers\XmlFetcherSpecs.cs" />
@@ -145,9 +149,7 @@
       <Name>Smeedee.Widgets.SL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WebPage\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

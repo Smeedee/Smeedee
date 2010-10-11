@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Smeedee.Client.Framework.Services;
+﻿using System.ComponentModel;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config.SlideConfig;
-using Smeedee.Widget.TeamPicture.Services;
-using Smeedee.Widget.TeamPicture.Services.Impl;
-using Smeedee.Widget.TeamPicture.ViewModel;
+using Smeedee.Widgets.SL.TeamPicture.Services;
+using Smeedee.Widgets.SL.TeamPicture.ViewModel;
 using Smeedee.Widget.TeamPicture.Views;
+using Smeedee.Widgets.SL.TeamPicture.Views;
 using TinyMVVM.Framework;
 
-namespace Smeedee.Widget.TeamPicture
+namespace Smeedee.Widgets.SL.TeamPicture
 {
     [WidgetInfo(Name = "Team Picture",
                 Description = "Use the webcam to take a picture of your team and add a message to it!",
