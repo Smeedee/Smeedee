@@ -124,23 +124,38 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamPicture\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="TeamPicture\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TeamPicture\Services\SilverlightWebcamService.cs" />
-    <Compile Include="TeamPicture\Services\IWebcamService.cs" />
-    <Compile Include="TeamPicture\TeamPictureWidget.cs" />
-    <Compile Include="TeamPicture\ViewModel\TeamPictureViewModel.cs" />
+    <Compile Include="TeamPicture\Services\IWebcamService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TeamPicture\Services\SilverlightWebcamService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TeamPicture\TeamPictureWidget.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TeamPicture\ViewModel\TeamPictureViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TeamPicture\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TeamPicture\ViewModel\WriteableBitmapHelper.cs" />
+    <Compile Include="TeamPicture\ViewModel\WriteableBitmapHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TeamPicture\Views\TeamPictureSettingsview.xaml.cs">
       <DependentUpon>TeamPictureSettingsview.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="TeamPicture\Views\TeamPictureView.xaml.cs">
       <DependentUpon>TeamPictureView.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Twitter\Controllers\IFetchTweets.cs" />
     <Compile Include="Twitter\Controllers\IFetchXml.cs" />
@@ -194,21 +209,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TeamPicture\Views\TeamPictureSettingsview.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TeamPicture\Views\TeamPictureView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="TeamPicture\App.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TeamPicture\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TeamPicture\Views\TeamPictureSettingsview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TeamPicture\Views\TeamPictureView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Twitter\View\TwitterSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -234,11 +249,11 @@
       <LastGenOutput>ViewModel.tt</LastGenOutput>
     </None>
     <None Include="TeamPicture\ViewModel\ViewModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ViewModel.mvvm</DependentUpon>
-      <LastGenOutput>ViewModel.txt</LastGenOutput>
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ViewModel.txt</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -259,16 +274,18 @@
     <Folder Include="Twitter\SampleData\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TeamPicture\ViewModel\ViewModel.txt">
-      <DependentUpon>ViewModel.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Content>
-    <Resource Include="TeamPicture\Views\digital_camera_icon-red.png" />
-    <Resource Include="TeamPicture\Views\digital_camera_icon.png" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="TeamPicture\ViewModel\ViewModel.txt">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TeamPicture\Views\digital_camera_icon-red.png" />
+    <Resource Include="TeamPicture\Views\digital_camera_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
