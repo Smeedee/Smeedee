@@ -52,7 +52,7 @@
 
               <File Id="SchedulerService_config" 
                     Name="Smeedee Scheduler Service.exe.config" 
-                    KeyPath="no" 
+                    KeyPath="no"
                     Source="..\..\Build\installer\bin\Smeedee.Scheduler.Service.exe.config" />
  
               <File Id="SchedulerService_service" 
@@ -88,7 +88,7 @@
 
       <!-- Registering site for Smeedee in IIS -->
       <Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
-        <iis:WebAppPool Id="SmeedeeAppPool" Name="Smeedee App Pool" ManagedPipelineMode="integrated" ManagedRuntimeVersion="v4.0"/>
+        <iis:WebAppPool Id="SmeedeeAppPool" Name="Smeedee App Pool" />
         <iis:WebVirtualDir Id="SmeedeeVirtualDir" Alias="Smeedee" Directory="INSTALLLOCATION" WebSite="DefaultWebSite">
           <iis:MimeMap Id="SilverligthMimeType" Extension=".xap" Type="application/x-silverlight-app" />
           <iis:WebApplication Id="SmeedeeWebApp" Name="Smeedee" WebAppPool="SmeedeeAppPool">
