@@ -17,144 +17,205 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
 {
     public class ModuleLoaderSpecs
     {
-        public class context
+    	[TestFixture]
+    	public class When_creating : Shared
+    	{
+    		[Test]
+    		public void Then_assure_SlideConfigRepository_arg_is_validated()
+    		{
+    			this.ShouldThrowException<ArgumentNullException>(() =>
+					new ModuleLoader(null, widgetMetadataRepoMock.Object, loggerMock.Object));
+    		}
+
+    		[Test]
+    		public void Then_assure_Logger_arg_is_validated()
+    		{
+    			this.ShouldThrowException<ArgumentNullException>(() =>
+					new ModuleLoader(slideConfigRepoMock.Object, widgetMetadataRepoMock.Object, null));
+    		}
+
+    		[Test]
+    		public void Then_assure_WidgetMetadataRepository_arg_is_validated()
+    		{
+    			this.ShouldThrowException<ArgumentNullException>(() =>
+					new ModuleLoader(slideConfigRepoMock.Object, null, loggerMock.Object));
+    		}
+    	}
+
+    	[TestFixture]
+    	public class When_loading_slides : Shared
+    	{
+			protected override void Before()
+			{
+				WidgetsExists();
+			}
+
+    		[Test]
+    		public void Then_assure_Slideshow_arg_is_validated()
+    		{
+    			this.ShouldThrowException<ArgumentNullException>(() =>
+					moduleLoader.LoadSlides(null));
+    		}
+
+    		[Test]
+    		public void Then_assure_Slideshow_is_created_based_on_config()
+    		{
+    			var slidesInConfig = GetSlideshowConfiguration();
+
+    			moduleLoader.LoadSlides(slideshowViewModel);
+
+				AssertThatSlidesAreLoadedCorrectly(slidesInConfig);
+    		}
+    	}
+
+		[TestFixture]
+        public class When_loading_slides_and_one_fails_to_load : Shared
         {
-            protected Mock<IAsyncRepository<SlideConfiguration>> slideRepoMock;
-            protected ModuleLoader Loader;
-            protected Slideshow slideshowViewModel;
-            protected SlideConfiguration slideConfig;
-            protected List<SlideConfiguration> slideConfigs;
-            protected Mock<ILog> loggerMock;
-
-            [SetUp]
-            public void Setup()
+            protected override void Before()
             {
-                ViewModelBootstrapperForTests.Initialize();
-                slideRepoMock = new Mock<IAsyncRepository<SlideConfiguration>>();
-                loggerMock = new Mock<ILog>();
-
-                slideConfig = new SlideConfiguration
-                {
-                    Duration = 100,
-                    Title = "Tittel",
-                    WidgetType = typeof (TestWidget).FullName,
-                    WidgetConfigurationId = Guid.NewGuid()
-                };
-                slideConfigs = new List<SlideConfiguration> {slideConfig};
-                slideRepoMock.Setup(t => t.BeginGet(It.IsAny<Specification<SlideConfiguration>>())).Raises(
-
-                    t => t.GetCompleted += null, new GetCompletedEventArgs<SlideConfiguration>(slideConfigs, new AllSpecification<SlideConfiguration>()));
-                Loader = new ModuleLoader(slideRepoMock.Object, loggerMock.Object);
-                before();
+            	WidgetsExists();
+                One_wronge_SlideConfig_is_added();
+                moduleLoader.LoadSlides(slideshowViewModel);
             }
 
-            protected virtual void before()
+            private void One_wronge_SlideConfig_is_added()
             {
-                
-            }
-
-            protected void MEF_Is_Finished_loading_available_widgets()
-            {
-                Loader.availalbleWidgets = new List<Lazy<Widget, IWidgetMetadata>>
-                {new Lazy<Widget, IWidgetMetadata>(() => new TestWidget(), null)};
-                Loader.OnImportsSatisfied();
-            }protected void MEF_Is_Finished_loading_available_widgets_with_admin_tag()
-            {
-                Loader.availalbleWidgets = new List<Lazy<Widget, IWidgetMetadata>> 
-                { new Lazy<Widget, IWidgetMetadata>(() => new TestWidget() { Title = "Holidays" }, 
-                    new WidgetMetadata() { Tags = new[] { "Admin" } }) };
-                Loader.OnImportsSatisfied();
-            }
-        }
-
-
-        [TestFixture]
-        public class when_loading_slides_and_mef_types_are_ready : context
-        {
-            protected override void before()
-            {
-                slideshowViewModel = new Slideshow();
-                MEF_Is_Finished_loading_available_widgets();
-                Loader.LoadSlides(slideshowViewModel);
-            }
-
-            [Test]
-            public void Assure_slideConfigurations_are_fetched()
-            {
-                slideRepoMock.Verify(r => r.BeginGet(All.ItemsOf<SlideConfiguration>()));
-            }
-
-            [Test]
-            public void Assure_slide_is_instantiated()
-            {
-                slideshowViewModel.Slides.Count.ShouldBe(1);
-                slideshowViewModel.Slides.ElementAt(0).Title.ShouldBe(slideConfig.Title);
-                slideshowViewModel.Slides.ElementAt(0).SecondsOnScreen.ShouldBe(slideConfig.Duration);
-                slideshowViewModel.Slides.ElementAt(0).Widget.GetType().FullName.ShouldBe(slideConfig.WidgetType);
-                slideshowViewModel.Slides.ElementAt(0).Widget.Configuration.Id.ShouldBe(slideConfig.WidgetConfigurationId);
-            }
-        }
-
-        [TestFixture]
-        public class when_loading_slides_and_one_fails_to_load : context
-        {
-            protected override void before()
-            {
-                slideshowViewModel = new Slideshow();
-                MEF_Is_Finished_loading_available_widgets();
-                one_slideConfig_is_wrong();
-                Loader.LoadSlides(slideshowViewModel);
-            }
-
-            
-
-            private void one_slideConfig_is_wrong()
-            {
-                slideConfigs.Insert(0, new SlideConfiguration(){WidgetType = "error up in here!"});
+                slideConfigs.Add(new SlideConfiguration(){WidgetType = typeof(FailingWidget).FullName});
             }
 
 
             [Test]
-            public void Assure_rest_of_the_slides_are_loaded()
+            public void Then_assure_rest_of_the_slides_are_loaded()
             {
-                slideshowViewModel.Slides.Count.ShouldBe(1);
-            }
+            	var slidesInConfig = GetSlideshowConfiguration();
 
-            [Test]
-            public void Assure_failiure_is_logged()
-            {
-                loggerMock.Verify(t => t.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.Once());
-            }   
+            	slideConfigs.RemoveAt(slideConfigs.Count - 1); //Remove the failing one
+				AssertThatSlidesAreLoadedCorrectly(slidesInConfig);
+            }
         }
 
         [TestFixture]
-        public class when_loading_admin_widgets : context
+        public class When_loading_admin_widgets : Shared
         {
-            protected override void before()
+            protected override void Before()
             {
-                slideshowViewModel = new Slideshow();
-                MEF_Is_Finished_loading_available_widgets_with_admin_tag();
-                Loader.LoadSlides(slideshowViewModel);
+            	WidgetsExists();
+                moduleLoader.LoadAdminWidgets(dockBarViewModel);
             }
 
             [Test]
-            public void Assure_one_DockBarItem_is_created()
+            public void Then_assure_DockBarItems_are_created()
             {
-                //TODO: Find a way to check that the admin widget is added
-                loggerMock.Verify(t => t.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.Never());
+				(dockBarViewModel.Items.Count > 1).ShouldBeTrue();
             }
 
-            [Test]
-            public void Assure_admin_widgets_are_not_loaded_to_slideshow()
-            {
-                slideshowViewModel.Slides.First().Title.ShouldNotBe("Holidays");
-            }
+        	[Test]
+        	public void Then_assure_DockBarViewModel_args_is_validated()
+        	{
+        		this.ShouldThrowException<ArgumentNullException>(() =>
+					moduleLoader.LoadAdminWidgets(null));
+        	}
         }
 
-    }
+		public class Shared
+		{
+			protected Mock<IAsyncRepository<SlideConfiguration>> slideConfigRepoMock;
+			protected Mock<IAsyncRepository<WidgetMetadata>> widgetMetadataRepoMock;
+			protected ModuleLoader moduleLoader;
+			protected Slideshow slideshowViewModel;
+			protected SlideConfiguration slideConfig;
+			protected List<SlideConfiguration> slideConfigs;
+			protected Mock<ILog> loggerMock;
+			protected DockBar dockBarViewModel;
 
-    public class TestWidget : Widget
-    {
+			[SetUp]
+			public void Setup()
+			{
+				ViewModelBootstrapperForTests.Initialize();
+				slideConfigRepoMock = new Mock<IAsyncRepository<SlideConfiguration>>();
+				loggerMock = new Mock<ILog>();
 
+				widgetMetadataRepoMock = new Mock<IAsyncRepository<WidgetMetadata>>();
+
+				slideConfig = new SlideConfiguration
+				{
+					Duration = 100,
+					Title = "Holidays provider widget",
+					WidgetType = typeof(HolidayProviderTestWidget).FullName,
+					WidgetConfigurationId = Guid.NewGuid()
+				};
+				slideConfigs = new List<SlideConfiguration> { slideConfig };
+				slideConfigRepoMock.Setup(t => t.BeginGet(It.IsAny<Specification<SlideConfiguration>>())).Raises(
+					t => t.GetCompleted += null, new GetCompletedEventArgs<SlideConfiguration>(slideConfigs, new AllSpecification<SlideConfiguration>()));
+
+				moduleLoader = new ModuleLoader(slideConfigRepoMock.Object, widgetMetadataRepoMock.Object, loggerMock.Object);
+
+				slideshowViewModel = new Slideshow();
+				dockBarViewModel = new DockBar();
+
+				Before();
+			}
+
+			protected virtual void Before()
+			{
+
+			}
+
+			protected void WidgetsExists()
+			{
+				var availalbleWidgets = new List<WidgetMetadata> 
+                { 
+                    new WidgetMetadata() { Type = typeof(HolidayProviderTestWidget), Tags = new[] { "Admin" } },
+					new WidgetMetadata() { Type = typeof(LatestCommitsWidget), Tags = new[] { "VCS" } },
+					new WidgetMetadata() { Type = typeof(TaskAdminTestWidget), Name = "Task Administration" }
+				};
+				
+				widgetMetadataRepoMock.Setup(s => s.BeginGet(It.IsAny<Specification<WidgetMetadata>>())).Raises(
+					c => c.GetCompleted += null, 
+						new GetCompletedEventArgs<WidgetMetadata>(availalbleWidgets, new AllSpecification<WidgetMetadata>()));
+			}
+
+			protected void AssertThatSlidesAreLoadedCorrectly(IEnumerable<SlideConfiguration> slidesInConfig)
+			{
+				foreach (var slideConfig in slidesInConfig)
+				{
+					slideshowViewModel.Slides.Any(s => s.Title == slideConfig.Title).ShouldBeTrue();
+				}
+			}
+
+			protected IEnumerable<SlideConfiguration> GetSlideshowConfiguration()
+			{
+				IEnumerable<SlideConfiguration> slidesInConfig = null;
+				slideConfigRepoMock.Object.GetCompleted += (o, e) =>
+				{
+					slidesInConfig = e.Result;
+				};
+				slideConfigRepoMock.Object.BeginGet(new AllSpecification<SlideConfiguration>());
+				return slidesInConfig;
+			}
+		}
+
+		public class HolidayProviderTestWidget : Widget
+		{
+
+		}
+
+		public class LatestCommitsWidget : Widget
+		{
+			
+		}
+
+		public class TaskAdminTestWidget : Widget
+		{
+			
+		}
+
+		public class FailingWidget : Widget
+		{
+			public FailingWidget()
+			{
+				throw new Exception("Widget fails to load because it doesn't longer exist, and then it don't get downloaded");
+			}
+		}
     }
 }
