@@ -33,6 +33,22 @@ namespace Smeedee.Client.Framework.Services.Impl
         }
     }
 
+    public class AsyncVoidClient : IInvokeBackgroundWorker
+    {
+        public void RunAsyncVoid(Action action)
+        {
+            ThreadPool.QueueUserWorkItem(o => action());
+        }
+    }
+
+    public class NoBackgroundWorkerInvocation : IInvokeBackgroundWorker
+    {
+        public void RunAsyncVoid(Action action)
+        {
+            action();
+        }
+    }
+
 
     public class NoBackgroundWorkerInvocation<TReturnType> : IInvokeBackgroundWorker<TReturnType>
     {

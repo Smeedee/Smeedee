@@ -31,10 +31,14 @@ using System;
 
 namespace Smeedee.Client.Framework.Services
 {
-    public interface IInvokeBackgroundWorker<TReturnType>
+    public interface IInvokeBackgroundWorker<TReturnType> : IInvokeBackgroundWorker
     {
         void RunAsync(Func<TReturnType> action);
         event EventHandler<AsyncResponseEventArgs<TReturnType>> RunAsyncCompleted;
+    }
+
+    public interface IInvokeBackgroundWorker
+    {
         void RunAsyncVoid(Action action);
     }
 

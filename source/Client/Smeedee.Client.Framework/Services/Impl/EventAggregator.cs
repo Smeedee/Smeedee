@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Threading;
+
+namespace Smeedee.Client.Framework.Services.Impl
+{
+    public class EventAggregator : IEventAggregator
+    {
+        private IInvokeBackgroundWorker backgroundworker;
+
+        private Dictionary<Type, List<IInvokeEventHandlers>> activeSubscriptions = new Dictionary<Type, List<IInvokeEventHandlers>>(10);
+
+        public EventAggregator(IInvokeBackgroundWorker backgroundworker)
+        {
+            this.backgroundworker = backgroundworker;
+        }
+
+        public void Subscribe<TMessage>(Action<TMessage> eventHandler)
+            where TMessage: MessageBase
+        {
+            var subscription = new Subscription<TMessage>(eventHandler);
+            var t = typeof(TMessage);
+
+            List<IInvokeEventHandlers> subscriptions;
+            activeSubscriptions.TryGetValue(t, out subscriptions);
+            if (subscriptions == null)
+            {
+                subscriptions = new List<IInvokeEventHandlers>();
+                activeSubscriptions.Add(t, subscriptions);
+            }
+
+            subscriptions.Add(subscription);
+        }
+
+
+        public void Unsubscribe<TMessage>(object subscriberToUnsusbscribe)
+            where TMessage: MessageBase
+        {
+            var messageType = typeof (TMessage);
+            
+        }
+
+        public void PublishMessage<TMessage>(TMessage message)
+            where TMessage: MessageBase
+        {
+            var messageType = typeof (TMessage);
+            List<IInvokeEventHandlers> subscriptions;
+            activeSubscriptions.TryGetValue(messageType, out subscriptions);
+            if(subscriptions != null)
+            {
+                foreach (var subscription in subscriptions)
+                {
+                    bool targetStillAlive = subscription.Invoke(message, backgroundworker);
+                }
+            }
+        }
+
+        private class Subscription<TMessage> : IInvokeEventHandlers
+            where TMessage : MessageBase
+        {
+            public WeakReference Subscriber { get; set; }
+            private WeakReference  eventHandlerReference;
+
+            public Subscription(Action<TMessage> eventHandler)
+            {
+                Subscriber = new WeakReference(eventHandler.Target);
+                this.eventHandlerReference = new WeakReference(eventHandler);
+            }
+
+            public bool Invoke(MessageBase message, IInvokeBackgroundWorker workerToInvokeOn)
+            {
+                if( eventHandlerReference.IsAlive)
+                {
+                    var action = eventHandlerReference.Target as Action<TMessage>;
+                    workerToInvokeOn.RunAsyncVoid(() => action(message as TMessage));
+                }
+
+                return eventHandlerReference.IsAlive;
+            }
+        }
+
+        private interface IInvokeEventHandlers
+        {
+            bool Invoke(MessageBase message, IInvokeBackgroundWorker workerToInvokeOn);
+        }
+    }
+}
