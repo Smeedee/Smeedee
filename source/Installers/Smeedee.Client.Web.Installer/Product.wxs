@@ -110,7 +110,7 @@
     </InstallExecuteSequence>
     
     <CustomAction Id="SetASPNETAsIISUser" Property="IISUsser" Value="ASPNET" />
-    <CustomAction Id="OpenWebSite" Directory="INSTALLLOCATION" ExeCommand='"[SystemFolder]cmd.exe" /c "start http://localhost/smeedee/Default.htm"' Return="asyncNoWait" />
+    <CustomAction Id="OpenWebSite" Directory="INSTALLLOCATION" ExeCommand='"[SystemFolder]cmd.exe" /c "start http://127.0.0.1/smeedee/Default.htm"' Return="asyncNoWait" />
     <CustomAction Id="StartService" Directory="INSTALLLOCATION" ExeCommand="sc start Smeedee" Return="asyncNoWait" />
     <CustomAction Id="RegisterAspInIIS" Directory="INSTALLLOCATION" ExeCommand="[FrameworkFolder]\aspnet_regiis.exe -i" Return="asyncNoWait" />
 
