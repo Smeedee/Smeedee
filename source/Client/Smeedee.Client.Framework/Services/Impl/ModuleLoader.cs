@@ -23,7 +23,7 @@ namespace Smeedee.Client.Framework.Services.Impl
         [ImportMany(AllowRecomposition = true)]
         private IEnumerable<WidgetMetadata> availalbleWidgets;
 
-        private readonly List<string> adminSlideTitles = new List<string>(){ "Task Administration", "User Administration", "Holidays" };
+        private readonly List<string> adminSlideTitles = new List<string>() { "Task Administration", "User Administration", "Holidays", "Add Widget", "Edit Slideshow" };
         private readonly IAsyncRepository<SlideConfiguration> slideConfigRepo;
         private readonly ILog logger;
         private Slideshow slideshowViewModel;
@@ -220,6 +220,8 @@ namespace Smeedee.Client.Framework.Services.Impl
             if (title == "Holidays") return new HolidaysIcon();
             if (title == "Task Administration") return new TaskAdministrationIcon();
             if (title == "User Administration") return new UserAdministrationIcon();
+            if (title == "Add Widget") return new AddWidgetIcon();
+            if (title == "Edit Slideshow") return new EditSlideShowIcon();
             return new SettingsIcon(title);
 #endif
 

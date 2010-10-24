@@ -306,6 +306,12 @@
     <Compile Include="Repositories\TeamPictureWebserviceRepository.cs" />
     <Compile Include="Repositories\UserdbWebserviceRepository.cs" />
     <Compile Include="Repositories\UserWebserviceRepositoryProxy.cs" />
+    <Compile Include="Resources\Graphic\Icons\AddWidgetIcon.xaml.cs">
+      <DependentUpon>AddWidgetIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Graphic\Icons\EditSlideShowIcon.xaml.cs">
+      <DependentUpon>EditSlideShowIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Graphic\Icons\FullScreenIcon.xaml.cs">
       <DependentUpon>FullScreenIcon.xaml</DependentUpon>
     </Compile>
@@ -760,6 +766,14 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </DesignTimeOnly>
+    <Page Include="Resources\Graphic\Icons\AddWidgetIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Graphic\Icons\EditSlideShowIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Graphic\Icons\FullScreenIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
