@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows;
 using System.Windows.Browser;
+using System.Windows.Media.Animation;
 using System.Xml;
 using System.Xml.Linq;
 using Smeedee.Client.Framework.SL.MEF.Services;
@@ -48,8 +50,7 @@ namespace Smeedee.Client.Framework.SL.MEF
 
         public void DownloadAsync()
         {
-            DownloadService.DownloadStringAsync(GetDeploymentMetadataUrl());
-            downloadService.DownloadStringCompleted += (sender, e) =>
+            DownloadService.DownloadStringCompleted += (sender, e) =>
             {
                 if (e.Error != null)
                 {
@@ -72,6 +73,8 @@ namespace Smeedee.Client.Framework.SL.MEF
                     }
                 }
             };
+
+            DownloadService.DownloadStringAsync(GetDeploymentMetadataUrl());
         }
 
         private void addAndDownloadDeploymentCatalogs(IEnumerable<string> xapsDeployedOnServer)
@@ -82,7 +85,10 @@ namespace Smeedee.Client.Framework.SL.MEF
 
             foreach (var deployedXap in xapsDeployedOnServer)
             {
-                var deploymentCatalog = new DeploymentCatalog(new Uri(deployedXap, UriKind.Relative));
+                //string url = GetBaseUrl() + "ClientBin/" + deployedXap;
+                var xapUri = new Uri(deployedXap, UriKind.Relative);
+                Debug.WriteLine("Dwnloading: " + xapUri);
+                var deploymentCatalog = new DeploymentCatalog(xapUri);
                 deploymentCatalogs.Add(deploymentCatalog);
                 deploymentCatalog.Changed += (o, ee) => OnChanged(ee);
                 deploymentCatalog.Changing += (o, ee) => OnChanging(ee);
@@ -111,21 +117,36 @@ namespace Smeedee.Client.Framework.SL.MEF
         private IEnumerable<string> ParseMetadata(string data)
         {
             var xDoc = XDocument.Parse(data);
-            return from element in xDoc.Element("SilverlightDeployment").Elements()
+            var urls = from element in xDoc.Element("SilverlightDeployment").Elements()
                    select element.Value;
+
+            // Windows 7 seems to have problem when resolving localhost to IPv6 when out
+            // of browser.
+            //var rewrittenUrls = urls.Select(u => u.Replace("/localhost", "/127.0.0.1"));
+
+            return urls;
         }
 
         protected virtual Uri GetDeploymentMetadataUrl()
         {
-            string basePath = new string(
+            string basePath = GetBaseUrl();
+
+            return new Uri(string.Format("{0}SilverlightDeploymentMetadata.ashx",
+                               basePath)); 
+        }
+
+        private string GetBaseUrl()
+        {
+            var result = new string(
                 Application.Current.Host.Source.AbsoluteUri.
                     Replace("ClientBin/", "").
                     Reverse().
                     SkipWhile(c => c != '/').
                     Reverse().ToArray());
 
-            return new Uri(string.Format("{0}SilverlightDeploymentMetadata.ashx",
-                               basePath)); 
+            //result = result.Replace("/localhost", "/127.0.0.1");
+
+            return result;
         }
 
         protected virtual IDownloadService CreateNewDownloadService()
@@ -153,6 +174,8 @@ namespace Smeedee.Client.Framework.SL.MEF
 
         protected virtual void OnDownloadCompleted(AsyncCompletedEventArgs e)
         {
+            Debug.WriteLine("Error?: " + GetErrorMsg(e));
+            Debug.WriteLine("OnDownloadCompleted");
             numberOfXapsDownloaded++;
 
             if (DownloadCompleted != null)
@@ -160,7 +183,24 @@ namespace Smeedee.Client.Framework.SL.MEF
 
             if (numberOfXapsDownloaded == numberOfXapsDeployedOnServer &&
                 AllCompleted != null)
+            {
+                Debug.WriteLine("Xaps deployed on server: " + numberOfXapsDeployedOnServer);
+                Debug.WriteLine("Downloaded xaps: " + numberOfXapsDownloaded);
                 AllCompleted(this, EventArgs.Empty);
+            }
+        }
+
+        private string GetErrorMsg(AsyncCompletedEventArgs e)
+        {
+            var msg = (e.Error != null ? e.Error.ToString() : "no error");
+
+            if (e.Error != null && e.Error.GetType() == typeof(WebException))
+            {
+                var webException = e.Error as WebException;
+                msg += " url: " + webException.Response.ResponseUri.ToString();
+            }
+
+            return msg;
         }
 
         public event EventHandler<ComposablePartCatalogChangeEventArgs> Changed;
