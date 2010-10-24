@@ -97,6 +97,9 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
         [TestClass]
         public class When_DownloadAsync : Context
         {
+            private AsyncCompletedEventArgs downloadCompletedArgs;
+            private string xapsWithRelativeUrl = "<SilverlightDeployment><XAP>Smeedee.Client.Framework.SL.Tests.xap</XAP></SilverlightDeployment>";
+
             [TestInitialize]
             public void Setup()
             {
@@ -104,8 +107,16 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
                 {
                     CreateFakeDownloadService = true
                 };
+                catalog.DownloadServiceFake.Raise(s =>
+                    s.DownloadStringCompleted += null, new DownloadServiceArgs(xapsWithRelativeUrl, null));
 
+                catalog.DownloadCompleted += new EventHandler<AsyncCompletedEventArgs>(catalog_DownloadCompleted);
                 catalog.DownloadAsync();
+            }
+
+            void catalog_DownloadCompleted(object sender, AsyncCompletedEventArgs e)
+            {
+                downloadCompletedArgs = e;
             }
 
             [TestMethod]
@@ -113,6 +124,16 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
             {
                 catalog.DownloadServiceFake.Verify(s => s.DownloadStringAsync(silverlightDeploymentMetadataUrl));
             }
+
+            [TestMethod]
+            [Ignore]
+            public void assure_it_doesnt_accept_relative_xap_urls()
+            {
+                Assert.IsNotNull(downloadCompletedArgs.Error);
+                Assert.IsInstanceOfType(downloadCompletedArgs.Error, typeof(DeploymentFolderCatalogException));
+                Assert.AreEqual("XAP urls are not absolute. Make sure no relative URLs are used.", downloadCompletedArgs.Error.Message);
+            }
+
         }
 
         [TestClass]
@@ -124,6 +145,8 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
             [TestInitialize]
             public void Setup()
             {
+                FrameworkBootstrapper.Initialize();
+
                 xapDownloadCounter = 0;
                 testDownloadMetadataEventArgs = null;
                 metadataDownloadCompletedArgs = null;
@@ -168,12 +191,12 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
             public void assure_MetadataDownloadCompleted_event_is_triggered()
             {
                 EnqueueConditional(() => WaitUntilAllXapsAreDownloaded());
+                EnqueueDelay(500);
 
                 EnqueueCallback(() =>
                 {
                     Assert.IsNotNull(metadataDownloadCompletedArgs);
                     Assert.IsFalse(metadataDownloadCompletedArgs.Cancelled);
-                    Assert.IsNull(metadataDownloadCompletedArgs.UserState);
                 });
 
                 EnqueueTestComplete();
@@ -239,7 +262,7 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
             {
                 catalog = new CustomDeploymentFolderCatalog()
                 {
-                    MetadataUri = new Uri("http://localhost/doestexist.ashx")
+                    MetadataUri = new Uri("http://localhost:1155/doestexist.ashx")
                 };
                 catalog.MetadataDownloadCompleted += (o, e) =>
                 {
@@ -327,6 +350,5 @@ namespace Smeedee.Client.Framework.SL.Tests.MEF
                 OnMetadataDownloadCompleted(e);
             }
         }
-
     }
 }
