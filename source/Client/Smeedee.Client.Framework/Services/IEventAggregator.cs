@@ -4,7 +4,7 @@ namespace Smeedee.Client.Framework.Services
 {
     public interface IEventAggregator
     {
-        void Subscribe<TMessage>(Action<TMessage> eventHandler)
+        void Subscribe<TMessage>(object subscriber, Action<TMessage> eventHandler)
             where TMessage: MessageBase;
 
         void Unsubscribe<TMessage>(object subscriberToUnsusbscribe)

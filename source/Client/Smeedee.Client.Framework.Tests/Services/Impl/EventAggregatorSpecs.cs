@@ -36,17 +36,16 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
             [Test]
             public void Assure_subscribed_event_handlers_are_called()
             {
-                ea.Subscribe<TestMessage>(msg => originalGuid = msg.Id);
+                ea.Subscribe<TestMessage>(this, msg => originalGuid = msg.Id);
                 ea.PublishMessage(testMessage);
                 originalGuid.ShouldBe(testMessage.Id);
             }
 
             [Test]
-            [Ignore("Not implemented yet. The tests is waiting to be green tho :)")]
             public void Assure_unsubscribed_handlers_does_not_get_called()
             {
                 Guid guidSetInEventhandler = originalGuid;
-                ea.Subscribe<TestMessage>(msg => guidSetInEventhandler = msg.Id);
+                ea.Subscribe<TestMessage>(this, msg => guidSetInEventhandler = msg.Id);
                 ea.Unsubscribe<TestMessage>(this);
                 ea.PublishMessage(testMessage);
                 
@@ -62,7 +61,7 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
                 
                 ea = new EventAggregator(backgroundWorkerMock.Object);
 
-                ea.Subscribe<TestMessage>(msg => {} );
+                ea.Subscribe<TestMessage>(this, msg => {} );
                 ea.PublishMessage(testMessage);
 
                 mockWasUsed.ShouldBeTrue();
@@ -77,7 +76,7 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
             {
                 var subscribingObject = new SubscribingObject();
                 WeakReference weakReference = new WeakReference(subscribingObject);
-                ea.Subscribe<TestMessage>(subscribingObject.ProcessMessage);
+                ea.Subscribe<TestMessage>(this, subscribingObject.ProcessMessage);
                 subscribingObject = null;
                 GC.Collect();
 
@@ -89,7 +88,7 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
             public void Assure_subscriber_is_ignored_on_consequent_publishings()
             {
                 var subscribingObject = new SubscribingObject();
-                ea.Subscribe<TestMessage>(subscribingObject.ProcessMessage);
+                ea.Subscribe<TestMessage>(this, subscribingObject.ProcessMessage);
                 subscribingObject = null;
                 GC.Collect();
 

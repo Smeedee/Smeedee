@@ -9,24 +9,24 @@ namespace Smeedee.Client.Framework.Services.Impl
     {
         private IInvokeBackgroundWorker backgroundworker;
 
-        private Dictionary<Type, List<IInvokeEventHandlers>> activeSubscriptions = new Dictionary<Type, List<IInvokeEventHandlers>>(10);
+        private Dictionary<Type, List<IInvokeEventHandler>> activeSubscriptions = new Dictionary<Type, List<IInvokeEventHandler>>(10);
 
         public EventAggregator(IInvokeBackgroundWorker backgroundworker)
         {
             this.backgroundworker = backgroundworker;
         }
 
-        public void Subscribe<TMessage>(Action<TMessage> eventHandler)
+        public void Subscribe<TMessage>(object subscriber, Action<TMessage> eventHandler)
             where TMessage: MessageBase
         {
-            var subscription = new Subscription<TMessage>(eventHandler);
+            var subscription = new Subscription<TMessage>(subscriber, eventHandler);
             var t = typeof(TMessage);
 
-            List<IInvokeEventHandlers> subscriptions;
+            List<IInvokeEventHandler> subscriptions;
             activeSubscriptions.TryGetValue(t, out subscriptions);
             if (subscriptions == null)
             {
-                subscriptions = new List<IInvokeEventHandlers>();
+                subscriptions = new List<IInvokeEventHandler>();
                 activeSubscriptions.Add(t, subscriptions);
             }
 
@@ -38,14 +38,17 @@ namespace Smeedee.Client.Framework.Services.Impl
             where TMessage: MessageBase
         {
             var messageType = typeof (TMessage);
-            
+            List<IInvokeEventHandler> subscribers;
+            activeSubscriptions.TryGetValue(messageType, out subscribers);
+            subscribers.RemoveAll(s => ReferenceEquals(s.Subscriber.Target, subscriberToUnsusbscribe));
+
         }
 
         public void PublishMessage<TMessage>(TMessage message)
             where TMessage: MessageBase
         {
             var messageType = typeof (TMessage);
-            List<IInvokeEventHandlers> subscriptions;
+            List<IInvokeEventHandler> subscriptions;
             activeSubscriptions.TryGetValue(messageType, out subscriptions);
             if(subscriptions != null)
             {
@@ -56,15 +59,15 @@ namespace Smeedee.Client.Framework.Services.Impl
             }
         }
 
-        private class Subscription<TMessage> : IInvokeEventHandlers
+        private class Subscription<TMessage> : IInvokeEventHandler
             where TMessage : MessageBase
         {
             public WeakReference Subscriber { get; set; }
             private WeakReference  eventHandlerReference;
 
-            public Subscription(Action<TMessage> eventHandler)
+            public Subscription(object subscriber, Action<TMessage> eventHandler)
             {
-                Subscriber = new WeakReference(eventHandler.Target);
+                Subscriber = new WeakReference(subscriber);
                 this.eventHandlerReference = new WeakReference(eventHandler);
             }
 
@@ -80,9 +83,10 @@ namespace Smeedee.Client.Framework.Services.Impl
             }
         }
 
-        private interface IInvokeEventHandlers
+        private interface IInvokeEventHandler
         {
             bool Invoke(MessageBase message, IInvokeBackgroundWorker workerToInvokeOn);
+            WeakReference Subscriber { get; set; }
         }
     }
 }
