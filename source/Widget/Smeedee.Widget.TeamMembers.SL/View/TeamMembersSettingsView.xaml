@@ -59,7 +59,7 @@
                 </Border>               
 
                 <StackPanel Grid.Column="1" Grid.Row="3" Style="{StaticResource SettingsViewControlButtonsWrapper}" Margin="0,10,0,20">
-                    <Button Style="{StaticResource SettingsViewSaveButton}" Command="{Binding Save}" IsEnabled="{Binding UsersAreValid}"/>
+                    <Button Style="{StaticResource SettingsViewSaveButton}" Command="{Binding Save}"/>
 					<Button Style="{StaticResource SettingsViewReloadSettingsButton}" Command="{Binding Refresh}" />
 				</StackPanel>
 			</Grid>

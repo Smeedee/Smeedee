@@ -45,11 +45,6 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
     	[TestFixture]
     	public class When_loading_slides : Shared
     	{
-			protected override void Before()
-			{
-				WidgetsExists();
-			}
-
     		[Test]
     		public void Then_assure_Slideshow_arg_is_validated()
     		{
@@ -99,7 +94,6 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
         {
             protected override void Before()
             {
-            	WidgetsExists();
                 moduleLoader.LoadAdminWidgets(dockBarViewModel);
             }
 
@@ -132,10 +126,12 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
 			public void Setup()
 			{
 				ViewModelBootstrapperForTests.Initialize();
+
 				slideConfigRepoMock = new Mock<IAsyncRepository<SlideConfiguration>>();
 				loggerMock = new Mock<ILog>();
 
 				widgetMetadataRepoMock = new Mock<IAsyncRepository<WidgetMetadata>>();
+				WidgetsExists();
 
 				slideConfig = new SlideConfiguration
 				{

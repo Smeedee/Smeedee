@@ -428,6 +428,9 @@
     <Compile Include="Views\LoadingNotificationView.xaml.cs">
       <DependentUpon>LoadingNotificationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SimpleWidgetView.xaml.cs">
+      <DependentUpon>SimpleWidgetView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SlideshowView.xaml.cs">
       <DependentUpon>SlideshowView.xaml</DependentUpon>
     </Compile>
@@ -806,6 +809,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\LoadingNotificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SimpleWidgetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
