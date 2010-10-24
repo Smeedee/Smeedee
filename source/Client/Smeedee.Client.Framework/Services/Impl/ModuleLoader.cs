@@ -15,6 +15,8 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.DSL.Specifications;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.Framework;
+using TinyMVVM.Framework;
+using Smeedee.Client.Framework.ViewModel.Dialogs;
 
 namespace Smeedee.Client.Framework.Services.Impl
 {
@@ -198,6 +200,32 @@ namespace Smeedee.Client.Framework.Services.Impl
 
                 var adminWidget = availalbleWidgets.FirstOrDefault(w => w.Name == title);
 
+                if (title.Contains("Add Widget"))
+                {
+                    var SelectWidgetsDialog = new SelectWidgetsDialog();
+                    var dockBarItem = new AddWidgetDockBarItem(){ItemName = title};
+                    
+
+                    //dockBarItem.Click
+
+                    //dockBarViewModel.Items.Add(new WidgetDockBarItem(title)
+                    
+                    //{                        
+                    //    Click = new DelegateCommand(() => dialogService.Show(SelectWidgetsDialog, dialogResult =>
+                    //    {
+                    //        if (dialogResult == true)
+                    //        {
+                    //           // RemoveWelcomeWidgetIfPresent();
+
+                    //            foreach (var newSlide in SelectWidgetsDialog.NewSlides)
+                    //            {
+                    //                slideshowViewModel.Slides.Add(newSlide);
+                    //            }
+                    //        }
+                    //    })),
+                    //    Icon = GetIcon(title)
+                    //});
+                }
                 if (adminWidget != null)
                 {
                     dockBarViewModel.Items.Add(new WidgetDockBarItem(title)
