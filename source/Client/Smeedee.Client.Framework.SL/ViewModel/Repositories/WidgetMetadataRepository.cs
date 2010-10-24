@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
+using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using Smeedee.Client.Framework.SL.MEF;
@@ -14,7 +15,7 @@ namespace Smeedee.Client.Framework.SL.ViewModel.Repositories
     {
         public DeploymentFolderCatalog deploymentFolderCatalog;
         private Specification<WidgetMetadata> specification;
-        [ImportMany(AllowRecomposition = true)]
+        [ImportMany(AllowRecomposition = false)]
         public IEnumerable<Lazy<Widget, IWidgetMetadata>> widgets = new List<Lazy<Widget, IWidgetMetadata>>();
         private IEnumerable<WidgetMetadata> availableWidgets;
 
@@ -32,7 +33,9 @@ namespace Smeedee.Client.Framework.SL.ViewModel.Repositories
         {
             isGetting = false;
             CompositionInitializer.SatisfyImports(this);
+
             ExtractWidgetMetadataViewModels();
+            
             TriggerGetCompleted(specification);
         }
 
@@ -50,6 +53,12 @@ namespace Smeedee.Client.Framework.SL.ViewModel.Repositories
                            IsDescriptionCapped = true,
                            Type = widgetMetadata.Value.GetType()
                        }).ToList();
+
+            Debug.WriteLine("Widgets downloaded and extracted: " + availableWidgets.Count());
+            foreach (var widget in availableWidgets)
+            {
+                Debug.WriteLine("Widget: " + widget.Type.Name);
+            }
         }
 
         public void BeginGet(Specification<WidgetMetadata> specification)
