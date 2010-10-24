@@ -103,6 +103,7 @@
     <Compile Include="ViewModel\Dialogs\Dialog.cs" />
     <Compile Include="ViewModel\Dialogs\EditSlideshowDialog.cs" />
     <Compile Include="ViewModel\DockBar.cs" />
+    <Compile Include="ViewModel\DockBarItems\AddWidgetDockBarItem.cs" />
     <Compile Include="ViewModel\DockBarItems\FullScreen.cs" />
     <Compile Include="ViewModel\DockBarItems\WidgetDockBarItem.cs" />
     <Compile Include="ViewModel\ErrorInfo.cs" />
