@@ -424,11 +424,6 @@
                                 Margin="0"   Width="32" Template="{StaticResource nextButtonTemplate}" ToolTipService.ToolTip="Next slide" 
                                 Height="32" Canvas.ZIndex="1"/>
 
-                        <Button Margin="8,8,0,8" Height="32" Width="32" Command="{Binding AddSlide}"
-                                IsEnabled="{Binding CurrentSlide.Widget.IsInSettingsMode, Converter={StaticResource BoolNegationConverter}}"
-                                ToolTipService.ToolTip="Add a slide to the slideshow" Cursor="Hand">
-                            <Image Source="add_widget.png" />
-                        </Button>
                         <Button Margin="5,8,0,8" Height="32" Width="32"  Command="{Binding Edit}" 
                                 IsEnabled="{Binding CurrentSlide.Widget.IsInSettingsMode, Converter={StaticResource BoolNegationConverter}}"  
                                 ToolTipService.ToolTip="Edit slideshow" Cursor="Hand">

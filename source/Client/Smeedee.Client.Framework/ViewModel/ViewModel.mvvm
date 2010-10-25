@@ -107,7 +107,7 @@ namespace Smeedee.Client.Framework.ViewModel.DockBarItems:
 
 namespace Smeedee.Client.Framework.ViewModel.DockBarItems:
 	viewmodel AddWidgetDockBarItem extends DockBarItem:
-		property SlideShow as Slideshow
+		oproperty SlideShow as Slideshow
 		property ItemName as string
 		
 namespace Smeedee.Client.Framework.ViewModel.Dialogs:

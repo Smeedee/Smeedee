@@ -1309,24 +1309,29 @@ namespace Smeedee.Client.Framework.ViewModel.DockBarItems
 	public partial class AddWidgetDockBarItem : DockBarItem
 	{
 		//State
-		public virtual Slideshow SlideShow 
-		{ 
-			get
+		public virtual Slideshow SlideShow
+		{
+			get 
 			{
 				OnGetSlideShow(ref _SlideShow);
 				 
 				return _SlideShow; 
 			}
-			set 
+			set
 			{
-				OnSetSlideShow(ref value); 
-				_SlideShow = value; 
-			} 
+				if (value != _SlideShow)
+				{
+					OnSetSlideShow(ref value); 
+					_SlideShow = value;
+					TriggerPropertyChanged("SlideShow");
+				}
+			}
 		}
-
 		private Slideshow _SlideShow;
+
 		partial void OnGetSlideShow(ref Slideshow value);
 		partial void OnSetSlideShow(ref Slideshow value);
+
 		public virtual string ItemName 
 		{ 
 			get

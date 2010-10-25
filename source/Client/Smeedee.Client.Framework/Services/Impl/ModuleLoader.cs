@@ -216,10 +216,10 @@ namespace Smeedee.Client.Framework.Services.Impl
                  } 
                 else if (title.Equals("Add Widget"))
                 {
-                    dockBarViewModel.Items.Add(new AddWidgetDockBarItem()
+                    dockBarViewModel.Items.Add(new AddWidgetDockBarItem(title)
                         {
-                            ItemName = title,
-                            Description = title, 
+                            Description = title,
+                            SlideShow = slideshowViewModel,
                             Icon = GetIcon(title)
                         });
                 }
