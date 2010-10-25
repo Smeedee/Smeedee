@@ -199,45 +199,29 @@ namespace Smeedee.Client.Framework.Services.Impl
                 if (dockBarViewModel.Items.Any(i => i.Description == title)) continue;
 
                 var adminWidget = availalbleWidgets.FirstOrDefault(w => w.Name == title);
-
-                if (title.Contains("Add Widget"))
-                {
-                    //var SelectWidgetsDialog = new SelectWidgetsDialog();
-                    var dockBarItem = new AddWidgetDockBarItem(){ItemName = title};
-                    
-
-                    //dockBarItem.Click
-
-                    //dockBarViewModel.Items.Add(new WidgetDockBarItem(title)
-                    
-                    //{                        
-                    //    Click = new DelegateCommand(() => dialogService.Show(SelectWidgetsDialog, dialogResult =>
-                    //    {
-                    //        if (dialogResult == true)
-                    //        {
-                    //           // RemoveWelcomeWidgetIfPresent();
-
-                    //            foreach (var newSlide in SelectWidgetsDialog.NewSlides)
-                    //            {
-                    //                slideshowViewModel.Slides.Add(newSlide);
-                    //            }
-                    //        }
-                    //    })),
-                    //    Icon = GetIcon(title)
-                    //});
-                }
+                
                 if (adminWidget != null)
                 {
+                    
                     dockBarViewModel.Items.Add(new WidgetDockBarItem(title)
-                    {
-                        Description = adminWidget.Name,
-                        Widget = Activator.CreateInstance(adminWidget.Type) as Widget,
-                        //TODO: Refactor this hack. Now resolving the Icon based on the Title of the Widget
-                        //We want to handle AdminDockbar plugins in a better way. A suggestion is to
-                        //provide an API for the Widget devs so that they can add items programatically
-                        //or use MEF and attributes. 
-                        Icon = GetIcon(title)
-                    });
+                        {
+                            Description = adminWidget.Name,
+                            Widget = Activator.CreateInstance(adminWidget.Type) as Widget,
+                            //TODO: Refactor this hack. Now resolving the Icon based on the Title of the Widget
+                            //We want to handle AdminDockbar plugins in a better way. A suggestion is to
+                            //provide an API for the Widget devs so that they can add items programatically
+                            //or use MEF and attributes. 
+                            Icon = GetIcon(title)
+                        }); 
+                 } 
+                else if (title.Equals("Add Widget"))
+                {
+                    dockBarViewModel.Items.Add(new AddWidgetDockBarItem()
+                        {
+                            ItemName = title,
+                            Description = title, 
+                            Icon = GetIcon(title)
+                        });
                 }
             }
         }

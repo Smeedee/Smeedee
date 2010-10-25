@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TinyMVVM.Framework.Conventions;
-using Smeedee.Client.Framework.Services;
 using System.ComponentModel;
+using Smeedee.Client.Framework.Services;
+#if SILVERLIGHT
+using Smeedee.Client.Framework.SL.Resources.Graphic.Icons;
+#endif
+using Smeedee.Client.Framework.ViewModel;
+using Smeedee.Client.Framework.ViewModel.Dialogs;
 using TinyMVVM.Framework;
+using TinyMVVM.Framework.Conventions;
+using TinyMVVM.IoC;
 
 namespace Smeedee.Client.Framework.ViewModel.DockBarItems
 {
