@@ -99,6 +99,21 @@
     <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\ViewModels.cs">
       <Link>Corkboard\ViewModel\ViewModels.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\TeamMembers\Controllers\TeamMembersController.cs">
+      <Link>TeamMembers\Controllers\TeamMembersController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\TeamMembers\ViewModels\TeamMembersSettingsViewModel.cs">
+      <Link>TeamMembers\ViewModels\TeamMembersSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\TeamMembers\ViewModels\TeamMembersViewModel.cs">
+      <Link>TeamMembers\ViewModels\TeamMembersViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\TeamMembers\ViewModels\UserViewModel.cs">
+      <Link>TeamMembers\ViewModels\UserViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\TeamMembers\ViewModels\ViewModels.cs">
+      <Link>TeamMembers\ViewModels\ViewModels.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\WebPage\Controllers\WebPageController.cs">
       <Link>WebPage\Controllers\WebPageController.cs</Link>
     </Compile>
@@ -125,6 +140,16 @@
       <DependentUpon>RetrospectiveNoteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamMembers\TeamMembersWidget.cs" />
+    <Compile Include="TeamMembers\Views\TeamMembersSettingsView.xaml.cs">
+      <DependentUpon>TeamMembersSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TeamMembers\Views\TeamMembersView.xaml.cs">
+      <DependentUpon>TeamMembersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TeamMembers\Views\UserdbSettingsView.xaml.cs">
+      <DependentUpon>UserdbSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TeamPicture\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -209,6 +234,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Corkboard\Views\RetrospectiveNoteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TeamMembers\Views\TeamMembersSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TeamMembers\Views\TeamMembersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TeamMembers\Views\UserdbSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

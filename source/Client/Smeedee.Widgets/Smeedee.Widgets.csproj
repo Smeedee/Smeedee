@@ -53,6 +53,13 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamMembers\Controllers\TeamMembersController.cs" />
+    <Compile Include="TeamMembers\ViewModels\TeamMembersSettingsViewModel.cs" />
+    <Compile Include="TeamMembers\ViewModels\TeamMembersViewModel.cs" />
+    <Compile Include="TeamMembers\ViewModels\UserViewModel.cs" />
+    <Compile Include="TeamMembers\ViewModels\ViewModels.cs">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="WebPage\Controllers\WebPageController.cs" />
     <Compile Include="WebPage\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
@@ -65,6 +72,17 @@
       <LastGenOutput>ViewModel.tt</LastGenOutput>
     </None>
     <None Include="Corkboard\ViewModel\ViewModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ViewModel.mvvm</DependentUpon>
+      <LastGenOutput>ViewModel.txt</LastGenOutput>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </None>
+    <None Include="TeamMembers\ViewModels\ViewModel.mvvm">
+      <Generator>T4ScriptFileGenerator</Generator>
+      <LastGenOutput>ViewModel.tt</LastGenOutput>
+    </None>
+    <None Include="TeamMembers\ViewModels\ViewModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ViewModel.mvvm</DependentUpon>
       <LastGenOutput>ViewModel.txt</LastGenOutput>
@@ -92,6 +110,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Content>
+    <Content Include="TeamMembers\ViewModels\ViewModel.txt">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
     <Content Include="WebPage\ViewModel\ViewModel.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -112,6 +135,7 @@
       <Name>Smeedee.Client.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

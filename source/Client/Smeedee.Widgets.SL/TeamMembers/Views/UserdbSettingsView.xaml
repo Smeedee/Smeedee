@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Smeedee.Widgets.SL.TeamMembers.Views.UserdbSettingsView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" d:Height="800" d:Width="719">
+	
+    <UserControl.Resources>	
+		<ResourceDictionary x:Key="settingsViewResourceDictionary">
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>		
+	</UserControl.Resources>
+    
+	<Grid x:Name="LayoutRoot" d:DataContext="{Binding Source={StaticResource userDomainDataSource}}">
+		<Border>
+			<Grid>
+				<Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+                <Border Style="{StaticResource SettingsViewBorder}">
+                    <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource SettingsViewTopGrid}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource SettingsViewH1}" Text="Configure Team Members" />
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource SettingsViewH2}" Text="Names to show" />
+                        <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" x:Name="NameOptionsPanel" Orientation="Horizontal">
+                            <CheckBox x:Name="FirstnameCheckBox" Content="Firstname" FontSize="14" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding FirstnameIsChecked, Mode=TwoWay}">
+                            </CheckBox>
+                            <CheckBox x:Name="MiddlenameCheckBox" Content="Middlename" FontSize="14" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding MiddlenameIsChecked, Mode=TwoWay}">
+                            </CheckBox>
+                            <CheckBox x:Name="SurnameCheckBox" Content="Surname" FontSize="14" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding SurnameIsChecked, Mode=TwoWay}">
+                            </CheckBox>
+                            <CheckBox x:Name="UsernameCheckBox" Content="Username" FontSize="14" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding UsernameIsChecked, Mode=TwoWay}">
+                            </CheckBox>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" x:Name="labelUserDB" Style="{StaticResource SettingsViewText}" Text="Select database" />
+                        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbUserDB" Style="{StaticResource SettingsViewComboBox}" ItemsSource="{Binding Userdbs}" SelectedItem="{Binding CurrentDBName, Mode=TwoWay}" />
+                    </Grid>
+                </Border>               
+
+                <StackPanel Grid.Column="1" Grid.Row="3" Style="{StaticResource SettingsViewControlButtonsWrapper}" Margin="0,10,0,20">
+                    <Button Style="{StaticResource SettingsViewSaveButton}" Command="{Binding Save}" IsEnabled="{Binding UsersAreValid}"/>
+					<Button Style="{StaticResource SettingsViewReloadSettingsButton}" Command="{Binding Refresh}" />
+				</StackPanel>
+			</Grid>
+		</Border>
+
+
+	</Grid>
+</UserControl>

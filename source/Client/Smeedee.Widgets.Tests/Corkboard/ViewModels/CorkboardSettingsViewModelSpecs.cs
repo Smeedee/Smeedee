@@ -7,7 +7,7 @@ using Smeedee.Widgets.Tests.Corkboard.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 
-namespace Smeedee.Widgets.Corkboard.Tests.ViewModels
+namespace Smeedee.Widgets.Tests.Corkboard.ViewModels
 {
     [TestFixture]
     public class When_notes_are_added_SettingsView : SettingsViewModelShared

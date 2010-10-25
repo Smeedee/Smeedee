@@ -64,6 +64,10 @@
     <Compile Include="Corkboard\ViewModels\CorkboardViewModelSpecs.cs" />
     <Compile Include="Corkboard\ViewModels\NoteViewModelSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamMembers\Controllers\TeamMembersControllerSpecs.cs" />
+    <Compile Include="TeamMembers\ViewModels\TeamMembersSettingsViewModelSpecs.cs" />
+    <Compile Include="TeamMembers\ViewModels\TeamMembersViewModelSpecs.cs" />
+    <Compile Include="TeamMembers\ViewModels\UserViewModelSpecs.cs" />
     <Compile Include="WebPage\Controllers\WebPageControllerSpec.cs" />
     <Compile Include="WebPage\ViewModel\WebPageViewModelSpec.cs" />
   </ItemGroup>
@@ -76,6 +80,10 @@
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Smeedee.Tests\Smeedee.Tests.csproj">
+      <Project>{F00CBB10-58D2-40B9-82DD-D8ABD14E1995}</Project>
+      <Name>Smeedee.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
       <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
       <Name>Smeedee.Client.Framework</Name>
@@ -85,6 +93,7 @@
       <Name>Smeedee.Widgets</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
