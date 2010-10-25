@@ -202,7 +202,7 @@ namespace Smeedee.Client.Framework.Services.Impl
 
                 if (title.Contains("Add Widget"))
                 {
-                    var SelectWidgetsDialog = new SelectWidgetsDialog();
+                    //var SelectWidgetsDialog = new SelectWidgetsDialog();
                     var dockBarItem = new AddWidgetDockBarItem(){ItemName = title};
                     
 
