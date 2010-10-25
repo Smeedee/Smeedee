@@ -99,6 +99,9 @@
     <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\ViewModels.cs">
       <Link>Corkboard\ViewModel\ViewModels.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebPage\Controllers\WebPageController.cs">
+      <Link>WebPage\Controllers\WebPageController.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\ViewModels.cs">
       <Link>WebPage\ViewModel\ViewModels.cs</Link>
     </Compile>

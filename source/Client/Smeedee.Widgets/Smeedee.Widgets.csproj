@@ -53,6 +53,7 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebPage\Controllers\WebPageController.cs" />
     <Compile Include="WebPage\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>

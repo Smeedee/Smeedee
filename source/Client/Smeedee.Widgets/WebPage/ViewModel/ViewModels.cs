@@ -104,10 +104,12 @@ namespace Smeedee.Widgets.WebPage.ViewModel
 		
 		//Commands
 		public DelegateCommand GoTo { get; set; }
+		public DelegateCommand Save { get; set; }
 		
 		public WebPageViewModel()
 		{
 			GoTo = new DelegateCommand();
+			Save = new DelegateCommand();
 	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());

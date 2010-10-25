@@ -64,6 +64,7 @@
     <Compile Include="Corkboard\ViewModels\CorkboardViewModelSpecs.cs" />
     <Compile Include="Corkboard\ViewModels\NoteViewModelSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebPage\Controllers\WebPageControllerSpec.cs" />
     <Compile Include="WebPage\ViewModel\WebPageViewModelSpec.cs" />
   </ItemGroup>
   <ItemGroup>

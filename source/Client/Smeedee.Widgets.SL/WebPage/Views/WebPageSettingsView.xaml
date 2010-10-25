@@ -11,10 +11,12 @@
 	</d:DataContext>
     <Grid x:Name="LayoutRoot" Background="White">
         <TextBox Margin="72,8,50,0" TextWrapping="Wrap" Text="{Binding InputUrl, Mode=TwoWay}" VerticalAlignment="Top" Height="23"/>
-    	<inputToolkit:NumericUpDown Margin="72,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="61" Height="23" Value="{Binding RefreshInterval}"/>
+    	<inputToolkit:NumericUpDown Margin="72,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="61" Height="23" Value="{Binding RefreshInterval, Mode=TwoWay}"/>
     	<Button Content="Go" HorizontalAlignment="Right" Margin="0,8,8,0" VerticalAlignment="Top" Width="35"/>
     	<TextBlock HorizontalAlignment="Left" Margin="8,12,0,0" TextWrapping="Wrap" Text="URL" VerticalAlignment="Top"/>
     	<TextBlock HorizontalAlignment="Left" Margin="8,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="44"><Run Text="Refresh"/><LineBreak/><Run/></TextBlock>
+    	<Button Content="Reload Settings" HorizontalAlignment="Right" Height="20" Margin="0,0,8,8" VerticalAlignment="Bottom" Width="92" Background="{x:Null}" Command="{Binding ReloadSettings}"/>
+    	<Button Content="Save" HorizontalAlignment="Right" Height="20" Margin="0,0,104,8" VerticalAlignment="Bottom" Width="54" Background="{x:Null}" Command="{Binding Save}"/>
     	<!--<WebBrowser Margin="8,72,8,8" Source="http://www.vg.no" Name="web34" />-->
     </Grid>
 </UserControl>

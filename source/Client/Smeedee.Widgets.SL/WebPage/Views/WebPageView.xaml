@@ -10,6 +10,6 @@
     </d:DataContext>
     
     <Grid x:Name="LayoutRoot" Background="White">
-    	<WebBrowser Source="http://www.bbc.co.uk" Margin="0,30,0,0" Name="web1" />
+    	<WebBrowser Source="{Binding ValidatedUrl}" Margin="0,30,0,0" Name="web1" />
     </Grid>
 </UserControl>
