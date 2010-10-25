@@ -231,6 +231,9 @@
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\DockBarItems\AddWidgetDockBarItem.cs">
       <Link>ViewModel\DockBaritems\AddWidgetDockBarItem.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\DockBarItems\EditSlideshowDockBarItem.cs">
+      <Link>ViewModel\DockBaritems\EditSlideshowDockBarItem.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\DockBarItems\FullScreen.cs">
       <Link>ViewModel\DockBaritems\FullScreen.cs</Link>
     </Compile>

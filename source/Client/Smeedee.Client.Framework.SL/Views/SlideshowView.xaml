@@ -423,13 +423,6 @@
                                 IsEnabled="{Binding CurrentSlide.Widget.IsInSettingsMode, Converter={StaticResource BoolNegationConverter}}" 
                                 Margin="0"   Width="32" Template="{StaticResource nextButtonTemplate}" ToolTipService.ToolTip="Next slide" 
                                 Height="32" Canvas.ZIndex="1"/>
-
-                        <Button Margin="5,8,0,8" Height="32" Width="32"  Command="{Binding Edit}" 
-                                IsEnabled="{Binding CurrentSlide.Widget.IsInSettingsMode, Converter={StaticResource BoolNegationConverter}}"  
-                                ToolTipService.ToolTip="Edit slideshow" Cursor="Hand">
-                        	<Image Source="edit_slideshow.png" />	
-						</Button>
-                        
     				</StackPanel>
     			</Grid>
     		</Viewbox>

@@ -201,8 +201,7 @@ namespace Smeedee.Client.Framework.Services.Impl
                 var adminWidget = availalbleWidgets.FirstOrDefault(w => w.Name == title);
                 
                 if (adminWidget != null)
-                {
-                    
+                {   
                     dockBarViewModel.Items.Add(new WidgetDockBarItem(title)
                         {
                             Description = adminWidget.Name,
@@ -213,7 +212,7 @@ namespace Smeedee.Client.Framework.Services.Impl
                             //or use MEF and attributes. 
                             Icon = GetIcon(title)
                         }); 
-                 } 
+                } 
                 else if (title.Equals("Add Widget"))
                 {
                     dockBarViewModel.Items.Add(new AddWidgetDockBarItem(title)
@@ -222,6 +221,15 @@ namespace Smeedee.Client.Framework.Services.Impl
                             SlideShow = slideshowViewModel,
                             Icon = GetIcon(title)
                         });
+                }
+                else if (title.Equals("Edit Slideshow"))
+                {
+                    dockBarViewModel.Items.Add(new EditSlideshowDockBarItem(title)
+                    {
+                        Description = title,
+                        SlideShow = slideshowViewModel,
+                        Icon = GetIcon(title)
+                    });
                 }
             }
         }

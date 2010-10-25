@@ -110,6 +110,11 @@ namespace Smeedee.Client.Framework.ViewModel.DockBarItems:
 		oproperty SlideShow as Slideshow
 		property ItemName as string
 		
+namespace Smeedee.Client.Framework.ViewModel.DockBarItems:
+	viewmodel EditSlideshowDockBarItem extends DockBarItem:
+		oproperty SlideShow as Slideshow
+		property ItemName as string
+
 namespace Smeedee.Client.Framework.ViewModel.Dialogs:
 	viewmodel Dialog:
 		property Progressbar as Progressbar

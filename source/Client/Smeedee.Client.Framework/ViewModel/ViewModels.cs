@@ -1365,6 +1365,67 @@ namespace Smeedee.Client.Framework.ViewModel.DockBarItems
 	}
 }
 
+namespace Smeedee.Client.Framework.ViewModel.DockBarItems
+{
+	public partial class EditSlideshowDockBarItem : DockBarItem
+	{
+		//State
+		public virtual Slideshow SlideShow
+		{
+			get 
+			{
+				OnGetSlideShow(ref _SlideShow);
+				 
+				return _SlideShow; 
+			}
+			set
+			{
+				if (value != _SlideShow)
+				{
+					OnSetSlideShow(ref value); 
+					_SlideShow = value;
+					TriggerPropertyChanged("SlideShow");
+				}
+			}
+		}
+		private Slideshow _SlideShow;
+
+		partial void OnGetSlideShow(ref Slideshow value);
+		partial void OnSetSlideShow(ref Slideshow value);
+
+		public virtual string ItemName 
+		{ 
+			get
+			{
+				OnGetItemName(ref _ItemName);
+				 
+				return _ItemName; 
+			}
+			set 
+			{
+				OnSetItemName(ref value); 
+				_ItemName = value; 
+			} 
+		}
+
+		private string _ItemName;
+		partial void OnGetItemName(ref string value);
+		partial void OnSetItemName(ref string value);
+	
+		
+		//Commands
+		
+		public EditSlideshowDockBarItem()
+		{
+	
+			OnInitialize();
+			ApplyConvention(new BindCommandsDelegatesToMethods());
+		}
+
+		partial void OnInitialize();
+	}
+}
+
 namespace Smeedee.Client.Framework.ViewModel.Dialogs
 {
 	public partial class Dialog : TinyMVVM.Framework.ViewModelBase
