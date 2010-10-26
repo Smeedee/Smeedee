@@ -21,8 +21,8 @@ namespace Smeedee.Client.Framework.Services.Impl
         public event EventHandler Elapsed;
         public void Start(int interval)
         {
+			timer.Interval = new TimeSpan(0, 0, 0, 0, interval);
             timer.Start();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, interval);
         }
 
         public void Stop()
