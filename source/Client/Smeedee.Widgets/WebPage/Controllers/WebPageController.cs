@@ -38,6 +38,7 @@ namespace Smeedee.Widgets.WebPage.Controllers
 			Guard.Requires<ArgumentException>(config.ContainsSetting(refresh_interval));
 			this.config = config;
 
+			webPageViewModel.InputUrl = config.GetSetting(url).Value;
 			webPageViewModel.ValidatedUrl = config.GetSetting(url).Value;
 			webPageViewModel.RefreshInterval = int.Parse(config.GetSetting(refresh_interval).Value);
 		}

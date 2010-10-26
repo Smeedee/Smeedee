@@ -82,6 +82,16 @@ namespace Smeedee.Widgets.Tests.WebPage.Controllers
 			}
 
 			[Test]
+			public void Then_assure_ViewModels_InputUrl_is_changed()
+			{
+				updatedConfig.ChangeSetting("url", "http://www.smeedee.org");
+
+				controller.UpdateConfiguration(updatedConfig);
+
+				webPageViewModel.InputUrl.ShouldBe("http://www.smeedee.org");
+			}
+
+			[Test]
 			public void Then_assure_ViewModels_RefreshInterval_is_changed()
 			{
 				updatedConfig.ChangeSetting("refresh-interval", "10");
