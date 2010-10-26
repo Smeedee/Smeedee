@@ -27,9 +27,9 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
             }
 
             [Test]
-            public void Then_assure_it_has_a_GoTo_Command()
+            public void Then_assure_it_has_a_Save_Command()
             {
-                webPageViewModel.GoTo.ShouldNotBeNull();
+                webPageViewModel.Save.ShouldNotBeNull();
             }
 
             [Test]
@@ -43,10 +43,10 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         public class When_Url_is_not_specified : Shared
         {
             [Test]
-            public void Then_assure_GoTo_command_is_disabled()
+            public void Then_assure_Save_command_is_disabled()
             {
                 webPageViewModel.InputUrl = "";
-                webPageViewModel.GoTo.CanExecute().ShouldBe(false);
+                webPageViewModel.Save.CanExecute().ShouldBe(false);
             }
         }
 
@@ -54,10 +54,10 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         public class When_Url_is_specified : Shared
         {
             [Test]
-            public void Then_assure_GoTo_command_is_enabled()
+            public void Then_assure_Save_command_is_enabled()
             {
                 webPageViewModel.InputUrl = "http://smeedee.org";
-                webPageViewModel.GoTo.CanExecute().ShouldBeTrue();
+                webPageViewModel.Save.CanExecute().ShouldBeTrue();
             }
         }
 
@@ -65,7 +65,7 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         public class When_Url_is_specified_incorrectly : Shared
         {
             [Test]
-            public void Then_assure_GoTo_command_is_disabled()
+            public void Then_assure_Save_command_is_disabled()
             {
                 var truth_table = new List<string>
                 {
@@ -77,7 +77,7 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
                 foreach (var url in truth_table)
                 {
                     webPageViewModel.InputUrl = url;
-                    Assert.IsFalse(webPageViewModel.GoTo.CanExecute(), url);
+                    Assert.IsFalse(webPageViewModel.Save.CanExecute(), url);
                 }
             }
 
@@ -103,7 +103,7 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
         public class When_Url_is_specified_correctly : Shared
         {
             [Test]
-            public void Then_assure_GoTo_command_is_enabled()
+            public void Then_assure_Save_command_is_enabled()
             {
                 var truth_table = new List<string>
                 {
@@ -129,7 +129,7 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
                 foreach (var url in truth_table)
                 {
                     webPageViewModel.InputUrl = url;
-                    Assert.IsTrue(webPageViewModel.GoTo.CanExecute(), url);
+                    Assert.IsTrue(webPageViewModel.Save.CanExecute(), url);
                 }
             }
 

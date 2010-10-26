@@ -31,6 +31,8 @@ namespace Smeedee.Widgets.WebPage.ViewModel
             {
                 ErrorMessage = IsValidInputUrl() ? "" : "Invalid URL!";
                 ValidatedUrl = IsValidInputUrl() ? InputUrl : string.Empty;
+
+				Save.TriggerCanExecuteChanged();
             }
         }
 
@@ -44,6 +46,11 @@ namespace Smeedee.Widgets.WebPage.ViewModel
         {
             return !string.IsNullOrEmpty(InputUrl) && IsValidInputUrl();
         }
+
+		public bool CanSave()
+		{
+			return !string.IsNullOrEmpty(InputUrl) && IsValidInputUrl();
+		}
 
         private bool IsValidInputUrl()
         {
