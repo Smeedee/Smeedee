@@ -135,6 +135,12 @@
     <Compile Include="..\Smeedee.Client.Framework\Factories\ModuleLoaderFactory.cs">
       <Link>Factories\ModuleLoaderFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Messages\CloseModalDialogMessage.cs">
+      <Link>Messages\CloseModalDialogMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Messages\OpenModalDialogMessage.cs">
+      <Link>Messages\OpenModalDialogMessage.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Repositories\WidgetConfigurationRepository.cs">
       <Link>Repositories\WidgetConfigurationRepository.cs</Link>
     </Compile>
@@ -149,6 +155,9 @@
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\IDownloadStringService.cs">
       <Link>Services\IDownloadStringService.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\IEventAggregator.cs">
+      <Link>Services\IEventAggregator.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\IFullScreenService.cs">
       <Link>Services\IFullScreenService.cs</Link>
@@ -179,6 +188,9 @@
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\DockBarService.cs">
       <Link>Services\Impl\DockBarService.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\EventAggregator.cs">
+      <Link>Services\Impl\EventAggregator.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\ModuleLoader.cs">
       <Link>Services\Impl\ModuleLoader.cs</Link>

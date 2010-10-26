@@ -69,6 +69,8 @@
     <Compile Include="Converters\DateToStringConverter.cs" />
     <Compile Include="Converters\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\TimeSpanToPrettyStringConverter.cs" />
+    <Compile Include="Messages\CloseModalDialogMessage.cs" />
+    <Compile Include="Messages\OpenModalDialogMessage.cs" />
     <Compile Include="Services\Impl\EventAggregator.cs" />
     <Compile Include="Factories\ModuleLoaderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

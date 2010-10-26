@@ -35,6 +35,7 @@ namespace Smeedee.Client.Framework
 			ConfigureGlobalDependencies.ForAllViewModels(config =>
         	{
 				// Bind the other dependencies here that don't have any logical grouping
+				config.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
                 config.Bind<IAsyncRepository<WidgetMetadata>>().ToInstance(WidgetMetadataRepository.Instance);
                 config.Bind<IFullScreenService>().To<SLFullScreenService>();
                 config.Bind<ILog>().To<Logger>();

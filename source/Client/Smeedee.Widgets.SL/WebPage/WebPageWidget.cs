@@ -1,4 +1,6 @@
-﻿using Smeedee.Client.Framework.ViewModel;
+﻿using Smeedee.Client.Framework.Messages;
+using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widgets.SL.WebPage.Views;
@@ -17,16 +19,27 @@ namespace Smeedee.Widgets.SL.WebPage
     {
     	private readonly WebPageController webPageController;
     	private readonly WebPageViewModel webPageViewModel;
+    	private readonly IEventAggregator eventAggregator;
 
     	public WebPageWidget()
         {
             webPageViewModel = GetInstance<WebPageViewModel>();
         	webPageController = GetInstance<WebPageController>();
+			eventAggregator = GetInstance<IEventAggregator>();
 
 			ConfigurationChanged += WebPageWidget_ConfigurationChanged;
 
-            View = new WebPageView {DataContext = webPageViewModel};
+    		var webPageView = new WebPageView {DataContext = webPageViewModel};
             SettingsView = new WebPageSettingsView {DataContext = webPageViewModel};
+
+			eventAggregator.Subscribe<OpenModalDialogMessage>(this, msg =>
+			{
+				webPageView.HideWebBrowser();				
+			});
+			eventAggregator.Subscribe<CloseModalDialogMessage>(this, msg =>
+			{
+				webPageView.ShowWebBrowser();
+			});
 
 			SaveSettings.BeforeExecute += (o, e) => webPageController.SaveConfiguration();
 			webPageViewModel.Save.ExecuteDelegate = () => SaveSettings.Execute();
