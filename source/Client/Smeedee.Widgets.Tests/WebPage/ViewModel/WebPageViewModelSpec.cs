@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using NUnit.Framework;
 using Smeedee.Widgets.WebPage.ViewModel;
 using TinyBDD.Specification.NUnit;
@@ -151,7 +152,22 @@ namespace Smeedee.Widgets.Tests.WebPage.ViewModel
             }
         }
 
-        public class Shared
+    	[TestFixture]
+    	public class When_refresh_after_an_interval : Shared
+    	{
+    		[Test]
+    		public void Then_assure_ValidatedUrl_is_updated()
+    		{
+				webPageViewModel.InputUrl = "http://smeedee.org:8111";
+    			webPageViewModel.PropertyChangeRecorder.Start();
+
+				webPageViewModel.OnRefresh();
+
+				webPageViewModel.PropertyChangeRecorder.Data.Count(r => r.PropertyName == "ValidatedUrl").ShouldBe(1);
+    		}
+    	}
+
+		public class Shared
         {
             protected WebPageViewModel webPageViewModel;
 

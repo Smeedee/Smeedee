@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Smeedee.Widgets.WebPage.ViewModel
 {
     public partial class WebPageViewModel
     {
-        partial void OnInitialize()
+    	private Timer timer;
+
+    	partial void OnInitialize()
         {
             InputUrl = "Enter URL here";
             ValidatedUrl = string.Empty;
@@ -13,6 +16,14 @@ namespace Smeedee.Widgets.WebPage.ViewModel
 
             PropertyChanged += WebPageViewModel_PropertyChanged;
         }
+
+    	public int RefreshIntervalInSeconds
+    	{
+    		get
+    		{
+    			return RefreshInterval * 1000;		
+    		}
+    	}
 
         void WebPageViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -22,6 +33,12 @@ namespace Smeedee.Widgets.WebPage.ViewModel
                 ValidatedUrl = IsValidInputUrl() ? InputUrl : string.Empty;
             }
         }
+
+		public void OnRefresh()
+		{
+			if (IsValidInputUrl())
+				TriggerPropertyChanged("ValidatedUrl");
+		}
 
         public bool CanGoTo()
         {
