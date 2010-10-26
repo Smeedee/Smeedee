@@ -25,7 +25,7 @@ namespace Smeedee.Widgets.SL.WebPage
 
 			ConfigurationChanged += WebPageWidget_ConfigurationChanged;
 
-            View = new WebPageView {DataContext = null};
+            View = new WebPageView {DataContext = webPageViewModel};
             SettingsView = new WebPageSettingsView {DataContext = webPageViewModel};
 
 			SaveSettings.BeforeExecute += (o, e) => webPageController.SaveConfiguration();
