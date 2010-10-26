@@ -40,7 +40,17 @@ namespace Smeedee.Client.Framework.Services.Impl
             var messageType = typeof (TMessage);
             List<IInvokeEventHandler> subscribers;
             activeSubscriptions.TryGetValue(messageType, out subscribers);
-            subscribers.RemoveAll(s => ReferenceEquals(s.Subscriber.Target, subscriberToUnsusbscribe));
+
+        	var subscribersToRemove = new List<IInvokeEventHandler>();
+        	foreach (var s in subscribers)
+        	{
+				if (ReferenceEquals(s.Subscriber.Target, subscriberToUnsusbscribe))
+					subscribersToRemove.Add(s);
+        	}
+			subscribersToRemove.ForEach(s => subscribers.Remove(s));
+
+			//Had to remove this code because it wasn't silverlight complient
+            //subscribers.RemoveAll(s => ReferenceEquals(s.Subscriber.Target, subscriberToUnsusbscribe));
 
         }
 
