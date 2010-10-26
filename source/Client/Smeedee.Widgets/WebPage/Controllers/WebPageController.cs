@@ -21,10 +21,12 @@ namespace Smeedee.Widgets.WebPage.Controllers
 			Guard.Requires<ArgumentNullException>(configuration != null);
 			Guard.Requires<ArgumentNullException>(timer != null);
 
+			this.config = configuration;
+
 			this.webPageViewModel = webPageViewModel;
 			webPageViewModel.PropertyChanged += webPageViewModel_PropertyChanged;
+			webPageViewModel.ReloadSettings.ExecuteDelegate = () => UpdateConfiguration(config);
 
-			this.config = configuration;
 			this.timer = timer;
 			timer.Elapsed += new EventHandler(timer_Elapsed);
 			ConfigureAndStartTimer();

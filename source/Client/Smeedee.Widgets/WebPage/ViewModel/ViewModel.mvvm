@@ -10,3 +10,4 @@ namespace Smeedee.Widgets.WebPage.ViewModel
 		oproperty ErrorMessage as string
 
 		command Save
+		command ReloadSettings

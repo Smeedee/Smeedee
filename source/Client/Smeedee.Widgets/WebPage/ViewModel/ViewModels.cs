@@ -104,10 +104,12 @@ namespace Smeedee.Widgets.WebPage.ViewModel
 		
 		//Commands
 		public DelegateCommand Save { get; set; }
+		public DelegateCommand ReloadSettings { get; set; }
 		
 		public WebPageViewModel()
 		{
 			Save = new DelegateCommand();
+			ReloadSettings = new DelegateCommand();
 	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
