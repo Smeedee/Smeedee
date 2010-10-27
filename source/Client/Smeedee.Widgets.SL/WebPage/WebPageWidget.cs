@@ -1,4 +1,5 @@
-﻿using Smeedee.Client.Framework.Messages;
+﻿using System.ComponentModel;
+using Smeedee.Client.Framework.Messages;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
@@ -20,6 +21,7 @@ namespace Smeedee.Widgets.SL.WebPage
     	private readonly WebPageController webPageController;
     	private readonly WebPageViewModel webPageViewModel;
     	private readonly IEventAggregator eventAggregator;
+    	private WebPageView webPageView;
 
     	public WebPageWidget()
         {
@@ -27,9 +29,10 @@ namespace Smeedee.Widgets.SL.WebPage
         	webPageController = GetInstance<WebPageController>();
 			eventAggregator = GetInstance<IEventAggregator>();
 
+			PropertyChanged += WebPageWidget_PropertyChanged;
 			ConfigurationChanged += WebPageWidget_ConfigurationChanged;
 
-    		var webPageView = new WebPageView {DataContext = webPageViewModel};
+    		webPageView = new WebPageView {DataContext = webPageViewModel};
     		View = webPageView;
             SettingsView = new WebPageSettingsView {DataContext = webPageViewModel};
 
@@ -42,8 +45,20 @@ namespace Smeedee.Widgets.SL.WebPage
 				webPageView.ShowWebBrowser();
 			});
 
+
 			SaveSettings.BeforeExecute += (o, e) => webPageController.SaveConfiguration();
 			webPageViewModel.Save.ExecuteDelegate = () => SaveSettings.Execute();
+		}
+
+		void WebPageWidget_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "IsDisplayed")
+			{
+				if (IsDisplayed)
+					webPageView.ShowWebBrowser();
+				else
+					webPageView.HideWebBrowser();
+			}
 		}
 
 		void WebPageWidget_ConfigurationChanged(object sender, System.EventArgs e)

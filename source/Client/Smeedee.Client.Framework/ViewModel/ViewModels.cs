@@ -266,6 +266,29 @@ namespace Smeedee.Client.Framework.ViewModel
 		partial void OnGetIsInSettingsMode(ref bool value);
 		partial void OnSetIsInSettingsMode(ref bool value);
 
+		public virtual bool IsDisplayed
+		{
+			get 
+			{
+				OnGetIsDisplayed(ref _IsDisplayed);
+				 
+				return _IsDisplayed; 
+			}
+			set
+			{
+				if (value != _IsDisplayed)
+				{
+					OnSetIsDisplayed(ref value); 
+					_IsDisplayed = value;
+					TriggerPropertyChanged("IsDisplayed");
+				}
+			}
+		}
+		private bool _IsDisplayed;
+
+		partial void OnGetIsDisplayed(ref bool value);
+		partial void OnSetIsDisplayed(ref bool value);
+
 		public virtual Progressbar ViewProgressbar 
 		{ 
 			get

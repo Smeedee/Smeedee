@@ -63,6 +63,13 @@ namespace Smeedee.Client.Tests.ViewModel
             {
                 viewModel.SlideshowInfo.ShouldBe(string.Format(SlideshowInfoPausedTemplate, 1, viewModel.Slides.Count));
             }
+
+        	[Test]
+        	public void assure_IsDisplayed_flag_is_set_on_CurrentSlide()
+        	{
+        		viewModel.CurrentSlide.IsDisplayed.ShouldBeTrue();
+				viewModel.CurrentSlide.Widget.IsDisplayed.ShouldBeTrue();
+        	}
         }
 
         [TestFixture]
@@ -194,6 +201,21 @@ namespace Smeedee.Client.Tests.ViewModel
             {
                 viewModel.PropertyChangeRecorder.Data.Where(r => r.PropertyName == "CurrentSlide").Count().ShouldBe(1);
             }
+
+        	[Test]
+        	public void assure_IsDisplayed_flag_is_set_on_CurrentSlide()
+        	{
+				viewModel.CurrentSlide.IsDisplayed.ShouldBeTrue();
+        		viewModel.CurrentSlide.Widget.IsDisplayed.ShouldBeTrue();
+        	}
+
+        	[Test]
+        	public void assure_all_others_Slides_IsDisplayed_flag_is_removed()
+        	{
+				When_execute_Next_Command();
+        		
+				viewModel.Slides.Count(s => s.Widget.IsDisplayed).ShouldBe(1);
+        	}
         }
 
         [TestFixture]

@@ -25,6 +25,7 @@ namespace Smeedee.Client.Framework.ViewModel:
 		oproperty SettingsView as FrameworkElement
 		property ErrorInfo as ErrorInfo
 		oproperty IsInSettingsMode as bool
+		oproperty IsDisplayed as bool
 	 
 		property ViewProgressbar as Progressbar
 		property SettingsProgressbar as Progressbar

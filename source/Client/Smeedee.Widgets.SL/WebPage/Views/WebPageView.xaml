@@ -10,6 +10,9 @@
     </d:DataContext>
     
     <Grid x:Name="LayoutRoot" Background="White">
-        <WebBrowser Source="{Binding ValidatedUrl}" Margin="0,30,0,0" Name="webBrowser" />
+        <WebBrowser Source="{Binding ValidatedUrl}"
+                    Margin="0,30,0,0" 
+                    Visibility="Collapsed"
+                    Name="webBrowser"/>
     </Grid>
 </UserControl>

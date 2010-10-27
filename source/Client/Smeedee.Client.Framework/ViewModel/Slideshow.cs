@@ -57,6 +57,20 @@ namespace Smeedee.Client.Framework.ViewModel
             }
         }
 
+		partial void OnSetCurrentSlide(ref Slide value)
+		{
+			foreach (var slide in Slides)
+			{
+				slide.IsDisplayed = false;
+				if (slide.Widget != null)
+					slide.Widget.IsDisplayed = false;
+			}
+
+			value.IsDisplayed = true;
+			if (value.Widget != null)
+				value.Widget.IsDisplayed = true;
+		}
+
         void Slides_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (!HasSlides()) 
