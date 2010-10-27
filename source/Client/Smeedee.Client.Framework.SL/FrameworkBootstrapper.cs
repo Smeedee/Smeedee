@@ -35,8 +35,12 @@ namespace Smeedee.Client.Framework
 			ConfigureGlobalDependencies.ForAllViewModels(config =>
         	{
 				// Bind the other dependencies here that don't have any logical grouping
-				config.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
-                config.Bind<IAsyncRepository<WidgetMetadata>>().ToInstance(WidgetMetadataRepository.Instance);
+        		config.Bind<IInvokeBackgroundWorker>().To<AsyncVoidClient>();
+				
+				//Must point to an instance because Widget can't share objects in their IoC, only configuration
+        		config.Bind<IEventAggregator>().ToInstance(EventAggregator.Instance);
+                
+				config.Bind<IAsyncRepository<WidgetMetadata>>().ToInstance(WidgetMetadataRepository.Instance);
                 config.Bind<IFullScreenService>().To<SLFullScreenService>();
                 config.Bind<ILog>().To<Logger>();
                 config.Bind<IManageConfigurations>().ToInstance(new ConfigurationManager(new StandardTimer(), new AsyncConfigurationRepository()));

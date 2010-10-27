@@ -30,11 +30,12 @@ namespace Smeedee.Widgets.SL.WebPage
 			ConfigurationChanged += WebPageWidget_ConfigurationChanged;
 
     		var webPageView = new WebPageView {DataContext = webPageViewModel};
+    		View = webPageView;
             SettingsView = new WebPageSettingsView {DataContext = webPageViewModel};
 
 			eventAggregator.Subscribe<OpenModalDialogMessage>(this, msg =>
 			{
-				webPageView.HideWebBrowser();				
+				webPageView.HideWebBrowser();
 			});
 			eventAggregator.Subscribe<CloseModalDialogMessage>(this, msg =>
 			{

@@ -12,12 +12,18 @@ namespace Smeedee.Widgets.SL.WebPage.Views
 
 		public void HideWebBrowser()
 		{
-			webBrowser.Visibility = Visibility.Collapsed;
+			Dispatcher.BeginInvoke(() =>
+			{
+				webBrowser.Visibility = Visibility.Collapsed;
+			});
 		}
 
 		public void ShowWebBrowser()
 		{
-			webBrowser.Visibility = Visibility.Visible;
+			Dispatcher.BeginInvoke(() =>
+			{
+				webBrowser.Visibility = Visibility.Visible;
+			});
 		}
     }
 }

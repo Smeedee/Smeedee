@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading;
+using TinyMVVM.Framework.Services.Impl;
 
 namespace Smeedee.Client.Framework.Services.Impl
 {
@@ -10,6 +11,8 @@ namespace Smeedee.Client.Framework.Services.Impl
         private IInvokeBackgroundWorker backgroundworker;
 
         private Dictionary<Type, List<IInvokeEventHandler>> activeSubscriptions = new Dictionary<Type, List<IInvokeEventHandler>>(10);
+
+    	public static IEventAggregator Instance = new EventAggregator(new AsyncVoidClient());
 
         public EventAggregator(IInvokeBackgroundWorker backgroundworker)
         {
