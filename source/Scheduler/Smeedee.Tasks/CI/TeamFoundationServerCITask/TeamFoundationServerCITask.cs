@@ -48,15 +48,17 @@ namespace Smeedee.Tasks.CI.TeamFoundationServerCITask
         private IRepository<CIServer> GetTfsciServerRepository()
         {
             var serverUrl = (string)_configuration.ReadEntryValue(URL_SETTING_NAME);
+            string username = (string)_configuration.ReadEntryValue(USERNAME_SETTING_NAME);
+            string domain = username.Contains('\\') ? username.Substring(0, username.IndexOf('\\')) : null;
+            username = username.Contains('\\') ? username.Substring(username.IndexOf('\\') + 1) : username;
+            string password = (string)_configuration.ReadEntryValue(PASSWORD_SETTING_NAME);
+
+            var cred = string.IsNullOrEmpty(domain) ? new NetworkCredential(username, password) : new NetworkCredential(username, password, domain);
 
             return new TFSCIServerRepository(
                 serverUrl,
                 (string)_configuration.ReadEntryValue(PROJECT_SETTING_NAME),
-                new NetworkCredential()
-                {
-                    UserName = (string)_configuration.ReadEntryValue(USERNAME_SETTING_NAME),
-                    Password = (string) _configuration.ReadEntryValue(PASSWORD_SETTING_NAME)
-                });
+                cred);
         }
     }
 }

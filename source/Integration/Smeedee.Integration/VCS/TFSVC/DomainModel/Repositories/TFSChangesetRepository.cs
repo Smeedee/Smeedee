@@ -36,6 +36,7 @@ using Microsoft.TeamFoundation.VersionControl.Client;
 using Changeset=Smeedee.DomainModel.SourceControl.Changeset;
 using MsChangeset = Microsoft.TeamFoundation.VersionControl.Client.Changeset;
 using Smeedee.DomainModel.Framework;
+using System;
 
 
 namespace Smeedee.Integration.VCS.TFSVC.DomainModel.Repositories
@@ -43,13 +44,13 @@ namespace Smeedee.Integration.VCS.TFSVC.DomainModel.Repositories
     public class TFSChangesetRepository : IRepository<Changeset>
     {
         private TfsVcQueryOptimizer queryOptimizer;
-        private TeamFoundationServer tfsClient;
+        private TfsTeamProjectCollection tfsClient;
         private string repository;
 
         public TFSChangesetRepository(string tfsServerUrl, string repository, ICredentials userCredentials)
         {
             this.repository = repository;
-            tfsClient = new TeamFoundationServer(tfsServerUrl, userCredentials);
+            tfsClient = new TfsTeamProjectCollection(new Uri(tfsServerUrl), userCredentials);
             tfsClient.Authenticate();
 
             queryOptimizer = new TfsVcQueryOptimizer();
@@ -60,7 +61,7 @@ namespace Smeedee.Integration.VCS.TFSVC.DomainModel.Repositories
         public IEnumerable<Changeset> Get(Specification<Changeset> specification)
         {
             List<Changeset> resultset;
-            var vcs = (VersionControlServer) tfsClient.GetService(typeof (VersionControlServer));
+            var vcs = tfsClient.GetService<VersionControlServer>();
             var query = new QueryModel();
 
             queryOptimizer.Optimize(specification, query);

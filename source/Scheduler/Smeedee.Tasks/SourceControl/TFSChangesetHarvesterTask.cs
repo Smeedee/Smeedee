@@ -46,14 +46,17 @@ namespace Smeedee.Tasks.SourceControl
 
         private TFSChangesetRepository GetChangesetRepository()
         {
+            string username = (string)config.ReadEntryValue(USERNAME_SETTING_NAME);
+            string domain = username.Contains('\\') ? username.Substring(0, username.IndexOf('\\')) : null;
+            username = username.Contains('\\') ? username.Substring(username.IndexOf('\\') + 1) : username;
+            string password = (string)config.ReadEntryValue(PASSWORD_SETTING_NAME);
+
+            var cred = string.IsNullOrEmpty(domain) ? new NetworkCredential(username, password) : new NetworkCredential(username, password, domain);
+
             return new TFSChangesetRepository(
                    (string)config.ReadEntryValue(URL_SETTING_NAME),
                    (string)config.ReadEntryValue(PROJECT_SETTING_NAME),
-                   new NetworkCredential()
-                   {
-                       UserName = (string)config.ReadEntryValue(USERNAME_SETTING_NAME),
-                       Password = (string)config.ReadEntryValue(PASSWORD_SETTING_NAME)
-                   });
+                   cred);
         }
     }
 }
