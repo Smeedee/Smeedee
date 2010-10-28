@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Threading;
-using TinyMVVM.Framework.Services.Impl;
+using System.Linq;
 
 namespace Smeedee.Client.Framework.Services.Impl
 {
@@ -10,9 +9,20 @@ namespace Smeedee.Client.Framework.Services.Impl
     {
         private IInvokeBackgroundWorker backgroundworker;
 
-        private Dictionary<Type, List<IInvokeEventHandler>> activeSubscriptions = new Dictionary<Type, List<IInvokeEventHandler>>(10);
+        private static EventAggregator instance;
+        public static EventAggregator Instance
+        {
+            get
+            {
+                if(instance == null)
+                    instance = new EventAggregator(new AsyncVoidClient());
 
-    	public static IEventAggregator Instance = new EventAggregator(new AsyncVoidClient());
+                return instance;
+            }
+        }
+
+
+        private Dictionary<Type, List<IInvokeEventHandler>> activeSubscriptions = new Dictionary<Type, List<IInvokeEventHandler>>(10);
 
         public EventAggregator(IInvokeBackgroundWorker backgroundworker)
         {
@@ -36,7 +46,6 @@ namespace Smeedee.Client.Framework.Services.Impl
             subscriptions.Add(subscription);
         }
 
-
         public void Unsubscribe<TMessage>(object subscriberToUnsusbscribe)
             where TMessage: MessageBase
         {
@@ -44,31 +53,53 @@ namespace Smeedee.Client.Framework.Services.Impl
             List<IInvokeEventHandler> subscribers;
             activeSubscriptions.TryGetValue(messageType, out subscribers);
 
-        	var subscribersToRemove = new List<IInvokeEventHandler>();
-        	foreach (var s in subscribers)
-        	{
-				if (ReferenceEquals(s.Subscriber.Target, subscriberToUnsusbscribe))
-					subscribersToRemove.Add(s);
-        	}
+            var subscribersToRemove =
+                subscribers.Where(s => ReferenceEquals(s.Subscriber.Target, subscriberToUnsusbscribe)).ToList();
+			
 			subscribersToRemove.ForEach(s => subscribers.Remove(s));
+        }
 
-			//Had to remove this code because it wasn't silverlight complient
-            //subscribers.RemoveAll(s => ReferenceEquals(s.Subscriber.Target, subscriberToUnsusbscribe));
-
+        public void PublishMessageAsync<TMessage>(TMessage message) 
+            where TMessage : MessageBase
+        {
+            PublishMessageInternal(message, true);
         }
 
         public void PublishMessage<TMessage>(TMessage message)
             where TMessage: MessageBase
         {
-            var messageType = typeof (TMessage);
+            PublishMessageInternal(message, false);
+        }
+
+        private void PublishMessageInternal<TMessage>(TMessage message, bool asyncInvokation)
+            where TMessage: MessageBase
+        {
+            var messageType = typeof(TMessage);
             List<IInvokeEventHandler> subscriptions;
+            List<IInvokeEventHandler> deadSubscribers = new List<IInvokeEventHandler>();
             activeSubscriptions.TryGetValue(messageType, out subscriptions);
-            if(subscriptions != null)
+            if (subscriptions != null)
             {
                 foreach (var subscription in subscriptions)
                 {
-                    bool targetStillAlive = subscription.Invoke(message, backgroundworker);
+                    if (subscription.Subscriber.IsAlive)
+                    {
+                        if(asyncInvokation)
+                        {
+                            subscription.Invoke(message, backgroundworker);
+                        }
+                        else
+                        {
+                            subscription.Invoke(message);
+                        }
+                    }
+                    else
+                    {
+                        deadSubscribers.Add(subscription);
+                    }
                 }
+
+                deadSubscribers.ForEach(s => subscriptions.Remove(s));
             }
         }
 
@@ -84,22 +115,28 @@ namespace Smeedee.Client.Framework.Services.Impl
                 this.eventHandlerReference = new WeakReference(eventHandler);
             }
 
-            public bool Invoke(MessageBase message, IInvokeBackgroundWorker workerToInvokeOn)
+            public void Invoke(MessageBase message, IInvokeBackgroundWorker workerToInvokeOn)
             {
-                if( eventHandlerReference.IsAlive)
-                {
-                    var action = eventHandlerReference.Target as Action<TMessage>;
-                    workerToInvokeOn.RunAsyncVoid(() => action(message as TMessage));
-                }
+                var action = eventHandlerReference.Target as Action<TMessage>;
+                workerToInvokeOn.RunAsyncVoid(() => action(message as TMessage));
+            }
 
-                return eventHandlerReference.IsAlive;
+            public void Invoke(MessageBase message)
+            {
+                var action = eventHandlerReference.Target as Action<TMessage>;
+                if(action != null)
+                    action(message as TMessage);
             }
         }
 
         private interface IInvokeEventHandler
         {
-            bool Invoke(MessageBase message, IInvokeBackgroundWorker workerToInvokeOn);
+            void Invoke(MessageBase message);
+            void Invoke(MessageBase message, IInvokeBackgroundWorker workerToInvokeOn);
             WeakReference Subscriber { get; set; }
         }
+
+
+
     }
 }

@@ -27,12 +27,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-
 using Smeedee.DomainModel.SourceControl;
-
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
-
 using Changeset=Smeedee.DomainModel.SourceControl.Changeset;
 using MsChangeset = Microsoft.TeamFoundation.VersionControl.Client.Changeset;
 using Smeedee.DomainModel.Framework;

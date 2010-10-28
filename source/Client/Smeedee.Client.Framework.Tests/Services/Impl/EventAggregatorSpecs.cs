@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -34,12 +35,31 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
         public class when_publishing_messages : shared
         {
             [Test]
-            public void Assure_subscribed_event_handlers_are_called()
+            public void Assure_all_subscribed_event_handlers_are_called()
             {
-                ea.Subscribe<TestMessage>(this, msg => originalGuid = msg.Id);
+                int callCount = 0;
+                int numberOfSubscribersToTestWith = 10;
+                for (int i = 0; i < numberOfSubscribersToTestWith; i++)
+                {
+                    ea.Subscribe<TestMessage>(this, m => { callCount++; });
+                }
+                
                 ea.PublishMessage(testMessage);
-                originalGuid.ShouldBe(testMessage.Id);
+                callCount.ShouldBe(numberOfSubscribersToTestWith);
             }
+
+            [Test]
+            public void Assure_only_correct_subscriptions_are_notified()
+            {
+                bool firstWasCalled = false, secondWasCalled = false;
+                ea.Subscribe<TestMessage>(this, m => { firstWasCalled = true; });
+                ea.Subscribe<AnotherTestMessage>(this, m => { secondWasCalled = true; });
+
+                ea.PublishMessage(testMessage);
+                firstWasCalled.ShouldBeTrue();
+                secondWasCalled.ShouldBeFalse();
+            }
+
 
             [Test]
             public void Assure_unsubscribed_handlers_does_not_get_called()
@@ -53,20 +73,60 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
             }
 
             [Test]
+            public void Assure_dead_subscribers_are_removed()
+            {
+                DateTime firstStartTime = DateTime.Now;
+                DateTime firstRunCompleted;
+                DateTime secondStartTime;
+                DateTime secondRunCompleted;
+
+                ea.Subscribe<TestMessage>(this, msg => {});
+                ea.PublishMessage<TestMessage>(new TestMessage(this));
+
+                firstRunCompleted = DateTime.Now;
+
+                for (int i = 0; i < 100000; i++)
+                {
+                    SubscribingObject so = new SubscribingObject();
+                    ea.Subscribe<TestMessage>(so, so.ProcessMessage);
+                    so = null;
+                }
+                GC.Collect();
+                GC.WaitForFullGCComplete();
+                // This call is expected to remove dead subscribers
+                ea.PublishMessage(testMessage);
+
+                secondStartTime = DateTime.Now;
+                ea.PublishMessage(testMessage);
+                secondRunCompleted = DateTime.Now;
+
+                var timeDifferenceBetweenFirstAndSecondRun = Math.Abs(
+                    ((firstRunCompleted - firstStartTime) - (secondRunCompleted - secondStartTime)).TotalMilliseconds);
+                Debug.WriteLine(timeDifferenceBetweenFirstAndSecondRun);
+                timeDifferenceBetweenFirstAndSecondRun.ShouldBeLessThan(50);
+            }
+
+        }
+
+        [TestFixture]
+        public class when_publishing_messages_async : shared
+        {
+            [Test]
             public void Assure_message_prosessing_is_done_on_background_thread()
             {
                 Mock<IInvokeBackgroundWorker> backgroundWorkerMock = new Mock<IInvokeBackgroundWorker>();
                 bool mockWasUsed = false;
                 backgroundWorkerMock.Setup(m => m.RunAsyncVoid(It.IsAny<Action>())).Callback(() => mockWasUsed = true);
-                
+
                 ea = new EventAggregator(backgroundWorkerMock.Object);
 
-                ea.Subscribe<TestMessage>(this, msg => {} );
-                ea.PublishMessage(testMessage);
+                ea.Subscribe<TestMessage>(this, msg => { });
+                ea.PublishMessageAsync(testMessage);
 
                 mockWasUsed.ShouldBeTrue();
             }
         }
+
 
         [TestFixture]
         public class when_subscriber_has_been_disposed : shared
@@ -105,6 +165,17 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
         public Guid Id { get; private set; }
 
         public TestMessage(object sender) : base(sender)
+        {
+            Id = Guid.NewGuid();
+        }
+    }
+
+    public class AnotherTestMessage : MessageBase
+    {
+        public Guid Id { get; private set; }
+
+        public AnotherTestMessage(object sender)
+            : base(sender)
         {
             Id = Guid.NewGuid();
         }

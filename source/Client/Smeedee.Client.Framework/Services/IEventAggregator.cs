@@ -12,6 +12,10 @@ namespace Smeedee.Client.Framework.Services
 
         void PublishMessage<TMessage>(TMessage message)
             where TMessage: MessageBase;
+
+        void PublishMessageAsync<TMessage>(TMessage message)
+            where TMessage : MessageBase;
+
     }
 
     public class MessageBase
