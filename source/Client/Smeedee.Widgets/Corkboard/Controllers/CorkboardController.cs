@@ -15,7 +15,7 @@ namespace Smeedee.Widgets.Corkboard.Controllers
     public class CorkboardController
     {
         private readonly IRepository<RetrospectiveNote> _repository;
-        private readonly IInvokeBackgroundWorker<IEnumerable<RetrospectiveNote>> _asyncClient;
+        private readonly IInvokeBackgroundWorker _asyncClient;
         private readonly IPersistDomainModelsAsync<RetrospectiveNote> _persistRepository;
         private readonly IDeleteDomainModelsAsync<RetrospectiveNote> _deleteRepository;
         private readonly IProgressbar _progressBar;
@@ -37,7 +37,7 @@ namespace Smeedee.Widgets.Corkboard.Controllers
                                    IDeleteDomainModelsAsync<RetrospectiveNote> deleteRetrospectiveNoteRepository,
                                    ITimer timer, 
                                    IUIInvoker uiInvoker, 
-                                   IInvokeBackgroundWorker<IEnumerable<RetrospectiveNote>> asyncClient, 
+                                   IInvokeBackgroundWorker asyncClient, 
                                    ILog logger, 
                                    IProgressbar progressbar,
                                    Configuration config 

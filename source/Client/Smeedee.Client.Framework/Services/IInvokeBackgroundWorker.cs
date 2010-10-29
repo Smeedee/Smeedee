@@ -35,6 +35,7 @@ namespace Smeedee.Client.Framework.Services
     {
         void RunAsync(Func<TReturnType> action);
         event EventHandler<AsyncResponseEventArgs<TReturnType>> RunAsyncCompleted;
+        void RunAsyncVoid(Action action);
     }
 
     public interface IInvokeBackgroundWorker
