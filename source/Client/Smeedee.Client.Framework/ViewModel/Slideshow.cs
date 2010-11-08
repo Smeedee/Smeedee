@@ -66,8 +66,10 @@ namespace Smeedee.Client.Framework.ViewModel
 					slide.Widget.IsDisplayed = false;
 			}
 
-			value.IsDisplayed = true;
-			if (value.Widget != null)
+            if (value != null)
+                value.IsDisplayed = true;
+
+			if (value != null && value.Widget != null)
 				value.Widget.IsDisplayed = true;
 		}
 
