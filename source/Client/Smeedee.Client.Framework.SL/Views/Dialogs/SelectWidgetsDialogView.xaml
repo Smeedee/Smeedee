@@ -504,7 +504,7 @@
 			<Button Content="Unselect all"  VerticalAlignment="Center"  Command="{Binding DeselectAll}" Margin="0,0,8,0" />
 		</StackPanel>
 
-		<ListBox Grid.Row="2" x:Name="list" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="465" d:DataContext="{StaticResource SelectWidgetsDialogSampleSource}" SelectionChanged="list_SelectionChanged" ItemsSource="{Binding FilteredWidgets}">
+		<ListBox Grid.Row="2" x:Name="list" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:DataContext="{StaticResource SelectWidgetsDialogSampleSource}" SelectionChanged="list_SelectionChanged" ItemsSource="{Binding FilteredWidgets}" Height="365">
 		
 			<ListBox.ItemTemplate>
 				<DataTemplate>
