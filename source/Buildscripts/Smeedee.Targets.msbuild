@@ -10,6 +10,10 @@
 	-->
         <TempDirs Include="..\Build" />
     </ItemGroup>
+	
+	<PropertyGroup>
+         <BuildConfiguration>Debug</BuildConfiguration>
+    </PropertyGroup>
 
   
     <!-- Build Targets -->
@@ -46,7 +50,7 @@
 
 
   <Target Name="Compile" DependsOnTargets="Clean;CreateOutputDirectories">
-    <MSBuild Projects="@(Project)" Targets="Build"/>
+    <MSBuild Projects="@(Project)" Targets="Build" Properties="Configuration=$(BuildConfiguration)"/>
   </Target>
 
   <Target Name="IntegrationTests">
@@ -72,10 +76,10 @@
           Command="xcopy Client\Smeedee.Client.Web\*.* Build\bin\$(BuildLabel)\Smeedee.Client.Web\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
     
     <Exec WorkingDirectory="..\"
-          Command="xcopy Client\Smeedee.Client.SL\bin\Release\*.* Build\bin\$(BuildLabel)\Smeedee.Client.SL\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
+          Command="xcopy Client\Smeedee.Client.SL\bin\$(BuildConfiguration)\*.* Build\bin\$(BuildLabel)\Smeedee.Client.SL\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
     
     <Exec WorkingDirectory="..\"
-          Command="xcopy Scheduler\Smeedee.Scheduler.Console\bin\Release\*.* Build\bin\$(BuildLabel)\Smeedee.Scheduler.Console\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
+          Command="xcopy Scheduler\Smeedee.Scheduler.Console\bin\$(BuildConfiguration)\*.* Build\bin\$(BuildLabel)\Smeedee.Scheduler.Console\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
 
     <Exec WorkingDirectory="..\"
           Command="xcopy Build\bin\$(BuildLabel)\*.* Build\bin\Latest\ /E /S /Y"
