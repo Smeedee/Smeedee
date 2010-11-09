@@ -67,7 +67,7 @@
 
   
   
-  <Target Name="DeployOutput" DependsOnTargets="CreateOutputDirectories">
+  <Target Name="DeployOutput" DependsOnTargets="Compile">
     <Exec WorkingDirectory="..\"
           Command="xcopy Client\Smeedee.Client.Web\*.* Build\bin\$(BuildLabel)\Smeedee.Client.Web\ /E /S /Y /EXCLUDE:files-to-exclude-in-deploy.txt"/>
     
