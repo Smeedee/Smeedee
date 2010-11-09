@@ -27,14 +27,14 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="50,30,0,0" x:Name="help4" Visibility="Collapsed">
                 <TextBlock Text="Learn More:" Foreground="White" FontSize="20"/>
-                <HyperlinkButton Content="Smeedee Wiki" TargetName="_blank" HorizontalAlignment="Left" NavigateUri="http://wiki.smeedee.com/display/apd/Home" FontSize="16"/>
+                <HyperlinkButton Content="Smeedee Home Page" TargetName="_blank" HorizontalAlignment="Left" NavigateUri="http://smeedee.org" FontSize="16"/>
             </StackPanel>
         </StackPanel>
 
         <StackPanel x:Name="help" Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Visibility="Collapsed" HorizontalAlignment="Left">
             <!--<Shapes:BlockArrow Orientation="Down" Width="20" Height="20" VerticalAlignment="Bottom" Fill="White" Margin="0,0,5,2" Stroke="LightGray"/>-->
             <TextBlock   VerticalAlignment="Bottom" Text="▼"  FontSize="20" Foreground="White" FontWeight="ExtraBold" Margin="0,0,3,0"/>
-            <TextBlock   VerticalAlignment="Bottom" Text="Add and Edit slides"  FontSize="20" Foreground="White"/>
+            <TextBlock   VerticalAlignment="Bottom" Text="Navigate slides"  FontSize="20" Foreground="White"/>
         </StackPanel>
 
         <StackPanel x:Name="help2" Visibility="Collapsed" Orientation="Horizontal" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right">
@@ -43,7 +43,7 @@
             <!--<Shapes:BlockArrow Orientation="Up" Width="20" Height="20" VerticalAlignment="Top" Fill="White" Margin="5,2,0,0" Stroke="LightGray"/>-->
         </StackPanel>
         <StackPanel x:Name="help3" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Visibility="Collapsed" Orientation="Horizontal">
-            <TextBlock  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="20"  Text="Change settings"/>
+            <TextBlock  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="20"  Text="Configure Smeedee"/>
             <TextBlock  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="20" Margin="3,0,0,3" Text="▲" FontWeight="ExtraBold"/>
             <!--<Shapes:BlockArrow Orientation="Up" Width="20" Height="20" VerticalAlignment="Top" Fill="White" Margin="5,2,0,0" Stroke="LightGray"/>-->
         </StackPanel>
