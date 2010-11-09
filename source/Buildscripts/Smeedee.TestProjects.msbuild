@@ -27,7 +27,7 @@
     <TestProject Include="..\Widget\Smeedee.Widget.Corkboard.Tests\Smeedee.Widget.Corkboard.Tests.csproj">
       <Assembly>..\Widget\Smeedee.Widget.Corkboard.Tests\bin\debug\Smeedee.Widget.Corkboard.Tests.dll</Assembly>
       <Report>TestResults.Smeedee.Widget.Corkboard.xml</Report>
-    </TestProject>--
+    </TestProject>-->
 
     <TestProject Include="..\Widget\Smeedee.Widget.ProjectInfo.Tests\Smeedee.Widget.ProjectInfo.Tests.csproj">
       <Assembly>..\Widget\Smeedee.Widget.ProjectInfo.Tests\bin\debug\Smeedee.Widget.ProjectInfo.Tests.dll</Assembly>
