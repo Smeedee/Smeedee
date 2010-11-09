@@ -39,10 +39,11 @@
       <Report>TestResults.Smeedee.Widget.SourceControl.xml</Report>
     </TestProject>
 
+	<!-- TODO Commented out due to MSTest/Silverlight Test
     <TestProject Include="..\Widget\Smeedee.Widget.TeamMembers.Test\Smeedee.Widget.TeamMembers.Test.csproj">
       <Assembly>..\Widget\Smeedee.Widget.TeamMembers.Test\bin\debug\Smeedee.Widget.TeamMembers.Test.dll</Assembly>
       <Report>TestResults.Smeedee.Widget.TeamMembers.xml</Report>
-    </TestProject>
+    </TestProject>-->
 
     <TestProject Include="..\Widget\Smeedee.Widget.Admin.Tasks.Tests\Smeedee.Widget.Admin.Tasks.Tests.csproj">
       <Assembly>..\Widget\Smeedee.Widget.Admin.Tasks.Tests\bin\debug\Smeedee.Widget.Admin.Tasks.Tests.dll</Assembly>
