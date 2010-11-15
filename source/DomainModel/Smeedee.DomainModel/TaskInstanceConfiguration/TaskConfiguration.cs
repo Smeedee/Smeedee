@@ -50,7 +50,7 @@ namespace Smeedee.DomainModel.TaskInstanceConfiguration
         {
             try
             {
-                return Entries.Single(e => e.Name == name).Value;
+                return Entries.Single(e => e != null && e.Name == name).Value;
             }
             catch (Exception exception)
             {

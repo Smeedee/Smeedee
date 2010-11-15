@@ -71,8 +71,6 @@ namespace Smeedee.Widget.CI.ViewModels
         public DelegateCommand ReloadSettings { get; set; }
 
 
-
-
         public static string GetProjectSelectedSettingName(CIProject project)
         {
             return project.SystemId + "-is-shown";

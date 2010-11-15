@@ -44,6 +44,35 @@
     <APDIntegrationOutputBin Include="..\Integration\Smeedee.Integration\bin\Debug\*.dll"/>
     
     <APDInstallerOutput Include="..\Installers\Smeedee.Client.Web.Installer\bin\Debug\*.msi"/>
+
+    <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\Smeedee.Client.Framework.dll" />
+    <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\Smeedee.DomainModel.Framework.dll" />
+    <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\Smeedee.DomainModel.dll" />
+    <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\TinyMVVM.dll" />
+    <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\Ninject.dll" />
+    <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\Newtonsoft.Json.dll" />
+
+    <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\Smeedee.Client.Framework.SL.dll" />
+    <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\Smeedee.DomainModel.Framework.SL.dll" />
+    <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\Smeedee.DomainModel.SL.dll" />
+    <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\TinyMVVM.SL.dll" />
+    <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\Ninject.dll" />
+    <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\Newtonsoft.Json.Silverlight.dll" />
+    
+    <SDKTaskAssemblies/>
+    <SDKTaskAssemblies/>
+    <SDKTaskAssemblies/>
+    
+    <SDKTaskAssemblies/>
+    <SDKTaskAssemblies/>
+    <SDKTaskAssemblies/>
+    
+    <SDKTaskAssembliesSilverlight/>
+    <SDKTaskAssembliesSilverlight/>
+    <SDKTaskAssembliesSilverlight/>
+    <SDKTaskAssembliesSilverlight/>
+    <SDKTaskAssembliesSilverlight/>
+    <SDKTaskAssembliesSilverlight/>
   </ItemGroup>
 
 

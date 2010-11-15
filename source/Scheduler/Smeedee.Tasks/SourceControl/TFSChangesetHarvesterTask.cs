@@ -25,7 +25,7 @@ namespace Smeedee.Tasks.SourceControl
     [TaskSetting(5, PROJECT_SETTING_NAME, typeof(string), "")]
     public class TFSChangesetHarvesterTask : ChangesetHarvesterBase
     {
-        protected const string PROJECT_SETTING_NAME = "Project";
+        public const string PROJECT_SETTING_NAME = "Project";
         public override string Name { get { return "TFS Changeset Harvester"; } }
 
         public TFSChangesetHarvesterTask(IRepository<Changeset> changesetDbRepository, IPersistDomainModels<Changeset> databasePersister, TaskConfiguration config) 
@@ -35,6 +35,13 @@ namespace Smeedee.Tasks.SourceControl
             Guard.Requires<ArgumentNullException>(databasePersister != null);
             Guard.Requires<ArgumentNullException>(config != null);
             Guard.Requires<TaskConfigurationException>(config.Entries.Count() >= 4);
+
+            var projectSettingValue = config.ReadEntryValue(PROJECT_SETTING_NAME) as string;
+
+            Guard.Requires<ArgumentException>(
+                projectSettingValue != null &&
+                projectSettingValue.StartsWith("$\\"),
+                string.Format("The setting named '{0}' needs to start with $\\, but was '{1}'", PROJECT_SETTING_NAME, projectSettingValue ?? "null" ));
 
             Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);
         }

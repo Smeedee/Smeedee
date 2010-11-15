@@ -121,6 +121,7 @@
     <Compile Include="SourceControl\SourceControlUserToUserDbSyncTaskSpecs.cs" />
     <Compile Include="SourceControl\ChangesetHarvesterBaseSpecs.cs" />
     <Compile Include="SourceControl\SVN_Git_TFS_HarvestersSpecs.cs" />
+    <Compile Include="SourceControl\TFSChangesetHarvesterTaskSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

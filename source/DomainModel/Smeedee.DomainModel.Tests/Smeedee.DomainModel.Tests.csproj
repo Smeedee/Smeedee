@@ -110,6 +110,7 @@
     <Compile Include="SourceControl\EmptyChangesetSpecs.cs" />
     <Compile Include="SpecificationExtensionMethods.cs" />
     <Compile Include="TaskInstanceConfiguration\TaskConfigurationEntrySpecs.cs" />
+    <Compile Include="TaskInstanceConfiguration\TaskConfigurationSpecs.cs" />
     <Compile Include="Users\SpecificationSpecs.cs" />
     <Compile Include="Users\UserdbSpecs.cs" />
     <Compile Include="Users\UserSpecs.cs" />

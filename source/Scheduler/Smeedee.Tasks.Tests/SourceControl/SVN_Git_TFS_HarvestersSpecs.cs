@@ -28,8 +28,7 @@ namespace Smeedee.Tasks.Tests.SourceControl
         {
             Scenario.StartNew(this, scenario =>
             {
-                scenario.Given(There_is_a_configuration_in_the_configRepository).
-                    And(All_harvesters_are_instantiated);
+                scenario.Given(All_harvesters_are_instantiated);
                 scenario.When("name is checked");
                 scenario.Then(All_of_the_tasks_have_overridden_the_default_name);
             });
@@ -38,9 +37,7 @@ namespace Smeedee.Tasks.Tests.SourceControl
         protected Context All_harvesters_are_instantiated = () =>
         {
             var changesetDbRepo = new Mock<IRepository<Changeset>>().Object;
-            var configMock = new Mock<TaskConfiguration>();
-            configMock.Setup((c) => c.Entries).Returns(new List<TaskConfigurationEntry> {null, null, null, null,null});
-            var config = configMock.Object;
+            var config = new TaskConfiguration {Entries = CreateTaskConfigurationEntries()};
             var gitConfigWithFiveEntries = new TaskConfiguration {Entries = new List<TaskConfigurationEntry>() {null, null, null, null, null,null}};
             var changesetDbPersister = new Mock<IPersistDomainModels<Changeset>>().Object;
             tasks = new ChangesetHarvesterBase[]
@@ -51,11 +48,17 @@ namespace Smeedee.Tasks.Tests.SourceControl
             };
         };
 
-        protected Context There_is_a_configuration_in_the_configRepository = () =>
+        private static List<TaskConfigurationEntry> CreateTaskConfigurationEntries()
         {
-            configRepoMock.Setup(c => c.Get(It.IsAny<Specification<Configuration>>())).
-                Returns(new List<Configuration> { new Configuration() });
-        };
+            return new List<TaskConfigurationEntry>
+                       {
+                           new TaskConfigurationEntry(){Name = TFSChangesetHarvesterTask.PROJECT_SETTING_NAME, Value = "$\\testProject", Type = typeof(string)},
+                           new TaskConfigurationEntry(){Name = TFSChangesetHarvesterTask.USERNAME_SETTING_NAME, Value = "test", Type = typeof(string)},
+                           new TaskConfigurationEntry(){Name = TFSChangesetHarvesterTask.PASSWORD_SETTING_NAME, Value = "pass", Type = typeof(string)},
+                           new TaskConfigurationEntry(){Name = TFSChangesetHarvesterTask.URL_SETTING_NAME, Value = "http://uri", Type = typeof(string)},
+                           new TaskConfigurationEntry(){Name = TFSChangesetHarvesterTask.SOURCECONTROL_SERVER_NAME, Value = "myName", Type = typeof(string)}
+                       };
+        }
 
         private class DummyTask : TaskBase
         {

@@ -35,6 +35,7 @@ namespace Smeedee.Widgets.SL.TeamMembers
             SettingsView = new TeamMembersSettingsView { DataContext = settingsViewModel };
 
             settingsViewModel.PropertyChanged += ViewModelPropertyChanged;
+            
         }
 
         private void TeamMembersWidget_PropertyChanged(object sender, PropertyChangedEventArgs e)

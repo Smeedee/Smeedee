@@ -60,9 +60,6 @@
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\..\..\tools\Expression Blend\Silverlight\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
-    <Reference Include="Moq.Silverlight">
-      <HintPath>..\..\..\tools\TinyMVVM-Silverlight\Moq.Silverlight.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Ninject">
       <HintPath>..\..\..\tools\Ninject\Ninject.dll</HintPath>
