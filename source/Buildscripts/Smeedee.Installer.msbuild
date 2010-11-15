@@ -59,20 +59,20 @@
     <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\Ninject.dll" />
     <SDKWidgetAssembliesSilverlight Include="..\Client\Smeedee.Client.Framework.SL\Bin\Debug\Newtonsoft.Json.Silverlight.dll" />
     
+    <!--<SDKTaskAssemblies/>
+    <SDKTaskAssemblies/>
+    <SDKTaskAssemblies/>
+    
     <SDKTaskAssemblies/>
     <SDKTaskAssemblies/>
     <SDKTaskAssemblies/>
     
-    <SDKTaskAssemblies/>
-    <SDKTaskAssemblies/>
-    <SDKTaskAssemblies/>
-    
     <SDKTaskAssembliesSilverlight/>
     <SDKTaskAssembliesSilverlight/>
     <SDKTaskAssembliesSilverlight/>
     <SDKTaskAssembliesSilverlight/>
     <SDKTaskAssembliesSilverlight/>
-    <SDKTaskAssembliesSilverlight/>
+    <SDKTaskAssembliesSilverlight/>-->
   </ItemGroup>
 
 
