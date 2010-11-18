@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.ProjectInfo;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
@@ -68,8 +70,12 @@ namespace Smeedee.Tasks.ProjectInfo
             var projectName = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.PROJECT_SETTING_NAME);
             var username = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.USERNAME_SETTING_NAME);
             var password = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.PASSWORD_SETTING_NAME);
+			string domain = username.Contains('\\') ? username.Substring(0, username.IndexOf('\\')) : null;
+			username = username.Contains('\\') ? username.Substring(username.IndexOf('\\') + 1) : username;
+			var cred = string.IsNullOrEmpty(domain) ? new NetworkCredential(username, password) : new NetworkCredential(username, password, domain);
 
-            return new ScrumForTFSRepository(serverUrl, projectName, username, password, configDictionary);
+
+            return new ScrumForTFSRepository(serverUrl, projectName, configDictionary, cred);
         }
     }
 }

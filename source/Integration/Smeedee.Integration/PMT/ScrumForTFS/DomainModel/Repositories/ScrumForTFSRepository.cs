@@ -29,8 +29,14 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
             fetcher = workItemFetcher;
         }
 
+		public ScrumForTFSRepository(string server, string project, Dictionary<string, string> config, NetworkCredential credentials)
+    	{
+			serverAddress = server;
+			projectName = project;
+			fetcher = new WorkItemFetcher(server, project, credentials, config);
+    	}
 
-        public IEnumerable<ProjectInfoServer> Get(Specification<ProjectInfoServer> specification)
+    	public IEnumerable<ProjectInfoServer> Get(Specification<ProjectInfoServer> specification)
         {
             var server = new ProjectInfoServer(serverAddress + " - " + projectName, serverAddress);
             var project = new Project
