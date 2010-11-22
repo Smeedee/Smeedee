@@ -12,6 +12,7 @@
     <UserControl.Resources>
     	<Converters1:DateTimeToPrettyStringConverter x:Key="DateTimeToPrettyStringConverter"/>
 		<Converters1:TimeSpanToPrettyStringConverter x:Key="TimeSpanToPrettyStringConverter"/>
+        <APD_Client_Framework_Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <SampleData:ProjectInfoSampleData x:Key="ProjectInfoSampleData" d:IsDataSource="True" />
         <Converters:BuildStatusConverter x:Key="BuildStatusConverter" />
         <MediaElement x:Name="BuildFailedSound"
@@ -30,25 +31,30 @@
 
     	<Grid Margin="0">
     		<Grid.ColumnDefinitions>
-    			<ColumnDefinition Width="130" />
+    			<ColumnDefinition Width="Auto" />
     			<ColumnDefinition Width="200" />
     			<ColumnDefinition />
     		</Grid.ColumnDefinitions>
 
     		<Grid.RowDefinitions>
-    			<RowDefinition Height="0.331*" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                
+    			<!--<RowDefinition Height="0.331*" />
     			<RowDefinition Height="0.339*" />
-    			<RowDefinition Height="0.331*" />
+    			<RowDefinition Height="0.331*" />-->
     			<RowDefinition Height="Auto" />
-    			<RowDefinition Height="Auto" MinHeight="21" />
+    			<RowDefinition Height="Auto" />
     		</Grid.RowDefinitions>
 
-    		<di:UserInfo Grid.Column="0"
-    			Grid.RowSpan="5"
-    			Grid.Row="0"
+            <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Visibility="{Binding ShowTriggeredBy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <di:UserInfo
     			DataContext="{Binding LatestBuild.TriggeredBy, Mode=OneWay}"
     			Margin="5,0,10,0"
     			Width="115" />
+            </Grid>
+
 
     		<TextBlock x:Name="lblProjectName"
     			Text="{Binding ProjectName, Mode=OneWay}"
@@ -62,6 +68,7 @@
     			HorizontalAlignment="Left"
     			Foreground="{StaticResource FontBrushBright}" d:LayoutOverrides="GridBox" />
     		<TextBlock x:Name="lblCause"
+                Visibility="{Binding ShowTriggerCause, Converter={StaticResource BoolToVisibilityConverter}}"
     			FontSize="24"
     			FontFamily="{StaticResource FontFamily}"
     			Text="{Binding LatestBuild.TriggerCause, Mode=OneWay}"
@@ -71,6 +78,7 @@
     			HorizontalAlignment="Left"
     			Foreground="{StaticResource FontBrushBright}" />
     		<TextBlock x:Name="lblStatus"
+                Visibility="{Binding ShowStatus, Converter={StaticResource BoolToVisibilityConverter}}"
     			Text="{Binding LatestBuild.Status, Converter={StaticResource BuildStatusConverter}, Mode=OneWay}"
     			Foreground="{StaticResource FontBrushBright}"
     			FontFamily="{StaticResource FontFamily}"
@@ -81,6 +89,7 @@
     			Grid.Row="2"
     			/>
     		<TextBlock x:Name="lblStarted"
+                Visibility="{Binding ShowStartTime, Converter={StaticResource BoolToVisibilityConverter}}"
     			Grid.Row="3"
     			Grid.Column="1"
     			Text="Started: "
@@ -91,6 +100,7 @@
     			Margin="0,0,0,4"
     			Foreground="{StaticResource FontBrushBright}" />
     		<TextBlock Grid.Column="2"
+                Visibility="{Binding ShowStartTime, Converter={StaticResource BoolToVisibilityConverter}}"
     			Grid.Row="3"
     			Text="{Binding LatestBuild.StartTime, Converter={StaticResource DateTimeToPrettyStringConverter}, Mode=OneWay}"
     			FontSize="18"
@@ -99,6 +109,7 @@
     			VerticalAlignment="Center"
     			Foreground="{StaticResource FontBrushBright}" />
     		<TextBlock x:Name="lblDuration"
+                Visibility="{Binding ShowDuration, Converter={StaticResource BoolToVisibilityConverter}}"
     			Foreground="{StaticResource FontBrushBright}"
     			Grid.Column="1"
     			Text="Duration: "
@@ -109,6 +120,7 @@
     			Margin="0,0,42,0"
     			d:LayoutOverrides="Width" />
     		<TextBlock Grid.Row="4"
+                Visibility="{Binding ShowDuration, Converter={StaticResource BoolToVisibilityConverter}}"
     			Grid.Column="2"
     			Text="{Binding LatestBuild.BuildDuration, Converter={StaticResource TimeSpanToPrettyStringConverter}, Mode=OneWay}"
     			FontSize="18"
@@ -118,7 +130,6 @@
     			d:LayoutOverrides="HorizontalAlignment"
     			Foreground="{StaticResource FontBrushBright}" />
 
-    		<Grid Margin="5,5,-65,2" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
     	</Grid>
     </Border>
 </UserControl>

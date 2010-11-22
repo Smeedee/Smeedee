@@ -75,5 +75,75 @@ namespace Smeedee.Widget.CI.ViewModels
                 }
             }
         }
+
+        private bool showTriggeredBy;
+        public bool ShowTriggeredBy
+        {
+            get { return showTriggeredBy; }
+            set
+            {
+                if (value != showTriggeredBy)
+                {
+                    showTriggeredBy = value;
+                    TriggerPropertyChanged("ShowTriggeredBy");
+                }
+            }
+        }
+
+        private bool showTriggerCause;
+        public bool ShowTriggerCause
+        {
+            get { return showTriggerCause; }
+            set
+            {
+                if (value != showTriggerCause)
+                {
+                    showTriggerCause = value;
+                    TriggerPropertyChanged("ShowTriggerCause");
+                }
+            }
+        }
+
+        private bool showStartTime;
+        public bool ShowStartTime
+        {
+            get { return showStartTime; }
+            set
+            {
+                if (value != showStartTime)
+                {
+                    showStartTime = value;
+                    TriggerPropertyChanged("ShowStartTime");
+                }
+            }
+        }
+
+        private bool showDuration;
+        public bool ShowDuration
+        {
+            get { return showDuration; }
+            set
+            {
+                if (value != showDuration)
+                {
+                    showDuration = value;
+                    TriggerPropertyChanged("ShowDuration");
+                }
+            }
+        }
+
+        private bool showStatus;
+        public bool ShowStatus
+        {
+            get { return showStatus; }
+            set
+            {
+                if (value != showStatus)
+                {
+                    showStatus = value;
+                    TriggerPropertyChanged("ShowStatus");
+                }
+            }
+        }
     }
 }

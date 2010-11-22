@@ -187,9 +187,6 @@ namespace Smeedee.Widget.CI.Controllers
             return new ObservableCollection<ServerConfigViewModel>(wrapped);
         }
 
-
-
-
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
             if (!ViewModel.IsLoading)
@@ -252,6 +249,12 @@ namespace Smeedee.Widget.CI.Controllers
             buildModel.FinishedTime = CIProject.LatestBuild.FinishedTime;
             buildModel.Status = (BuildStatus) CIProject.LatestBuild.Status;
             SetBuildTrigger(CIProject.LatestBuild.Trigger, ref buildModel);
+
+            model.ShowDuration = settingsViewModel.ShowDuration;
+            model.ShowStartTime = settingsViewModel.ShowStartTime;
+            model.ShowStatus = settingsViewModel.ShowStatus;
+            model.ShowTriggerCause = settingsViewModel.ShowTriggerCause;
+            model.ShowTriggeredBy = settingsViewModel.ShowTriggeredBy;
         }
 
         private void SetBuildTrigger(Trigger trigger, ref BuildViewModel buildViewModel)
@@ -311,11 +314,23 @@ namespace Smeedee.Widget.CI.Controllers
             private const string FILTER_SETTING_NAME = "FilterInactiveProjects";
             private const bool FILTER_SETTING_DEFAULT = false;
 
+            private const string SHOW_TRIGGEREDBY_SETTING_NAME = "showTriggeredBy";
+            private const string SHOW_TRIGGERCAUSE_SETTING_NAME = "showTriggerCause";
+            private const string SHOW_STARTTIME_SETTING_NAME = "showStartTime";
+            private const string SHOW_DURATION_SETTING_NAME = "showDuration";
+            private const string SHOW_STATUS_SETTING_NAME = "showStatus";
+
+
+
             private int initialInactiveProjectThreshold = THRESHOLD_SETTING_DEFAULT;
             private bool initialFilterInactiveProjects = FILTER_SETTING_DEFAULT;
+            private bool initialShowDuration = true;
+            private bool initialShowStartTime = true;
+            private bool initialShowTriggerCause = true;
+            private bool initialShowTriggeredBy = true;
+            private bool initialShowStatus = true;
 
             private CISettingsViewModel settingsViewModel;
-            private CIController controller;
 
             public SettingsHandler(CISettingsViewModel viewModel)
             {
@@ -328,6 +343,12 @@ namespace Smeedee.Widget.CI.Controllers
                 settingsViewModel.EachProject(project => config.NewSetting(project.SelectedSetting));
                 config.NewSetting(THRESHOLD_SETTING_NAME, settingsViewModel.InactiveProjectThreshold.ToString());
                 config.NewSetting(FILTER_SETTING_NAME, settingsViewModel.FilterInactiveProjects.ToString());
+                config.NewSetting(SHOW_DURATION_SETTING_NAME, settingsViewModel.ShowDuration.ToString());
+                config.NewSetting(SHOW_STARTTIME_SETTING_NAME, settingsViewModel.ShowStartTime.ToString());
+                config.NewSetting(SHOW_STATUS_SETTING_NAME, settingsViewModel.ShowStatus.ToString());
+                config.NewSetting(SHOW_TRIGGERCAUSE_SETTING_NAME, settingsViewModel.ShowTriggerCause.ToString());
+                config.NewSetting(SHOW_TRIGGEREDBY_SETTING_NAME, settingsViewModel.ShowTriggeredBy.ToString());
+
                 config.IsConfigured = true;
                 return config;
             }
@@ -341,6 +362,11 @@ namespace Smeedee.Widget.CI.Controllers
             {
                 settingsViewModel.InactiveProjectThreshold = int.Parse(config.GetSetting(THRESHOLD_SETTING_NAME).Value);
                 settingsViewModel.FilterInactiveProjects = bool.Parse(config.GetSetting(FILTER_SETTING_NAME).Value);
+                settingsViewModel.ShowDuration = bool.Parse(config.GetSetting(SHOW_DURATION_SETTING_NAME).Value);
+                settingsViewModel.ShowStartTime = bool.Parse(config.GetSetting(SHOW_STARTTIME_SETTING_NAME).Value);
+                settingsViewModel.ShowStatus = bool.Parse(config.GetSetting(SHOW_STATUS_SETTING_NAME).Value);
+                settingsViewModel.ShowTriggerCause = bool.Parse(config.GetSetting(SHOW_TRIGGERCAUSE_SETTING_NAME).Value);
+                settingsViewModel.ShowTriggeredBy = bool.Parse(config.GetSetting(SHOW_TRIGGEREDBY_SETTING_NAME).Value);
             }
 
             public Configuration LoadConfigFromDb(IRepository<Configuration> configRepo, IEnumerable<CIServer> servers)
@@ -359,6 +385,11 @@ namespace Smeedee.Widget.CI.Controllers
 
                 AddIfNotExists(config, THRESHOLD_SETTING_NAME, THRESHOLD_SETTING_DEFAULT.ToString());
                 AddIfNotExists(config, FILTER_SETTING_NAME, FILTER_SETTING_DEFAULT.ToString());
+                AddIfNotExists(config, SHOW_DURATION_SETTING_NAME, "true");
+                AddIfNotExists(config, SHOW_STARTTIME_SETTING_NAME, "true");
+                AddIfNotExists(config, SHOW_STATUS_SETTING_NAME, "true");
+                AddIfNotExists(config, SHOW_TRIGGERCAUSE_SETTING_NAME, "true");
+                AddIfNotExists(config, SHOW_TRIGGEREDBY_SETTING_NAME, "true");
                 return config;
             }
 
@@ -372,6 +403,11 @@ namespace Smeedee.Widget.CI.Controllers
             {
                 initialInactiveProjectThreshold = settingsViewModel.InactiveProjectThreshold;
                 initialFilterInactiveProjects = settingsViewModel.FilterInactiveProjects;
+                initialShowDuration = settingsViewModel.ShowDuration;
+                initialShowStartTime = settingsViewModel.ShowStartTime;
+                initialShowTriggerCause = settingsViewModel.ShowTriggerCause;
+                initialShowStatus = settingsViewModel.ShowStatus;
+                initialShowTriggeredBy = settingsViewModel.ShowTriggeredBy;
                 settingsViewModel.EachProject(project => project.SetResetPoint());
             }
 
@@ -380,6 +416,13 @@ namespace Smeedee.Widget.CI.Controllers
                 settingsViewModel.InactiveProjectThreshold = initialInactiveProjectThreshold;
                 settingsViewModel.FilterInactiveProjects = initialFilterInactiveProjects;
                 settingsViewModel.EachProject(project => project.ResetSelectedState());
+
+                settingsViewModel.ShowDuration = initialShowDuration;
+                settingsViewModel.ShowStartTime = initialShowStartTime;
+                settingsViewModel.ShowTriggerCause = initialShowTriggerCause;
+                settingsViewModel.ShowTriggeredBy = initialShowTriggeredBy;
+                settingsViewModel.ShowStatus = initialShowStatus;
+
             }
         }
     }

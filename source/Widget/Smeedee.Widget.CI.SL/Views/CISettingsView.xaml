@@ -282,6 +282,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -331,8 +332,15 @@
                         Maximum="1000"/>
                 </StackPanel>
 
-                
-                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                <StackPanel Grid.Row="3" Grid.Column="0">
+                    <CheckBox IsChecked="{Binding ShowStatus, Mode=TwoWay}">Show build status as text</CheckBox>
+                    <CheckBox IsChecked="{Binding ShowTriggeredBy, Mode=TwoWay}">Show who triggered the build</CheckBox>
+                    <CheckBox IsChecked="{Binding ShowTriggerCause, Mode=TwoWay}">Show what triggered the build</CheckBox>
+                    <CheckBox IsChecked="{Binding ShowStartTime, Mode=TwoWay}">Show when the build started</CheckBox>
+                    <CheckBox IsChecked="{Binding ShowDuration, Mode=TwoWay}">Show how long the build took to complete</CheckBox>
+                </StackPanel>
+
+                    <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="200*"/>
@@ -354,7 +362,7 @@
 
                 <StackPanel 
                     Grid.Column="1"
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Style="{StaticResource SettingsViewControlButtonsWrapper}">
                     <Button
                         Style="{StaticResource SettingsViewSaveButton}"
