@@ -54,14 +54,6 @@ namespace Smeedee.Scheduler.Console
             ILog databaseLogger = new Logger(new LogEntryDatabaseRepository(sessionFactory)) {VerbosityLevel = 1};
             ILog log = new CompositeLogger(consoleLogger, databaseLogger);
 
-            #region Unncomment to fill up the database with some task configurations. Used for TESTING ONLY
-
-            //var dbRepository = new TaskConfigurationDatabaseRepository();
-            //var hardCodedTaskConfigurations = new HardCodedTaskConfigurationRepository();
-            //dbRepository.Save(hardCodedTaskConfigurations.Get(new AllSpecification<TaskConfiguration>()));
-
-            #endregion
-
             var iocContainer = new IocContainerForScheduler();
             iocContainer.BindToConstant(sessionFactory);
             var taskDirectory = new DirectoryInfo(Assembly.GetExecutingAssembly().Location).Parent.FullName;
@@ -75,8 +67,7 @@ namespace Smeedee.Scheduler.Console
             }
             catch (Exception e)
             {
-                //TODO: Replace this with some proper logging
-                System.Console.WriteLine(e);
+                log.WriteEntry(new LogEntry(e.Source, e.Message, DateTime.Now));
             }
         }
 
