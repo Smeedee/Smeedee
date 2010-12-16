@@ -265,7 +265,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
 
         private void LoadChangesetsIntoViewModelSync(IEnumerable<Changeset> changesets)
         {
-            foreach (var changeset in changesets.Where(ViewModelDoesNotContainChangeset).Reverse())
+            foreach (var changeset in changesets.Where(ViewModelDoesNotContainChangeset).OrderBy(c => c.Revision))
                 AddChangeSetToViewModel(changeset);
 
             KeepLatestCommits();
