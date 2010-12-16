@@ -204,29 +204,29 @@
 							Visibility="{Binding RunningTaskIsSelected, Converter={StaticResource BoolToVisibilityConverter}}">
 						
 							<UserControl TabNavigation="Cycle">
-								
-								<StackPanel x:Name="TaskConfigGrid" Background="#FF979595" Margin="5,0">
-							
-									<TextBlock x:Name="GridTitle" 
+                                <ScrollViewer IsTabStop="false" x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel x:Name="TaskConfigGrid" Background="#FF979595" Margin="5,0">
+
+                                        <TextBlock x:Name="GridTitle" 
 										Margin="0" 
 										TextWrapping="Wrap" 
 										Text="Configure running task of type:" 
 										FontSize="14"/>
-								
-									<sdk:Label x:Name="AvailableTaskName" 
+
+                                        <sdk:Label x:Name="AvailableTaskName" 
 										HorizontalAlignment="Left" 
 										Margin="0,5,0,0" 
 										Content="{Binding SelectedRunningTask.AvailableTaskName, Mode=TwoWay}" 
 										Padding="0" 
-										FontSize="12" FontStyle="Italic"/>									
-								
-									<sdk:Label x:Name="NameChangeLabel"  
+										FontSize="12" FontStyle="Italic"/>
+
+                                        <sdk:Label x:Name="NameChangeLabel"  
 										Content="Type a preferred instance name:" 
 										HorizontalAlignment="Left" 
 										Margin="0,5,0,0" 
 										d:LayoutOverrides="HorizontalAlignment" FontSize="9.333" />
-									
-									<SL:SelectAllOnFocusTextBox x:Name="RunningTaskName" 
+
+                                        <SL:SelectAllOnFocusTextBox x:Name="RunningTaskName" 
 										Margin="0,0,0,2" 
 										Text="{Binding SelectedRunningTask.RunningTaskName, Mode=TwoWay}" 
 										BorderBrush="#FF6D95DD" 
@@ -234,33 +234,33 @@
 	                                    d:LayoutOverrides="Width" FontSize="9.333" 
 	                                    IsTabStop="True" 
 										/>
-                                    <TextBlock 
+                                        <TextBlock 
 										Margin="0,5,0,0" 
 										TextWrapping="Wrap" 
 										Text="Dispatch interval (h:m:s):" 
 										FontSize="9.333"/>
-                                    
-                                    <StackPanel Orientation="Horizontal">
-                                        <Toolkit:NumericUpDown Value="{Binding SelectedRunningTask.DispatchIntervalHours, Mode=TwoWay}"
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <Toolkit:NumericUpDown Value="{Binding SelectedRunningTask.DispatchIntervalHours, Mode=TwoWay}"
                                                                DecimalPlaces="0" Minimum="0" IsTabStop="false"/>
-                                        <Toolkit:NumericUpDown Value="{Binding SelectedRunningTask.DispatchIntervalMinutes, Mode=TwoWay}"
+                                            <Toolkit:NumericUpDown Value="{Binding SelectedRunningTask.DispatchIntervalMinutes, Mode=TwoWay}"
                                                                DecimalPlaces="0" Minimum="0" Maximum="59" IsTabStop="false"/>
-                                        <Toolkit:NumericUpDown Value="{Binding SelectedRunningTask.DispatchIntervalSeconds, Mode=TwoWay}"
+                                            <Toolkit:NumericUpDown Value="{Binding SelectedRunningTask.DispatchIntervalSeconds, Mode=TwoWay}"
                                                                DecimalPlaces="0" Minimum="0" Maximum="59" IsTabStop="false"/>
-                                    </StackPanel>
-	                                <TextBlock 
+                                        </StackPanel>
+                                        <TextBlock 
 										Margin="0,5,0,0" 
 										TextWrapping="Wrap" 
 										Text="Fill in config info:" 
 										FontSize="9.333"/>
-									
-									<Views:ConfigEntries x:Name="ConfigEntries"  
+
+                                        <Views:ConfigEntries x:Name="ConfigEntries"  
 										DataContext="{Binding SelectedRunningTask.ConfigurationEntries}" 
-										Margin="0" />  
-                            
-								</StackPanel>  
-								
-							</UserControl>
+										Margin="0" />
+
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </UserControl>
 
 						</Border>
 						<Border x:Name="DescriptionPanelBorder" 

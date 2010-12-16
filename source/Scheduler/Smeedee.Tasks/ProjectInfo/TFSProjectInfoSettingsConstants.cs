@@ -10,8 +10,10 @@ namespace Smeedee.Tasks.ProjectInfo
         public const string URL_SETTING_NAME = "Url";
         public const string USERNAME_SETTING_NAME = "Username";
         public const string PASSWORD_SETTING_NAME = "Password";
-        public const string PROVIDER_SETTING_NAME = "Provider";
+        public const string REMAINING_SETTING_NAME = "Remaining Work Field";
+        public const string ESTIMATED_SETTING_NAME = "Estimated Work Field";
         public const string PROJECT_SETTING_NAME = "Project";
-        public const string SCRUM_FOR_TFS = "conchango-tfs";
+        public const string REMAINING_FIELD = "Work Remaining (Scrum v3)";
+        public const string ESTIMATED_FIELD = "Estimated Effort (Scrum v3)";
     }
 }

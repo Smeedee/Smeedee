@@ -23,7 +23,8 @@ namespace Smeedee.Tasks.ProjectInfo
     [TaskSetting(2, TFSProjectInfoSettingsConstants.PASSWORD_SETTING_NAME, typeof(string), "")]
     [TaskSetting(3, TFSProjectInfoSettingsConstants.URL_SETTING_NAME, typeof(Uri), "")]
     [TaskSetting(4, TFSProjectInfoSettingsConstants.PROJECT_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(5, TFSProjectInfoSettingsConstants.PROVIDER_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.SCRUM_FOR_TFS)]
+    [TaskSetting(5, TFSProjectInfoSettingsConstants.REMAINING_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.REMAINING_FIELD)]
+    [TaskSetting(6, TFSProjectInfoSettingsConstants.ESTIMATED_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.ESTIMATED_FIELD)]
     public class TFSProjectInfoTask : TaskBase
     {
 
@@ -58,13 +59,17 @@ namespace Smeedee.Tasks.ProjectInfo
 
         protected virtual IRepository<ProjectInfoServer> Assemble(TaskConfiguration config)
         {
-            var provider = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.PROVIDER_SETTING_NAME);
-            if (provider != TFSProjectInfoSettingsConstants.SCRUM_FOR_TFS)
-                throw new ArgumentException("Unsupported Project Info Provider.");
+            var remainingField = (string) config.ReadEntryValue(TFSProjectInfoSettingsConstants.REMAINING_SETTING_NAME);
+            var estimatedField = (string) config.ReadEntryValue(TFSProjectInfoSettingsConstants.ESTIMATED_SETTING_NAME);
 
             var configDictionary = new Dictionary<String, String>();
-            configDictionary["tfswi-remaining-field"] = "Work Remaining (Scrum v3)";
-            configDictionary["tfswi-estimated-field"] = "Estimated Effort (Scrum v3)";
+            configDictionary["tfswi-remaining-field"] = (remainingField != "")
+                                                            ? remainingField
+                                                            : "Work Remaining (Scrum v3)";
+            configDictionary["tfswi-estimated-field"] = (estimatedField != "")
+                                                            ? estimatedField
+                                                            : "Estimated Effort (Scrum v3)";
+
 
             var serverUrl = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.URL_SETTING_NAME);
             var projectName = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.PROJECT_SETTING_NAME);

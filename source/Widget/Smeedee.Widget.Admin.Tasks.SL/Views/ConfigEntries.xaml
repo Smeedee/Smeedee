@@ -14,20 +14,19 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    
-    <Grid x:Name="LayoutRoot" Background="#FF979595">
 
+    <Grid x:Name="LayoutRoot" Background="#FF979595">
         <ItemsControl UseLayoutRounding="True" Margin="0" IsTabStop="false">
-        	 <ItemsControl.Template>
+            <ItemsControl.Template>
                 <ControlTemplate>
-        	 		<ScrollViewer IsTabStop="false" x:Name="ScrollViewer" Padding="{TemplateBinding Padding}" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource ConfigTemplate}" IsTabStop="false"/>
-                    </ScrollViewer>
-				</ControlTemplate>    	 
-			 </ItemsControl.Template>
+                    <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource ConfigTemplate}" IsTabStop="false"/>
+                </ControlTemplate>
+            </ItemsControl.Template>
         </ItemsControl>
     </Grid>
-    
-    
-    
+
+
+
+
+
 </UserControl>
