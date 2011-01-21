@@ -100,7 +100,7 @@ namespace Smeedee.Tasks.Framework.TaskDefinitions
             var settings = hasSettingAttr ? (TaskSettingAttribute[]) settingAttributes : new TaskSettingAttribute[] {};
             return (from setting
                    in settings
-                   select new TaskSettingDefinition(setting.IndexOrder, setting.SettingName, setting.Type, setting.DefaultValue)).ToList();
+                   select new TaskSettingDefinition(setting.IndexOrder, setting.SettingName, setting.Type, setting.DefaultValue, setting.HelpText)).ToList();
         }
     }
 }

@@ -4,12 +4,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Converters="clr-namespace:Smeedee.Widget.Admin.Tasks.SL.Converters"
+    xmlns:ASLTTip="clr-namespace:Silverlight.Controls.ToolTips;assembly=Silverlight.Controls.ToolTips"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Class="Smeedee.Widget.Admin.Tasks.SL.Views.ConfigEntry"
     mc:Ignorable="d"
     Margin="2,0" Padding="0,0,10,0">
     
     <UserControl.Resources>
     	<Converters:ConfigEntryControlConverter x:Key="ConfigEntryControlConverter"/>
+        <Converters:ConfigEntryHelpTextConverter x:Key="ConfigEntryHelpTextConverter"/>
     </UserControl.Resources>
     
     <Border BorderBrush="#FF6D95DD" 
@@ -19,12 +21,33 @@
                     Background="White" 
                     Margin="0">
         
-    		<sdk:Label 
-    			VerticalAlignment="Top"
-    			Content="{Binding Name}" 
-    			FontWeight="Bold"
-                IsTabStop="false"
-                Margin="2,0" FontSize="9.333"/>
+            <StackPanel Orientation="Horizontal">
+                <sdk:Label 
+    			    VerticalAlignment="Top"
+    			    Content="{Binding Name}" 
+    			    FontWeight="Bold"
+                    IsTabStop="false"
+                    Margin="2,0" FontSize="9.333"/>
+                
+                <sdk:Label
+                    VerticalAlignment="Top"
+                    Content="[?]"
+                    FontWeight="Bold"
+                    IsTabStop="false"
+                    FontSize="9.333">
+                    <ASLTTip:ToolTipService.ToolTip>
+                        <ASLTTip:ToolTip InitialDelay="00:00:00" DisplayTime="Forever">
+                            <ASLTTip:ToolTip.Content>
+                                <TextBlock Text="{Binding HelpText, Converter={StaticResource ConfigEntryHelpTextConverter}}" 
+                                           TextWrapping="Wrap" 
+                                           Width="300"/>
+                            </ASLTTip:ToolTip.Content>
+                        </ASLTTip:ToolTip>
+                    </ASLTTip:ToolTipService.ToolTip>
+                    
+                </sdk:Label>
+            </StackPanel>
+    		
 
     		<ContentControl Content="{Binding}" 
     			ContentTemplate="{Binding DataContext, Converter={StaticResource ConfigEntryControlConverter}, ElementName=LayoutRoot}"

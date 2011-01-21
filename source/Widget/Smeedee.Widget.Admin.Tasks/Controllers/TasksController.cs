@@ -87,7 +87,8 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
                                                                 OrderIndex = setting.OrderIndex,
                                                                 Name = setting.SettingName,
                                                                 Type = setting.Type ?? typeof (string),
-                                                                Value = setting.DefaultValue
+                                                                Value = setting.DefaultValue,
+                                                                HelpText = setting.HelpText
                                                             }).ToArray()),
                                             Author = taskDefinition.Author,
                                             Description = taskDefinition.Description,
@@ -112,7 +113,8 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
                                                                         {  
                                                                             Name = entry.Name,
                                                                             Type = entry.Type,
-                                                                            Value = entry.Value
+                                                                            Value = entry.Value,
+                                                                            HelpText = entry.HelpText
                                                                         }).ToArray()
                                                         ),
                                                     DispatchInterval = taskConfiguration.DispatchInterval,
@@ -136,7 +138,8 @@ namespace Smeedee.Widget.Admin.Tasks.Controllers
                                                                     {
                                                                         Name = entry.Name,
                                                                         Type = entry.Type,
-                                                                        Value = entry.Value
+                                                                        Value = entry.Value,
+                                                                        HelpText = entry.HelpText
                                                                     }).ToList()
                                           }).ToArray();
 

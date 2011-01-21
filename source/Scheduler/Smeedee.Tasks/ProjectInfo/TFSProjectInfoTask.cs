@@ -21,10 +21,10 @@ namespace Smeedee.Tasks.ProjectInfo
                          Webpage = "http://smeedee.org")]
     [TaskSetting(1, TFSProjectInfoSettingsConstants.USERNAME_SETTING_NAME, typeof(string), "")]
     [TaskSetting(2, TFSProjectInfoSettingsConstants.PASSWORD_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(3, TFSProjectInfoSettingsConstants.URL_SETTING_NAME, typeof(Uri), "")]
+    [TaskSetting(3, TFSProjectInfoSettingsConstants.URL_SETTING_NAME, typeof(Uri), "", "Include protocols such as http://\nand port numbers such as :8080")]
     [TaskSetting(4, TFSProjectInfoSettingsConstants.PROJECT_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(5, TFSProjectInfoSettingsConstants.REMAINING_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.REMAINING_FIELD)]
-    [TaskSetting(6, TFSProjectInfoSettingsConstants.ESTIMATED_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.ESTIMATED_FIELD)]
+    [TaskSetting(5, TFSProjectInfoSettingsConstants.REMAINING_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.REMAINING_FIELD, "If you are using a custom template you can edit this value to tell Smeedee what work item field it should retrieve 'time remaining' information for a task from.")]
+    [TaskSetting(6, TFSProjectInfoSettingsConstants.ESTIMATED_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.ESTIMATED_FIELD, "If you are using a custom template you can edit this value to tell smeedee what work item field it should retrieve 'estimated time' information for a task from.")]
     public class TFSProjectInfoTask : TaskBase
     {
 

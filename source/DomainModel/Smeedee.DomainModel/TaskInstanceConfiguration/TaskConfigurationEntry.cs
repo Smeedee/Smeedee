@@ -32,6 +32,9 @@ namespace Smeedee.DomainModel.TaskInstanceConfiguration
         [DataMember]
         public virtual int OrderIndex { get; set; }
 
+        [DataMember]
+        public virtual string HelpText { get; set; }
+
         #region Overrides of GetHashCode and Equals. Needed to satisfy Hibernate
 
         public override int GetHashCode()

@@ -53,6 +53,10 @@ namespace Smeedee.DomainModel.TaskDefinition
         [DataMember]
         public int OrderIndex { get; set; }
 
+        [DataMember]
+        public string HelpText { get; set; }
+
+
         public TaskSettingDefinition(string name, Type type)
         {
             SettingName = name;
@@ -65,6 +69,12 @@ namespace Smeedee.DomainModel.TaskDefinition
             DefaultValue = defaultValue;
         }
 
+        public TaskSettingDefinition(string name, Type type, string defaultValue, string helpText)
+            : this(name, type, defaultValue)
+        {
+            HelpText = helpText;
+        }
+
         public TaskSettingDefinition(int orderIndex, string name, Type type)
             : this(name, type)
         {
@@ -75,6 +85,12 @@ namespace Smeedee.DomainModel.TaskDefinition
             : this(name, type, defaultValue)
         {
             OrderIndex = orderIndex;
+        }
+
+        public TaskSettingDefinition(int orderIndex, string name, Type type, string defaultValue, string helpText)
+            : this(orderIndex, name, type, defaultValue)
+        {
+            HelpText = helpText;
         }
 
 

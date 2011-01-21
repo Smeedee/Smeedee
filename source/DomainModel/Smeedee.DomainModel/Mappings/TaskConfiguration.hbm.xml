@@ -27,6 +27,7 @@
     
     <property name="PersistableValue" />
     <property name="PersistableType" />
+    <property name="HelpText" />
 
   </class>
 </hibernate-mapping>

@@ -581,6 +581,30 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetValue(ref object value);
 		partial void OnSetValue(ref object value);
 
+
+        public string HelpText
+        {
+            get
+            {
+                OnGetHelpText(ref _HelpText);
+
+                return _HelpText;
+            }
+            set
+            {
+                if (value != _HelpText)
+                {
+                    OnSetHelpText(ref value);
+                    _HelpText = value;
+                    TriggerPropertyChanged("HelpText");
+                }
+            }
+        }
+        private string _HelpText;
+
+        partial void OnGetHelpText(ref string value);
+        partial void OnSetHelpText(ref string value);
+
 	
 		
 		//Commands

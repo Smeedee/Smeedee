@@ -40,6 +40,7 @@ namespace Smeedee.Tasks.Framework.TaskAttributes
         public string SettingName { get; set; }
         public Type Type { get; set; }
         public string DefaultValue { get; set; }
+        public string HelpText { get; set; }
 
         public TaskSettingAttribute(string name, Type T, string defaultValue)
         {
@@ -48,9 +49,22 @@ namespace Smeedee.Tasks.Framework.TaskAttributes
             DefaultValue = defaultValue;
         }
 
-        public TaskSettingAttribute(int indexOrder, string name, Type T, string defaultValue) : this(name, T, defaultValue)
+        public TaskSettingAttribute(string name, Type T, string defaultValue, string helpText)
+            : this(name, T, defaultValue)
+        {
+            HelpText = helpText;
+        }
+
+        public TaskSettingAttribute(int indexOrder, string name, Type T, string defaultValue) 
+            : this(name, T, defaultValue)
         {
             IndexOrder = indexOrder;
+        }
+
+        public TaskSettingAttribute(int indexOrder, string name, Type T, string defaultValue, string helpText)
+            : this(indexOrder, name, T, defaultValue)
+        {
+            HelpText = helpText;
         }
     }
 }
