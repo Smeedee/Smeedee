@@ -63,7 +63,7 @@
                         Value="{Binding NumberOfCommits, Mode=TwoWay}"
                         Margin="0,0,10,0"
                         Minimum="1"
-                        Maximum="20"/>
+                        Maximum="25"/>
                     <inputToolkit:NumericUpDown
                         x:Name="NumberOfCommitsToShow"
                         Style="{StaticResource SettingsViewNumericUpDown}"
