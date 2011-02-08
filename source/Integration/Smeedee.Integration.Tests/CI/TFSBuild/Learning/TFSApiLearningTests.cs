@@ -41,6 +41,7 @@ using TinyBDD.Specification.NUnit;
 namespace Smeedee.IntegrationTests.CI.TFSBuild.Learning
 {
     [TestFixture][Category("IntegrationTest")]
+    [Ignore("TFS Server is down")]
     public class TFSApiLearningTests
     {
         private TeamFoundationServer tfsServer;

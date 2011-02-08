@@ -54,6 +54,7 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Services.TFSCredentials
     }
 
     [TestFixture][Category("IntegrationTest")]
+    [Ignore("TFS Server is down")]
     public class When_testing_Credentials : Shared
     {
         [SetUp]

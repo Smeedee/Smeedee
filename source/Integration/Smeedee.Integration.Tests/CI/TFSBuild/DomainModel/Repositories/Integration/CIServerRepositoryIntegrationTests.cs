@@ -83,6 +83,7 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
     }
 
     [TestFixture][Category("IntegrationTest")]
+    [Ignore("TFS Server is down")]
     public class CIProjectRepositoryIntegrationTests : Shared
     {
         [SetUp]

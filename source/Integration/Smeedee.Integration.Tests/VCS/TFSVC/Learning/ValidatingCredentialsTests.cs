@@ -15,6 +15,7 @@ using TinyBDD.Specification.NUnit;
 namespace Smeedee.IntegrationTests.VCS.TFSVC.Learning
 {
     [TestFixture][Category("IntegrationTest")]
+    [Ignore("TFS Server is down")]
     public class ValidatingCredentialsTests
     {
         protected static string serverUrl = "http://80.203.160.221:8080/tfs";
