@@ -49,7 +49,6 @@ namespace Smeedee.IntegrationTests.CI.TFSBuild.DomainModel.Repositories.Integrat
         protected static String projectName = "smeedee";
         protected static String buildName = "Smeedee Builds";
         protected static NetworkCredential credentials = new NetworkCredential("smeedee", "dlog4321.");
-
         protected static BuildFetcher fetcher;
 
         protected Context build_fetcher_is_instantiated = () => 
