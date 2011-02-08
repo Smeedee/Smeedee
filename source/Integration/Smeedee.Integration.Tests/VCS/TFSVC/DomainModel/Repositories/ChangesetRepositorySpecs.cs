@@ -193,6 +193,7 @@ namespace Smeedee.IntegrationTests.VCS.TFSVC.DomainModel.Repositories
     }
     
     [TestFixture][Category("IntegrationTest")]
+    [Ignore("TFS Server is down")]
     public class When_query_all_changesets_after_a_given_revision : Shared
     {
         [Test]
