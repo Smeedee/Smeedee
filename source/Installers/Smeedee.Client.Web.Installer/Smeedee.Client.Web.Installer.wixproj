@@ -55,6 +55,9 @@
       <HintPath>..\..\..\tools\WiX v3 binaries\WixIIsExtension.dll</HintPath>
       <Name>WixIIsExtension</Name>
     </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+        <HintPath>..\..\..\tools\WiX v3 binaries\WixUtilExtension.dl</HintPath>
+    </WixExtension>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
