@@ -1,5 +1,5 @@
 The version of WiX currently residing in this folder is:
 
-/releases/3.5.2006.0
+/releases/3.5.2229.0
 
 Please update this file if you update WiX

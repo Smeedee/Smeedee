@@ -38,9 +38,7 @@ Copyright (c) Microsoft Corporation. All rights reserved.
 <Project
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
   InitialTargets="_CheckForInvalidConfigurationAndPlatform;
-                  _CheckRequiredProperties;
-                  _SetDefaultPathValues">
-
+                  _CheckRequiredProperties">
   <!--
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +90,6 @@ Copyright (c) Microsoft Corporation. All rights reserved.
   <UsingTask TaskName="Lit" AssemblyFile="$(WixTasksPath)" />
   <UsingTask TaskName="Light" AssemblyFile="$(WixTasksPath)" />
   <UsingTask TaskName="Torch" AssemblyFile="$(WixTasksPath)" />
-  <UsingTask TaskName="ReadRegistry" AssemblyFile="$(WixTasksPath)" />
 
   <!-- These tasks are extensions for harvesting WiX source code from other sources. -->
   <UsingTask TaskName="HeatFile" AssemblyFile="$(WixTasksPath)" />
@@ -184,6 +181,12 @@ Copyright (c) Microsoft Corporation. All rights reserved.
       <IntermediateAssembly Include="$(IntermediateOutputPath)$(TargetName)$(TargetExt)"/>
       <FinalDocFile Include="@(DocFileItem->'$(OutDir)%(Filename)%(Extension)')"/>
   </ItemGroup>
+
+  <PropertyGroup>
+    <WixToolPath Condition=" '$(WixToolPath)' == ''">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Installer XML\3.5@InstallRoot)</WixToolPath>
+    <WixToolPath Condition=" '$(WixToolPath)' == ''">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows Installer XML\3.5@InstallRoot)</WixToolPath>
+    <WixExtDir Condition=" '$(WixExtDir)' == ''">$(WixToolPath)</WixExtDir>
+  </PropertyGroup>
 
   <!--
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -475,76 +478,6 @@ Copyright (c) Microsoft Corporation. All rights reserved.
       Code="WIXTARGETS103"
       Condition="'$(OutDir)' != '' and !HasTrailingSlash('$(OutDir)')"
       Text="The OutDir property must end with a trailing slash." />
-
-  </Target>
-
-  <!--
-  ==================================================================================================
-  _SetDefaultPathValues
-
-    Gets the default values of some paths from the registry.
-
-    [OUT]
-    $(WixExtDir) - Default Wix Extension Directory
-    $(WixToolPath) - Default Wix Tool install folder
-  ==================================================================================================
-  -->
-  <PropertyGroup>
-    <WixInstallRegKey>SOFTWARE\Microsoft\Windows Installer XML\3.5</WixInstallRegKey>
-    <WixInstallRegKeyWow64>SOFTWARE\Wow6432Node\Microsoft\Windows Installer XML\3.5</WixInstallRegKeyWow64>
-  </PropertyGroup>
-  <Target
-    Name="_SetDefaultPathValues">
-
-    <ReadRegistry
-      Hive="LocalMachine"
-      Key="$(WixInstallRegKey)"
-      Name="InstallRoot"
-      FailIfMissing="false"
-      Condition=" '$(WixExtDir)' == '' ">
-
-      <Output TaskParameter="Value" PropertyName="WixExtDir" />
-    </ReadRegistry>
-
-    <ReadRegistry
-      Hive="LocalMachine"
-      Key="$(WixInstallRegKey)"
-      Name="InstallRoot"
-      FailIfMissing="false"
-      Condition=" '$(WixToolPath)' == '' ">
-
-      <Output TaskParameter="Value" PropertyName="WixToolPath" />
-    </ReadRegistry>
-
-    <!-- If we didn't find the first registry paths, assume we're in a 64bit process. -->
-    <!-- WiX tools are 32bit EXEs, so run them out-of-proc when MSBuild is 64bit. -->
-    <CreateProperty Value="true" Condition=" '$(WixToolPath)' == '' ">
-      <Output TaskParameter="Value" PropertyName="RunWixToolsOutOfProc" />
-    </CreateProperty>
-
-    <ReadRegistry
-      Hive="LocalMachine"
-      Key="$(WixInstallRegKeyWow64)"
-      Name="InstallRoot"
-      FailIfMissing="false"
-      Condition=" '$(WixExtDir)' == '' ">
-
-      <Output TaskParameter="Value" PropertyName="WixExtDir" />
-    </ReadRegistry>
-
-    <ReadRegistry
-      Hive="LocalMachine"
-      Key="$(WixInstallRegKeyWow64)"
-      Name="InstallRoot"
-      FailIfMissing="false"
-      Condition=" '$(WixToolPath)' == '' ">
-
-      <Output TaskParameter="Value" PropertyName="WixToolPath" />
-    </ReadRegistry>
-    
-    <CreateProperty Value="$(WixToolPath)" Condition=" '$(WixExtDir)' == '' ">
-      <Output TaskParameter="Value" PropertyName="WixExtDir" />
-    </CreateProperty>
 
   </Target>
 
@@ -2132,13 +2065,13 @@ Copyright (c) Microsoft Corporation. All rights reserved.
       WixVariables="$(WixVariables)" />
 
     <GetCabList Database="$(TargetDir)%(CultureGroup.OutputFolder)$(TargetName)$(TargetExt)"
-        Condition="('$(OutputType)' == 'Package' or '$(OutputType)' == 'Module')" >
+        Condition="('$(OutputType)' == 'Package' or '$(OutputType)' == 'Module') and '$(OutputAsXml)' != 'true' " >
       <Output TaskParameter="CabList" PropertyName="OutputCabs" />
       <Output TaskParameter="CabList" ItemName="FileWrites" />
     </GetCabList>
 
     <GetLooseFileList Database="$(TargetDir)%(CultureGroup.OutputFolder)$(TargetName)$(TargetExt)"
-        Condition="('$(OutputType)' == 'Package' or '$(OutputType)' == 'Module')" >
+        Condition="('$(OutputType)' == 'Package' or '$(OutputType)' == 'Module') and '$(OutputAsXml)' != 'true' " >
       <Output TaskParameter="LooseFileList" ItemName="FileWrites" />
     </GetLooseFileList>
 
@@ -2264,17 +2197,12 @@ Copyright (c) Microsoft Corporation. All rights reserved.
     </CreateItem>
 
     <!-- Record the link ouput(s) -->
-    <CreateItem Include="@(TargetOutput)" Condition="Exists('%(FullPath)')">
-      <Output TaskParameter="Include" ItemName="FileWrites" />
+    <!-- Stuff into an itemgroup -->
+    <CreateItem Include="$(TargetPath);$(TargetPdbPath)">
+      <Output TaskParameter="Include" ItemName="_TempTargetOutputs" />
     </CreateItem>
 
-    <!--Stuff into an itemgroup-->
-    <CreateItem Include="$(TargetPdbPath)">
-      <Output TaskParameter="Include" ItemName="_TempTargetPdbPath" />
-    </CreateItem>
-    
-    <!-- Record the wixpdb file(s) generated -->
-    <CreateItem Include="@(_TempTargetPdbPath)" Condition="Exists('%(FullPath)')">
+    <CreateItem Include="@(_TempTargetOutputs)" Condition="Exists('%(FullPath)')">
       <Output TaskParameter="Include" ItemName="FileWrites" />
     </CreateItem>
   </Target>

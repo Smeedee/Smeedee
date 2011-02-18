@@ -18,8 +18,11 @@
     <Property Id="AspnetIsapiDll">%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll</Property>
     <Property Id="FrameworkFolder">%windir%\Microsoft.NET\Framework\v4.0.30319</Property>
 
+    <!--
+      This no longer works in WiX 3.5.
     <WixVariable Id="WixUICostingPopupOptOut" Value="1" Overridable="yes" />
-    
+    -->
+
     <!-- We need this reference for wix to be able to detect .NET 4 -->
     <PropertyRef Id="NETFRAMEWORK40FULL"/>
     <!-- Checking if .NET 4 is installed -->
@@ -89,7 +92,7 @@
 
       <!-- Registering site for Smeedee in IIS -->
       <Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
-        <iis:WebAppPool Id="SmeedeeAppPool" Name="Smeedee App Pool" />
+        <iis:WebAppPool Id="SmeedeeAppPool" Name="Smeedee App Pool" ManagedRuntimeVersion="v4.0" />
         <iis:WebVirtualDir Id="SmeedeeVirtualDir" Alias="Smeedee" Directory="INSTALLLOCATION" WebSite="DefaultWebSite">
           <iis:MimeMap Id="SilverligthMimeType" Extension=".xap" Type="application/x-silverlight-app" />
           <iis:WebApplication Id="SmeedeeWebApp" Name="Smeedee" WebAppPool="SmeedeeAppPool">
