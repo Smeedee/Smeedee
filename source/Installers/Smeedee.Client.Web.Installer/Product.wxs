@@ -14,10 +14,14 @@
     <Media Id="1" Cabinet="Smeedee.cab" EmbedCab="yes" />
     
     <!-- Some variables -->
+    <!-- Determine the .NET Framework root directory from registry -->
+    <Property Id="FRAMEWORKROOT">
+      <RegistrySearch Id="FrameworkRootDir" Root="HKLM"
+                    Key="SOFTWARE\Microsoft\.NETFramework" 
+                    Type="directory" Name="InstallRoot" />
+        <!-- For 64bit we need to add "Win64='yes' attrib on RegisrySearch -->
+    </Property>
     <Property Id="IISUser">Network Service</Property>
-    <Property Id="AspnetIsapiDll">%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll</Property>
-    <Property Id="FrameworkFolder">%windir%\Microsoft.NET\Framework\v4.0.30319</Property>
-
     <!--
       This no longer works in WiX 3.5.
     <WixVariable Id="WixUICostingPopupOptOut" Value="1" Overridable="yes" />
@@ -90,15 +94,21 @@
         </Component>
       </Directory>
 
+    
+
       <!-- Registering site for Smeedee in IIS -->
       <Component Id="IISSmeedeeApplication" Guid="FFA12D9C-5AEC-45f8-AA7D-5C4CEC7FA466">
+        <iis:WebServiceExtension Id="ExtensionASP4" Group="ASP.NET v4" Allow="yes" File="[FRAMEWORKROOT]aspnet_isapi.dll" Description="ASP.NET v4"/>
+
         <iis:WebAppPool Id="SmeedeeAppPool" Name="Smeedee App Pool" ManagedRuntimeVersion="v4.0" />
         <iis:WebVirtualDir Id="SmeedeeVirtualDir" Alias="Smeedee" Directory="INSTALLLOCATION" WebSite="DefaultWebSite">
           <iis:MimeMap Id="SilverligthMimeType" Extension=".xap" Type="application/x-silverlight-app" />
           <iis:WebApplication Id="SmeedeeWebApp" Name="Smeedee" WebAppPool="SmeedeeAppPool">
-            <iis:WebApplicationExtension Executable="[AspnetIsapiDll]" Extension="svc" Script="yes" CheckPath="yes" Verbs="GET,HEAD,POST" />
-            <iis:WebApplicationExtension Executable="[AspnetIsapiDll]" Extension="aspx" Script="yes" CheckPath="yes" Verbs="GET,HEAD,POST" />
-            <iis:WebApplicationExtension Executable="[AspnetIsapiDll]" Extension="ashx" Script="yes" CheckPath="yes" Verbs="GET,HEAD,POST" />
+            <iis:WebApplicationExtension Executable="[FRAMEWORKROOT]v4.0.30319\aspnet_isapi.dll" Extension="svc" Script="yes" CheckPath="no" Verbs="GET,HEAD,POST" />
+            <iis:WebApplicationExtension Executable="[FRAMEWORKROOT]v4.0.30319\aspnet_isapi.dll" Extension="aspx" Script="yes" CheckPath="yes" Verbs="GET,HEAD,POST" />
+            <iis:WebApplicationExtension Executable="[FRAMEWORKROOT]v4.0.30319\aspnet_isapi.dll" Extension="ashx" Script="yes" CheckPath="yes" Verbs="GET,HEAD,POST" />
+            <iis:WebApplicationExtension Executable="[FRAMEWORKROOT]v4.0.30319\aspnet_isapi.dll" Extension="config" Script="yes" CheckPath="yes" Verbs="GET,HEAD,POST" />
+            <iis:WebApplicationExtension Executable="[FRAMEWORKROOT]v4.0.30319\aspnet_isapi.dll" Extension="resx" Script="yes" CheckPath="yes" Verbs="GET,HEAD,POST" />
           </iis:WebApplication>
           <iis:WebDirProperties Id="APDWebDirProperties" Execute="yes" Script="yes" Read="yes" WindowsAuthentication="no" AnonymousAccess="yes" IIsControlledPassword="yes" />
         </iis:WebVirtualDir>
@@ -116,7 +126,7 @@
     <CustomAction Id="SetASPNETAsIISUser" Property="IISUsser" Value="ASPNET" />
     <CustomAction Id="OpenWebSite" Directory="INSTALLLOCATION" ExeCommand='"[SystemFolder]cmd.exe" /c "start http://127.0.0.1/smeedee/Default.htm"' Return="asyncNoWait" />
     <CustomAction Id="StartService" Directory="INSTALLLOCATION" ExeCommand="sc start Smeedee" Return="asyncNoWait" />
-    <CustomAction Id="RegisterAspInIIS" Directory="INSTALLLOCATION" ExeCommand="[FrameworkFolder]\aspnet_regiis.exe -i" Return="asyncNoWait" />
+    <CustomAction Id="RegisterAspInIIS" Directory="INSTALLLOCATION" ExeCommand="[FRAMEWORKROOT]\aspnet_regiis.exe -i" Return="asyncNoWait" />
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
     <UIRef Id="InstallationUI" />
