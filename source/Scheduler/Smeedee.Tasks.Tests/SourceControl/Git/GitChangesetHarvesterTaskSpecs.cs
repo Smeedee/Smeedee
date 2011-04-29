@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using Moq;
 using NUnit.Framework;
 using Smeedee.DomainModel.Framework;
@@ -23,11 +21,11 @@ namespace Smeedee.Tasks.Tests.SourceControl.Git
         private const bool do_not_inherit = false;
 
         [Test]
-        public void should_have_6_configuration_attributes()
+        public void should_have_7_configuration_attributes()
         {
             var settingAttributes = GetGitChangesetHarvesterTaskAttributes<TaskSettingAttribute>();
 
-            settingAttributes.Count().ShouldBe(6);
+            settingAttributes.Count().ShouldBe(7);
         }
 
         [Test]
@@ -41,13 +39,22 @@ namespace Smeedee.Tasks.Tests.SourceControl.Git
         }
 
         [Test]
-        public void default_git_installation_location_should_be_empty()
+        public void default_git_installation_location_should_be_standard_msysgit()
         {
             var settingAttributes = GetGitChangesetHarvesterTaskAttributes<TaskSettingAttribute>();
             var gitPullAttribute = settingAttributes.Where(a => a.SettingName == "GitExecutableLocation").SingleOrDefault();
 
             gitPullAttribute.ShouldNotBeNull();
-            gitPullAttribute.DefaultValue.ShouldBe("");
+            gitPullAttribute.DefaultValue.ShouldBe("C:\\msysgit\\msysgit\\bin\\git.exe");
+        }
+
+        public void default_mingq_installation_location_should_be_standard_msysgit_mingw()
+        {
+            var settingAttributes = GetGitChangesetHarvesterTaskAttributes<TaskSettingAttribute>();
+            var gitPullAttribute = settingAttributes.Where(a => a.SettingName == "MingwBinaryDir").SingleOrDefault();
+
+            gitPullAttribute.ShouldNotBeNull();
+            gitPullAttribute.DefaultValue.ShouldBe("C:\\msysgit\\msysgit\\mingw\\bin");
         }
 
         private IEnumerable<T> GetGitChangesetHarvesterTaskAttributes<T>()
@@ -362,7 +369,8 @@ namespace Smeedee.Tasks.Tests.SourceControl.Git
                                          new TaskConfigurationEntry { Name = "Password", Type = typeof(string), Value = "" },
                                          new TaskConfigurationEntry { Name = "GitPullCommand", Type = typeof(string), Value = "pull origin master" },
                                          new TaskConfigurationEntry { Name = "GitExecutableLocation", Type = typeof(string), Value = "" },
-                                         new TaskConfigurationEntry {Name = ChangesetHarvesterBase.SOURCECONTROL_SERVER_NAME, Type = typeof(string), Value = "Main Sourceontrol"}
+                                         new TaskConfigurationEntry {Name = ChangesetHarvesterBase.SOURCECONTROL_SERVER_NAME, Type = typeof(string), Value = "Main Sourceontrol"},
+                                         new TaskConfigurationEntry {Name = "MingwBinaryDir", Type = typeof(string), Value = ""}
                                      };
 
             gitTask = CreateGitTask(taskConfig);

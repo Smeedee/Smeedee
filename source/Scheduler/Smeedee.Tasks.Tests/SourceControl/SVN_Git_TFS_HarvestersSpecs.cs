@@ -38,13 +38,13 @@ namespace Smeedee.Tasks.Tests.SourceControl
         {
             var changesetDbRepo = new Mock<IRepository<Changeset>>().Object;
             var config = new TaskConfiguration {Entries = CreateTaskConfigurationEntries()};
-            var gitConfigWithFiveEntries = new TaskConfiguration {Entries = new List<TaskConfigurationEntry>() {null, null, null, null, null,null}};
+            var gitConfigWithSevenEntries = new TaskConfiguration {Entries = new List<TaskConfigurationEntry>() {null, null, null, null, null,null, null}};
             var changesetDbPersister = new Mock<IPersistDomainModels<Changeset>>().Object;
             tasks = new ChangesetHarvesterBase[]
             {
                 new SVNChangesetHarvesterTask(changesetDbRepo, changesetDbPersister, config),
                 new TFSChangesetHarvesterTask(changesetDbRepo, changesetDbPersister, config),
-                new GitChangesetHarvesterTask(changesetDbRepo, changesetDbPersister, gitConfigWithFiveEntries)
+                new GitChangesetHarvesterTask(changesetDbRepo, changesetDbPersister, gitConfigWithSevenEntries)
             };
         };
 
