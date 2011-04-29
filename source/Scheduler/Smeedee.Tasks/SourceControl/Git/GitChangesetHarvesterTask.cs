@@ -21,11 +21,13 @@ namespace Smeedee.Tasks.SourceControl.Git
     [TaskSetting(3, SOURCECONTROL_SERVER_NAME, typeof(string), "Main Sourcecontrol Server")]
     [TaskSetting(4, URL_SETTING_NAME, typeof(string), "")]
     [TaskSetting(5, GIT_PULL_COMMAND, typeof(string), "pull origin master")]
-    [TaskSetting(6, GIT_EXECUTABLE_LOCATION, typeof(string), "")]
+    [TaskSetting(6, GIT_EXECUTABLE_LOCATION, typeof(string), "C:\\msysgit\\msysgit\\bin\\git.exe", "Full path to git.exe")]
+    [TaskSetting(7, MINGW_BINARY_DIRECTORY, typeof(string), "C:\\msysgit\\msysgit\\mingw\\bin", "Typically found in the mingw folder in \nbase msysgit install folder")]
     public class GitChangesetHarvesterTask : ChangesetHarvesterBase
     {
         public const string GIT_PULL_COMMAND = "GitPullCommand";
         public const string GIT_EXECUTABLE_LOCATION = "GitExecutableLocation";
+        public const string MINGW_BINARY_DIRECTORY = "MingwBinaryDir";
 
         public override string Name
         {
@@ -88,7 +90,7 @@ namespace Smeedee.Tasks.SourceControl.Git
             Guard.Requires<ArgumentNullException>(changesetDbRepository != null);
             Guard.Requires<ArgumentNullException>(databasePersister != null);
             Guard.Requires<ArgumentNullException>(config != null);
-            Guard.Requires<TaskConfigurationException>(config.Entries.Count() == 6);
+            Guard.Requires<TaskConfigurationException>(config.Entries.Count() == 7);
             this.config = config;
             Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);
         }
@@ -113,18 +115,16 @@ namespace Smeedee.Tasks.SourceControl.Git
 
         private void EnsureGitPull(string targetPath)
         {
-            /*
-             set HOME="C:\Code\GitSharpTestApp\sandbox\CodeKataExercises"
-             "C:\Program Files (x86)\Git\bin\git.exe" --git-dir "C:\Code\GitSharpTestApp\sandbox\CodeKataExercises\.git" pull origin master
-            */
             string contents = string.Format("set HOME=\"{0}\"{1}",
-                                            targetPath,
-                                            Environment.NewLine);
-            contents += string.Format(@"set PATH=$PATH;C:\msysgit\msysgit\mingw\bin");
+                                        targetPath,
+                                        Environment.NewLine);
+            contents += string.Format("set PATH=$PATH;{0}{1}", 
+                                        config.Entries.Single(c => c.Name == MINGW_BINARY_DIRECTORY).Value, 
+                                        Environment.NewLine);
             contents += string.Format("\"{0}\" --git-dir \"{1}\\.git\" {2}",
-                                      GetGitExecutable(),
-                                      targetPath,
-                                      config.Entries.Single(c => c.Name == GIT_PULL_COMMAND).Value);
+                                        GetGitExecutable(),
+                                        targetPath,
+                                        config.Entries.Single(c => c.Name == GIT_PULL_COMMAND).Value);
 
             FileSystemAccessor.WriteFile(targetPath, "pull.bat", contents);
 
