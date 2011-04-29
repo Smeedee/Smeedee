@@ -71,21 +71,20 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DiffieHellman, Version=0.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\DiffieHellman.dll</HintPath>
-    </Reference>
     <Reference Include="GitSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\GitSharp.dll</HintPath>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp.dll</HintPath>
     </Reference>
     <Reference Include="GitSharp.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\GitSharp.Core.dll</HintPath>
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GitSharp.Tests">
+      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp.Tests.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\..\..\tools\GitSharp_binaries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -165,10 +164,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tamir.SharpSSH, Version=1.1.1.13, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\Tamir.SharpSSH.dll</HintPath>
-    </Reference>
     <Reference Include="TinyBDD, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TinyBDD\TinyBDD.dll</HintPath>
@@ -176,10 +171,6 @@
     <Reference Include="TinyBDD.Specification.NUnit, Version=0.1.0.1, Culture=neutral, PublicKeyToken=e47493d570969161, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\TinyBDD\TinyBDD.Specification.NUnit.dll</HintPath>
-    </Reference>
-    <Reference Include="Winterdom.IO.FileMap, Version=2.0.2.0, Culture=neutral, PublicKeyToken=4982617362e1edb5, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp\Winterdom.IO.FileMap.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
