@@ -120,6 +120,7 @@ namespace Smeedee.Tasks.SourceControl.Git
             string contents = string.Format("set HOME=\"{0}\"{1}",
                                             targetPath,
                                             Environment.NewLine);
+            contents += string.Format(@"set PATH=$PATH;C:\msysgit\msysgit\mingw\bin");
             contents += string.Format("\"{0}\" --git-dir \"{1}\\.git\" {2}",
                                       GetGitExecutable(),
                                       targetPath,
