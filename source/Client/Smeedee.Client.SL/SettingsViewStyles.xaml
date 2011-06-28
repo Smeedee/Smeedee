@@ -59,7 +59,7 @@
 	
 	<Style x:Key="SettingsViewAddWordAndColorButton" TargetType="Button">
         <Setter Property="FontSize" Value="14"/>
-		<Setter Property="Content" Value="AddWordAndColor"/>
+		<Setter Property="Content" Value="Add word and color"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
 		<Setter Property="Height" Value="25"/>
 		<Setter Property="VerticalAlignment" Value="Bottom"/> 
