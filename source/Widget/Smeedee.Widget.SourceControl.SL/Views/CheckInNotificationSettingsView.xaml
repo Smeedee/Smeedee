@@ -50,6 +50,7 @@
                     Grid.ColumnSpan="1"
                     Style="{StaticResource SettingsViewText}"
                     Text="Blink when commit comment is bad" />
+					
                 <CheckBox 
                     Grid.Column="1" 
                     Grid.Row="1"
@@ -63,7 +64,12 @@
                     Grid.Row="2"
                     Style="{StaticResource SettingsViewText}"
                     Text="Number of commits shown" />
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+					
+                <StackPanel 
+					Margin="10,0,0,0" 
+					Orientation="Horizontal" 
+					Grid.Column="1" 
+					Grid.Row="2">
                     <Slider
                         Style="{StaticResource SettingsViewSlider}"
                         Value="{Binding NumberOfCommits, Mode=TwoWay}"
@@ -111,7 +117,8 @@
 					<ComboBox
 						Grid.Column="1"
 						Style="{StaticResource SettingsViewComboBox}"
-						Margin="0,0,0,0" Height="30"/>
+						Margin="0,0,0,0" 
+						Height="30"/>
 				</Grid>
 				
 				<StackPanel
