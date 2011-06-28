@@ -57,9 +57,11 @@ namespace Smeedee.Widgets.WebPage.Controllers
 		public static Configuration GetDefaultConfiguration()
 		{
 			var config = new Configuration("webpage");
+
 			config.NewSetting(url, "");
 			config.NewSetting(refresh_interval, "30");
-			return config;
+			
+            return config;
 		}
 
 		public void UpdateConfiguration(Configuration config)
