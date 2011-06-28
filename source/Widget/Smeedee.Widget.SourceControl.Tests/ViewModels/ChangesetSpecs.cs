@@ -74,6 +74,22 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.ChangesetSpecs
             viewModel.CommentIsBad = true;
             viewModel.CommentIsBad.ShouldBe(true);
         }
+        
+        [Test]
+        public void Should_have_DarkBackgroundColor_property()
+        {
+            viewModel.DarkBackgroundColor.ShouldNotBeNull();
+            viewModel.DarkBackgroundColor = "#000000";
+            viewModel.DarkBackgroundColor.ShouldBe("#000000");
+        }
+
+        [Test]
+        public void Should_have_LightBackgroundColor_property()
+        {
+            viewModel.LightBackgroundColor.ShouldNotBeNull();
+            viewModel.LightBackgroundColor = "#000000";
+            viewModel.LightBackgroundColor.ShouldBe("#000000");
+        }
 
     }
 }

@@ -20,8 +20,8 @@
     <Border x:Name="BoundingBorder" Style="{StaticResource DefaultBorder}" Padding="5">
     	<Border.Background>
     		<RadialGradientBrush GradientOrigin="-0.28,-0.239" RadiusX="0.91" RadiusY="0.552" Center="0.22,0.261" SpreadMethod="Reflect">
-    			<GradientStop Color="#FF838383"/>
-    			<GradientStop Color="#FF505050" Offset="0.82"/>
+    			<GradientStop Color="{Binding LightBackgroundColor, Mode=OneWay}"/>
+    			<GradientStop Color="{Binding DarkBackgroundColor, Mode=OneWay}" Offset="0.82"/>
     		</RadialGradientBrush>
     	</Border.Background>
         <VisualStateManager.VisualStateGroups>

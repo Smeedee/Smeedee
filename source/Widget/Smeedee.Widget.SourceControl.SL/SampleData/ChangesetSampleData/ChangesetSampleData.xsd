@@ -12,6 +12,8 @@
     </xs:sequence>
     <xs:attribute blend:FormatParameters="30,8" name="Message" type="xs:string" />
     <xs:attribute blend:Format="Date" name="Date" type="xs:string" />
+    <xs:attribute blend:Format="Colors" name="DarkBackgroundColor" type="xs:string" />
+    <xs:attribute blend:Format="Colors" name="LightBackgroundColor" type="xs:string" />
   </xs:complexType>
   <xs:complexType name="ComplexPropertyType">
     <xs:attribute blend:Format="Name" name="Name" type="xs:string" />
