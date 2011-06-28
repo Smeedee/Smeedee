@@ -56,6 +56,15 @@
     <Style x:Key="SettingsViewButton" TargetType="Button">
         <Setter Property="FontSize" Value="14"/>
     </Style>
+	
+	<Style x:Key="SettingsViewAddWordAndColorButton" TargetType="Button">
+        <Setter Property="FontSize" Value="14"/>
+		<Setter Property="Content" Value="AddWordAndColor"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="Height" Value="25"/>
+		<Setter Property="VerticalAlignment" Value="Bottom"/> 
+		<Setter Property="Margin" Value="0,5,0,0"/>
+    </Style>
     
     <Style x:Key="SettingsViewSaveButton" TargetType="Button">
         <Setter Property="FontSize" Value="14"/>
@@ -75,6 +84,12 @@
         <Setter Property="Margin" Value="10,0,0,5"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
+
+	<Style x:Key="SettingsViewTextBox" TargetType="TextBox">
+		<Setter Property="Width" Value="120"/>
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="HorizontalAlignment" Value="Left"/>
+	</Style>
 
     <Style x:Key="SettingsViewButtonWrapper" TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal"/>

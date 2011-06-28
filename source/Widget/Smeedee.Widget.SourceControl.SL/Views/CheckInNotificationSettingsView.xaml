@@ -19,7 +19,7 @@
 	
 	<Grid x:Name="LayoutRoot">
         <Border Style="{StaticResource SettingsViewBorder}">
-            <Grid Style="{StaticResource SettingsViewGrid}">
+            <Grid Style="{StaticResource SettingsViewGrid}" Height="350">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -29,6 +29,12 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+					<RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+					<RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <TextBlock 
@@ -36,7 +42,7 @@
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     Style="{StaticResource SettingsViewH1}"
-                    Text="Configure Latest commits"/>
+                    Text="Configure Latest commits" Margin="0,-9,0,0"/>
 
                 <TextBlock 
                     Grid.Column="0"
@@ -69,15 +75,56 @@
                         Style="{StaticResource SettingsViewNumericUpDown}"
                         HorizontalAlignment="Left" 
                         Value="{Binding NumberOfCommits, Mode=TwoWay}" 
-                        Grid.Column="1"
-                        Grid.Row="2"
                         Minimum="1"
                         Maximum="20"/>
                 </StackPanel>
+				
+				<Grid
+					Grid.Column="0" 
+                    Grid.Row="3">
+					<Grid.ColumnDefinitions>
+                    	<ColumnDefinition />
+                    	<ColumnDefinition />
+                	</Grid.ColumnDefinitions>
+					<TextBlock
+						Grid.Column="0"
+						Text="Word:" 
+						Style="{StaticResource SettingsViewText}"/>
+					<TextBlock
+						Grid.Column="1"
+						Text="Color:" 
+						Style="{StaticResource SettingsViewText}"/>
+				</Grid>
+				
+				<Grid
+					Grid.Column="0" 
+                    Grid.Row="4">
+					<Grid.ColumnDefinitions>
+                    	<ColumnDefinition />
+                    	<ColumnDefinition />
+                	</Grid.ColumnDefinitions>
+					<TextBox
+						Grid.Column="0"
+						Text="Word" 
+						Height="30"
+						Style="{StaticResource SettingsViewTextBox}"/>
+					<ComboBox
+						Grid.Column="1"
+						Style="{StaticResource SettingsViewComboBox}"
+						Margin="0,0,0,0" Height="30"/>
+				</Grid>
+				
+				<StackPanel
+					Grid.Column="0" 
+                    Grid.Row="5">
+					<Button
+						Style="{StaticResource SettingsViewAddWordAndColorButton}"
+						Command="{Binding AddWordAndColorSettings}"/>
+				</StackPanel>
 
                 <StackPanel 
                     Grid.Column="1"
-                    Grid.Row="4"
+                    Grid.Row="9"
                     Style="{StaticResource SettingsViewControlButtonsWrapper}">
                     <Button
                         Style="{StaticResource SettingsViewSaveButton}"
