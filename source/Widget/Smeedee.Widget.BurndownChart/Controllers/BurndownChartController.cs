@@ -369,7 +369,6 @@ namespace Smeedee.Widget.BurndownChart.Controllers
         private void SetCurrentProjectIterationBurndownCoordinates()
         {
             PopulateAndSortAllDatesWithWorkItems();
-
             SetBurndownCoordinatesOnViewModel();
         }
 
