@@ -38,6 +38,8 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         public ChangesetViewModel()
         {
             developer = new Person();
+            LightBackgroundColor = "#FF838383";
+            DarkBackgroundColor = "#FF505050";
         }
 
         public bool ShouldBlink { get; set; }
@@ -99,6 +101,35 @@ namespace Smeedee.Widget.SourceControl.ViewModels
                 {
                     revision = value;
                     TriggerPropertyChanged<ChangesetViewModel>(vm => vm.Revision);
+                }
+            }
+        }
+
+        private String _darkBackgroundColor;
+        public String DarkBackgroundColor
+        {
+            get { return _darkBackgroundColor;  }
+            set { 
+               
+                if (value != _darkBackgroundColor)
+                {
+                    _darkBackgroundColor = value;
+                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.DarkBackgroundColor);
+                }
+            }
+        }
+
+        private String _lightBackgroundColor;
+        public string LightBackgroundColor
+        {
+            get { return _lightBackgroundColor; }
+            set
+            {
+
+                if (value != _lightBackgroundColor)
+                {
+                    _lightBackgroundColor = value;
+                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.LightBackgroundColor);
                 }
             }
         }

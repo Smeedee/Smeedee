@@ -1056,8 +1056,11 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
                         config.ContainsSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME).ShouldBeTrue();
                         config.ContainsSetting("").ShouldBeFalse();
 
+                        var firstOfJanuary2010WithCurrentCulture =
+                            new DateTime(2010, 1, 1).ToString(Thread.CurrentThread.CurrentCulture);
+
+                        config.GetSetting(DATE_ENTRY_NAME).Value.ShouldBe(firstOfJanuary2010WithCurrentCulture);
                         config.GetSetting(TIMESPAN_ENTRY_NAME).Value.ShouldBe("1");
-                        config.GetSetting(DATE_ENTRY_NAME).Value.ShouldBe("1/1/2010 12:00:00 AM");
                         config.GetSetting(IS_USING_DATE_ENTRY_NAME).Value.ShouldBe("False");
                         config.GetSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME).Value.ShouldBe("12");
                         config.GetSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME).Value.ShouldBe("False");
