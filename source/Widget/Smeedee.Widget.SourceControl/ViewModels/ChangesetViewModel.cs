@@ -35,11 +35,14 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 {
     public class ChangesetViewModel : AbstractViewModel
     {
+        public const string DEFAULT_LIGHT_BACKGROUND_COLOR = "#FF838383";
+        public const string DEFAULT_DARK_BACGROUND_COLOR = "#FF505050";
+
         public ChangesetViewModel()
         {
             developer = new Person();
-            LightBackgroundColor = "#FF838383";
-            DarkBackgroundColor = "#FF505050";
+            LightBackgroundColor = DEFAULT_LIGHT_BACKGROUND_COLOR;
+            DarkBackgroundColor = DEFAULT_DARK_BACGROUND_COLOR;
         }
 
         public bool ShouldBlink { get; set; }
