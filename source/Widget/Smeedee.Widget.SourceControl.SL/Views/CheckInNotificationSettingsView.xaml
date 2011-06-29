@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
 	mc:Ignorable="d"
 	d:DesignWidth="640" d:DesignHeight="480">
@@ -17,6 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 	
+	
 	<Grid x:Name="LayoutRoot">
         <Border Style="{StaticResource SettingsViewBorder}">
             <Grid Style="{StaticResource SettingsViewGrid}" Height="350">
@@ -25,14 +26,14 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
-					<RowDefinition/>
+                    <RowDefinition />
+					<RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
-					<RowDefinition/>
+					<RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -42,7 +43,8 @@
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     Style="{StaticResource SettingsViewH1}"
-                    Text="Configure Latest commits" Margin="0,-9,0,0"/>
+                    Text="Configure Latest commits" 
+					Margin="0,-9,0,0" />
 
                 <TextBlock 
                     Grid.Column="0"
@@ -50,21 +52,21 @@
                     Grid.ColumnSpan="1"
                     Style="{StaticResource SettingsViewText}"
                     Text="Blink when commit comment is bad" />
-					
+
                 <CheckBox 
                     Grid.Column="1" 
                     Grid.Row="1"
                     FontSize="14" 
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    IsChecked="{Binding BlinkWhenNoComment, Mode=TwoWay}" />
+                    IsChecked="{Binding BlinkWhenNoComment, Mode=TwoWay}" 
+					VerticalAlignment="Top" 
+					Margin="10,2,0,0" />
 
                 <TextBlock
                     Grid.Column="0"
                     Grid.Row="2"
                     Style="{StaticResource SettingsViewText}"
                     Text="Number of commits shown" />
-					
+
                 <StackPanel 
 					Margin="10,0,0,0" 
 					Orientation="Horizontal" 
@@ -73,61 +75,77 @@
                     <Slider
                         Style="{StaticResource SettingsViewSlider}"
                         Value="{Binding NumberOfCommits, Mode=TwoWay}"
-                        Margin="0,0,10,0"
+                        Margin="0,3,10,0"
                         Minimum="1"
-                        Maximum="25"/>
+                        Maximum="25" 
+						VerticalAlignment="Top" />
                     <inputToolkit:NumericUpDown
                         x:Name="NumberOfCommitsToShow"
                         Style="{StaticResource SettingsViewNumericUpDown}"
-                        HorizontalAlignment="Left" 
                         Value="{Binding NumberOfCommits, Mode=TwoWay}" 
+						Margin="0,2,0,0"
                         Minimum="1"
-                        Maximum="20"/>
+                        Maximum="20" 
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" />
                 </StackPanel>
-				
-				<Grid
-					Grid.Column="0" 
+
+                <StackPanel
+                    Grid.Column="0" 
                     Grid.Row="3">
-					<Grid.ColumnDefinitions>
-                    	<ColumnDefinition />
-                    	<ColumnDefinition />
-                	</Grid.ColumnDefinitions>
-					<TextBlock
-						Grid.Column="0"
-						Text="Word:" 
-						Style="{StaticResource SettingsViewText}"/>
-					<TextBlock
-						Grid.Column="1"
-						Text="Color:" 
-						Style="{StaticResource SettingsViewText}"/>
-				</Grid>
-				
-				<Grid
+                    <Controls:DataGrid 
+                        AutoGenerateColumns="False" 
+                        Height="211" 
+                        Name="keywordAndColorGrid" 
+                        Width="240" 
+                        FontSize="14"
+						Background="White"
+						Margin="6,0">
+                        <Controls:DataGrid.Columns>
+                            <Controls:DataGridTextColumn 
+								x:Name="wordColumn" 
+								Binding="{Binding SelectedKeyword, Mode=TwoWay}"
+								Header="Word:" 
+								Width="SizeToCells" 
+								MinWidth="120"/>
+							<Controls:DataGridTextColumn 
+								x:Name="colorColumn" 
+								Header="Color:" 
+								Binding="{Binding SelectedColor, Mode=TwoWay}" 
+								Width="SizeToCells" 
+								MinWidth="120"/>
+                            <Controls:DataGridTemplateColumn Header="Word">
+                    			<Controls:DataGridTemplateColumn.CellTemplate>
+                       				<DataTemplate>
+                           				<TextBox Text="{Binding SelectedKeyword, Mode=TwoWay}" />
+                       				</DataTemplate>
+                   				</Controls:DataGridTemplateColumn.CellTemplate>
+                   				<Controls:DataGridTemplateColumn.CellEditingTemplate>
+                       				<DataTemplate>
+                           				<ComboBox  
+                                     		ItemsSource="{Binding AvailableColors}" 
+                        					SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+											Style="{StaticResource SettingsViewComboBox}"> 			
+                        					<ComboBoxItem Content="Orange" Background="Orange" Style="{StaticResource SettingsViewComboBoxItem}"/>
+                        					<ComboBoxItem Content="Yellow" Background="Yellow" Style="{StaticResource SettingsViewComboBoxItem}"/>
+                        					<ComboBoxItem Content="Green" Background="Green" Style="{StaticResource SettingsViewComboBoxItem}"/>
+                        					<ComboBoxItem Content="Blue" Background="Blue" Style="{StaticResource SettingsViewComboBoxItem}"/>
+                        					<ComboBoxItem Content="Purple" Background="Purple" Style="{StaticResource SettingsViewComboBoxItem}"/>
+										</ComboBox>
+                        			</DataTemplate>
+                    			</Controls:DataGridTemplateColumn.CellEditingTemplate>
+                			</Controls:DataGridTemplateColumn>
+                        </Controls:DataGrid.Columns>
+                    </Controls:DataGrid>
+                </StackPanel>
+
+                <StackPanel
 					Grid.Column="0" 
-                    Grid.Row="4">
-					<Grid.ColumnDefinitions>
-                    	<ColumnDefinition />
-                    	<ColumnDefinition />
-                	</Grid.ColumnDefinitions>
-					<TextBox
-						Grid.Column="0"
-						Text="Word" 
-						Height="30"
-						Style="{StaticResource SettingsViewTextBox}"/>
-					<ComboBox
-						Grid.Column="1"
-						Style="{StaticResource SettingsViewComboBox}"
-						Margin="0,0,0,0" 
-						Height="30"/>
-				</Grid>
-				
-				<StackPanel
-					Grid.Column="0" 
-                    Grid.Row="5">
-					<Button
+                    Grid.Row="9">
+                    <Button
 						Style="{StaticResource SettingsViewAddWordAndColorButton}"
-						Command="{Binding AddWordAndColorSettings}"/>
-				</StackPanel>
+						Command="{Binding AddWordAndColorSettings}" />
+                </StackPanel>
 
                 <StackPanel 
                     Grid.Column="1"
@@ -135,11 +153,12 @@
                     Style="{StaticResource SettingsViewControlButtonsWrapper}">
                     <Button
                         Style="{StaticResource SettingsViewSaveButton}"
-                        Command="{Binding SaveSettings}"  />
+                        Command="{Binding SaveSettings}" />
                     <Button 
                         Style="{StaticResource SettingsViewReloadSettingsButton}"
-                        Command="{Binding ReloadSettings}"/>
+                        Command="{Binding ReloadSettings}" />
                 </StackPanel>
+
             </Grid>
         </Border>
     </Grid>

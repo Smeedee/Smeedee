@@ -34,6 +34,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     {
         public DelegateCommand SaveSettings { get; set; }
         public DelegateCommand ReloadSettings { get; set; }
+        
 
         public const int NUMBER_OF_COMMITS_DEFAULT = 8;
         public const bool BLINK_WHEN_NO_COMMENT_DEFAULT = false;
@@ -45,6 +46,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 
             SaveSettings = new DelegateCommand();
             ReloadSettings = new DelegateCommand();
+            
 
             ReloadSettings.ExecuteDelegate += Reset;
             widget.PropertyChanged += (o, e) =>
