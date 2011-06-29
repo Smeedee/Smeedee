@@ -128,10 +128,14 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
                 <ListBox Grid.Row="0" ItemsSource="{Binding Snapshots}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource snapshotDataTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsPanel="{StaticResource snapshotLayoutTemplate}" Background="{x:Null}" BorderBrush="{x:Null}" SelectedItem="{Binding SelectedSnapshot, Mode=TwoWay}" />
-                <Button Grid.Row="1" Content="Delete snapshot" Style="{StaticResource SettingsViewButton}" Command="{Binding Delete}" HorizontalAlignment="Right" />                
+                <Button Grid.Row="1" Content="Delete snapshot" Style="{StaticResource SettingsViewButton}" Command="{Binding Delete}" HorizontalAlignment="Right" />
+                <RadioButton Content="Maximize" Grid.Row="2" Grid.RowSpan="2" Height="16" HorizontalAlignment="Left" Margin="35,15,0,0" Name="radioButton1" VerticalAlignment="Top" />
+                <RadioButton Content="Fit to screen" Grid.Row="3" Grid.RowSpan="3" Height="16" HorizontalAlignment="Right" Margin="35,15,0,0" Name="radioButton2" VerticalAlignment="Top" />
             </Grid>
 
 		</Grid>
