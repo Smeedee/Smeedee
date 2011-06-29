@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Smeedee.Client.Framework.ViewModel;
 using TinyMVVM.Framework;
@@ -42,6 +43,11 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         public LatestCommitsViewModel(Client.Framework.ViewModel.Widget widget)
         {
             Changesets = new ObservableCollection<ChangesetViewModel>();
+            KeywordList = new ObservableCollection<BackgroundColor>();
+            
+            ColorList = new List<string>();
+            ColorList.Add("blue"); // should generate list of colors based on available colors
+
             BlinkWhenNoComment = true;
 
             SaveSettings = new DelegateCommand();
@@ -116,6 +122,10 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             }
         }
 
+        public ObservableCollection<BackgroundColor> KeywordList { get; private set; }
+
+        public List<string> ColorList { get; private set; }
+
         public void SetResetPoint()
         {
             blinkWhenNoCommentResetPoint = BlinkWhenNoComment;
@@ -127,5 +137,11 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             BlinkWhenNoComment = blinkWhenNoCommentResetPoint;
             NumberOfCommits = numberOfCommitsResetPoint;
         }
+    }
+
+    public class BackgroundColor
+    {
+        public string Keyword { get; set; }
+        public string ColorName { get; set; }
     }
 }

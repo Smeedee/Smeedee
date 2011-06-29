@@ -105,6 +105,20 @@ namespace Smeedee.Widget.SourceControl.Controllers
             var configToSave = new Configuration(SettingsEntryName);
             configToSave.NewSetting(NumberOfCommittsEntryName, ViewModel.NumberOfCommits.ToString());
             configToSave.NewSetting(BlinkIsCheckedEntryName,ViewModel.BlinkWhenNoComment.ToString());
+
+            ////
+           // if (keywordColorBinding.Count() == 0)
+           //     keywordColorBinding.Add("fix", new[] { "#FF55FF55", "#FF00CC00" });
+            //if (keywordColorBinding.Count() > 0)
+            //{
+            //    configToSave.NewSetting(KeywordsEntryName, keywordColorBinding.Keys.ToArray());
+            //    foreach (KeyValuePair<string, string[]> binding in keywordColorBinding)
+            //    {
+            //        configToSave.NewSetting("keyword_" + binding.Key, binding.Value);
+            //    }
+            //}
+            ////
+           
             configToSave.IsConfigured = true;
 
             configPersister.Save(configToSave);
