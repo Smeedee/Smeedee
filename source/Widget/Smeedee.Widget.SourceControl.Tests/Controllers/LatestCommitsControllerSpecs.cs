@@ -486,6 +486,94 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
     }
 
+    [TestFixture]
+    public class When_checking_comment_for_key_words : Shared
+    {
+        private Context there_is_one_changeset_in_sourcecontrol_containing_the_word_fix = () =>
+        {
+            var changesets = new List<Changeset>();
+
+            changesets.Add(
+                new Changeset
+                {
+                    Revision = 201222,
+                    Comment = "Added fix to hello world method ",
+                    Time = new DateTime(1986, 5, 20),
+                    Author = new Author { Username = "goeran" }
+                }
+            );
+            repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
+        };
+
+        private Context there_is_one_changeset_in_sourcecontrol_containing_the_word_Fix_with_capital_f = () =>
+        {
+            var changesets = new List<Changeset>();
+
+            changesets.Add(
+                new Changeset
+                {
+                    Revision = 201222,
+                    Comment = "Added Fix to hello world method ",
+                    Time = new DateTime(1986, 5, 20),
+                    Author = new Author { Username = "goeran" }
+                }
+            );
+            repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
+        };
+
+        protected Context the_keyword_fix_is_bound_to_green_in_settings_db = () =>
+        {
+            var configs = new List<Configuration>();
+            var config = GenerateSettings(40, false);
+            config.NewSetting("commentKeywords", new[] { "fix" });
+            config.NewSetting("keyword_fix", new[] { "#FF55FF55", "#FF00CC00" });
+            configs.Add(config);
+            configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
+        };
+
+        [Test]
+        public void Assure_that_changeset_has_default_color_when_no_word_is_found()
+        {
+            Given(there_are_changesets_in_sourcecontrol).
+                And(the_controller_has_been_created);
+            When("there are no key words");
+            Then("the changeset viewModel should have default colors", () =>
+            {
+                viewModel.Changesets[0].LightBackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_LIGHT_BACKGROUND_COLOR);
+                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_DARK_BACGROUND_COLOR);
+            });
+        }
+
+        [Test]
+        public void Assure_that_color_is_updated_when_changeset_has_keyword()
+        {
+            Given(there_is_one_changeset_in_sourcecontrol_containing_the_word_fix).
+                And(the_keyword_fix_is_bound_to_green_in_settings_db).
+                And(the_controller_has_been_created);
+            When("the keyword fix exists in comment");
+            Then("the changeset viewModel should have have green colors", () =>
+            {
+                viewModel.Changesets[0].LightBackgroundColor.ShouldBe("#FF55FF55");
+                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe("#FF00CC00");
+            });
+        }
+
+        [Test]
+        public void Assure_that_keywords_are_case_insensitive()
+        {
+            Given(there_is_one_changeset_in_sourcecontrol_containing_the_word_Fix_with_capital_f).
+               And(the_keyword_fix_is_bound_to_green_in_settings_db).
+               And(the_controller_has_been_created);
+            When("the keyword Fix exists in comment");
+            Then("the changeset viewModel should have have green colors", () =>
+            {
+                viewModel.Changesets[0].LightBackgroundColor.ShouldBe("#FF55FF55");
+                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe("#FF00CC00");
+            });
+        }
+    }
+
+
     public class Shared : ScenarioClass
     {
         protected static PropertyChangedRecorder changeRecorder;
@@ -574,9 +662,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         protected Context there_are_config_settings_in_db = () =>
         {
             var configs = new List<Configuration>();
-            var config = new Configuration("CheckInNotification");
-            config.NewSetting("numberOfCommits", new[] { "40" });
-            config.NewSetting("blinkOnBlankComment", new[] { "false" });
+            var config = GenerateSettings(40, false);
             configs.Add(config);
             configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
         };

@@ -46,6 +46,9 @@ namespace Smeedee.Widget.SourceControl.Controllers
         private const string BlinkIsCheckedEntryName = "blinkOnBlankComment";
         private const string NumberOfCommittsEntryName = "numberOfCommits";
         private const string SettingsEntryName = "CheckInNotification";
+        private const string KeywordsEntryName = "commentKeywords";
+
+        private Dictionary<string, string[]> keywordColorBinding = new Dictionary<string, string[]>();
 
         private readonly List<string> listOfSettings = new List<string>
         {
@@ -147,6 +150,11 @@ namespace Smeedee.Widget.SourceControl.Controllers
             {
                 SetSettings(currentSettings);
             }
+
+            if (ConfigurationHasSettings(currentSettings))
+            {
+                Try(() => UpdateColorBindings(currentSettings));
+            }
             ViewModel.SetResetPoint();
             SetIsNotLoadingConfig();
         }
@@ -191,6 +199,26 @@ namespace Smeedee.Widget.SourceControl.Controllers
 
             Try(() => LoadSpecificSetting(settings.GetSetting(NumberOfCommittsEntryName)));
             Try(() => LoadSpecificSetting(settings.GetSetting(BlinkIsCheckedEntryName)));
+        }
+
+        private void UpdateColorBindings(Configuration settings)
+        {
+            SettingsEntry keywordsEntry = settings.GetSetting(KeywordsEntryName);
+            if (keywordsEntry is EntryNotFound)
+                return;
+
+            List<String> keywords = keywordsEntry.Vals.ToList();
+            keywordColorBinding.Clear();
+
+            SettingsEntry colorEntry;
+            foreach(string key in keywords)
+            {
+                colorEntry = settings.GetSetting("keyword_" + key);
+                if (colorEntry is EntryNotFound)
+                    continue;
+
+                keywordColorBinding.Add(key, colorEntry.Vals.ToArray());
+            }
         }
         
         delegate void VoidDelegate();
@@ -287,10 +315,37 @@ namespace Smeedee.Widget.SourceControl.Controllers
                                        ShouldBlink = ViewModel.BlinkWhenNoComment
                                    };
 
+
+            newChangeset = AddColorToChangeset(newChangeset, changeset.Comment);
+
             newChangeset.Developer.Username = changeset.Author.Username;
 
             ViewModel.Changesets.Insert(0, newChangeset);
         }
+
+        private ChangesetViewModel AddColorToChangeset(ChangesetViewModel newChangeset, string changesetComment)
+        {
+            string[] colors = FindColorForChangeset(changesetComment);
+            if (colors != null && colors.Count() == 2)
+            {
+                newChangeset.LightBackgroundColor = colors[0];
+                newChangeset.DarkBackgroundColor = colors[1];
+            }
+            return newChangeset;
+        }
+
+        private string[] FindColorForChangeset(String changesetComment)
+        {
+            string comment = changesetComment.ToLower();
+            foreach (KeyValuePair<string, string[]> binding in keywordColorBinding)
+            {
+                
+                if (comment.Contains(binding.Key))
+                    return binding.Value;
+            }
+            return null;
+        }
+
 
         private void KeepLatestCommits()
         {
