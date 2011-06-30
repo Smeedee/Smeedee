@@ -79,9 +79,12 @@
 
     <Style x:Key="SettingsViewComboBox" TargetType="ComboBox">
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Width" Value="140"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
+	
+	<Style x:Key="SettingsViewComboBoxItem" TargetType="ComboBoxItem">
+		<Setter Property="FontSize" Value="14"/>
+	</Style>
 
 	<Style x:Key="SettingsViewTextBox" TargetType="TextBox">
 		<Setter Property="Width" Value="120"/>
@@ -93,11 +96,7 @@
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Margin" Value="10,0,0,5"/>
     </Style>
-	
-	<Style x:Key="SettingsViewComboBoxItem" TargetType="ComboBoxItem">
-		<Setter Property="FontSize" Value="14"/>
-	</Style>
-    
+
     <Style x:Key="SettingsViewControlButtonsWrapper" TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Margin" Value="0,10,0,0"/>

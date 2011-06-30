@@ -16,27 +16,29 @@
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <src:ColorProvider x:Key="colorProvider" />
+        <!--<src:ColorProvider x:Key="colorProvider" />-->
     </UserControl.Resources>
    
 	<Grid x:Name="LayoutRoot">
-        <Border Style="{StaticResource SettingsViewBorder}">
-            <Grid Style="{StaticResource SettingsViewGrid}" Height="350">
+        <Border Style="{StaticResource SettingsViewBorder}" Margin="0,0,0,-14">
+            <Grid Style="{StaticResource SettingsViewGrid}" Height="380" Width="482" d:LayoutOverrides="Width">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="0.585*" />
+                    <ColumnDefinition Width="0.415*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-					<RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-					<RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+					<RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+					<RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+					<RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.103*" />
                 </Grid.RowDefinitions>
 
                 <TextBlock 
@@ -91,60 +93,59 @@
 						VerticalAlignment="Top" />
                 </StackPanel>
 
-                <Grid
-                    Grid.Column="0" 
-                    ></Grid>
+                <Controls:DataGrid 
+                    AutoGenerateColumns="False" 
+                    Name="keywordAndColorGrid"
+                    FontSize="14" 
+                    Background="White" 
+                    Margin="8,0,6,0" 
+                    ItemsSource="{Binding Path=KeywordList}" 
+                    Grid.Column="0"
+                    Grid.Row="3" 
+                    Grid.RowSpan="6"
+                    HorizontalScrollBarVisibility="Visible"
+                    VerticalScrollBarVisibility="Visible">
+                    <Controls:DataGrid.Columns>
+                        <Controls:DataGridTextColumn 
+                            Header="Keyword" 
+                            Binding="{Binding Keyword, Mode=TwoWay}" 
+                            MinWidth="120" />
+                        <Controls:DataGridTemplateColumn
+                            Header="Color"
+                            MinWidth="129">
+                   			<Controls:DataGridTemplateColumn.CellEditingTemplate>
+                       	        <DataTemplate>
+                           			<ComboBox  
+                                     	ItemsSource="{Binding ColorList}" 
+                        				SelectedItem="{Binding ColorName, Mode=TwoWay}"
+										Style="{StaticResource SettingsViewComboBox}"
+                                        MinWidth="127"> 			
+									</ComboBox>
+                        		</DataTemplate>
+                    		</Controls:DataGridTemplateColumn.CellEditingTemplate>
+                		</Controls:DataGridTemplateColumn>
+                    </Controls:DataGrid.Columns>
+                </Controls:DataGrid>
 
                 <StackPanel
 					Grid.Column="0" 
                     Grid.Row="9">
                     <Button
 						Style="{StaticResource SettingsViewAddWordAndColorButton}"
-						Command="{Binding AddWordAndColorSettings}" />
+						Command="{Binding AddWordAndColorSettings}" Margin="0,5,0,0" />
                 </StackPanel>
 
                 <StackPanel 
                     Grid.Column="1"
-                    Grid.Row="9"
-                    Style="{StaticResource SettingsViewControlButtonsWrapper}">
+                    Grid.Row="11"
+                    Style="{StaticResource SettingsViewControlButtonsWrapper}" >
                     <Button
                         Style="{StaticResource SettingsViewSaveButton}"
-                        Command="{Binding SaveSettings}" />
+                        Command="{Binding SaveSettings}"/>
                     <Button 
                         Style="{StaticResource SettingsViewReloadSettingsButton}"
-                        Command="{Binding ReloadSettings}" />
+                        Command="{Binding ReloadSettings}"  />
                 </StackPanel>
-                <Controls:DataGrid 
-                    AutoGenerateColumns="False" 
-                    Height="211" 
-                    Name="keywordAndColorGrid" 
-                    Width="241" 
-                    FontSize="14" 
-                    Background="White" 
-                    Margin="6,34,6,0" 
-                    ItemsSource="{Binding Path=KeywordList}" 
-                    Grid.Row="2" 
-                    Grid.RowSpan="7">
-                    <Controls:DataGrid.Columns>
-                        <Controls:DataGridTextColumn 
-                            Header="Keyword" 
-                            Binding="{Binding Keyword, Mode=TwoWay}" 
-                            MinWidth="100" />
-                        <Controls:DataGridTemplateColumn
-                                Header="Color"
-                                Width="140">
-                   				<Controls:DataGridTemplateColumn.CellEditingTemplate>
-                       				<DataTemplate>
-                           				<ComboBox  
-                                     		ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}" 
-                        					SelectedItem="{Binding ColorName, Mode=TwoWay}"
-											Style="{StaticResource SettingsViewComboBox}"> 			
-										</ComboBox>
-                        			</DataTemplate>
-                    			</Controls:DataGridTemplateColumn.CellEditingTemplate>
-                			</Controls:DataGridTemplateColumn>
-                    </Controls:DataGrid.Columns>
-                </Controls:DataGrid>
             </Grid>
         </Border>
     </Grid>
