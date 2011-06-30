@@ -147,13 +147,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     {
         public List<string> ColorList
         {
-            get
-            {
-                return new List<string>
-                           {
-                               "red", "green", "blue"
-                           };
-            }
+            get { return new List<string>(ChangesetBackgroundProvider.GetColors()); }
         }
     }
 }

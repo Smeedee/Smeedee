@@ -437,6 +437,22 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
             Then(() => configPersisterMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Once()));
         }
+
+        [Test]
+        public void Assure_that_change_in_color_settings_in_db_lead_to_changes_in_View()
+        {
+            Given(the_controller_has_been_created).And(the_keyword_fix_is_bound_to_green_in_settings_db);
+
+            When(refresh_is_triggered);
+
+            Then(() =>
+            {
+                controller.ViewModel.KeywordList.Count.ShouldBe(1);
+                controller.ViewModel.KeywordList[0].Keyword.ShouldBe("fix");
+                controller.ViewModel.KeywordList[0].ColorName.ShouldBe("green");
+            });
+
+        }
     }
 
     [TestFixture]
@@ -545,15 +561,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
         };
 
-        protected Context the_keyword_fix_is_bound_to_green_in_settings_db = () =>
-        {
-            var configs = new List<Configuration>();
-            var config = GenerateSettings(40, false);
-            config.NewSetting("commentKeywords", new[] { "fix" });
-            config.NewSetting("keyword_fix", new[] { "#FF55FF55", "#FF00CC00" });
-            configs.Add(config);
-            configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
-        };
+        
 
         [Test]
         public void Assure_that_changeset_has_default_color_when_no_word_is_found()
@@ -577,8 +585,8 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             When("the keyword fix exists in comment");
             Then("the changeset viewModel should have have green colors", () =>
             {
-                viewModel.Changesets[0].LightBackgroundColor.ShouldBe("#FF55FF55");
-                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe("#FF00CC00");
+                viewModel.Changesets[0].LightBackgroundColor.ShouldBe("#FF55FF55");  // the color green is bound to these colors
+                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe("#FF00CC00");   // in the static class ChangesetBackgroundProvider
             });
         }
 
@@ -691,6 +699,15 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
         };
 
+        protected Context the_keyword_fix_is_bound_to_green_in_settings_db = () =>
+        {
+            var configs = new List<Configuration>();
+            var config = GenerateSettings(40, false);
+            config.NewSetting("commentKeywords", new[] { "fix", "green" });
+            configs.Add(config);
+            configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
+        };
+
         protected Context db_with_nonrelevant_configdata = () =>
         {
             var configs = new List<Configuration>();
@@ -733,6 +750,9 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             config.NewSetting("blinkOnBlankComment", new[] { blinkIsChecked.ToString() });
             if (keywordColors != null)
                 config.NewSetting("commentKeywords", keywordColors);
+            else
+                config.NewSetting("commentKeywords", new string[0]);
+    
             return config;
         }
 

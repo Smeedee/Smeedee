@@ -28,6 +28,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Smeedee.Client.Framework.ViewModel;
 
 
@@ -137,4 +140,28 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             }
         }
     }
+
+    public static class ChangesetBackgroundProvider
+    {
+        private static Dictionary<string, string[]> colors = new Dictionary<string, string[]>
+                { 
+                    {"green", new [] {"#FF55FF55", "#FF00CC00"}},
+                    {"yellow", new [] {"#FFFFFF55", "#FFCCCC00"}}
+                };
+
+        public static string GetLightColor(string color)
+        {
+            return colors.ContainsKey(color) ? colors[color][0] : ChangesetViewModel.DEFAULT_LIGHT_BACKGROUND_COLOR;
+        }
+
+        public static string GetDarkColor(string color)
+        {
+            return colors.ContainsKey(color) ? colors[color][1] : ChangesetViewModel.DEFAULT_DARK_BACGROUND_COLOR;
+        }
+
+        public static string[] GetColors()
+        {
+            return colors.Keys.ToArray();
+        }
+    }   
 }

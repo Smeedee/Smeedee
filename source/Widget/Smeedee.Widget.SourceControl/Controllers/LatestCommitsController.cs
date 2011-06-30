@@ -48,8 +48,6 @@ namespace Smeedee.Widget.SourceControl.Controllers
         private const string SettingsEntryName = "CheckInNotification";
         private const string KeywordsEntryName = "commentKeywords";
 
-        private Dictionary<string, string[]> keywordColorBinding = new Dictionary<string, string[]>();
-
         private readonly List<string> listOfSettings = new List<string>
         {
             BlinkIsCheckedEntryName, NumberOfCommittsEntryName
@@ -105,20 +103,17 @@ namespace Smeedee.Widget.SourceControl.Controllers
 
             var configToSave = new Configuration(SettingsEntryName);
             configToSave.NewSetting(NumberOfCommittsEntryName, ViewModel.NumberOfCommits.ToString());
-            configToSave.NewSetting(BlinkIsCheckedEntryName,ViewModel.BlinkWhenNoComment.ToString());
+            configToSave.NewSetting(BlinkIsCheckedEntryName, ViewModel.BlinkWhenNoComment.ToString());
 
-            ////
-           // if (keywordColorBinding.Count() == 0)
-           //     keywordColorBinding.Add("fix", new[] { "#FF55FF55", "#FF00CC00" });
-            //if (keywordColorBinding.Count() > 0)
-            //{
-            //    configToSave.NewSetting(KeywordsEntryName, keywordColorBinding.Keys.ToArray());
-            //    foreach (KeyValuePair<string, string[]> binding in keywordColorBinding)
-            //    {
-            //        configToSave.NewSetting("keyword_" + binding.Key, binding.Value);
-            //    }
-            //}
-            ////
+            var keywords = new List<string>();
+            foreach (var keywordColor in ViewModel.KeywordList)
+            {
+                if (keywordColor.Keyword == "")
+                    continue;
+                keywords.Add(keywordColor.Keyword);
+                keywords.Add(keywordColor.ColorName);
+            }
+            configToSave.NewSetting(KeywordsEntryName, keywords.ToArray());
            
             configToSave.IsConfigured = true;
 
@@ -165,16 +160,18 @@ namespace Smeedee.Widget.SourceControl.Controllers
         {
             SetIsLoadingConfig();
             var currentSettings = configRepo.Get(new ConfigurationByName(SettingsEntryName)).SingleOrDefault();
+            
+          
 
-            if (ConfigurationHasSettings(currentSettings) && DbSettingsIsChanged(currentSettings)) 
+            if (ConfigurationHasSettings(currentSettings) && DbSettingsIsChanged(currentSettings))
             {
                 SetSettings(currentSettings);
             }
-
             if (ConfigurationHasSettings(currentSettings))
             {
-                Try(() => UpdateColorBindings(currentSettings));
+                SetColorSettings(currentSettings);
             }
+
             ViewModel.SetResetPoint();
             SetIsNotLoadingConfig();
         }
@@ -221,24 +218,9 @@ namespace Smeedee.Widget.SourceControl.Controllers
             Try(() => LoadSpecificSetting(settings.GetSetting(BlinkIsCheckedEntryName)));
         }
 
-        private void UpdateColorBindings(Configuration settings)
+        private void SetColorSettings(Configuration settings)
         {
-            SettingsEntry keywordsEntry = settings.GetSetting(KeywordsEntryName);
-            if (keywordsEntry is EntryNotFound)
-                return;
-
-            List<String> keywords = keywordsEntry.Vals.ToList();
-            keywordColorBinding.Clear();
-
-            SettingsEntry colorEntry;
-            foreach(string key in keywords)
-            {
-                colorEntry = settings.GetSetting("keyword_" + key);
-                if (colorEntry is EntryNotFound)
-                    continue;
-
-                keywordColorBinding.Add(key, colorEntry.Vals.ToArray());
-            }
+            Try(() => LoadColorSetting(settings.GetSetting(KeywordsEntryName)));
         }
         
         delegate void VoidDelegate();
@@ -273,6 +255,21 @@ namespace Smeedee.Widget.SourceControl.Controllers
                     });
                     break;
             }
+        }
+
+        private void LoadColorSetting(SettingsEntry setting)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.KeywordList.Clear();
+                if (!setting.HasMultipleValues) return;
+
+                var config = setting.Vals.ToArray();
+                for (int i = 0; i < config.Count(); i += 2)
+                {
+                    ViewModel.KeywordList.Add(new KeywordColorPair() { Keyword = config[i], ColorName = config[i + 1] });
+                }
+            });
         }
 
         private void LogErrorMsg(Exception exception)
@@ -357,11 +354,11 @@ namespace Smeedee.Widget.SourceControl.Controllers
         private string[] FindColorForChangeset(String changesetComment)
         {
             string comment = changesetComment.ToLower();
-            foreach (KeyValuePair<string, string[]> binding in keywordColorBinding)
+            foreach (var binding in ViewModel.KeywordList)
             {
-                
-                if (comment.Contains(binding.Key))
-                    return binding.Value;
+                var lowerCaseKeyword = binding.Keyword.ToLower();
+                if (comment.Contains(lowerCaseKeyword))
+                    return new [] {ChangesetBackgroundProvider.GetLightColor(binding.ColorName), ChangesetBackgroundProvider.GetDarkColor(binding.ColorName) };
             }
             return null;
         }
