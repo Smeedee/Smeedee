@@ -35,6 +35,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     {
         public DelegateCommand SaveSettings { get; set; }
         public DelegateCommand ReloadSettings { get; set; }
+        public DelegateCommand AddWordAndColorSettings { get; set; }
         
 
         public const int NUMBER_OF_COMMITS_DEFAULT = 8;
@@ -49,7 +50,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 
             SaveSettings = new DelegateCommand();
             ReloadSettings = new DelegateCommand();
-            
+            AddWordAndColorSettings = new DelegateCommand();
 
             ReloadSettings.ExecuteDelegate += Reset;
             widget.PropertyChanged += (o, e) =>

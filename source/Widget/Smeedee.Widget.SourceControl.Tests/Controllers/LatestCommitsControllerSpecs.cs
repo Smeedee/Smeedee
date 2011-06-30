@@ -487,6 +487,30 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
     }
 
     [TestFixture]
+    public class When_configuring_keyword_color_bindings : Shared
+    {
+        [Test]
+        public void Assure_that_clicking_Add_word_and_color_button_inserts_a_new_binding()
+        {
+            Given(the_controller_has_been_created);
+            When(add_word_and_color_button_is_pressed);
+            Then("there should be one item in KeywordList", () => viewModel.KeywordList.Count().ShouldBe(1));
+        }
+
+        [Test]
+        public void Assure_that_clicking_Add_word_and_color_button_twice_inserts_two_bindings()
+        {
+            Given(the_controller_has_been_created);
+            When("add_word_and_color_is_pressed_twice", () =>
+                {
+                    add_word_and_color_button_is_pressed();
+                    add_word_and_color_button_is_pressed();
+                });
+            Then("there should be two items in KeywordList", () => viewModel.KeywordList.Count().ShouldBe(2));
+        }
+    }
+
+    [TestFixture]
     public class When_checking_comment_for_key_words : Shared
     {
         private Context there_is_one_changeset_in_sourcecontrol_containing_the_word_fix = () =>
@@ -683,6 +707,8 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
         protected When save_button_is_pressed = () => viewModel.SaveSettings.ExecuteDelegate();
 
+        protected When add_word_and_color_button_is_pressed = () => viewModel.AddWordAndColorSettings.ExecuteDelegate();
+
         protected When the_controller_is_created = CreateController;
 
         protected When numberOfCommitts_is_changed_to_five = () =>
@@ -697,9 +723,16 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
         protected static Configuration GenerateSettings(int numOfCommits, bool blinkIsChecked)
         {
+            return GenerateSettings(numOfCommits, blinkIsChecked, null);
+        }
+
+        protected static Configuration GenerateSettings(int numOfCommits, bool blinkIsChecked, string[] keywordColors)
+        {
             var config = new Configuration("CheckInNotification");
             config.NewSetting("numberOfCommits", new[] { numOfCommits.ToString() });
             config.NewSetting("blinkOnBlankComment", new[] { blinkIsChecked.ToString() });
+            if (keywordColors != null)
+                config.NewSetting("commentKeywords", keywordColors);
             return config;
         }
 

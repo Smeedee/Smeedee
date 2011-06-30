@@ -84,6 +84,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
             this.logger = logger;
 
             ViewModel.SaveSettings.ExecuteDelegate = SaveSettings;
+            ViewModel.AddWordAndColorSettings.ExecuteDelegate = AddWordAndColorSettings;
 
             configPersister.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
 
@@ -123,6 +124,11 @@ namespace Smeedee.Widget.SourceControl.Controllers
 
             configPersister.Save(configToSave);
             ReloadViewModel();
+        }
+
+        public void AddWordAndColorSettings()
+        {
+            ViewModel.KeywordList.Add(new KeywordColorPair() { Keyword = "word" + ViewModel.KeywordList.Count() });
         }
 
         private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs e)
