@@ -16,7 +16,7 @@
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <!--<src:ColorProvider x:Key="colorProvider" />-->
+        <src:ColorProvider x:Key="colorProvider" />
     </UserControl.Resources>
    
 	<Grid x:Name="LayoutRoot">
@@ -116,7 +116,7 @@
                    			<Controls:DataGridTemplateColumn.CellEditingTemplate>
                        	        <DataTemplate>
                            			<ComboBox  
-                                     	ItemsSource="{Binding ColorList}" 
+                                     	ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}" 
                         				SelectedItem="{Binding ColorName, Mode=TwoWay}"
 										Style="{StaticResource SettingsViewComboBox}"
                                         MinWidth="127"> 			
