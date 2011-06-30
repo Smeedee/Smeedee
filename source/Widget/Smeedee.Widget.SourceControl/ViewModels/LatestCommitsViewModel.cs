@@ -43,10 +43,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         public LatestCommitsViewModel(Client.Framework.ViewModel.Widget widget)
         {
             Changesets = new ObservableCollection<ChangesetViewModel>();
-            KeywordList = new ObservableCollection<BackgroundColor>();
-            
-            ColorList = new List<string>();
-            ColorList.Add("blue"); // should generate list of colors based on available colors
+            KeywordList = new ObservableCollection<KeywordColorPair>();
 
             BlinkWhenNoComment = true;
 
@@ -122,9 +119,9 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             }
         }
 
-        public ObservableCollection<BackgroundColor> KeywordList { get; private set; }
+        public ObservableCollection<KeywordColorPair> KeywordList { get; private set; }
 
-        public List<string> ColorList { get; private set; }
+        
 
         public void SetResetPoint()
         {
@@ -139,9 +136,23 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         }
     }
 
-    public class BackgroundColor
+    public class KeywordColorPair
     {
         public string Keyword { get; set; }
         public string ColorName { get; set; }
+    }
+
+    public class ColorProvider
+    {
+        public List<string> ColorList
+        {
+            get
+            {
+                return new List<string>
+                           {
+                               "red", "green", "blue"
+                           };
+            }
+        }
     }
 }
