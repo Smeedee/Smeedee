@@ -419,7 +419,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
     {
 
         [Test]
-        public void Assure_that_a_change_in_db_settings_lead_to_changes_in_View()
+        public void Assure_that_a_change_in_db_settings_lead_to_changes_in_ViewModel()
         {
             Given(the_controller_has_been_created).And(there_are_config_settings_in_db);
 
@@ -439,7 +439,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         }
 
         [Test]
-        public void Assure_that_change_in_color_settings_in_db_lead_to_changes_in_View()
+        public void Assure_that_change_in_color_settings_in_db_lead_to_changes_in_ViewModel()
         {
             Given(the_controller_has_been_created).And(the_keyword_fix_is_bound_to_green_in_settings_db);
 
