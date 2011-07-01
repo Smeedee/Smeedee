@@ -317,15 +317,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TeamPicture\ViewModel\ViewModel.txt">
-      <DependentUpon>ViewModel.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="TeamPicture\Views\digital_camera_icon-red.png" />
     <Resource Include="TeamPicture\Views\digital_camera_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TeamPicture\ViewModel\ViewModel.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

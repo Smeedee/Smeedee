@@ -13,6 +13,7 @@ namespace Smeedee.Widgets.SL.TeamPicture.ViewModel
 		oproperty HasSelectedSnapshot as bool
 		oproperty Message as string
 		oproperty ErrorMsg as string
+		oproperty PictureScaling as string
 	
 		oproperty HasStoredImage as bool
 

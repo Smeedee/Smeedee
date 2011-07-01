@@ -148,6 +148,29 @@ namespace Smeedee.Widgets.SL.TeamPicture.ViewModel
 		partial void OnGetErrorMsg(ref string value);
 		partial void OnSetErrorMsg(ref string value);
 
+		public virtual string PictureScaling
+		{
+			get 
+			{
+				OnGetPictureScaling(ref _PictureScaling);
+				 
+				return _PictureScaling; 
+			}
+			set
+			{
+				if (value != _PictureScaling)
+				{
+					OnSetPictureScaling(ref value); 
+					_PictureScaling = value;
+					TriggerPropertyChanged("PictureScaling");
+				}
+			}
+		}
+		private string _PictureScaling;
+
+		partial void OnGetPictureScaling(ref string value);
+		partial void OnSetPictureScaling(ref string value);
+
 		public virtual bool HasStoredImage
 		{
 			get 
