@@ -230,6 +230,7 @@ namespace Smeedee.Widgets.SL.Tests.TeamPicture.ViewModel
 						Assert.AreEqual((WIDTH * HEIGHT * 4), t.Picture.Length);
 						Assert.AreEqual(WIDTH, t.PictureWidth);
 						Assert.AreEqual(HEIGHT, t.PictureHeight);
+                        Assert.AreEqual(MAXIMIZED, t.PictureScaling);
 					});
 				viewModel.Save.Execute(null);
 
@@ -250,20 +251,8 @@ namespace Smeedee.Widgets.SL.Tests.TeamPicture.ViewModel
             {
                 viewModel.Refresh.Execute(null);
                 repositoryMock.Verify(r => r.Get(It.IsAny<CurrentTeamPictureSpecification>()), Times.Exactly(2));
-                
-                //These started to fail when the backgroundworker was introduced in
-                //LoadDataFromDatabaseIntoViewModel
-                //Assert.AreEqual(MESSAGE, viewModel.Message);
-                //Assert.AreEqual(HEIGHT, viewModel.Snapshot.PixelHeight);
-                //Assert.AreEqual(WIDTH, viewModel.Snapshot.PixelWidth);
             }
 
-            [TestMethod]
-            public void Then_assure_HasStoredImage_is_true()
-            {
-                //Doesnt work because of the backgroundworker
-                //Assert.IsTrue(viewModel.HasStoredImage);
-            }
         }
 
     	[TestClass]
@@ -472,6 +461,31 @@ namespace Smeedee.Widgets.SL.Tests.TeamPicture.ViewModel
                 progressbarMock.Verify(l => l.HideInSettingsView(), Times.AtLeastOnce());
                 Assert.IsFalse(viewModel.IsSaving);
             }
+        }
+
+        [TestClass]
+        public class When_picture_scale_is_changed : Shared
+        {
+            public override void Before()
+            {
+                Given_ViewModel_contains_valid_data();
+                RepositoryContainsTeamPicture();
+            }
+
+            [TestMethod]
+            public void Then_assure_property_is_set()
+            {
+                viewModel.IsMaximized = true;
+                Assert.AreEqual(MAXIMIZED, viewModel.PictureScaling);
+            }
+
+            [TestMethod]
+            public void Then_assure_inverse_property_is_false()
+            {
+                viewModel.IsMaximized = true;
+                Assert.IsFalse(viewModel.IsFitToScreen);
+            }
+
         }
     }
 }

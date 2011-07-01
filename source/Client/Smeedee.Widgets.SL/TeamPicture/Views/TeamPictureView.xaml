@@ -18,7 +18,7 @@
 
         <Grid Visibility="{Binding Converter={StaticResource BoolToVisibilityConverter}, Path=HasStoredImage}">
             <Border Grid.Column="0" BorderThickness="1" CornerRadius="4">
-                <Image Margin="0" Source="{Binding Snapshot}" Stretch="Uniform"/>
+                <Image Margin="0" Source="{Binding Snapshot}" Stretch="{Binding PictureScaling}"/>
             </Border>
             <Border HorizontalAlignment="Right" Height="101" Margin="0,0,8,8" VerticalAlignment="Bottom" Width="542" Background="#7F000000" BorderBrush="#66000000" BorderThickness="1" CornerRadius="4">
                 <Grid Margin="4">
