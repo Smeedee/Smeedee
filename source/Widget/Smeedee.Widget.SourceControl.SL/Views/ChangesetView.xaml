@@ -7,23 +7,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:di="clr-namespace:Smeedee.Widget.DeveloperInfo.SL.Views;assembly=Smeedee.Widget.DeveloperInfo.SL"
     xmlns:APD_Client_Framework_Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL"
-    xmlns:i ="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-	mc:Ignorable="d" 
+    xmlns:i ="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+    xmlns:conv="clr-namespace:Smeedee.Widget.SourceControl.SL.Converters" 
+    mc:Ignorable="d" 
     d:DesignWidth="600" d:DesignHeight="180">
 	
     
     <UserControl.Resources>
     	<APD_Client_Framework_Converters:DateTimeToPrettyStringConverter x:Key="DateTimeToPrettyStringConverter"/>
         <SampleData:ChangesetSampleData x:Key="ChangesetSampleData" d:IsDataSource="True"/>
+        <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
     </UserControl.Resources>
 	
-    <Border x:Name="BoundingBorder" Style="{StaticResource DefaultBorder}" Padding="5">
-    	<Border.Background>
+    <Border x:Name="BoundingBorder" Style="{StaticResource DefaultBorder}" Padding="5" Background="{Binding BackgroundColor, Converter={StaticResource StringToBrushConverter}}">
+    	<!--<Border.Background>
     		<RadialGradientBrush GradientOrigin="-0.28,-0.239" RadiusX="0.91" RadiusY="0.552" Center="0.22,0.261" SpreadMethod="Reflect">
     			<GradientStop Color="{Binding LightBackgroundColor, Mode=OneWay}"/>
     			<GradientStop Color="{Binding DarkBackgroundColor, Mode=OneWay}" Offset="0.82"/>
     		</RadialGradientBrush>
-    	</Border.Background>
+    	</Border.Background>-->
         <VisualStateManager.VisualStateGroups>
         	
             <VisualStateGroup x:Name="VisualStateGroup">

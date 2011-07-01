@@ -38,14 +38,13 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 {
     public class ChangesetViewModel : AbstractViewModel
     {
-        public const string DEFAULT_LIGHT_BACKGROUND_COLOR = "#FF838383";
-        public const string DEFAULT_DARK_BACGROUND_COLOR = "#FF505050";
+        public const string DEFAULT_BACKGROUND_COLOR = "GreyGradientBrush";
 
         public ChangesetViewModel()
         {
             developer = new Person();
-            LightBackgroundColor = DEFAULT_LIGHT_BACKGROUND_COLOR;
-            DarkBackgroundColor = DEFAULT_DARK_BACGROUND_COLOR;
+
+            BackgroundColor = DEFAULT_BACKGROUND_COLOR;
         }
 
         public bool ShouldBlink { get; set; }
@@ -111,57 +110,39 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             }
         }
 
-        private String _darkBackgroundColor;
-        public String DarkBackgroundColor
+        private String _backgroundColor;
+        public string BackgroundColor
         {
-            get { return _darkBackgroundColor;  }
-            set { 
-               
-                if (value != _darkBackgroundColor)
-                {
-                    _darkBackgroundColor = value;
-                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.DarkBackgroundColor);
-                }
-            }
-        }
-
-        private String _lightBackgroundColor;
-        public string LightBackgroundColor
-        {
-            get { return _lightBackgroundColor; }
+            get { return _backgroundColor; }
             set
             {
 
-                if (value != _lightBackgroundColor)
+                if (value != _backgroundColor)
                 {
-                    _lightBackgroundColor = value;
-                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.LightBackgroundColor);
+                    _backgroundColor = value;
+                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.BackgroundColor);
                 }
             }
         }
+
     }
 
     public static class ChangesetBackgroundProvider
     {
-        private static Dictionary<string, string[]> colors = new Dictionary<string, string[]>
-                { 
-                    {"green", new [] {"#FF55FF55", "#FF00CC00"}},
-                    {"yellow", new [] {"#FFFFFF55", "#FFCCCC00"}}
-                };
+        private static Dictionary<string, string> brushes = new Dictionary<string, string>
+                                                                {
+                                                                    {"green", "GreenGradientBrush"},
+                                                                    {"yellow", "YellowGradientBrush"}
+                                                                };
 
-        public static string GetLightColor(string color)
+        public static string GetBrushName(string color)
         {
-            return colors.ContainsKey(color) ? colors[color][0] : ChangesetViewModel.DEFAULT_LIGHT_BACKGROUND_COLOR;
-        }
-
-        public static string GetDarkColor(string color)
-        {
-            return colors.ContainsKey(color) ? colors[color][1] : ChangesetViewModel.DEFAULT_DARK_BACGROUND_COLOR;
+            return brushes.ContainsKey(color) ? brushes[color] : ChangesetViewModel.DEFAULT_BACKGROUND_COLOR;
         }
 
         public static string[] GetColors()
         {
-            return colors.Keys.ToArray();
+            return brushes.Keys.ToArray();
         }
     }   
 }

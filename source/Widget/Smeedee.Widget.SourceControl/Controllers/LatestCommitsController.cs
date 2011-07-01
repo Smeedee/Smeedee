@@ -335,29 +335,16 @@ namespace Smeedee.Widget.SourceControl.Controllers
                                        Date = changeset.Time.ToLocalTime(),
                                        Revision = changeset.Revision,
                                        CommentIsBad = !changeset.IsValidComment(),
-                                       ShouldBlink = ViewModel.BlinkWhenNoComment
+                                       ShouldBlink = ViewModel.BlinkWhenNoComment,
+                                       BackgroundColor = FindBrushForChangeset(changeset.Comment)
                                    };
-
-
-            newChangeset = AddColorToChangeset(newChangeset, changeset.Comment);
 
             newChangeset.Developer.Username = changeset.Author.Username;
 
             ViewModel.Changesets.Insert(0, newChangeset);
         }
 
-        private ChangesetViewModel AddColorToChangeset(ChangesetViewModel newChangeset, string changesetComment)
-        {
-            string[] colors = FindColorForChangeset(changesetComment);
-            if (colors != null && colors.Count() == 2)
-            {
-                newChangeset.LightBackgroundColor = colors[0];
-                newChangeset.DarkBackgroundColor = colors[1];
-            }
-            return newChangeset;
-        }
-
-        private string[] FindColorForChangeset(String changesetComment)
+        private string FindBrushForChangeset(String changesetComment)
         {
             string comment = changesetComment.ToLower();
             foreach (var binding in ViewModel.KeywordList)
@@ -366,9 +353,9 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 if (lowerCaseKeyword.Length == 0)
                     continue;
                 if (comment.Contains(lowerCaseKeyword))
-                    return new [] {ChangesetBackgroundProvider.GetLightColor(binding.ColorName), ChangesetBackgroundProvider.GetDarkColor(binding.ColorName) };
+                    return ChangesetBackgroundProvider.GetBrushName(binding.ColorName);
             }
-            return null;
+            return ChangesetViewModel.DEFAULT_BACKGROUND_COLOR;
         }
 
 

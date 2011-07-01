@@ -578,11 +578,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(there_are_changesets_in_sourcecontrol).
                 And(the_controller_has_been_created);
             When("there are no key words");
-            Then("the changeset viewModel should have default colors", () =>
-            {
-                viewModel.Changesets[0].LightBackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_LIGHT_BACKGROUND_COLOR);
-                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_DARK_BACGROUND_COLOR);
-            });
+            Then("the changeset viewModel should have default colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_BACKGROUND_COLOR));
         }
 
         [Test]
@@ -592,11 +588,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                 And(the_keyword_fix_is_bound_to_green_in_settings_db).
                 And(the_controller_has_been_created);
             When("the keyword fix exists in comment");
-            Then("the changeset viewModel should have have green colors", () =>
-            {
-                viewModel.Changesets[0].LightBackgroundColor.ShouldBe("#FF55FF55");  // the color green is bound to these colors
-                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe("#FF00CC00");   // in the static class ChangesetBackgroundProvider
-            });
+            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("GreenGradientBrush"));
         }
 
         [Test]
@@ -606,11 +598,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                And(the_keyword_fix_is_bound_to_green_in_settings_db).
                And(the_controller_has_been_created);
             When("the keyword Fix exists in comment");
-            Then("the changeset viewModel should have have green colors", () =>
-            {
-                viewModel.Changesets[0].LightBackgroundColor.ShouldBe("#FF55FF55");
-                viewModel.Changesets[0].DarkBackgroundColor.ShouldBe("#FF00CC00");
-            });
+            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("GreenGradientBrush"));
         }
 
     }
