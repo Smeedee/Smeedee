@@ -99,11 +99,13 @@ namespace Smeedee.Widgets.SL.Tests.TeamPicture
 		protected const string MESSAGE = "hello!";
 		protected const int HEIGHT = 480;
 		protected const int WIDTH = 640;
+        protected const string MAXIMIZED = "UniformToFill";
 
 		protected void Given_ViewModel_contains_valid_data()
 		{
 		    viewModel.Message = MESSAGE;
 			viewModel.SelectedSnapshot = new WriteableBitmap(WIDTH, HEIGHT);
+		    viewModel.IsMaximized = true;
 		}
 
 		protected void ViewModelIsToldToRefresh()
