@@ -23,7 +23,7 @@
 		</DataTemplate>
 		
 		<ItemsPanelTemplate x:Key="ItemsPanelTemplate">
-			<Controls:WrapPanel Margin="0"/>
+			<Controls:WrapPanel Margin="0" HorizontalAlignment="Center"/>
 		</ItemsPanelTemplate>
 	</UserControl.Resources>
 
