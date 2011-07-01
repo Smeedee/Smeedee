@@ -28,6 +28,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Smeedee.Client.Framework.ViewModel;
 
 
@@ -35,11 +38,13 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 {
     public class ChangesetViewModel : AbstractViewModel
     {
+        public const string DEFAULT_BACKGROUND_COLOR = "GreyGradientBrush";
+
         public ChangesetViewModel()
         {
             developer = new Person();
-            LightBackgroundColor = "#FF838383";
-            DarkBackgroundColor = "#FF505050";
+
+            BackgroundColor = DEFAULT_BACKGROUND_COLOR;
         }
 
         public bool ShouldBlink { get; set; }
@@ -105,33 +110,46 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             }
         }
 
-        private String _darkBackgroundColor;
-        public String DarkBackgroundColor
+        private String _backgroundColor;
+        public string BackgroundColor
         {
-            get { return _darkBackgroundColor;  }
-            set { 
-               
-                if (value != _darkBackgroundColor)
-                {
-                    _darkBackgroundColor = value;
-                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.DarkBackgroundColor);
-                }
-            }
-        }
-
-        private String _lightBackgroundColor;
-        public string LightBackgroundColor
-        {
-            get { return _lightBackgroundColor; }
+            get { return _backgroundColor; }
             set
             {
 
-                if (value != _lightBackgroundColor)
+                if (value != _backgroundColor)
                 {
-                    _lightBackgroundColor = value;
-                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.LightBackgroundColor);
+                    _backgroundColor = value;
+                    TriggerPropertyChanged<ChangesetViewModel>(vm => vm.BackgroundColor);
                 }
             }
         }
+
     }
+
+    public static class ChangesetBackgroundProvider
+    {
+        private static Dictionary<string, string> brushes = new Dictionary<string, string>
+        {   
+            {"white", "WhiteGradientBrush"},
+            {"cyan", "CyanGradientBrush"},
+            {"blue", "BlueGradientBrush"},
+            {"green", "GreenGradientBrush"},
+            {"yellow", "YellowGradientBrush"},
+            {"orange", "OrangeGradientBrush"},
+            {"pink", "PinkGradientBrush"},
+            {"purple", "PurpleGradientBrush"}
+            
+        };
+
+        public static string GetBrushName(string color)
+        {
+            return brushes.ContainsKey(color) ? brushes[color] : ChangesetViewModel.DEFAULT_BACKGROUND_COLOR;
+        }
+
+        public static string[] GetColors()
+        {
+            return brushes.Keys.ToArray();
+        }
+    }   
 }

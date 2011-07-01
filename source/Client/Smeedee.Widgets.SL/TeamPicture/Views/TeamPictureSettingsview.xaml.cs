@@ -8,5 +8,6 @@ namespace Smeedee.Widgets.SL.TeamPicture.Views
         {
             InitializeComponent();
         }
+
     }
 }

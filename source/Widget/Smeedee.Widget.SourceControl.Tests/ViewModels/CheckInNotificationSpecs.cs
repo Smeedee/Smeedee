@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Moq;
 using Smeedee.Client.Framework;
@@ -83,6 +84,15 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificatio
             viewModel.Changesets.ShouldNotBeNull();
             viewModel.Changesets.Count.ShouldBe(0);
         }
+
+        [Test]
+        public void Should_have_KeywordList_Property()
+        {
+            viewModel.KeywordList.ShouldNotBeNull();
+            viewModel.KeywordList.Count().ShouldBe(0);
+            (viewModel.KeywordList is ObservableCollection<KeywordColorPair>).ShouldBeTrue();
+        }
+
     }
 
     [TestFixture]

@@ -60,10 +60,9 @@
 	<Style x:Key="SettingsViewAddWordAndColorButton" TargetType="Button">
         <Setter Property="FontSize" Value="14"/>
 		<Setter Property="Content" Value="Add word and color"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-		<Setter Property="Height" Value="25"/>
-		<Setter Property="VerticalAlignment" Value="Bottom"/> 
-		<Setter Property="Margin" Value="0,5,0,0"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="240"/>
+        <Setter Property="Margin" Value="0,10,0,0"/>
     </Style>
     
     <Style x:Key="SettingsViewSaveButton" TargetType="Button">
@@ -79,11 +78,13 @@
     </Style>
 
     <Style x:Key="SettingsViewComboBox" TargetType="ComboBox">
-        <Setter Property="Width" Value="120"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Margin" Value="10,0,0,5"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
+	
+	<Style x:Key="SettingsViewComboBoxItem" TargetType="ComboBoxItem">
+		<Setter Property="FontSize" Value="14"/>
+	</Style>
 
 	<Style x:Key="SettingsViewTextBox" TargetType="TextBox">
 		<Setter Property="Width" Value="120"/>
@@ -95,7 +96,7 @@
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Margin" Value="10,0,0,5"/>
     </Style>
-    
+
     <Style x:Key="SettingsViewControlButtonsWrapper" TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Margin" Value="0,10,0,0"/>

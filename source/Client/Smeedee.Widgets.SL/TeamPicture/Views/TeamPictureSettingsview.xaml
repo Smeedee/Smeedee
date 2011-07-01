@@ -1,4 +1,4 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿    <UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ViewModel="clr-namespace:Smeedee.Widgets.SL.TeamPicture.ViewModel"
@@ -128,10 +128,26 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
                 <ListBox Grid.Row="0" ItemsSource="{Binding Snapshots}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource snapshotDataTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsPanel="{StaticResource snapshotLayoutTemplate}" Background="{x:Null}" BorderBrush="{x:Null}" SelectedItem="{Binding SelectedSnapshot, Mode=TwoWay}" />
-                <Button Grid.Row="1" Content="Delete snapshot" Style="{StaticResource SettingsViewButton}" Command="{Binding Delete}" HorizontalAlignment="Right" />                
+                <Button Grid.Row="1" Content="Delete snapshot" Style="{StaticResource SettingsViewButton}" Command="{Binding Delete}" HorizontalAlignment="Right" />
+                <RadioButton
+                    ClickMode="Release" GroupName="ScalingGroup" 
+                    IsChecked="{Binding IsMaximized, Mode=TwoWay}" 
+                    Foreground="White" Content="Maximize" 
+                    Grid.Row="2" Grid.RowSpan="2" Height="16" 
+                    HorizontalAlignment="Left" Margin="35,15,0,0" 
+                    x:Name="radioButtonMaximize" VerticalAlignment="Top" />
+                <RadioButton  
+                    ClickMode="Release" GroupName="ScalingGroup" 
+                    IsChecked="{Binding IsFitToScreen, Mode=TwoWay}" 
+                    Foreground="White" Content="Fit to screen" 
+                    Grid.Row="3" Grid.RowSpan="3" Height="16" 
+                    HorizontalAlignment="Right" Margin="35,15,0,0" 
+                    x:Name="radioButtonFitToScreen" VerticalAlignment="Top" />
             </Grid>
 
 		</Grid>

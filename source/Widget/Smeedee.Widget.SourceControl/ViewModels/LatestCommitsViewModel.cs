@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Smeedee.Client.Framework.ViewModel;
 using TinyMVVM.Framework;
@@ -34,6 +35,8 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     {
         public DelegateCommand SaveSettings { get; set; }
         public DelegateCommand ReloadSettings { get; set; }
+        public DelegateCommand AddWordAndColorSettings { get; set; }
+        
 
         public const int NUMBER_OF_COMMITS_DEFAULT = 8;
         public const bool BLINK_WHEN_NO_COMMENT_DEFAULT = false;
@@ -41,10 +44,13 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         public LatestCommitsViewModel(Client.Framework.ViewModel.Widget widget)
         {
             Changesets = new ObservableCollection<ChangesetViewModel>();
+            KeywordList = new ObservableCollection<KeywordColorPair>();
+
             BlinkWhenNoComment = true;
 
             SaveSettings = new DelegateCommand();
             ReloadSettings = new DelegateCommand();
+            AddWordAndColorSettings = new DelegateCommand();
 
             ReloadSettings.ExecuteDelegate += Reset;
             widget.PropertyChanged += (o, e) =>
@@ -114,6 +120,10 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             }
         }
 
+        public ObservableCollection<KeywordColorPair> KeywordList { get; private set; }
+
+        
+
         public void SetResetPoint()
         {
             blinkWhenNoCommentResetPoint = BlinkWhenNoComment;
@@ -124,6 +134,40 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         {
             BlinkWhenNoComment = blinkWhenNoCommentResetPoint;
             NumberOfCommits = numberOfCommitsResetPoint;
+        }
+    }
+
+    public class KeywordColorPair
+    {
+        public delegate void KeywordEvent(KeywordColorPair sender);
+
+        public KeywordColorPair(KeywordEvent handler)
+        {
+            KeywordChanged = handler;
+        }
+
+        public KeywordEvent KeywordChanged { get; set; }
+
+        private string keyword;
+        public string Keyword { 
+            get { return keyword; }
+            set
+            {
+                if (value != keyword)
+                {
+                    keyword = value;
+                    KeywordChanged(this);
+                }
+            } 
+        }
+        public string ColorName { get; set; }
+    }
+
+    public class ColorProvider
+    {
+        public List<string> ColorList
+        {
+            get { return new List<string>(ChangesetBackgroundProvider.GetColors()); }
         }
     }
 }

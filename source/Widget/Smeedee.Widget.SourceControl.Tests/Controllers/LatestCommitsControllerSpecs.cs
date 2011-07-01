@@ -419,7 +419,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
     {
 
         [Test]
-        public void Assure_that_a_change_in_db_settings_lead_to_changes_in_View()
+        public void Assure_that_a_change_in_db_settings_lead_to_changes_in_ViewModel()
         {
             Given(the_controller_has_been_created).And(there_are_config_settings_in_db);
 
@@ -436,6 +436,22 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             When(save_button_is_pressed);
 
             Then(() => configPersisterMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Once()));
+        }
+
+        [Test]
+        public void Assure_that_change_in_color_settings_in_db_lead_to_changes_in_ViewModel()
+        {
+            Given(the_controller_has_been_created).And(the_keyword_fix_is_bound_to_green_in_settings_db);
+
+            When(refresh_is_triggered);
+
+            Then(() =>
+            {
+                controller.ViewModel.KeywordList.Count.ShouldBe(1);
+                controller.ViewModel.KeywordList[0].Keyword.ShouldBe("fix");
+                controller.ViewModel.KeywordList[0].ColorName.ShouldBe("green");
+            });
+
         }
     }
 
@@ -485,6 +501,108 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         }
 
     }
+
+    [TestFixture]
+    public class When_configuring_keyword_color_bindings : Shared
+    {
+        [Test]
+        public void Assure_that_clicking_Add_word_and_color_button_inserts_a_new_binding()
+        {
+            Given(the_controller_has_been_created);
+            When(add_word_and_color_button_is_pressed);
+            Then("there should be one item in KeywordList", () => viewModel.KeywordList.Count().ShouldBe(1));
+        }
+
+        [Test]
+        public void Assure_that_clicking_Add_word_and_color_button_twice_inserts_two_bindings()
+        {
+            Given(the_controller_has_been_created);
+            When("add_word_and_color_is_pressed_twice", () =>
+                {
+                    add_word_and_color_button_is_pressed();
+                    add_word_and_color_button_is_pressed();
+                });
+            Then("there should be two items in KeywordList", () => viewModel.KeywordList.Count().ShouldBe(2));
+        }
+
+        [Test]
+        public void Assure_that_removing_keyword_from_a_binding_removes_that_binding()
+        {
+            Given(the_keyword_fix_is_bound_to_green_in_settings_db).And(the_controller_has_been_created);
+            When(the_keyword_green_is_replaced_with_an_empty_string);
+            Then("there should not be items in KeywordList", () => viewModel.KeywordList.Count.ShouldBe(0));
+        }
+    }
+
+    [TestFixture]
+    public class When_checking_comment_for_key_words : Shared
+    {
+        private Context there_is_one_changeset_in_sourcecontrol_containing_the_word_fix = () =>
+        {
+            var changesets = new List<Changeset>();
+
+            changesets.Add(
+                new Changeset
+                {
+                    Revision = 201222,
+                    Comment = "Added fix to hello world method ",
+                    Time = new DateTime(1986, 5, 20),
+                    Author = new Author { Username = "goeran" }
+                }
+            );
+            repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
+        };
+
+        private Context there_is_one_changeset_in_sourcecontrol_containing_the_word_Fix_with_capital_f = () =>
+        {
+            var changesets = new List<Changeset>();
+
+            changesets.Add(
+                new Changeset
+                {
+                    Revision = 201222,
+                    Comment = "Added Fix to hello world method ",
+                    Time = new DateTime(1986, 5, 20),
+                    Author = new Author { Username = "goeran" }
+                }
+            );
+            repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
+        };
+
+ 
+        
+
+        [Test]
+        public void Assure_that_changeset_has_default_color_when_no_word_is_found()
+        {
+            Given(there_are_changesets_in_sourcecontrol).
+                And(the_controller_has_been_created);
+            When("there are no key words");
+            Then("the changeset viewModel should have default colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_BACKGROUND_COLOR));
+        }
+
+        [Test]
+        public void Assure_that_color_is_updated_when_changeset_has_keyword()
+        {
+            Given(there_is_one_changeset_in_sourcecontrol_containing_the_word_fix).
+                And(the_keyword_fix_is_bound_to_green_in_settings_db).
+                And(the_controller_has_been_created);
+            When("the keyword fix exists in comment");
+            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("GreenGradientBrush"));
+        }
+
+        [Test]
+        public void Assure_that_keywords_are_case_insensitive()
+        {
+            Given(there_is_one_changeset_in_sourcecontrol_containing_the_word_Fix_with_capital_f).
+               And(the_keyword_fix_is_bound_to_green_in_settings_db).
+               And(the_controller_has_been_created);
+            When("the keyword Fix exists in comment");
+            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("GreenGradientBrush"));
+        }
+
+    }
+
 
     public class Shared : ScenarioClass
     {
@@ -574,9 +692,16 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         protected Context there_are_config_settings_in_db = () =>
         {
             var configs = new List<Configuration>();
-            var config = new Configuration("CheckInNotification");
-            config.NewSetting("numberOfCommits", new[] { "40" });
-            config.NewSetting("blinkOnBlankComment", new[] { "false" });
+            var config = GenerateSettings(40, false);
+            configs.Add(config);
+            configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
+        };
+
+        protected Context the_keyword_fix_is_bound_to_green_in_settings_db = () =>
+        {
+            var configs = new List<Configuration>();
+            var config = GenerateSettings(40, false);
+            config.NewSetting("commentKeywords", new[] { "fix", "green" });
             configs.Add(config);
             configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
         };
@@ -597,6 +722,8 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
         protected When save_button_is_pressed = () => viewModel.SaveSettings.ExecuteDelegate();
 
+        protected When add_word_and_color_button_is_pressed = () => viewModel.AddWordAndColorSettings.ExecuteDelegate();
+
         protected When the_controller_is_created = CreateController;
 
         protected When numberOfCommitts_is_changed_to_five = () =>
@@ -606,14 +733,30 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         };
         protected When refresh_is_triggered = () => ITimerMock.Raise(n => n.Elapsed += null, new EventArgs());
 
+        protected When the_keyword_green_is_replaced_with_an_empty_string = () =>
+        {
+            controller.ViewModel.KeywordList[0].Keyword = "";
+            controller.ViewModel.SaveSettings.ExecuteDelegate();
+        };
+
         protected Then assure_it_queried_Changeset_Repository_for_the_newest_changeset =
             () => repositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()));
 
         protected static Configuration GenerateSettings(int numOfCommits, bool blinkIsChecked)
         {
+            return GenerateSettings(numOfCommits, blinkIsChecked, null);
+        }
+
+        protected static Configuration GenerateSettings(int numOfCommits, bool blinkIsChecked, string[] keywordColors)
+        {
             var config = new Configuration("CheckInNotification");
             config.NewSetting("numberOfCommits", new[] { numOfCommits.ToString() });
             config.NewSetting("blinkOnBlankComment", new[] { blinkIsChecked.ToString() });
+            if (keywordColors != null)
+                config.NewSetting("commentKeywords", keywordColors);
+            else
+                config.NewSetting("commentKeywords", new string[0]);
+    
             return config;
         }
 

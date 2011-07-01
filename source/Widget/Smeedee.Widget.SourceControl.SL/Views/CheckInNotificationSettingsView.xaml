@@ -4,9 +4,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-	xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
-	mc:Ignorable="d"
+	xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
+    xmlns:src="clr-namespace:Smeedee.Widget.SourceControl.ViewModels" 
+    mc:Ignorable="d"
 	d:DesignWidth="640" d:DesignHeight="480">
     
     <UserControl.Resources>
@@ -15,26 +16,29 @@
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        <src:ColorProvider x:Key="colorProvider" />
     </UserControl.Resources>
-	
+   
 	<Grid x:Name="LayoutRoot">
-        <Border Style="{StaticResource SettingsViewBorder}">
-            <Grid Style="{StaticResource SettingsViewGrid}" Height="350">
+        <Border Style="{StaticResource SettingsViewBorder}" Margin="0,0,0,-14">
+            <Grid Style="{StaticResource SettingsViewGrid}" Height="380" Width="482" d:LayoutOverrides="Width">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="0.585*" />
+                    <ColumnDefinition Width="0.415*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-					<RowDefinition/>
-                    <RowDefinition />
-                    <RowDefinition />
-					<RowDefinition/>
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+					<RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+					<RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.082*" />
+					<RowDefinition Height="0.082*" />
+                    <RowDefinition Height="0.103*" />
                 </Grid.RowDefinitions>
 
                 <TextBlock 
@@ -42,7 +46,8 @@
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     Style="{StaticResource SettingsViewH1}"
-                    Text="Configure Latest commits" Margin="0,-9,0,0"/>
+                    Text="Configure Latest commits" 
+					Margin="0,-9,0,0" />
 
                 <TextBlock 
                     Grid.Column="0"
@@ -50,21 +55,21 @@
                     Grid.ColumnSpan="1"
                     Style="{StaticResource SettingsViewText}"
                     Text="Blink when commit comment is bad" />
-					
+
                 <CheckBox 
                     Grid.Column="1" 
                     Grid.Row="1"
                     FontSize="14" 
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    IsChecked="{Binding BlinkWhenNoComment, Mode=TwoWay}" />
+                    IsChecked="{Binding BlinkWhenNoComment, Mode=TwoWay}" 
+					VerticalAlignment="Top" 
+					Margin="10,2,0,0" />
 
                 <TextBlock
                     Grid.Column="0"
                     Grid.Row="2"
                     Style="{StaticResource SettingsViewText}"
                     Text="Number of commits shown" />
-					
+
                 <StackPanel 
 					Margin="10,0,0,0" 
 					Orientation="Horizontal" 
@@ -73,72 +78,73 @@
                     <Slider
                         Style="{StaticResource SettingsViewSlider}"
                         Value="{Binding NumberOfCommits, Mode=TwoWay}"
-                        Margin="0,0,10,0"
+                        Margin="0,3,10,0"
                         Minimum="1"
-                        Maximum="25"/>
+                        Maximum="25" 
+						VerticalAlignment="Top" />
                     <inputToolkit:NumericUpDown
                         x:Name="NumberOfCommitsToShow"
                         Style="{StaticResource SettingsViewNumericUpDown}"
-                        HorizontalAlignment="Left" 
                         Value="{Binding NumberOfCommits, Mode=TwoWay}" 
+						Margin="0,2,0,0"
                         Minimum="1"
-                        Maximum="20"/>
+                        Maximum="20" 
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Top" />
                 </StackPanel>
-				
-				<Grid
+
+                <Controls:DataGrid 
+                    AutoGenerateColumns="False" 
+                    Name="keywordAndColorGrid"
+                    FontSize="14" 
+                    Background="White" 
+                    Margin="8,0,6,0" 
+                    ItemsSource="{Binding Path=KeywordList}" 
+                    Grid.Column="0"
+                    Grid.Row="3" 
+                    Grid.RowSpan="6"
+                    HorizontalScrollBarVisibility="Visible"
+                    VerticalScrollBarVisibility="Visible">
+                    <Controls:DataGrid.Columns>
+                        <Controls:DataGridTextColumn 
+                            Header="Keyword" 
+                            Binding="{Binding Keyword, Mode=TwoWay}" 
+                            MinWidth="120" />
+                        <Controls:DataGridTemplateColumn
+                            Header="Color"
+                            MinWidth="129">
+                   			<Controls:DataGridTemplateColumn.CellEditingTemplate>
+                       	        <DataTemplate>
+                           			<ComboBox  
+                                     	ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}" 
+                        				SelectedItem="{Binding ColorName, Mode=TwoWay}"
+										Style="{StaticResource SettingsViewComboBox}"
+                                        MinWidth="127"> 			
+									</ComboBox>
+                        		</DataTemplate>
+                    		</Controls:DataGridTemplateColumn.CellEditingTemplate>
+                		</Controls:DataGridTemplateColumn>
+                    </Controls:DataGrid.Columns>
+                </Controls:DataGrid>
+
+                <StackPanel
 					Grid.Column="0" 
-                    Grid.Row="3">
-					<Grid.ColumnDefinitions>
-                    	<ColumnDefinition />
-                    	<ColumnDefinition />
-                	</Grid.ColumnDefinitions>
-					<TextBlock
-						Grid.Column="0"
-						Text="Word:" 
-						Style="{StaticResource SettingsViewText}"/>
-					<TextBlock
-						Grid.Column="1"
-						Text="Color:" 
-						Style="{StaticResource SettingsViewText}"/>
-				</Grid>
-				
-				<Grid
-					Grid.Column="0" 
-                    Grid.Row="4">
-					<Grid.ColumnDefinitions>
-                    	<ColumnDefinition />
-                    	<ColumnDefinition />
-                	</Grid.ColumnDefinitions>
-					<TextBox
-						Grid.Column="0"
-						Text="Word" 
-						Height="30"
-						Style="{StaticResource SettingsViewTextBox}"/>
-					<ComboBox
-						Grid.Column="1"
-						Style="{StaticResource SettingsViewComboBox}"
-						Margin="0,0,0,0" 
-						Height="30"/>
-				</Grid>
-				
-				<StackPanel
-					Grid.Column="0" 
-                    Grid.Row="5">
-					<Button
+                    Grid.Row="9">
+                    <Button
 						Style="{StaticResource SettingsViewAddWordAndColorButton}"
-						Command="{Binding AddWordAndColorSettings}"/>
-				</StackPanel>
+						Command="{Binding AddWordAndColorSettings}" Margin="0,5,0,0" />
+                </StackPanel>
 
                 <StackPanel 
                     Grid.Column="1"
-                    Grid.Row="9"
-                    Style="{StaticResource SettingsViewControlButtonsWrapper}">
+                    Grid.Row="11"
+                    Style="{StaticResource SettingsViewControlButtonsWrapper}" >
                     <Button
                         Style="{StaticResource SettingsViewSaveButton}"
-                        Command="{Binding SaveSettings}"  />
+                        Command="{Binding SaveSettings}"/>
                     <Button 
                         Style="{StaticResource SettingsViewReloadSettingsButton}"
-                        Command="{Binding ReloadSettings}"/>
+                        Command="{Binding ReloadSettings}"  />
                 </StackPanel>
             </Grid>
         </Border>
