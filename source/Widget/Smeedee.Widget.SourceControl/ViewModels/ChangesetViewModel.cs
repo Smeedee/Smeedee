@@ -130,10 +130,17 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     public static class ChangesetBackgroundProvider
     {
         private static Dictionary<string, string> brushes = new Dictionary<string, string>
-                                                                {
-                                                                    {"green", "GreenGradientBrush"},
-                                                                    {"yellow", "YellowGradientBrush"}
-                                                                };
+        {   
+            {"white", "WhiteGradientBrush"},
+            {"cyan", "CyanGradientBrush"},
+            {"blue", "BlueGradientBrush"},
+            {"green", "GreenGradientBrush"},
+            {"yellow", "YellowGradientBrush"},
+            {"orange", "OrangeGradientBrush"},
+            {"pink", "PinkGradientBrush"},
+            {"purple", "PurpleGradientBrush"}
+            
+        };
 
         public static string GetBrushName(string color)
         {
