@@ -121,9 +121,15 @@ namespace Smeedee.Widget.SourceControl.Controllers
             ReloadViewModel();
         }
 
-        public void AddWordAndColorSettings()
+        private void AddWordAndColorSettings()
         {
-            ViewModel.KeywordList.Add(new KeywordColorPair() { Keyword = "word" + ViewModel.KeywordList.Count() });
+            ViewModel.KeywordList.Add(new KeywordColorPair(KeywordChanged) { Keyword = "word" + ViewModel.KeywordList.Count() });
+        }
+
+        public void KeywordChanged(KeywordColorPair sender)
+        {
+            if (sender.Keyword == "")
+                ViewModel.KeywordList.Remove(sender);
         }
 
         private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs e)
@@ -267,7 +273,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 var config = setting.Vals.ToArray();
                 for (int i = 0; i < config.Count(); i += 2)
                 {
-                    ViewModel.KeywordList.Add(new KeywordColorPair() { Keyword = config[i], ColorName = config[i + 1] });
+                    ViewModel.KeywordList.Add(new KeywordColorPair(KeywordChanged) { Keyword = config[i], ColorName = config[i + 1] });
                 }
             });
         }
@@ -357,6 +363,8 @@ namespace Smeedee.Widget.SourceControl.Controllers
             foreach (var binding in ViewModel.KeywordList)
             {
                 var lowerCaseKeyword = binding.Keyword.ToLower();
+                if (lowerCaseKeyword.Length == 0)
+                    continue;
                 if (comment.Contains(lowerCaseKeyword))
                     return new [] {ChangesetBackgroundProvider.GetLightColor(binding.ColorName), ChangesetBackgroundProvider.GetDarkColor(binding.ColorName) };
             }

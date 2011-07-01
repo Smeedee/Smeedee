@@ -524,6 +524,14 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                 });
             Then("there should be two items in KeywordList", () => viewModel.KeywordList.Count().ShouldBe(2));
         }
+
+        [Test]
+        public void Assure_that_removing_keyword_from_a_binding_removes_that_binding()
+        {
+            Given(the_keyword_fix_is_bound_to_green_in_settings_db).And(the_controller_has_been_created);
+            When(the_keyword_green_is_replaced_with_an_empty_string);
+            Then("there should not be items in KeywordList", () => viewModel.KeywordList.Count.ShouldBe(0));
+        }
     }
 
     [TestFixture]
@@ -561,6 +569,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
         };
 
+ 
         
 
         [Test]
@@ -603,6 +612,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                 viewModel.Changesets[0].DarkBackgroundColor.ShouldBe("#FF00CC00");
             });
         }
+
     }
 
 
@@ -734,6 +744,12 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             controller.ViewModel.SaveSettings.ExecuteDelegate();
         };
         protected When refresh_is_triggered = () => ITimerMock.Raise(n => n.Elapsed += null, new EventArgs());
+
+        protected When the_keyword_green_is_replaced_with_an_empty_string = () =>
+        {
+            controller.ViewModel.KeywordList[0].Keyword = "";
+            controller.ViewModel.SaveSettings.ExecuteDelegate();
+        };
 
         protected Then assure_it_queried_Changeset_Repository_for_the_newest_changeset =
             () => repositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()));

@@ -139,7 +139,27 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 
     public class KeywordColorPair
     {
-        public string Keyword { get; set; }
+        public delegate void KeywordEvent(KeywordColorPair sender);
+
+        public KeywordColorPair(KeywordEvent handler)
+        {
+            KeywordChanged = handler;
+        }
+
+        public KeywordEvent KeywordChanged { get; set; }
+
+        private string keyword;
+        public string Keyword { 
+            get { return keyword; }
+            set
+            {
+                if (value != keyword)
+                {
+                    keyword = value;
+                    KeywordChanged(this);
+                }
+            } 
+        }
         public string ColorName { get; set; }
     }
 
