@@ -24,36 +24,60 @@
 		<GradientStop Color="#FF414141" Offset="0"/>
 		<GradientStop Color="#FF1E1E1E" Offset="0.983"/>
 	</LinearGradientBrush>
-	
-	<RadialGradientBrush x:Key="RedGradientBrush"
+
+    <RadialGradientBrush x:Key="GreyGradientBrush" 
+			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#FFB5B5B5"/>
+        <GradientStop Color="#FF4C4C4C" Offset="0.8"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="WhiteGradientBrush" 
+			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#FFF4F4F4"/>
+        <GradientStop Color="#FFB7B7B7" Offset="0.8"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="CyanGradientBrush"
+		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#D8F0F8"/>
+        <GradientStop Color="#2FC5F3" Offset="0.8"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="BlueGradientBrush"
+		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#948FE8"/>
+        <GradientStop Color="#3C33C2" Offset="0.8"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="GreenGradientBrush"
+			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#FF9DC2B3"/>
+        <GradientStop Color="#FF1D7554" Offset="0.8"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="YellowGradientBrush"
+			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#FFFDE79C"/>
+        <GradientStop Color="#FFF6BC0C" Offset="0.8"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="OrangeGradientBrush"
+		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#F0BD99"/>
+        <GradientStop Color="#E37937" Offset="0.8"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="RedGradientBrush"
 			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
 		<GradientStop Color="#FFFBB7B5"/>
 		<GradientStop Color="#FFC52525" Offset="0.8"/>
 	</RadialGradientBrush>
 
-	<RadialGradientBrush x:Key="YellowGradientBrush"
-			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#FFFDE79C"/>
-		<GradientStop Color="#FFF6BC0C" Offset="0.8"/>
-	</RadialGradientBrush>
-
-	<RadialGradientBrush x:Key="GreenGradientBrush"
-			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#FF9DC2B3"/>
-		<GradientStop Color="#FF1D7554" Offset="0.8"/>
-	</RadialGradientBrush>
-
-	<RadialGradientBrush x:Key="GreyGradientBrush" 
-			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#FFB5B5B5"/>
-		<GradientStop Color="#FF4C4C4C" Offset="0.8"/>
-	</RadialGradientBrush>
-
-	<RadialGradientBrush x:Key="WhiteGradientBrush" 
-			GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#FFF4F4F4"/>
-		<GradientStop Color="#FFB7B7B7" Offset="0.8"/>
-	</RadialGradientBrush>
+    <RadialGradientBrush x:Key="PinkGradientBrush"
+		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
+        <GradientStop Color="#F6D8F8"/>
+        <GradientStop Color="#D93AE1" Offset="0.8"/>
+    </RadialGradientBrush>
 
 	<RadialGradientBrush x:Key="PurpleGradientBrush"
 		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
@@ -61,44 +85,11 @@
 		<GradientStop Color="#8431A4" Offset="0.8"/>
 	</RadialGradientBrush>
 	
-	<RadialGradientBrush x:Key="BlueGradientBrush"
-		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#948FE8"/>
-		<GradientStop Color="#3C33C2" Offset="0.8"/>
-	</RadialGradientBrush>
-	
-	<RadialGradientBrush x:Key="OrangeGradientBrush"
-		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#F0BD99"/>
-		<GradientStop Color="#E37937" Offset="0.8"/>
-	</RadialGradientBrush>
-	
-	<RadialGradientBrush x:Key="CyanGradientBrush"
-		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#D8F0F8"/>
-		<GradientStop Color="#2FC5F3" Offset="0.8"/>
-	</RadialGradientBrush>
-	
-	<RadialGradientBrush x:Key="PinkGradientBrush"
-		GradientOrigin="-0.3,-0.3" RadiusX="0.7" RadiusY="0.7" Center="0.2,0.2" SpreadMethod="Reflect">
-		<GradientStop Color="#F6D8F8"/>
-		<GradientStop Color="#D93AE1" Offset="0.8"/>
-	</RadialGradientBrush>
-
 	<!-- Styles -->
 	<Style x:Key="DefaultBorder" TargetType="Border">
 		<Setter Property="Background" Value="{StaticResource RedGradientBrush}"/>
 		<Setter Property="CornerRadius" Value="10"/>
-		<!--<Setter Property="BorderBrush" Value="#FF000000"/>-->
 		<Setter Property="BorderThickness" Value="1"/>
 	</Style>
 	
-	
-	<!--<Style x:Key="DefaultRadialGradient" TargetType="RadialGradientBrush">
-		<Setter Property="GradientOrigin" Value="-0.3,-0.3"/>
-		<Setter Property="RadiusX" Value="0.7" />
-		<Setter Property="RadiusY" Value="0.7" />
-		<Setter Property="Center" Value="0.2,0.2" />
-		<Setter Property="SpreadMethod" Value="Reflect"/>
-	</Style>-->
 </ResourceDictionary>

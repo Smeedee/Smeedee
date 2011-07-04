@@ -172,11 +172,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 
     public class ColorProvider
     {
-        //public List<string> ColorList
-        //{
-        //    get { return new List<string>(ChangesetBackgroundProvider.GetColors()); }
-        //}
-
+       
         public List<ColorProviderPart> ColorList
         {
             get

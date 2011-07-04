@@ -9,13 +9,6 @@ namespace Smeedee.Widget.SourceControl.SL
 			// Required to initialize variables
 			InitializeComponent();
 
-            
 		}
-
-        //public Brush selectedBrushColor
-        //{
-        //    get {}
-        //    set {}
-        //}
 	}
 }

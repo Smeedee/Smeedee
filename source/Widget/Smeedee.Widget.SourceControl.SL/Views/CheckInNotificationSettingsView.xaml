@@ -16,12 +16,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
         </ResourceDictionary>
         <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
         <src:ColorProvider x:Key="colorProvider" />
     </UserControl.Resources>
-   
 	<Grid x:Name="LayoutRoot">
         <Border Style="{StaticResource SettingsViewBorder}" Margin="0,0,0,-14">
             <Grid Style="{StaticResource SettingsViewGrid}" Height="380" Width="482" d:LayoutOverrides="Width">
