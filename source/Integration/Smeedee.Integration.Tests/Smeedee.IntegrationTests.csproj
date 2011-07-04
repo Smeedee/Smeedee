@@ -222,7 +222,6 @@
     <Compile Include="Database\DomainModel\Repositories\TaskConfigurationDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\TeamPictureRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\UserdbRepositorySpecs.cs" />
-    <Compile Include="Database\DomainModel\Repositories\UserRepositorySpecs.cs" />
     <Compile Include="Database\Learning\NHibernateLearningTests.cs" />
     <Compile Include="Database\Learning\SessionFactoryLearning.cs" />
     <Compile Include="Holidays\Resource.Designer.cs">
