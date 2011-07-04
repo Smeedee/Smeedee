@@ -172,9 +172,33 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 
     public class ColorProvider
     {
-        public List<string> ColorList
+        //public List<string> ColorList
+        //{
+        //    get { return new List<string>(ChangesetBackgroundProvider.GetColors()); }
+        //}
+
+        public List<ColorProviderPart> ColorList
         {
-            get { return new List<string>(ChangesetBackgroundProvider.GetColors()); }
+            get
+            {
+                var list = new List<ColorProviderPart>();
+                foreach (var color in ChangesetBackgroundProvider.GetColors())
+                {
+                    list.Add(new ColorProviderPart(color, ChangesetBackgroundProvider.GetBrushName(color)));
+                }
+                return list;
+            }
         }
+    }
+
+    public class ColorProviderPart
+    {
+        public ColorProviderPart(string name, string brush)
+        {
+            ShortName = name;
+            BrushName = brush;
+        }
+        public string ShortName { get; set; }
+        public string BrushName { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Smeedee.Widget.SourceControl.SL
+﻿using System.Windows.Media;
+
+namespace Smeedee.Widget.SourceControl.SL
 {
 	public partial class CheckInNotificationSettingsView
 	{
@@ -6,6 +8,14 @@
 		{
 			// Required to initialize variables
 			InitializeComponent();
+
+            
 		}
+
+        //public Brush selectedBrushColor
+        //{
+        //    get {}
+        //    set {}
+        //}
 	}
 }

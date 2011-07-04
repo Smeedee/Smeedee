@@ -19,13 +19,10 @@
         <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
     </UserControl.Resources>
 	
-    <Border x:Name="BoundingBorder" Style="{StaticResource DefaultBorder}" Padding="5" Background="{Binding BackgroundColor, Converter={StaticResource StringToBrushConverter}}">
-    	<!--<Border.Background>
-    		<RadialGradientBrush GradientOrigin="-0.28,-0.239" RadiusX="0.91" RadiusY="0.552" Center="0.22,0.261" SpreadMethod="Reflect">
-    			<GradientStop Color="{Binding LightBackgroundColor, Mode=OneWay}"/>
-    			<GradientStop Color="{Binding DarkBackgroundColor, Mode=OneWay}" Offset="0.82"/>
-    		</RadialGradientBrush>
-    	</Border.Background>-->
+    <Border x:Name="BoundingBorder" 
+            Style="{StaticResource DefaultBorder}"
+            Padding="5" 
+            Background="{Binding BackgroundColor, Converter={StaticResource StringToBrushConverter}}">
         <VisualStateManager.VisualStateGroups>
         	
             <VisualStateGroup x:Name="VisualStateGroup">

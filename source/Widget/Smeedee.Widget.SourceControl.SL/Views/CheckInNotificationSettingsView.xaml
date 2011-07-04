@@ -7,6 +7,7 @@
 	xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
     xmlns:src="clr-namespace:Smeedee.Widget.SourceControl.ViewModels" 
+    xmlns:conv="clr-namespace:Smeedee.Widget.SourceControl.SL.Converters" 
     mc:Ignorable="d"
 	d:DesignWidth="640" d:DesignHeight="480">
     
@@ -15,7 +16,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
+        <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
         <src:ColorProvider x:Key="colorProvider" />
     </UserControl.Resources>
    
@@ -119,7 +122,19 @@
                                      	ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}" 
                         				SelectedItem="{Binding ColorName, Mode=TwoWay}"
 										Style="{StaticResource SettingsViewComboBox}"
-                                        MinWidth="127"> 			
+                                        MinWidth="127"> 
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Rectangle
+                                                        Width="15"
+                                                        Height="15"
+                                                        Margin="5"
+                                                        Fill="{Binding BrushName, Converter={StaticResource StringToBrushConverter}}" />
+                                                    <TextBlock Text="{Binding ShortName}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
 									</ComboBox>
                         		</DataTemplate>
                     		</Controls:DataGridTemplateColumn.CellEditingTemplate>
