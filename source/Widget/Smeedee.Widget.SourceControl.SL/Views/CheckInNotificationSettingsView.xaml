@@ -117,8 +117,9 @@
                    			<Controls:DataGridTemplateColumn.CellEditingTemplate>
                        	        <DataTemplate>
                            			<ComboBox  
-                                     	ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}" 
-                        				SelectedItem="{Binding ColorName, Mode=TwoWay}"
+                                     	ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}"
+                                        SelectedValue="{Binding ColorName, Mode=TwoWay}"
+                                        SelectedValuePath="ShortName"
 										Style="{StaticResource SettingsViewComboBox}"
                                         MinWidth="127"> 
                                         <ComboBox.ItemTemplate>
