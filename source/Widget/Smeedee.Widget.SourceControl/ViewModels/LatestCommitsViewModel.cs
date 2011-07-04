@@ -122,18 +122,25 @@ namespace Smeedee.Widget.SourceControl.ViewModels
 
         public ObservableCollection<KeywordColorPair> KeywordList { get; private set; }
 
+        private Collection<KeywordColorPair> keywordListResetPoint = new Collection<KeywordColorPair>();
         
 
         public void SetResetPoint()
         {
             blinkWhenNoCommentResetPoint = BlinkWhenNoComment;
             numberOfCommitsResetPoint = NumberOfCommits;
+            keywordListResetPoint.Clear();
+            foreach (var item in KeywordList)
+                keywordListResetPoint.Add(item);
         }
 
         public void Reset()
         {
             BlinkWhenNoComment = blinkWhenNoCommentResetPoint;
             NumberOfCommits = numberOfCommitsResetPoint;
+            KeywordList.Clear();
+            foreach (var item in keywordListResetPoint)
+                KeywordList.Add(item);
         }
     }
 

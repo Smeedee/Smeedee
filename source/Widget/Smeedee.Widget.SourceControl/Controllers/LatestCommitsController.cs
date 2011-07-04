@@ -178,7 +178,8 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 SetColorSettings(currentSettings);
             }
 
-            ViewModel.SetResetPoint();
+            uiInvoker.Invoke(() => ViewModel.SetResetPoint());
+            
             SetIsNotLoadingConfig();
         }
 
