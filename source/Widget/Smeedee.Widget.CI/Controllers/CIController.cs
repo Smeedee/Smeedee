@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
@@ -39,7 +38,6 @@ using Smeedee.DomainModel.Users;
 using Smeedee.Widget.CI.ViewModels;
 using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
-using TinyMVVM.Framework.Services.Impl;
 
 namespace Smeedee.Widget.CI.Controllers
 {
@@ -267,8 +265,19 @@ namespace Smeedee.Widget.CI.Controllers
         private string RemoveEmailFromUsernameIfExists(Trigger trigger)
         {
             var usr = trigger.InvokedBy;
-            if(usr.Contains("<") && usr.Contains("@"))
+            if (usr.Contains("<") && usr.Contains("@"))
+            {
+                // InvokedBy in git is "firstname lastname <email@address.org>"
                 usr = usr.Substring(0, usr.IndexOf("<") - 1);
+                var firstAndLastName = usr.Split(' ');
+                var firstName = firstAndLastName[0];
+                var lastName = firstAndLastName[1];
+                firstName = firstName.Substring(0, 1).ToUpper() + firstName.Substring(1);
+                lastName = lastName.Substring(0, 1).ToUpper() + lastName.Substring(1);
+                
+                return string.Format("{0} {1}", firstName, lastName );
+                
+            }
             return usr;
         }
 
