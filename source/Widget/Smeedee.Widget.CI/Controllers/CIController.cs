@@ -259,8 +259,17 @@ namespace Smeedee.Widget.CI.Controllers
 
         private void SetBuildTrigger(Trigger trigger, ref BuildViewModel buildViewModel)
         {
-            buildViewModel.TriggeredBy = TryGetPerson(trigger.InvokedBy);
+            string username = RemoveEmailFromUsernameIfExists(trigger);
+            buildViewModel.TriggeredBy = TryGetPerson(username);
             buildViewModel.TriggerCause = trigger.Cause;
+        }
+
+        private string RemoveEmailFromUsernameIfExists(Trigger trigger)
+        {
+            var usr = trigger.InvokedBy;
+            if(usr.Contains("<") && usr.Contains("@"))
+                usr = usr.Substring(0, usr.IndexOf("<") - 1);
+            return usr;
         }
 
         private Person TryGetPerson(string username)
