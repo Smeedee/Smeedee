@@ -48,7 +48,7 @@ namespace Smeedee.DomainModel.Users
 
         public override Expression<Func<User, bool>> IsSatisfiedByExpression()
         {
-            return u => u.Username.Equals(Username);
+            return u => u.Username.ToLower().Equals(Username.ToLower());
         }
     }
 }
