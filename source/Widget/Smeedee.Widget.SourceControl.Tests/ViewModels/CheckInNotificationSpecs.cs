@@ -46,15 +46,17 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificatio
     {
         protected static LatestCommitsViewModel viewModel;
         protected static PropertyChangedRecorder changeRecorder;
+        protected static ChangesetViewModel changeViewModel;
 
         protected Context the_object_is_created = () =>
                     {
                         ViewModelBootstrapperForTests.Initialize();
                         viewModel = new LatestCommitsViewModel(new Client.Framework.ViewModel.Widget());
                         changeRecorder = new PropertyChangedRecorder(viewModel);
+                        changeViewModel = new ChangesetViewModel();
                     };
 
-        protected When numberOfCommitts_field_in_view_is_set_to_5 = () => viewModel.NumberOfCommits = 5;
+        protected When numberOfCommits_field_in_view_is_set_to_5 = () => viewModel.NumberOfCommits = 5;
 
         [TearDown]
         public void TearDown()
@@ -115,19 +117,12 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificatio
 
     {
         [Test]
-        public void assure_number_of_committs_is_changed_when_the_field_in_the_viewModel_is_set()
+        public void assure_number_of_commits_is_changed_when_the_field_in_the_viewModel_is_set()
         {
             Given(the_object_is_created);
-            When(numberOfCommitts_field_in_view_is_set_to_5);
+            When(numberOfCommits_field_in_view_is_set_to_5);
             Then(() => changeRecorder.ChangedProperties.Count.ShouldBe(1));
         }
 
-        [Test]
-        public void assure_that_the_ViewModels_badComment_is_set_by_bad_comments()
-        {
-            Given(the_object_is_created);
-            When("a_bad_comment_is_uploaded");
-            Then("() => ");
-        }
     }
 }

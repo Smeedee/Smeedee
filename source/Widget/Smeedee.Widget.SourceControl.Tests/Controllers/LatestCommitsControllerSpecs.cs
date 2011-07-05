@@ -456,6 +456,151 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
     }
 
     [TestFixture]
+    public class When_reload_settings_is_pressed : Shared
+    {
+        [Test]
+        public void Assure_nothing_happens_when_no_changes_are_made()
+        {
+            Given(the_controller_has_been_created);
+            When(reload_settings_button_is_pressed);
+            Then("nothing is changed",
+                () =>
+                {
+                    viewModel.BlinkWhenNoComment.ShouldBeFalse();
+                    viewModel.KeywordList.ShouldBeEmpty();
+                    viewModel.NumberOfCommits.ShouldBe(8);
+                }
+            );
+        }
+
+        [Test]
+        public void Assure_number_of_commits_is_reset_if_changed_and_not_saved()
+        {
+            Given(the_controller_has_been_created).And(number_of_commits_has_been_changed);
+            When(reload_settings_button_is_pressed);
+            Then("numberOfCommits should be back to default 8", () => viewModel.NumberOfCommits.ShouldBe(8));
+        }
+
+        [Test]
+        public void Assure_number_of_commits_is_saved_and_reloades_correctly()
+        {
+            Given(the_controller_has_been_created).And(number_of_commits_has_been_changed).And(save_button_has_been_pressed);
+            When(reload_settings_button_is_pressed);
+            Then("numberOfCommits should be saved and not changed when reload is pressed",
+                 () => viewModel.NumberOfCommits.ShouldBe(42));
+        }
+
+        [Test]
+        public void Assure_blink_when_no_comment_is_reset_if_changed_and_not_saved()
+        {
+            Given(the_controller_has_been_created).And(blink_when_no_comment_has_been_changed);
+            When(reload_settings_button_is_pressed);
+            Then("blinkWhenNoComment should be back to default false", () => viewModel.BlinkWhenNoComment.ShouldBeFalse());
+        }
+
+        [Test]
+        public void Assure_blink_when_no_comment_is_saved_and_reloades_correctly()
+        {
+            Given(the_controller_has_been_created).And(blink_when_no_comment_has_been_changed).And(save_button_has_been_pressed);
+            When(reload_settings_button_is_pressed);
+            Then("blinkWhenNoComment should be saved and not changed when reload is pressed",
+                 () => viewModel.BlinkWhenNoComment.ShouldBeTrue());
+        }
+
+        [Test]
+        public void Assure_keywordlist_is_reset_if_changed_and_not_saved()
+        {
+            Given(the_controller_has_been_created).And(fix_green_binding_has_been_added_to_keywordlist);
+            When(reload_settings_button_is_pressed);
+            Then("keywordlist should be empty", () => viewModel.KeywordList.ShouldBeEmpty());
+        }
+
+        [Test]
+        public void Assure_keywordcolorpair_is_saved_and_reloades_correctly()
+        {
+            Given(the_controller_has_been_created).And(fix_green_binding_has_been_added_to_keywordlist).And(save_button_has_been_pressed);
+            When(reload_settings_button_is_pressed);
+            Then(keywordlist_contains_fix_green_binding);
+        }
+
+        [Test]
+        public void Assure_two_keywordcolorpair_is_saved_and_reloades_correctly()
+        {
+            Given(the_controller_has_been_created).And(fix_green_binding_has_been_added_to_keywordlist).And(gul_yellow_binding_has_been_added_to_keywordlist).And(save_button_has_been_pressed);
+            When(reload_settings_button_is_pressed);
+            Then(keywordlist_contains_fix_green_and_gul_yellow_binding);
+        }
+
+        [Test]
+        public void Assure_two_keywordcolorpair_is_saved_and_reloades_correctly_if_the_first_one_is_deleted_but_already_saved()
+        {
+            Given(the_controller_has_been_created).And(fix_green_binding_has_been_added_to_keywordlist).And(gul_yellow_binding_has_been_added_to_keywordlist).And(save_button_has_been_pressed).And(fix_green_binding_has_been_deleted);
+            When(reload_settings_button_is_pressed);
+            Then(keywordlist_contains_fix_green_and_gul_yellow_binding);
+        }
+
+        [Test]
+        public void Assure_that_keywordcolorpair_is_reloaded_correctly()
+        {
+            Given(the_controller_has_been_created).
+                And(fix_green_binding_has_been_added_to_keywordlist).
+                And(save_button_has_been_pressed).
+                And(the_keyword_fix_has_been_changed);
+
+            When(reload_settings_button_is_pressed);
+
+            Then("the_keyword_should_be_fix_again", () => viewModel.KeywordList[0].Keyword.ShouldBe("fix"));
+
+
+        }
+
+        [Test]
+        public void Assure_that_keywordcolorpair_is_removed_when_keyword_is_set_to_an_empty_string()
+        {
+            Given(the_controller_has_been_created).And(fix_green_binding_has_been_added_to_keywordlist);
+            When(fix_keyword_is_set_to_an_empty_string);
+            Then("keyword list should be empty", () => viewModel.KeywordList.Count.ShouldBe(0));
+        }
+
+        private Context the_keyword_fix_has_been_changed = () => viewModel.KeywordList[0].Keyword = "change";
+
+        protected When reload_settings_button_is_pressed = () => viewModel.ReloadSettings.ExecuteDelegate();
+        protected Context number_of_commits_has_been_changed = () => viewModel.NumberOfCommits = 42;
+        protected Context save_button_has_been_pressed = () => viewModel.SaveSettings.ExecuteDelegate();
+        protected Context blink_when_no_comment_has_been_changed = () => viewModel.BlinkWhenNoComment = true;
+        protected Context keywordlist_has_been_changed = () => viewModel.KeywordList.Add(new KeywordColorPair(null));
+        protected Context fix_green_binding_has_been_added_to_keywordlist = () => viewModel.KeywordList.Add(new KeywordColorPair(controller.KeywordChanged) { Keyword = "fix", ColorName = "green"});
+        protected Context gul_yellow_binding_has_been_added_to_keywordlist = () => viewModel.KeywordList.Add(new KeywordColorPair(controller.KeywordChanged) { Keyword = "gul", ColorName = "yellow" });
+
+        private When fix_keyword_is_set_to_an_empty_string = () => viewModel.KeywordList[0].Keyword = "";
+        
+
+        private Then keywordlist_contains_fix_green_binding = () =>
+        {
+            var pair = viewModel.KeywordList[0];
+            pair.Keyword.ShouldBe("fix");
+            pair.ColorName.ShouldBe("green");
+        };
+        private Then keywordlist_contains_fix_green_and_gul_yellow_binding = () =>
+        {
+
+            var greenPair = viewModel.KeywordList[0];
+            greenPair.Keyword.ShouldBe("fix");
+            greenPair.ColorName.ShouldBe("green");
+
+            var yellowPair = viewModel.KeywordList[1];
+            yellowPair.Keyword.ShouldBe("gul");
+            yellowPair.ColorName.ShouldBe("yellow");
+
+        };
+
+        private Context fix_green_binding_has_been_deleted = () => viewModel.KeywordList.RemoveAt(0);
+    }
+
+
+
+
+    [TestFixture]
     public class Notify_when_loading : Shared
     {
         [Test]
@@ -531,7 +676,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(the_keyword_fix_is_bound_to_green_in_settings_db).And(the_controller_has_been_created);
             When(the_keyword_green_is_replaced_with_an_empty_string);
             Then("there should not be items in KeywordList", () => viewModel.KeywordList.Count.ShouldBe(0));
-        }
+        }                                                                                               
     }
 
     [TestFixture]

@@ -131,7 +131,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             numberOfCommitsResetPoint = NumberOfCommits;
             keywordListResetPoint.Clear();
             foreach (var item in KeywordList)
-                keywordListResetPoint.Add(item);
+                keywordListResetPoint.Add(item.Clone());
         }
 
         public void Reset()
@@ -140,7 +140,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             NumberOfCommits = numberOfCommitsResetPoint;
             KeywordList.Clear();
             foreach (var item in keywordListResetPoint)
-                KeywordList.Add(item);
+                KeywordList.Add(item.Clone());
         }
     }
 
@@ -168,6 +168,11 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             } 
         }
         public string ColorName { get; set; }
+
+        public KeywordColorPair Clone()
+        {
+            return MemberwiseClone() as KeywordColorPair;
+        }
     }
 
     public class ColorProvider
