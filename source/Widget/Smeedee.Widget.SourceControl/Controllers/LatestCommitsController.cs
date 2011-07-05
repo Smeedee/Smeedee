@@ -335,7 +335,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
             var newChangeset = new ChangesetViewModel
                                    {
                                        Message = changeset.Comment,
-                                       Date = changeset.Time.ToLocalTime(),
+                                       Date = changeset.Time,
                                        Revision = changeset.Revision,
                                        CommentIsBad = !changeset.IsValidComment(),
                                        ShouldBlink = ViewModel.BlinkWhenNoComment,

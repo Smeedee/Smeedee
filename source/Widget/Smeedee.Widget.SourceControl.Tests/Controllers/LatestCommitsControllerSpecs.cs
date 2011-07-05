@@ -78,7 +78,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                     //viewModel.Date.ShouldBe(new DateTime(1986, 5, 20));
                     viewModel.Changesets.Count.ShouldNotBe(0);
                     viewModel.Changesets.First().Message.ShouldBe("Added hello world method");
-                    viewModel.Changesets.First().Date.ShouldBe(new DateTime(1986, 5, 20).ToLocalTime());
+                    viewModel.Changesets.First().Date.ShouldBe(new DateTime(1986, 5, 20));
                 });
         }
 
