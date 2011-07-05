@@ -151,6 +151,9 @@
     <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\CommitStatisticsSettingsViewModel.cs">
       <Link>ViewModels\CommitStatisticsSettingsViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\KeywordColorPairViewModel.cs">
+      <Link>ViewModels\KeywordColorPairViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widget.SourceControl\ViewModels\LatestCommitsViewModel.cs">
       <Link>ViewModels\LatestCommitsViewModel.cs</Link>
     </Compile>

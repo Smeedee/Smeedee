@@ -611,16 +611,15 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         private Context blink_when_no_comment_has_been_changed = () => viewModel.BlinkWhenNoComment = true;
         
         private Context fix_green_binding_has_been_added_to_keywordlist = 
-            () => viewModel.KeywordList.Add(new KeywordColorPair(controller.KeywordChanged) { Keyword = "fix", ColorName = "green"});
-        protected Context gul_yellow_binding_has_been_added_to_keywordlist = 
-            () => viewModel.KeywordList.Add(new KeywordColorPair(controller.KeywordChanged) { Keyword = "gul", ColorName = "yellow" });
+            () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = "fix", ColorName = "green", KeywordChanged = controller.KeywordChangedHandler});
+        protected Context gul_yellow_binding_has_been_added_to_keywordlist =
+            () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = "gul", ColorName = "yellow", KeywordChanged = controller.KeywordChangedHandler});
 
         private Context fix_green_binding_has_been_deleted = () => viewModel.KeywordList.RemoveAt(0);
         private Context the_keyword_fix_has_been_changed = () => viewModel.KeywordList[0].Keyword = "change";
-        
-        
-        private When fix_keyword_is_set_to_an_empty_string = () => viewModel.KeywordList[0].Keyword = "";
 
+
+        private When fix_keyword_is_set_to_an_empty_string = () => viewModel.KeywordList[0].Keyword = "";
 
         private Then keywordlist_contains_fix_green_binding = () =>
         {

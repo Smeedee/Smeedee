@@ -123,10 +123,12 @@ namespace Smeedee.Widget.SourceControl.Controllers
 
         private void AddWordAndColorSettings()
         {
-            ViewModel.KeywordList.Add(new KeywordColorPair(KeywordChanged) { Keyword = "word" + ViewModel.KeywordList.Count() });
+            var pair = new KeywordColorPairViewModel {Keyword = "word" + ViewModel.KeywordList.Count()};
+            pair.KeywordChanged = KeywordChangedHandler;
+            ViewModel.KeywordList.Add(pair);
         }
 
-        public void KeywordChanged(KeywordColorPair sender)
+        public void KeywordChangedHandler(KeywordColorPairViewModel sender)
         {
             if (sender.Keyword == "")
                 ViewModel.KeywordList.Remove(sender);
@@ -274,7 +276,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 var config = setting.Vals.ToArray();
                 for (int i = 0; i < config.Count(); i += 2)
                 {
-                    ViewModel.KeywordList.Add(new KeywordColorPair(KeywordChanged) { Keyword = config[i], ColorName = config[i + 1] });
+                    ViewModel.KeywordList.Add(new KeywordColorPairViewModel() { Keyword = config[i], ColorName = config[i + 1], KeywordChanged = this.KeywordChangedHandler});
                 }
             });
         }

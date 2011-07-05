@@ -103,6 +103,7 @@
     <Compile Include="Controllers\TopCommitersController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ChangesetViewModel.cs" />
+    <Compile Include="ViewModels\KeywordColorPairViewModel.cs" />
     <Compile Include="ViewModels\LatestCommitsViewModel.cs" />
     <Compile Include="ViewModels\CodeCommiterViewModel.cs" />
     <Compile Include="ViewModels\CommitStatisticsForDate.cs" />

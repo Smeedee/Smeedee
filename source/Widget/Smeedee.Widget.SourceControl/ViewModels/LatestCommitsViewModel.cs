@@ -44,7 +44,7 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         public LatestCommitsViewModel(Client.Framework.ViewModel.Widget widget)
         {
             Changesets = new ObservableCollection<ChangesetViewModel>();
-            KeywordList = new ObservableCollection<KeywordColorPair>();
+            KeywordList = new ObservableCollection<KeywordColorPairViewModel>();
 
             BlinkWhenNoComment = true;
 
@@ -120,9 +120,9 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             }
         }
 
-        public ObservableCollection<KeywordColorPair> KeywordList { get; private set; }
+        public ObservableCollection<KeywordColorPairViewModel> KeywordList { get; private set; }
 
-        private Collection<KeywordColorPair> keywordListResetPoint = new Collection<KeywordColorPair>();
+        private Collection<KeywordColorPairViewModel> keywordListResetPoint = new Collection<KeywordColorPairViewModel>();
         
 
         public void SetResetPoint()
@@ -141,37 +141,6 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             KeywordList.Clear();
             foreach (var item in keywordListResetPoint)
                 KeywordList.Add(item.Clone());
-        }
-    }
-
-    public class KeywordColorPair
-    {
-        public delegate void KeywordEvent(KeywordColorPair sender);
-
-        public KeywordColorPair(KeywordEvent handler)
-        {
-            KeywordChanged = handler;
-        }
-
-        public KeywordEvent KeywordChanged { get; set; }
-
-        private string keyword;
-        public string Keyword { 
-            get { return keyword; }
-            set
-            {
-                if (value != keyword)
-                {
-                    keyword = value;
-                    KeywordChanged(this);
-                }
-            } 
-        }
-        public string ColorName { get; set; }
-
-        public KeywordColorPair Clone()
-        {
-            return MemberwiseClone() as KeywordColorPair;
         }
     }
 

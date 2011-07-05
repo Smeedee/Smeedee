@@ -92,7 +92,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CheckInNotificatio
         {
             viewModel.KeywordList.ShouldNotBeNull();
             viewModel.KeywordList.Count().ShouldBe(0);
-            (viewModel.KeywordList is ObservableCollection<KeywordColorPair>).ShouldBeTrue();
+            (viewModel.KeywordList is ObservableCollection<KeywordColorPairViewModel>).ShouldBeTrue();
         }
 
     }
