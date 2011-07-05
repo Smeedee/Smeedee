@@ -8,9 +8,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		oproperty ValidatedUrl as string
 		oproperty RefreshInterval as int
 
-
 		oproperty ErrorMessage as string
-		oproperty Snapshot as WritableBitmap
 
 		command Save
 		command ReloadSettings

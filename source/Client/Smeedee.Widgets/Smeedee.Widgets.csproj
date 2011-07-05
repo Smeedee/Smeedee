@@ -65,6 +65,10 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
+    <Compile Include="WebSnapshot\ViewModel\ViewModels.cs">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WebSnapshot\ViewModel\WebSnapshotViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Corkboard\ViewModel\ViewModel.mvvm">
@@ -100,6 +104,17 @@
       <DependentUpon>ViewModel.mvvm</DependentUpon>
       <LastGenOutput>ViewModel.txt</LastGenOutput>
     </None>
+    <None Include="WebSnapshot\ViewModel\ViewModel.mvvm">
+      <Generator>T4ScriptFileGenerator</Generator>
+      <LastGenOutput>ViewModel.tt</LastGenOutput>
+    </None>
+    <None Include="WebSnapshot\ViewModel\ViewModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModel.mvvm</DependentUpon>
+      <LastGenOutput>ViewModel.txt</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -116,6 +131,11 @@
       <DesignTime>True</DesignTime>
     </Content>
     <Content Include="WebPage\ViewModel\ViewModel.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Content>
+    <Content Include="WebSnapshot\ViewModel\ViewModel.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewModel.tt</DependentUpon>
