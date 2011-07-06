@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using TinyMVVM.Framework;
+
+namespace Smeedee.Widgets.GenericCharting.ViewModels
+
+	viewmodel ChartViewModelTest:
+
+		oproperty IsCakeALie as bool
+

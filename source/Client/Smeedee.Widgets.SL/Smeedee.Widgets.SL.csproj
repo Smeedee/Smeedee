@@ -67,6 +67,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
@@ -98,6 +101,15 @@
     </Compile>
     <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\ViewModels.cs">
       <Link>Corkboard\ViewModel\ViewModels.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartController.cs">
+      <Link>GenericCharting\Controllers\ChartController.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartViewModel.cs">
+      <Link>GenericCharting\ViewModels\ChartViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ViewModels.cs">
+      <Link>GenericCharting\ViewModels\ViewModels.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\TeamMembers\Controllers\TeamMembersController.cs">
       <Link>TeamMembers\Controllers\TeamMembersController.cs</Link>
@@ -138,6 +150,10 @@
     </Compile>
     <Compile Include="Corkboard\Views\RetrospectiveNoteView.xaml.cs">
       <DependentUpon>RetrospectiveNoteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GenericCharting\GenericChartingWidget.cs" />
+    <Compile Include="GenericCharting\Views\ChartView.xaml.cs">
+      <DependentUpon>ChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamMembers\TeamMembersWidget.cs" />
@@ -236,6 +252,10 @@
     <Page Include="Corkboard\Views\RetrospectiveNoteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GenericCharting\Views\ChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TeamMembers\Views\TeamMembersSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
