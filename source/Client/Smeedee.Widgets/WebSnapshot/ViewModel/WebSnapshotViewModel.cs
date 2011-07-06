@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Text.RegularExpressions;
+using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
     public partial class WebSnapshotViewModel
     {
+        public DelegateCommand FetchImage { get; set; }
+
         partial void OnInitialize()
         {
             InputUrl = "Enter URL here";
@@ -44,6 +45,22 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         private bool IsValidInputUrl()
         {
             return Regex.IsMatch(InputUrl, "^https?://[a-zA-Z1-9]");
+        }
+
+        public bool IsPictureUrl()
+        {
+            var fileExtension = Path.GetExtension(InputUrl).ToLower();
+            switch (fileExtension)
+            {
+                case ".png"  :
+                case ".gif"  :
+                case ".jpg"  :
+                case ".jpeg" :
+                case ".bmp"  :
+                case ".tiff" :
+                    return true;
+            }
+            return false;
         }
 
         public bool IsSaving

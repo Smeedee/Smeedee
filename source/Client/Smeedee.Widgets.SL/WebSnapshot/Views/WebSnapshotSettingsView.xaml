@@ -8,13 +8,21 @@
            xmlns:ViewModel="clr-namespace:Smeedee.Widgets.WebSnapshot.ViewModel"
            d:DesignWidth="300" d:DesignHeight="400">
 
-    <d:DataContext>
+    <!--<d:DataContext>
         <ViewModel:WebSnapshotViewModel />
-    </d:DataContext>
+    </d:DataContext>-->
+    
+    <UserControl.Resources>
+        <ResourceDictionary x:Key="settingsViewResourceDictionary">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot">
         <TextBox Margin="72,8,50,0" TextWrapping="Wrap" Text="{Binding InputUrl, Mode=TwoWay}" VerticalAlignment="Top" Height="23" />
-
+        <Button x:Name="buttonFetchImage" Content="Fetch image" Command="{Binding FetchImage}" HorizontalAlignment="Left" Height="20" Margin="72,40,0,0" VerticalAlignment="Top" Width="78"/>
     </Grid>
 
 </UserControl>

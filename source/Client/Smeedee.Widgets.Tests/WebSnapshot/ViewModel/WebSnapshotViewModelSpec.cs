@@ -160,6 +160,46 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
         
         }
 
+        [TestFixture]
+        public class When_URL_is_link_to_picture : Shared
+        {
+            [Test]
+            public void Then_assure_URL_is_identified_as_picture_after_having_been_set_as_webpage()
+            {
+                webSnapshotViewModel.InputUrl = "http://smeedee.org/";
+                webSnapshotViewModel.IsPictureUrl().ShouldBeFalse();
+                webSnapshotViewModel.IsPictureUrl().ShouldNotBeNull();
+                webSnapshotViewModel.InputUrl = "http://smeedee.org/images/code.png";
+                webSnapshotViewModel.IsPictureUrl().ShouldBeTrue();
+            }
+
+            [Test]
+            public void Then_assure_file_types_are_valid()
+            {
+                var thruth_table = new[]
+                                       {
+                                           "http://smeedee.org/images/code.png",
+                                           "http://smeedee.org/images/code.gif",
+                                           "http://smeedee.org/images/code.jpg",
+                                           "http://smeedee.org/images/code.jpeg",
+                                           "http://10.0.0.1/images/code.bmp",
+                                           "http://10.0.0.1/images/code.tiff"
+                                       };
+                foreach (string url in thruth_table)
+                {
+                    webSnapshotViewModel.InputUrl = url;
+                    webSnapshotViewModel.IsPictureUrl().ShouldBeTrue();
+                }
+            }
+
+            [Test]
+            public void Then_assure_it_should_be_fetched_as_image()
+            {
+                webSnapshotViewModel.InputUrl = "http://smeedee.org/images/code.png";
+                webSnapshotViewModel.FetchImage.CanExecute().ShouldBeTrue();
+            }
+        }
+
 
 
         public class Shared

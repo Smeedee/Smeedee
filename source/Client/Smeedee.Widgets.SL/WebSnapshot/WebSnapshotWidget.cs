@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config.SlideConfig;
+using Smeedee.Widgets.SL.WebSnapshot.Views;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
 
 namespace Smeedee.Widgets.SL.WebSnapshot

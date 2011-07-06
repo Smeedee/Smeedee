@@ -4,9 +4,9 @@ using System.Windows.Controls;
 
 namespace Smeedee.Widgets.SL.WebSnapshot.Views
 {
-    public partial class WebSnapshotSettingsView : UserControl
+    public partial class WebSnapshotView : UserControl
     {
-        public WebSnapshotSettingsView()
+        public WebSnapshotView()
         {
             InitializeComponent();
         }

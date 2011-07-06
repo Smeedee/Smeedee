@@ -70,6 +70,7 @@
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Toolkit">
       <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
@@ -217,6 +218,12 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
+    <Compile Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml.cs">
+      <DependentUpon>WebSnapshotSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WebSnapshot\Views\WebSnapshotView.xaml.cs">
+      <DependentUpon>WebSnapshotView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WebSnapshot\WebSnapshotWidget.cs" />
   </ItemGroup>
   <ItemGroup>
