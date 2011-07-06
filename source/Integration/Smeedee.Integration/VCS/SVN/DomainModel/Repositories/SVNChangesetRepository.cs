@@ -87,7 +87,7 @@ namespace Smeedee.Integration.VCS.SVN.DomainModel.Repositories
                 changeset = new Changeset()
                 {
                     Revision = item.Revision,
-                    Time = item.Time,
+                    Time = item.Time.ToLocalTime(),
                     Comment = item.LogMessage,
                     Author = new Author()
                     {
