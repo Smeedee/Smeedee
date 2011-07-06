@@ -23,7 +23,7 @@ namespace Smeedee.Client.Framework.Services.Impl
     public class ModuleLoader : IModuleLoader
     {
         [ImportMany(AllowRecomposition = true)]
-        private IEnumerable<WidgetMetadata> availalbleWidgets;
+        private IEnumerable<WidgetMetadata> availableWidgets;
 
         private readonly List<string> adminSlideTitles = new List<string>() { "Task Administration", "User Administration", "Holidays", "Add Widget", "Edit Slideshow" };
         private readonly IAsyncRepository<SlideConfiguration> slideConfigRepo;
@@ -53,7 +53,7 @@ namespace Smeedee.Client.Framework.Services.Impl
 		{
 			slideConfigRepo.GetCompleted -= slideConfigRepo_GetCompleted;
 			slideConfigRepo.GetCompleted += slideConfigRepo_GetCompleted;
-			availalbleWidgets = e.Result;
+			availableWidgets = e.Result;
 
 			if (slideConfigs == null)
 				slideConfigRepo.BeginGet(All.ItemsOf<SlideConfiguration>());
@@ -74,6 +74,7 @@ namespace Smeedee.Client.Framework.Services.Impl
     		{
     			welcomeWidget.ProgressbarService.ShowInView("Got slideshow configuration!");
     			CreateSlidesFromConfigs();
+                
     		}
 
     		if (dockBarViewModel != null)
@@ -123,7 +124,7 @@ namespace Smeedee.Client.Framework.Services.Impl
 								numberOfReadySlides,
 								numberOfSlideConfigs));
 
-				if (availalbleWidgets.Any(w => w.Type.FullName == config.WidgetType))
+				if (availableWidgets.Any(w => w.Type.FullName == config.WidgetType))
 				{
 					try
 					{
@@ -152,11 +153,16 @@ namespace Smeedee.Client.Framework.Services.Impl
 			}
 			else
 			{
+                
 				slideshowViewModel.Slides.Clear();
 				foreach (var loadedSlide in loadedSlides)
 				{
 					slideshowViewModel.Slides.Add(loadedSlide);
 				}
+
+                if (slideshowViewModel.Slides.Count > 1)
+                    slideshowViewModel.Start.ExecuteDelegate();
+
 			}
         }
 
@@ -178,7 +184,7 @@ namespace Smeedee.Client.Framework.Services.Impl
 
         private Type GetType(string typeName)
         {
-            var widgetType = availalbleWidgets
+            var widgetType = availableWidgets
                 .Where(w => w.Type.FullName.Equals(typeName))
                 .Select(w => w.Type)
                 .SingleOrDefault();
@@ -198,7 +204,7 @@ namespace Smeedee.Client.Framework.Services.Impl
             {
                 if (dockBarViewModel.Items.Any(i => i.Description == title)) continue;
 
-                var adminWidget = availalbleWidgets.FirstOrDefault(w => w.Name == title);
+                var adminWidget = availableWidgets.FirstOrDefault(w => w.Name == title);
                 
                 if (adminWidget != null)
                 {   
