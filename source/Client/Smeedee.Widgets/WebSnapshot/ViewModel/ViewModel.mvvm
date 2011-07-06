@@ -3,7 +3,7 @@ using TinyMVVM.Framework
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 	
-	viewmodel WebSnapshotViewModel
+	viewmodel WebSnapshotSettingsViewModel
 		oproperty InputUrl as string
 		oproperty ValidatedUrl as string
 		oproperty RefreshInterval as int

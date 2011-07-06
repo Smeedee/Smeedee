@@ -8,14 +8,10 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
     public partial class WebSnapshotViewModel
     {
-        public DelegateCommand FetchImage { get; set; }
+
 
         partial void OnInitialize()
         {
-            InputUrl = "Enter URL here";
-            ValidatedUrl = string.Empty;
-
-            PropertyChanged += WebSnapshotViewModel_PropertyChanged;
         }
 
         void WebSnapshotViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -25,8 +21,12 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
                 ErrorMessage = IsValidInputUrl() ? "" : "Invalid URL!";
                 ValidatedUrl = IsValidInputUrl() ? InputUrl : string.Empty;
 
-                Save.TriggerCanExecuteChanged();
+                Save.TriggerCanExecuteChanged(); 
             }
+            //else if (e.PropertyName == "FetchImage")
+            //{
+            //    if (IsValidInputUrl() && )
+            //}
         }
 
         public bool CanSave()
@@ -76,5 +76,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
         private bool isSaving;
+
+
     }
 }

@@ -127,6 +127,9 @@
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\ViewModels.cs">
       <Link>WebSnapshot\ViewModel\ViewModels.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs">
+      <Link>WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\WebSnapshotViewModel.cs">
       <Link>WebSnapshot\ViewModel\WebSnapshotViewModel.cs</Link>
     </Compile>

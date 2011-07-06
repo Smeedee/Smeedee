@@ -5,7 +5,7 @@ using System;
 using TinyMVVM.Framework;
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
-	public partial class WebSnapshotViewModel : TinyMVVM.Framework.ViewModelBase
+	public partial class WebSnapshotSettingsViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
 		public virtual string InputUrl
@@ -106,7 +106,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		public DelegateCommand Save { get; set; }
 		public DelegateCommand ReloadSettings { get; set; }
 		
-		public WebSnapshotViewModel()
+		public WebSnapshotSettingsViewModel()
 		{
 			Save = new DelegateCommand();
 			ReloadSettings = new DelegateCommand();
