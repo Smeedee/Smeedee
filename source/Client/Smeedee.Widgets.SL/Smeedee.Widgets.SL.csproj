@@ -123,6 +123,12 @@
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\ViewModels.cs">
+      <Link>WebSnapshot\ViewModel\ViewModels.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\WebSnapshotViewModel.cs">
+      <Link>WebSnapshot\ViewModel\WebSnapshotViewModel.cs</Link>
+    </Compile>
     <Compile Include="Corkboard\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -278,6 +284,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WebPage\Views\WebPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WebSnapshot\Views\WebSnapshotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
