@@ -217,6 +217,7 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
+    <Compile Include="WebSnapshot\WebSnapshotWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Corkboard\App.xaml">

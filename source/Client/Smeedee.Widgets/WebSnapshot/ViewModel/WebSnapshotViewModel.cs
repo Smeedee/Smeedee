@@ -46,5 +46,18 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             return Regex.IsMatch(InputUrl, "^https?://[a-zA-Z1-9]");
         }
 
+        public bool IsSaving
+        {
+            get { return isSaving; }
+            set
+            {
+                if (value != isSaving)
+                {
+                    isSaving = value;
+                    TriggerPropertyChanged("IsSaving");
+                }
+            }
+        }
+        private bool isSaving;
     }
 }
