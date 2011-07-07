@@ -1,14 +1,22 @@
 ﻿using System
 using TinyMVVM.Framework
+using Smeedee.Client.Framework.ViewModel
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 	
-	viewmodel WebSnapshotViewModel
+	viewmodel WebSnapshotSettingsViewModel extends SettingsViewModelBase:
 		oproperty InputUrl as string
 		oproperty ValidatedUrl as string
 		oproperty RefreshInterval as int
 
 		oproperty ErrorMessage as string
 
+		command FetchAsImage
+		command FetchAsSnapshot
 		command Save
 		command ReloadSettings
+
+	viewmodel WebSnapshotViewModel:
+		oproperty InputUrl as string
+		oproperty ValidatedUrl as string
+		oproperty RefreshInterval as int	
