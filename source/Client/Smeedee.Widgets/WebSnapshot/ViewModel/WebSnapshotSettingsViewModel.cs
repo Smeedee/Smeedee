@@ -11,20 +11,23 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
     public partial class WebSnapshotSettingsViewModel
     {
-        //public DelegateCommand FetchAsImage { get; set; }
-        //public DelegateCommand FetchAsSnapshot { get; set; }
         public DelegateCommand FetchMethod { get; set; }
 
         partial void OnInitialize()
         {
             InputUrl = "Enter URL here";
+            RefreshInterval = 15;
             ValidatedUrl = string.Empty;
 
             FetchAsImage = new DelegateCommand { CanExecuteDelegate = ShouldFetchAsImage };
             FetchAsSnapshot = new DelegateCommand { CanExecuteDelegate = ShouldFetchAsSnapshot };
-            FetchMethod = FetchAsImage;
 
             PropertyChanged += WebSnapshotViewModel_PropertyChanged;
+        }
+
+        public int RefreshIntervalInSeconds
+        {
+            get { return RefreshInterval*1000*60; }
         }
 
         void WebSnapshotViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

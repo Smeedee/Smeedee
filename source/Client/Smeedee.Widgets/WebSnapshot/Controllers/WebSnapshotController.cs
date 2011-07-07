@@ -37,7 +37,26 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             var config = new Configuration("websnapshot");
 
             config.NewSetting(url, "");
-            config.NewSetting(refresh_interval, "30");
+            config.NewSetting(refresh_interval, "15");
+
+            return config;
+        }
+
+        public void UpdateConfiguration(Configuration config)
+        {
+            Guard.Requires<ArgumentNullException>(config != null);
+            Guard.Requires<ArgumentException>(config.ContainsSetting(url));
+            Guard.Requires<ArgumentException>(config.ContainsSetting(refresh_interval));
+
+            this.config = config;
+
+            webSnapshotViewModel.InputUrl = config.GetSetting(url).Value;
+        }
+
+        public Configuration SaveConfiguration()
+        {
+            config.ChangeSetting(url, webSnapshotViewModel.InputUrl);
+            config.ChangeSetting(refresh_interval, webSnapshotViewModel.RefreshInterval.ToString());
 
             return config;
         }

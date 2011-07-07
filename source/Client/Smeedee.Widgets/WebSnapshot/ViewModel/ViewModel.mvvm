@@ -17,4 +17,6 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		command ReloadSettings
 
 	viewmodel WebSnapshotViewModel:
-		oproperty InputUrl as string	
+		oproperty InputUrl as string
+		oproperty ValidatedUrl as string
+		oproperty RefreshInterval as int	

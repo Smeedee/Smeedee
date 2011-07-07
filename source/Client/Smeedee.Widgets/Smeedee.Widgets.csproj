@@ -65,6 +65,7 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
+    <Compile Include="WebSnapshot\Controllers\WebSnapshotController.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs" />
     <Compile Include="WebSnapshot\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>

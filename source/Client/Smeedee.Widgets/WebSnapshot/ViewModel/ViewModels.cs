@@ -152,6 +152,52 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		partial void OnGetInputUrl(ref string value);
 		partial void OnSetInputUrl(ref string value);
 
+		public virtual string ValidatedUrl
+		{
+			get 
+			{
+				OnGetValidatedUrl(ref _ValidatedUrl);
+				 
+				return _ValidatedUrl; 
+			}
+			set
+			{
+				if (value != _ValidatedUrl)
+				{
+					OnSetValidatedUrl(ref value); 
+					_ValidatedUrl = value;
+					TriggerPropertyChanged("ValidatedUrl");
+				}
+			}
+		}
+		private string _ValidatedUrl;
+
+		partial void OnGetValidatedUrl(ref string value);
+		partial void OnSetValidatedUrl(ref string value);
+
+		public virtual int RefreshInterval
+		{
+			get 
+			{
+				OnGetRefreshInterval(ref _RefreshInterval);
+				 
+				return _RefreshInterval; 
+			}
+			set
+			{
+				if (value != _RefreshInterval)
+				{
+					OnSetRefreshInterval(ref value); 
+					_RefreshInterval = value;
+					TriggerPropertyChanged("RefreshInterval");
+				}
+			}
+		}
+		private int _RefreshInterval;
+
+		partial void OnGetRefreshInterval(ref int value);
+		partial void OnSetRefreshInterval(ref int value);
+
 	
 		
 		//Commands

@@ -70,6 +70,7 @@
     <Compile Include="TeamMembers\ViewModels\UserViewModelSpecs.cs" />
     <Compile Include="WebPage\Controllers\WebPageControllerSpec.cs" />
     <Compile Include="WebPage\ViewModel\WebPageViewModelSpec.cs" />
+    <Compile Include="WebSnapshot\Controllers\WebSnapshotControllerSpec.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModelSpec.cs" />
   </ItemGroup>
   <ItemGroup>

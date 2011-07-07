@@ -74,7 +74,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             public void Then_assure_it_can_be_fetched_as_snapshot()
             {
                 webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/";
-                webSnapshotSettingsViewModel.FetchAsSnapshot.CanExecute().ShouldBeTrue();
+                webSnapshotSettingsViewModel.FetchMethod.ShouldBeSameAs(
+                    webSnapshotSettingsViewModel.FetchAsSnapshot);
             }
         }
 
@@ -117,9 +118,13 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             [Test]
             public void Then_assure_it_cannot_be_fetched()
             {
+                webSnapshotSettingsViewModel.InputUrl = "http://10.0.0.1/img/bilde.png";
+                webSnapshotSettingsViewModel.FetchMethod.CanExecute().ShouldBeTrue();
+
                 webSnapshotSettingsViewModel.InputUrl = "captain kirk is climbing a mountain";
                 webSnapshotSettingsViewModel.FetchAsImage.CanExecute().ShouldBeFalse();
                 webSnapshotSettingsViewModel.FetchAsSnapshot.CanExecute().ShouldBeFalse();
+                webSnapshotSettingsViewModel.FetchMethod.CanExecute().ShouldBeFalse();
             }
         }
 
