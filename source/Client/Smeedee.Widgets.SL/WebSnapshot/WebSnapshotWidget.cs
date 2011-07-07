@@ -37,7 +37,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var tempViewModel = sender as WebSnapshotViewModel;
+            var tempViewModel = sender as WebSnapshotSettingsViewModel;
             var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);
 
             if (isDoneSaving && IsInSettingsMode)

@@ -13,6 +13,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
     {
         //public DelegateCommand FetchAsImage { get; set; }
         //public DelegateCommand FetchAsSnapshot { get; set; }
+        public DelegateCommand FetchMethod { get; set; }
 
         partial void OnInitialize()
         {
@@ -21,6 +22,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 
             FetchAsImage = new DelegateCommand { CanExecuteDelegate = ShouldFetchAsImage };
             FetchAsSnapshot = new DelegateCommand { CanExecuteDelegate = ShouldFetchAsSnapshot };
+            FetchMethod = FetchAsImage;
 
             PropertyChanged += WebSnapshotViewModel_PropertyChanged;
         }
@@ -32,13 +34,24 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
                 ErrorMessage = IsValidInputUrl() ? "" : "Invalid URL!";
                 ValidatedUrl = IsValidInputUrl() ? InputUrl : string.Empty;
 
+                SetFetchMethod();
                 Save.TriggerCanExecuteChanged();
             }
-            //else if (e.PropertyName == "FetchImage")
-            //{
-            //    if (IsValidInputUrl() && )
-            //}
+
         }
+
+        private void SetFetchMethod()
+        {
+            if ( IsValidInputUrl() && IsPictureUrl())
+            {
+                FetchMethod = FetchAsImage;
+            } 
+            else if ( IsValidInputUrl() && !IsPictureUrl())
+            {
+                FetchMethod = FetchAsSnapshot;
+            }
+        }
+        
 
         private bool ShouldFetchAsImage()
         {
