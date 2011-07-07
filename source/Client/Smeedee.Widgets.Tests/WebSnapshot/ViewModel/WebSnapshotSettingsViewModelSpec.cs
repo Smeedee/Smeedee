@@ -8,7 +8,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
 {
-    public class WebSnapshotViewModelSpec
+    public class WebSnapshotSettingsViewModelSpec
     {
 
         [TestFixture]
@@ -17,19 +17,19 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             [Test]
             public void Then_assure_input_URL_has_some_default_text()
             {
-                webSnapshotViewModel.InputUrl.ShouldBe(INPUT_MESSAGE);
+                webSnapshotSettingsViewModel.InputUrl.ShouldBe(INPUT_MESSAGE);
             }
 
             [Test]
             public void Then_there_should_be_a_validated_URL()
             {
-                webSnapshotViewModel.ValidatedUrl.ShouldBe("");
+                webSnapshotSettingsViewModel.ValidatedUrl.ShouldBe("");
             }
 
             [Test]
             public void Then_assure_it_has_a_save_command()
             {
-                webSnapshotViewModel.Save.ShouldNotBeNull();
+                webSnapshotSettingsViewModel.Save.ShouldNotBeNull();
             }
         }
 
@@ -39,15 +39,15 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             [Test]
             public void Then_assure_save_command_is_disabled()
             {
-                webSnapshotViewModel.InputUrl = "";
-                webSnapshotViewModel.Save.CanExecute().ShouldBe(false);
+                webSnapshotSettingsViewModel.InputUrl = "";
+                webSnapshotSettingsViewModel.Save.CanExecute().ShouldBe(false);
             }
 
             [Test]
             public void Then_assure_it_has_error_message()
             {
-                webSnapshotViewModel.InputUrl = "";
-                webSnapshotViewModel.ErrorMessage.ShouldBeSameAs(ERROR_MESSAGE);
+                webSnapshotSettingsViewModel.InputUrl = "";
+                webSnapshotSettingsViewModel.ErrorMessage.ShouldBeSameAs(ERROR_MESSAGE);
             }
         }
 
@@ -65,9 +65,16 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
 
                 foreach (string url in truth_table)
                 {
-                    webSnapshotViewModel.InputUrl = url;
-                    webSnapshotViewModel.Save.CanExecute().ShouldBeTrue();                                    
+                    webSnapshotSettingsViewModel.InputUrl = url;
+                    webSnapshotSettingsViewModel.Save.CanExecute().ShouldBeTrue();                                    
                 }
+            }
+
+            [Test]
+            public void Then_assure_it_can_be_fetched_as_snapshot()
+            {
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/";
+                webSnapshotSettingsViewModel.FetchAsSnapshot.CanExecute().ShouldBeTrue();
             }
         }
 
@@ -85,26 +92,34 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
                                        };
                 foreach (string url in thruth_table)
                 {
-                    webSnapshotViewModel.InputUrl = url;
-                    webSnapshotViewModel.Save.CanExecute().ShouldBeFalse();
+                    webSnapshotSettingsViewModel.InputUrl = url;
+                    webSnapshotSettingsViewModel.Save.CanExecute().ShouldBeFalse();
                 }
             }
 
             [Test]
             public void Then_assure_error_message_is_set()
             {
-                webSnapshotViewModel.InputUrl = "invalid UR1!";
-                webSnapshotViewModel.ErrorMessage.ShouldBe(ERROR_MESSAGE);
+                webSnapshotSettingsViewModel.InputUrl = "invalid UR1!";
+                webSnapshotSettingsViewModel.ErrorMessage.ShouldBe(ERROR_MESSAGE);
             }
 
             [Test]
             public void Then_assure_the_validated_URL_is_not_set()
             {
-                webSnapshotViewModel.InputUrl = "http://smeedee.org/";
-                webSnapshotViewModel.ValidatedUrl.ShouldBe("http://smeedee.org/");
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/";
+                webSnapshotSettingsViewModel.ValidatedUrl.ShouldBe("http://smeedee.org/");
 
-                webSnapshotViewModel.InputUrl = "does not work";
-                webSnapshotViewModel.ValidatedUrl.ShouldBe("");
+                webSnapshotSettingsViewModel.InputUrl = "does not work";
+                webSnapshotSettingsViewModel.ValidatedUrl.ShouldBe("");
+            }
+
+            [Test]
+            public void Then_assure_it_cannot_be_fetched()
+            {
+                webSnapshotSettingsViewModel.InputUrl = "captain kirk is climbing a mountain";
+                webSnapshotSettingsViewModel.FetchAsImage.CanExecute().ShouldBeFalse();
+                webSnapshotSettingsViewModel.FetchAsSnapshot.CanExecute().ShouldBeFalse();
             }
         }
 
@@ -137,25 +152,25 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
                                       };
                 foreach (string url in truth_table)
                 {
-                    webSnapshotViewModel.InputUrl = url;
-                    webSnapshotViewModel.Save.CanExecute().ShouldBeTrue();
+                    webSnapshotSettingsViewModel.InputUrl = url;
+                    webSnapshotSettingsViewModel.Save.CanExecute().ShouldBeTrue();
                 }
             }
        
             [Test]
             public void Then_assure_ErrorMessage_is_removed_after_URL_is_fixed()
             {
-                webSnapshotViewModel.InputUrl = "invalid url";
-                webSnapshotViewModel.ErrorMessage.ShouldBe(ERROR_MESSAGE);
-                webSnapshotViewModel.InputUrl = "http://www.smeedee.org/";
-                webSnapshotViewModel.ErrorMessage.ShouldBe("");
+                webSnapshotSettingsViewModel.InputUrl = "invalid url";
+                webSnapshotSettingsViewModel.ErrorMessage.ShouldBe(ERROR_MESSAGE);
+                webSnapshotSettingsViewModel.InputUrl = "http://www.smeedee.org/";
+                webSnapshotSettingsViewModel.ErrorMessage.ShouldBe("");
             }
 
             [Test]
             public void Then_assure_validated_URL_is_set()
             {
-                webSnapshotViewModel.InputUrl = "http://www.smeedee.org/";
-                webSnapshotViewModel.ValidatedUrl.ShouldBe("http://www.smeedee.org/");
+                webSnapshotSettingsViewModel.InputUrl = "http://www.smeedee.org/";
+                webSnapshotSettingsViewModel.ValidatedUrl.ShouldBe("http://www.smeedee.org/");
             }
         
         }
@@ -166,11 +181,11 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             [Test]
             public void Then_assure_URL_is_identified_as_picture_after_having_been_set_as_webpage()
             {
-                webSnapshotViewModel.InputUrl = "http://smeedee.org/";
-                webSnapshotViewModel.IsPictureUrl().ShouldBeFalse();
-                webSnapshotViewModel.IsPictureUrl().ShouldNotBeNull();
-                webSnapshotViewModel.InputUrl = "http://smeedee.org/images/code.png";
-                webSnapshotViewModel.IsPictureUrl().ShouldBeTrue();
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/";
+                webSnapshotSettingsViewModel.IsPictureUrl().ShouldBeFalse();
+                webSnapshotSettingsViewModel.IsPictureUrl().ShouldNotBeNull();
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/images/code.png";
+                webSnapshotSettingsViewModel.IsPictureUrl().ShouldBeTrue();
             }
 
             [Test]
@@ -187,16 +202,26 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
                                        };
                 foreach (string url in thruth_table)
                 {
-                    webSnapshotViewModel.InputUrl = url;
-                    webSnapshotViewModel.IsPictureUrl().ShouldBeTrue();
+                    webSnapshotSettingsViewModel.InputUrl = url;
+                    webSnapshotSettingsViewModel.IsPictureUrl().ShouldBeTrue();
                 }
             }
 
             [Test]
             public void Then_assure_it_should_be_fetched_as_image()
             {
-                webSnapshotViewModel.InputUrl = "http://smeedee.org/images/code.png";
-                webSnapshotViewModel.FetchImage.CanExecute().ShouldBeTrue();
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/images/code.png";
+                webSnapshotSettingsViewModel.FetchAsImage.CanExecute().ShouldBeTrue();
+                webSnapshotSettingsViewModel.FetchAsSnapshot.CanExecute().ShouldBeFalse();
+            }
+
+            [Test]
+            public void Then_assure_it_is_should_not_be_fetched_as_image_after_changing_URL()
+            {
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/images/code.png";
+                webSnapshotSettingsViewModel.FetchAsImage.CanExecute().ShouldBeTrue();
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org/";
+                webSnapshotSettingsViewModel.FetchAsImage.CanExecute().ShouldBeFalse();
             }
         }
 
@@ -204,14 +229,14 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
 
         public class Shared
         {
-            protected WebSnapshotViewModel webSnapshotViewModel;
+            protected WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
             protected const string ERROR_MESSAGE = "Invalid URL!";
             protected const string INPUT_MESSAGE = "Enter URL here";
 
             [SetUp]
             public void Setup()
             {
-                webSnapshotViewModel = new WebSnapshotViewModel();
+                webSnapshotSettingsViewModel = new WebSnapshotSettingsViewModel();
             }
 
         }

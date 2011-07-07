@@ -3,9 +3,10 @@ using TinyMVVM.Framework.Services;
 using TinyMVVM.Framework.Conventions;
 using System;
 using TinyMVVM.Framework;
+using Smeedee.Client.Framework.ViewModel;
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
-	public partial class WebSnapshotSettingsViewModel : TinyMVVM.Framework.ViewModelBase
+	public partial class WebSnapshotSettingsViewModel : SettingsViewModelBase
 	{
 		//State
 		public virtual string InputUrl
@@ -103,13 +104,60 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 	
 		
 		//Commands
+		public DelegateCommand FetchAsImage { get; set; }
+		public DelegateCommand FetchAsSnapshot { get; set; }
 		public DelegateCommand Save { get; set; }
 		public DelegateCommand ReloadSettings { get; set; }
 		
 		public WebSnapshotSettingsViewModel()
 		{
+			FetchAsImage = new DelegateCommand();
+			FetchAsSnapshot = new DelegateCommand();
 			Save = new DelegateCommand();
 			ReloadSettings = new DelegateCommand();
+	
+			OnInitialize();
+			ApplyConvention(new BindCommandsDelegatesToMethods());
+		}
+
+		partial void OnInitialize();
+	}
+}
+
+namespace Smeedee.Widgets.WebSnapshot.ViewModel
+{
+	public partial class WebSnapshotViewModel : TinyMVVM.Framework.ViewModelBase
+	{
+		//State
+		public virtual string InputUrl
+		{
+			get 
+			{
+				OnGetInputUrl(ref _InputUrl);
+				 
+				return _InputUrl; 
+			}
+			set
+			{
+				if (value != _InputUrl)
+				{
+					OnSetInputUrl(ref value); 
+					_InputUrl = value;
+					TriggerPropertyChanged("InputUrl");
+				}
+			}
+		}
+		private string _InputUrl;
+
+		partial void OnGetInputUrl(ref string value);
+		partial void OnSetInputUrl(ref string value);
+
+	
+		
+		//Commands
+		
+		public WebSnapshotViewModel()
+		{
 	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());

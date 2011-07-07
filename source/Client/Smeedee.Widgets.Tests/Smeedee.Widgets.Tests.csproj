@@ -70,7 +70,7 @@
     <Compile Include="TeamMembers\ViewModels\UserViewModelSpecs.cs" />
     <Compile Include="WebPage\Controllers\WebPageControllerSpec.cs" />
     <Compile Include="WebPage\ViewModel\WebPageViewModelSpec.cs" />
-    <Compile Include="WebSnapshot\ViewModel\WebSnapshotViewModelSpec.cs" />
+    <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModelSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
