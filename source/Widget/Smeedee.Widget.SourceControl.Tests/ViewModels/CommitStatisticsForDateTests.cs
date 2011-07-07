@@ -51,14 +51,14 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels
         public void Should_have_date_property()
         {
             commitStatisticsForDate.Date.ShouldBeInstanceOfType<DateTime>();
-            Assert.IsNotNull(commitStatisticsForDate.Date);
+            commitStatisticsForDate.Date.ShouldNotBeNull();
         }
 
         [Test]
         public void Should_have_numberOfCommits_property()
         {
             commitStatisticsForDate.NumberOfCommits.ShouldBeInstanceOfType<int>();
-            Assert.IsNotNull(commitStatisticsForDate.NumberOfCommits);
+            commitStatisticsForDate.NumberOfCommits.ShouldNotBeNull();
         }
     }
 }

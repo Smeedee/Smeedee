@@ -36,13 +36,13 @@ using Smeedee.Tests;
 
 namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.TopCommitersViewModelSpecs
 {
-    public class Shared
+    public class Shared : ScenarioClass
     {
         protected static TopCommitersViewModel viewModel;
         protected static PropertyChangedRecorder changeRecorder;
     }
 
-    [TestFixture] 
+    [TestFixture]
     public class When_ViewModel_is_spawned : Shared
     {
         [SetUp]
@@ -54,13 +54,13 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.TopCommitersViewMo
         [Test]
         public void Assure_ViewModel_is_a_AbstractViewModel()
         {
-            (viewModel is AbstractViewModel).ShouldBeTrue();       
+            (viewModel is AbstractViewModel).ShouldBeTrue();
         }
-        
+
         [Test]
         public void Assure_it_has_a_Developers_property()
         {
-            viewModel.Developers.ShouldNotBeNull();       
+            viewModel.Developers.ShouldNotBeNull();
         }
     }
 
@@ -76,19 +76,15 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.TopCommitersViewMo
         [Test]
         public void Assure_observers_are_notified_when_content_in_Developer_property_changes()
         {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(the_ViewModel_is_created);
+            Given(the_ViewModel_is_created);
 
-                scenario.When("content in Developer property changes", () =>
-                    viewModel.Developers.Add(new CodeCommiterViewModel()));
+            When("content in Developer property changes", () =>
+                viewModel.Developers.Add(new CodeCommiterViewModel()));
 
-                scenario.Then("assure observers are notified", () =>
-                    changeRecorder.ChangedProperties.Count.ShouldNotBe(0));
-            });
-        
+            Then("assure observers are notified", () =>
+                 changeRecorder.ChangedProperties.Count.ShouldNotBe(0));
         }
-               
+
     }
-        
+
 }

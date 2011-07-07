@@ -38,7 +38,7 @@ using Smeedee.Tests;
 
 namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CodeCommiterViewModelSpecs
 {
-    public class Shared
+    public class Shared : ScenarioClass
     {
         protected static CodeCommiterViewModel viewModel;
         protected static PropertyChangedRecorder changeRecorder;
@@ -62,7 +62,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CodeCommiterViewMo
         [Test]
         public void Assure_ViewModel_is_a_PersonViewModel()
         {
-            (viewModel is Person).ShouldBeTrue();   
+            (viewModel is Person).ShouldBeTrue();
         }
     }
 
@@ -72,22 +72,17 @@ namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CodeCommiterViewMo
         [Test]
         public void Assure_observers_are_notified_when_NumberOfCommits_changes()
         {
-            Scenario.StartNew(this, scenario =>
-            {
-                scenario.Given(the_ViewModel_is_created);
+            Given(the_ViewModel_is_created);
 
-                scenario.When("the NumberOfCommits property is changed", () =>
-                    viewModel.NumberOfCommits = 10);
+            When("the NumberOfCommits property is changed", () =>
+                viewModel.NumberOfCommits = 10);
 
-                scenario.
-                    Then("assure observers are notified", () =>
-                        changeRecorder.ChangedProperties.Any(p => p == "NumberOfCommits").ShouldBeTrue()).
-                    And("assure the value is changed", () =>
-                        viewModel.NumberOfCommits.ShouldBe(10));
-            });
-               
+            Then("assure observers are notified", () =>
+                changeRecorder.ChangedProperties.Any(p => p == "NumberOfCommits").ShouldBeTrue()).
+            And("assure the value is changed", () =>
+                viewModel.NumberOfCommits.ShouldBe(10));
         }
-        
+
     }
-        
+
 }
