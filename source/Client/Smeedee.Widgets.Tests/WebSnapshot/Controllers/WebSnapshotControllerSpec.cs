@@ -94,7 +94,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controllers
             public void Setup()
             {
                 webSnapshotViewModel = new WebSnapshotViewModel();
-                webSnapshotController = new WebSnapshotController(webSnapshotViewModel, WebSnapshotController.GetDefaultConfiguration(), new StandardTimer());
+                webSnapshotSettingsViewModel = new WebSnapshotSettingsViewModel();
+                webSnapshotController = new WebSnapshotController(webSnapshotViewModel, webSnapshotSettingsViewModel, WebSnapshotController.GetDefaultConfiguration(), new StandardTimer());
             }
 
             [Test]
@@ -119,6 +120,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controllers
         {
             protected Mock<ITimer> timerFake;
             protected WebSnapshotViewModel webSnapshotViewModel;
+            protected WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
             protected WebSnapshotController webSnapshotController;
             
             [SetUp]
@@ -126,7 +128,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controllers
             {
                 timerFake = new Mock<ITimer>();
                 webSnapshotViewModel = new WebSnapshotViewModel();
-                webSnapshotController = new WebSnapshotController(webSnapshotViewModel, WebSnapshotController.GetDefaultConfiguration(), timerFake.Object);
+                webSnapshotSettingsViewModel = new WebSnapshotSettingsViewModel();
+                webSnapshotController = new WebSnapshotController(webSnapshotViewModel, webSnapshotSettingsViewModel, WebSnapshotController.GetDefaultConfiguration(), timerFake.Object);
                 Before();
             }
 
