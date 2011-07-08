@@ -24,20 +24,13 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
-using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
-using Smeedee.DomainModel.Framework;
-using Smeedee.DomainModel.Framework.Logging;
-using Smeedee.DomainModel.SourceControl;
 using Smeedee.Widget.SourceControl.Controllers;
 using Smeedee.Widget.SourceControl.SL.Views;
 using Smeedee.Widget.SourceControl.ViewModels;
 using TinyMVVM.Framework;
-using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widget.SourceControl.SL
 {

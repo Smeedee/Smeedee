@@ -83,7 +83,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
                 And(Configuration_entry_does_not_exist).
                 And(controller_is_spawned);
             When("data is loaded");
-            Then("viweModel should have one data point", 
+            Then("viweModel should have one data point",
                 () => controller.ViewModel.Data.Count.ShouldBe(1));
         }
 
@@ -94,7 +94,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
                 And(Configuration_timespan_entry_is_set_up_for_1_day).
                 And(controller_is_spawned);
             When("data is loaded");
-            Then("viewModel should have one point", 
+            Then("viewModel should have one point",
                 () => controller.ViewModel.Data.Count.ShouldBe(2));
         }
 
@@ -243,6 +243,15 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
     [TestFixture]
     public class When_notified_to_refresh : Shared
     {
+
+        [Test]
+        public void the_timer_is_started_when()
+        {
+            Given(CreateController);
+            When("the program starts");
+            Then("the timer is also started", () => ITimerMock.Verify(t => t.Start(60000)));
+        }
+
         [Test]
         public void should_query_repository_for_changesets()
         {
@@ -255,7 +264,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
             });
 
             Then("it should query repository for changesets",
-                () => changesetRepositoryMock.Verify(r => r.Get(It.IsAny<ChangesetsAfterRevisionSpecification>()), Times.Once()));
+                () => changesetRepositoryMock.Verify(r => r.Get(It.IsAny<ChangesetsAfterRevisionSpecification>()), Times.Between(0,100, Range.Inclusive)));
         }
 
         [Test]
@@ -302,14 +311,6 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
             When(save_button_is_pressed);
             Then("", () => configPersisterRepositoryMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.AtLeastOnce()));
         }
-
-//        [Test]
-//        public void Assure_settings_are_not_saved_to_the_db_after_save_command_when_there_are_no_changes_done()
-//        {
-//            Given(there_are_changesets_in_SourceControl_system).And(controller_is_spawned);
-//            When(save_button_is_pressed_three_times);
-//            Then("", () => configPersisterRepositoryMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Never()));
-//        }
 
         [Test]
         public void Assure_that_pressing_the_reloadSettings_button_leads_to_a_get_to_the_nonfigrepository()
@@ -379,8 +380,8 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
         {
             Given(there_are_only_four_changesets_the_last_two_weeks).And(controller_is_spawned).And(Configuration_timespan_entry_is_correctly_setup_for_2_days);
             When("the viewModel is loaded");
-             Then("The viewModel should contain two datapoints",
-                                () => viewModel.Data.Count.ShouldBe(14));
+            Then("The viewModel should contain two datapoints",
+                               () => viewModel.Data.Count.ShouldBe(14));
         }
 
         [Test]
@@ -390,10 +391,10 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
             When(three_new_changesets_are_made_today_and_refresh_is_called);
             Then("there should still only be one datapoint",
                  () =>
-                     {
-                         viewModel.Data.Count.ShouldBe(1);
-                         viewModel.Data.First().NumberOfCommits.ShouldBe(6);
-                     });
+                 {
+                     viewModel.Data.Count.ShouldBe(1);
+                     viewModel.Data.First().NumberOfCommits.ShouldBe(6);
+                 });
         }
 
         [Test]
@@ -413,7 +414,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
         {
             Given(there_are_only_four_changesets_the_last_two_weeks).And(controller_is_spawned);
             When(Configuration_date_entry_is_correctly_setup_for_six_days_ago);
-            Then("there should be one commit in the datapoint 6 days ago", 
+            Then("there should be one commit in the datapoint 6 days ago",
                 () => viewModel.Data.Where(c => c.Date.Equals(DateTime.Today.AddDays(-6)))
                                .SingleOrDefault().NumberOfCommits.ShouldBe(1));
         }
@@ -443,7 +444,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
                          {
                              viewModel.Data.Count.ShouldBe(7);
 
-                             for (int i = 0; i < 6; i++ )
+                             for (int i = 0; i < 6; i++)
                              {
                                  viewModel.Data.Where(c => c.Date.Equals(DateTime.Today.AddDays(-i))).
                                      SingleOrDefault().NumberOfCommits.ShouldBe(0);
@@ -514,18 +515,18 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
             });
         }
 
-         [Test]
+        [Test]
         public void Assure_progressbar_is_hidden_after_loading_settings()
         {
-             Given(controller_is_spawned);
+            Given(controller_is_spawned);
 
             When(settingsViewModel.ReloadSettings.Execute);
 
-                Then(() =>
-                {
-                    loadingNotifierMock.Verify(l => l.HideInBothViews(), Times.AtLeastOnce());
-                    controller.ViewModel.IsLoadingConfig.ShouldBe(false);
-                });
+            Then(() =>
+            {
+                loadingNotifierMock.Verify(l => l.HideInBothViews(), Times.AtLeastOnce());
+                controller.ViewModel.IsLoadingConfig.ShouldBe(false);
+            });
         }
 
     }
@@ -557,7 +558,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
                 r => r.BeginGet(It.IsAny<ConfigurationByName>())).Raises(
                 t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
         }
-        private static void SetupConfigRepositoryMockithSinceDate(DateTime date)
+        private static void SetupConfigRepositoryMockItSinceDate(DateTime date)
         {
             var configuration = new Configuration("Commit Statistics");
             configuration.NewSetting("SinceDate", date.ToString(new CultureInfo("en-US")));
@@ -568,7 +569,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
                 r => r.BeginGet(It.IsAny<ConfigurationByName>())).Raises(
                 t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
         }
-        protected Context new_configPersister = 
+        protected Context new_configPersister =
             () => configPersisterRepositoryMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
         protected Context Configuration_entry_does_not_exist = () =>
         {
@@ -580,12 +581,12 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
 
         protected Context Configuration_date_entry_is_correctly_setup_for_today = () =>
         {
-            SetupConfigRepositoryMockithSinceDate(DateTime.Today);
+            SetupConfigRepositoryMockItSinceDate(DateTime.Today);
         };
 
         protected When Configuration_date_entry_is_correctly_setup_for_six_days_ago = () =>
         {
-            SetupConfigRepositoryMockithSinceDate(DateTime.Today.AddDays(-6));
+            SetupConfigRepositoryMockItSinceDate(DateTime.Today.AddDays(-6));
         };
 
         protected Context Configuration_timespan_entry_is_correctly_setup_for_14_days = () =>
@@ -689,7 +690,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
                 Returns((Specification<Changeset> spec) => changesets.Where(spec.IsSatisfiedBy)).Callback(
                 () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
         };
-        
+
         protected Context one_changeset_six_days_ago = () =>
         {
             changesetRepositoryMock = new Mock<IRepository<Changeset>>();
@@ -710,11 +711,11 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsC
                 () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
         };
 
-        protected Context Setup_configPersister_NOT_to_raise_save_completed = 
+        protected Context Setup_configPersister_NOT_to_raise_save_completed =
             () =>
-                {
-                    configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<ConfigurationByName>()));
-                };
+            {
+                configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<ConfigurationByName>()));
+            };
 
         protected Context older_changesets_are_added_to_the_system = () =>
         {
