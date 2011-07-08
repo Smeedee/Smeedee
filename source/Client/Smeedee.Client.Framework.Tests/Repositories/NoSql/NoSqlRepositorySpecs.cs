@@ -29,7 +29,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
             private Context there_are_no_databases_in_NoSql = () => DownloadStringServiceFakeReturns("[]", null);
         }
 
-        [Ignore] // failing test, ignoring until I can continue (committing code)
+        [Ignore]  // failing test, ignoring until I can continue (committing code)
         [TestFixture]
         public class When_there_is_one_database : Shared
         {

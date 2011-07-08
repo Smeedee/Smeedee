@@ -24,7 +24,6 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
         public NoSqlRepository(IDownloadStringService downloadStringService)
         {
             Guard.Requires<ArgumentNullException>(downloadStringService != null);
-
             this.downloadStringService = downloadStringService;
         }
 
