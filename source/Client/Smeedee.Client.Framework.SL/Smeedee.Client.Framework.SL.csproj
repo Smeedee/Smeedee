@@ -138,6 +138,9 @@
     <Compile Include="..\Smeedee.Client.Framework\Messages\OpenModalDialogMessage.cs">
       <Link>Messages\OpenModalDialogMessage.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Repositories\NoSql\NoSqlRepository.cs">
+      <Link>Repositories\NoSql\NoSqlRepository.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Repositories\WidgetConfigurationRepository.cs">
       <Link>Repositories\WidgetConfigurationRepository.cs</Link>
     </Compile>
