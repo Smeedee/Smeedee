@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class  name="Smeedee.DomainModel.Charting.Chart, Smeedee.DomainModel" table="charting">
+
+    <property name="Name"/>/
+    <property name="ChartType"/>
+    <property name="XAxisName" />
+    <property name="YAxisName" />
+    <property name="DataSets" />
+
+  </class>
+</hibernate-mapping>
