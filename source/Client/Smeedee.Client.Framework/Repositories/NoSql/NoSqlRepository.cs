@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Framework;
+using Newtonsoft.Json.Linq;
 using Smeedee.DomainModel.NoSql;
 using Smeedee.Framework;
 
@@ -55,6 +58,26 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
                     database,
                     collection),
                 UriKind.Relative);
+        }
+
+        public static IList<string> GetDatabasesAsList(Collection databases)
+        {
+            return databases.Documents.Select(doc => doc["Name"].Value<string>()).ToList();
+        }
+
+        public static IList<string> GetCollectionsInDatabase(string currentDatabase, Collection databases)
+        {
+            var list = new List<string>();
+            foreach (var database in databases.Documents)
+            {
+                if (database["Name"].Value<string>().Equals(currentDatabase))
+                {
+                    var json = database["Collections"].ToList();
+                    Console.WriteLine(json.Count);
+                    list.AddRange(json.Select(doc => doc["Name"].Value<string>()));
+                }
+            }
+            return list;
         }
     }
 }

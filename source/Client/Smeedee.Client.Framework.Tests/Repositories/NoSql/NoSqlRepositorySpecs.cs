@@ -65,8 +65,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
 
             private Context there_is_one_database_in_NoSql = () => DownloadStringServiceFakeReturns("[{Name: \"TestDatabase\", Collections: []}]", null);
 
-            private Context there_is_one_database_and_one_collection_in_NoSql = () =>
-                DownloadStringServiceFakeReturns("[{Name: \"TestDatabase\", Collections: [{Name: \"TestCollection\"}]}]", null);
+            
         }
 
         [TestFixture]
@@ -145,17 +144,93 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                 DownloadStringServiceFakeReturns("[{Test: 1, Data: 2}, {Test2: 3, Data2: 4}]", null);
         }
 
+        [TestFixture]
+        public class When_using_NoSqlRepository_static_methods : Shared
+        {
+            private static Collection databases;
+
+            protected override void Before()
+            {
+                base.Before();
+                databases = null;
+            }
+
+            [Test]
+            public void Assure_that_it_it_possible_to_get_databases_as_a_list()
+            {
+                Given(the_repository_has_been_created).
+                    And(there_is_one_database_and_one_collection_in_NoSql).
+                And(GetDatabases_has_been_called);
+                When("calling GetDatabasesAsList");
+                Then("Databases should be converted to string list", () =>
+                {
+                    var list = NoSqlRepository.GetDatabasesAsList(databases);
+                    list.Count.ShouldBe(1);
+                    list[0].ShouldBe("TestDatabase");
+                });
+            }
+
+            [Test]
+            public void Assure_that_it_is_possible_to_get_a_collection_in_database_as_a_list()
+            {
+                Given(the_repository_has_been_created).
+                    And(there_is_one_database_and_one_collection_in_NoSql).
+                    And(GetDatabases_has_been_called);
+                When("calling GetCollectionsInDatabase");
+                Then("Collections should be converted to a string list", () =>
+                    {
+                        var list = NoSqlRepository.GetCollectionsInDatabase("TestDatabase", databases);
+                        list.Count.ShouldBe(1);
+                        list[0].ShouldBe("TestCollection");
+                    });
+            }
+
+            [Test]
+            public void Assure_that_it_is_possible_to_get_two_collections_in_database_as_a_list()
+            {
+                Given(the_repository_has_been_created).
+                    And(there_is_two_database_and_two_collection_in_NoSql).
+                    And(GetDatabases_has_been_called);
+                When("calling GetCollectionsInDatabase");
+                Then("Collections should be converted to a string list", () =>
+                {
+                    var list = NoSqlRepository.GetCollectionsInDatabase("TestDatabase", databases);
+                    list.Count.ShouldBe(2);
+                    list[0].ShouldBe("TestCollection");
+                    list[1].ShouldBe("TestCollection2");
+                });
+            }
+
+            private Context GetDatabases_has_been_called = () =>
+                repository.GetDatabases(collection =>
+                    {
+                        databases = collection;
+                    });
+
+        }
+
         public class Shared : ScenarioClass
         {
             protected static NoSqlRepository repository;
             protected Context the_repository_has_been_created = () => repository = new NoSqlRepository(downloadStringServiceFake.Object);
+            protected Context there_is_one_database_and_one_collection_in_NoSql = () =>
+                DownloadStringServiceFakeReturns("[{Name: \"TestDatabase\", Collections: [{Name: \"TestCollection\"}]}]", null);
+
+            protected Context there_is_two_database_and_two_collection_in_NoSql = () =>
+                DownloadStringServiceFakeReturns("[{Name: \"EmptyDatabase\", Collections: []}, {Name: \"TestDatabase\", Collections: [{Name: \"TestCollection\"}, {Name: \"TestCollection2\"}]}]", null);
 
             protected static Mock<IDownloadStringService> downloadStringServiceFake;
+
+            protected virtual void Before()
+            {
+            }
 
             [SetUp]
             public void Setup()
             {
+                repository = null;
                 downloadStringServiceFake = new Mock<IDownloadStringService>();
+                Before();
             }
 
             [TearDown]
@@ -178,7 +253,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                             whenDownloaded();
                     });
             }
-            
+
             
         }
     }
