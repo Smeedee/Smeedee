@@ -162,6 +162,9 @@
       <DependentUpon>RetrospectiveNoteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GenericCharting\GenericChartingWidget.cs" />
+    <Compile Include="GenericCharting\Views\ChartSettingsView.xaml.cs">
+      <DependentUpon>ChartSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GenericCharting\Views\ChartView.xaml.cs">
       <DependentUpon>ChartView.xaml</DependentUpon>
     </Compile>
@@ -269,6 +272,10 @@
     <Page Include="Corkboard\Views\RetrospectiveNoteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GenericCharting\Views\ChartSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GenericCharting\Views\ChartView.xaml">
       <SubType>Designer</SubType>

@@ -28,7 +28,7 @@ namespace Smeedee.Widgets.SL.GenericCharting
             controller = NewController<ChartController>();
 
             View = new ChartView { DataContext = controller.ViewModel };
-            SettingsView = new ChartView { DataContext = controller.ViewModel };
+            SettingsView = new ChartSettingsView { DataContext = controller.ViewModel };
         }
 
         public override void Configure(DependencyConfigSemantics config)

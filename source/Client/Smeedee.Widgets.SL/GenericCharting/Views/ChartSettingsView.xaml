@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="Smeedee.Widgets.SL.GenericCharting.Views.ChartSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="800" d:DesignWidth="600">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" >
+        <Border Style="{StaticResource SettingsViewBorder}">
+            <Grid Style="{StaticResource SettingsViewGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" 
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource SettingsViewH1}"
+                    Text="Configure Generic Charting" />
+
+                <TextBlock 
+                    Grid.Row="1" 
+                    Grid.Column="0"
+                    Style="{StaticResource SettingsViewText}"
+                    Text="Chart name:" />
+
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource SettingsViewTextBox}"
+                    Text ="Testname"
+                    />
+
+                <TextBlock 
+                    Grid.Row="2" 
+                    Grid.Column="0"
+                    Style="{StaticResource SettingsViewText}"
+                    Text="X-axis name:" />
+
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Style="{StaticResource SettingsViewTextBox}"
+                    Text ="Testname2"
+                    />
+
+                <TextBlock 
+                    Grid.Row="3" 
+                    Grid.Column="0"
+                    Style="{StaticResource SettingsViewText}"
+                    Text="Y-axis name:" />
+
+                <TextBox
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Style="{StaticResource SettingsViewTextBox}"
+                    Text ="Testname3"
+                    />
+
+                <TextBlock 
+                    Grid.Row="4" 
+                    Grid.Column="0"
+                    Style="{StaticResource SettingsViewText}"
+                    Text="Type of chart:" />
+
+                <ComboBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Style="{StaticResource SettingsViewComboBox}"
+                    Width="120"
+                    />
+
+                <StackPanel
+					Grid.Column="0" 
+                    Grid.Row="7"
+					Orientation="Horizontal">
+                    <Button
+						Style="{StaticResource SettingsViewButton}"
+						Command="{Binding AddGraphSettings}" 
+						Content="Add" />
+                    <Button
+						Style="{StaticResource SettingsViewButton}"
+						Command="{Binding RemoveGraphSettings}" 
+						Content="Remove" />
+                </StackPanel>
+                <StackPanel
+					Grid.Row="8"
+					Grid.Column="1"
+					Style="{StaticResource SettingsViewControlButtonsWrapper}" >
+                    <Button
+                		Style="{StaticResource SettingsViewSaveButton}"
+                    	Command="{Binding SaveSettings}"/>
+                    <Button 
+                		Style="{StaticResource SettingsViewReloadSettingsButton}"
+                     	Command="{Binding ReloadSettings}"  />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
