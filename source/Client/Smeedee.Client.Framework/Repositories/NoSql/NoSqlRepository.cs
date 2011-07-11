@@ -30,7 +30,12 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
 
         public void GetDatabases(Action<Collection> callback)
         {
-            callback(new Collection());
+            downloadStringService.DownloadAsync(new Uri("../Services/NoSql/Databases.ashx", UriKind.Relative), json =>
+            {
+                Collection databases = Collection.Parse(json);
+                callback(databases);
+            });
+            
         }
     }
 }
