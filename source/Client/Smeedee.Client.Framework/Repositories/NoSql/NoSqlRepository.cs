@@ -73,7 +73,6 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
                 if (database["Name"].Value<string>().Equals(currentDatabase))
                 {
                     var json = database["Collections"].ToList();
-                    Console.WriteLine(json.Count);
                     list.AddRange(json.Select(doc => doc["Name"].Value<string>()));
                 }
             }
