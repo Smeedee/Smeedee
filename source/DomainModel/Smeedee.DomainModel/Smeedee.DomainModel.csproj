@@ -65,6 +65,10 @@
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -78,6 +82,7 @@
     <Compile Include="..\..\Common\Classes\Guard.cs">
       <Link>Guard.cs</Link>
     </Compile>
+    <Compile Include="Charting\Chart.cs" />
     <Compile Include="CI\Build.cs" />
     <Compile Include="CI\BuildSpecification.cs" />
     <Compile Include="CI\CIProject.cs" />
@@ -188,7 +193,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Mappings\Charting.hbm.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
