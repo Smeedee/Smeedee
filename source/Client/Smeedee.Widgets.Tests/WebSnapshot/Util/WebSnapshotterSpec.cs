@@ -56,7 +56,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
                         blankBitmap.SetPixel(i,j,Color.White);                        
                     }
                 }
-                webSnapshotter.IsBlank(blankBitmap).ShouldBeTrue();
+                
+			webSnapshotter.IsBlank(blankBitmap).ShouldBeTrue();
             }
         }
 
