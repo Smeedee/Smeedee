@@ -18,6 +18,8 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
 {
     public class NoSqlRepository
     {
+        public static readonly string relativeUrl = "../Services/NoSql/Documents.ashx?database={0}&collection={1}";
+
         private IDownloadStringService downloadStringService;
         
 
@@ -30,12 +32,29 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
 
         public void GetDatabases(Action<Collection> callback)
         {
-            downloadStringService.DownloadAsync(new Uri("../Services/NoSql/Databases.ashx", UriKind.Relative), json =>
+            downloadStringService.DownloadAsync(new Uri("../Services/NoSql/Database.ashx", UriKind.Relative), json =>
             {
                 Collection databases = Collection.Parse(json);
                 callback(databases);
             });
-            
+        }
+
+        public void GetDocuments(string database, string collection, Action<Collection> callback)
+        {
+            downloadStringService.DownloadAsync(Url(database, collection), json =>
+            {
+                Collection documents = Collection.Parse(json);
+                callback(documents);
+            });
+        }
+
+        private Uri Url(string database, string collection)
+        {
+            return new Uri(
+                string.Format(relativeUrl,
+                    database,
+                    collection),
+                UriKind.Relative);
         }
     }
 }
