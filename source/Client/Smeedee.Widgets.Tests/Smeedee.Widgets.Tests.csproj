@@ -42,6 +42,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,6 +73,7 @@
     <Compile Include="WebPage\Controllers\WebPageControllerSpec.cs" />
     <Compile Include="WebPage\ViewModel\WebPageViewModelSpec.cs" />
     <Compile Include="WebSnapshot\Controllers\WebSnapshotControllerSpec.cs" />
+    <Compile Include="WebSnapshot\Util\WebSnapshotterSpec.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModelSpec.cs" />
   </ItemGroup>
   <ItemGroup>
