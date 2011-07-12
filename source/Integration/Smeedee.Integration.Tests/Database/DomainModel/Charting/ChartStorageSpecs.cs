@@ -36,7 +36,8 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             public void Assure_that_chart_without_data_is_saved()
             {
                 Given(the_storage_has_been_created).
-                    And(a_chart_without_data_has_been_created);
+                    And(a_chart_without_data_has_been_created).
+                    And(no_database_exists);
                 When(saving_chart);
                 Then("Expect a NoSqlDatabase-object to be saved", () => noSqlPersistRepositoryMock.Verify(
                     a => a.Save(It.Is<NoSqlDatabase>(d => (d.Name == "database" && d.GetCollection("collection").Documents.Count == 0)) )
@@ -47,7 +48,8 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             public void Assure_that_chart_with_data_is_saved()
             {
                 Given(the_storage_has_been_created).
-                    And(a_chart_with_data_has_been_created);
+                    And(a_chart_with_data_has_been_created).
+                    And(no_database_exists);
                 When(saving_chart);
                 Then(expect_correct_datastructure);
             }
@@ -96,25 +98,57 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
                        doc1["DataPoints"][0]["Y"].Value<int>() == 42;
             }
 
+            private Context no_database_exists = () =>
+            {
+                var list = new List<NoSqlDatabase>();
+
+                noSqlRepositoryMock.Setup(
+                    g =>
+                    g.BeginGet(
+                        It.IsAny<Specification<NoSqlDatabase>>())).
+                        Raises(f => f.GetCompleted += null, new GetCompletedEventArgs<NoSqlDatabase>(list, null));
+            };
             
         }
 
         [TestFixture]
         public class When_database_already_exists : Shared
         {
-            [Ignore]
             [Test]            
             public void Assure_that_database_is_not_overwritten()
             {
                 Given(the_storage_has_been_created).
                     And(a_chart_without_data_has_been_created).
                     And(the_database_already_exists);
-
+                When(saving_chart);
+                Then(validate_that_the_other_collection_is_still_in_database);
             }
 
             private Context the_database_already_exists = () =>
-                                                              {
-                                                              };
+            {
+                var database = new NoSqlDatabase() {Name = "database"};
+                var anotherCollection = database.GetCollection("another");
+                anotherCollection.Insert(Document.Parse("{Test:1}"));
+                var list = new List<NoSqlDatabase> {database};
+
+                noSqlRepositoryMock.Setup(
+                    g =>
+                    g.BeginGet(
+                        It.IsAny<Specification<NoSqlDatabase>>())).
+                        Raises(f => f.GetCompleted += null, new GetCompletedEventArgs<NoSqlDatabase>(list, null));
+            };
+
+            private Then validate_that_the_other_collection_is_still_in_database = () =>
+            {
+                noSqlPersistRepositoryMock.Verify( a => a.Save(
+                        It.Is<NoSqlDatabase>(d => ValidateDatabase(d))));
+            };
+
+            private static bool ValidateDatabase(NoSqlDatabase d)
+            {
+                var another = d.GetCollection("another");
+                return another.Documents.Count == 1;
+            }
         }
 
         public class Shared : ScenarioClass
@@ -125,7 +159,7 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             protected static Mock<IAsyncRepository<NoSqlDatabase>> noSqlRepositoryMock;
 
             protected Context the_storage_has_been_created = () =>
-                storage = new ChartStorage(noSqlPersistRepositoryMock.Object);
+                storage = new ChartStorage(noSqlRepositoryMock.Object, noSqlPersistRepositoryMock.Object);
 
             protected Context a_chart_without_data_has_been_created = () =>
                 chart = new Chart("database", "collection");

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Smeedee.Widgets.WebSnapshot.Util;
 using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
@@ -73,23 +74,12 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 
         private bool IsValidInputUrl()
         {
-            return Regex.IsMatch(InputUrl, "^https?://[a-zA-Z1-9]");
+            return URLValidator.IsValidUrl(InputUrl);
         }
 
         public bool IsPictureUrl()
         {
-            var fileExtension = Path.GetExtension(InputUrl).ToLower();
-            switch (fileExtension)
-            {
-                case ".png":
-                case ".gif":
-                case ".jpg":
-                case ".jpeg":
-                case ".bmp":
-                case ".tiff":
-                    return true;
-            }
-            return false;
+            return URLValidator.IsPictureURL(InputUrl);
         }
 
         public bool IsSaving

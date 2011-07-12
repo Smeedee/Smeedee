@@ -137,6 +137,9 @@
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\URLValidator.cs">
+      <Link>WebSnapshot\Util\URLValidator.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\ViewModels.cs">
       <Link>WebSnapshot\ViewModel\ViewModels.cs</Link>
     </Compile>

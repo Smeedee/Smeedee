@@ -10,35 +10,30 @@ using System.Windows.Forms;
 
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
-    public class WebSnapshotter
+    public class 
+        WebSnapshotter
     {
         public string Url { get; private set; }
-        public bool IsFinished { get; private set; }
         public Bitmap Snapshot { get; private set; }
 
 
         public Bitmap GetSnapshot(string url)
         {
             Url = url;
-            IsFinished = false;
 
             var thread = new Thread(WorkerMethod);
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
 
-            while (!IsFinished) { /*stupid way of halting code execution untill thread is finished*/}
-            //while (thread.IsAlive){}
+            while (thread.IsAlive) {/*stupid way of halting code execution untill thread is finished*/}
 
             return Snapshot;
         }
-
 
         private void WorkerMethod(object state)
         {
             var wb = SetupBrowser();
             Snapshot = RenderBitmap(wb);
-            //pic.Save("websnapshot.bmp", ImageFormat.Bmp);
-            IsFinished = true;
         }
 
         private WebBrowser SetupBrowser()
@@ -76,6 +71,7 @@ namespace Smeedee.Widgets.WebSnapshot.Util
 
             var firstColor = colors.First().ToArgb();
             var filteredColors = colors.FindAll(pixel => pixel.ToArgb() == firstColor);
+
             return colors.Count == filteredColors.Count;
         }
 
