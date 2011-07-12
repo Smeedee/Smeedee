@@ -104,6 +104,10 @@
     <Compile Include="SourceControl\TFSChangesetHarvesterTask.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
+      <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
+      <Name>Smeedee.Client.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
       <Name>Smeedee.DomainModel.Framework</Name>
