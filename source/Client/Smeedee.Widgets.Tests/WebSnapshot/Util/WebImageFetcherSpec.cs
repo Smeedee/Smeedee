@@ -9,7 +9,7 @@ using Smeedee.Widgets.WebSnapshot.Util;
 
 namespace Smeedee.Widgets.Tests.WebSnapshot.Util
 {
-    public class WebImageURLSpec
+    public class WebImageFetcherSpec
     {
         [TestFixture]
         public class When_image_URL_is_specified : Shared
@@ -18,7 +18,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_it_can_be_downloaded()
             {
-                var image = WebImageURL.GetBitmapFromURL(imageURL);
+                var image = WebImageFetcher.GetBitmapFromURL(imageURL);
                 image.ShouldBeInstanceOfType<Bitmap>();
                 image.ShouldNotBeNull();
             }
@@ -31,7 +31,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_it_is_not_downloaded()
             {
-                var page = WebImageURL.GetBitmapFromURL("http://smeedee.org");
+                var page = WebImageFetcher.GetBitmapFromURL("http://smeedee.org");
                 page.ShouldBeNull();
             }
         }

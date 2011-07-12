@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
-    public static class WebImageURL
+    public static class WebImageFetcher
     {
 
         public static Bitmap GetBitmapFromURL(string url)
