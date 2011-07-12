@@ -31,17 +31,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             }
         }
 
-        //[TestFixture]
-        //public class When_snapshot_is_generated : Shared
-        //{
-        //    [Test]
-        //    public void Then_assure_it_is_not_blank()
-        //    {
-        //        var snap = webSnapshotter.GetSnapshot(url);
-                
-        //    }
-        //}
-
         [TestFixture]
         public class When_blank_bitmap_is_generated : Shared
         {
@@ -58,6 +47,29 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
                 }
                 
 			webSnapshotter.IsBlank(blankBitmap).ShouldBeTrue();
+            }
+
+        }
+
+        [TestFixture]
+        public class When_supported_site_is_snapshotted : Shared
+        {
+            [Test]
+            public void Then_assure_it_is_not_blank()
+            {
+                var snapshot = webSnapshotter.GetSnapshot(url);
+                webSnapshotter.IsBlank(snapshot).ShouldBeFalse();
+            }
+        }
+
+        [TestFixture]
+        public class When_unsupported_site_is_snapshotted : Shared
+        {
+            [Test]
+            public void Then_assure_it_is_detected_as_blank()
+            {
+                var snapshot = webSnapshotter.GetSnapshot("http://google.com");
+                webSnapshotter.IsBlank(snapshot).ShouldBeTrue();
             }
         }
 

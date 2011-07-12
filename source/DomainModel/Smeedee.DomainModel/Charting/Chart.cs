@@ -9,24 +9,42 @@ namespace Smeedee.DomainModel.Charting
 {
     public class Chart
     {
+        public Chart()
+        {
+            DataSets = new List<DataSet>();
+        }
 
-        public virtual string Name { get; set; }
-        public virtual string ChartType { get; set; }
-        public virtual string XAxisName { get; set; }
-        public virtual string YAxisName { get; set; }
-        public virtual IList<DataSet> DataSets { get; set; }
+        public Chart(string database, string collection) : this()
+        {
+            Database = database;
+            Collection = collection;
+        }
+
+        public string Database { get; set; }
+        public string Collection { get; set; }
+        public IList<DataSet> DataSets { get; private set; }
 
     }
 
     public class DataSet
     {
-        public virtual IList<DataPoint> DataPoints { get; set; }
+        public DataSet()
+        {
+            DataPoints = new List<DataPoint>();
+        }
+
+        public DataSet(string name) : this()
+        {
+            Name = name;
+        }
+
+        public string Name { get; set; }
+        public IList<DataPoint> DataPoints { get; private set; }
     }
 
     public class DataPoint
     {
-        public virtual Object X { get; set; }
-        public virtual Object Y { get; set; }
-
+        public Object X { get; set; }
+        public Object Y { get; set; }
     }
 }
