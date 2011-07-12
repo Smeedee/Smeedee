@@ -90,6 +90,7 @@
                     Grid.Column="1"
                     Style="{StaticResource SettingsViewComboBox}"
                     Width="120" >
+                    <!-- SelectedItem="{Binding ChartType}" -->
                     <ComboBoxItem>Pie</ComboBoxItem>
                     <ComboBoxItem>Line</ComboBoxItem>
                     <ComboBoxItem>Column</ComboBoxItem>
