@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Charting\ChartingTask.cs" />
     <Compile Include="CI\CITaskBase.cs" />
     <Compile Include="CI\HudsonXMLTask\HudsonXMLTask.cs" />
     <Compile Include="CI\TeamCityCITask\TeamCityCITask.cs" />

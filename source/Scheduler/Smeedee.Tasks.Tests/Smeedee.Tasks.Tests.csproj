@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Charting\ChartingTaskSpecs.cs" />
     <Compile Include="CI\CITaskBaseSpecs.cs" />
     <Compile Include="CI\HudsonXMLTask\HudsonXMLTaskSpecs.cs" />
     <Compile Include="CI\Integration\CIHarvesterSpecs.cs" />

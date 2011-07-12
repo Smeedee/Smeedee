@@ -2,7 +2,7 @@
 
 namespace Smeedee.Integration.Database.DomainModel.Charting
 {
-    interface IChartStorage
+    public interface IChartStorage
     {
         void Save(Chart chart);
     }
