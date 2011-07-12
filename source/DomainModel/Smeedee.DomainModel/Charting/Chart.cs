@@ -10,16 +10,15 @@ namespace Smeedee.DomainModel.Charting
     public class Chart
     {
 
-        public virtual string Name { get; set; }
-        public virtual string ChartType { get; set; }
-        public virtual string XAxisName { get; set; }
-        public virtual string YAxisName { get; set; }
+        public virtual string Database { get; set; }
+        public virtual string Collection { get; set; }
         public virtual IList<DataSet> DataSets { get; set; }
 
     }
 
     public class DataSet
     {
+        public virtual string Name { get; set; }
         public virtual IList<DataPoint> DataPoints { get; set; }
     }
 
