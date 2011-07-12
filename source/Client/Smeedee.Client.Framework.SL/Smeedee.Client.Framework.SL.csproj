@@ -207,6 +207,9 @@
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\StandardTimer.cs">
       <Link>Services\Impl\StandardTimer.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\WebClientDownloadStringService.cs">
+      <Link>Services\Impl\WebClientDownloadStringService.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\WidgetProgressbar.cs">
       <Link>Services\Impl\WidgetProgressbar.cs</Link>
     </Compile>
@@ -371,7 +374,6 @@
     <Compile Include="Services\Impl\MetadataService.cs" />
     <Compile Include="Services\Impl\SLFullScreenService.cs" />
     <Compile Include="Services\Impl\SLMessageBoxService.cs" />
-    <Compile Include="Services\Impl\WebClientDownloadStringService.cs" />
     <Compile Include="ViewModel\Repositories\WidgetMetadataRepository.cs" />
     <Compile Include="ResourceReading\SLXamlReader.cs" />
     <Compile Include="SampleData\LoadingNotificationSampleDataSource\LoadingNotificationSampleDataSource.xaml.cs">
