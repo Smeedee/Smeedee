@@ -101,9 +101,7 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
 
                 noSqlRepositoryMock.Setup(
                     g =>
-                    g.BeginGet(
-                        It.IsAny<Specification<NoSqlDatabase>>())).
-                        Raises(f => f.GetCompleted += null, new GetCompletedEventArgs<NoSqlDatabase>(list, null));
+                    g.Get(It.IsAny<Specification<NoSqlDatabase>>())).Returns(list);
             };
             
         }
@@ -130,9 +128,7 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
 
                 noSqlRepositoryMock.Setup(
                     g =>
-                    g.BeginGet(
-                        It.IsAny<Specification<NoSqlDatabase>>())).
-                        Raises(f => f.GetCompleted += null, new GetCompletedEventArgs<NoSqlDatabase>(list, null));
+                    g.Get(It.IsAny<Specification<NoSqlDatabase>>())).Returns(list);
             };
 
             private Then validate_that_the_other_collection_is_still_in_database = () =>
@@ -152,8 +148,8 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
         {
             protected static ChartStorage storage;
             protected static Chart chart;
-            protected static Mock<IPersistDomainModelsAsync<NoSqlDatabase>> noSqlPersistRepositoryMock;
-            protected static Mock<IAsyncRepository<NoSqlDatabase>> noSqlRepositoryMock;
+            protected static Mock<IPersistDomainModels<NoSqlDatabase>> noSqlPersistRepositoryMock;
+            protected static Mock<IRepository<NoSqlDatabase>> noSqlRepositoryMock;
 
             protected Context the_storage_has_been_created = () =>
                 storage = new ChartStorage(noSqlRepositoryMock.Object, noSqlPersistRepositoryMock.Object);
@@ -177,8 +173,8 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             public void SetUp()
             {
                 Scenario("");
-                noSqlPersistRepositoryMock = new Mock<IPersistDomainModelsAsync<NoSqlDatabase>>();
-                noSqlRepositoryMock = new Mock<IAsyncRepository<NoSqlDatabase>>();
+                noSqlPersistRepositoryMock = new Mock<IPersistDomainModels<NoSqlDatabase>>();
+                noSqlRepositoryMock = new Mock<IRepository<NoSqlDatabase>>();
                 storage = null;
                 chart = null;
                 hasRun = false;

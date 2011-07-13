@@ -20,15 +20,15 @@ namespace Smeedee.Tasks.Charting
          Version = 1,
          Webpage = "http://smeedee.org")]
     [TaskSetting(1, FILEPATH, typeof(Uri), "")]
-    [TaskSetting(2, VALUE_SEPARATOR, typeof(string), ",","At what value should the data be separated. Ex. CSV uses ','")]
-    [TaskSetting(3, DATABASE_NAME, typeof(string), "", "Give your database a name")]
-    [TaskSetting(4, COLLECTIONS_NAME, typeof(string),"default collection","" )]
+    [TaskSetting(2, VALUE_SEPARATOR, typeof(string), ",", "At what value should the data be separated. Ex. CSV uses ','")]
+    [TaskSetting(3, DATABASE_NAME, typeof(string), "Charting", "Give your database a name")]
+    [TaskSetting(4, COLLECTIONS_NAME, typeof(string), "Collection", "Give this data a unique name in the database")]
     public class ChartingTask : TaskBase
     {
-        protected const string FILEPATH = "File path";
-        protected const string VALUE_SEPARATOR = "Value separator";
-        protected const string DATABASE_NAME = "Name of database";
-        protected const string COLLECTIONS_NAME = "Name of collection";
+        public const string FILEPATH = "File path";
+        public const string VALUE_SEPARATOR = "Value separator";
+        public const string DATABASE_NAME = "Name of database";
+        public const string COLLECTIONS_NAME = "Name of collection";
 
         private IChartStorage chartStorage;
         private TaskConfiguration _configuration;
@@ -44,46 +44,58 @@ namespace Smeedee.Tasks.Charting
             this.downloadStringService = downloadStringService;
         }
 
-        public override string Name 
-        { 
-            get { return "Charting Task"; } 
+        public override string Name
+        {
+            get { return "Charting Task"; }
         }
 
         public override void Execute()
         {
-            //var separator = (string)_configuration.ReadEntryValue(VALUE_SEPARATOR);
-            //var filepath = (string) _configuration.ReadEntryValue(FILEPATH);
+            var separator = (string)_configuration.ReadEntryValue(VALUE_SEPARATOR);
+            var filepath = _configuration.ReadEntryValue(FILEPATH);
 
-            //var dataset = GetDataSetFromFile(filepath, separator);
+            GetDataSetFromFile(filepath.ToString(), ',', SaveDataToStorage);
 
             //var chart = new Chart();
-            //chart.Database = (string) _configuration.ReadEntryValue(DATABASE_NAME);
-            //chart.Collection = (string) _configuration.ReadEntryValue(COLLECTIONS_NAME);
+            //chart.Database = (string)_configuration.ReadEntryValue(DATABASE_NAME);
+            //chart.Collection = (string)_configuration.ReadEntryValue(COLLECTIONS_NAME);
             //chart.DataSets.Add(dataset);
 
             //chartStorage.Save(chart);
-            
+
         }
+
         string someString = "";
-        public DataSet GetDataSetFromFile(string somefilepath, string separator)
+        public void GetDataSetFromFile(string somefilepath, char separator, Action<IList<DataSet>> callback)
         {
-            var dataset = new DataSet();
-            //downloadStringService.DownloadAsync(new Uri(somefilepath), () => someMethod(ref someString) );
-            //var splittedString = someString.Split(char.Parse(separator));
-            //for (int i = 0; i < splittedString.Length ; i++)
-            //{
-            //    var dp = new DataPoint();
-            //    dp.X = i;
-            //    dp.Y = splittedString[i];
-            //    dataset.DataPoints.Add(dp);
-            //}
+            var datasets = new List<DataSet>();
 
-            return dataset;
+            downloadStringService.DownloadAsync(new Uri(somefilepath), data =>
+                                                                           {
+                                                                               var oneLineOneDataset = data.Split('\n');
+                                                                               foreach (var item in oneLineOneDataset)
+                                                                               {
+                                                                                   var set = new DataSet();
+                                                                                   var splittedString =
+                                                                                       item.Split(separator);
+                                                                                   foreach (
+                                                                                       var element in splittedString)
+                                                                                   {
+                                                                                       set.DataPoints.Add(element);
+                                                                                   }
+                                                                                   datasets.Add(set);
+
+                                                                               }
+                                                                               callback(datasets);
+                                                                           });
         }
 
-        private void someMethod(ref string someStringparameter)
+        public void SaveDataToStorage(IList<DataSet> datasets)
         {
-            someString = someStringparameter;
+            var chart = new Chart("Charting", "Testing");
+            foreach (var set in datasets)
+                chart.DataSets.Add(set);
+            chartStorage.Save(chart);   
         }
     }
 }

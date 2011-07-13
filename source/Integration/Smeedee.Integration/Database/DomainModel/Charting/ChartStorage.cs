@@ -10,10 +10,10 @@ namespace Smeedee.Integration.Database.DomainModel.Charting
 {
     public class ChartStorage : IChartStorage
     {
-        private IPersistDomainModelsAsync<NoSqlDatabase> persistRepository;
-        private IAsyncRepository<NoSqlDatabase> repository;
+        private IPersistDomainModels<NoSqlDatabase> persistRepository;
+        private IRepository<NoSqlDatabase> repository;
 
-        public ChartStorage(IAsyncRepository<NoSqlDatabase> repository, IPersistDomainModelsAsync<NoSqlDatabase> persistRepository)
+        public ChartStorage(IRepository<NoSqlDatabase> repository, IPersistDomainModels<NoSqlDatabase> persistRepository)
         {
             this.repository = repository;
             this.persistRepository = persistRepository;
@@ -24,21 +24,19 @@ namespace Smeedee.Integration.Database.DomainModel.Charting
             if (chart.Database == null || chart.Collection == null)
                 throw new NullReferenceException();
 
-            repository.GetCompleted += (o, e) =>
-                                           {
-                                               var list = e.Result.ToList();
-                                               var database = list.Count > 0 ? list[0] : new NoSqlDatabase {Name = chart.Database};
+            var e = repository.Get(new LinqSpecification<NoSqlDatabase>(d => d.Name == chart.Database));
 
-                                               var collection = database.GetCollection(chart.Collection);
-                                               collection.Documents.Clear();
-                                               foreach (var dataset in chart.DataSets)
-                                               {
-                                                   collection.Insert(Document.FromObject(dataset));
-                                               }
-                                               persistRepository.Save(database);
-                                           };
+            var list = e.ToList();
+            var database = list.Count > 0 ? list[0] : new NoSqlDatabase { Name = chart.Database };
 
-            repository.BeginGet(new LinqSpecification<NoSqlDatabase>(d => d.Name == chart.Database));
+            var collection = database.GetCollection(chart.Collection);
+            collection.Documents.Clear();
+            foreach (var dataset in chart.DataSets)
+            {
+                collection.Insert(Document.FromObject(dataset));
+            }
+            
+            persistRepository.Save(database);
         }
 
         
