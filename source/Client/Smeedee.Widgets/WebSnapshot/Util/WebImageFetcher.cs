@@ -4,13 +4,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Windows.Media.Imaging;
 using HtmlAgilityPack;
 
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
-    public class WebImageFetcher
+    public class WebImageFetcher : IWebImageFetcher
     {
 
         public Bitmap GetBitmapFromURL(string url)
@@ -20,7 +18,6 @@ namespace Smeedee.Widgets.WebSnapshot.Util
                 return null;
             }
             
-
             Bitmap picture = null;
             try
             {
@@ -29,10 +26,7 @@ namespace Smeedee.Widgets.WebSnapshot.Util
                 Stream stream = response.GetResponseStream();
                 picture = new Bitmap(stream);
             }
-            catch (Exception)
-            {
-
-            }
+            catch {}
 
             return picture;
         }
@@ -42,15 +36,15 @@ namespace Smeedee.Widgets.WebSnapshot.Util
             return GetBitmapFromURL(FindImageURLInWebpage(url, xpath));
         }
 
-        private string FindImageURLInWebpage(string pageURL, string xpath)
+        private static string FindImageURLInWebpage(string pageURL, string xpath)
         {
             if (URLValidator.IsPictureURL(pageURL))
             {
                 return pageURL;
             }
 
-            HtmlNode xpathNode = GetXpathNode(pageURL, xpath);
-            string pictureURL = GetPictureUrlFromNode(xpathNode);
+            var xpathNode = GetXpathNode(pageURL, xpath);
+            var pictureURL = GetPictureURLFromNode(xpathNode);
 
             if (!URLValidator.IsValidUrl(pictureURL))
             {
@@ -69,7 +63,7 @@ namespace Smeedee.Widgets.WebSnapshot.Util
             return document.DocumentNode.SelectSingleNode(xpath);
         }
 
-        private static string GetPictureUrlFromNode(HtmlNode xpathNode)
+        private static string GetPictureURLFromNode(HtmlNode xpathNode)
         {
             var attributes = xpathNode.Attributes.ToList();
             var src = attributes.FindAll(a => a.Name == "src");

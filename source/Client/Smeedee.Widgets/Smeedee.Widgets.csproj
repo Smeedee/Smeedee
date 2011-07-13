@@ -80,6 +80,8 @@
     </Compile>
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
     <Compile Include="WebSnapshot\Controllers\WebSnapshotController.cs" />
+    <Compile Include="WebSnapshot\Util\IWebImageFetcher.cs" />
+    <Compile Include="WebSnapshot\Util\IWebSnapshotter.cs" />
     <Compile Include="WebSnapshot\Util\URLValidator.cs" />
     <Compile Include="WebSnapshot\Util\WebImageFetcher.cs" />
     <Compile Include="WebSnapshot\Util\WebSnapshotter.cs" />

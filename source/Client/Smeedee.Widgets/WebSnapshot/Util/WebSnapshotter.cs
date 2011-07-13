@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
     public class 
-        WebSnapshotter
+        WebSnapshotter : IWebSnapshotter
     {
         public string Url { get; private set; }
         public Bitmap Snapshot { get; private set; }
