@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.NoSql;
@@ -20,13 +21,8 @@ namespace Smeedee.Client.Framework.Repositories.Charting
         }
 
         public event EventHandler DatasourcesRefreshed;
-/*        public event EventHandler<ChartLoadedEventArgs> ChartLoaded;
+        public event EventHandler<ChartLoadedEventArgs> ChartLoaded;
 
-        public void RefreshDatasources()
-        {
-            DatasourcesRefreshed.Invoke(this, EventArgs.Empty);
-        }
-        */
         public IList<string> GetDatabases()
         {
             return NoSqlRepository.GetDatabasesAsList(databases);
@@ -36,11 +32,25 @@ namespace Smeedee.Client.Framework.Repositories.Charting
         {
             return NoSqlRepository.GetCollectionsInDatabase(database, databases);
         }
-        /*
-        public void BeginGetChart(string database, string collection)
+        
+        public void LoadChart(string database, string collection)
         {
-            ChartLoaded.Invoke(this, new ChartLoadedEventArgs(new Chart()));
-        }*/
+            repository.GetDocuments(database, collection, c =>
+            {
+                var chart = new Chart(database, collection);
+                foreach (var document in c.Documents)
+                {
+                    var dataset = new DataSet {Name = document["Name"].Value<string>()};
+
+                    foreach (var point in document["DataPoints"].ToList<object>())
+                        dataset.DataPoints.Add(point);
+
+                    chart.DataSets.Add(dataset);
+                }
+                ChartLoaded.Invoke(this, new ChartLoadedEventArgs(chart));
+            });
+
+        }
 
         public void RefreshDatasources()
         {
