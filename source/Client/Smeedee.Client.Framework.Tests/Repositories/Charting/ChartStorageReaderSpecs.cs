@@ -197,6 +197,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
             [SetUp]
             public void SetUp()
             {
+                Scenario("");
                 noSqlRepositoryMock = new Mock<INoSqlRepository>();
                 storage = null;
             }

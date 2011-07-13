@@ -176,6 +176,7 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             [SetUp]
             public void SetUp()
             {
+                Scenario("");
                 noSqlPersistRepositoryMock = new Mock<IPersistDomainModelsAsync<NoSqlDatabase>>();
                 noSqlRepositoryMock = new Mock<IAsyncRepository<NoSqlDatabase>>();
                 storage = null;
