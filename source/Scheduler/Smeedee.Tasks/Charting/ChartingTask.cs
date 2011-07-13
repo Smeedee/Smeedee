@@ -51,23 +51,39 @@ namespace Smeedee.Tasks.Charting
 
         public override void Execute()
         {
-            var separator = (string)_configuration.ReadEntryValue(VALUE_SEPARATOR);
-            var filepath = (string) _configuration.ReadEntryValue(FILEPATH);
+            //var separator = (string)_configuration.ReadEntryValue(VALUE_SEPARATOR);
+            //var filepath = (string) _configuration.ReadEntryValue(FILEPATH);
 
-            var dataset = GetDataSetFromFile(filepath, separator);
+            //var dataset = GetDataSetFromFile(filepath, separator);
 
-            var chart = new Chart();
-            chart.DataSets.Add(dataset);
+            //var chart = new Chart();
+            //chart.Database = (string) _configuration.ReadEntryValue(DATABASE_NAME);
+            //chart.Collection = (string) _configuration.ReadEntryValue(COLLECTIONS_NAME);
+            //chart.DataSets.Add(dataset);
 
-            chartStorage.Save(chart);
+            //chartStorage.Save(chart);
             
         }
-
+        string someString = "";
         public DataSet GetDataSetFromFile(string somefilepath, string separator)
         {
-            downloadStringService.DownloadAsync(new Uri(somefilepath), null);
-            
-            return new DataSet();
+            var dataset = new DataSet();
+            //downloadStringService.DownloadAsync(new Uri(somefilepath), () => someMethod(ref someString) );
+            //var splittedString = someString.Split(char.Parse(separator));
+            //for (int i = 0; i < splittedString.Length ; i++)
+            //{
+            //    var dp = new DataPoint();
+            //    dp.X = i;
+            //    dp.Y = splittedString[i];
+            //    dataset.DataPoints.Add(dp);
+            //}
+
+            return dataset;
+        }
+
+        private void someMethod(ref string someStringparameter)
+        {
+            someString = someStringparameter;
         }
     }
 }

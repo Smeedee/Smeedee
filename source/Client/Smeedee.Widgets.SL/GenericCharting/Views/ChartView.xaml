@@ -10,6 +10,7 @@
 
     <Grid x:Name="LayoutRoot">
 
+        <!--
         <Charting:Chart Title="{Binding ChartName}"
                         ChartAreaStyle="{}"
                         LegendStyle="{}"
@@ -18,7 +19,7 @@
 
 
 
-            <!-- Just testing some code and functionality
+            Just testing some code and functionality
             
             <Charting:LineSeries Title="FirstLine"
                                  ItemsSource="{Binding a}"
@@ -67,8 +68,9 @@
                     IndependentAxis="{Binding ElementName=xaxis}" />
             </Charting:Chart.Series>
             
-            -->
+            
         </Charting:Chart>
+        -->
 
     </Grid>
 </UserControl>
