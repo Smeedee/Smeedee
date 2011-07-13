@@ -80,86 +80,152 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
     [TestFixture]
     public class When_DatabaseViewModel_is_created : Shared
     {
-        [Test]
-        public void Assure_it_has_name_value()
-        {
-
-        }
+        private DatabaseViewModel dataBaseViewModel;
 
         [Test]
         public void Assure_it_has_collections()
         {
-
+            Given("dataBaseViewModel has been created", () => dataBaseViewModel = new DatabaseViewModel());
+            When("");
+            Then("dataBaseViewModel should have a collection", () => dataBaseViewModel.Collections.ShouldNotBeNull());
         }
+
+        [Test]
+        public void Assure_it_has_name()
+        {
+            Given("dataBaseViewModel has been created", () => dataBaseViewModel = new DatabaseViewModel());
+            When("");
+            Then("Name should not be null", () => dataBaseViewModel.Name.ShouldNotBeNull());
+        }
+       
     }
 
     [TestFixture]
     public class When_CollectionViewModel_is_created : Shared
     {
+        private CollectionViewModel collectionViewModel;
         [Test]
-        public void Assure_it_has_value()
+        public void Assure_it_has_Name()
         {
-
+            Given("collectionViewModel has been created", () => collectionViewModel = new CollectionViewModel());
+            When("");
+            Then("it should have a name", () => collectionViewModel.Name.ShouldNotBeNull());
         }
     }
 
     [TestFixture]
     public class When_ChartSettingsViewModel_is_created : Shared
     {
+       
         [Test]
-        public void Assure_it_has_value()
+        public void Assure_it_has_ChartName()
         {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("chartName should not be null", () => chartSettingsViewModel.ChartName.ShouldNotBeNull());
+        }
 
+        [Test]
+        public void Assure_it_has_XAxisName()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("XAxisName should not be null", () => chartSettingsViewModel.XAxisName.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_has_YAxisName()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("YAxisName should not be null", () => chartSettingsViewModel.YAxisName.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_has_ChartType()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("ChartType should not be null", () => chartSettingsViewModel.ChartType.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_has_Databases()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("Databases should not be null", () => chartSettingsViewModel.Databases.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_has_SelectedDatabase()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("SelectedDataBase should not be null", () => chartSettingsViewModel.SelectedDatabase.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_has_SelectedCollection()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("SelectedCollection should not be null", () => chartSettingsViewModel.SelectedCollection.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_has_AvailableProperties()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("AvailableProperties should not be null", () => chartSettingsViewModel.AvailableProperties.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_has_SelectedPropertyForXAxis()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("SelectedProperty");
+        }
+
+        [Test]
+        public void Assure_it_has_SelectedPropertyForYAxis()
+        {
+            Given("");
+            When("");
+            Then("");
+        }
+
+        [Test]
+        public void Assure_it_has_Chart()
+        {
+            Given(chartSettingsViewModel_has_been_created);
+            When("");
+            Then("Chart should not be null", () => chartSettingsViewModel.Chart.ShouldNotBeNull());
         }
     }
 
     public class Shared : ScenarioClass
     {
-        //protected static ChartViewModel chartViewModel;
-        //protected static DataPointViewModel dataPointViewModel;
+        
+        protected static ChartSettingsViewModel chartSettingsViewModel;
 
-        protected Mock<IRepository<ChartViewModel>> ChartRepositoryFake = new Mock<IRepository<ChartViewModel>>();
-        protected Mock<IRepository<DataPointViewModel>> DataPointRepositoryFake = new Mock<IRepository<DataPointViewModel>>();
-        protected Mock<IRepository<ChartSettingsViewModel>> ChartSettingsRepositoryFake = new Mock<IRepository<ChartSettingsViewModel>>();
-        protected Mock<IRepository<DatabaseViewModel>> DataBaseRepositoryFake = new Mock<IRepository<DatabaseViewModel>>();
-        protected Mock<IRepository<CollectionViewModel>> CollectionRepositoryFake = new Mock<IRepository<CollectionViewModel>>();
+        protected Context chartSettingsViewModel_has_been_created =
+            () => chartSettingsViewModel = new ChartSettingsViewModel();
+
+        
 
         [SetUp]
         public void Setup()
         {
-            RemoveAllGlobalDependencies.ForAllViewModels();
-            ConfigureGlobalDependencies.ForAllViewModels(config =>
-                                                             {
-                                                                 config.Bind<IUIInvoker>().To<UIInvokerForTesting>();
-
-                                                                 config.Bind<IRepository<ChartViewModel>>().ToInstance(
-                                                                     ChartRepositoryFake.Object);
-                                                                 config.Bind<IRepository<DataPointViewModel>>().
-                                                                     ToInstance(DataPointRepositoryFake.Object);
-                                                                 config.Bind<IRepository<ChartSettingsViewModel>>().
-                                                                     ToInstance(ChartSettingsRepositoryFake.Object);
-                                                                 config.Bind<IRepository<DatabaseViewModel>>().
-                                                                     ToInstance(DataBaseRepositoryFake.Object);
-                                                                 config.Bind<IRepository<CollectionViewModel>>().
-                                                                     ToInstance(CollectionRepositoryFake.Object);
-                                                             });
+            Scenario("");
         }
 
         [TearDown]
         public void TearDown()
         {
-            RemoveAllGlobalDependencies.ForAllViewModels();
             StartScenario();
         }
-
-
-        
-        //protected Context datapointviewmodel_has_been_created = () => dataPointViewModel = new DataPointViewModel();
-
-
-        //protected Context chartViewModel_has_been_created = () => chartViewModel = new ChartViewModel();
-        //protected When data_is_added = () => chartViewModel.Data.Add(new DataPointViewModel());
-        //protected When chartViewModel_is_created = () => chartViewModel = new ChartViewModel();
-
     }
 }

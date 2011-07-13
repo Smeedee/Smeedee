@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
+using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.NoSql;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
@@ -124,10 +125,68 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
             }
         }
 
+        [TestFixture]
+        public class When_reading_data : Shared
+        {
+            private static Chart loadedChart = null;
+
+            [Test]
+            public void Assure_that_complex_data_is_loaded_correctly()
+            {
+                Given(the_storage_has_been_created).
+                    And(there_are_two_documents_in_collection).
+                    And(we_are_listening_to_chart_loaded_event);
+                When(loading_chart);
+                Then(chart_should_contain_complex_data);
+            }
+
+
+            private Context there_are_two_documents_in_collection = () =>
+                NoSqlRepositoryGetDocumentsReturns(testCollection);
+
+            private Context we_are_listening_to_chart_loaded_event = () =>
+                {
+                    loadedChart = null;
+                    storage.ChartLoaded += ChartLoaded;
+                };
+
+            private When loading_chart = () =>
+                storage.LoadChart("somedatabase", "somecollection");
+
+            private Then chart_should_contain_complex_data = () =>
+            {
+                loadedChart.ShouldNotBeNull();
+                var sets = loadedChart.DataSets;
+                sets.Count.ShouldBe(2);
+                sets[0].Name.ShouldBe("Data1");
+                sets[1].Name.ShouldBe("Data2");
+                sets[0].DataPoints.Count.ShouldBe(6);
+                sets[1].DataPoints.Count.ShouldBe(2);
+                for (int i = 0; i <= 5;i++)
+                    sets[0].DataPoints[i].ToString().ShouldBe(i.ToString());
+                for (int i = 0; i <= 1; i++ )
+                    sets[1].DataPoints[i].ToString().ShouldBe((-i).ToString());
+            };
+
+            private static void ChartLoaded(object sender, ChartLoadedEventArgs args)
+            {
+                loadedChart = args.Chart;
+            }
+
+            private static Collection testCollection = new Collection
+            {
+                Documents =
+                        {
+                            Document.Parse("{ Name: \"Data1\", DataPoints: [0, 1, 2, 3, 4, 5]}"),
+                            Document.Parse("{ Name: \"Data2\", DataPoints: [0, -1]}")
+                        }
+            };
+        }
 
 
         public class Shared : ScenarioClass
         {
+
             protected static Mock<INoSqlRepository> noSqlRepositoryMock;
 
             protected static ChartStorageReader storage;
@@ -138,6 +197,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
             [SetUp]
             public void SetUp()
             {
+                Scenario("");
                 noSqlRepositoryMock = new Mock<INoSqlRepository>();
                 storage = null;
             }
@@ -153,6 +213,12 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
             {
                 noSqlRepositoryMock.Setup(s => s.GetDatabases(It.IsAny<Action<Collection>>())).
                     Callback((Action<Collection> callback) => callback(databases));
+            }
+
+            protected static void NoSqlRepositoryGetDocumentsReturns(Collection documents)
+            {
+                noSqlRepositoryMock.Setup(s => s.GetDocuments(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action<Collection>>())).
+                    Callback((string d, string c, Action<Collection> callback) => callback(documents));                
             }
         }
     }

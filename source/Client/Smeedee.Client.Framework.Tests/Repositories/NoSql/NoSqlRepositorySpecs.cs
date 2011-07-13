@@ -228,6 +228,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
             [SetUp]
             public void Setup()
             {
+                Scenario("");
                 repository = null;
                 downloadStringServiceFake = new Mock<IDownloadStringService>();
                 Before();
