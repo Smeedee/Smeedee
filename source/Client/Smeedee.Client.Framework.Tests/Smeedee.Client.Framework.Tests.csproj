@@ -80,6 +80,7 @@
     <Compile Include="Controller\SelectWidgetsDialogControllerSpecs.cs" />
     <Compile Include="Controller\WidgetControllerSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Charting\ChartStorageReaderSpecs.cs" />
     <Compile Include="Repositories\NoSql\NoSqlRepositorySpecs.cs" />
     <Compile Include="Repositories\WidgetConfigurationRepositorySpecs.cs" />
     <Compile Include="Services\Impl\ConfigurationManagerTests.cs" />

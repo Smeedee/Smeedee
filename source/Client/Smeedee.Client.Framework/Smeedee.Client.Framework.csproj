@@ -79,6 +79,7 @@
     <Compile Include="Converters\TimeSpanToPrettyStringConverter.cs" />
     <Compile Include="Messages\CloseModalDialogMessage.cs" />
     <Compile Include="Messages\OpenModalDialogMessage.cs" />
+    <Compile Include="Repositories\Charting\ChartStorageReader.cs" />
     <Compile Include="Repositories\NoSql\NoSqlRepository.cs" />
     <Compile Include="Services\Impl\EventAggregator.cs" />
     <Compile Include="Factories\ModuleLoaderFactory.cs" />
@@ -180,6 +181,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
