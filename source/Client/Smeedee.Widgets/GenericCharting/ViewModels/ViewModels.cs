@@ -153,7 +153,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		public DatabaseViewModel()
 		{
-	
+		    Name = "";
+            Collections = new ObservableCollection<CollectionViewModel>();
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}
@@ -191,7 +192,9 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		public CollectionViewModel()
 		{
-	
+
+		    Name = "";
+
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}
@@ -467,7 +470,21 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 			ReloadSettings = new DelegateCommand();
 			Add = new DelegateCommand();
 			Remove = new DelegateCommand();
-	
+
+		    ChartName = "ChartName";
+		    XAxisName = "X-axis";
+		    YAxisName = "Y-axis";
+            ChartType = new ObservableCollection<ChartTypeViewModel>();
+
+            Databases = new ObservableCollection<DatabaseViewModel>();
+
+            SelectedDatabase = new DatabaseViewModel();
+            SelectedCollection = new CollectionViewModel();
+
+            AvailableProperties = new ObservableCollection<string>();
+
+            Chart = new ChartViewModel();
+
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}
