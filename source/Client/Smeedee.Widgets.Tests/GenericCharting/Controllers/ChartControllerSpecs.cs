@@ -91,21 +91,52 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             //         this.ShouldThrowException<ArgumentException>(
             //            () => new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, downloadStringServiceFake.Object, null)));
             //}
+            //
+            //Tests for:    configuration contains RefreshInterval
+            //              configuration contains Database settings
+            //              configuration contains Collection Settings
+            //              configuration contains XAxisPropertyName
+            //              configuration contains YAxisPropertyName
 
         }
+
+        [TestFixture]
+        public class When_controller_is_spawned : Shared
+        {
+            [Test]
+            public void Then_assure_viewModel_is_not_null()
+            {
+                Given(the_controller_has_been_created);
+                When("it is created");
+                Then("the viewModel should not be null", () => chartController.ViewModel.ShouldNotBeNull());
+            }
+
+            
+
+            [Test]
+            public void Then_assure_timer_is_started()
+            {
+                Given(the_controller_has_been_created);
+                When("it has been created");
+                Then("the timer should have started",
+                     () => timerFake.Verify(t => t.Start(60000)));
+            }
+        }
+
         public class Shared : ScenarioClass
         {
-            protected ChartController chartController;
-            protected ChartViewModel chartViewModel;
+            protected static ChartController chartController;
+            protected static ChartViewModel chartViewModel;
 
             //protected ChartSettingsViewModel chartSettingsViewModel;
             
-            protected Mock<ITimer> timerFake;
-            protected Mock<IUIInvoker> uIInvokerFake;
-            protected Mock<IProgressbar> loadingNotifierFake;
-            protected Mock<IDownloadStringService> downloadStringServiceFake;
-           
-            
+            protected static Mock<ITimer> timerFake;
+            protected static Mock<IUIInvoker> uIInvokerFake;
+            protected static Mock<IProgressbar> loadingNotifierFake;
+            protected static Mock<IDownloadStringService> downloadStringServiceFake;
+
+            protected Context the_controller_has_been_created = 
+                () => chartController = new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, downloadStringServiceFake.Object);
             
 
 

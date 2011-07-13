@@ -22,14 +22,28 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             IDownloadStringService downloadStringService
             ) : base(viewModel, timer, uiInvoker, loadingNotifier)
         {
+
             Guard.Requires<ArgumentException>(downloadStringService != null);
+
+            this.downloadStringService = downloadStringService;
+            
+            Start();
+
+            DownloadAndAddDataToViewModel();
         }
 
-        
-        
-        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        private void DownloadAndAddDataToViewModel()
         {
             throw new NotImplementedException();
         }
+
+
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        {
+            DownloadAndAddDataToViewModel();
+        }
+
+        private Uri Url;
+
     }
 }
