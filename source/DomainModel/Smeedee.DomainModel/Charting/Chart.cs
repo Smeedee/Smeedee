@@ -30,7 +30,7 @@ namespace Smeedee.DomainModel.Charting
     {
         public DataSet()
         {
-            DataPoints = new List<DataPoint>();
+            DataPoints = new List<object>();
         }
 
         public DataSet(string name) : this()
@@ -39,7 +39,7 @@ namespace Smeedee.DomainModel.Charting
         }
 
         public string Name { get; set; }
-        public IList<DataPoint> DataPoints { get; private set; }
+        public IList<object> DataPoints { get; private set; }
     }
 
     public class DataPoint

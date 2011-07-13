@@ -64,11 +64,11 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             {
                 chart = new Chart("testbase", "testcol");
                 var set = new DataSet("testset");
-                set.DataPoints.Add(new DataPoint {X = 0, Y = 1});
-                set.DataPoints.Add(new DataPoint {X = 2, Y = 3});
+                set.DataPoints.Add(0);
+                set.DataPoints.Add(1);
                 chart.DataSets.Add(set);
                 set = new DataSet("test2");
-                set.DataPoints.Add(new DataPoint {X = 42, Y = 42});
+                set.DataPoints.Add(42);
                 chart.DataSets.Add(set);
             };
 
@@ -90,12 +90,9 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
                        doc1["Name"].Value<string>() == "test2" &&
                        doc0["DataPoints"].Count() == 2 &&
                        doc1["DataPoints"].Count() == 1 &&
-                       doc0["DataPoints"][0]["X"].Value<int>() == 0 &&
-                       doc0["DataPoints"][0]["Y"].Value<int>() == 1 &&
-                       doc0["DataPoints"][1]["X"].Value<int>() == 2 &&
-                       doc0["DataPoints"][1]["Y"].Value<int>() == 3 &&
-                       doc1["DataPoints"][0]["X"].Value<int>() == 42 &&
-                       doc1["DataPoints"][0]["Y"].Value<int>() == 42;
+                       doc0["DataPoints"][0].Value<int>() == 0 &&
+                       doc0["DataPoints"][1].Value<int>() == 1 &&
+                       doc1["DataPoints"][0].Value<int>() == 42;
             }
 
             private Context no_database_exists = () =>
@@ -216,9 +213,9 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
                 }
                 return true;
             }
-            private static bool CompareDataPoint(DataPoint a, DataPoint b)
+            private static bool CompareDataPoint(object a, object b)
             {
-                return (a.X == b.X && a.Y == b.Y);
+                return (a.Equals(b));
             }
 
         }
