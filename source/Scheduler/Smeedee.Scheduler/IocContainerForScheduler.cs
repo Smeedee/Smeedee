@@ -1,5 +1,7 @@
 ﻿using System;
 using Ninject;
+using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.SL.Services.Impl;
 using Smeedee.DomainModel.CI;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Corkboard;
@@ -49,6 +51,7 @@ namespace Smeedee.Scheduler
             kernel.Bind<IPersistDomainModels<TeamPicture>>().To<TeamPictureDatabaseRepository>();
 
             kernel.Bind<IChartStorage>().To<ChartStorage>();
+            kernel.Bind<IDownloadStringService>().To<WebClientDownloadStringService>();
 
             kernel.Bind<ILog>().To<Logger>();
         }

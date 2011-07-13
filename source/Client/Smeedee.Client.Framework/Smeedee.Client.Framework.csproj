@@ -105,6 +105,7 @@
     <Compile Include="Services\Impl\ModuleLoader.cs" />
     <Compile Include="Services\Impl\NoUIInvokation.cs" />
     <Compile Include="Services\Impl\StandardTimer.cs" />
+    <Compile Include="Services\Impl\WebClientDownloadStringService.cs" />
     <Compile Include="Services\Impl\WidgetProgressbar.cs" />
     <Compile Include="Services\IProgressbar.cs" />
     <Compile Include="Services\ITimer.cs" />

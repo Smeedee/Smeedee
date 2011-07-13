@@ -55,6 +55,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		public DataPointViewModel()
 		{
+            X = new Object();
+            Y = new Object();
 	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
@@ -94,6 +96,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		public ChartTypeViewModel()
 		{
 	
+            ChartType = "DefaultChartSeries";
+
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}

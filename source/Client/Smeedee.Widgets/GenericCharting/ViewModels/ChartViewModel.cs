@@ -31,16 +31,23 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
         partial void OnGetData(ref ObservableCollection<DataPointViewModel> value);
         partial void OnSetData(ref ObservableCollection<DataPointViewModel> value);
 
+       
+        
 
         //Commands
         public DelegateCommand Refresh { get; set; }
 
         public ChartViewModel()
         {
+            Data = new ObservableCollection<DataPointViewModel>();
+            
             Refresh = new DelegateCommand();
 
             OnInitialize();
+            
             ApplyConvention(new BindCommandsDelegatesToMethods());
+            
+            
         }
 
         partial void OnInitialize();
