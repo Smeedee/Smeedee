@@ -41,10 +41,4 @@ namespace Smeedee.DomainModel.Charting
         public string Name { get; set; }
         public IList<object> DataPoints { get; private set; }
     }
-
-    public class DataPoint
-    {
-        public Object X { get; set; }
-        public Object Y { get; set; }
-    }
 }
