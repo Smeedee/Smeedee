@@ -116,11 +116,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
     [TestFixture]
     public class When_ChartSettingsViewModel_is_created : Shared
     {
-        //private static ChartSettingsViewModel chartSettingsViewModel;
-
-        //private Context chartSettingsViewModel_has_been_created =
-        //    () => chartSettingsViewModel = new ChartSettingsViewModel();
-
+       
         [Test]
         public void Assure_it_has_ChartName()
         {
@@ -212,55 +208,24 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
 
     public class Shared : ScenarioClass
     {
-        //protected static ChartViewModel chartViewModel;
-        //protected static DataPointViewModel dataPointViewModel;
+        
         protected static ChartSettingsViewModel chartSettingsViewModel;
 
         protected Context chartSettingsViewModel_has_been_created =
             () => chartSettingsViewModel = new ChartSettingsViewModel();
 
-        protected Mock<IRepository<ChartViewModel>> ChartRepositoryFake = new Mock<IRepository<ChartViewModel>>();
-        protected Mock<IRepository<DataPointViewModel>> DataPointRepositoryFake = new Mock<IRepository<DataPointViewModel>>();
-        protected Mock<IRepository<ChartSettingsViewModel>> ChartSettingsRepositoryFake = new Mock<IRepository<ChartSettingsViewModel>>();
-        protected Mock<IRepository<DatabaseViewModel>> DataBaseRepositoryFake = new Mock<IRepository<DatabaseViewModel>>();
-        protected Mock<IRepository<CollectionViewModel>> CollectionRepositoryFake = new Mock<IRepository<CollectionViewModel>>();
+        
 
         [SetUp]
         public void Setup()
         {
-            RemoveAllGlobalDependencies.ForAllViewModels();
-            ConfigureGlobalDependencies.ForAllViewModels(config =>
-                                                             {
-                                                                 config.Bind<IUIInvoker>().To<UIInvokerForTesting>();
-
-                                                                 config.Bind<IRepository<ChartViewModel>>().ToInstance(
-                                                                     ChartRepositoryFake.Object);
-                                                                 config.Bind<IRepository<DataPointViewModel>>().
-                                                                     ToInstance(DataPointRepositoryFake.Object);
-                                                                 config.Bind<IRepository<ChartSettingsViewModel>>().
-                                                                     ToInstance(ChartSettingsRepositoryFake.Object);
-                                                                 config.Bind<IRepository<DatabaseViewModel>>().
-                                                                     ToInstance(DataBaseRepositoryFake.Object);
-                                                                 config.Bind<IRepository<CollectionViewModel>>().
-                                                                     ToInstance(CollectionRepositoryFake.Object);
-                                                             });
+            Scenario("");
         }
 
         [TearDown]
         public void TearDown()
         {
-            RemoveAllGlobalDependencies.ForAllViewModels();
             StartScenario();
         }
-
-
-        
-        //protected Context datapointviewmodel_has_been_created = () => dataPointViewModel = new DataPointViewModel();
-
-
-        //protected Context chartViewModel_has_been_created = () => chartViewModel = new ChartViewModel();
-        //protected When data_is_added = () => chartViewModel.Data.Add(new DataPointViewModel());
-        //protected When chartViewModel_is_created = () => chartViewModel = new ChartViewModel();
-
     }
 }
