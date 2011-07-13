@@ -1,15 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.NoSql;
+using System.Collections.Generic;
+
 
 namespace Smeedee.Client.Framework.Repositories.Charting
 {
-    public class ChartStorageReader
+    public interface IChartStorageReader
+    {
+        event EventHandler DatasourcesRefreshed;
+        event EventHandler<ChartLoadedEventArgs> ChartLoaded;
+        IList<string> GetDatabases();
+        IList<string> GetCollectionsInDatabase(string database);
+        void LoadChart(string database, string collection);
+        void RefreshDatasources();
+    }
+
+    public class ChartStorageReader : IChartStorageReader
     {
         private INoSqlRepository repository;
 
@@ -42,7 +53,7 @@ namespace Smeedee.Client.Framework.Repositories.Charting
                 {
                     var dataset = new DataSet {Name = document["Name"].Value<string>()};
 
-                    foreach (var point in document["DataPoints"].ToList<object>())
+                    foreach (var point in document["DataPoints"].Values<object>().ToList<object>())
                         dataset.DataPoints.Add(point);
 
                     chart.DataSets.Add(dataset);

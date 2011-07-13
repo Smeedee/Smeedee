@@ -141,6 +141,9 @@
     <Compile Include="..\Smeedee.Client.Framework\Messages\OpenModalDialogMessage.cs">
       <Link>Messages\OpenModalDialogMessage.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Repositories\Charting\ChartStorageReader.cs">
+      <Link>Repositories\Charting\ChartStorageReader.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Repositories\NoSql\NoSqlRepository.cs">
       <Link>Repositories\NoSql\NoSqlRepository.cs</Link>
     </Compile>
