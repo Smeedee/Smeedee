@@ -1,12 +1,15 @@
 ﻿using System
 using TinyMVVM.Framework
 using Smeedee.Client.Framework.ViewModel
+using System.Windows.Media.Imaging
+using System.Windows.Media
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 	
 	viewmodel WebSnapshotSettingsViewModel extends SettingsViewModelBase:
 		oproperty InputUrl as string
 		oproperty ValidatedUrl as string
+		oproperty Xpath as string
 		oproperty RefreshInterval as int
 
 		oproperty ErrorMessage as string
@@ -17,6 +20,4 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		command ReloadSettings
 
 	viewmodel WebSnapshotViewModel:
-		oproperty InputUrl as string
-		oproperty ValidatedUrl as string
-		oproperty RefreshInterval as int	
+		oproperty Snapshot as WriteableBitmap	

@@ -1,37 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
+using System.Windows.Media.Imaging;
 using HtmlAgilityPack;
 
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
     public interface IWebImageProvider
     {
-        Bitmap GetBitmapFromURL(string url);
+        WriteableBitmap GetBitmapFromURL(string url);
         string GetPictureNodeURLFromXpath(string pageURL, string xpath);
     }
 
     public class WebImageProvider : IWebImageProvider
     {
-        public Bitmap GetBitmapFromURL(string url)
+        public WriteableBitmap GetBitmapFromURL(string url)
         {
             if (!URLValidator.IsPictureURL(url))
             {
                 return null;
             }
 
-            Bitmap picture = null;
+            WriteableBitmap picture = null;
+
             try
             {
-                WebRequest request = WebRequest.Create(url);
-                WebResponse response = request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                picture = new Bitmap(stream);
+                picture = new WriteableBitmap(new BitmapImage(new Uri(url, UriKind.Absolute)));
             }
-            catch { }
+            catch {}
 
             return picture;
         }
@@ -56,12 +51,12 @@ namespace Smeedee.Widgets.WebSnapshot.Util
             this.imageProvider = imageProvider;
         }
 
-        public Bitmap GetBitmapFromURL(string url)
+        public WriteableBitmap GetBitmapFromURL(string url)
         {
             return imageProvider.GetBitmapFromURL(url);
         }
 
-        public Bitmap GetBitmapFromURL(string url, string xpath)
+        public WriteableBitmap GetBitmapFromURL(string url, string xpath)
         {
             return imageProvider.GetBitmapFromURL(FindImageURLInWebpage(url, xpath));
         }

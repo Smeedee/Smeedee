@@ -60,6 +60,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\..\tools\htmlagilitypack\HAPLight\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
@@ -139,6 +142,9 @@
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\URLValidator.cs">
       <Link>WebSnapshot\Util\URLValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\WebImageFetcher.cs">
+      <Link>WebSnapshot\Util\WebImageFetcher.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\ViewModels.cs">
       <Link>WebSnapshot\ViewModel\ViewModels.cs</Link>

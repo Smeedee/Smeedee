@@ -60,11 +60,11 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controllers
             }
 
             [Test]
-            public void Then_assure_Viewmodel_URL_is_changed()
+            public void Then_assure_Settingsviewmodel_URL_is_changed()
             {
                 updatedConfig.ChangeSetting("url", "http://smeedee.org");
                 webSnapshotController.UpdateConfiguration(updatedConfig);
-                webSnapshotViewModel.InputUrl.ShouldBe("http://smeedee.org");
+                webSnapshotSettingsViewModel.InputUrl.ShouldBe("http://smeedee.org");
             }
 
             [Test]
@@ -99,17 +99,17 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controllers
             }
 
             [Test]
-            public void Then_assure_URL_is_extracted_from_Viewmodel()
+            public void Then_assure_URL_is_extracted_from_Settingsviewmodel()
             {
-                webSnapshotViewModel.InputUrl = "http://smeedee.org";
+                webSnapshotSettingsViewModel.InputUrl = "http://smeedee.org";
                 var config = webSnapshotController.SaveConfiguration();
                 config.GetSetting("url").Value.ShouldBe("http://smeedee.org");
             }
 
             [Test]
-            public void Then_assure_refresh_interval_is_extracted_from_Viewmodel()
+            public void Then_assure_refresh_interval_is_extracted_from_Settingsviewmodel()
             {
-                webSnapshotViewModel.RefreshInterval = 30;
+                webSnapshotSettingsViewModel.RefreshInterval = 30;
                 var config = webSnapshotController.SaveConfiguration();
                 config.GetSetting("refresh-interval").Value.ShouldBe("30");
             }

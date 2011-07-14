@@ -66,13 +66,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
             this.config = config;
 
-            webSnapshotViewModel.InputUrl = config.GetSetting(url).Value;
+            webSnapshotSettingsViewModel.InputUrl = config.GetSetting(url).Value;
         }
 
         public Configuration SaveConfiguration()
         {
-            config.ChangeSetting(url, webSnapshotViewModel.InputUrl);
-            config.ChangeSetting(refresh_interval, webSnapshotViewModel.RefreshInterval.ToString());
+            config.ChangeSetting(url, webSnapshotSettingsViewModel.InputUrl);
+            config.ChangeSetting(refresh_interval, webSnapshotSettingsViewModel.RefreshInterval.ToString());
 
             return config;
         }

@@ -11,3 +11,4 @@ namespace Smeedee.Widgets.WebPage.ViewModel
 
 		command Save
 		command ReloadSettings
+
