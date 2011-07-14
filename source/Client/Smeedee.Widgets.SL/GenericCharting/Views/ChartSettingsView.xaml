@@ -93,7 +93,7 @@
                     Grid.Column="1"
                     Style="{StaticResource SettingsViewComboBox}"
                     Width="120"
-                    SelectedItem="{Binding AxisType}" >
+                    SelectedItem="{Binding XAxisType, Mode=TwoWay}" >
                     <ComboBoxItem Content="Select"
                                   IsSelected="True" />
                     <ComboBoxItem>DateTime</ComboBoxItem>
@@ -198,7 +198,7 @@
                               Width="140"/>
                     <Button
 						Style="{StaticResource SettingsViewButton}"
-						Command="{Binding AddGraphSettings}" 
+						Command="{Binding AddDataSettings}" 
 						Content="Add"
                         HorizontalAlignment="Right" />
                     
