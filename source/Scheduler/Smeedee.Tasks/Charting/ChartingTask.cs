@@ -36,9 +36,9 @@ namespace Smeedee.Tasks.Charting
 
         public ChartingTask(IChartStorage chartStorage, TaskConfiguration configuration, IDownloadStringService downloadStringService)
         {
-            //Guard.Requires<ArgumentNullException>(databasePersister != null);
-            //Guard.Requires<ArgumentNullException>(configuration != null);
-            //Guard.Requires<TaskConfigurationException>(configuration.Entries.Count() >= 3);
+            Guard.Requires<ArgumentNullException>(chartStorage != null);
+            Guard.Requires<ArgumentNullException>(configuration != null);
+            Guard.Requires<TaskConfigurationException>(configuration.Entries.Count() >= 3);
             this.chartStorage = chartStorage;
             _configuration = configuration;
             this.downloadStringService = downloadStringService;
@@ -54,30 +54,21 @@ namespace Smeedee.Tasks.Charting
             var separator = (string)_configuration.ReadEntryValue(VALUE_SEPARATOR);
             var filepath = _configuration.ReadEntryValue(FILEPATH);
 
-            GetDataSetFromFile(filepath.ToString(), ',', SaveDataToStorage);
-
-            //var chart = new Chart();
-            //chart.Database = (string)_configuration.ReadEntryValue(DATABASE_NAME);
-            //chart.Collection = (string)_configuration.ReadEntryValue(COLLECTIONS_NAME);
-            //chart.DataSets.Add(dataset);
-
-            //chartStorage.Save(chart);
-
+            GetDataSetFromFile(filepath.ToString(), separator, SaveDataToStorage);
         }
 
-        string someString = "";
-        public void GetDataSetFromFile(string somefilepath, char separator, Action<IList<DataSet>> callback)
+        public void GetDataSetFromFile(string filepath, string separator, Action<IList<DataSet>> callback)
         {
             var datasets = new List<DataSet>();
 
-            downloadStringService.DownloadAsync(new Uri(somefilepath), data =>
+            downloadStringService.DownloadAsync(new Uri(filepath), data =>
                                                                            {
                                                                                var oneLineOneDataset = data.Split('\n');
                                                                                foreach (var item in oneLineOneDataset)
                                                                                {
                                                                                    var set = new DataSet();
                                                                                    var splittedString =
-                                                                                       item.Split(separator);
+                                                                                       item.Split(char.Parse(separator));
                                                                                    foreach (
                                                                                        var element in splittedString)
                                                                                    {
@@ -92,7 +83,9 @@ namespace Smeedee.Tasks.Charting
 
         public void SaveDataToStorage(IList<DataSet> datasets)
         {
-            var chart = new Chart("Charting", "Testing");
+            var databasename = (string) _configuration.ReadEntryValue(DATABASE_NAME);
+            var collection = (string) _configuration.ReadEntryValue(COLLECTIONS_NAME);
+            var chart = new Chart(databasename, collection);
             foreach (var set in datasets)
                 chart.DataSets.Add(set);
             chartStorage.Save(chart);   

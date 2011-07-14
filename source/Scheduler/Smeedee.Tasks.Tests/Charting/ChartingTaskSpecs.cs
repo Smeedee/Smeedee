@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
-using Smeedee.Client.Framework.SL.Services.Impl;
 using Smeedee.DomainModel.Charting;
-using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.Integration.Database.DomainModel.Charting;
 using Smeedee.Tasks.Charting;
@@ -61,7 +58,7 @@ namespace Smeedee.Tasks.Tests.Charting
         public void assure_one_dataset_is_created_when_one_line_in_file()
         {
             Given(Task_is_created).And(File_contains_one_row_with_three_values);
-            When("loading data from file", () => Task.GetDataSetFromFile("http://my.url", ',', DataFromFile));
+            When("loading data from file", () => Task.GetDataSetFromFile("http://my.url", ",", DataFromFile));
             Then("one dataset should contain three values", () =>
                                                             {
                                                                 datasets[0].DataPoints.Count.ShouldBe(3);
@@ -73,7 +70,7 @@ namespace Smeedee.Tasks.Tests.Charting
         public void assure_two_dataset_is_created_when_two_lines_in_file()
         {
             Given(Task_is_created).And(File_contains_two_rowes_with_three_values_each);
-            When("loading data from file", () => Task.GetDataSetFromFile("http://my.url", ',', DataFromFile));
+            When("loading data from file", () => Task.GetDataSetFromFile("http://my.url", ",", DataFromFile));
             Then("two datasets should contain three values each", () =>
                                                                       {
                                                                           datasets[0].DataPoints.Count.ShouldBe(3);
@@ -98,35 +95,16 @@ namespace Smeedee.Tasks.Tests.Charting
         }
 
         private static Then Chart_should_be_saved_in_storage = () =>
-                                                                   {
                                                                        chartStorage.Verify(
                                                                            s =>
                                                                            s.Save(It.Is<Chart>(c => VerifyChart(c))));
-                                                                   };
+                                                                   
 
         private static bool VerifyChart(Chart chart)
         {
             return chart.DataSets.Count == 1 && chart.DataSets[0].DataPoints.Count == 3;
 
         }
-    }
-
-    [TestFixture]
-    public class When_dispatched : Shared
-    {
-        [Test]
-        [Ignore]
-        public void assure_will_save_all_charts_in_repo()
-        {
-            Given(Task_is_created).And("have some charts in repo");
-            When(Task_is_dispatched);
-            Then("charts are added to the database", () =>
-                                                         {
-                                                             // insert code to check..
-                                                         });
-
-        }
-
     }
 
 
@@ -155,8 +133,7 @@ namespace Smeedee.Tasks.Tests.Charting
         public void Setup()
         {
             Scenario("");
-            config = new TaskConfiguration { Entries = new List<TaskConfigurationEntry>() { new TaskConfigurationEntry { Name = ChartingTask.VALUE_SEPARATOR, Value = ",", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.FILEPATH, Value = "http://my.url", Type = typeof(string) } } };
-            //config.Setup(c => c.Entries).Returns(new List<TaskConfigurationEntry>() {new TaskConfigurationEntry{Name = ChartingTask.VALUE_SEPARATOR, Value=","}, new TaskConfigurationEntry{Name = ChartingTask.FILEPATH, Value = "http://my.url"}});
+            config = new TaskConfiguration { Entries = new List<TaskConfigurationEntry>() { new TaskConfigurationEntry { Name = ChartingTask.VALUE_SEPARATOR, Value = ",", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.FILEPATH, Value = "http://my.url", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.DATABASE_NAME, Value = "database", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.COLLECTIONS_NAME, Value = "collection", Type = typeof(string) } } };
             chartStorage = new Mock<IChartStorage>();
             downloadStringServiceFake = new Mock<IDownloadStringService>();
             Before();
@@ -166,7 +143,6 @@ namespace Smeedee.Tasks.Tests.Charting
         public void TearDown()
         {
             StartScenario();
-
         }
 
         protected static void DownloadStringServiceFakeReturns(string data)
