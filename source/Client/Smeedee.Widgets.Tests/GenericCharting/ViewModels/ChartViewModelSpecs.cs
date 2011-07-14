@@ -141,14 +141,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
             Then("YAxisName should not be null", () => chartSettingsViewModel.YAxisName.ShouldNotBeNull());
         }
 
-        [Test]
-        public void Assure_it_has_ChartType()
-        {
-            Given(chartSettingsViewModel_has_been_created);
-            When("");
-            Then("ChartType should not be null", () => chartSettingsViewModel.ChartType.ShouldNotBeNull());
-        }
-
+       
         [Test]
         public void Assure_it_has_Databases()
         {
@@ -171,14 +164,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
             Given(chartSettingsViewModel_has_been_created);
             When("");
             Then("SelectedCollection should not be null", () => chartSettingsViewModel.SelectedCollection.ShouldNotBeNull());
-        }
-
-        [Test]
-        public void Assure_it_has_AvailableProperties()
-        {
-            Given(chartSettingsViewModel_has_been_created);
-            When("");
-            Then("AvailableProperties should not be null", () => chartSettingsViewModel.AvailableProperties.ShouldNotBeNull());
         }
 
         //Not implemented

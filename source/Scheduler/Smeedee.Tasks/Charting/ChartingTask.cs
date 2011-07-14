@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Framework;
@@ -23,6 +24,7 @@ namespace Smeedee.Tasks.Charting
     [TaskSetting(2, VALUE_SEPARATOR, typeof(string), ",", "At what value should the data be separated. Ex. CSV uses ','")]
     [TaskSetting(3, DATABASE_NAME, typeof(string), "Charting", "Give your database a name")]
     [TaskSetting(4, COLLECTIONS_NAME, typeof(string), "Collection", "Give this data a unique name in the database")]
+    //[TaskSetting(5, "Is this a checkbox", "","",""  )]
     public class ChartingTask : TaskBase
     {
         public const string FILEPATH = "File path";
@@ -59,36 +61,62 @@ namespace Smeedee.Tasks.Charting
 
         public void GetDataSetFromFile(string filepath, string separator, Action<IList<DataSet>> callback)
         {
-            var datasets = new List<DataSet>();
-
-            downloadStringService.DownloadAsync(new Uri(filepath), data =>
+            if (IsValidURL(filepath)) // notify the user somehow?
+            {
+                var datasets = new List<DataSet>();
+                downloadStringService.DownloadAsync(new Uri(filepath), data =>
                                                                            {
                                                                                var oneLineOneDataset = data.Split('\n');
+
+                                                                               int shortestDataset = int.MaxValue;
+                                                                               foreach (var s in oneLineOneDataset)
+                                                                               {
+                                                                                   if (shortestDataset >
+                                                                                       s.Split(char.Parse(separator)).
+                                                                                           Length)
+                                                                                       shortestDataset =
+                                                                                           s.Split(char.Parse(separator))
+                                                                                               .Length;
+                                                                               }
                                                                                foreach (var item in oneLineOneDataset)
                                                                                {
                                                                                    var set = new DataSet();
                                                                                    var splittedString =
                                                                                        item.Split(char.Parse(separator));
-                                                                                   foreach (
-                                                                                       var element in splittedString)
+
+                                                                                   for (int i = 0;
+                                                                                        i < shortestDataset;
+                                                                                        i++)
                                                                                    {
-                                                                                       set.DataPoints.Add(element);
+                                                                                       set.DataPoints.Add(
+                                                                                           splittedString[i].Trim());
                                                                                    }
                                                                                    datasets.Add(set);
 
                                                                                }
                                                                                callback(datasets);
                                                                            });
+            }
         }
 
         public void SaveDataToStorage(IList<DataSet> datasets)
         {
-            var databasename = (string) _configuration.ReadEntryValue(DATABASE_NAME);
-            var collection = (string) _configuration.ReadEntryValue(COLLECTIONS_NAME);
+            var databasename = (string)_configuration.ReadEntryValue(DATABASE_NAME);
+            var collection = (string)_configuration.ReadEntryValue(COLLECTIONS_NAME);
             var chart = new Chart(databasename, collection);
             foreach (var set in datasets)
                 chart.DataSets.Add(set);
-            chartStorage.Save(chart);   
+            chartStorage.Save(chart);
         }
+
+        public static bool IsValidURL(string filepath)
+        {
+            if (Regex.IsMatch(filepath, "^file:///"))
+                return true;
+            if (Regex.IsMatch(filepath, "^https?://[a-zA-Z1-9]"))
+                return true;
+            return false;
+        }
+
     }
 }

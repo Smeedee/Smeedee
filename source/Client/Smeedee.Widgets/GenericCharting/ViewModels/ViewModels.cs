@@ -285,28 +285,28 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetYAxisName(ref string value);
 		partial void OnSetYAxisName(ref string value);
 
-		public virtual ObservableCollection<ChartTypeViewModel> ChartType
+		public virtual string XAxisType
 		{
 			get 
 			{
-				OnGetChartType(ref _ChartType);
+				OnGetXAxisType(ref _XAxisType);
 				 
-				return _ChartType; 
+				return _XAxisType; 
 			}
 			set
 			{
-				if (value != _ChartType)
+				if (value != _XAxisType)
 				{
-					OnSetChartType(ref value); 
-					_ChartType = value;
-					TriggerPropertyChanged("ChartType");
+					OnSetXAxisType(ref value); 
+					_XAxisType = value;
+					TriggerPropertyChanged("XAxisType");
 				}
 			}
 		}
-		private ObservableCollection<ChartTypeViewModel> _ChartType;
+		private string _XAxisType;
 
-		partial void OnGetChartType(ref ObservableCollection<ChartTypeViewModel> value);
-		partial void OnSetChartType(ref ObservableCollection<ChartTypeViewModel> value);
+		partial void OnGetXAxisType(ref string value);
+		partial void OnSetXAxisType(ref string value);
 
 		public virtual ObservableCollection<DatabaseViewModel> Databases 
 		{ 
@@ -372,89 +372,130 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetSelectedCollection(ref CollectionViewModel value);
 		partial void OnSetSelectedCollection(ref CollectionViewModel value);
 
-		public virtual ObservableCollection<string> AvailableProperties
-		{
-			get 
-			{
-				OnGetAvailableProperties(ref _AvailableProperties);
-				 
-				return _AvailableProperties; 
-			}
-			set
-			{
-				if (value != _AvailableProperties)
-				{
-					OnSetAvailableProperties(ref value); 
-					_AvailableProperties = value;
-					TriggerPropertyChanged("AvailableProperties");
-				}
-			}
-		}
-		private ObservableCollection<string> _AvailableProperties;
-
-		partial void OnGetAvailableProperties(ref ObservableCollection<string> value);
-		partial void OnSetAvailableProperties(ref ObservableCollection<string> value);
-
-		public virtual string SelectedPropertyForXAxis
-		{
-			get 
-			{
-				OnGetSelectedPropertyForXAxis(ref _SelectedPropertyForXAxis);
-				 
-				return _SelectedPropertyForXAxis; 
-			}
-			set
-			{
-				if (value != _SelectedPropertyForXAxis)
-				{
-					OnSetSelectedPropertyForXAxis(ref value); 
-					_SelectedPropertyForXAxis = value;
-					TriggerPropertyChanged("SelectedPropertyForXAxis");
-				}
-			}
-		}
-		private string _SelectedPropertyForXAxis;
-
-		partial void OnGetSelectedPropertyForXAxis(ref string value);
-		partial void OnSetSelectedPropertyForXAxis(ref string value);
-
-		public virtual string SelectedPropertyForYAxis
-		{
-			get 
-			{
-				OnGetSelectedPropertyForYAxis(ref _SelectedPropertyForYAxis);
-				 
-				return _SelectedPropertyForYAxis; 
-			}
-			set
-			{
-				if (value != _SelectedPropertyForYAxis)
-				{
-					OnSetSelectedPropertyForYAxis(ref value); 
-					_SelectedPropertyForYAxis = value;
-					TriggerPropertyChanged("SelectedPropertyForYAxis");
-				}
-			}
-		}
-		private string _SelectedPropertyForYAxis;
-
-		partial void OnGetSelectedPropertyForYAxis(ref string value);
-		partial void OnSetSelectedPropertyForYAxis(ref string value);
-
 	
 		
 		//Commands
 		public DelegateCommand SaveSettings { get; set; }
 		public DelegateCommand ReloadSettings { get; set; }
-		public DelegateCommand Add { get; set; }
-		public DelegateCommand Remove { get; set; }
+		public DelegateCommand AddDataSettings { get; set; }
 		
 		public ChartSettingsViewModel()
 		{
 			SaveSettings = new DelegateCommand();
 			ReloadSettings = new DelegateCommand();
-			Add = new DelegateCommand();
-			Remove = new DelegateCommand();
+			AddDataSettings = new DelegateCommand();
+	
+			OnInitialize();
+			ApplyConvention(new BindCommandsDelegatesToMethods());
+		}
+
+		partial void OnInitialize();
+	}
+}
+
+namespace Smeedee.Widgets.GenericCharting.ViewModels
+{
+	public partial class SetConfigViewModel : TinyMVVM.Framework.ViewModelBase
+	{
+		//State
+		public virtual string SelectedAction
+		{
+			get 
+			{
+				OnGetSelectedAction(ref _SelectedAction);
+				 
+				return _SelectedAction; 
+			}
+			set
+			{
+				if (value != _SelectedAction)
+				{
+					OnSetSelectedAction(ref value); 
+					_SelectedAction = value;
+					TriggerPropertyChanged("SelectedAction");
+				}
+			}
+		}
+		private string _SelectedAction;
+
+		partial void OnGetSelectedAction(ref string value);
+		partial void OnSetSelectedAction(ref string value);
+
+		public virtual string DatabaseAndCollection
+		{
+			get 
+			{
+				OnGetDatabaseAndCollection(ref _DatabaseAndCollection);
+				 
+				return _DatabaseAndCollection; 
+			}
+			set
+			{
+				if (value != _DatabaseAndCollection)
+				{
+					OnSetDatabaseAndCollection(ref value); 
+					_DatabaseAndCollection = value;
+					TriggerPropertyChanged("DatabaseAndCollection");
+				}
+			}
+		}
+		private string _DatabaseAndCollection;
+
+		partial void OnGetDatabaseAndCollection(ref string value);
+		partial void OnSetDatabaseAndCollection(ref string value);
+
+		public virtual string DataName
+		{
+			get 
+			{
+				OnGetDataName(ref _DataName);
+				 
+				return _DataName; 
+			}
+			set
+			{
+				if (value != _DataName)
+				{
+					OnSetDataName(ref value); 
+					_DataName = value;
+					TriggerPropertyChanged("DataName");
+				}
+			}
+		}
+		private string _DataName;
+
+		partial void OnGetDataName(ref string value);
+		partial void OnSetDataName(ref string value);
+
+		public virtual string SelectedChartType
+		{
+			get 
+			{
+				OnGetSelectedChartType(ref _SelectedChartType);
+				 
+				return _SelectedChartType; 
+			}
+			set
+			{
+				if (value != _SelectedChartType)
+				{
+					OnSetSelectedChartType(ref value); 
+					_SelectedChartType = value;
+					TriggerPropertyChanged("SelectedChartType");
+				}
+			}
+		}
+		private string _SelectedChartType;
+
+		partial void OnGetSelectedChartType(ref string value);
+		partial void OnSetSelectedChartType(ref string value);
+
+	
+		
+		//Commands
+		
+		public SetConfigViewModel()
+		{
 	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());

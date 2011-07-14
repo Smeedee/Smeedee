@@ -5,7 +5,7 @@
     xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="550" d:DesignWidth="450">
+    d:DesignHeight="600" d:DesignWidth="450">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,12 +17,14 @@
 
     <Grid x:Name="LayoutRoot" >
         <Border Style="{StaticResource SettingsViewBorder}">
-            <Grid Style="{StaticResource SettingsViewGrid}" Height="450" Width="450">
+            <Grid Style="{StaticResource SettingsViewGrid}" Height="500" Width="450">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -83,18 +85,20 @@
                     Grid.Row="4" 
                     Grid.Column="0"
                     Style="{StaticResource SettingsViewText}"
-                    Text="Type of chart:" />
+                    Text="Type of x-axis:" />
 
                 <ComboBox
+                    
                     Grid.Row="4"
                     Grid.Column="1"
                     Style="{StaticResource SettingsViewComboBox}"
-                    Width="120" >
-                    <!-- SelectedItem="{Binding ChartType}" -->
-                    <ComboBoxItem>Pie</ComboBoxItem>
-                    <ComboBoxItem>Line</ComboBoxItem>
-                    <ComboBoxItem>Column</ComboBoxItem>
-                    <ComboBoxItem>Area</ComboBoxItem>
+                    Width="120"
+                    SelectedItem="{Binding XAxisType, Mode=TwoWay}" >
+                    <ComboBoxItem Content="Select"
+                                  IsSelected="True" />
+                    <ComboBoxItem>DateTime</ComboBoxItem>
+                    <ComboBoxItem>Linear</ComboBoxItem>
+                    <ComboBoxItem>Category</ComboBoxItem>
                 </ComboBox>
 
                 <Controls:DataGrid 
@@ -104,51 +108,61 @@
                     Grid.Row="5" 
                     Grid.ColumnSpan="2"
                     Grid.RowSpan="5"
-                    Width="450">
+                    Width="452">
                     <Controls:DataGrid.Columns>
                         <Controls:DataGridTemplateColumn
-                            Header="Database"
-                            Width="140">
+                            Header="Action"
+                            Width="70">
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <ComboBox
-                                        ItemTemplate="{StaticResource DatabaseItemTemplate}"
-                                        ItemsSource="{Binding Databases}"
-                                        SelectedItem="{Binding SelectedDatabase, Mode=TwoWay}"
-                                        Width="140" />
+                                    <ComboBox Style="{StaticResource SettingsViewComboBox}"
+                                              SelectedItem="{Binding SelectedAction, Mode=TwoWay}"
+                                              Width="70">
+                                        <ComboBoxItem>Show</ComboBoxItem>
+                                        <ComboBoxItem>Hide</ComboBoxItem>
+                                        <ComboBoxItem>Use as definition</ComboBoxItem>
+                                        <ComboBoxItem>Remove</ComboBoxItem>
+                                    </ComboBox>
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>
                         </Controls:DataGridTemplateColumn>
                         <Controls:DataGridTemplateColumn
-                            Header="Collection"
-                            Width="140">
-                            <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            Header="Database/Collection"
+                            Width="180">
+                            <Controls:DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox  
-										ItemTemplate="{StaticResource CollectionItemTemplate}" 
-										ItemsSource="{Binding SelectedDatabase.Collections}"
-										SelectedItem="{Binding SelectedCollection, Mode=TwoWay}"
-										Width="140" />
+                                    <TextBlock Text="{Binding DatabaseAndCollection}"
+                                               Style="{StaticResource SettingsViewText}" 
+                                               Width="180" />
                                 </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            </Controls:DataGridTemplateColumn.CellTemplate>
                         </Controls:DataGridTemplateColumn>
                         <Controls:DataGridTemplateColumn
-                            Header="X-axis" >
-                            <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            Header="Name"
+                            Width="100">
+                            <Controls:DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox  
-										ItemsSource="{Binding AvailableProperties}"
-										SelectedItem="{Binding SelectedPropertyForXAxis, Mode=TwoWay}" />
+                                    <TextBlock Text="{Binding DataName}"
+                                               Style="{StaticResource SettingsViewText}"
+                                               Width="100" />
                                 </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            </Controls:DataGridTemplateColumn.CellTemplate>
                         </Controls:DataGridTemplateColumn>
-                        <Controls:DataGridTemplateColumn
-                            Header="Y-axis" >
+                        <Controls:DataGridTemplateColumn Header="ChartType"
+                                                         Width="100">
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <ComboBox  
-										ItemsSource="{Binding AvailableProperties}"
-										SelectedItem="{Binding SelectedPropertyForYAxis, Mode=TwoWay}" />
+                                    <ComboBox Style="{StaticResource SettingsViewComboBox}"
+                                              SelectedItem="{Binding SelectedChartType, Mode=TwoWay}"
+                                              Width="100">
+                                        <ComboBoxItem>Area</ComboBoxItem>
+                                        <ComboBoxItem>Bar</ComboBoxItem>
+                                        <ComboBoxItem>Bubble</ComboBoxItem>
+                                        <ComboBoxItem>Columns</ComboBoxItem>
+                                        <ComboBoxItem>Line</ComboBoxItem>
+                                        <ComboBoxItem>Scatter</ComboBoxItem>
+                                        <ComboBoxItem>Stacked</ComboBoxItem>
+                                    </ComboBox>
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>
                         </Controls:DataGridTemplateColumn>
@@ -157,24 +171,40 @@
                 </Controls:DataGrid>
 
 
-
-                <StackPanel
+                <StackPanel Grid.Column="0"
+                            Grid.Row="10"
+                            Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource SettingsViewText}"
+                               Text="Database:"
+                               Width="140"
+                               VerticalAlignment="Bottom"/>
+                    <TextBlock Style="{StaticResource SettingsViewText}"
+                               Text="Collection:"
+                               Width="140"
+                               VerticalAlignment="Bottom" />
+                </StackPanel>
+                    <StackPanel
 					Grid.Column="0" 
-                    Grid.Row="10"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="11"
 					Orientation="Horizontal">
+                    <ComboBox Style="{StaticResource SettingsViewComboBox}"
+                              SelectedItem="{Binding SelectedDatabase, Mode=TwoWay}"
+                              ItemsSource="{Binding Databases}"
+                              Width="140"/>
+                    <ComboBox Style="{StaticResource SettingsViewComboBox}"
+                              SelectedItem="{Binding SelectedCollection, Mode=TwoWay}"
+                              ItemsSource="{Binding SelectedDatabase.Collections}"
+                              Width="140"/>
                     <Button
 						Style="{StaticResource SettingsViewButton}"
-						Command="{Binding AddGraphSettings}" 
+						Command="{Binding AddDataSettings}" 
 						Content="Add"
                         HorizontalAlignment="Right" />
-                    <Button
-						Style="{StaticResource SettingsViewButton}"
-						Command="{Binding RemoveGraphSettings}" 
-						Content="Remove" 
-                        Margin="10,0,0,0" />
+                    
                 </StackPanel>
                 <StackPanel
-					Grid.Row="11"
+					Grid.Row="13"
 					Grid.Column="1"
 					Style="{StaticResource SettingsViewControlButtonsWrapper}" >
                     <Button

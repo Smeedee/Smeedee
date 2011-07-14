@@ -48,9 +48,9 @@ namespace Smeedee.Tasks.Tests.Charting
     public class When_getting_data_From_file : Shared
     {
 
-        protected override void  Before()
+        protected override void Before()
         {
- 	        base.Before();
+            base.Before();
             datasets = null;
         }
 
@@ -70,13 +70,13 @@ namespace Smeedee.Tasks.Tests.Charting
         public void assure_two_dataset_is_created_when_two_lines_in_file()
         {
             Given(Task_is_created).And(File_contains_two_rowes_with_three_values_each);
-            When("loading data from file", () => Task.GetDataSetFromFile("http://my.url", ",", DataFromFile));
+            When("loading data from file", () => Task.GetDataSetFromFile("http://my.url", "-", DataFromFile));
             Then("two datasets should contain three values each", () =>
                                                                       {
                                                                           datasets[0].DataPoints.Count.ShouldBe(3);
                                                                           datasets[1].DataPoints.Count.ShouldBe(3);
                                                                           datasets.Count.ShouldBe(2);
-                                                                      }) ;
+                                                                      });
         }
 
         [Test]
@@ -87,23 +87,42 @@ namespace Smeedee.Tasks.Tests.Charting
             Then(Chart_should_be_saved_in_storage);
         }
 
-        private static IList<DataSet> datasets = null;
 
-        private static void DataFromFile(IList<DataSet> data)
+    }
+
+    [TestFixture]
+    public class When_executing_task : Shared
+    {
+
+
+        [Test]
+        public void assure_datasets_have_same_length()
         {
-            datasets = data;
+            Given(Task_is_created).And(File_contains_two_rowes_with_three_and_four_values);
+            When("data is loaded from file", () => Task.GetDataSetFromFile("http://my.url", ",", DataFromFile));
+            Then("the datasets should be have the same number of values", () =>
+                                                                              {
+                                                                                  var largestDataset = datasets[1];
+                                                                                  var smallestDataset = datasets[0];
+                                                                                  smallestDataset.DataPoints.Count.ShouldBe(3);
+                                                                                  largestDataset.DataPoints.Count.ShouldBe(smallestDataset.DataPoints.Count);
+                         });
+
         }
-
-        private static Then Chart_should_be_saved_in_storage = () =>
-                                                                       chartStorage.Verify(
-                                                                           s =>
-                                                                           s.Save(It.Is<Chart>(c => VerifyChart(c))));
-                                                                   
-
-        private static bool VerifyChart(Chart chart)
+        [Test]
+        public void assure_filepath_is_valid() // does the file exist?
         {
-            return chart.DataSets.Count == 1 && chart.DataSets[0].DataPoints.Count == 3;
+            Given(Task_is_created);
+            When("file is loading");
+            Then("file should be valid", () =>
+            {
+                var filepath = config.ReadEntryValue(ChartingTask.FILEPATH) as string;
+                ChartingTask.IsValidURL(filepath).ShouldBeTrue();
 
+                ChartingTask.IsValidURL("not an URL").ShouldBeFalse();
+
+                ChartingTask.IsValidURL(@"file:///c:/someFolder/someFile.txt").ShouldBeTrue();
+            });
         }
     }
 
@@ -121,9 +140,29 @@ namespace Smeedee.Tasks.Tests.Charting
                                                 };
 
         protected Context File_contains_one_row_with_three_values = () => DownloadStringServiceFakeReturns("1,1,1");
-        protected Context File_contains_two_rowes_with_three_values_each = () => DownloadStringServiceFakeReturns("1,1,1 \n 2,2,2");
+        protected Context File_contains_two_rowes_with_three_values_each = () => DownloadStringServiceFakeReturns("1-1-1 \n 2-2-2");
+        protected Context File_contains_two_rowes_with_three_and_four_values = () => DownloadStringServiceFakeReturns("1,1,1 \n 2,2,2,3");
 
         protected When Task_is_dispatched = () => Task.Execute();
+
+        protected static IList<DataSet> datasets = null;
+
+        protected static void DataFromFile(IList<DataSet> data)
+        {
+            datasets = data;
+        }
+
+        protected static Then Chart_should_be_saved_in_storage = () =>
+                                                                       chartStorage.Verify(
+                                                                           s =>
+                                                                           s.Save(It.Is<Chart>(c => VerifyChart(c))));
+
+
+        protected static bool VerifyChart(Chart chart)
+        {
+            return chart.DataSets.Count == 1 && chart.DataSets[0].DataPoints.Count == 3;
+
+        }
 
         protected virtual void Before()
         {
