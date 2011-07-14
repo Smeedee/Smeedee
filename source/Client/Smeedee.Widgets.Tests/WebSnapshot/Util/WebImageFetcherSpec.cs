@@ -19,8 +19,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_it_can_be_downloaded()
             {
-                webImageFetcherMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
-                var webImageFetcher = webImageFetcherMock.Object;
+                providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
                 var image = webImageFetcher.GetBitmapFromURL(imageURL);
                 image.ShouldBeInstanceOfType<Bitmap>();
                 image.ShouldNotBeNull();
@@ -34,9 +33,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_it_is_not_downloaded()
             {
-                webImageFetcherMock.Setup(w => w.GetBitmapFromURL(pageURL)).Returns(null as Bitmap);
-                webImageFetcherMock.Object.GetBitmapFromURL(pageURL);
-                webImageFetcherMock.Verify(w => w.GetBitmapFromURL(pageURL));
+                providerMock.Setup(w => w.GetBitmapFromURL(pageURL)).Returns(null as Bitmap);
+                webImageFetcher.GetBitmapFromURL(pageURL).ShouldBeNull();
             }
         }
 
@@ -46,8 +44,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_it_can_be_downloaded()
             {
-                webImageFetcherMock.Setup(w => w.GetBitmapFromURL(pageURL, xPath)).Returns(bitmap);
-                var webImageFetcher = webImageFetcherMock.Object;
+                providerMock.Setup(w => w.GetPictureNodeURLFromXpath(pageURL, xPath)).Returns(xPathParsed);
+                providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
                 var image = webImageFetcher.GetBitmapFromURL(pageURL, xPath);
                 image.ShouldBeInstanceOfType<Bitmap>();
                 image.ShouldNotBeNull();
@@ -60,32 +58,35 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_xpath_is_ignored_and_picture_is_downloaded()
             {
-                webImageFetcherMock.Setup(w => w.GetBitmapFromURL(imageURL, xPath)).Returns(bitmap);
-                var webImageFetcher = webImageFetcherMock.Object;
+                providerMock.Setup(w => w.GetPictureNodeURLFromXpath(imageURL, xPath)).Returns(imageURL);
+                providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
                 var image = webImageFetcher.GetBitmapFromURL(imageURL, xPath);
-
                 image.ShouldBeInstanceOfType<Bitmap>();
                 image.ShouldNotBeNull();
-                webImageFetcherMock.Verify(w => w.GetBitmapFromURL(imageURL, xPath));
+                providerMock.Verify(w => w.GetBitmapFromURL(imageURL));
             }
         }
 
         public class Shared
         {
-            protected Mock<IWebImageFetcher> webImageFetcherMock;
+            protected Mock<IWebImageProvider> providerMock;
+            protected WebImageFetcher webImageFetcher;
             protected Bitmap bitmap;
             protected string imageURL;
             protected string pageURL;
             protected string xPath;
+            protected string xPathParsed;
 
             [SetUp]
             public void Setup()
             {
-                webImageFetcherMock = new Mock<IWebImageFetcher>();
+                providerMock = new Mock<IWebImageProvider>();
+                webImageFetcher = new WebImageFetcher(providerMock.Object);
                 bitmap = new Bitmap(1,1);
                 imageURL = "http://smeedee.org/images/code.png";
                 pageURL = "http://smeedee.org/";
-                xPath = "/html/body/div[2]/div[2]/div/div/div/img";  
+                xPath = "/html/body/div[2]/div[2]/div/div/div/img";
+                xPathParsed = "images/code.png/";
             }
         }
     }
