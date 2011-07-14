@@ -8,16 +8,21 @@ using HtmlAgilityPack;
 
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
-    public class WebImageFetcher : IWebImageFetcher
+    public interface IWebImageProvider
     {
+        Bitmap GetBitmapFromURL(string url);
+        string GetPictureNodeURLFromXpath(string pageURL, string xpath);
+    }
 
+    public class WebImageProvider : IWebImageProvider
+    {
         public Bitmap GetBitmapFromURL(string url)
         {
             if (!URLValidator.IsPictureURL(url))
             {
                 return null;
             }
-            
+
             Bitmap picture = null;
             try
             {
@@ -26,25 +31,48 @@ namespace Smeedee.Widgets.WebSnapshot.Util
                 Stream stream = response.GetResponseStream();
                 picture = new Bitmap(stream);
             }
-            catch {}
+            catch { }
 
             return picture;
         }
 
-        public Bitmap GetBitmapFromURL(string url, string xpath)
+        public string GetPictureNodeURLFromXpath(string pageURL, string xpath)
         {
-            return GetBitmapFromURL(FindImageURLInWebpage(url, xpath));
+            HtmlWeb htmlWeb = new HtmlWeb();
+            HtmlDocument document = htmlWeb.Load(pageURL);
+            var xpathNode = document.DocumentNode.SelectSingleNode(xpath);
+            var attributes = xpathNode.Attributes.ToList();
+            var src = attributes.FindAll(a => a.Name == "src");
+            return src.First().Value;
+        }
+    }
+
+    public class WebImageFetcher
+    {
+        private IWebImageProvider imageProvider;
+
+        public WebImageFetcher(IWebImageProvider imageProvider)
+        {
+            this.imageProvider = imageProvider;
         }
 
-        private static string FindImageURLInWebpage(string pageURL, string xpath)
+        public Bitmap GetBitmapFromURL(string url)
+        {
+            return imageProvider.GetBitmapFromURL(url);
+        }
+
+        public Bitmap GetBitmapFromURL(string url, string xpath)
+        {
+            return imageProvider.GetBitmapFromURL(FindImageURLInWebpage(url, xpath));
+        }
+
+        private string FindImageURLInWebpage(string pageURL, string xpath)
         {
             if (URLValidator.IsPictureURL(pageURL))
             {
                 return pageURL;
             }
-
-            var xpathNode = GetXpathNode(pageURL, xpath);
-            var pictureURL = GetPictureURLFromNode(xpathNode);
+            var pictureURL = imageProvider.GetPictureNodeURLFromXpath(pageURL, xpath);
 
             if (!URLValidator.IsValidUrl(pictureURL))
             {
@@ -53,35 +81,20 @@ namespace Smeedee.Widgets.WebSnapshot.Util
 
             pictureURL = RemoveTrailingSlash(pictureURL);
             return pictureURL;
-
         }
 
-        private static HtmlNode GetXpathNode(string pageURL, string xpath)
+        private string AppendBaseURLWithPictureURL(string pageURL, string pictureURL)
         {
-            HtmlWeb htmlWeb = new HtmlWeb();
-            HtmlDocument document = htmlWeb.Load(pageURL);
-            return document.DocumentNode.SelectSingleNode(xpath);
-        }
-
-        private static string GetPictureURLFromNode(HtmlNode xpathNode)
-        {
-            var attributes = xpathNode.Attributes.ToList();
-            var src = attributes.FindAll(a => a.Name == "src");
-            return src.First().Value;
-        }
-
-        private static string AppendBaseURLWithPictureURL(string pageURL, string pictureURL)
-        {
-            if (pageURL.Substring(pageURL.Length-1).Equals("/"))
+            if (!pageURL.EndsWith("/"))
             {
-                pageURL = pageURL.Insert(pageURL.Length - 1, "/");
+                pageURL += "/";
             }
 
-            pictureURL = pageURL.Insert(pageURL.Length - 1, pictureURL);
-            return pictureURL;
+            pageURL += pictureURL;
+            return pageURL;
         }
 
-        private static string RemoveTrailingSlash(string pictureURL)
+        private string RemoveTrailingSlash(string pictureURL)
         {
             return pictureURL.TrimEnd(new char[] {'/'});
         }
