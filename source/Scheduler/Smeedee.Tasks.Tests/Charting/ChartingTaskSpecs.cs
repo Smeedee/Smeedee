@@ -124,6 +124,20 @@ namespace Smeedee.Tasks.Tests.Charting
                 ChartingTask.IsValidURL(@"file:///c:/someFolder/someFile.txt").ShouldBeTrue();
             });
         }
+        
+        [Test]
+        public void check_if_dataset_starts_with_a_name()
+        {
+             Given(Task_is_created).And(File_contains_one_row_with_a_name_and_three_values);
+             When("data is loaded from file", () => Task.GetDataSetFromFile("http://my.url", ",", DataFromFile));
+            Then("check if the first value in each dataset is a \"name\"", () =>
+                                                                               {
+                                                                                   datasets[0].Name.ShouldBe("name");
+                                                                                   datasets[0].DataPoints.Count.ShouldBe(3);
+                                                                               });
+
+        }
+
     }
 
 
@@ -140,6 +154,7 @@ namespace Smeedee.Tasks.Tests.Charting
                                                 };
 
         protected Context File_contains_one_row_with_three_values = () => DownloadStringServiceFakeReturns("1,1,1");
+        protected Context File_contains_one_row_with_a_name_and_three_values = () => DownloadStringServiceFakeReturns("name,1,1,1");
         protected Context File_contains_two_rowes_with_three_values_each = () => DownloadStringServiceFakeReturns("1-1-1 \n 2-2-2");
         protected Context File_contains_two_rowes_with_three_and_four_values = () => DownloadStringServiceFakeReturns("1,1,1 \n 2,2,2,3");
 

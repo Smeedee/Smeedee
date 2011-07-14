@@ -83,8 +83,13 @@ namespace Smeedee.Tasks.Charting
                                                                                    var set = new DataSet();
                                                                                    var splittedString =
                                                                                        item.Split(char.Parse(separator));
-
-                                                                                   for (int i = 0;
+                                                                                   int i = 0;
+                                                                                   if (!IsNumber(splittedString[0]))
+                                                                                   {
+                                                                                       set.Name = splittedString[0];
+                                                                                       i = 1;
+                                                                                   }
+                                                                                   for (;
                                                                                         i < shortestDataset;
                                                                                         i++)
                                                                                    {
@@ -116,6 +121,11 @@ namespace Smeedee.Tasks.Charting
             if (Regex.IsMatch(filepath, "^https?://[a-zA-Z1-9]"))
                 return true;
             return false;
+        }
+
+        public static bool IsNumber(string word)
+        {
+            return Regex.IsMatch(word, @"^-?\d*[0-9]?(|.\d*[0-9]|,\d*[0-9])?$");
         }
 
     }
