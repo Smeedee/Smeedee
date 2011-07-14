@@ -148,6 +148,7 @@
     <Compile Include="Users\Userdb.cs" />
     <Compile Include="Users\UserdbSpecifications.cs" />
     <Compile Include="Users\UserSpecifications.cs" />
+    <Compile Include="WebSnapshot\WebSnapshot.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Smeedee.DomainModel.Framework.SL\Smeedee.DomainModel.Framework.SL.csproj">
