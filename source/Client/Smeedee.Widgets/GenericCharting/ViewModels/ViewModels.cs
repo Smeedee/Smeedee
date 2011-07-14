@@ -13,50 +13,58 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 	public partial class DataPointViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual Object X 
-		{ 
-			get
+		public virtual Object X
+		{
+			get 
 			{
 				OnGetX(ref _X);
 				 
 				return _X; 
 			}
-			set 
+			set
 			{
-				OnSetX(ref value); 
-				_X = value; 
-			} 
+				if (value != _X)
+				{
+					OnSetX(ref value); 
+					_X = value;
+					TriggerPropertyChanged("X");
+				}
+			}
 		}
-
 		private Object _X;
+
 		partial void OnGetX(ref Object value);
 		partial void OnSetX(ref Object value);
-		public virtual Object Y 
-		{ 
-			get
+
+		public virtual Object Y
+		{
+			get 
 			{
 				OnGetY(ref _Y);
 				 
 				return _Y; 
 			}
-			set 
+			set
 			{
-				OnSetY(ref value); 
-				_Y = value; 
-			} 
+				if (value != _Y)
+				{
+					OnSetY(ref value); 
+					_Y = value;
+					TriggerPropertyChanged("Y");
+				}
+			}
 		}
-
 		private Object _Y;
+
 		partial void OnGetY(ref Object value);
 		partial void OnSetY(ref Object value);
+
 	
 		
 		//Commands
 		
 		public DataPointViewModel()
 		{
-            X = new Object();
-            Y = new Object();
 	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
@@ -71,24 +79,29 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 	public partial class ChartTypeViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual string ChartType 
-		{ 
-			get
+		public virtual string ChartType
+		{
+			get 
 			{
 				OnGetChartType(ref _ChartType);
 				 
 				return _ChartType; 
 			}
-			set 
+			set
 			{
-				OnSetChartType(ref value); 
-				_ChartType = value; 
-			} 
+				if (value != _ChartType)
+				{
+					OnSetChartType(ref value); 
+					_ChartType = value;
+					TriggerPropertyChanged("ChartType");
+				}
+			}
 		}
-
 		private string _ChartType;
+
 		partial void OnGetChartType(ref string value);
 		partial void OnSetChartType(ref string value);
+
 	
 		
 		//Commands
@@ -96,8 +109,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		public ChartTypeViewModel()
 		{
 	
-            ChartType = "DefaultChartSeries";
-
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}
@@ -153,8 +164,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		public DatabaseViewModel()
 		{
-		    Name = "";
-            Collections = new ObservableCollection<CollectionViewModel>();
+	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}
@@ -192,9 +202,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		public CollectionViewModel()
 		{
-
-		    Name = "";
-
+	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}
@@ -433,29 +441,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetSelectedPropertyForYAxis(ref string value);
 		partial void OnSetSelectedPropertyForYAxis(ref string value);
 
-		public virtual ChartViewModel Chart
-		{
-			get 
-			{
-				OnGetChart(ref _Chart);
-				 
-				return _Chart; 
-			}
-			set
-			{
-				if (value != _Chart)
-				{
-					OnSetChart(ref value); 
-					_Chart = value;
-					TriggerPropertyChanged("Chart");
-				}
-			}
-		}
-		private ChartViewModel _Chart;
-
-		partial void OnGetChart(ref ChartViewModel value);
-		partial void OnSetChart(ref ChartViewModel value);
-
 	
 		
 		//Commands
@@ -470,21 +455,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 			ReloadSettings = new DelegateCommand();
 			Add = new DelegateCommand();
 			Remove = new DelegateCommand();
-
-		    ChartName = "ChartName";
-		    XAxisName = "X-axis";
-		    YAxisName = "Y-axis";
-            ChartType = new ObservableCollection<ChartTypeViewModel>();
-
-            Databases = new ObservableCollection<DatabaseViewModel>();
-
-            SelectedDatabase = new DatabaseViewModel();
-            SelectedCollection = new CollectionViewModel();
-
-            AvailableProperties = new ObservableCollection<string>();
-
-            Chart = new ChartViewModel();
-
+	
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}

@@ -9,11 +9,11 @@ using TinyMVVM.Framework;
 namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 	viewmodel DataPointViewModel:
-		property X as Object
-		property Y as Object
+		oproperty X as Object
+		oproperty Y as Object
 		
 	viewmodel ChartTypeViewModel:
-		property ChartType as string
+		oproperty ChartType as string
 
 	viewmodel DatabaseViewModel:
 		property Name as string
@@ -38,7 +38,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty SelectedPropertyForXAxis as string
 		oproperty SelectedPropertyForYAxis as string
 
-		oproperty Chart as ChartViewModel
+		
 
 		command SaveSettings
 		command ReloadSettings

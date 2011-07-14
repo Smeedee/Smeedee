@@ -181,29 +181,23 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
             Then("AvailableProperties should not be null", () => chartSettingsViewModel.AvailableProperties.ShouldNotBeNull());
         }
 
-        [Test]
-        public void Assure_it_has_SelectedPropertyForXAxis()
-        {
-            Given(chartSettingsViewModel_has_been_created);
-            When("");
-            Then("SelectedProperty");
-        }
+        //Not implemented
+        //[Test]
+        //public void Assure_it_has_SelectedPropertyForXAxis()
+        //{
+        //    Given(chartSettingsViewModel_has_been_created);
+        //    When("");
+        //    Then("SelectedProperty");
+        //}
 
-        [Test]
-        public void Assure_it_has_SelectedPropertyForYAxis()
-        {
-            Given("");
-            When("");
-            Then("");
-        }
+        //[Test]
+        //public void Assure_it_has_SelectedPropertyForYAxis()
+        //{
+        //    Given("");
+        //    When("");
+        //    Then("");
+        //}
 
-        [Test]
-        public void Assure_it_has_Chart()
-        {
-            Given(chartSettingsViewModel_has_been_created);
-            When("");
-            Then("Chart should not be null", () => chartSettingsViewModel.Chart.ShouldNotBeNull());
-        }
     }
 
     public class Shared : ScenarioClass
