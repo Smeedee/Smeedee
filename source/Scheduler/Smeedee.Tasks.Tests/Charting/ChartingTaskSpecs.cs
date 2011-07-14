@@ -109,6 +109,21 @@ namespace Smeedee.Tasks.Tests.Charting
                          });
 
         }
+        [Test]
+        public void assure_filepath_is_valid() // does the file exist?
+        {
+            Given(Task_is_created);
+            When("file is loading");
+            Then("file should be valid", () =>
+            {
+                var filepath = config.ReadEntryValue(ChartingTask.FILEPATH) as string;
+                ChartingTask.IsValidURL(filepath).ShouldBeTrue();
+
+                ChartingTask.IsValidURL("not an URL").ShouldBeFalse();
+
+                ChartingTask.IsValidURL(@"file:///c:/someFolder/someFile.txt").ShouldBeTrue();
+            });
+        }
     }
 
 

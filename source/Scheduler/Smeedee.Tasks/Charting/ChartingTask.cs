@@ -61,7 +61,8 @@ namespace Smeedee.Tasks.Charting
 
         public void GetDataSetFromFile(string filepath, string separator, Action<IList<DataSet>> callback)
         {
-            
+            if (IsValidURL(filepath)) // notify the user somehow?
+            {
                 var datasets = new List<DataSet>();
                 downloadStringService.DownloadAsync(new Uri(filepath), data =>
                                                                            {
@@ -70,9 +71,12 @@ namespace Smeedee.Tasks.Charting
                                                                                int shortestDataset = int.MaxValue;
                                                                                foreach (var s in oneLineOneDataset)
                                                                                {
-                                                                                   if (shortestDataset > s.Split(char.Parse(separator)).Length)
+                                                                                   if (shortestDataset >
+                                                                                       s.Split(char.Parse(separator)).
+                                                                                           Length)
                                                                                        shortestDataset =
-                                                                                           s.Split(char.Parse(separator)).Length;
+                                                                                           s.Split(char.Parse(separator))
+                                                                                               .Length;
                                                                                }
                                                                                foreach (var item in oneLineOneDataset)
                                                                                {
@@ -92,7 +96,7 @@ namespace Smeedee.Tasks.Charting
                                                                                }
                                                                                callback(datasets);
                                                                            });
-            
+            }
         }
 
         public void SaveDataToStorage(IList<DataSet> datasets)
@@ -105,6 +109,14 @@ namespace Smeedee.Tasks.Charting
             chartStorage.Save(chart);
         }
 
+        public static bool IsValidURL(string filepath)
+        {
+            if (Regex.IsMatch(filepath, "^file:///"))
+                return true;
+            if (Regex.IsMatch(filepath, "^https?://[a-zA-Z1-9]"))
+                return true;
+            return false;
+        }
 
     }
 }
