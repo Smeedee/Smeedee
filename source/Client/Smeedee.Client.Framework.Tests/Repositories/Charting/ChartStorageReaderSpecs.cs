@@ -55,7 +55,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
                     And(there_is_one_database).
                     And(we_are_listening_for_refresh_event);
                 When(calling_refresh_datasources);
-                Then("storage should return a list with two database", () =>
+                Then("storage should return a list with one database", () =>
                 {
                     var databases = storage.GetDatabases();
                     databases.Count.ShouldBe(1);

@@ -381,6 +381,9 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		public ChartSettingsViewModel()
 		{
+
+            Databases = new ObservableCollection<DatabaseViewModel>();
+
 			SaveSettings = new DelegateCommand();
 			ReloadSettings = new DelegateCommand();
 			AddDataSettings = new DelegateCommand();

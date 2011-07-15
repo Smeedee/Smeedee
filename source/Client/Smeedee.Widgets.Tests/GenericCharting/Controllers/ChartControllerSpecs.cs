@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Moq;
@@ -130,72 +131,44 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
         }
 
         [TestFixture]
-        public class When_OnNotifiedToRefresh_is_called :Shared
+        public class When_DownloadAndAddDataToViewModel_is_called : Shared
         {
 
+
             [Test]
-            [Ignore]
-            public void Then_assure_data_is_downloaded()
+            public void Then_assure_that_one_database_is_returned_when_there_is_only_one()
             {
-                Given(the_controller_has_been_created).And(there_is_one_database).And(the_storage_has_been_created);
-                When(onNotifiedToRefresh_is_called);
-                Then("data should be loaded", () =>
-                                                  {
-                                                      settingsViewModel.Databases.ShouldBe("TestDatabase");
-                                                  });
-                //Then("", () => storageReader.get)
+                Given(the_storage_has_been_created).
+                    And(there_is_one_database).
+                    And(the_controller_has_been_created).
+                    And(we_are_listening_for_refresh_event);
+                When(calling_refresh_datasources);
+                Then("settingsViewModel should contain a database", () =>
+                                                                        {
+                                                                            storageReader.GetDatabases().Count.ShouldBe(1);
+                                                                            chartController.AddDatabasesToSettingsViewModel(storageReader.GetDatabases());
+                                                                            chartController.settingsViewModel.Databases.Count.ShouldBe(1);
+                                                                            chartController.settingsViewModel.Databases[0].Name.ShouldBe("TestDatabase");
+                                                                        });
             }
 
-            //[Test]
-            //public void Then_RefreshDatasources_is_called_and_finds_data()
-            //{
-            //    Given(the_controller_has_been_created).And(there_is_one_database).And(the_storage_has_been_created);
-            //    When(calling_refresh_datasources);
-            //    Then("RefreshDatasources is called and finds data", () =>
-            //                                                            {
-            //                                                                    storageReader.GetDatabases().ShouldBe("TestDatabase");                            
-            //                                                            });
-            //}
-            
-            //[Test]
-            //[Ignore]
-            //public void Then_assure_data_is_loaded_to_viewModel()
-            //{
-
-            //    Given(the_controller_has_been_created);
-            //    When("OnNotifiedToRefresh is called", () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty));
-            //    Then("data should be loaded to chartViewModel", () => "");
-
-            //}
-
-            //[Test]
-            //public void assure_data_is_loaded_from_storage()
-            //{
-            //    Given(the_controller_has_been_created).And(some_data_exists_in_storage);
-            //    When("");
-            //    Then("data is loaded from storage", () =>
-            //                                            {
-                                                            
-            //                                            });
-            //}
-
-            //private static Chart chart;
-            //private static void SetChart(Chart c)
-            //{
-            //    chart = c;
-            //} 
-            //protected Context some_data_exists_in_storage = () =>
-            //                                                    {
-            //                                                        var chart = new Chart("mockDB", "mockCollection");
-            //                                                        var dataset = new DataSet("mockSet");
-            //                                                        dataset.DataPoints.Add(1);
-            //                                                        chart.DataSets.Add(dataset);
-
-            //                                                        storageReader.Setup(
-            //                                                            s =>
-            //                                                            s.LoadChart(It.IsAny<string>(), It.IsAny<string>()))
-            //                                                            .Callback((string s,string callback) => SetChart(chart));
-            //                                                    };
+            [Test]
+            public void Then_assure_that_two_database_is_returned_when_there_is_two()
+            {
+                Given(the_storage_has_been_created).
+                    And(there_are_two_databases).
+                    And(the_controller_has_been_created).
+                    And(we_are_listening_for_refresh_event);
+                When(calling_refresh_datasources);
+                Then("settingsViewModel should contain two databases", () =>
+                {
+                    storageReader.GetDatabases().Count.ShouldBe(2);
+                    chartController.AddDatabasesToSettingsViewModel(storageReader.GetDatabases());
+                    chartController.settingsViewModel.Databases.Count.ShouldBe(2);
+                    chartController.settingsViewModel.Databases[0].Name.ShouldBe("TestDatabase");
+                    chartController.settingsViewModel.Databases[1].Name.ShouldBe("TestDatabase2");
+                });
+            }
         }
         
 
@@ -203,7 +176,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
         {
             protected static ChartController chartController;
             protected static ChartViewModel chartViewModel;
-            protected static ChartSettingsViewModel settingsViewModel;
 
             protected static Configuration configuration;
             protected static ChartConfig chartConfig;
@@ -215,17 +187,32 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
             protected static Mock<INoSqlRepository> noSqlRepositoryMock;
 
+            protected static int refresh_event_raised = 0;
+
+            protected static void RefreshEventRaised(object sender, EventArgs args)
+            {
+                refresh_event_raised++;
+            }
+
+
             protected Context the_controller_has_been_created = 
                 () => chartController = new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, storageReader, configuration);
-
-            protected Context the_storage_has_been_created = () =>
-             storageReader = new ChartStorageReader(noSqlRepositoryMock.Object);
-
+            protected Context the_storage_has_been_created = () => storageReader = new ChartStorageReader(noSqlRepositoryMock.Object);
+            protected Context onNotifiedToRefresh_has_been_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
             protected Context there_is_one_database = () =>
                 NoSqlRepositoryGetDatabasesReturns(new Collection { Documents = { Document.Parse("{Name:\"TestDatabase\", Collections: []}") } });
-            protected When calling_refresh_datasources = () =>
-                                storageReader.RefreshDatasources();
+            protected Context there_are_two_databases = () =>
+                NoSqlRepositoryGetDatabasesReturns(new Collection { Documents =
+                                                                        {
+                                                                            Document.Parse("{Name:\"TestDatabase\", Collections: []}"), 
+                                                                            Document.Parse("{Name:\"TestDatabase2\", Collections: []}")
+                                                                        } });
+
+            protected When calling_refresh_datasources = () => storageReader.RefreshDatasources();
             protected When onNotifiedToRefresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
+
+           
+
 
             protected static void NoSqlRepositoryGetDatabasesReturns(Collection databases)
             {
@@ -233,18 +220,18 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     Callback((Action<Collection> callback) => callback(databases));
             }
 
-            //protected Mock<IRepository<ChartViewModel>> ChartRepositoryFake = new Mock<IRepository<ChartViewModel>>();
-            //protected Mock<IRepository<DataPointViewModel>> DataPointRepositoryFake = new Mock<IRepository<DataPointViewModel>>();
-            //protected Mock<IRepository<ChartSettingsViewModel>> ChartSettingsRepositoryFake = new Mock<IRepository<ChartSettingsViewModel>>();
-            //protected Mock<IRepository<DatabaseViewModel>> DataBaseRepositoryFake = new Mock<IRepository<DatabaseViewModel>>();
-            //protected Mock<IRepository<CollectionViewModel>> CollectionRepositoryFake = new Mock<IRepository<CollectionViewModel>>();
+            protected Context we_are_listening_for_refresh_event = () =>
+            {
+                refresh_event_raised = 0;
+                storageReader.DatasourcesRefreshed += RefreshEventRaised;
+            };
+
 
             [SetUp]
             public void Setup()
             {
                 Scenario("");
                 chartViewModel = new ChartViewModel();
-                settingsViewModel = new ChartSettingsViewModel();
 
                 timerFake = new Mock<ITimer>();
                 uIInvokerFake = new Mock<IUIInvoker>();
@@ -255,33 +242,12 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
                 configuration = new Configuration();
 
-
-
-
-                //RemoveAllGlobalDependencies.ForAllViewModels();
-                //ConfigureGlobalDependencies.ForAllViewModels(config =>
-                //{
-                //    config.Bind<IUIInvoker>().To<UIInvokerForTesting>();
-
-                //    config.Bind<IRepository<ChartViewModel>>().ToInstance(
-                //        ChartRepositoryFake.Object);
-                //    config.Bind<IRepository<DataPointViewModel>>().
-                //        ToInstance(DataPointRepositoryFake.Object);
-                //    config.Bind<IRepository<ChartSettingsViewModel>>().
-                //        ToInstance(ChartSettingsRepositoryFake.Object);
-                //    config.Bind<IRepository<DatabaseViewModel>>().
-                //        ToInstance(DataBaseRepositoryFake.Object);
-                //    config.Bind<IRepository<CollectionViewModel>>().
-                //        ToInstance(CollectionRepositoryFake.Object);
-                //});
-                //}
             }
 
 
             [TearDown]
             public void TearDown()
             {
-                //RemoveAllGlobalDependencies.ForAllViewModels();
                 StartScenario();
             } 
         }

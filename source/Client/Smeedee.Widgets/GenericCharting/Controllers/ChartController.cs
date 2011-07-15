@@ -18,7 +18,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private IDownloadStringService downloadStringService;
         private IChartStorageReader storageReader;
         private ChartConfig chartConfig;
-        private ChartSettingsViewModel settingsViewModel;
+        public ChartSettingsViewModel settingsViewModel;
 
         public ChartController(
             ChartViewModel chartViewModel,
@@ -41,14 +41,18 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             chartViewModel.Refresh.AfterExecute += new EventHandler(OnNotifiedToRefresh);
 
-            Start();
+            
 
-            DownloadAndAddDataToViewModel();
+            
 
             settingsViewModel = new ChartSettingsViewModel();
             settingsViewModel.SaveSettings.ExecuteDelegate = SaveSettings;
             settingsViewModel.ReloadSettings.ExecuteDelegate = ReloadSettings;
             settingsViewModel.AddDataSettings.ExecuteDelegate = AddDataSettings;
+
+            Start();
+
+            DownloadAndAddDataToViewModel();
         }
 
         private void AddDataSettings()
@@ -73,23 +77,33 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             SetIsLoadingData();
 
             var db = storageReader.GetDatabases();
-
-            var databases = new ObservableCollection<DatabaseViewModel>();
-            databases.Add(new DatabaseViewModel{});
-            
+            AddDatabasesToSettingsViewModel(db);
             
             SetIsNotLoadingConfig();
             SetIsNotLoadingData();
 
         }
 
+         public void AddDatabasesToSettingsViewModel(IList<string> db)
+         {
+             var databases = new ObservableCollection<DatabaseViewModel>();
+             var databaseNames = db;
+
+             foreach (var databaseName in databaseNames)
+             {
+                 databases.Add(new DatabaseViewModel{Name = databaseName});
+             }
+
+             settingsViewModel.Databases = databases;
+
+         }
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
             DownloadAndAddDataToViewModel();
         }
 
-        private Uri Url;
+
 
     }
 }
