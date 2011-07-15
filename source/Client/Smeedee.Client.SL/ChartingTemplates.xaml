@@ -370,124 +370,20 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-	
-	<Style x:Key="TopCommittersLegendStyle" TargetType="visualizationToolkit:Legend">
-		<Setter Property="BorderBrush" Value="Black"/>
-		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="IsTabStop" Value="False"/>
-		<Setter Property="TitleStyle">
-			<Setter.Value>
-				<Style TargetType="visualizationToolkit:Title">
-					<Setter Property="Margin" Value="0,5,0,10"/>
-					<Setter Property="FontWeight" Value="Bold"/>
-					<Setter Property="HorizontalAlignment" Value="Center"/>
-					<Setter Property="Visibility" Value="Collapsed" />
-				</Style>
-			</Setter.Value>
-		</Setter>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="visualizationToolkit:Legend">
-					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="2">
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto"/>
-								<RowDefinition/>
-							</Grid.RowDefinitions>
-							<visualizationToolkit:Title Style="{TemplateBinding TitleStyle}" Content="{TemplateBinding Header}" Grid.Row="0"/>
-							<ScrollViewer BorderThickness="0" IsTabStop="False" Padding="0" Grid.Row="1" VerticalScrollBarVisibility="Auto">
-								<Controls:WrapPanel x:Name="LegendItemsArea" Grid.Column="1" />
-							</ScrollViewer>
-						</Grid>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-	<Style x:Key="TopCommitersLegendItemStyle" TargetType="Charting:LegendItem">
-		<Setter Property="IsTabStop" Value="False"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="Charting:LegendItem">
-                    <Border
-                        CornerRadius="5"
-                        Margin="0,0,5,5"
-                        Padding="7,0,7,0"
-                        Background="{Binding Background}">
-                        <Border 
-                            Margin="0,0,0,0"
-                            CornerRadius="5"
-                            Background="Transparent">
-                            <Grid 
-                                MinWidth="250"
-                                MaxWidth="250"
-                                Width="250">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <APD_Client_Framework_SL_Controls:DefaultImage 
-                                    Height="80"
-                                    Margin="0,0,5,0"
-                                    HorizontalAlignment="Left"
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Grid.RowSpan="2"
-                                    Width="72" 
-                                    ImageUrl="{Binding DataContext.ImageUrl}"/>
-                                <TextBlock 
-                                    HorizontalAlignment="Left" 
-                                    Text="{TemplateBinding Content}"
-                                    FontFamily="{StaticResource FontFamily}" 
-                                    Foreground="White" 
-                                    Margin="0,5,0,0"
-                                    FontSize="30" 
-                                    Grid.Row="0"
-                                    Grid.Column="1"/>
-                                <Grid
-                                    Grid.Row="1"
-                                    Grid.Column="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
 
-                                 <TextBlock FontFamily="{StaticResource FontFamily}" 
-                                        Foreground="White"
-                                        Margin="0,0,0,5"
-                                        Text="{Binding DataContext.NumberOfCommits}"
-                                        TextWrapping="Wrap" 
-                                        FontSize="36" 
-                                        VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Right"
-                                        Grid.Row="0"
-                                        Grid.Column="0"/> 
-                                    <TextBlock
-                                        FontFamily="{StaticResource FontFamily}"
-                                        Margin="0,0,0,5"
-                                        Foreground="White"
-                                        Text=" commits"
-                                        FontSize="18"
-                                        VerticalAlignment="Bottom"
-                                        Grid.Row="0"
-                                        Grid.Column="1"/>
-                                    </Grid>
-                                </Grid>
-                            </Border>
-                        </Border>
-                </ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+	
 	<Style x:Key="TopCommittersLegendStyle2" TargetType="visualizationToolkit:Legend">
 		<Setter Property="BorderBrush" Value="Black"/>
 		<Setter Property="BorderThickness" Value="0"/>
 		<Setter Property="IsTabStop" Value="False"/>
-		<!--<Setter Property="Template">
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<Controls:WrapPanel />
+				</ItemsPanelTemplate>	
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="visualizationToolkit:Legend">
 					<Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="2">
@@ -497,14 +393,18 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 							<visualizationToolkit:Title Style="{TemplateBinding TitleStyle}" Content="{TemplateBinding Header}" Grid.Row="0"/>
+							
 							<ScrollViewer BorderThickness="0" IsTabStop="False" Padding="0" Grid.Row="1" VerticalScrollBarVisibility="Auto">
-								<Controls:WrapPanel x:Name="LegendItemsArea" Grid.Column="1" />
+								
+								<ItemsPresenter />
+								
 							</ScrollViewer>
 						</Grid>
+						
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
-		</Setter>-->
+		</Setter>
 	</Style>
 	<Style x:Key="TopCommittersLegendItemStyle2" TargetType="Charting:LegendItem">
 		<Setter Property="IsTabStop" Value="False"/>
@@ -585,6 +485,7 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
 	
 	
 	
