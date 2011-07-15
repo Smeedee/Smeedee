@@ -20,16 +20,14 @@ namespace Smeedee.Tasks.Charting
          Description = "Retrieves information from some file to show in some chart",
          Version = 1,
          Webpage = "http://smeedee.org")]
-    [TaskSetting(1, FILEPATH, typeof(Uri), "")]
+    [TaskSetting(1, FILEPATH, typeof(Uri), "file:///")]
     [TaskSetting(2, VALUE_SEPARATOR, typeof(string), ",", "At what value should the data be separated. Ex. CSV uses ','")]
-    [TaskSetting(3, DATABASE_NAME, typeof(string), "Charting", "Give your database a name")]
-    [TaskSetting(4, COLLECTIONS_NAME, typeof(string), "Collection", "Give this data a unique name in the database")]
+    [TaskSetting(3, COLLECTIONS_NAME, typeof(string), "Collection", "Give this data a unique name in the database")]
     //[TaskSetting(5, "Is this a checkbox", "","",""  )]
     public class ChartingTask : TaskBase
     {
         public const string FILEPATH = "File path";
         public const string VALUE_SEPARATOR = "Value separator";
-        public const string DATABASE_NAME = "Name of database";
         public const string COLLECTIONS_NAME = "Name of collection";
 
         private IChartStorage chartStorage;
@@ -83,7 +81,6 @@ namespace Smeedee.Tasks.Charting
                                                                                    }
                                                                                    for (;i < shortestDataset; i++)
                                                                                    {
-                                                                                       if (IsNumber(splittedString[i].Trim()))
                                                                                         set.DataPoints.Add(splittedString[i].Trim());
                                                                                    }
                                                                                    datasets.Add(set);
@@ -107,9 +104,8 @@ namespace Smeedee.Tasks.Charting
 
         public void SaveDataToStorage(IList<DataSet> datasets)
         {
-            var databasename = (string)_configuration.ReadEntryValue(DATABASE_NAME);
             var collection = (string)_configuration.ReadEntryValue(COLLECTIONS_NAME);
-            var chart = new Chart(databasename, collection);
+            var chart = new Chart("charting", collection);
             foreach (var set in datasets)
                 chart.DataSets.Add(set);
             chartStorage.Save(chart);
