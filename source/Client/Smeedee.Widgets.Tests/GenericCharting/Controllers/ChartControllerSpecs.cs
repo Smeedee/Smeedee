@@ -5,10 +5,12 @@ using System.Text;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Repositories.Charting;
+using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
+using Smeedee.DomainModel.NoSql;
 using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
@@ -34,7 +36,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(null, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, storageReader.Object, configuration)));
+                        () => new ChartController(null, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, storageReader, configuration)));
             }
 
             [Test]
@@ -45,7 +47,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(chartViewModel, null, uIInvokerFake.Object, loadingNotifierFake.Object, storageReader.Object, configuration)));
+                        () => new ChartController(chartViewModel, null, uIInvokerFake.Object, loadingNotifierFake.Object, storageReader, configuration)));
             }
 
             [Test]
@@ -56,7 +58,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(chartViewModel, timerFake.Object, null, loadingNotifierFake.Object, storageReader.Object, configuration)));
+                        () => new ChartController(chartViewModel, timerFake.Object, null, loadingNotifierFake.Object, storageReader, configuration)));
             }
 
             [Test]
@@ -67,7 +69,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object, null, storageReader.Object, configuration)));
+                        () => new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object, null, storageReader, configuration)));
             }
 
             [Test]
@@ -91,16 +93,11 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                      this.ShouldThrowException<ArgumentException>(
                          () =>
                          new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object,
-                                             loadingNotifierFake.Object, storageReader.Object, null)));
+                                             loadingNotifierFake.Object, storageReader, null)));
             }
 
-            [Test]
-            public void Then_configuration_should_contain_Database_settings()
-            {
-                Given(the_controller_has_been_created);
-                When("it is created");
-                Then("the configuration should contain database settings");
-            }
+           
+
             //Tests for:    configuration contains RefreshInterval
             //              configuration contains Database settings
             //              configuration contains Collection Settings
@@ -132,9 +129,34 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
         }
 
-        //[TestFixture]
-        //public class When_OnNotifiedToRefresh_is_called :Shared
-        //{
+        [TestFixture]
+        public class When_OnNotifiedToRefresh_is_called :Shared
+        {
+
+            [Test]
+            [Ignore]
+            public void Then_assure_data_is_downloaded()
+            {
+                Given(the_controller_has_been_created).And(there_is_one_database).And(the_storage_has_been_created);
+                When(onNotifiedToRefresh_is_called);
+                Then("data should be loaded", () =>
+                                                  {
+                                                      settingsViewModel.Databases.ShouldBe("TestDatabase");
+                                                  });
+                //Then("", () => storageReader.get)
+            }
+
+            //[Test]
+            //public void Then_RefreshDatasources_is_called_and_finds_data()
+            //{
+            //    Given(the_controller_has_been_created).And(there_is_one_database).And(the_storage_has_been_created);
+            //    When(calling_refresh_datasources);
+            //    Then("RefreshDatasources is called and finds data", () =>
+            //                                                            {
+            //                                                                    storageReader.GetDatabases().ShouldBe("TestDatabase");                            
+            //                                                            });
+            //}
+            
             //[Test]
             //[Ignore]
             //public void Then_assure_data_is_loaded_to_viewModel()
@@ -174,25 +196,42 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             //                                                            s.LoadChart(It.IsAny<string>(), It.IsAny<string>()))
             //                                                            .Callback((string s,string callback) => SetChart(chart));
             //                                                    };
-        //}
+        }
         
 
         public class Shared : ScenarioClass
         {
             protected static ChartController chartController;
             protected static ChartViewModel chartViewModel;
+            protected static ChartSettingsViewModel settingsViewModel;
 
             protected static Configuration configuration;
+            protected static ChartConfig chartConfig;
             
             protected static Mock<ITimer> timerFake;
             protected static Mock<IUIInvoker> uIInvokerFake;
             protected static Mock<IProgressbar> loadingNotifierFake;
-            protected static Mock<IChartStorageReader> storageReader;
+            protected static ChartStorageReader storageReader;
+
+            protected static Mock<INoSqlRepository> noSqlRepositoryMock;
 
             protected Context the_controller_has_been_created = 
-                () => chartController = new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, storageReader.Object, configuration);
-            
+                () => chartController = new ChartController(chartViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, storageReader, configuration);
 
+            protected Context the_storage_has_been_created = () =>
+             storageReader = new ChartStorageReader(noSqlRepositoryMock.Object);
+
+            protected Context there_is_one_database = () =>
+                NoSqlRepositoryGetDatabasesReturns(new Collection { Documents = { Document.Parse("{Name:\"TestDatabase\", Collections: []}") } });
+            protected When calling_refresh_datasources = () =>
+                                storageReader.RefreshDatasources();
+            protected When onNotifiedToRefresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
+
+            protected static void NoSqlRepositoryGetDatabasesReturns(Collection databases)
+            {
+                noSqlRepositoryMock.Setup(s => s.GetDatabases(It.IsAny<Action<Collection>>())).
+                    Callback((Action<Collection> callback) => callback(databases));
+            }
 
             //protected Mock<IRepository<ChartViewModel>> ChartRepositoryFake = new Mock<IRepository<ChartViewModel>>();
             //protected Mock<IRepository<DataPointViewModel>> DataPointRepositoryFake = new Mock<IRepository<DataPointViewModel>>();
@@ -205,15 +244,18 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             {
                 Scenario("");
                 chartViewModel = new ChartViewModel();
+                settingsViewModel = new ChartSettingsViewModel();
 
                 timerFake = new Mock<ITimer>();
                 uIInvokerFake = new Mock<IUIInvoker>();
                 loadingNotifierFake = new Mock<IProgressbar>();
-                storageReader = new Mock<IChartStorageReader>();
+                noSqlRepositoryMock = new Mock<INoSqlRepository>();
+                storageReader = new ChartStorageReader(noSqlRepositoryMock.Object);
+                
 
                 configuration = new Configuration();
 
-           
+
 
 
                 //RemoveAllGlobalDependencies.ForAllViewModels();
@@ -232,7 +274,9 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 //    config.Bind<IRepository<CollectionViewModel>>().
                 //        ToInstance(CollectionRepositoryFake.Object);
                 //});
+                //}
             }
+
 
             [TearDown]
             public void TearDown()

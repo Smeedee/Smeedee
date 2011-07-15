@@ -67,36 +67,42 @@ namespace Smeedee.Tasks.Charting
                 downloadStringService.DownloadAsync(new Uri(filepath), data =>
                                                                            {
                                                                                var oneLineOneDataset = data.Split('\n');
+                                                                               var valueSeparator = char.Parse(separator);
+                                                                               int shortestDataset = GetShortestDataset(oneLineOneDataset, valueSeparator);
 
-                                                                               int shortestDataset = int.MaxValue;
-                                                                               foreach (var s in oneLineOneDataset)
-                                                                               {
-                                                                                   if (shortestDataset >
-                                                                                       s.Split(char.Parse(separator)).
-                                                                                           Length)
-                                                                                       shortestDataset =
-                                                                                           s.Split(char.Parse(separator))
-                                                                                               .Length;
-                                                                               }
                                                                                foreach (var item in oneLineOneDataset)
                                                                                {
                                                                                    var set = new DataSet();
-                                                                                   var splittedString =
-                                                                                       item.Split(char.Parse(separator));
-
-                                                                                   for (int i = 0;
-                                                                                        i < shortestDataset;
-                                                                                        i++)
+                                                                                   var splittedString = item.Split(valueSeparator);
+                                                                                   
+                                                                                   int i = 0;
+                                                                                   if (!IsNumber(splittedString[0]))
                                                                                    {
-                                                                                       set.DataPoints.Add(
-                                                                                           splittedString[i].Trim());
+                                                                                       set.Name = splittedString[0];
+                                                                                       i = 1;
+                                                                                   }
+                                                                                   for (;i < shortestDataset; i++)
+                                                                                   {
+                                                                                       if (IsNumber(splittedString[i].Trim()))
+                                                                                        set.DataPoints.Add(splittedString[i].Trim());
                                                                                    }
                                                                                    datasets.Add(set);
-
                                                                                }
                                                                                callback(datasets);
                                                                            });
             }
+        }
+
+        private int GetShortestDataset(string[] datasets, char separator)
+        {
+            int shortestDataset = int.MaxValue;
+            
+            foreach (var set in datasets)
+            {
+                if (shortestDataset > set.Split(separator).Length)
+                    shortestDataset = set.Split(separator).Length;
+            }
+            return shortestDataset;
         }
 
         public void SaveDataToStorage(IList<DataSet> datasets)
@@ -116,6 +122,11 @@ namespace Smeedee.Tasks.Charting
             if (Regex.IsMatch(filepath, "^https?://[a-zA-Z1-9]"))
                 return true;
             return false;
+        }
+
+        public static bool IsNumber(string word)
+        {
+            return Regex.IsMatch(word, @"^-?\d*[0-9]?(|.\d*[0-9]|,\d*[0-9])?$");
         }
 
     }

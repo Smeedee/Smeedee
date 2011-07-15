@@ -9,17 +9,46 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
     public class ChartConfig
     {
         public static readonly string chart_setting_name = "chart name";
+        public static readonly string x_axis_setting_name = "x-axis";
+        public static readonly string y_axis_setting_name = "y-axis";
 
-        public static readonly string collection_setting_name = "collection";
+        public static readonly string x_axis_setting_type = "x-axis type";
+
         public static readonly string database_setting_name = "database";
-        
-        //public static readonly string xaxis_property_setting_name = "x-axis-property";
-        //public static readonly string yaxis_property_Setting_name = "y-axis-property";
+        public static readonly string collection_setting_name = "collection";
+
+        public static readonly string data_name_setting = "data name";
+        public static readonly string chart_type_setting = "chart type";
+
         private Configuration configuration;
 
         public ChartConfig(Configuration configuration)
         {
             this.configuration = configuration;
+        }
+
+        public string ChartName
+        {
+            get { return configuration.GetSetting(chart_setting_name).Value; }
+            set { configuration.ChangeSetting(chart_setting_name, value); }
+        }
+
+        public string XAxisName
+        {
+            get { return configuration.GetSetting(x_axis_setting_name).Value; }
+            set { configuration.ChangeSetting(x_axis_setting_name, value); }
+        }
+
+        public string YAxisName
+        {
+            get { return configuration.GetSetting(y_axis_setting_name).Value; }
+            set { configuration.ChangeSetting(y_axis_setting_name, value); }
+        }
+
+        public string XAxisType
+        {
+            get { return configuration.GetSetting(x_axis_setting_type).Value; }
+            set { configuration.ChangeSetting(x_axis_setting_type, value); }
         }
 
         public string Database
@@ -34,19 +63,20 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             set { configuration.ChangeSetting(collection_setting_name, value); }
         }
 
-        
-        //public string XAxisProperty
-        //{
-        //    get { return configuration.GetSetting(xaxis_property_setting_name).Value; }
-        //    set { configuration.ChangeSetting(xaxis_property_setting_name, value); }
-        //}
+        public string DataName
+        {
+            get { return configuration.GetSetting(data_name_setting).Value; }
+            set { configuration.ChangeSetting(data_name_setting, value); }
+        }
 
-        //public string YAxisProperty
-        //{
-        //    get { return configuration.GetSetting(yaxis_property_Setting_name).Value; }
-        //    set { configuration.ChangeSetting(yaxis_property_Setting_name, value); }
-        //}
-        
+        public string SelectedChartType
+        {
+            get { return configuration.GetSetting(chart_type_setting).Value; }
+            set { configuration.ChangeSetting(chart_type_setting, value); }
+        }
+
+
+
 
         public bool IsConfigured
         {
@@ -64,11 +94,14 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             get
             {
                 return
+                    configuration.ContainsSetting(ChartConfig.chart_setting_name) == true &&
+                    configuration.ContainsSetting(ChartConfig.x_axis_setting_name) == true &&
+                    configuration.ContainsSetting(ChartConfig.y_axis_setting_name) == true &&
+                    configuration.ContainsSetting(ChartConfig.x_axis_setting_type) == true &&
                     configuration.ContainsSetting(ChartConfig.database_setting_name) == true &&
-                    configuration.ContainsSetting(ChartConfig.collection_setting_name) == true;
-                //&&
-                //configuration.ContainsSetting(ChartConfig.xaxis_property_setting_name) == true &&
-                //configuration.ContainsSetting(ChartConfig.yaxis_property_Setting_name) == true;
+                    configuration.ContainsSetting(ChartConfig.collection_setting_name) == true &&
+                    configuration.ContainsSetting(ChartConfig.data_name_setting) == true &&
+                    configuration.ContainsSetting(ChartConfig.chart_type_setting) == true;
 
                 /*       "Config setting is missing; " + GraphConfig.xaxis_property_setting_name);
                 Guard.Requires<ArgumentException>(configuration.ContainsSetting(GraphConfig.yaxis_property_Setting_name),
@@ -86,20 +119,25 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 //else if (configuration.ContainsSetting(yaxis_property_Setting_name) == false)
                 //    return "Config setting is missing; " + yaxis_property_Setting_name;
                 //else
-                    return string.Empty;
+                return string.Empty;
             }
         }
 
-        public static Configuration NewDefaultConfiguration()
-        {
-            var config = new Configuration("graph-config");
-            config.NewSetting(database_setting_name);
-            config.NewSetting(collection_setting_name);
-            //config.NewSetting(xaxis_property_setting_name);
-            //config.NewSetting(yaxis_property_Setting_name);
-            config.IsConfigured = false;
+        //Not used
+        //public static Configuration NewDefaultConfiguration()
+        //{
+        //    var config = new Configuration("graph-config");
+        //    config.NewSetting(chart_setting_name);
+        //    config.NewSetting(x_axis_setting_name);
+        //    config.NewSetting(y_axis_setting_name);
+        //    config.NewSetting(x_axis_setting_type);
+        //    config.NewSetting(database_setting_name);
+        //    config.NewSetting(collection_setting_name);
+        //    config.NewSetting(data_name_setting);
+        //    config.NewSetting(chart_type_setting);
+        //    config.IsConfigured = false;
 
-            return config;
-        }
+        //    return config;
+        //}
     }
 }

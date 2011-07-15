@@ -105,6 +105,9 @@
     <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\ViewModels.cs">
       <Link>Corkboard\ViewModel\ViewModels.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartConfig.cs">
+      <Link>GenericCharting\Controllers\ChartConfig.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartController.cs">
       <Link>GenericCharting\Controllers\ChartController.cs</Link>
     </Compile>
