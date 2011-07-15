@@ -11,6 +11,9 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 {
     public partial class ChartViewModel : AbstractViewModel
     {
+
+        public ObservableCollection<DataSetViewModel> Lines { get; set; }
+
         //State
         public virtual ObservableCollection<DataPointViewModel> Data
         {
@@ -39,6 +42,11 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
         public ChartViewModel()
         {
+            Lines = new ObservableCollection<DataSetViewModel>
+                        {
+                            new DataSetViewModel {Name = "Test", Data = new ObservableCollection<DataPointViewModel> { new DataPointViewModel {X = 1, Y = 1},  new DataPointViewModel {X = 2, Y = 2}}},
+                            new DataSetViewModel {Name = "Test2", Data = new ObservableCollection<DataPointViewModel> { new DataPointViewModel {X = 1, Y = 3},  new DataPointViewModel {X = 2, Y = 1}}}
+                        };
             Data = new ObservableCollection<DataPointViewModel>();
             
             Refresh = new DelegateCommand();
