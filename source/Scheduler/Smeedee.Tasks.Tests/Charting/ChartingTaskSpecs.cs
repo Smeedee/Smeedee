@@ -187,7 +187,7 @@ namespace Smeedee.Tasks.Tests.Charting
         public void Setup()
         {
             Scenario("");
-            config = new TaskConfiguration { Entries = new List<TaskConfigurationEntry>() { new TaskConfigurationEntry { Name = ChartingTask.VALUE_SEPARATOR, Value = ",", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.FILEPATH, Value = "http://my.url", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.DATABASE_NAME, Value = "database", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.COLLECTIONS_NAME, Value = "collection", Type = typeof(string) } } };
+            config = new TaskConfiguration { Entries = new List<TaskConfigurationEntry>() { new TaskConfigurationEntry { Name = ChartingTask.VALUE_SEPARATOR, Value = ",", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.FILEPATH, Value = "http://my.url", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.COLLECTIONS_NAME, Value = "collection", Type = typeof(string) } } };
             chartStorage = new Mock<IChartStorage>();
             downloadStringServiceFake = new Mock<IDownloadStringService>();
             Before();
