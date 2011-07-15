@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Charting;
-using Smeedee.DomainModel.Framework;
-using Smeedee.DomainModel.NoSql;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.Framework;
 using Smeedee.Integration.Database.DomainModel.Charting;
@@ -20,10 +18,9 @@ namespace Smeedee.Tasks.Charting
          Description = "Retrieves information from some file to show in some chart",
          Version = 1,
          Webpage = "http://smeedee.org")]
-    [TaskSetting(1, FILEPATH, typeof(Uri), "file:///")]
+    [TaskSetting(1, FILEPATH, typeof(Uri), "file://")]
     [TaskSetting(2, VALUE_SEPARATOR, typeof(string), ",", "At what value should the data be separated. Ex. CSV uses ','")]
     [TaskSetting(3, COLLECTIONS_NAME, typeof(string), "Collection", "Give this data a unique name in the database")]
-    //[TaskSetting(5, "Is this a checkbox", "","",""  )]
     public class ChartingTask : TaskBase
     {
         public const string FILEPATH = "File path";
@@ -59,7 +56,7 @@ namespace Smeedee.Tasks.Charting
 
         public void GetDataSetFromFile(string filepath, string separator, Action<IList<DataSet>> callback)
         {
-            if (IsValidURL(filepath)) // notify the user somehow?
+            if (IsValidURL(filepath))
             {
                 var datasets = new List<DataSet>();
                 downloadStringService.DownloadAsync(new Uri(filepath), data =>
@@ -88,6 +85,9 @@ namespace Smeedee.Tasks.Charting
                                                                                callback(datasets);
                                                                            });
             }
+            else
+                throw new FileFormatException("Filepath is not valid. Try using file:// or http://");
+
         }
 
         private int GetShortestDataset(string[] datasets, char separator)
@@ -113,7 +113,7 @@ namespace Smeedee.Tasks.Charting
 
         public static bool IsValidURL(string filepath)
         {
-            if (Regex.IsMatch(filepath, "^file:///"))
+            if (Regex.IsMatch(filepath, "^file://"))
                 return true;
             if (Regex.IsMatch(filepath, "^https?://[a-zA-Z1-9]"))
                 return true;
