@@ -11,7 +11,7 @@
         <Converters:BuildStatusConverter x:Key="BuildStatusConverter" />
         <SampleData:CINotifierDataSource x:Key="CINotifierDataSource" d:IsDataSource="True" />
         <ControlTemplate x:Name="LargeNotifier" TargetType="ContentControl">
-            <controlsToolkit:Viewbox>
+            <Viewbox>
                 <Grid Margin="0,7,0,7"
                       x:Name="LayoutRoot">
                     <Grid.ColumnDefinitions>
@@ -50,10 +50,10 @@
                              StrokeThickness="3">
                     </Ellipse>
                 </Grid>
-            </controlsToolkit:Viewbox>
+            </Viewbox>
         </ControlTemplate>
         <ControlTemplate x:Name="SmallNotifier" TargetType="ContentControl">
-            <controlsToolkit:Viewbox>
+            <Viewbox>
                 <StackPanel Margin="0,7,0,7">
                     <Ellipse x:Name="Light"
                              Fill="{Binding Status, Converter={StaticResource BuildStatusConverter}, Mode=OneWay}"
@@ -65,7 +65,7 @@
                              StrokeThickness="3">
                     </Ellipse>
                 </StackPanel>
-            </controlsToolkit:Viewbox>
+            </Viewbox>
         </ControlTemplate>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot"

@@ -15,10 +15,10 @@
 		
 		<DataTemplate x:Key="ProjectInfoTemplate">
 			<Grid Margin="0,0,5,5">
-				<Controls:Viewbox Margin="0" Width="417" Height="Auto">
+				<Viewbox Margin="0" Width="417" Height="Auto">
 					<Views1:CIProjectInfoView x:Name="projectView" Margin="0,0,5,5" 
 						HorizontalAlignment="Stretch" Height="Auto" Width="550"/>
-				</Controls:Viewbox>
+				</Viewbox>
 			</Grid>
 		</DataTemplate>
 		

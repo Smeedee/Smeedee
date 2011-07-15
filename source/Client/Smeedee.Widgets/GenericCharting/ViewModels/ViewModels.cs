@@ -13,57 +13,103 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 	public partial class DataPointViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual Object X
-		{
-			get 
+		public virtual Object X 
+		{ 
+			get
 			{
 				OnGetX(ref _X);
 				 
 				return _X; 
 			}
-			set
+			set 
 			{
-				if (value != _X)
-				{
-					OnSetX(ref value); 
-					_X = value;
-					TriggerPropertyChanged("X");
-				}
-			}
+				OnSetX(ref value); 
+				_X = value; 
+			} 
 		}
-		private Object _X;
 
+		private Object _X;
 		partial void OnGetX(ref Object value);
 		partial void OnSetX(ref Object value);
-
-		public virtual Object Y
-		{
-			get 
+		public virtual Object Y 
+		{ 
+			get
 			{
 				OnGetY(ref _Y);
 				 
 				return _Y; 
 			}
-			set
+			set 
 			{
-				if (value != _Y)
-				{
-					OnSetY(ref value); 
-					_Y = value;
-					TriggerPropertyChanged("Y");
-				}
-			}
+				OnSetY(ref value); 
+				_Y = value; 
+			} 
 		}
-		private Object _Y;
 
+		private Object _Y;
 		partial void OnGetY(ref Object value);
 		partial void OnSetY(ref Object value);
-
 	
 		
 		//Commands
 		
 		public DataPointViewModel()
+		{
+	
+			OnInitialize();
+			ApplyConvention(new BindCommandsDelegatesToMethods());
+		}
+
+		partial void OnInitialize();
+	}
+}
+
+namespace Smeedee.Widgets.GenericCharting.ViewModels
+{
+	public partial class DataSetViewModel : TinyMVVM.Framework.ViewModelBase
+	{
+		//State
+		public virtual string Name 
+		{ 
+			get
+			{
+				OnGetName(ref _Name);
+				 
+				return _Name; 
+			}
+			set 
+			{
+				OnSetName(ref value); 
+				_Name = value; 
+			} 
+		}
+
+		private string _Name;
+		partial void OnGetName(ref string value);
+		partial void OnSetName(ref string value);
+		public virtual ObservableCollection<DataPointViewModel> Data 
+		{ 
+			get
+			{
+				OnGetData(ref _Data);
+				 
+				return _Data; 
+			}
+			set 
+			{
+				OnSetData(ref value); 
+				_Data = value; 
+			} 
+		}
+
+		private ObservableCollection<DataPointViewModel> _Data;
+		partial void OnGetData(ref ObservableCollection<DataPointViewModel> value);
+		partial void OnSetData(ref ObservableCollection<DataPointViewModel> value);
+	
+		
+		//Commands
+		
+		public DataSetViewModel()
 		{
 	
 			OnInitialize();

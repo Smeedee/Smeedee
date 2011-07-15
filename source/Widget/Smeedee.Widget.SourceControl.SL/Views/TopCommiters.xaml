@@ -26,12 +26,12 @@
         <charting:Chart
 			BorderThickness="0,0,0,0"
             Style="{StaticResource PieChartStyle}" 
-            LegendStyle="{StaticResource TopCommittersLegendStyle}" Margin="0,0,0,65">
+            Margin="0,0,0,65" LegendStyle="{StaticResource TopCommittersLegendStyle2}">
 			<charting:PieSeries
-                x:Name="PieChart"
+                x:Name="PieChart6"
                 ItemsSource="{Binding Data}"
 				IndependentValueBinding="{Binding Firstname}"
-                DependentValueBinding="{Binding NumberOfCommits}" LegendItemStyle="{StaticResource TopCommitersLegendItemStyle}" Margin="10"/>
+                DependentValueBinding="{Binding NumberOfCommits}" Margin="10" LegendItemStyle="{StaticResource TopCommittersLegendItemStyle2}" />
 		</charting:Chart>
         <TextBlock x:Name="TotalAndRevision" FontSize="16" TextWrapping="Wrap" FontWeight="Bold" Foreground="{StaticResource FontBrushDark}" FontFamily="{StaticResource FontFamily}" Text="{Binding NumberOfCommitsAndRevision, Mode=OneWay}" Height="61" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="271" d:LayoutOverrides="HorizontalAlignment" Margin="0,0,8,0"/>
         <TextBlock x:Name="Date" VerticalAlignment="Bottom" FontSize="48" TextWrapping="Wrap" FontWeight="Bold" Foreground="{StaticResource FontBrushDark}" Height="65" FontFamily="{StaticResource FontFamily}" HorizontalAlignment="Left" Width="581" ><Run Text="Since "/><Run Text="{Binding ActualDateUsed, Converter={StaticResource DateToStringConverter}, Mode=OneWay}"/></TextBlock>

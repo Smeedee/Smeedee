@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,9 +26,30 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
             DependencyProperty.Register("LinesSource", typeof (IEnumerable), typeof (GenericChart),
                 new PropertyMetadata(null, (s, e) => ((GenericChart) s).InitSeries()));
 
+
+        public DataTemplate LineTemplate
+        {
+            get { return (DataTemplate) GetValue(LineTemplateProperty); }
+            set { SetValue(LineTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty LineTemplateProperty =
+            DependencyProperty.Register("LineTemplate", typeof (DataTemplate), typeof (GenericChart), 
+                new PropertyMetadata(null, (s, e) => ((GenericChart)s).InitSeries()));
+
         private void InitSeries()
         {
-            throw new NotImplementedException();
+            Series.Clear();
+            if (LinesSource == null || LineTemplate == null)
+                return;
+
+            var series = from line in LinesSource.OfType<object>()
+                         let seriesItem = LineTemplate.LoadContent() as ISeries
+                         where seriesItem != null && seriesItem is FrameworkElement
+                         let assignDataContext = ((FrameworkElement) seriesItem).DataContext = line
+                         select seriesItem;
+
+            series.ToList().ForEach(Series.Add);
         }
     }
 }

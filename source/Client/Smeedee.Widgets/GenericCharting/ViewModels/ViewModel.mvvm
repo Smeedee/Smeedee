@@ -9,8 +9,12 @@ using TinyMVVM.Framework;
 namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 	viewmodel DataPointViewModel:
-		oproperty X as Object
-		oproperty Y as Object
+		property X as Object
+		property Y as Object
+
+	viewmodel DataSetViewModel:
+		property Name as string
+		property Data as ObservableCollection<DataPointViewModel>
 		
 	viewmodel ChartTypeViewModel:
 		oproperty ChartType as string
