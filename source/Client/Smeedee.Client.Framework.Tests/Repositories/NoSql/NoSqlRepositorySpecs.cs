@@ -201,6 +201,21 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                 });
             }
 
+            [Test]
+            public void Assure_that_it_is_possible_to_get_no_collections_in_database_as_empty_list()
+            {
+                Given(the_repository_has_been_created).
+                    And(there_is_one_database_without_collections_in_NoSql).
+                    And(GetDatabases_has_been_called);
+                When("calling GetCollectionsInDatabase");
+                Then("Collections should be converted to an empty string list", () =>
+                {
+                    var list = NoSqlRepository.GetCollectionsInDatabase("EmptyDatabase", databases);
+                    list.Count.ShouldBe(0);
+                });
+
+            }
+
             private Context GetDatabases_has_been_called = () =>
                 repository.GetDatabases(collection =>
                     {
@@ -218,6 +233,9 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
 
             protected Context there_is_two_database_and_two_collection_in_NoSql = () =>
                 DownloadStringServiceFakeReturns("[{Name: \"EmptyDatabase\", Collections: []}, {Name: \"TestDatabase\", Collections: [{Name: \"TestCollection\"}, {Name: \"TestCollection2\"}]}]", null);
+
+            protected Context there_is_one_database_without_collections_in_NoSql = () =>
+                DownloadStringServiceFakeReturns("[{Name: \"EmptyDatabase\", Collections: [] }]", null);
 
             protected static Mock<IDownloadStringService> downloadStringServiceFake;
 

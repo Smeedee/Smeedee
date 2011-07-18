@@ -58,7 +58,7 @@ namespace Smeedee.Client.Framework.Repositories.Charting
 
                     chart.DataSets.Add(dataset);
                 }
-                ChartLoaded.Invoke(this, new ChartLoadedEventArgs(chart));
+                ChartLoaded(this, new ChartLoadedEventArgs(chart));
             });
 
         }
@@ -68,7 +68,7 @@ namespace Smeedee.Client.Framework.Repositories.Charting
             repository.GetDatabases(d =>
             {
                 databases = d;
-                DatasourcesRefreshed.Invoke(this, EventArgs.Empty);
+                DatasourcesRefreshed(this, EventArgs.Empty);
             });
         }
     }

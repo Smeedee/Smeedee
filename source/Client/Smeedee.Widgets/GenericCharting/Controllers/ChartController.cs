@@ -42,7 +42,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
 
-            storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
+            this.storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
 
             SettingsViewModel = settingsViewModel;
             SettingsViewModel.SaveSettings.ExecuteDelegate = SaveSettings;
