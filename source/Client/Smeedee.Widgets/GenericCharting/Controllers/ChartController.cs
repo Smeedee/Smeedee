@@ -40,38 +40,30 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             this.storageReader = storageReader;
 
-
-
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
 
-
-
             storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
-
 
             SettingsViewModel = settingsViewModel;
             SettingsViewModel.SaveSettings.ExecuteDelegate = SaveSettings;
             SettingsViewModel.ReloadSettings.ExecuteDelegate = ReloadSettings;
             SettingsViewModel.AddDataSettings.ExecuteDelegate = AddDataSettings;
 
-
             SettingsViewModel.PropertyChanged += SettingsViewModelPropertyChanged;
-
-           
 
             UpdateListOfDataSources();
 
             Start();
         }
 
-        private void AddDataSettings()
+        public void AddDataSettings()
         {
-
+            //var db ="hallo";
+            //SettingsViewModel.Databases.Add(db);
         }
 
         private void ReloadSettings()
         {
-
         }
 
         private void SaveSettings()
@@ -84,13 +76,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             SetIsLoadingConfig();
 
-            //SetIsNotLoadingConfig();
-
-            //SetIsLoadingData();
-
             storageReader.RefreshDatasources();
-
-
         }
 
         private void DatasourcesRefreshed(object sender, EventArgs args)
@@ -101,6 +87,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         public void AddDatabasesToSettingsViewModel(IList<string> db)
         {
+            //db = new List<string>{"db1", "db2", "db3"};     burde ikke dette virke?
+
             uiInvoker.Invoke(() =>
             {
                 SettingsViewModel.Databases.Clear();
@@ -123,10 +111,10 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         public void UpdateCollectionsInSettingsViewModel(string database)
         {
-
             SettingsViewModel.Collections.Clear();
             SettingsViewModel.SelectedCollection = null;
             if (database == null) return;
+
             var collections = storageReader.GetCollectionsInDatabase(database);
             if (collections != null && collections.Count() > 0)
             {
@@ -139,14 +127,10 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                                   });
             }
         }
-     
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
             UpdateListOfDataSources();
         }
-
-
-
     }
 }
