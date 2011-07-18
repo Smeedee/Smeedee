@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Charting\ChartingTaskSpecs.cs" />
     <Compile Include="CI\CITaskBaseSpecs.cs" />
     <Compile Include="CI\HudsonXMLTask\HudsonXMLTaskSpecs.cs" />
     <Compile Include="CI\Integration\CIHarvesterSpecs.cs" />
@@ -144,6 +145,10 @@
     <ProjectReference Include="..\..\Client\Smeedee.Client.Framework.Tests\Smeedee.Client.Framework.Tests.csproj">
       <Project>{1E77D895-A0E6-4DC9-82FF-3379D65836C1}</Project>
       <Name>Smeedee.Client.Framework.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
+      <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
+      <Name>Smeedee.Client.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>

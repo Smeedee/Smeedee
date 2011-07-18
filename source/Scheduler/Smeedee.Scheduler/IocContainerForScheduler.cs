@@ -1,5 +1,7 @@
 ﻿using System;
 using Ninject;
+using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.SL.Services.Impl;
 using Smeedee.DomainModel.CI;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Corkboard;
@@ -12,6 +14,7 @@ using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.DomainModel.TeamPicture;
 using Smeedee.DomainModel.Users;
+using Smeedee.Integration.Database.DomainModel.Charting;
 using Smeedee.Integration.Database.DomainModel.Repositories;
 
 namespace Smeedee.Scheduler
@@ -46,6 +49,10 @@ namespace Smeedee.Scheduler
             kernel.Bind<IPersistDomainModels<ProjectInfoServer>>().To<ProjectInfoServerDatabaseRepository>();
             kernel.Bind<IPersistDomainModels<RetrospectiveNote>>().To<RetrospectiveNoteDatabaseRepository>();
             kernel.Bind<IPersistDomainModels<TeamPicture>>().To<TeamPictureDatabaseRepository>();
+            kernel.Bind<IPersistDomainModels<NoSqlDatabase>>().To<SqliteNoSqlDatabaseRepository>();
+
+            kernel.Bind<IChartStorage>().To<ChartStorage>();
+            kernel.Bind<IDownloadStringService>().To<WebClientDownloadStringService>();
 
             kernel.Bind<ILog>().To<Logger>();
         }

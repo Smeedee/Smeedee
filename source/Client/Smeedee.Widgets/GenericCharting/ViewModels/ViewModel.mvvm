@@ -8,7 +8,47 @@ using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.GenericCharting.ViewModels
 
-	viewmodel ChartViewModelTest:
+	viewmodel DataPointViewModel:
+		property X as Object
+		property Y as Object
 
-		oproperty IsCakeALie as bool
+	viewmodel DataSetViewModel:
+		property Name as string
+		property Data as ObservableCollection<DataPointViewModel>
+		
+	viewmodel ChartTypeViewModel:
+		oproperty ChartType as string
 
+	viewmodel DatabaseViewModel:
+		property Name as string
+		property Collections as ObservableCollection<CollectionViewModel>
+
+	viewmodel CollectionViewModel:
+		property Name as string
+
+	viewmodel ChartSettingsViewModel:
+
+		oproperty ChartName as string
+		oproperty XAxisName as string
+		oproperty YAxisName as string
+		oproperty XAxisType as string
+
+		property Databases as ObservableCollection<DatabaseViewModel>
+
+		oproperty SelectedDatabase as DatabaseViewModel
+		oproperty SelectedCollection as CollectionViewModel
+
+		command SaveSettings
+		command ReloadSettings
+		command AddDataSettings
+
+
+	viewmodel SetConfigViewModel
+
+		oproperty SelectedAction as string
+		oproperty DatabaseAndCollection as string
+		oproperty DataName as string
+		oproperty SelectedChartType as string
+
+	
+		

@@ -36,7 +36,8 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             public void Assure_that_chart_without_data_is_saved()
             {
                 Given(the_storage_has_been_created).
-                    And(a_chart_without_data_has_been_created);
+                    And(a_chart_without_data_has_been_created).
+                    And(no_database_exists);
                 When(saving_chart);
                 Then("Expect a NoSqlDatabase-object to be saved", () => noSqlPersistRepositoryMock.Verify(
                     a => a.Save(It.Is<NoSqlDatabase>(d => (d.Name == "database" && d.GetCollection("collection").Documents.Count == 0)) )
@@ -47,7 +48,8 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             public void Assure_that_chart_with_data_is_saved()
             {
                 Given(the_storage_has_been_created).
-                    And(a_chart_with_data_has_been_created);
+                    And(a_chart_with_data_has_been_created).
+                    And(no_database_exists);
                 When(saving_chart);
                 Then(expect_correct_datastructure);
             }
@@ -62,11 +64,11 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             {
                 chart = new Chart("testbase", "testcol");
                 var set = new DataSet("testset");
-                set.DataPoints.Add(new DataPoint {X = 0, Y = 1});
-                set.DataPoints.Add(new DataPoint {X = 2, Y = 3});
+                set.DataPoints.Add(0);
+                set.DataPoints.Add(1);
                 chart.DataSets.Add(set);
                 set = new DataSet("test2");
-                set.DataPoints.Add(new DataPoint {X = 42, Y = 42});
+                set.DataPoints.Add(42);
                 chart.DataSets.Add(set);
             };
 
@@ -88,44 +90,69 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
                        doc1["Name"].Value<string>() == "test2" &&
                        doc0["DataPoints"].Count() == 2 &&
                        doc1["DataPoints"].Count() == 1 &&
-                       doc0["DataPoints"][0]["X"].Value<int>() == 0 &&
-                       doc0["DataPoints"][0]["Y"].Value<int>() == 1 &&
-                       doc0["DataPoints"][1]["X"].Value<int>() == 2 &&
-                       doc0["DataPoints"][1]["Y"].Value<int>() == 3 &&
-                       doc1["DataPoints"][0]["X"].Value<int>() == 42 &&
-                       doc1["DataPoints"][0]["Y"].Value<int>() == 42;
+                       doc0["DataPoints"][0].Value<int>() == 0 &&
+                       doc0["DataPoints"][1].Value<int>() == 1 &&
+                       doc1["DataPoints"][0].Value<int>() == 42;
             }
 
+            private Context no_database_exists = () =>
+            {
+                var list = new List<NoSqlDatabase>();
+
+                noSqlRepositoryMock.Setup(
+                    g =>
+                    g.Get(It.IsAny<Specification<NoSqlDatabase>>())).Returns(list);
+            };
             
         }
 
         [TestFixture]
         public class When_database_already_exists : Shared
         {
-            [Ignore]
             [Test]            
             public void Assure_that_database_is_not_overwritten()
             {
                 Given(the_storage_has_been_created).
                     And(a_chart_without_data_has_been_created).
                     And(the_database_already_exists);
-
+                When(saving_chart);
+                Then(validate_that_the_other_collection_is_still_in_database);
             }
 
             private Context the_database_already_exists = () =>
-                                                              {
-                                                              };
+            {
+                var database = new NoSqlDatabase() {Name = "database"};
+                var anotherCollection = database.GetCollection("another");
+                anotherCollection.Insert(Document.Parse("{Test:1}"));
+                var list = new List<NoSqlDatabase> {database};
+
+                noSqlRepositoryMock.Setup(
+                    g =>
+                    g.Get(It.IsAny<Specification<NoSqlDatabase>>())).Returns(list);
+            };
+
+            private Then validate_that_the_other_collection_is_still_in_database = () =>
+            {
+                noSqlPersistRepositoryMock.Verify( a => a.Save(
+                        It.Is<NoSqlDatabase>(d => ValidateDatabase(d))));
+            };
+
+            private static bool ValidateDatabase(NoSqlDatabase d)
+            {
+                var another = d.GetCollection("another");
+                return another.Documents.Count == 1;
+            }
         }
 
         public class Shared : ScenarioClass
         {
             protected static ChartStorage storage;
             protected static Chart chart;
-            protected static Mock<IPersistDomainModelsAsync<NoSqlDatabase>> noSqlPersistRepositoryMock;
-            protected static Mock<IAsyncRepository<NoSqlDatabase>> noSqlRepositoryMock;
+            protected static Mock<IPersistDomainModels<NoSqlDatabase>> noSqlPersistRepositoryMock;
+            protected static Mock<IRepository<NoSqlDatabase>> noSqlRepositoryMock;
 
             protected Context the_storage_has_been_created = () =>
-                storage = new ChartStorage(noSqlPersistRepositoryMock.Object);
+                storage = new ChartStorage(noSqlRepositoryMock.Object, noSqlPersistRepositoryMock.Object);
 
             protected Context a_chart_without_data_has_been_created = () =>
                 chart = new Chart("database", "collection");
@@ -145,8 +172,9 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
             [SetUp]
             public void SetUp()
             {
-                noSqlPersistRepositoryMock = new Mock<IPersistDomainModelsAsync<NoSqlDatabase>>();
-                noSqlRepositoryMock = new Mock<IAsyncRepository<NoSqlDatabase>>();
+                Scenario("");
+                noSqlPersistRepositoryMock = new Mock<IPersistDomainModels<NoSqlDatabase>>();
+                noSqlRepositoryMock = new Mock<IRepository<NoSqlDatabase>>();
                 storage = null;
                 chart = null;
                 hasRun = false;
@@ -182,9 +210,9 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Charting
                 }
                 return true;
             }
-            private static bool CompareDataPoint(DataPoint a, DataPoint b)
+            private static bool CompareDataPoint(object a, object b)
             {
-                return (a.X == b.X && a.Y == b.Y);
+                return (a.Equals(b));
             }
 
         }

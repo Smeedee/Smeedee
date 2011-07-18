@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Smeedee.Client.Framework.Repositories.Charting;
+using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.SL.Repositories;
@@ -52,7 +54,10 @@ namespace Smeedee.Client.Framework
                 config.Bind<ITimer>().To<StandardTimer>();
                 config.Bind<IUIInvoker>().To<UIInvoker>();
         	    config.Bind<SmeedeeREST>().To<SmeedeeREST>();
+                
                 config.Bind<IDownloadStringService>().To<WebClientDownloadStringService>();
+        	    config.Bind<INoSqlRepository>().To<NoSqlRepository>();
+        	    config.Bind<IChartStorageReader>().To<ChartStorageReader>();
 
                 BindAsyncIDomainModelDeleters(config);
                 BindAsyncPersisters(config);

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Text;
 
 namespace Smeedee.DomainModel.Charting
 {
@@ -30,7 +26,7 @@ namespace Smeedee.DomainModel.Charting
     {
         public DataSet()
         {
-            DataPoints = new List<DataPoint>();
+            DataPoints = new List<object>();
         }
 
         public DataSet(string name) : this()
@@ -39,12 +35,6 @@ namespace Smeedee.DomainModel.Charting
         }
 
         public string Name { get; set; }
-        public IList<DataPoint> DataPoints { get; private set; }
-    }
-
-    public class DataPoint
-    {
-        public Object X { get; set; }
-        public Object Y { get; set; }
+        public IList<object> DataPoints { get; private set; }
     }
 }

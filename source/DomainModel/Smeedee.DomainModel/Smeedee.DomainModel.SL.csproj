@@ -98,6 +98,7 @@
     <Compile Include="..\..\Common\Classes\Guard.cs">
       <Link>Guard.cs</Link>
     </Compile>
+    <Compile Include="Charting\Chart.cs" />
     <Compile Include="CI\Build.cs" />
     <Compile Include="CI\BuildSpecification.cs" />
     <Compile Include="CI\CIProject.cs" />

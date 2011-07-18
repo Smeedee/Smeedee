@@ -12,14 +12,20 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Framework;
-using Newtonsoft.Json.Linq;
 using Smeedee.DomainModel.NoSql;
 using Smeedee.Framework;
+using Newtonsoft.Json.Linq;
 
 
 namespace Smeedee.Client.Framework.Repositories.NoSql
 {
-    public class NoSqlRepository
+    public interface INoSqlRepository
+    {
+        void GetDatabases(Action<Collection> callback);
+        void GetDocuments(string database, string collection, Action<Collection> callback);
+    }
+
+    public class NoSqlRepository : INoSqlRepository
     {
         public static readonly string documentsUrl = "../Services/NoSql/Documents.ashx?database={0}&collection={1}";
         public static readonly string databasesUrl = "../Services/NoSql/Database.ashx";

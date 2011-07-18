@@ -3,258 +3,293 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	mc:Ignorable="d"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:visualizationToolkit="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:System_Windows_Controls_DataVisualization_Charting_Primitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:APD_Client_Framework_SL_Controls="clr-namespace:Smeedee.Client.Framework.SL.Controls;assembly=Smeedee.Client.Framework.SL" xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+	xmlns:visualizationToolkit="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+	xmlns:System_Windows_Controls_DataVisualization_Charting_Primitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+	xmlns:APD_Client_Framework_SL_Controls="clr-namespace:Smeedee.Client.Framework.SL.Controls;assembly=Smeedee.Client.Framework.SL"
+	xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit">
 
     
 	<Style x:Key="PieChartStyle" TargetType="Charting:Chart">
 		<Setter Property="BorderBrush" Value="Black"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="IsTabStop" Value="False"/>
-		<Setter Property="StylePalette">
+		<Setter Property="Palette">
 			<Setter.Value>
-				<visualizationToolkit:StylePalette>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFB9D6F7"/>
-									<GradientStop Color="#FF284B70" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFFBB7B5"/>
-									<GradientStop Color="#FF702828" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFB8C0AC"/>
-									<GradientStop Color="#FF5F7143" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFFDE79C"/>
-									<GradientStop Color="#FFF6BC0C" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFA9A3BD"/>
-									<GradientStop Color="#FF382C6C" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFB1A1B1"/>
-									<GradientStop Color="#FF50224F" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FF9DC2B3"/>
-									<GradientStop Color="#FF1D7554" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFB5B5B5"/>
-									<GradientStop Color="#FF4C4C4C" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FF98C1DC"/>
-									<GradientStop Color="#FF0271AE" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFC1C0AE"/>
-									<GradientStop Color="#FF706E41" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFADBDC0"/>
-									<GradientStop Color="#FF446A73" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FF2F8CE2"/>
-									<GradientStop Color="#FF0C3E69" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFDCDCDC"/>
-									<GradientStop Color="#FF757575" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFF4F4F4"/>
-									<GradientStop Color="#FFB7B7B7" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-					<Style TargetType="Control">
-						<Setter Property="Background">
-							<Setter.Value>
-								<RadialGradientBrush>
-									<RadialGradientBrush.RelativeTransform>
-										<TransformGroup>
-											<ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
-											<TranslateTransform X="-0.425" Y="-0.486"/>
-										</TransformGroup>
-									</RadialGradientBrush.RelativeTransform>
-									<GradientStop Color="#FFF4F4F4"/>
-									<GradientStop Color="#FFA3A3A3" Offset="1"/>
-								</RadialGradientBrush>
-							</Setter.Value>
-						</Setter>
-					</Style>
-				</visualizationToolkit:StylePalette>
-			</Setter.Value>
+                <visualizationToolkit:ResourceDictionaryCollection>
+                    <ResourceDictionary>
+                    <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFB9D6F7"/>
+                                    <GradientStop Color="#FF284B70" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFFBB7B5"/>
+                                    <GradientStop Color="#FF702828" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFB8C0AC"/>
+                                    <GradientStop Color="#FF5F7143" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFFDE79C"/>
+                                    <GradientStop Color="#FFF6BC0C" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFA9A3BD"/>
+                                    <GradientStop Color="#FF382C6C" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFB1A1B1"/>
+                                    <GradientStop Color="#FF50224F" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF9DC2B3"/>
+                                    <GradientStop Color="#FF1D7554" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFB5B5B5"/>
+                                    <GradientStop Color="#FF4C4C4C" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF98C1DC"/>
+                                    <GradientStop Color="#FF0271AE" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFC1C0AE"/>
+                                    <GradientStop Color="#FF706E41" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFADBDC0"/>
+                                    <GradientStop Color="#FF446A73" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF2F8CE2"/>
+                                    <GradientStop Color="#FF0C3E69" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFDCDCDC"/>
+                                    <GradientStop Color="#FF757575" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFF4F4F4"/>
+                                    <GradientStop Color="#FFB7B7B7" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                    <ResourceDictionary>
+                        <Style x:Key="DataPointStyle" TargetType="Control">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <RadialGradientBrush>
+                                    <RadialGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="2.09" ScaleY="1.819"/>
+                                            <TranslateTransform X="-0.425" Y="-0.486"/>
+                                        </TransformGroup>
+                                    </RadialGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFF4F4F4"/>
+                                    <GradientStop Color="#FFA3A3A3" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    </ResourceDictionary>
+                </visualizationToolkit:ResourceDictionaryCollection>
+            </Setter.Value>
 		</Setter>
 		<Setter Property="TitleStyle">
 			<Setter.Value>
@@ -319,8 +354,8 @@
 								</Grid.ColumnDefinitions>
 								<visualizationToolkit:Legend x:Name="Legend" 
                                                              Style="{TemplateBinding LegendStyle}" 
-                                                             Grid.Column="0" 
-                                                             Title="{TemplateBinding LegendTitle}" Margin="0" VerticalAlignment="Top"/>
+                                                             Grid.Column="0"
+                                                             Header="{TemplateBinding LegendTitle}" Margin="0" VerticalAlignment="Top"/>
 								<System_Windows_Controls_DataVisualization_Charting_Primitives:EdgePanel 
                                     x:Name="ChartArea" 
                                     Style="{TemplateBinding ChartAreaStyle}"
@@ -335,19 +370,17 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
 	
-	<Style x:Key="TopCommittersLegendStyle" TargetType="visualizationToolkit:Legend">
+	<Style x:Key="TopCommittersLegendStyle2" TargetType="visualizationToolkit:Legend">
 		<Setter Property="BorderBrush" Value="Black"/>
 		<Setter Property="BorderThickness" Value="0"/>
 		<Setter Property="IsTabStop" Value="False"/>
-		<Setter Property="TitleStyle">
+		<Setter Property="ItemsPanel">
 			<Setter.Value>
-				<Style TargetType="visualizationToolkit:Title">
-					<Setter Property="Margin" Value="0,5,0,10"/>
-					<Setter Property="FontWeight" Value="Bold"/>
-					<Setter Property="HorizontalAlignment" Value="Center"/>
-					<Setter Property="Visibility" Value="Collapsed" />
-				</Style>
+				<ItemsPanelTemplate>
+					<Controls:WrapPanel />
+				</ItemsPanelTemplate>	
 			</Setter.Value>
 		</Setter>
 		<Setter Property="Template">
@@ -359,17 +392,21 @@
 								<RowDefinition Height="Auto"/>
 								<RowDefinition/>
 							</Grid.RowDefinitions>
-							<visualizationToolkit:Title Style="{TemplateBinding TitleStyle}" Content="{TemplateBinding Title}" Grid.Row="0"/>
+							<visualizationToolkit:Title Style="{TemplateBinding TitleStyle}" Content="{TemplateBinding Header}" Grid.Row="0"/>
+							
 							<ScrollViewer BorderThickness="0" IsTabStop="False" Padding="0" Grid.Row="1" VerticalScrollBarVisibility="Auto">
-								<Controls:WrapPanel x:Name="LegendItemsArea" Grid.Column="1" />
+								
+								<ItemsPresenter />
+								
 							</ScrollViewer>
 						</Grid>
+						
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
-	<Style x:Key="TopCommitersLegendItemStyle" TargetType="Charting:LegendItem">
+	<Style x:Key="TopCommittersLegendItemStyle2" TargetType="Charting:LegendItem">
 		<Setter Property="IsTabStop" Value="False"/>
 		<Setter Property="Template">
 			<Setter.Value>
@@ -448,4 +485,8 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+	
+	
+	
 </ResourceDictionary>
