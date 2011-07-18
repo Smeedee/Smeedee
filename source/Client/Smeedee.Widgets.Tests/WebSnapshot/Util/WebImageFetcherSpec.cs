@@ -38,33 +38,33 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             }
         }
 
-        [TestFixture]
-        public class When_normal_URL_and_Xpath_is_specified : Shared
-        {
-            [Test]
-            public void Then_assure_it_can_be_downloaded()
-            {
-                providerMock.Setup(w => w.GetPictureNodeURLFromXpath(pageURL, xPath)).Returns(xPathParsed);
-                providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
-                var image = webImageFetcher.GetBitmapFromURL(pageURL, xPath);
-                image.ShouldBeInstanceOfType<WriteableBitmap>();
-                image.ShouldNotBeNull();
-            }
-        }
+        //[TestFixture]
+        //public class When_normal_URL_and_Xpath_is_specified : Shared
+        //{
+        //    [Test]
+        //    public void Then_assure_it_can_be_downloaded()
+        //    {
+        //        providerMock.Setup(w => w.GetPictureNodeURLFromXpath(pageURL, xPath)).Returns(xPathParsed);
+        //        providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
+        //        var image = webImageFetcher.GetBitmapFromURL(pageURL, xPath);
+        //        image.ShouldBeInstanceOfType<WriteableBitmap>();
+        //        image.ShouldNotBeNull();
+        //    }
+        //}
 
-        [TestFixture]
-        public class When_picture_URL_and_Xpath_is_specified : Shared
-        {
-            [Test]
-            public void Then_assure_xpath_is_ignored_and_picture_is_downloaded()
-            {
-                providerMock.Setup(w => w.GetPictureNodeURLFromXpath(imageURL, xPath)).Returns(imageURL);
-                providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
-                var image = webImageFetcher.GetBitmapFromURL(imageURL, xPath);
-                image.ShouldBeInstanceOfType<WriteableBitmap>();
-                image.ShouldNotBeNull();
-            }
-        }
+        //[TestFixture]
+        //public class When_picture_URL_and_Xpath_is_specified : Shared
+        //{
+        //    [Test]
+        //    public void Then_assure_xpath_is_ignored_and_picture_is_downloaded()
+        //    {
+        //        providerMock.Setup(w => w.GetPictureNodeURLFromXpath(imageURL, xPath)).Returns(imageURL);
+        //        providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
+        //        var image = webImageFetcher.GetBitmapFromURL(imageURL, xPath);
+        //        image.ShouldBeInstanceOfType<WriteableBitmap>();
+        //        image.ShouldNotBeNull();
+        //    }
+        //}
 
         public class Shared
         {

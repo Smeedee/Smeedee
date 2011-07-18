@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack">
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\htmlagilitypack\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -42,13 +43,15 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Browser">
+      <HintPath>..\..\..\..\..\..\Program Files\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\System.Windows.Browser.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
     <Reference Include="TinyMVVM">
       <HintPath>..\..\..\tools\TinyMVVM\TinyMVVM.dll</HintPath>
     </Reference>
@@ -87,9 +90,11 @@
     </Compile>
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
     <Compile Include="WebSnapshot\Controllers\WebSnapshotController.cs" />
+    <Compile Include="WebSnapshot\Util\IWebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\IWebSnapshotter.cs" />
     <Compile Include="WebSnapshot\Util\URLValidator.cs" />
     <Compile Include="WebSnapshot\Util\WebImageFetcher.cs" />
+    <Compile Include="WebSnapshot\Util\WebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\WebSnapshotter.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs" />
     <Compile Include="WebSnapshot\ViewModel\ViewModels.cs">

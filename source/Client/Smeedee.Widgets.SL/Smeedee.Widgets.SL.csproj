@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.XPath, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="TinyMVVM.SL">
       <HintPath>..\..\..\tools\TinyMVVM-Silverlight\TinyMVVM.SL.dll</HintPath>
     </Reference>
@@ -139,6 +140,9 @@
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\IWebImageProvider.cs">
+      <Link>WebSnapshot\Util\IWebImageProvider.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\URLValidator.cs">
       <Link>WebSnapshot\Util\URLValidator.cs</Link>
@@ -250,6 +254,7 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
+    <Compile Include="WebSnapshot\Util\WebImageProvider.cs" />
     <Compile Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml.cs">
       <DependentUpon>WebSnapshotSettingsView.xaml</DependentUpon>
     </Compile>

@@ -63,6 +63,9 @@
     <Reference Include="Microsoft.Silverlight.Testing">
       <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Testing\Microsoft.Silverlight.Testing.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Silverlight.Testing.Framework">
+      <HintPath>..\..\..\..\..\sltk\Controls\Bin\Microsoft.Silverlight.Testing.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
       <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Testing\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
     </Reference>
@@ -104,6 +107,7 @@
     <Compile Include="Twitter\ViewModel\TweetViewModelSpecs.cs" />
     <Compile Include="Twitter\ViewModel\TwitterSettingsViewModelSpecs.cs" />
     <Compile Include="Twitter\ViewModel\TwitterViewModelSpecs.cs" />
+    <Compile Include="WebSnapshot\WebImageProviderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
