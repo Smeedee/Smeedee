@@ -22,34 +22,104 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
             set { SetValue(LinesSourceProperty, value); }
         }
 
-        public static readonly DependencyProperty LinesSourceProperty =
-            DependencyProperty.Register("LinesSource", typeof (IEnumerable), typeof (GenericChart),
-                new PropertyMetadata(null, (s, e) => ((GenericChart) s).InitSeries()));
-
-
         public DataTemplate LineTemplate
         {
-            get { return (DataTemplate) GetValue(LineTemplateProperty); }
+            get { return (DataTemplate)GetValue(LineTemplateProperty); }
             set { SetValue(LineTemplateProperty, value); }
         }
 
-        public static readonly DependencyProperty LineTemplateProperty =
-            DependencyProperty.Register("LineTemplate", typeof (DataTemplate), typeof (GenericChart), 
-                new PropertyMetadata(null, (s, e) => ((GenericChart)s).InitSeries()));
+        public IEnumerable ColumnsSource
+        {
+            get { return (IEnumerable) GetValue(ColumnsSourceProperty); }
+            set { SetValue(ColumnsSourceProperty, value); }
+        }
+
+        public DataTemplate ColumnTemplate
+        {
+            get { return (DataTemplate) GetValue(ColumnTemplateProperty); }
+            set { SetValue(ColumnTemplateProperty, value); }
+        }
+
+        public IEnumerable AreasSource
+        {
+            get { return (IEnumerable) GetValue(AreasSourceProperty); }
+            set { SetValue(AreasSourceProperty, value); }
+        }
+
+        public DataTemplate AreaTemplate
+        {
+            get { return (DataTemplate) GetValue(AreaTemplateProperty); }
+            set { SetValue(AreaTemplateProperty, value); }
+        }
 
         private void InitSeries()
         {
             Series.Clear();
-            if (LinesSource == null || LineTemplate == null)
-                return;
+            if (WeHaveAreaTemplateAndAreasSource())
+                AddSeriesFrom(AreasSource, AreaTemplate);
 
-            var series = from line in LinesSource.OfType<object>()
-                         let seriesItem = LineTemplate.LoadContent() as ISeries
+            if (WeHaveColumnTemplateAndColumnsSource())
+                AddSeriesFrom(ColumnsSource, ColumnTemplate);
+
+            if (WeHaveLineTemplateAndLinesSource())
+                AddSeriesFrom(LinesSource, LineTemplate);
+        }
+
+        private bool WeHaveAreaTemplateAndAreasSource()
+        {
+            return AreaTemplate != null && AreasSource != null;
+        }
+
+        private bool WeHaveColumnTemplateAndColumnsSource()
+        {
+            return ColumnTemplate != null && ColumnsSource != null;
+        }
+
+        private bool WeHaveLineTemplateAndLinesSource()
+        {
+            return LineTemplate != null && LinesSource != null;
+        }
+
+        private void AddSeriesFrom(IEnumerable source, DataTemplate template)
+        {
+            var series = from line in source.OfType<object>()
+                         let seriesItem = template.LoadContent() as ISeries
                          where seriesItem != null && seriesItem is FrameworkElement
-                         let assignDataContext = ((FrameworkElement) seriesItem).DataContext = line
+                         let assignDataContext = ((FrameworkElement)seriesItem).DataContext = line
                          select seriesItem;
 
             series.ToList().ForEach(Series.Add);
         }
+
+        public static readonly DependencyProperty LinesSourceProperty =
+            MakeSourceDependencyProperty("LinesSource");
+
+        public static readonly DependencyProperty LineTemplateProperty =
+            MakeDataTemplateDependencyProperty("LineTemplate");
+
+        public static readonly DependencyProperty ColumnsSourceProperty =
+            MakeSourceDependencyProperty("ColumnsSource");
+
+        public static readonly DependencyProperty ColumnTemplateProperty =
+            MakeDataTemplateDependencyProperty("ColumnTemplate");
+
+        public static readonly DependencyProperty AreasSourceProperty =
+            MakeSourceDependencyProperty("AreasSource");
+
+        public static readonly DependencyProperty AreaTemplateProperty =
+            MakeDataTemplateDependencyProperty("AreaTemplate");
+
+        private static DependencyProperty MakeSourceDependencyProperty(string name)
+        {
+            return DependencyProperty.Register(name, typeof(IEnumerable), typeof(GenericChart),
+                new PropertyMetadata(null, (s, e) => ((GenericChart)s).InitSeries()));
+        }
+
+        private static DependencyProperty MakeDataTemplateDependencyProperty(string name)
+        {
+            return DependencyProperty.Register(name, typeof (DataTemplate), typeof (GenericChart),
+                                               new PropertyMetadata(null, (s, e) => ((GenericChart) s).InitSeries()));
+        }
+
     }
 }

@@ -9,75 +9,49 @@
              d:DesignWidth="400">
 
     <Grid x:Name="LayoutRoot">
-    	<local:GenericChart Title="{Binding Name, Mode=OneWay}" LinesSource="{Binding Lines, Mode=OneWay}">
+  
+
+        <local:GenericChart Title="{Binding Name, Mode=OneWay}"
+                            LinesSource="{Binding Lines, Mode=OneWay}"
+                            ColumnsSource="{Binding Columns, Mode=OneWay}"
+                            AreasSource="{Binding Areas, Mode=OneWay}">
+            <charting:Chart.Axes>
+                <charting:LinearAxis
+                        Title="Value"
+                        Foreground="White"
+                        FontSize="15"
+                        Orientation="Y"
+                        Interval="auto"
+                        VerticalAlignment="Stretch"
+                        Minimum="0"
+                        ShowGridLines="True"/>
+
+                <charting:CategoryAxis
+                        Title="Category"
+                        Foreground="White"
+                        FontSize="15"
+                        Orientation="X"
+                        
+                        VerticalAlignment="Stretch"
+                        ShowGridLines="True"/>
+            </charting:Chart.Axes>
+
+            <local:GenericChart.AreaTemplate>
+                <DataTemplate>
+                    <charting:AreaSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
+                </DataTemplate>
+            </local:GenericChart.AreaTemplate>
+            <local:GenericChart.ColumnTemplate>
+                <DataTemplate>
+                    <charting:ColumnSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
+                </DataTemplate>
+            </local:GenericChart.ColumnTemplate>
             <local:GenericChart.LineTemplate>
                 <DataTemplate>
                     <charting:LineSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
                 </DataTemplate>
             </local:GenericChart.LineTemplate>
-    	</local:GenericChart>
-
-        <!--
-        <Charting:Chart Title="{Binding ChartName}"
-                        ChartAreaStyle="{}"
-                        LegendStyle="{}"
-                        PlotAreaStyle="{}"
-                        Name="Chart">
-
-
-
-            Just testing some code and functionality
-            
-            <Charting:LineSeries Title="FirstLine"
-                                 ItemsSource="{Binding a}"
-                                 IndependentValueBinding="{Binding TeaCupsDrunk}"
-                                 DependentValueBinding="{Binding number}"
-                                 Name="testGraph1" />
-            <Charting:LineSeries Title="SecondLine"
-                                 ItemsSource="{Binding b}"
-                                 IndependentValueBinding="{Binding CoffeeCupsDrunk}"
-                                 DependentValueBinding="{Binding number}"
-                                 Name="testGraph2"/>
-
-
-            
-            
-            <Charting:LineSeries
-                ItemsSource="{Binding}"
-                DependentValueBinding="{Binding Y}"
-                IndependentValueBinding="{Binding X}" />
-            <Charting:ColumnSeries
-                Title="Ford"
-                DataContext="{Binding PointsA}"
-                ItemsSource="{Binding}"
-                DependentValueBinding="{Binding Y}"
-                IndependentValueBinding="{Binding X}"
-                AnimationSequence="FirstToLast"
-                TransitionDuration="5000" >
-                <Charting:ColumnSeries.TransitionEasingFunction>
-                    <ElasticEase EasingMode="EaseIn" />
-                </Charting:ColumnSeries.TransitionEasingFunction>
-            </Charting:ColumnSeries>
-            <Charting:Chart.Axes>
-                <Charting:LinearAxis x:Name="yaxis" Orientation="Y"
-                    ShowGridLines="False" Title="Y Axis Values" 
-                    Minimum="-100" Maximum="100" Interval="50" />
-                <Charting:CategoryAxis x:Name="xaxis" Orientation="X"
-                                       Title="X Axis Values" />
-            </Charting:Chart.Axes> 
-            <Charting:Chart.Series>
-                <Charting:LineSeries
-                    DataContext="{Binding PointsB}"
-                    ItemsSource="{Binding}"
-                    DependentValuePath="Y"
-                    DependentRangeAxis="{Binding ElementName=yaxis}"
-                    IndependentValuePath="X"
-                    IndependentAxis="{Binding ElementName=xaxis}" />
-            </Charting:Chart.Series>
-            
-            
-        </Charting:Chart>
-        -->
+        </local:GenericChart>
 
     </Grid>
 </UserControl>
