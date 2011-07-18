@@ -68,7 +68,7 @@ namespace Smeedee.Client.Framework.Repositories.Charting
             repository.GetDatabases(d =>
             {
                 databases = d;
-                DatasourcesRefreshed(this, EventArgs.Empty);
+                DatasourcesRefreshed.Invoke(this, EventArgs.Empty);
             });
         }
     }

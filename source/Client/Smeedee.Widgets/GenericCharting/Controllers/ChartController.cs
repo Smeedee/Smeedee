@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Smeedee.Client.Framework.Controller;
@@ -20,8 +21,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private ChartConfig chartConfig;
         public ChartSettingsViewModel SettingsViewModel { get; private set; }
 
-        private int refresh_event_raised;
-
         public ChartController(
             ChartViewModel chartViewModel,
             ChartSettingsViewModel settingsViewModel,
@@ -30,7 +29,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             IProgressbar loadingNotifier,
             IChartStorageReader storageReader,
             Configuration configuration
-            ) : base(chartViewModel, timer, uiInvoker, loadingNotifier)
+            )
+            : base(chartViewModel, timer, uiInvoker, loadingNotifier)
         {
 
             Guard.Requires<ArgumentException>(storageReader != null);
@@ -40,11 +40,12 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             this.storageReader = storageReader;
 
-            
+
 
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
 
-            refresh_event_raised = 0;
+
+
             storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
 
 
@@ -53,19 +54,24 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             SettingsViewModel.ReloadSettings.ExecuteDelegate = ReloadSettings;
             SettingsViewModel.AddDataSettings.ExecuteDelegate = AddDataSettings;
 
-            Start();
+
+            SettingsViewModel.PropertyChanged += SettingsViewModelPropertyChanged;
+
+           
 
             UpdateListOfDataSources();
+
+            Start();
         }
 
         private void AddDataSettings()
         {
-            
+
         }
 
         private void ReloadSettings()
         {
-        
+
         }
 
         private void SaveSettings()
@@ -76,58 +82,64 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void UpdateListOfDataSources()
         {
-            //SetIsLoadingConfig();
-         
-            //SetIsNotLoadingData();
-            
-            SetIsLoadingData();
+            SetIsLoadingConfig();
+
+            //SetIsNotLoadingConfig();
+
+            //SetIsLoadingData();
 
             storageReader.RefreshDatasources();
-            
-            SetIsNotLoadingData();
+
+
         }
 
         private void DatasourcesRefreshed(object sender, EventArgs args)
         {
-            var db = storageReader.GetDatabases();
-
-            if (DatabasesExists())
-            {
-                AddDatabasesToSettingsViewModel(db);
-                AddCollectionsToSettingsViewModel(db[0]);
-            }
-
-            SetIsNotLoadingConfig();            
-        }
-
-        private bool DatabasesExists()
-        {
-            return storageReader.GetDatabases().Count > 0;
+            AddDatabasesToSettingsViewModel(storageReader.GetDatabases());
+            SetIsNotLoadingConfig();
         }
 
         public void AddDatabasesToSettingsViewModel(IList<string> db)
-         {
-             foreach (var databaseName in db)
-             {
-                 SettingsViewModel.Databases.Add(databaseName);
-             }
-         }
-
-        public void AddCollectionsToSettingsViewModel(string database)
         {
-/*            databaseViewModel = new DatabaseViewModel();
-            var collectionViewModels = new ObservableCollection<CollectionViewModel>();
-
-            var collectionsInDatabase = storageReader.GetCollectionsInDatabase(database);
-            int i = collectionsInDatabase.Count();
-
-            foreach (var collection in collectionsInDatabase)
+            uiInvoker.Invoke(() =>
             {
-                collectionViewModels.Add(new CollectionViewModel { Name = collection });
-            }
-            databaseViewModel.Collections = collectionViewModels;
-            int j = databaseViewModel.Collections.Count();*/
+                SettingsViewModel.Databases.Clear();
+                SettingsViewModel.SelectedDatabase = null;
+                SettingsViewModel.Collections.Clear();
+                foreach (var databaseName in db)
+                {
+                    SettingsViewModel.Databases.Add(databaseName);
+                }
+            });
         }
+
+        private void SettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
+        {
+            if (eventArgs.PropertyName == "SelectedDatabase")
+            {
+                UpdateCollectionsInSettingsViewModel(SettingsViewModel.SelectedDatabase);
+            }
+        }
+
+        public void UpdateCollectionsInSettingsViewModel(string database)
+        {
+
+            SettingsViewModel.Collections.Clear();
+            SettingsViewModel.SelectedCollection = null;
+            if (database == null) return;
+            var collections = storageReader.GetCollectionsInDatabase(database);
+            if (collections != null && collections.Count() > 0)
+            {
+                uiInvoker.Invoke(() =>
+                                  {
+                                      foreach (var collectionName in collections)
+                                      {
+                                          SettingsViewModel.Collections.Add(collectionName);
+                                      }
+                                  });
+            }
+        }
+     
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {

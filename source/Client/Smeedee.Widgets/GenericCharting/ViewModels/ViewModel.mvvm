@@ -19,10 +19,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 	viewmodel ChartTypeViewModel:
 		oproperty ChartType as string
 
-	viewmodel DatabaseViewModel:
-		property Name as string
-		property Collections as ObservableCollection<CollectionViewModel>
-
 	viewmodel CollectionViewModel:
 		property Name as string
 
@@ -34,9 +30,10 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty XAxisType as string
 
 		oproperty Databases as ObservableCollection<string>
+		oproperty Collections as ObservableCollection<string>
 
-		oproperty SelectedDatabase as DatabaseViewModel
-		oproperty SelectedCollection as CollectionViewModel
+		oproperty SelectedDatabase as string
+		oproperty SelectedCollection as string
 
 		command SaveSettings
 		command ReloadSettings

@@ -194,7 +194,7 @@
                               Width="140"/>
                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                               SelectedItem="{Binding SelectedCollection, Mode=TwoWay}"
-                              ItemsSource="{Binding SelectedDatabase.Collections}"
+                              ItemsSource="{Binding Collections}"
                               Width="140"/>
                     <Button
 						Style="{StaticResource SettingsViewButton}"

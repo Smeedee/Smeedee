@@ -165,62 +165,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 namespace Smeedee.Widgets.GenericCharting.ViewModels
 {
-	public partial class DatabaseViewModel : TinyMVVM.Framework.ViewModelBase
-	{
-		//State
-		public virtual string Name 
-		{ 
-			get
-			{
-				OnGetName(ref _Name);
-				 
-				return _Name; 
-			}
-			set 
-			{
-				OnSetName(ref value); 
-				_Name = value; 
-			} 
-		}
-
-		private string _Name;
-		partial void OnGetName(ref string value);
-		partial void OnSetName(ref string value);
-		public virtual ObservableCollection<CollectionViewModel> Collections 
-		{ 
-			get
-			{
-				OnGetCollections(ref _Collections);
-				 
-				return _Collections; 
-			}
-			set 
-			{
-				OnSetCollections(ref value); 
-				_Collections = value; 
-			} 
-		}
-
-		private ObservableCollection<CollectionViewModel> _Collections;
-		partial void OnGetCollections(ref ObservableCollection<CollectionViewModel> value);
-		partial void OnSetCollections(ref ObservableCollection<CollectionViewModel> value);
-	
-		
-		//Commands
-		
-		public DatabaseViewModel()
-		{
-	
-			OnInitialize();
-			ApplyConvention(new BindCommandsDelegatesToMethods());
-		}
-
-		partial void OnInitialize();
-	}
-}
-
-namespace Smeedee.Widgets.GenericCharting.ViewModels
-{
 	public partial class CollectionViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
@@ -377,7 +321,30 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetDatabases(ref ObservableCollection<string> value);
 		partial void OnSetDatabases(ref ObservableCollection<string> value);
 
-		public virtual DatabaseViewModel SelectedDatabase
+		public virtual ObservableCollection<string> Collections
+		{
+			get 
+			{
+				OnGetCollections(ref _Collections);
+				 
+				return _Collections; 
+			}
+			set
+			{
+				if (value != _Collections)
+				{
+					OnSetCollections(ref value); 
+					_Collections = value;
+					TriggerPropertyChanged("Collections");
+				}
+			}
+		}
+		private ObservableCollection<string> _Collections;
+
+		partial void OnGetCollections(ref ObservableCollection<string> value);
+		partial void OnSetCollections(ref ObservableCollection<string> value);
+
+		public virtual string SelectedDatabase
 		{
 			get 
 			{
@@ -395,12 +362,12 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 				}
 			}
 		}
-		private DatabaseViewModel _SelectedDatabase;
+		private string _SelectedDatabase;
 
-		partial void OnGetSelectedDatabase(ref DatabaseViewModel value);
-		partial void OnSetSelectedDatabase(ref DatabaseViewModel value);
+		partial void OnGetSelectedDatabase(ref string value);
+		partial void OnSetSelectedDatabase(ref string value);
 
-		public virtual CollectionViewModel SelectedCollection
+		public virtual string SelectedCollection
 		{
 			get 
 			{
@@ -418,10 +385,10 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 				}
 			}
 		}
-		private CollectionViewModel _SelectedCollection;
+		private string _SelectedCollection;
 
-		partial void OnGetSelectedCollection(ref CollectionViewModel value);
-		partial void OnSetSelectedCollection(ref CollectionViewModel value);
+		partial void OnGetSelectedCollection(ref string value);
+		partial void OnSetSelectedCollection(ref string value);
 
 	
 		

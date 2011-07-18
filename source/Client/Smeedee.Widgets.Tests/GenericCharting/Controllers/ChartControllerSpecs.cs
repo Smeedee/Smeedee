@@ -8,6 +8,7 @@ using NUnit.Framework;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
@@ -37,7 +38,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(null, settingsViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, storageReaderFake.Object, configuration)));
+                        () => new ChartController(null, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration)));
             }
 
             [Test]
@@ -48,7 +49,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(viewModel, settingsViewModel, null, uIInvokerFake.Object, loadingNotifierFake.Object, storageReaderFake.Object, configuration)));
+                        () => new ChartController(viewModel, settingsViewModel, null, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration)));
             }
 
             [Test]
@@ -70,7 +71,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvokerFake.Object, null, storageReaderFake.Object, configuration)));
+                        () => new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvoker, null, storageReaderFake.Object, configuration)));
             }
 
             [Test]
@@ -81,7 +82,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("an ArgumentException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, null, configuration)));
+                        () => new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, null, configuration)));
             }
 
             [Test]
@@ -93,7 +94,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                      () =>
                      this.ShouldThrowException<ArgumentException>(
                          () =>
-                         new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvokerFake.Object,
+                         new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvoker,
                                              loadingNotifierFake.Object, storageReaderFake.Object, null)));
             }
 
@@ -133,14 +134,14 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
         [TestFixture]
         public class When_updating_list_of_datasources : Shared
         {
-
+            
 
             [Test]
             public void Then_assure_that_there_are_no_databases_in_viewmodel_when_there_are_none_in_storage()
             {
                 Given(there_are_no_databases).
                     And(the_controller_has_been_created);
-                When("finished loading datasources");
+                When("finished loading");
                 Then("there should not be any databases in viewmodel", () => 
                     controller.SettingsViewModel.Databases.Count.ShouldBe(0)
                     );
@@ -149,9 +150,9 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             [Test]
             public void Then_assure_that_one_database_is_returned_when_there_is_only_one()
             {
-                Given(there_is_one_database).
+                Given(there_is_one_database_TestDatabase).
                     And(the_controller_has_been_created);
-                When("finished loading datasources");
+                When("finished loading");
                 Then("settingsViewModel should contain a database", () =>
                                                                         {
                                                                             settingsViewModel.Databases.Count.ShouldBe(1);
@@ -160,11 +161,11 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
             [Test]
-            public void Then_assure_that_two_database_is_returned_when_there_is_two()
+            public void Then_assure_that_two_databases_are_returned_when_there_are_two()
             {
-                Given(there_are_two_databases).
+                Given(there_are_two_databases_TestDatabase1_TestDatabase2).
                     And(the_controller_has_been_created);
-                When("finished loading datasources");
+                When("finished loading");
                 Then("settingsViewModel should contain two databases", () =>
                 {
                     settingsViewModel.Databases.Count.ShouldBe(2);
@@ -172,32 +173,125 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     settingsViewModel.Databases[1].ShouldBe("TestDatabase2");
                 });
             }
-/*
-            [Test]
-            public void Then_assure_that_the_collections_is_returned_when_the_datbase_contains_some()
-            {
-                Given(the_storage_has_been_created).
-                    And(there_is_a_database_with_collections).
-                    And(the_controller_has_been_created).
-                    And(we_are_listening_for_refresh_event);
-                When(calling_refresh_datasources);
-                Then("settingsViewModel should contain collections", () =>
-                                                                         {
-                                                                            var db = storageReader.GetDatabases();
-                                                                            db.Count.ShouldBe(1);
-                                                                            storageReader.GetCollectionsInDatabase(db[0]).Count.ShouldBe(2);
-                                                                            controller.AddDatabasesToSettingsViewModel(db);
-                                                                            controller.AddCollectionsToSettingsViewModel(db[0]);
-                                                                            controller.settingsViewModel.Databases.Count.ShouldBe(1);
-                                                                            controller.settingsViewModel.Databases[0].Name.ShouldBe("TestDatabase");
-                                                                            
-                                                                            controller.databaseViewModel.Collections.Count.ShouldBe(2);
 
-                                                                            controller.databaseViewModel.Collections[0].Name.ShouldBe("TestCollection1");
-                                                                            controller.databaseViewModel.Collections[1].Name.ShouldBe("TestCollection2");
-                                                                        });
+            [Test]
+            public void Then_assure_that_two_databases_are_returned_when_there_are_two_and_refresh_is_called()
+            {
+                Given(there_are_two_databases_TestDatabase1_TestDatabase2).
+                    And(the_controller_has_been_created);
+                When(refresh_is_called);
+                Then("settingsViewModel should contain two databases", () =>
+                {
+                    settingsViewModel.Databases.Count.ShouldBe(2);
+                    settingsViewModel.Databases[0].ShouldBe("TestDatabase1");
+                    settingsViewModel.Databases[1].ShouldBe("TestDatabase2");
+                });
             }
 
+            [Test]
+            public void Then_assure_that_there_are_no_collections_in_viewmodel_when_there_is_none_in_storage()
+            {
+                Given(there_are_no_collections).
+                    And(the_controller_has_been_created);
+                When("finished loading");
+                Then("settingsViewModel should not contain any collections", () => settingsViewModel.Collections.Count.ShouldBe(0));
+            }
+
+            [Test]
+            public void Then_assure_that_there_are_no_collections_in_viewmodel_when_there_is_none_in_storage_but_database_is_selected()
+            {
+                Given(there_are_no_collections).
+                    And(there_is_one_database_TestDatabase).
+                    And(the_controller_has_been_created);
+                When("TestDatabase is selected", () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase");
+                Then("settingsViewModel should not contain any collections", () => settingsViewModel.Collections.Count.ShouldBe(0));
+            }
+
+            [Test]
+            public void Then_assure_that_one_collection_is_returned_when_the_database_contains_one()
+            {
+                Given(there_is_one_database_TestDatabase).
+                    And(the_selected_database_is_TestDatabase).
+                    And(there_is_a_collection_in_TestDatabase).
+                    And(the_controller_has_been_created);
+                When("TestDatabase is selected", () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase");
+                Then("settingsViewModel should contain the collection of the first database",
+                     () =>
+                     {
+                         settingsViewModel.Collections.Count.ShouldBe(1);
+                         settingsViewModel.Collections[0].ShouldBe("TestCollection");
+                     });
+            }
+
+            [Test]
+            public void Then_assure_that_two_collections_are_returned_when_the_database_contains_two()
+            {
+                Given(there_is_one_database_TestDatabase).
+                    And(there_are_two_collections_in_TestDatabase).
+                    And(the_controller_has_been_created);
+                When("TestDatabase is selected", () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase");
+                Then("settingsViewModel should contain the two collections of the first database",
+                     () =>
+                     {
+                         settingsViewModel.Collections.Count.ShouldBe(2);
+                         settingsViewModel.Collections[0].ShouldBe("TestCollection1");
+                         settingsViewModel.Collections[1].ShouldBe("TestCollection2");
+                     });
+            }
+
+            [Test]
+            [Ignore]
+            public void Then_assure_that_two_collections_are_returned_when_the_database_contains_two_and_refresh_is_called()
+            {
+                Given(there_is_one_database_TestDatabase).
+                    And(there_are_two_collections_in_TestDatabase).
+                    And(the_controller_has_been_created).
+                    And("TestDatabase has been selected", () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase");
+                When(refresh_is_called);
+                Then("settingsViewModel should contain the two collections of the first database",
+                     () =>
+                     {
+                         settingsViewModel.Collections.Count.ShouldBe(2);
+                         settingsViewModel.Collections[0].ShouldBe("TestCollection1");
+                         settingsViewModel.Collections[1].ShouldBe("TestCollection2");
+                     });
+            }
+
+            [Test]
+            [Ignore]
+            public void Then_assure_that_if_two_databases_and_several_collections_the_collections_of_the_first_database_is_returned()
+            {
+                Given(there_are_two_databases_TestDatabase1_TestDatabase2).
+                    And(TestDatabase1_has_collections).
+                    And(TestDatabase2_has_collections).
+                    And(the_controller_has_been_created);
+                When("finished loading");
+                Then("settingsViewModel should contain the collections of the first database", () =>
+                                                                                                   {
+                                                                                                       settingsViewModel.Databases.Count.ShouldBe(2);
+                                                                                                       settingsViewModel.Collections.Count.ShouldBe(2);
+                                                                                                       settingsViewModel.Collections[0].ShouldBe("TestCollection1");
+                                                                                                       settingsViewModel.Collections[1].ShouldBe("TestCollection2");
+                                                                                                   });
+            }
+            [Test]
+            public void Then_assure_that_if_two_databases_and_several_collections_the_collections_of_the_selected_database_is_returned()
+            {
+                Given(there_are_two_databases_TestDatabase1_TestDatabase2).
+                    And(TestDatabase1_has_collections).
+                    And(TestDatabase2_has_collections).
+                    And(the_controller_has_been_created);
+                When("TestDatabase2 is selected", () => controller.SettingsViewModel.SelectedDatabase="TestDatabase2");
+                Then("settingsViewModel should contain a collection",
+                     () =>
+                         {
+
+                             settingsViewModel.Databases.Count.ShouldBe(2);
+                             settingsViewModel.Collections.Count.ShouldBe(3);
+                             settingsViewModel.Collections[0].ShouldBe("TestCollection3");
+                         });
+            }
+/*
             [Test]
             public void Then_assure_that_the_collections_is_returned_when_the_datbase_contains_some_when_refresh_is_not_called_in_the_test()
             {
@@ -211,7 +305,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     db.Count.ShouldBe(1);
                     storageReader.GetCollectionsInDatabase(db[0]).Count.ShouldBe(2);
                     controller.AddDatabasesToSettingsViewModel(db);
-                    controller.AddCollectionsToSettingsViewModel(db[0]);
+                    controller.UpdateCollectionsInSettingsViewModel(db[0]);
                     controller.settingsViewModel.Databases.Count.ShouldBe(1);
                     controller.settingsViewModel.Databases[0].Name.ShouldBe("TestDatabase");
 
@@ -229,13 +323,12 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static ChartController controller;
             protected static ChartViewModel viewModel;
             protected static ChartSettingsViewModel settingsViewModel;
-            protected static DatabaseViewModel databaseViewModel;
-
+           
             protected static Configuration configuration;
             protected static ChartConfig chartConfig;
 
             protected static Mock<ITimer> timerFake;
-            protected static Mock<IUIInvoker> uIInvokerFake;
+            protected static IUIInvoker uIInvoker;
             protected static Mock<IProgressbar> loadingNotifierFake;
             protected static Mock<IChartStorageReader> storageReaderFake;
 
@@ -248,22 +341,37 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
 
             protected Context the_controller_has_been_created =
-                () => controller = new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvokerFake.Object, loadingNotifierFake.Object, storageReaderFake.Object, configuration);
-           
-            protected Context onNotifiedToRefresh_has_been_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
+                () => controller = new ChartController
+                    (viewModel, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration);
+            
 
             protected static Context there_are_no_databases = () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string>());
-
-            protected static Context there_is_one_database =
+            protected static Context there_is_one_database_TestDatabase =
                 () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string> {"TestDatabase"});
-
-            protected Context there_are_two_databases =
-                () =>
-                storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string>
+            protected Context there_are_two_databases_TestDatabase1_TestDatabase2 =
+                () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string>
                                                                            {"TestDatabase1", "TestDatabase2"});
 
-            protected When onNotifiedToRefresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
+            protected Context there_are_no_collections =
+                () => storageReaderFake.Setup(s => s.GetCollectionsInDatabase(It.Is<string>(t => t == "TestDatabase"))).Returns(new List<string>());
+            protected Context there_is_a_collection_in_TestDatabase =
+                () => storageReaderFake.Setup(s => s.GetCollectionsInDatabase(It.Is<string>(t => t == "TestDatabase"))).Returns(new List<string> { "TestCollection" });
+            protected Context there_are_two_collections_in_TestDatabase =
+                () => storageReaderFake.Setup(s => s.GetCollectionsInDatabase(It.Is<string>(t => t == "TestDatabase"))).Returns(new List<string>
+                                                                           {"TestCollection1", "TestCollection2" });
 
+            protected Context the_selectedDatabase_is_TestDatabase2 = () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase2";
+            protected Context the_selected_database_is_TestDatabase = () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase";
+
+            protected Context TestDatabase1_has_collections =
+               () => storageReaderFake.Setup(s => s.GetCollectionsInDatabase(It.Is<string>(t => t == "TestDatabase1"))).Returns(new List<string> { "TestCollection1", "TestCollection2" });
+            protected Context TestDatabase2_has_collections =
+              () => storageReaderFake.Setup(s => s.GetCollectionsInDatabase(It.Is<string>(t => t == "TestDatabase2"))).Returns(new List<string> { "TestCollection3", "TestCollection4", "TestCollection5" });
+
+            protected Context onNotifiedToRefresh_has_been_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
+
+            protected When onNotifiedToRefresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
+            protected When refresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
 
 
 
@@ -273,16 +381,16 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Scenario("");
                 viewModel = new ChartViewModel();
                 settingsViewModel = new ChartSettingsViewModel();
-                databaseViewModel = new DatabaseViewModel();
-                databaseViewModel.Collections=new ObservableCollection<CollectionViewModel>();
+              
 
                 timerFake = new Mock<ITimer>();
-                uIInvokerFake = new Mock<IUIInvoker>();
+                uIInvoker = new NoUIInvokation();
                 loadingNotifierFake = new Mock<IProgressbar>();
                 
                 storageReaderFake = new Mock<IChartStorageReader>();
                 storageReaderFake.Setup(s => s.RefreshDatasources()).Raises(s => s.DatasourcesRefreshed += null, EventArgs.Empty);
                 there_are_no_databases(); // defaults to no databases
+                there_are_no_collections();
 
                 configuration = new Configuration();
 

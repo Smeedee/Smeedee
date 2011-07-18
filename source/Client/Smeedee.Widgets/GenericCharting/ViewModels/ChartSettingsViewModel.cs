@@ -11,6 +11,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
         partial void OnInitialize()
         {
             Databases = new ObservableCollection<string>();
+            Collections = new ObservableCollection<string>();
         }
     }
 
