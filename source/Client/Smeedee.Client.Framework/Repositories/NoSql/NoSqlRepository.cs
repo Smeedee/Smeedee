@@ -28,7 +28,7 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
     public class NoSqlRepository : INoSqlRepository
     {
         public static readonly string documentsUrl = "../Services/NoSql/Documents.ashx?database={0}&collection={1}";
-        public static readonly string databasesUrl = "../Services/NoSql/Database.ashx";
+        public static readonly string databasesUrl = "../Services/NoSql/Databases.ashx";
 
         private IDownloadStringService downloadStringService;
         
@@ -79,6 +79,7 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
             {
                 if (database["Name"].Value<string>().Equals(currentDatabase))
                 {
+                    if (database["Collections"].Count() == 0) return list;
                     var json = database["Collections"].ToList();
                     list.AddRange(json.Select(doc => doc["Name"].Value<string>()));
                 }

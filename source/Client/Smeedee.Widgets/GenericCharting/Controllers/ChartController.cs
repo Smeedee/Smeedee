@@ -46,7 +46,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
 
 
-            storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
+            this.storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
 
 
             SettingsViewModel = settingsViewModel;
