@@ -103,6 +103,7 @@
     <Compile Include="SourceControl\SourceControlUserToUserDbTask.cs" />
     <Compile Include="SourceControl\SVNChangesetHarvesterTask.cs" />
     <Compile Include="SourceControl\TFSChangesetHarvesterTask.cs" />
+    <Compile Include="WebSnapshot\WebSnapshotTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">

@@ -14,6 +14,7 @@ using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.DomainModel.TeamPicture;
 using Smeedee.DomainModel.Users;
+using Smeedee.DomainModel.WebSnapshot;
 using Smeedee.Integration.Database.DomainModel.Charting;
 using Smeedee.Integration.Database.DomainModel.Repositories;
 
@@ -50,6 +51,7 @@ namespace Smeedee.Scheduler
             kernel.Bind<IPersistDomainModels<RetrospectiveNote>>().To<RetrospectiveNoteDatabaseRepository>();
             kernel.Bind<IPersistDomainModels<TeamPicture>>().To<TeamPictureDatabaseRepository>();
             kernel.Bind<IPersistDomainModels<NoSqlDatabase>>().To<SqliteNoSqlDatabaseRepository>();
+            kernel.Bind<IPersistDomainModels<WebSnapshot>>().To<WebSnapshotDatabaseRepository>();
 
             kernel.Bind<IChartStorage>().To<ChartStorage>();
             kernel.Bind<IDownloadStringService>().To<WebClientDownloadStringService>();
