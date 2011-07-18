@@ -28,12 +28,13 @@ namespace Smeedee.Widgets.SL.GenericCharting
             controller = NewController<ChartController>();
 
             View = new ChartView { DataContext = controller.ViewModel };
-            SettingsView = new ChartSettingsView { DataContext = controller.ViewModel };
+            SettingsView = new ChartSettingsView { DataContext = controller.SettingsViewModel };
         }
 
         public override void Configure(DependencyConfigSemantics config)
         {
             config.Bind<ChartViewModel>().To<ChartViewModel>().InSingletonScope();
+            config.Bind<ChartSettingsViewModel>().To<ChartSettingsViewModel>().InSingletonScope();
         }
 
     }

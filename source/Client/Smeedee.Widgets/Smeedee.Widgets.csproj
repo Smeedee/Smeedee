@@ -64,6 +64,7 @@
     <Compile Include="GenericCharting\Controllers\ChartConfig.cs" />
     <Compile Include="GenericCharting\Controllers\ChartController.cs" />
     <Compile Include="GenericCharting\Controllers\ChartSettingsController.cs" />
+    <Compile Include="GenericCharting\ViewModels\ChartSettingsViewModel.cs" />
     <Compile Include="GenericCharting\ViewModels\ChartViewModel.cs" />
     <Compile Include="GenericCharting\ViewModels\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>

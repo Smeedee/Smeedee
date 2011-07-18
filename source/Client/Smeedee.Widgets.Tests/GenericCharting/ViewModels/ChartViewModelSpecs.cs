@@ -22,14 +22,14 @@
         
 //    {
 
-//        private static ChartViewModel chartViewModel;
+//        private static ChartViewModel viewModel;
 
 //        [Test]
 //        public void Assure_it_has_Data()
 //        {
-//            Given("chartViewModel has been created", () => chartViewModel = new ChartViewModel());
+//            Given("viewModel has been created", () => viewModel = new ChartViewModel());
 //            When("");
-//            Then("chartViewModel should not be null", () => chartViewModel.Data.ShouldNotBeNull());
+//            Then("viewModel should not be null", () => viewModel.Data.ShouldNotBeNull());
 //        }
 
 //    }

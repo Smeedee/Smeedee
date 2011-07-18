@@ -354,24 +354,29 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetXAxisType(ref string value);
 		partial void OnSetXAxisType(ref string value);
 
-		public virtual ObservableCollection<DatabaseViewModel> Databases 
-		{ 
-			get
+		public virtual ObservableCollection<string> Databases
+		{
+			get 
 			{
 				OnGetDatabases(ref _Databases);
 				 
 				return _Databases; 
 			}
-			set 
+			set
 			{
-				OnSetDatabases(ref value); 
-				_Databases = value; 
-			} 
+				if (value != _Databases)
+				{
+					OnSetDatabases(ref value); 
+					_Databases = value;
+					TriggerPropertyChanged("Databases");
+				}
+			}
 		}
+		private ObservableCollection<string> _Databases;
 
-		private ObservableCollection<DatabaseViewModel> _Databases;
-		partial void OnGetDatabases(ref ObservableCollection<DatabaseViewModel> value);
-		partial void OnSetDatabases(ref ObservableCollection<DatabaseViewModel> value);
+		partial void OnGetDatabases(ref ObservableCollection<string> value);
+		partial void OnSetDatabases(ref ObservableCollection<string> value);
+
 		public virtual DatabaseViewModel SelectedDatabase
 		{
 			get 
@@ -427,9 +432,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		public ChartSettingsViewModel()
 		{
-
-            Databases = new ObservableCollection<DatabaseViewModel>();
-
 			SaveSettings = new DelegateCommand();
 			ReloadSettings = new DelegateCommand();
 			AddDataSettings = new DelegateCommand();

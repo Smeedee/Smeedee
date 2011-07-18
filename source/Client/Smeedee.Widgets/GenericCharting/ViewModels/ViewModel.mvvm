@@ -33,7 +33,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty YAxisName as string
 		oproperty XAxisType as string
 
-		property Databases as ObservableCollection<DatabaseViewModel>
+		oproperty Databases as ObservableCollection<string>
 
 		oproperty SelectedDatabase as DatabaseViewModel
 		oproperty SelectedCollection as CollectionViewModel
