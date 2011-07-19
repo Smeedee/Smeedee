@@ -41,6 +41,129 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                             configuration.GetSetting(ChartConfig.chart_setting_name).Value.ShouldBe("else");
                         });
             }
+
+            [Test]
+            public void It_should_be_possible_to_set_XAxisName()
+            {
+                Given(chart_config_has_been_made);
+                When("setting XAxisName", () => chartConfig.XAxisName = "XAxisName");
+                Then("configuration should have that value",
+                     () => configuration.GetSetting(ChartConfig.x_axis_setting_name).Value.ShouldBe("XAxisName"));
+            }
+
+            [Test]
+            public void It_should_be_possible_to_change_XAxisName()
+            {
+                Given(chart_config_has_been_made).
+                    And("XAxisName is set", () => chartConfig.XAxisName = "something");
+                When("changing XAxisName", () => chartConfig.XAxisName = "else");
+                Then("configuration should be updated",
+                    () =>
+                    {
+                        configuration.GetSetting(ChartConfig.x_axis_setting_name).HasMultipleValues.ShouldBeFalse();
+                        configuration.GetSetting(ChartConfig.x_axis_setting_name).Value.ShouldBe("else");
+                    });
+            }
+
+            [Test]
+            public void It_should_be_possible_to_set_YAxisName()
+            {
+                Given(chart_config_has_been_made);
+                When("setting YAxisName", () => chartConfig.YAxisName = "YAxisName");
+                Then("configuration should have that value",
+                     () => configuration.GetSetting(ChartConfig.y_axis_setting_name).Value.ShouldBe("YAxisName"));
+            }
+
+            [Test]
+            public void It_should_be_possible_to_change_YAxisName()
+            {
+                Given(chart_config_has_been_made).
+                    And("YAxisName is set", () => chartConfig.YAxisName = "something");
+                When("changing YAxisName", () => chartConfig.YAxisName = "else");
+                Then("configuration should be updated",
+                    () =>
+                    {
+                        configuration.GetSetting(ChartConfig.y_axis_setting_name).HasMultipleValues.ShouldBeFalse();
+                        configuration.GetSetting(ChartConfig.y_axis_setting_name).Value.ShouldBe("else");
+                    });
+            }
+
+            [Test]
+            public void It_should_be_possible_to_set_XAxisType()
+            {
+                Given(chart_config_has_been_made);
+                When("setting XAxisType", () => chartConfig.XAxisType = "XAxisType");
+                Then("configuration should have that value",
+                     () => configuration.GetSetting(ChartConfig.x_axis_setting_type).Value.ShouldBe("XAxisType"));
+            }
+
+            [Test]
+            public void It_should_be_possible_to_change_XAxisType()
+            {
+                Given(chart_config_has_been_made).
+                    And("XAxisType is set", () => chartConfig.XAxisType = "something");
+                When("changing XAxisType", () => chartConfig.XAxisType = "else");
+                Then("configuration should be updated",
+                    () =>
+                    {
+                        configuration.GetSetting(ChartConfig.x_axis_setting_type).HasMultipleValues.ShouldBeFalse();
+                        configuration.GetSetting(ChartConfig.x_axis_setting_type).Value.ShouldBe("else");
+                    });
+            }
+
+            [Test]
+            public void It_should_be_possible_to_change_Action()
+            {
+                
+            }
+            [Test]
+            public void It_should_be_possible_to_set_Name()
+            {
+                Given(chart_config_has_been_made);
+                When("setting Name", () => chartConfig.Name = "Name");
+                Then("configuration should have that value",
+                     () => configuration.GetSetting(ChartConfig.series_setting_name).Value.ShouldBe("Name"));
+            }
+
+            [Test]
+            public void It_should_be_possible_to_change_Name()
+            {
+                Given(chart_config_has_been_made).
+                    And("Name is set", () => chartConfig.Name = "something");
+                When("changing Name", () => chartConfig.Name = "else");
+                Then("configuration should be updated",
+                    () =>
+                    {
+                        configuration.GetSetting(ChartConfig.series_setting_name).HasMultipleValues.ShouldBeFalse();
+                        configuration.GetSetting(ChartConfig.series_setting_name).Value.ShouldBe("else");
+                    });
+            }
+
+            [Test]
+            public void It_should_be_possible_to_set_Database()
+            {
+                Given(chart_config_has_been_made);
+                When("setting Database", () => chartConfig.Database = "Database");
+                Then("configuration should have that value",
+                     () => configuration.GetSetting(ChartConfig.series_setting_database).Value.ShouldBe("Database"));
+            }
+
+            [Test]
+            public void It_should_be_possible_to_change_Database()
+            {
+                Given(chart_config_has_been_made).
+                    And("Database is set", () => chartConfig.Database = "something");
+                When("changing Database", () => chartConfig.Database = "else");
+                Then("configuration should be updated",
+                    () =>
+                    {
+                        configuration.GetSetting(ChartConfig.series_setting_database).HasMultipleValues.ShouldBeFalse();
+                        configuration.GetSetting(ChartConfig.series_setting_database).Value.ShouldBe("else");
+                    });
+            }
+
+            
+
         }
 
         [TestFixture]

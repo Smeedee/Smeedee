@@ -462,75 +462,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetSelectedAction(ref string value);
 		partial void OnSetSelectedAction(ref string value);
 
-		public virtual string Database
-		{
-			get 
-			{
-				OnGetDatabase(ref _Database);
-				 
-				return _Database; 
-			}
-			set
-			{
-				if (value != _Database)
-				{
-					OnSetDatabase(ref value); 
-					_Database = value;
-					TriggerPropertyChanged("Database");
-				}
-			}
-		}
-		private string _Database;
-
-		partial void OnGetDatabase(ref string value);
-		partial void OnSetDatabase(ref string value);
-
-		public virtual string Collection
-		{
-			get 
-			{
-				OnGetCollection(ref _Collection);
-				 
-				return _Collection; 
-			}
-			set
-			{
-				if (value != _Collection)
-				{
-					OnSetCollection(ref value); 
-					_Collection = value;
-					TriggerPropertyChanged("Collection");
-				}
-			}
-		}
-		private string _Collection;
-
-		partial void OnGetCollection(ref string value);
-		partial void OnSetCollection(ref string value);
-
-		public virtual string DatabaseAndCollection
-		{
-			get 
-			{
-				OnGetDatabaseAndCollection(ref _DatabaseAndCollection);
-				 
-				return _DatabaseAndCollection; 
-			}
-			set
-			{
-				if (value != _DatabaseAndCollection)
-				{
-					OnSetDatabaseAndCollection(ref value); 
-					_DatabaseAndCollection = value;
-					TriggerPropertyChanged("DatabaseAndCollection");
-				}
-			}
-		}
-		private string _DatabaseAndCollection;
-
-		partial void OnGetDatabaseAndCollection(ref string value);
-		partial void OnSetDatabaseAndCollection(ref string value);
-
 		public virtual string Name
 		{
 			get 
@@ -599,6 +530,75 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 		partial void OnGetSelectedChartType(ref string value);
 		partial void OnSetSelectedChartType(ref string value);
+
+		public virtual string Database
+		{
+			get 
+			{
+				OnGetDatabase(ref _Database);
+				 
+				return _Database; 
+			}
+			set
+			{
+				if (value != _Database)
+				{
+					OnSetDatabase(ref value); 
+					_Database = value;
+					TriggerPropertyChanged("Database");
+				}
+			}
+		}
+		private string _Database;
+
+		partial void OnGetDatabase(ref string value);
+		partial void OnSetDatabase(ref string value);
+
+		public virtual string Collection
+		{
+			get 
+			{
+				OnGetCollection(ref _Collection);
+				 
+				return _Collection; 
+			}
+			set
+			{
+				if (value != _Collection)
+				{
+					OnSetCollection(ref value); 
+					_Collection = value;
+					TriggerPropertyChanged("Collection");
+				}
+			}
+		}
+		private string _Collection;
+
+		partial void OnGetCollection(ref string value);
+		partial void OnSetCollection(ref string value);
+
+		public virtual string DatabaseAndCollection
+		{
+			get 
+			{
+				OnGetDatabaseAndCollection(ref _DatabaseAndCollection);
+				 
+				return _DatabaseAndCollection; 
+			}
+			set
+			{
+				if (value != _DatabaseAndCollection)
+				{
+					OnSetDatabaseAndCollection(ref value); 
+					_DatabaseAndCollection = value;
+					TriggerPropertyChanged("DatabaseAndCollection");
+				}
+			}
+		}
+		private string _DatabaseAndCollection;
+
+		partial void OnGetDatabaseAndCollection(ref string value);
+		partial void OnSetDatabaseAndCollection(ref string value);
 
 	
 		

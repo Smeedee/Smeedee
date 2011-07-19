@@ -17,12 +17,16 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public static readonly string x_axis_setting_type = "x-axis type";
 
         public static readonly string series_setting_prefix = "series_";
-        public static readonly string series_setting_name = series_setting_prefix + "name";
-        public static readonly string series_setting_collection = series_setting_prefix + "collection";
-        public static readonly string series_setting_database = series_setting_prefix + "database";
-        public static readonly string series_setting_legend = series_setting_prefix + "legend";
+
         public static readonly string series_setting_action = series_setting_prefix + "action";
+        public static readonly string series_setting_name = series_setting_prefix + "name";
+        public static readonly string series_setting_legend = series_setting_prefix + "legend";
         public static readonly string series_setting_type = series_setting_prefix + "type";
+
+        public static readonly string series_setting_database = series_setting_prefix + "database";
+        public static readonly string series_setting_collection = series_setting_prefix + "collection";
+        
+        
 
         private Configuration configuration;
 
@@ -34,9 +38,44 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
     
         public string ChartName
         {
-            get { return configuration.GetSetting(chart_setting_name).Value; }
+            //get { return configuration.GetSetting(chart_setting_name).Value; }
             set { configuration.NewSetting(chart_setting_name, value); }
         }
+
+        public string XAxisName
+        {
+            //get { return configuration.GetSetting(x_axis_setting_name).Value; }
+            set { configuration.NewSetting(x_axis_setting_name, value); }
+        }
+
+        public string YAxisName
+        {
+            set { configuration.NewSetting(y_axis_setting_name, value); }
+        }
+
+        public string XAxisType
+        {
+            set { configuration.NewSetting(x_axis_setting_type, value); }
+        }
+
+        public string Action;
+
+        public string Name
+        {
+            set { configuration.NewSetting(series_setting_name, value);}
+        }
+
+        public string Legend;
+
+        public string Type;
+
+        public string Database
+        {
+            set { configuration.NewSetting(series_setting_database, value);}
+        }
+
+        public string Collection;
+
 
         public void SetSeries(Collection<SeriesConfigViewModel> seriesConfig)
         {
