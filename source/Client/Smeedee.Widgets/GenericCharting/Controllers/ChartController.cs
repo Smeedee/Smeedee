@@ -68,12 +68,13 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 var databaseAndCollection = e.Chart.Database + "/" + e.Chart.Collection;
                 foreach (var dataset in e.Chart.DataSets)
                     SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel 
-                    { Database = e.Chart.Database, Collection = e.Chart.Collection, DatabaseAndCollection = databaseAndCollection, DataName = dataset.Name });
+                    { Database = e.Chart.Database, Collection = e.Chart.Collection, DatabaseAndCollection = databaseAndCollection, Name = dataset.Name});
             //});
         }
 
         public void AddDataSettings()
         {
+            
             var database = SettingsViewModel.SelectedDatabase;
             var collection = SettingsViewModel.SelectedCollection;
             if (database != null && collection != null)
@@ -120,9 +121,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private void SettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
         {
             if (eventArgs.PropertyName == "SelectedDatabase")
-            {
                 UpdateCollectionsInSettingsViewModel(SettingsViewModel.SelectedDatabase);
-            }
         }
 
         public void UpdateCollectionsInSettingsViewModel(string database)

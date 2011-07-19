@@ -114,12 +114,12 @@
                     <Controls:DataGrid.Columns>
                         <Controls:DataGridTemplateColumn
                             Header="Action"
-                            Width="110">
+                            Width="111">
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                                               SelectedItem="{Binding SelectedAction, Mode=TwoWay}"
-                                              Width="109">
+                                              Width="110">
                                         <ComboBoxItem>Show</ComboBoxItem>
                                         <ComboBoxItem>Hide</ComboBoxItem>
                                         <ComboBoxItem>Reference</ComboBoxItem>
@@ -129,28 +129,33 @@
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>
                         </Controls:DataGridTemplateColumn>
                        
-                        <Controls:DataGridTextColumn Header="Database/Collection"
+                        <Controls:DataGridTextColumn Header="Database"
+                                                     Binding="{Binding Database, Mode=TwoWay}"
+                                                     IsReadOnly="True"
+                                                     MinWidth="90" />
+
+                        <Controls:DataGridTextColumn Header="Collection"
                                                      Binding="{Binding Collection, Mode=TwoWay}"
                                                      IsReadOnly="True"
-                                                     MinWidth="140" />
+                                                     MinWidth="90" />
 
-                        <Controls:DataGridTextColumn Header="DataSet"
-                                                     Binding="{Binding DataName, Mode=TwoWay}"
+                        <Controls:DataGridTextColumn Header="Dataset"
+                                                     Binding="{Binding Name, Mode=TwoWay}"
                                                      IsReadOnly ="True"
-                                                     MinWidth="100" />
+                                                     MinWidth="90" />
 
-                        <Controls:DataGridTextColumn Header="Legend"
+                        <Controls:DataGridTextColumn Header="Legend*"
                                                      Binding="{Binding Legend, Mode=TwoWay}"
-                                                     MinWidth="100" />
+                                                     MinWidth="90" />
                         
                         <Controls:DataGridTemplateColumn 
                             Header="Type"
-                            Width="110">
+                            Width="111">
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                                               SelectedItem="{Binding SelectedChartType, Mode=TwoWay}"
-                                              Width="109">
+                                              Width="110">
                                         <ComboBoxItem>Area</ComboBoxItem>
                                         <ComboBoxItem>Columns</ComboBoxItem>
                                         <ComboBoxItem>Line</ComboBoxItem>
@@ -164,7 +169,12 @@
 
 
                 <StackPanel Grid.Column="0"
-                            Grid.Row="10"
+                            Grid.Row="10">
+                    <TextBlock Text="*Fill in custom legend"
+                               FontSize="12" />
+                </StackPanel>
+                <StackPanel Grid.Column="0"
+                            Grid.Row="11"
                             Orientation="Horizontal">
                     <TextBlock Style="{StaticResource SettingsViewText}"
                                Text="Database:"
@@ -178,7 +188,7 @@
                     <StackPanel
 					Grid.Column="0" 
                     Grid.ColumnSpan="2"
-                    Grid.Row="11"
+                    Grid.Row="12"
 					Orientation="Horizontal">
                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                               SelectedItem="{Binding SelectedDatabase, Mode=TwoWay}"

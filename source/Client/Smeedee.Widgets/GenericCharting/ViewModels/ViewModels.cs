@@ -531,28 +531,28 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetDatabaseAndCollection(ref string value);
 		partial void OnSetDatabaseAndCollection(ref string value);
 
-		public virtual string DataName
+		public virtual string Name
 		{
 			get 
 			{
-				OnGetDataName(ref _DataName);
+				OnGetName(ref _Name);
 				 
-				return _DataName; 
+				return _Name; 
 			}
 			set
 			{
-				if (value != _DataName)
+				if (value != _Name)
 				{
-					OnSetDataName(ref value); 
-					_DataName = value;
-					TriggerPropertyChanged("DataName");
+					OnSetName(ref value); 
+					_Name = value;
+					TriggerPropertyChanged("Name");
 				}
 			}
 		}
-		private string _DataName;
+		private string _Name;
 
-		partial void OnGetDataName(ref string value);
-		partial void OnSetDataName(ref string value);
+		partial void OnGetName(ref string value);
+		partial void OnSetName(ref string value);
 
 		public virtual string Legend
 		{
