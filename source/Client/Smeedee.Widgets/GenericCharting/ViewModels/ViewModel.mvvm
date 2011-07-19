@@ -50,7 +50,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 		oproperty DatabaseAndCollection as string
 
-		oproperty DataName as string
+		oproperty Name as string
 		oproperty Legend as string
 		oproperty SelectedChartType as string
 

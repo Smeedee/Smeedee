@@ -293,9 +293,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
             private Context selected_collection_contains_two_empty_datasets = () => StorageReaderLoadChartReturns(new Chart("Charting", "Collection") { DataSets = { new DataSet { Name = "DataSet1" } , new DataSet { Name = "DataSet2" } } });
 
-            private Context seriesconfig_already_has_a_dataset = () => controller.SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { Database = "Old", Collection = "Collection", DatabaseAndCollection = "Old/Collection", DataName = "OldName" });
+            private Context seriesconfig_already_has_a_dataset = () => controller.SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { Database = "Old", Collection = "Collection", DatabaseAndCollection = "Old/Collection", Name = "OldName" , Legend = "OldName"});
 
             private When AddDataSettings_is_pressed = () => controller.SettingsViewModel.AddDataSettings.ExecuteDelegate();
+
 
             [Test]
             public void Assure_nothing_happens_if_selectedDatabase_and_selectedCollection_is_empty()
@@ -330,7 +331,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                                                                         //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Charting");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
-                                                                        controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("DataSet");
+                                                                        controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("DataSet");
                                                                     });
             }
 
@@ -349,12 +350,12 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
                     controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Charting");
                     controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
-                    controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("DataSet1");
+                    controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("DataSet1");
 
                     //controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
                     controller.SettingsViewModel.SeriesConfig[1].Database.ShouldBe("Charting");
                     controller.SettingsViewModel.SeriesConfig[1].Collection.ShouldBe("Collection");
-                    controller.SettingsViewModel.SeriesConfig[1].DataName.ShouldBe("DataSet2");
+                    controller.SettingsViewModel.SeriesConfig[1].Name.ShouldBe("DataSet2");
                 });
             }
 
@@ -374,14 +375,27 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Old/Collection");
                     controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Old");
                     controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
-                    controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("OldName");
+                    controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("OldName");
 
                     //controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
                     controller.SettingsViewModel.SeriesConfig[1].Database.ShouldBe("Charting");
                     controller.SettingsViewModel.SeriesConfig[1].Collection.ShouldBe("Collection");
-                    controller.SettingsViewModel.SeriesConfig[1].DataName.ShouldBe("DataSet");
+                    controller.SettingsViewModel.SeriesConfig[1].Name.ShouldBe("DataSet");
                 });
             }
+
+            [Test]
+            public void Assure_that_default_legend_is_set_to_null()
+            {
+                Given(the_controller_has_been_created).
+                    And(selected_database_is_charting).
+                    And(selected_collection_is_collection).
+                    And(selected_collection_contains_one_empty_dataset);
+                When(AddDataSettings_is_pressed);
+                Then("default legend should be null",
+                     () => controller.SettingsViewModel.SeriesConfig[0].Legend.ShouldBe(null));
+            }
+
         }
 
 
