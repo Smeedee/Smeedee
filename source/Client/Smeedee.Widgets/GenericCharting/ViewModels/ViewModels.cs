@@ -462,6 +462,52 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetSelectedAction(ref string value);
 		partial void OnSetSelectedAction(ref string value);
 
+		public virtual string Database
+		{
+			get 
+			{
+				OnGetDatabase(ref _Database);
+				 
+				return _Database; 
+			}
+			set
+			{
+				if (value != _Database)
+				{
+					OnSetDatabase(ref value); 
+					_Database = value;
+					TriggerPropertyChanged("Database");
+				}
+			}
+		}
+		private string _Database;
+
+		partial void OnGetDatabase(ref string value);
+		partial void OnSetDatabase(ref string value);
+
+		public virtual string Collection
+		{
+			get 
+			{
+				OnGetCollection(ref _Collection);
+				 
+				return _Collection; 
+			}
+			set
+			{
+				if (value != _Collection)
+				{
+					OnSetCollection(ref value); 
+					_Collection = value;
+					TriggerPropertyChanged("Collection");
+				}
+			}
+		}
+		private string _Collection;
+
+		partial void OnGetCollection(ref string value);
+		partial void OnSetCollection(ref string value);
+
 		public virtual string DatabaseAndCollection
 		{
 			get 
@@ -507,6 +553,29 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 		partial void OnGetDataName(ref string value);
 		partial void OnSetDataName(ref string value);
+
+		public virtual string Legend
+		{
+			get 
+			{
+				OnGetLegend(ref _Legend);
+				 
+				return _Legend; 
+			}
+			set
+			{
+				if (value != _Legend)
+				{
+					OnSetLegend(ref value); 
+					_Legend = value;
+					TriggerPropertyChanged("Legend");
+				}
+			}
+		}
+		private string _Legend;
+
+		partial void OnGetLegend(ref string value);
+		partial void OnSetLegend(ref string value);
 
 		public virtual string SelectedChartType
 		{
