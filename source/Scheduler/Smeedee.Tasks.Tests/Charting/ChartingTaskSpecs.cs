@@ -93,8 +93,6 @@ namespace Smeedee.Tasks.Tests.Charting
     [TestFixture]
     public class When_executing_task : Shared
     {
-
-
         [Test]
         public void assure_datasets_have_same_length()
         {
@@ -107,8 +105,8 @@ namespace Smeedee.Tasks.Tests.Charting
                                                                                   smallestDataset.DataPoints.Count.ShouldBe(3);
                                                                                   largestDataset.DataPoints.Count.ShouldBe(smallestDataset.DataPoints.Count);
                          });
-
         }
+
         [Test]
         public void assure_filepath_is_valid() // does the file exist?
         {
@@ -135,9 +133,7 @@ namespace Smeedee.Tasks.Tests.Charting
                                                                                    datasets[0].Name.ShouldBe("name");
                                                                                    datasets[0].DataPoints.Count.ShouldBe(3);
                                                                                });
-
         }
-
     }
 
 
@@ -176,7 +172,6 @@ namespace Smeedee.Tasks.Tests.Charting
         protected static bool VerifyChart(Chart chart)
         {
             return chart.DataSets.Count == 1 && chart.DataSets[0].DataPoints.Count == 3;
-
         }
 
         protected virtual void Before()
@@ -207,5 +202,4 @@ namespace Smeedee.Tasks.Tests.Charting
                     callback(data));
         }
     }
-
 }
