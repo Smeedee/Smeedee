@@ -92,7 +92,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 collections.Add(series.Collection);
                 databases.Add(series.Database);
                 legends.Add(series.Legend);
-                actions.Add(series.SelectedAction);
+                actions.Add(series.Action);
                 types.Add(series.SelectedChartType);
             }
 
@@ -122,7 +122,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                         Collection = collections[i],
                         Database = databases[i],
                         Legend = legends[i],
-                        SelectedAction = actions[i],
+                        Action = actions[i],
                         SelectedChartType = types[i]
                     });
 

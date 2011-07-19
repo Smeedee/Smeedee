@@ -439,28 +439,28 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 	public partial class SeriesConfigViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual string SelectedAction
+		public virtual string Action
 		{
 			get 
 			{
-				OnGetSelectedAction(ref _SelectedAction);
+				OnGetAction(ref _Action);
 				 
-				return _SelectedAction; 
+				return _Action; 
 			}
 			set
 			{
-				if (value != _SelectedAction)
+				if (value != _Action)
 				{
-					OnSetSelectedAction(ref value); 
-					_SelectedAction = value;
-					TriggerPropertyChanged("SelectedAction");
+					OnSetAction(ref value); 
+					_Action = value;
+					TriggerPropertyChanged("Action");
 				}
 			}
 		}
-		private string _SelectedAction;
+		private string _Action;
 
-		partial void OnGetSelectedAction(ref string value);
-		partial void OnSetSelectedAction(ref string value);
+		partial void OnGetAction(ref string value);
+		partial void OnSetAction(ref string value);
 
 		public virtual string Name
 		{

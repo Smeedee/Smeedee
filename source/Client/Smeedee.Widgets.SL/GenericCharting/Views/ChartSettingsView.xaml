@@ -118,7 +118,7 @@
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                                              SelectedItem="{Binding SelectedAction, Mode=TwoWay}"
+                                              SelectedItem="{Binding Action, Mode=TwoWay}"
                                               Width="110">
                                         <ComboBoxItem>Show</ComboBoxItem>
                                         <ComboBoxItem>Hide</ComboBoxItem>

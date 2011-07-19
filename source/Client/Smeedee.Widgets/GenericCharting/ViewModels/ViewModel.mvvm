@@ -44,7 +44,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 	viewmodel SeriesConfigViewModel
 
-		oproperty SelectedAction as string
+		oproperty Action as string
 		oproperty Name as string
 		oproperty Legend as string
 		oproperty SelectedChartType as string
