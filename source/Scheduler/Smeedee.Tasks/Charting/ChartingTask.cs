@@ -85,8 +85,6 @@ namespace Smeedee.Tasks.Charting
                                                                                callback(datasets);
                                                                            });
             }
-            else
-                throw new FileFormatException("Filepath is not valid. Try using file:// or http://");
 
         }
 
