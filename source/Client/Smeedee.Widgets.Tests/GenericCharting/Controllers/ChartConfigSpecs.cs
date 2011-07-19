@@ -224,8 +224,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
 
-            private static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", SelectedAction = "Show", SelectedChartType = "Line" };
-            private static SeriesConfigViewModel series2 = new SeriesConfigViewModel { Database = "D2B", Collection = "Col2", Name = "Row2", Legend = "Legend2", SelectedAction = "Hide", SelectedChartType = "Area" };
 
             private static void CompareConfigurationToSeriesConfigViewModel(int row, SeriesConfigViewModel series)
             {
@@ -253,8 +251,89 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
         }
 
+        [TestFixture]
+        public class When_getting_series_config : Shared
+        {
+            private static IList<SeriesConfigViewModel> series = null;
+
+            protected override void Before()
+            {
+                series = null;
+            }
+
+            [Test]
+            public void Empty_configuration_should_return_empty_list()
+            {
+                Given(chart_config_has_been_made);
+                When(getting_series);
+                Then("series should be empty", () => series.Count.ShouldBe(0));
+            }
+
+            [Test]
+            public void One_configured_series_should_return_the_configured_series()
+            {
+                Given(chart_config_has_been_made).
+                    And(there_is_one_series_configured);
+                When(getting_series);
+                Then("series should contain the one series", () =>
+                    {
+                        series.Count.ShouldBe(1);
+                        var s = series[0];
+                        s.Name.ShouldBe("TestName");
+                        s.Collection.ShouldBe("TestCol");
+                        s.Database.ShouldBe("TestDb");
+                        s.Legend.ShouldBe("TestLegend");
+                        s.SelectedAction.ShouldBe("Show");
+                        s.SelectedChartType.ShouldBe("Columns");
+                    });
+            }
+
+            [Test]
+            public void Two_configured_series_should_be_returned_correctly()
+            {
+                Given(chart_config_has_been_made).
+                    And(two_series_has_been_set);
+                When(getting_series);
+                Then("the two series should be returned", () =>
+                    {
+                        Compare(series[0], series1);
+                        Compare(series[1], series2);
+                    });
+            }
+
+
+            private Context there_is_one_series_configured = () =>
+            {
+                configuration.NewSetting(ChartConfig.series_setting_name, new [] {"TestName"});
+                configuration.NewSetting(ChartConfig.series_setting_collection, new[] { "TestCol" });
+                configuration.NewSetting(ChartConfig.series_setting_database, new[] { "TestDb" });
+                configuration.NewSetting(ChartConfig.series_setting_legend, new[] { "TestLegend" });
+                configuration.NewSetting(ChartConfig.series_setting_action, new[] { "Show" });
+                configuration.NewSetting(ChartConfig.series_setting_type, new[] { "Columns" });
+            };
+
+            private Context two_series_has_been_set = () =>
+                {
+                    chartConfig.SetSeries(new ObservableCollection<SeriesConfigViewModel> {series1, series2});
+                };
+
+            private When getting_series = () => series = chartConfig.GetSeries();
+
+            private static void Compare(SeriesConfigViewModel given, SeriesConfigViewModel expected)
+            {
+                given.Name.ShouldBe(expected.Name);
+                given.Database.ShouldBe(expected.Database);
+                given.Collection.ShouldBe(expected.Collection);
+                given.Legend.ShouldBe(expected.Legend);
+                given.SelectedChartType.ShouldBe(expected.SelectedChartType);
+                given.SelectedAction.ShouldBe(expected.SelectedAction);
+            }
+        }
+
         public class Shared : ScenarioClass
         {
+            protected static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", SelectedAction = "Show", SelectedChartType = "Line" };
+            protected static SeriesConfigViewModel series2 = new SeriesConfigViewModel { Database = "D2B", Collection = "Col2", Name = "Row2", Legend = "Legend2", SelectedAction = "Hide", SelectedChartType = "Area" };
 
             protected Context chart_config_has_been_made = () => CreateChartConfig();
 
@@ -274,6 +353,12 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 configuration = new Configuration();
                 seriesConfig = new ObservableCollection<SeriesConfigViewModel>();
                 chartConfig = null;
+                Before();
+            }
+
+            protected virtual void Before()
+            {
+                
             }
 
             [TearDown]

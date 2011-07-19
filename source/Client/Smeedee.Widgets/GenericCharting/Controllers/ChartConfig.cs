@@ -104,6 +104,31 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             configuration.NewSetting(series_setting_type, types.ToArray());
         }
 
+        public List<SeriesConfigViewModel> GetSeries()
+        {
+            var list = new List<SeriesConfigViewModel>();
+            var names = configuration.GetSetting(series_setting_name).Vals.ToArray();
+            var collections = configuration.GetSetting(series_setting_collection).Vals.ToArray();
+            var databases = configuration.GetSetting(series_setting_database).Vals.ToArray();
+            var legends = configuration.GetSetting(series_setting_legend).Vals.ToArray();
+            var actions = configuration.GetSetting(series_setting_action).Vals.ToArray();
+            var types = configuration.GetSetting(series_setting_type).Vals.ToArray();
+
+            for (int i = 0; i < names.Count(); i++)
+            {
+                list.Add(new SeriesConfigViewModel
+                    {
+                        Name = names[i],
+                        Collection = collections[i],
+                        Database = databases[i],
+                        Legend = legends[i],
+                        SelectedAction = actions[i],
+                        SelectedChartType = types[i]
+                    });
+
+            }
+            return list;
+        }
         /*
         public string XAxisName
         {
@@ -185,5 +210,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         //    return config;
         //}
+
     }
 }
