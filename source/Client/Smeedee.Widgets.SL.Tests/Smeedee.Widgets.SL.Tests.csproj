@@ -107,7 +107,6 @@
     <Compile Include="Twitter\ViewModel\TweetViewModelSpecs.cs" />
     <Compile Include="Twitter\ViewModel\TwitterSettingsViewModelSpecs.cs" />
     <Compile Include="Twitter\ViewModel\TwitterViewModelSpecs.cs" />
-    <Compile Include="WebSnapshot\WebImageProviderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

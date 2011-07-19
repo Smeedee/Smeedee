@@ -145,14 +145,8 @@
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\IWebImageProvider.cs">
-      <Link>WebSnapshot\Util\IWebImageProvider.cs</Link>
-    </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\URLValidator.cs">
       <Link>WebSnapshot\Util\URLValidator.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\WebImageFetcher.cs">
-      <Link>WebSnapshot\Util\WebImageFetcher.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\ViewModels.cs">
       <Link>WebSnapshot\ViewModel\ViewModels.cs</Link>
@@ -259,7 +253,6 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
-    <Compile Include="WebSnapshot\Util\WebImageProvider.cs" />
     <Compile Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml.cs">
       <DependentUpon>WebSnapshotSettingsView.xaml</DependentUpon>
     </Compile>

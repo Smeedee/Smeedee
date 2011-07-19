@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Media.Imaging;
+﻿using System.Drawing;
 
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
     public interface IWebImageProvider
     {
-        WriteableBitmap GetBitmapFromURL(string url);
+        Bitmap GetBitmapFromURL(string url);
+        string GetPictureNodeURLFromXpath(string pageURL, string xpath);
     }
 }

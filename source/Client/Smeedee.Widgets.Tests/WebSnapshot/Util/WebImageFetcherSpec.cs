@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Resources;
 using Moq;
@@ -21,7 +22,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             {
                 providerMock.Setup(w => w.GetBitmapFromURL(imageURL)).Returns(bitmap);
                 var image = webImageFetcher.GetBitmapFromURL(imageURL);
-                image.ShouldBeInstanceOfType<WriteableBitmap>();
+                image.ShouldBeInstanceOfType<Bitmap>();
                 image.ShouldNotBeNull();
             }
             
@@ -33,7 +34,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_it_is_not_downloaded()
             {
-                providerMock.Setup(w => w.GetBitmapFromURL(pageURL)).Returns(null as WriteableBitmap);
+                providerMock.Setup(w => w.GetBitmapFromURL(pageURL)).Returns(null as Bitmap);
                 webImageFetcher.GetBitmapFromURL(pageURL).ShouldBeNull();
             }
         }
@@ -70,7 +71,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
         {
             protected Mock<IWebImageProvider> providerMock;
             protected WebImageFetcher webImageFetcher;
-            protected WriteableBitmap bitmap;
+            protected Bitmap bitmap;
             protected string imageURL;
             protected string pageURL;
             protected string xPath;
@@ -83,9 +84,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
                 webImageFetcher = new WebImageFetcher(providerMock.Object);
 
                 string imgUrl = "..\\..\\WebSnapshot\\Util\\not-blank.bmp";
-                Uri uri = new Uri(imgUrl, UriKind.Relative);
-                BitmapImage src = new BitmapImage(uri);
-                bitmap = new WriteableBitmap(src);
+                bitmap = new Bitmap(imgUrl);
 
                 imageURL = "http://smeedee.org/images/code.png";
                 pageURL = "http://smeedee.org/";
