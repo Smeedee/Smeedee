@@ -101,7 +101,7 @@
                     <ComboBoxItem>Category</ComboBoxItem>
                 </ComboBox>
 
-                <Controls:DataGrid 
+                <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
                     AutoGenerateColumns="False" 
                     FontSize="14" 
                     Grid.Column="0"
