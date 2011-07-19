@@ -12,6 +12,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
         {
             Databases = new ObservableCollection<string>();
             Collections = new ObservableCollection<string>();
+            SeriesConfig = new ObservableCollection<SeriesConfigViewModel>();
         }
     }
 

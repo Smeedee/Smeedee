@@ -344,6 +344,29 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetCollections(ref ObservableCollection<string> value);
 		partial void OnSetCollections(ref ObservableCollection<string> value);
 
+		public virtual ObservableCollection<SeriesConfigViewModel> SeriesConfig
+		{
+			get 
+			{
+				OnGetSeriesConfig(ref _SeriesConfig);
+				 
+				return _SeriesConfig; 
+			}
+			set
+			{
+				if (value != _SeriesConfig)
+				{
+					OnSetSeriesConfig(ref value); 
+					_SeriesConfig = value;
+					TriggerPropertyChanged("SeriesConfig");
+				}
+			}
+		}
+		private ObservableCollection<SeriesConfigViewModel> _SeriesConfig;
+
+		partial void OnGetSeriesConfig(ref ObservableCollection<SeriesConfigViewModel> value);
+		partial void OnSetSeriesConfig(ref ObservableCollection<SeriesConfigViewModel> value);
+
 		public virtual string SelectedDatabase
 		{
 			get 
@@ -413,7 +436,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 namespace Smeedee.Widgets.GenericCharting.ViewModels
 {
-	public partial class SetConfigViewModel : TinyMVVM.Framework.ViewModelBase
+	public partial class SeriesConfigViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
 		public virtual string SelectedAction
@@ -512,7 +535,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		
 		//Commands
 		
-		public SetConfigViewModel()
+		public SeriesConfigViewModel()
 		{
 	
 			OnInitialize();

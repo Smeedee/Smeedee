@@ -99,13 +99,33 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
             [Test]
+            [Ignore]
             public void Then_assure_Configuration_contains_Database_setting()
             {
-                Given("", () => configuration = new Configuration());
-                When("", () => configuration.NewSetting(ChartConfig.chart_setting_name, "cName"));
+                Given("a new configuration is made", () => configuration = new Configuration());
+                When("no database setting is entered", () => configuration.NewSetting(ChartConfig.chart_setting_name, ""));
                 Then("", () =>
-                this.ShouldThrowException<ArgumentException>(() =>
-                    the_controller_has_been_created()));
+                         this.ShouldThrowException<ArgumentException>(CreateController, ex =>
+                        ex.Message.ShouldBe("Config setting is missing; " + ChartConfig.chart_setting_name)));
+            }
+
+            [Test]
+            [Ignore]
+            public void Then_assure_complete_configuration_does_not_throw_exception()
+            {
+                Given("a new configuration is made", () => configuration = new Configuration());
+                When("settings are entered", () =>
+                                                 {
+                                                     configuration.NewSetting(ChartConfig.chart_setting_name, "cName");
+                                                     configuration.NewSetting(ChartConfig.x_axis_setting_name,"xName");
+                                                     configuration.NewSetting(ChartConfig.y_axis_setting_name, "yName");
+                                                     configuration.NewSetting(ChartConfig.x_axis_setting_type, "xType");
+                                                     configuration.NewSetting(ChartConfig.database_setting_name, "dbName");
+                                                     configuration.NewSetting(ChartConfig.collection_setting_name, "colName");
+                                                     configuration.NewSetting(ChartConfig.data_name_setting, "dName");
+                                                     configuration.NewSetting(ChartConfig.chart_type_setting, "cType");
+                                                 });
+                Then("no exceptions should be thrown", CreateController);
             }
 
             //Tests for:    configuration contains RefreshInterval
@@ -266,42 +286,91 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
         {
             private Context SelectedDatabase_is_null = () => controller.SettingsViewModel.SelectedDatabase=null;
             private Context SelectedCollection_is_null = () => controller.SettingsViewModel.SelectedCollection = null;
-            private When AddDataSettings_is_pressed = () => controller.AddDataSettings();
+            
+            private Context selected_database_is_charting = () => controller.SettingsViewModel.SelectedDatabase = "Charting";
+            private Context selected_collection_is_collection = () => controller.SettingsViewModel.SelectedCollection = "Collection";
+            private Context selected_collection_contains_one_empty_dataset = () => StorageReaderLoadChartReturns(new Chart("Charting", "Collection") { DataSets = { new DataSet { Name = "DataSet" } } });
+
+            private Context selected_collection_contains_two_empty_datasets = () => StorageReaderLoadChartReturns(new Chart("Charting", "Collection") { DataSets = { new DataSet { Name = "DataSet1" } , new DataSet { Name = "DataSet2" } } });
+
+            private Context seriesconfig_already_has_a_dataset = () => controller.SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { DatabaseAndCollection = "Old/Collection", DataName = "OldName" });
+
+            private When AddDataSettings_is_pressed = () => controller.SettingsViewModel.AddDataSettings.ExecuteDelegate();
 
             [Test]
-            [Ignore]
             public void Assure_nothing_happens_if_selectedDatabase_and_selectedCollection_is_empty()
             {
                 Given(the_controller_has_been_created).
-                    And(SelectedDatabase_is_null).
                     And(SelectedCollection_is_null);
                 When(AddDataSettings_is_pressed);
-                Then("nothing happens", () =>
-                                            {
-                                                controller.SettingsViewModel.SelectedDatabase.ShouldBeNull();
-                                                controller.SettingsViewModel.SelectedCollection.ShouldBeNull();
-                                                //controller.setConfigViewModel.SelectedAction.ShouldBeNull();
-                                                //controller.setConfigViewModel.DataName.ShouldBeNull();
-                                                //controller.setConfigViewModel.DatabaseAndCollection.ShouldBeNull();
-                                                //controller.setConfigViewModel.SelectedChartType.ShouldBeNull();
-                                                //selectedAction should not be set
-                                                //dataName should not be set
-                                                //databaseAndCollection should not be set
-                                                //selectedChartType should not be set
-                                            });
+                Then("nothing happens", () => controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(0));
             }
 
             [Test]
-            public void Assure_selectedDatabase_is_saved()
+            public void Assure_that_adding_a_collection_with_one_dataset_will_add_one_dataset()
             {
-                
+                Given(the_controller_has_been_created).
+                    And(selected_database_is_charting).
+                    And(selected_collection_is_collection).
+                    And(selected_collection_contains_one_empty_dataset);
+                When(AddDataSettings_is_pressed);
+                Then("SeriesConfig should contain one dataset", () => controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(1));
             }
 
             [Test]
-            public void Assure_selectedCollection_is_saved()
+            public void Assure_that_adding_a_dataset_will_add_correct_dataset()
             {
-
+                Given(the_controller_has_been_created).
+                    And(selected_database_is_charting).
+                    And(selected_collection_is_collection).
+                    And(selected_collection_contains_one_empty_dataset);
+                When(AddDataSettings_is_pressed);
+                Then("SeriesConfig should contain one dataset", () =>
+                                                                    {
+                                                                        controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                                                                        controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("DataSet");
+                                                                    });
             }
+
+            [Test]
+            public void Assure_that_adding_two_datasets_will_add_correct_datasets()
+            {
+                Given(the_controller_has_been_created).
+                    And(selected_database_is_charting).
+                    And(selected_collection_is_collection).
+                    And(selected_collection_contains_two_empty_datasets);
+                When(AddDataSettings_is_pressed);
+                Then("SeriesConfig should contain two dataset", () =>
+                {
+                    controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(2);
+
+                    controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("DataSet1");
+
+                    controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    controller.SettingsViewModel.SeriesConfig[1].DataName.ShouldBe("DataSet2");
+                });
+            }
+
+            [Test]
+            public void Assure_that_adding_a_dataset_when_one_already_exists_results_in_two_datasets()
+            {
+                Given(the_controller_has_been_created).
+                    And(seriesconfig_already_has_a_dataset).
+                    And(selected_database_is_charting).
+                    And(selected_collection_is_collection).
+                    And(selected_collection_contains_one_empty_dataset);
+                When(AddDataSettings_is_pressed);
+                Then("SeriesConfig should contain two dataset", () =>
+                {
+                    controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(2);
+                    controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Old/Collection");
+                    controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("OldName");
+                    controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    controller.SettingsViewModel.SeriesConfig[1].DataName.ShouldBe("DataSet");
+                });
+            }
+       
 
             [Test]
             public void Assure_DatabaseAndCollection_is_displayed_in_datagrid()
@@ -380,7 +449,17 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected When testdatabase_is_selected = () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase";
             protected When testdatabase2_is_selected = () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase2";
 
+            protected void CreateController()
+            {
+                controller = new ChartController
+                    (viewModel, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration);
+            }
 
+            protected static void StorageReaderLoadChartReturns(Chart chart)
+            {
+                storageReaderFake.Setup(s => s.LoadChart(It.IsAny<string>(), It.IsAny<string>())).Raises(
+                    t => t.ChartLoaded += null, new ChartLoadedEventArgs(chart));
+            }
 
             [SetUp]
             public void Setup()

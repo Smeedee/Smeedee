@@ -38,11 +38,16 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             chartConfig = new ChartConfig(configuration);
 
+            //Guard.Requires<ArgumentException>(chartConfig.IsValid, chartConfig.ErrorMsg);
+
+            
+
             this.storageReader = storageReader;
 
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
 
             this.storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
+            this.storageReader.ChartLoaded += ChartLoaded;
 
             SettingsViewModel = settingsViewModel;
             SettingsViewModel.SaveSettings.ExecuteDelegate = SaveSettings;
@@ -56,10 +61,19 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             Start();
         }
 
+        private void ChartLoaded(object sender, ChartLoadedEventArgs e)
+        {
+            var databaseAndCollection = e.Chart.Database + "/" + e.Chart.Collection;
+            foreach (var dataset in e.Chart.DataSets)
+                SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { DatabaseAndCollection = databaseAndCollection, DataName = dataset.Name });
+        }
+
         public void AddDataSettings()
         {
-            //var db ="hallo";
-            //SettingsViewModel.Databases.Add(db);
+            var database = SettingsViewModel.SelectedDatabase;
+            var collection = SettingsViewModel.SelectedCollection;
+            if (database != null && collection != null)
+                storageReader.LoadChart(database, collection);
         }
 
         private void ReloadSettings()
@@ -87,8 +101,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         public void AddDatabasesToSettingsViewModel(IList<string> db)
         {
-            //db = new List<string>{"db1", "db2", "db3"};     burde ikke dette virke?
-
             uiInvoker.Invoke(() =>
             {
                 SettingsViewModel.Databases.Clear();

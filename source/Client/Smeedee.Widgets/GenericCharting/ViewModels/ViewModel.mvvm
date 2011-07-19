@@ -32,6 +32,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty Databases as ObservableCollection<string>
 		oproperty Collections as ObservableCollection<string>
 
+		oproperty SeriesConfig as ObservableCollection<SeriesConfigViewModel>
+
 		oproperty SelectedDatabase as string
 		oproperty SelectedCollection as string
 
@@ -40,7 +42,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		command AddDataSettings
 
 
-	viewmodel SetConfigViewModel
+	viewmodel SeriesConfigViewModel
 
 		oproperty SelectedAction as string
 		oproperty DatabaseAndCollection as string

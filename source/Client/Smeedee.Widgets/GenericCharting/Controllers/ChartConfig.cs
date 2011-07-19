@@ -94,14 +94,14 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             get
             {
                 return
-                    configuration.ContainsSetting(ChartConfig.chart_setting_name) == true &&
-                    configuration.ContainsSetting(ChartConfig.x_axis_setting_name) == true &&
-                    configuration.ContainsSetting(ChartConfig.y_axis_setting_name) == true &&
-                    configuration.ContainsSetting(ChartConfig.x_axis_setting_type) == true &&
-                    configuration.ContainsSetting(ChartConfig.database_setting_name) == true &&
-                    configuration.ContainsSetting(ChartConfig.collection_setting_name) == true &&
-                    configuration.ContainsSetting(ChartConfig.data_name_setting) == true &&
-                    configuration.ContainsSetting(ChartConfig.chart_type_setting) == true;
+                    configuration.ContainsSetting(ChartConfig.chart_setting_name) &&
+                    configuration.ContainsSetting(ChartConfig.x_axis_setting_name) &&
+                    configuration.ContainsSetting(ChartConfig.y_axis_setting_name) &&
+                    configuration.ContainsSetting(ChartConfig.x_axis_setting_type) &&
+                    configuration.ContainsSetting(ChartConfig.database_setting_name) &&
+                    configuration.ContainsSetting(ChartConfig.collection_setting_name) &&
+                    configuration.ContainsSetting(ChartConfig.data_name_setting) &&
+                    configuration.ContainsSetting(ChartConfig.chart_type_setting);
 
                 /*       "Config setting is missing; " + GraphConfig.xaxis_property_setting_name);
                 Guard.Requires<ArgumentException>(configuration.ContainsSetting(GraphConfig.yaxis_property_Setting_name),
@@ -114,11 +114,23 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             get
             {
-                //if (configuration.ContainsSetting(xaxis_property_setting_name) == false)
-                //    return "Config setting is missing; " + xaxis_property_setting_name;
-                //else if (configuration.ContainsSetting(yaxis_property_Setting_name) == false)
-                //    return "Config setting is missing; " + yaxis_property_Setting_name;
-                //else
+                if (configuration.ContainsSetting(chart_setting_name) == false)
+                    return "Config setting is missing; " + chart_setting_name;
+                else if (configuration.ContainsSetting(x_axis_setting_name) == false)
+                    return "Config setting is missing; " + x_axis_setting_name;
+                else if (configuration.ContainsSetting(y_axis_setting_name) == false)
+                    return "Config setting is missing; " + y_axis_setting_name;
+                else if (configuration.ContainsSetting(x_axis_setting_type) == false)
+                    return "Config setting is missing; " + x_axis_setting_type;
+                else if (configuration.ContainsSetting(database_setting_name) == false)
+                    return "Config setting is missing; " + database_setting_name;
+                else if (configuration.ContainsSetting(collection_setting_name) == false)
+                    return "Config setting is missing; " + collection_setting_name;
+                else if (configuration.ContainsSetting(data_name_setting) == false)
+                    return "Config setting is missing; " + data_name_setting;
+                else if (configuration.ContainsSetting(chart_type_setting) == false)
+                    return "Config setting is missing; " + chart_type_setting;
+                else
                 return string.Empty;
             }
         }
