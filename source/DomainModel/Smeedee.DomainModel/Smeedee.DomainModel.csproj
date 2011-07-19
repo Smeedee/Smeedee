@@ -132,6 +132,7 @@
     <Compile Include="Users\UserdbSpecifications.cs" />
     <Compile Include="Users\UserSpecifications.cs" />
     <Compile Include="WebSnapshot\WebSnapshot.cs" />
+    <Compile Include="WebSnapshot\WebSnapshotSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CI\ClassDiagram.cd" />

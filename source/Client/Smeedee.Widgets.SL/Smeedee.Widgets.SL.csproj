@@ -91,6 +91,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\DomainModel\Smeedee.DomainModel\WebSnapshot\WebSnapshotSpecification.cs">
+      <Link>WebSnapshot\Controller\WebSnapshotSpecification.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\Corkboard\Controllers\CorkboardController.cs">
       <Link>Corkboard\Controllers\CorkboardController.cs</Link>
     </Compile>
@@ -253,6 +256,7 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
+    <Compile Include="WebSnapshot\Controller\WebSnapshotController.cs" />
     <Compile Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml.cs">
       <DependentUpon>WebSnapshotSettingsView.xaml</DependentUpon>
     </Compile>

@@ -19,5 +19,6 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		command Save
 		command ReloadSettings
 
-	viewmodel WebSnapshotViewModel:
-		oproperty Snapshot as WriteableBitmap	
+	viewmodel WebSnapshotViewModel extends AbstractViewModel:
+		oproperty Snapshot as WriteableBitmap
+		oproperty HasStoredImage as bool	

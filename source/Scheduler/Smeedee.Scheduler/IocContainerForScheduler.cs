@@ -39,6 +39,7 @@ namespace Smeedee.Scheduler
             kernel.Bind<IRepository<RetrospectiveNote>>().To<RetrospectiveNoteDatabaseRepository>();
             kernel.Bind<IRepository<TeamPicture>>().To<TeamPictureDatabaseRepository>();
             kernel.Bind<IRepository<NoSqlDatabase>>().To<SqliteNoSqlDatabaseRepository>();
+            kernel.Bind<IRepository<WebSnapshot>>().To<WebSnapshotDatabaseRepository>();
 
             kernel.Bind<IPersistDomainModels<LogEntry>>().To<LogEntryDatabaseRepository>();
             kernel.Bind<IPersistDomainModels<Configuration>>().To<ConfigurationDatabaseRepository>();

@@ -151,7 +151,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
-	public partial class WebSnapshotViewModel : TinyMVVM.Framework.ViewModelBase
+	public partial class WebSnapshotViewModel : AbstractViewModel
 	{
 		//State
 		public virtual WriteableBitmap Snapshot
@@ -176,6 +176,29 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 
 		partial void OnGetSnapshot(ref WriteableBitmap value);
 		partial void OnSetSnapshot(ref WriteableBitmap value);
+
+		public virtual bool HasStoredImage
+		{
+			get 
+			{
+				OnGetHasStoredImage(ref _HasStoredImage);
+				 
+				return _HasStoredImage; 
+			}
+			set
+			{
+				if (value != _HasStoredImage)
+				{
+					OnSetHasStoredImage(ref value); 
+					_HasStoredImage = value;
+					TriggerPropertyChanged("HasStoredImage");
+				}
+			}
+		}
+		private bool _HasStoredImage;
+
+		partial void OnGetHasStoredImage(ref bool value);
+		partial void OnSetHasStoredImage(ref bool value);
 
 	
 		
