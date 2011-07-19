@@ -5,7 +5,7 @@
     xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="600" d:DesignWidth="450">
+    d:DesignHeight="600" d:DesignWidth="600">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,7 +17,7 @@
 
     <Grid x:Name="LayoutRoot" >
         <Border Style="{StaticResource SettingsViewBorder}">
-            <Grid Style="{StaticResource SettingsViewGrid}" Height="500" Width="450">
+            <Grid Style="{StaticResource SettingsViewGrid}" Height="500" Width="600">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -55,7 +55,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Style="{StaticResource SettingsViewTextBox}"
-                    Text ="{Binding ChartName}" />
+                    Text ="{Binding ChartName, Mode=TwoWay}" />
 
                 <TextBlock 
                     Grid.Row="2" 
@@ -67,7 +67,7 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     Style="{StaticResource SettingsViewTextBox}"
-                    Text ="{Binding XAxisName}" />
+                    Text ="{Binding XAxisName, Mode=TwoWay}" />
 
                 <TextBlock 
                     Grid.Row="3" 
@@ -79,7 +79,7 @@
                     Grid.Row="3"
                     Grid.Column="1"
                     Style="{StaticResource SettingsViewTextBox}"
-                    Text ="{Binding YAxisName}" />
+                    Text ="{Binding YAxisName, Mode=TwoWay}" />
 
                 <TextBlock 
                     Grid.Row="4" 
@@ -103,65 +103,57 @@
 
                 <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
                     AutoGenerateColumns="False" 
+                    VerticalScrollBarVisibility="Visible"
+                    HorizontalScrollBarVisibility="Hidden"
                     FontSize="14" 
                     Grid.Column="0"
                     Grid.Row="5" 
                     Grid.ColumnSpan="2"
                     Grid.RowSpan="5"
-                    Width="452">
+                    Width="600">
                     <Controls:DataGrid.Columns>
                         <Controls:DataGridTemplateColumn
                             Header="Action"
-                            Width="70">
+                            Width="110">
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                                               SelectedItem="{Binding SelectedAction, Mode=TwoWay}"
-                                              Width="70">
+                                              Width="109">
                                         <ComboBoxItem>Show</ComboBoxItem>
                                         <ComboBoxItem>Hide</ComboBoxItem>
-                                        <ComboBoxItem>Use as definition</ComboBoxItem>
+                                        <ComboBoxItem>Reference</ComboBoxItem>
                                         <ComboBoxItem>Remove</ComboBoxItem>
                                     </ComboBox>
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>
                         </Controls:DataGridTemplateColumn>
-                        <Controls:DataGridTemplateColumn
-                            Header="Database/Collection"
-                            Width="180">
-                            <Controls:DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding DatabaseAndCollection}"
-                                               Style="{StaticResource SettingsViewText}" 
-                                               Width="180" />
-                                </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellTemplate>
-                        </Controls:DataGridTemplateColumn>
-                        <Controls:DataGridTemplateColumn
-                            Header="Name"
-                            Width="100">
-                            <Controls:DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding DataName}"
-                                               Style="{StaticResource SettingsViewText}"
-                                               Width="100" />
-                                </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellTemplate>
-                        </Controls:DataGridTemplateColumn>
-                        <Controls:DataGridTemplateColumn Header="ChartType"
-                                                         Width="100">
+                       
+                        <Controls:DataGridTextColumn Header="Database/Collection"
+                                                     Binding="{Binding Collection, Mode=TwoWay}"
+                                                     IsReadOnly="True"
+                                                     MinWidth="140" />
+
+                        <Controls:DataGridTextColumn Header="DataSet"
+                                                     Binding="{Binding DataName, Mode=TwoWay}"
+                                                     IsReadOnly ="True"
+                                                     MinWidth="100" />
+
+                        <Controls:DataGridTextColumn Header="Legend"
+                                                     Binding="{Binding Legend, Mode=TwoWay}"
+                                                     MinWidth="100" />
+                        
+                        <Controls:DataGridTemplateColumn 
+                            Header="Type"
+                            Width="110">
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                                               SelectedItem="{Binding SelectedChartType, Mode=TwoWay}"
-                                              Width="100">
+                                              Width="109">
                                         <ComboBoxItem>Area</ComboBoxItem>
-                                        <ComboBoxItem>Bar</ComboBoxItem>
-                                        <ComboBoxItem>Bubble</ComboBoxItem>
                                         <ComboBoxItem>Columns</ComboBoxItem>
                                         <ComboBoxItem>Line</ComboBoxItem>
-                                        <ComboBoxItem>Scatter</ComboBoxItem>
-                                        <ComboBoxItem>Stacked</ComboBoxItem>
                                     </ComboBox>
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>

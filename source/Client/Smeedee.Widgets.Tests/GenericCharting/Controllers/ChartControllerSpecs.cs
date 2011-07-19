@@ -289,7 +289,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
             private Context selected_collection_contains_two_empty_datasets = () => StorageReaderLoadChartReturns(new Chart("Charting", "Collection") { DataSets = { new DataSet { Name = "DataSet1" } , new DataSet { Name = "DataSet2" } } });
 
-            private Context seriesconfig_already_has_a_dataset = () => controller.SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { DatabaseAndCollection = "Old/Collection", DataName = "OldName" });
+            private Context seriesconfig_already_has_a_dataset = () => controller.SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { Database = "Old", Collection = "Collection", DatabaseAndCollection = "Old/Collection", DataName = "OldName" });
 
             private When AddDataSettings_is_pressed = () => controller.SettingsViewModel.AddDataSettings.ExecuteDelegate();
 
@@ -323,7 +323,9 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When(AddDataSettings_is_pressed);
                 Then("SeriesConfig should contain one dataset", () =>
                                                                     {
-                                                                        controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                                                                        //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                                                                        controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Charting");
+                                                                        controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
                                                                         controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("DataSet");
                                                                     });
             }
@@ -340,10 +342,14 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 {
                     controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(2);
 
-                    controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Charting");
+                    controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("DataSet1");
 
-                    controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    //controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    controller.SettingsViewModel.SeriesConfig[1].Database.ShouldBe("Charting");
+                    controller.SettingsViewModel.SeriesConfig[1].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[1].DataName.ShouldBe("DataSet2");
                 });
             }
@@ -360,38 +366,18 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("SeriesConfig should contain two dataset", () =>
                 {
                     controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(2);
-                    controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Old/Collection");
+
+                    //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Old/Collection");
+                    controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Old");
+                    controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[0].DataName.ShouldBe("OldName");
-                    controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
+
+                    //controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
+                    controller.SettingsViewModel.SeriesConfig[1].Database.ShouldBe("Charting");
+                    controller.SettingsViewModel.SeriesConfig[1].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[1].DataName.ShouldBe("DataSet");
                 });
             }
-       
-
-            [Test]
-            public void Assure_DatabaseAndCollection_is_displayed_in_datagrid()
-            {
-                
-            }
-
-            [Test]
-            public void Assure_Action_is_displayed_in_datagrid()
-            {
-                
-            }
-
-            [Test]
-            public void Assure_DataName_is_displayed_in_datagrid()
-            {
-                
-            }
-
-            [Test]
-            public void Assure_SelectedChartType_is_displayed_in_datagrid()
-            {
-                
-            }
-
         }
 
 

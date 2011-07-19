@@ -63,9 +63,13 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void ChartLoaded(object sender, ChartLoadedEventArgs e)
         {
-            var databaseAndCollection = e.Chart.Database + "/" + e.Chart.Collection;
-            foreach (var dataset in e.Chart.DataSets)
-                SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { DatabaseAndCollection = databaseAndCollection, DataName = dataset.Name });
+            //uiInvoker.Invoke(() =>
+            //{
+                var databaseAndCollection = e.Chart.Database + "/" + e.Chart.Collection;
+                foreach (var dataset in e.Chart.DataSets)
+                    SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel 
+                    { Database = e.Chart.Database, Collection = e.Chart.Collection, DatabaseAndCollection = databaseAndCollection, DataName = dataset.Name });
+            //});
         }
 
         public void AddDataSettings()
