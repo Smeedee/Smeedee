@@ -120,10 +120,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                                                      configuration.NewSetting(ChartConfig.x_axis_setting_name,"xName");
                                                      configuration.NewSetting(ChartConfig.y_axis_setting_name, "yName");
                                                      configuration.NewSetting(ChartConfig.x_axis_setting_type, "xType");
-                                                     configuration.NewSetting(ChartConfig.database_setting_name, "dbName");
-                                                     configuration.NewSetting(ChartConfig.collection_setting_name, "colName");
-                                                     configuration.NewSetting(ChartConfig.data_name_setting, "dName");
-                                                     configuration.NewSetting(ChartConfig.chart_type_setting, "cType");
                                                  });
                 Then("no exceptions should be thrown", CreateController);
             }
