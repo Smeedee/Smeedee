@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Smeedee.DomainModel.Config;
+using Smeedee.Widgets.GenericCharting.ViewModels;
 
 namespace Smeedee.Widgets.GenericCharting.Controllers
 {
     public class ChartConfig
     {
-        public static readonly string chart_setting_name = "chart name";
+        public static readonly string chart_setting_name = "chartname";
         public static readonly string x_axis_setting_name = "x-axis";
         public static readonly string y_axis_setting_name = "y-axis";
 
         public static readonly string x_axis_setting_type = "x-axis type";
 
-        public static readonly string database_setting_name = "database";
-        public static readonly string collection_setting_name = "collection";
-
-        public static readonly string data_name_setting = "data name";
-        public static readonly string chart_type_setting = "chart type";
+        public static readonly string series_setting_prefix = "series_";
+        public static readonly string series_setting_name = series_setting_prefix + "name";
+        public static readonly string series_setting_collection = series_setting_prefix + "collection";
+        public static readonly string series_setting_database = series_setting_prefix + "database";
+        public static readonly string series_setting_legend = series_setting_prefix + "legend";
+        public static readonly string series_setting_action = series_setting_prefix + "action";
+        public static readonly string series_setting_type = series_setting_prefix + "type";
 
         private Configuration configuration;
 
@@ -27,12 +31,41 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             this.configuration = configuration;
         }
 
+    
         public string ChartName
         {
             get { return configuration.GetSetting(chart_setting_name).Value; }
-            set { configuration.ChangeSetting(chart_setting_name, value); }
+            set { configuration.NewSetting(chart_setting_name, value); }
         }
 
+        public void SetSeries(Collection<SeriesConfigViewModel> seriesConfig)
+        {
+            var names = new List<string>();
+            var collections = new List<string>();
+            var databases = new List<string>();
+            var legends = new List<string>();
+            var actions = new List<string>();
+            var types = new List<string>();
+
+            foreach (var series in seriesConfig)
+            {
+                names.Add(series.Name);
+                collections.Add(series.Collection);
+                databases.Add(series.Database);
+                legends.Add(series.Legend);
+                actions.Add(series.SelectedAction);
+                types.Add(series.SelectedChartType);
+            }
+
+            configuration.NewSetting(series_setting_name, names.ToArray());
+            configuration.NewSetting(series_setting_collection, collections.ToArray());
+            configuration.NewSetting(series_setting_database, databases.ToArray());
+            configuration.NewSetting(series_setting_legend, legends.ToArray());
+            configuration.NewSetting(series_setting_action, actions.ToArray());
+            configuration.NewSetting(series_setting_type, types.ToArray());
+        }
+
+        /*
         public string XAxisName
         {
             get { return configuration.GetSetting(x_axis_setting_name).Value; }
@@ -51,32 +84,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             set { configuration.ChangeSetting(x_axis_setting_type, value); }
         }
 
-        public string Database
-        {
-            get { return configuration.GetSetting(database_setting_name).Value; }
-            set { configuration.ChangeSetting(database_setting_name, value); }
-        }
-
-        public string Collection
-        {
-            get { return configuration.GetSetting(collection_setting_name).Value; }
-            set { configuration.ChangeSetting(collection_setting_name, value); }
-        }
-
-        public string DataName
-        {
-            get { return configuration.GetSetting(data_name_setting).Value; }
-            set { configuration.ChangeSetting(data_name_setting, value); }
-        }
-
-        public string SelectedChartType
-        {
-            get { return configuration.GetSetting(chart_type_setting).Value; }
-            set { configuration.ChangeSetting(chart_type_setting, value); }
-        }
-
-
-
 
         public bool IsConfigured
         {
@@ -88,52 +95,40 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             get { return configuration; }
         }
+        */
+        //public bool IsValid
+        //{
+        //    get
+        //    {
+        //        return
+        //            configuration.ContainsSetting(ChartConfig.chart_setting_name) &&
+        //            configuration.ContainsSetting(ChartConfig.x_axis_setting_name) &&
+        //            configuration.ContainsSetting(ChartConfig.y_axis_setting_name) &&
+        //            configuration.ContainsSetting(ChartConfig.x_axis_setting_type);
 
-        public bool IsValid
-        {
-            get
-            {
-                return
-                    configuration.ContainsSetting(ChartConfig.chart_setting_name) &&
-                    configuration.ContainsSetting(ChartConfig.x_axis_setting_name) &&
-                    configuration.ContainsSetting(ChartConfig.y_axis_setting_name) &&
-                    configuration.ContainsSetting(ChartConfig.x_axis_setting_type) &&
-                    configuration.ContainsSetting(ChartConfig.database_setting_name) &&
-                    configuration.ContainsSetting(ChartConfig.collection_setting_name) &&
-                    configuration.ContainsSetting(ChartConfig.data_name_setting) &&
-                    configuration.ContainsSetting(ChartConfig.chart_type_setting);
+        //        /*       "Config setting is missing; " + GraphConfig.xaxis_property_setting_name);
+        //        Guard.Requires<ArgumentException>(configuration.ContainsSetting(GraphConfig.yaxis_property_Setting_name),
+        //            "Config setting is missing; " + GraphConfig.yaxis_property_Setting_name);*/
 
-                /*       "Config setting is missing; " + GraphConfig.xaxis_property_setting_name);
-                Guard.Requires<ArgumentException>(configuration.ContainsSetting(GraphConfig.yaxis_property_Setting_name),
-                    "Config setting is missing; " + GraphConfig.yaxis_property_Setting_name);*/
+        //    }
+        //}
 
-            }
-        }
-
-        public string ErrorMsg
-        {
-            get
-            {
-                if (configuration.ContainsSetting(chart_setting_name) == false)
-                    return "Config setting is missing; " + chart_setting_name;
-                else if (configuration.ContainsSetting(x_axis_setting_name) == false)
-                    return "Config setting is missing; " + x_axis_setting_name;
-                else if (configuration.ContainsSetting(y_axis_setting_name) == false)
-                    return "Config setting is missing; " + y_axis_setting_name;
-                else if (configuration.ContainsSetting(x_axis_setting_type) == false)
-                    return "Config setting is missing; " + x_axis_setting_type;
-                else if (configuration.ContainsSetting(database_setting_name) == false)
-                    return "Config setting is missing; " + database_setting_name;
-                else if (configuration.ContainsSetting(collection_setting_name) == false)
-                    return "Config setting is missing; " + collection_setting_name;
-                else if (configuration.ContainsSetting(data_name_setting) == false)
-                    return "Config setting is missing; " + data_name_setting;
-                else if (configuration.ContainsSetting(chart_type_setting) == false)
-                    return "Config setting is missing; " + chart_type_setting;
-                else
-                return string.Empty;
-            }
-        }
+        //public string ErrorMsg
+        //{
+        //    get
+        //    {
+        //        if (configuration.ContainsSetting(chart_setting_name) == false)
+        //            return "Config setting is missing; " + chart_setting_name;
+        //        else if (configuration.ContainsSetting(x_axis_setting_name) == false)
+        //            return "Config setting is missing; " + x_axis_setting_name;
+        //        else if (configuration.ContainsSetting(y_axis_setting_name) == false)
+        //            return "Config setting is missing; " + y_axis_setting_name;
+        //        else if (configuration.ContainsSetting(x_axis_setting_type) == false)
+        //            return "Config setting is missing; " + x_axis_setting_type;
+        //        else
+        //        return string.Empty;
+        //    }
+        //}
 
         //Not used
         //public static Configuration NewDefaultConfiguration()
