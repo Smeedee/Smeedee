@@ -197,18 +197,35 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
             [Test]
-            public void IsValid_should_return_true_when_seriesConfig_contains_a_series()
+            public void IsValid_should_return_true_if_a_dataset_has_action_show()
             {
                 Given(chart_config_has_been_made).
                     And("seriesConfig has one entry", () => seriesConfig.Add(series1));
                 When(setting_series);
-                Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeTrue());
+                Then("IsValid should return true", () => chartConfig.IsValid.ShouldBeTrue());
             }
 
             [Test]
-            public void IsValid_should_return_false_if_no_dataset_is_show()
+            public void IsValid_should_return_false_if_no_dataset_has_action_show()
             {
-                
+                Given(chart_config_has_been_made).
+                    And("seriesConfig has one entry", () => seriesConfig.Add(series2));
+                When(setting_series);
+                Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeFalse());
+            }
+
+            [Test]
+            public void IsValid_should_return_true_if_several_datasets_and_one_has_action_show()
+            {
+                Given(chart_config_has_been_made).
+                    And("seriesConfig has three entries", () =>
+                                                              {
+                                                                  seriesConfig.Add(series2);
+                                                                  seriesConfig.Add(series1);
+                                                                  seriesConfig.Add(series2);
+                                                              });
+                When(setting_series);
+                Then("IsValid should return true", () => chartConfig.IsValid.ShouldBeTrue());
             }
            
         }

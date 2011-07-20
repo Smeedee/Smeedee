@@ -125,13 +125,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                                                  });
                 Then("no exceptions should be thrown", CreateController);
             }
-
-            //Tests for:    configuration contains RefreshInterval
-            //              configuration contains Database settings
-            //              configuration contains Collection Settings
-            //              configuration contains XAxisPropertyName
-            //              configuration contains YAxisPropertyName
-
         }
 
         [TestFixture]
