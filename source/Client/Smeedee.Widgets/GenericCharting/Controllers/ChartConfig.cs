@@ -93,7 +93,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 databases.Add(series.Database);
                 legends.Add(series.Legend);
                 actions.Add(series.Action);
-                types.Add(series.SelectedChartType);
+                types.Add(series.ChartType);
             }
 
             configuration.NewSetting(series_setting_name, names.ToArray());
@@ -123,7 +123,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                         Database = databases[i],
                         Legend = legends[i],
                         Action = actions[i],
-                        SelectedChartType = types[i]
+                        ChartType = types[i]
                     });
 
             }

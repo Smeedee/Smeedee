@@ -154,7 +154,7 @@
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                                              SelectedItem="{Binding SelectedChartType, Mode=TwoWay}"
+                                              SelectedItem="{Binding ChartType, Mode=TwoWay}"
                                               Width="110">
                                         <ComboBoxItem>Area</ComboBoxItem>
                                         <ComboBoxItem>Columns</ComboBoxItem>

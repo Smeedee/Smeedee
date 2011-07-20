@@ -508,28 +508,28 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetLegend(ref string value);
 		partial void OnSetLegend(ref string value);
 
-		public virtual string SelectedChartType
+		public virtual string ChartType
 		{
 			get 
 			{
-				OnGetSelectedChartType(ref _SelectedChartType);
+				OnGetChartType(ref _ChartType);
 				 
-				return _SelectedChartType; 
+				return _ChartType; 
 			}
 			set
 			{
-				if (value != _SelectedChartType)
+				if (value != _ChartType)
 				{
-					OnSetSelectedChartType(ref value); 
-					_SelectedChartType = value;
-					TriggerPropertyChanged("SelectedChartType");
+					OnSetChartType(ref value); 
+					_ChartType = value;
+					TriggerPropertyChanged("ChartType");
 				}
 			}
 		}
-		private string _SelectedChartType;
+		private string _ChartType;
 
-		partial void OnGetSelectedChartType(ref string value);
-		partial void OnSetSelectedChartType(ref string value);
+		partial void OnGetChartType(ref string value);
+		partial void OnSetChartType(ref string value);
 
 		public virtual string Database
 		{

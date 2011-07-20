@@ -239,7 +239,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 database.Vals.ToList()[row].ShouldBe(series.Database);
                 legend.Vals.ToList()[row].ShouldBe(series.Legend);
                 action.Vals.ToList()[row].ShouldBe(series.Action);
-                type.Vals.ToList()[row].ShouldBe(series.SelectedChartType);
+                type.Vals.ToList()[row].ShouldBe(series.ChartType);
             }
 
             private Context series_has_been_set = () => SetSeries();
@@ -284,7 +284,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                         s.Database.ShouldBe("TestDb");
                         s.Legend.ShouldBe("TestLegend");
                         s.Action.ShouldBe("Show");
-                        s.SelectedChartType.ShouldBe("Columns");
+                        s.ChartType.ShouldBe("Columns");
                     });
             }
 
@@ -325,15 +325,15 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 given.Database.ShouldBe(expected.Database);
                 given.Collection.ShouldBe(expected.Collection);
                 given.Legend.ShouldBe(expected.Legend);
-                given.SelectedChartType.ShouldBe(expected.SelectedChartType);
+                given.ChartType.ShouldBe(expected.ChartType);
                 given.Action.ShouldBe(expected.Action);
             }
         }
 
         public class Shared : ScenarioClass
         {
-            protected static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", Action = "Show", SelectedChartType = "Line" };
-            protected static SeriesConfigViewModel series2 = new SeriesConfigViewModel { Database = "D2B", Collection = "Col2", Name = "Row2", Legend = "Legend2", Action = "Hide", SelectedChartType = "Area" };
+            protected static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", Action = "Show", ChartType = "Line" };
+            protected static SeriesConfigViewModel series2 = new SeriesConfigViewModel { Database = "D2B", Collection = "Col2", Name = "Row2", Legend = "Legend2", Action = "Hide", ChartType = "Area" };
 
             protected Context chart_config_has_been_made = () => CreateChartConfig();
 
