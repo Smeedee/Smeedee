@@ -29,6 +29,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty YAxisName as string
 		oproperty XAxisType as string
 
+		property XAxisTypes as ObservableCollection<string>
+		
 		oproperty Databases as ObservableCollection<string>
 		oproperty Collections as ObservableCollection<string>
 

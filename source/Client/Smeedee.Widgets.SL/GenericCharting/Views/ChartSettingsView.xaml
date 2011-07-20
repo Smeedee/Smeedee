@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:src="clr-namespace:Smeedee.Widgets.GenericCharting.ViewModels"
     mc:Ignorable="d"
     d:DesignHeight="600" d:DesignWidth="600">
 
@@ -12,7 +13,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
+        <src:SettingsChoices x:Key="settingsChoices" />
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" >
@@ -88,18 +91,12 @@
                     Text="Type of x-axis:" />
 
                 <ComboBox
-                    
                     Grid.Row="4"
                     Grid.Column="1"
                     Style="{StaticResource SettingsViewComboBox}"
                     Width="120"
-                    SelectedItem="{Binding XAxisType, Mode=TwoWay}" >
-                    <ComboBoxItem Content="Select"
-                                  IsSelected="True" />
-                    <ComboBoxItem>DateTime</ComboBoxItem>
-                    <ComboBoxItem>Linear</ComboBoxItem>
-                    <ComboBoxItem>Category</ComboBoxItem>
-                </ComboBox>
+                    ItemsSource="{Binding XAxisTypes, Mode=TwoWay}"
+                    SelectedValue="{Binding XAxisType, Mode=TwoWay}" />
 
                 <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
                     AutoGenerateColumns="False" 
@@ -115,18 +112,14 @@
                         <Controls:DataGridTemplateColumn
                             Header="Action"
                             Width="111">
-                            <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            <Controls:DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                                              SelectedItem="{Binding Action, Mode=TwoWay}"
-                                              Width="110">
-                                        <ComboBoxItem>Show</ComboBoxItem>
-                                        <ComboBoxItem>Hide</ComboBoxItem>
-                                        <ComboBoxItem>Reference</ComboBoxItem>
-                                        <ComboBoxItem>Remove</ComboBoxItem>
-                                    </ComboBox>
+                                              ItemsSource="{Binding Actions, Mode=TwoWay, Source={StaticResource settingsChoices}}"
+                                              SelectedValue="{Binding Action, Mode=TwoWay}"
+                                              Width="110" />
                                 </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            </Controls:DataGridTemplateColumn.CellTemplate>
                         </Controls:DataGridTemplateColumn>
                        
                         <Controls:DataGridTextColumn Header="Database"
@@ -154,16 +147,12 @@
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                                              SelectedItem="{Binding ChartType, Mode=TwoWay}"
-                                              Width="110">
-                                        <ComboBoxItem>Area</ComboBoxItem>
-                                        <ComboBoxItem>Columns</ComboBoxItem>
-                                        <ComboBoxItem>Line</ComboBoxItem>
-                                    </ComboBox>
+                                              ItemsSource="{Binding ChartTypes, Source={StaticResource settingsChoices}}"
+                                              SelectedValue="{Binding ChartType, Mode=TwoWay}"
+                                              Width="110" />
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>
                         </Controls:DataGridTemplateColumn>
-
                     </Controls:DataGrid.Columns>
                 </Controls:DataGrid>
 
@@ -191,12 +180,12 @@
                     Grid.Row="12"
 					Orientation="Horizontal">
                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                              SelectedItem="{Binding SelectedDatabase, Mode=TwoWay}"
                               ItemsSource="{Binding Databases}"
+                              SelectedItem="{Binding SelectedDatabase, Mode=TwoWay}"
                               Width="140"/>
                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                              SelectedItem="{Binding SelectedCollection, Mode=TwoWay}"
                               ItemsSource="{Binding Collections}"
+                              SelectedItem="{Binding SelectedCollection, Mode=TwoWay}"
                               Width="140"/>
                     <Button
 						Style="{StaticResource SettingsViewButton}"

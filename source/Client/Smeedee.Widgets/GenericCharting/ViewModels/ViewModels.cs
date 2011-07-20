@@ -298,6 +298,24 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetXAxisType(ref string value);
 		partial void OnSetXAxisType(ref string value);
 
+		public virtual ObservableCollection<string> XAxisTypes 
+		{ 
+			get
+			{
+				OnGetXAxisTypes(ref _XAxisTypes);
+				 
+				return _XAxisTypes; 
+			}
+			set 
+			{
+				OnSetXAxisTypes(ref value); 
+				_XAxisTypes = value; 
+			} 
+		}
+
+		private ObservableCollection<string> _XAxisTypes;
+		partial void OnGetXAxisTypes(ref ObservableCollection<string> value);
+		partial void OnSetXAxisTypes(ref ObservableCollection<string> value);
 		public virtual ObservableCollection<string> Databases
 		{
 			get 
