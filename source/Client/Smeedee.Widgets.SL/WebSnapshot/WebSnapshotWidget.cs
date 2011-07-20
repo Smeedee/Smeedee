@@ -32,10 +32,10 @@ namespace Smeedee.Widgets.SL.WebSnapshot
         {
             Title = "Web Snapshot";
             viewModel = GetInstance<WebSnapshotViewModel>();
-            //controller = NewController<WebSnapshotController>();
+            controller = NewController<WebSnapshotController>();
             viewModel.PropertyChanged += ViewModelPropertyChanged;
 
-            //View = new WebSnapshotView {DataContext = controller.ViewModel};
+            View = new WebSnapshotView {DataContext = controller.ViewModel};
             SettingsView = new WebSnapshotSettingsView {DataContext = viewModel};
         }
 

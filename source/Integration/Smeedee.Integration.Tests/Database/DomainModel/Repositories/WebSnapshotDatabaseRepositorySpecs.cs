@@ -17,7 +17,7 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Repositories
         protected static WebSnapshot webSnapshot1 = new WebSnapshot
                                                         {
                                                             Name = "WebSnapshot 1",
-                                                            Picture = new byte[2],
+                                                            PictureFilePath = "url",
                                                             PictureHeight = 100,
                                                             PictureWidth = 100,
                                                             CropHeight = 40,

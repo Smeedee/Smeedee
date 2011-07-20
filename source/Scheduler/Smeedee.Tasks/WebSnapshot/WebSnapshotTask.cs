@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using Smeedee.DomainModel.Framework;
@@ -24,13 +26,29 @@ namespace Smeedee.Tasks.WebSnapshot
     {
         private TaskConfiguration config;
         private WebImageFetcher webImageFetcher;
+        private string filename;
+        private string filePath;
         private IPersistDomainModels<Smeedee.DomainModel.WebSnapshot.WebSnapshot> databasepersister;
+
+        private string lastWebpageValue;
+        private string lastXpathValue;
+        private string lastConfigName;
+        private bool FirstRun;
 
         public WebSnapshotTask(TaskConfiguration config,  IPersistDomainModels<Smeedee.DomainModel.WebSnapshot.WebSnapshot> databasePersister)
         {
             this.config = config;
             this.databasepersister = databasePersister;
             webImageFetcher = new WebImageFetcher(new WebImageProvider());
+            filename = Path.GetRandomFileName() + ".png";
+            filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                filename);
+
+            lastWebpageValue = config.ReadEntryValue(WEBPAGE) as string;
+            lastXpathValue = config.ReadEntryValue(XPATH) as string;
+            lastConfigName = config.Name;
+            FirstRun = true;
         }
 
         public const string WEBPAGE = "Webpage URL";
@@ -55,46 +73,47 @@ namespace Smeedee.Tasks.WebSnapshot
                                                            config.ReadEntryValue(XPATH) as string);
             }
 
-            var pictureData = makePixelArray(picture);
-            var model = new DomainModel.WebSnapshot.WebSnapshot
-                            {
-                                Name = config.Name,
-                                Picture = ToByteArray(pictureData),
-                                PictureHeight = picture.Height,
-                                PictureWidth = picture.Width,
-
-                                CropHeight = picture.Height,
-                                CropWidth = picture.Width,
-                                CropCoordinateX = 0,
-                                CropCoordinateY = 0
-                            };
-            
-            databasepersister.Save(model);
-        }
-
-        private int[] makePixelArray(Bitmap picture)
-        {
-            var pixels = new int[picture.Height * picture.Width];
-            int position = 0;
-
-            for (int i = 0; i < picture.Width; i++)
+            if (picture != null)
             {
-                for (int j = 0; j < picture.Height; j++)
-                {
-                    var pixel = picture.GetPixel(i, j);
-                    pixels[position++] = pixel.B | (pixel.G << 8) | (pixel.R << 16) | (pixel.A << 24);                    
+                picture.Save(filePath, ImageFormat.Png);
+
+                if (ConfigValuesHasChanged() || FirstRun)
+                {  
+                    var model = new DomainModel.WebSnapshot.WebSnapshot
+                                    {
+                                        Name = config.Name,
+                                        PictureFilePath = filePath,
+                                        PictureHeight = picture.Height,
+                                        PictureWidth = picture.Width,
+                                    };
+
+
+                    FirstRun = false;
+                    databasepersister.Save(model);
+                    UpdateConfigValues();
                 }
             }
-
-            return pixels;
         }
 
-        private byte[] ToByteArray(int[] data)
+        private bool PictureValuesHasChanged()
         {
-            int len = data.Length << 2;
-            byte[] result = new byte[len];
-            Buffer.BlockCopy(data, 0, result, 0, len);
-            return result;
+            var currentWeb = config.ReadEntryValue(WEBPAGE) as string;
+            var currentXpath = config.ReadEntryValue(XPATH) as string;
+            return !currentWeb.Equals(lastWebpageValue) || !currentXpath.Equals(lastXpathValue);
         }
+
+        private bool ConfigValuesHasChanged()
+        {
+            var currentConfigName = config.Name;
+            return PictureValuesHasChanged() || !currentConfigName.Equals(lastConfigName);
+        }
+        
+        private void UpdateConfigValues()
+        {
+                lastWebpageValue = config.ReadEntryValue(WEBPAGE) as string;
+                lastXpathValue = config.ReadEntryValue(XPATH) as string;
+                lastConfigName = config.Name;
+        }
+
     }
 }
