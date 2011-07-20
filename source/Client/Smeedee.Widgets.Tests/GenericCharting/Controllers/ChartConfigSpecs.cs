@@ -110,60 +110,46 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                         configuration.GetSetting(ChartConfig.x_axis_setting_type).Value.ShouldBe("else");
                     });
             }
+        }
 
+        [TestFixture]
+        public class When_getting_string_values : Shared
+        {
             [Test]
-            public void It_should_be_possible_to_change_Action()
-            {
-                
-            }
-            [Test]
-            public void It_should_be_possible_to_set_Name()
-            {
-                Given(chart_config_has_been_made);
-                When("setting Name", () => chartConfig.Name = "Name");
-                Then("configuration should have that value",
-                     () => configuration.GetSetting(ChartConfig.series_setting_name).Value.ShouldBe("Name"));
-            }
-
-            [Test]
-            public void It_should_be_possible_to_change_Name()
+            public void It_should_be_possible_to_get_ChartName()
             {
                 Given(chart_config_has_been_made).
-                    And("Name is set", () => chartConfig.Name = "something");
-                When("changing Name", () => chartConfig.Name = "else");
-                Then("configuration should be updated",
-                    () =>
-                    {
-                        configuration.GetSetting(ChartConfig.series_setting_name).HasMultipleValues.ShouldBeFalse();
-                        configuration.GetSetting(ChartConfig.series_setting_name).Value.ShouldBe("else");
-                    });
+                    And("ChartName is set", () => chartConfig.ChartName = "ChartName");
+                When("we want to get ChartName");
+                Then("correct ChartName should be returned", () => chartConfig.ChartName.ShouldBe("ChartName"));
             }
 
             [Test]
-            public void It_should_be_possible_to_set_Database()
-            {
-                Given(chart_config_has_been_made);
-                When("setting Database", () => chartConfig.Database = "Database");
-                Then("configuration should have that value",
-                     () => configuration.GetSetting(ChartConfig.series_setting_database).Value.ShouldBe("Database"));
-            }
-
-            [Test]
-            public void It_should_be_possible_to_change_Database()
+            public void It_should_be_possible_to_get_XAxisName()
             {
                 Given(chart_config_has_been_made).
-                    And("Database is set", () => chartConfig.Database = "something");
-                When("changing Database", () => chartConfig.Database = "else");
-                Then("configuration should be updated",
-                    () =>
-                    {
-                        configuration.GetSetting(ChartConfig.series_setting_database).HasMultipleValues.ShouldBeFalse();
-                        configuration.GetSetting(ChartConfig.series_setting_database).Value.ShouldBe("else");
-                    });
+                    And("XAxisName is set", () => chartConfig.XAxisName = "XAxisName");
+                When("we want to get XAxisName");
+                Then("correct XAxisName should be returned", () => chartConfig.XAxisName.ShouldBe("XAxisName"));
             }
 
-            
+            [Test]
+            public void It_should_be_possible_to_get_YAxisName()
+            {
+                Given(chart_config_has_been_made).
+                    And("YAxisName is set", () => chartConfig.YAxisName = "YAxisName");
+                When("we want to get YAxisName");
+                Then("correct YAxisName should be returned", () => chartConfig.YAxisName.ShouldBe("YAxisName"));
+            }
 
+            [Test]
+            public void It_should_be_possible_to_get_XAxisType()
+            {
+                Given(chart_config_has_been_made).
+                    And("XAxisType is set", () => chartConfig.XAxisType = "XAxisType");
+                When("we want to get XAxisType");
+                Then("correct XAxisType should be returned", () => chartConfig.XAxisType.ShouldBe("XAxisType"));
+            }
         }
 
         [TestFixture]

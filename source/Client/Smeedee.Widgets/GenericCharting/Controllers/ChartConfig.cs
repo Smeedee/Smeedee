@@ -35,46 +35,30 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             this.configuration = configuration;
         }
 
-    
+
         public string ChartName
         {
-            //get { return configuration.GetSetting(chart_setting_name).Value; }
+            get { return configuration.GetSetting(chart_setting_name).Value; }
             set { configuration.NewSetting(chart_setting_name, value); }
         }
-
         public string XAxisName
         {
-            //get { return configuration.GetSetting(x_axis_setting_name).Value; }
+            get { return configuration.GetSetting(x_axis_setting_name).Value; }
             set { configuration.NewSetting(x_axis_setting_name, value); }
         }
 
         public string YAxisName
         {
+            get { return configuration.GetSetting(y_axis_setting_name).Value; }
             set { configuration.NewSetting(y_axis_setting_name, value); }
         }
 
         public string XAxisType
         {
+            get { return configuration.GetSetting(x_axis_setting_type).Value;}
             set { configuration.NewSetting(x_axis_setting_type, value); }
         }
 
-        public string Action;
-
-        public string Name
-        {
-            set { configuration.NewSetting(series_setting_name, value);}
-        }
-
-        public string Legend;
-
-        public string Type;
-
-        public string Database
-        {
-            set { configuration.NewSetting(series_setting_database, value);}
-        }
-
-        public string Collection;
 
 
         public void SetSeries(Collection<SeriesConfigViewModel> seriesConfig)
@@ -129,36 +113,13 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             }
             return list;
         }
-        /*
-        public string XAxisName
-        {
-            get { return configuration.GetSetting(x_axis_setting_name).Value; }
-            set { configuration.ChangeSetting(x_axis_setting_name, value); }
-        }
-
-        public string YAxisName
-        {
-            get { return configuration.GetSetting(y_axis_setting_name).Value; }
-            set { configuration.ChangeSetting(y_axis_setting_name, value); }
-        }
-
-        public string XAxisType
-        {
-            get { return configuration.GetSetting(x_axis_setting_type).Value; }
-            set { configuration.ChangeSetting(x_axis_setting_type, value); }
-        }
-
-
+       /*
         public bool IsConfigured
         {
             get { return configuration.IsConfigured; }
             set { configuration.IsConfigured = value; }
         }
 
-        public Configuration Configuration
-        {
-            get { return configuration; }
-        }
         */
         //public bool IsValid
         //{
