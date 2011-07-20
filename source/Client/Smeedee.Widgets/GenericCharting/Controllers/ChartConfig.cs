@@ -154,12 +154,12 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             get { return configuration.IsConfigured; }
             set { configuration.IsConfigured = value; }
         }
-
+        */
         public Configuration Configuration
         {
             get { return configuration; }
         }
-        */
+        
         //public bool IsValid
         //{
         //    get
