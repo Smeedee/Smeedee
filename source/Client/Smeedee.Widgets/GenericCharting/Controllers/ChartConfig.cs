@@ -35,6 +35,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             this.configuration = configuration;
         }
 
+
         public string ChartName
         {
             get { return configuration.GetSetting(chart_setting_name).Value; }
@@ -120,12 +121,12 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             }
             return list;
         }
-       /*
+
         public Configuration Configuration
         {
             get { return configuration; }
         }
-        */
+        
         //public bool IsValid
         //{
         //    get

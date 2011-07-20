@@ -34,68 +34,70 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Then_null_viewModelArgs_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as viewModel");
-                Then("an ArgumentException should be thrown",
+                When("creating new controller with null as viewModel", () => viewModel = null);
+                Then("an ArgumentNullException should be thrown",
                      () =>
-                     this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(null, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration)));
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
             [Test]
             public void Then_null_timerArgs_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as timer");
-                Then("an ArgumentException should be thrown",
+                When("creating new controller with null as timer", () => timerFake = null);
+                Then("an ArgumentNullException should be thrown",
                      () =>
-                     this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(viewModel, settingsViewModel, null, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration)));
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
             [Test]
             public void Then_null_uIInvokerArgs_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as uIInvoker");
-                Then("an ArgumentException should be thrown",
+                When("creating new controller with null as uIInvoker", () => uIInvoker = null);
+                Then("an ArgumentNullException should be thrown",
                      () =>
-                     this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(viewModel, settingsViewModel, timerFake.Object, null, loadingNotifierFake.Object, storageReaderFake.Object, configuration)));
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
             [Test]
             public void Then_null_loadingNotifierArgs_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as loadingNotifier");
-                Then("an ArgumentException should be thrown",
+                When("creating new controller with null as loadingNotifier", () => loadingNotifierFake = null);
+                Then("an ArgumentNullException should be thrown",
                      () =>
-                     this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvoker, null, storageReaderFake.Object, configuration)));
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
             [Test]
             public void Then_null_storageReaderArgs_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as storageReader");
-                Then("an ArgumentException should be thrown",
+                When("creating new controller with null as storageReader", () => storageReaderFake = null);
+                Then("an ArgumentNullException should be thrown",
                      () =>
-                     this.ShouldThrowException<ArgumentException>(
-                        () => new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, null, configuration)));
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
             [Test]
             public void Then_null_configurationArgs_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as configuration");
-                Then("an ArgumentException should be thrown",
+                When("creating new controller with null as configuration", () => configuration = null);
+                Then("an ArgumentNullException should be thrown",
                      () =>
-                     this.ShouldThrowException<ArgumentException>(
-                         () =>
-                         new ChartController(viewModel, settingsViewModel, timerFake.Object, uIInvoker,
-                                             loadingNotifierFake.Object, storageReaderFake.Object, null)));
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
+            }
+
+            [Test]
+            public void Then_null_configRepoArgs_should_return_exception()
+            {
+                Given("");
+                When("creating new controller with null as configRepo", () => configPersisterFake = null);
+                Then("an ArgumentNullException should be thrown",
+                     () =>
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
             [Test]
@@ -289,7 +291,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
             private Context selected_collection_contains_two_empty_datasets = () => StorageReaderLoadChartReturns(new Chart("Charting", "Collection") { DataSets = { new DataSet { Name = "DataSet1" } , new DataSet { Name = "DataSet2" } } });
 
-            private Context seriesconfig_already_has_a_dataset = () => controller.SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { Database = "Old", Collection = "Collection", DatabaseAndCollection = "Old/Collection", Name = "OldName" , Legend = "OldName"});
+            private Context seriesconfig_already_has_a_dataset = () => controller.SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { Database = "Old", Collection = "Collection", Name = "OldName" , Legend = "OldName"});
 
             private When AddDataSettings_is_pressed = () => controller.SettingsViewModel.AddDataSettings.ExecuteDelegate();
 
@@ -343,12 +345,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 {
                     controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(2);
 
-                    //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
                     controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Charting");
                     controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("DataSet1");
 
-                    //controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
                     controller.SettingsViewModel.SeriesConfig[1].Database.ShouldBe("Charting");
                     controller.SettingsViewModel.SeriesConfig[1].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[1].Name.ShouldBe("DataSet2");
@@ -368,12 +368,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 {
                     controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(2);
 
-                    //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Old/Collection");
                     controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Old");
                     controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("OldName");
 
-                    //controller.SettingsViewModel.SeriesConfig[1].DatabaseAndCollection.ShouldBe("Charting/Collection");
                     controller.SettingsViewModel.SeriesConfig[1].Database.ShouldBe("Charting");
                     controller.SettingsViewModel.SeriesConfig[1].Collection.ShouldBe("Collection");
                     controller.SettingsViewModel.SeriesConfig[1].Name.ShouldBe("DataSet");
@@ -394,6 +392,76 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
         }
 
+        [TestFixture]
+        public class When_saving_configuration : Shared
+        {
+            [Test]
+            public void Then_series_settings_from_viewmodel_should_be_copied_into_configuration()
+            {
+                Given(the_controller_has_been_created).
+                    And(there_is_a_series_configured_in_viewmodel);
+                When(SaveSettings_is_executed);
+                Then("configuration should contain the given series", () =>
+                    {
+                        var series = chartConfig.GetSeries();
+                        series.Count.ShouldBe(1);
+                        series[0].Name.ShouldBe("series1");
+                    });
+            }
+
+            [Test]
+            public void Then_two_series_settings_from_viewmodel_should_be_copied_into_configuration()
+            {
+                Given(the_controller_has_been_created).
+                    And(there_is_a_series_configured_in_viewmodel).
+                    And(there_is_another_series_configured_in_viewmodel);
+                When(SaveSettings_is_executed);
+                Then("configuration should contain the given series", () =>
+                {
+                    var series = chartConfig.GetSeries();
+                    series.Count.ShouldBe(2);
+                    series[0].Name.ShouldBe("series1");
+                    series[1].Name.ShouldBe("series2");
+                });
+            }
+
+            [Test]
+            public void Then_save_should_be_called_on_on_configPersister()
+            {
+                Given(the_controller_has_been_created);
+                When(SaveSettings_is_executed);
+                Then("save should be called on the configPersister",
+                     () => configPersisterFake.Verify(c => c.Save(It.IsAny<Configuration>()), Times.AtLeastOnce()));
+            }
+
+
+            private When SaveSettings_is_executed = () => controller.SettingsViewModel.SaveSettings.ExecuteDelegate();
+
+            private Context there_is_a_series_configured_in_viewmodel = () =>
+                    controller.SettingsViewModel.SeriesConfig.Add(
+                        new SeriesConfigViewModel
+                        {
+                            Name = "series1",
+                            Database = "db",
+                            Collection = "col",
+                            Action = "show",
+                            ChartType = "Lines",
+                            Legend = ""
+                        });
+
+            private Context there_is_another_series_configured_in_viewmodel = () =>
+                    controller.SettingsViewModel.SeriesConfig.Add(
+                        new SeriesConfigViewModel
+                        {
+                            Name = "series2",
+                            Database = "db2",
+                            Collection = "col2",
+                            Action = "hide",
+                            ChartType = "Area",
+                            Legend = "legend"
+                        });
+        }
+
 
         public class Shared : ScenarioClass
         {
@@ -404,15 +472,33 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static Configuration configuration;
             protected static ChartConfig chartConfig;
 
-            protected static Mock<ITimer> timerFake;
             protected static IUIInvoker uIInvoker;
+            protected static Mock<ITimer> timerFake;
             protected static Mock<IProgressbar> loadingNotifierFake;
             protected static Mock<IChartStorageReader> storageReaderFake;
+            protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterFake;
 
+            protected static ITimer GetTimerObject()
+            {
+                return timerFake != null ? timerFake.Object : null; 
+            }
 
-            protected Context the_controller_has_been_created =
-                () => controller = new ChartController
-                    (viewModel, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration);
+            protected static IProgressbar GetLoadingNotifier()
+            {
+                return loadingNotifierFake != null ? loadingNotifierFake.Object : null;
+            }
+
+            protected static IChartStorageReader GetStorageReader()
+            {
+                return storageReaderFake != null ? storageReaderFake.Object : null;
+            }
+
+            protected static IPersistDomainModelsAsync<Configuration> GetConfigurationRepo()
+            {
+                return configPersisterFake != null ? configPersisterFake.Object : null;
+            }
+
+            protected Context the_controller_has_been_created = CreateController;
             
             protected static Context there_are_no_databases = () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string>());
             protected static Context there_is_one_database_TestDatabase =
@@ -445,10 +531,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected When testdatabase_is_selected = () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase";
             protected When testdatabase2_is_selected = () => controller.SettingsViewModel.SelectedDatabase = "TestDatabase2";
 
-            protected void CreateController()
+            protected static void CreateController()
             {
                 controller = new ChartController
-                    (viewModel, settingsViewModel, timerFake.Object, uIInvoker, loadingNotifierFake.Object, storageReaderFake.Object, configuration);
+                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigurationRepo());
             }
 
             protected static void StorageReaderLoadChartReturns(Chart chart)
@@ -474,7 +560,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 there_are_no_databases(); // defaults to no databases
                 there_are_no_collections();
 
+                configPersisterFake = new Mock<IPersistDomainModelsAsync<Configuration>>();
+
                 configuration = new Configuration();
+                chartConfig = new ChartConfig(configuration);
 
             }
 
