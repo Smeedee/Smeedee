@@ -99,6 +99,10 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void CopySettingsViewModelToConfiguration()
         {
+            chartConfig.ChartName = SettingsViewModel.ChartName;
+            chartConfig.XAxisName = SettingsViewModel.XAxisName;
+            chartConfig.YAxisName = SettingsViewModel.YAxisName;
+            chartConfig.XAxisType = SettingsViewModel.XAxisType;
             chartConfig.SetSeries(SettingsViewModel.SeriesConfig);
             chartConfig.IsConfigured = true;
         }

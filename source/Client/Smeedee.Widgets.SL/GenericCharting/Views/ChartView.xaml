@@ -26,14 +26,15 @@
                         Minimum="0"
                         ShowGridLines="True"/>
 
-                <charting:CategoryAxis
-                        Title="Category"
+                <charting:LinearAxis
+                        Title="Time"
                         Foreground="White"
                         FontSize="15"
                         Orientation="X"
-                        
-                        VerticalAlignment="Stretch"
-                        ShowGridLines="True"/>
+                        Minimum="0"
+                        Interval="1"
+                        HorizontalAlignment="Stretch"
+                        />
             </charting:Chart.Axes>
 
             <local:GenericChart.AreaTemplate>
