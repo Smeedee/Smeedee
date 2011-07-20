@@ -428,6 +428,21 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
             [Test]
+            public void Then_string_settings_from_viewmodel_should_be_copied_into_configuration()
+            {
+                Given(the_controller_has_been_created).
+                    And(there_is_settings_in_viewmodel);
+                When(SaveSettings_is_executed);
+                Then("configuration should contain string settings", () =>
+                    {
+                        controller.ChartConfig.ChartName.ShouldBe("TestName");
+                        controller.ChartConfig.XAxisName.ShouldBe("X-Axis");
+                        controller.ChartConfig.YAxisName.ShouldBe("Y-Axis");
+                        controller.ChartConfig.XAxisType.ShouldBe("Linear");
+                    });
+            }
+
+            [Test]
             public void Then_save_should_be_called_on_on_configPersister()
             {
                 Given(the_controller_has_been_created);
@@ -462,6 +477,15 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                             ChartType = "Area",
                             Legend = "legend"
                         });
+
+            private Context there_is_settings_in_viewmodel = () =>
+                                                                 {
+                                                                     var vm = controller.SettingsViewModel;
+                                                                     vm.ChartName = "TestName";
+                                                                     vm.XAxisName = "X-Axis";
+                                                                     vm.YAxisName = "Y-Axis";
+                                                                     vm.XAxisType = "Linear";
+                                                                 };
         }
 
 
