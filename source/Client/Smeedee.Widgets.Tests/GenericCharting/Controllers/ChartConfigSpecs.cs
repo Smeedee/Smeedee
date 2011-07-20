@@ -374,6 +374,27 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
         }
 
+        [TestFixture]
+        public class When_creating_default_configuration
+        {
+            [Test]
+            public void ChartConfig_should_have_default_configuration()
+            {
+                var config = ChartConfig.NewDefaultConfiguration();
+                config.ContainsSetting(ChartConfig.chart_setting_name).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.x_axis_setting_name).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.y_axis_setting_name).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.x_axis_setting_type).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.series_setting_action).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.series_setting_name).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.series_setting_legend).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.series_setting_type).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.series_setting_database).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.series_setting_collection).ShouldBeTrue();
+                config.IsConfigured.ShouldBeFalse();
+            }
+        }
+
         public class Shared : ScenarioClass
         {
             protected static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", Action = "Show", ChartType = "Line" };
@@ -401,7 +422,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Setup()
             {
                 Scenario("");
-                configuration = new Configuration();
+                configuration = ChartConfig.NewDefaultConfiguration();
                 seriesConfig = new ObservableCollection<SeriesConfigViewModel>();
                 chartConfig = null;
                 Before();

@@ -17,11 +17,12 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 {
     public class ChartController : ControllerBase<ChartViewModel>
     {
-        private IDownloadStringService downloadStringService;
+        private const string SettingsEntryName = "GenericCharting";
+
         private IChartStorageReader storageReader;
         private ChartConfig chartConfig;
         public ChartSettingsViewModel SettingsViewModel { get; private set; }
-        private IPersistDomainModelsAsync<Configuration> configPersister;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersister;
 
         public ChartController(
             ChartViewModel chartViewModel,
@@ -37,8 +38,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
 
             Guard.Requires<ArgumentNullException>(storageReader != null);
-            Guard.Requires<ArgumentNullException>(configuration != null);
             Guard.Requires<ArgumentNullException>(configPersister != null);
+            Guard.Requires<ArgumentNullException>(configuration != null);
 
             chartConfig = new ChartConfig(configuration);
 
@@ -61,14 +62,9 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             SettingsViewModel.PropertyChanged += OnSettingsViewModelPropertyChanged;
 
-
-
             UpdateListOfDataSources();
-
             Start();
         }
-
-        
 
         private void ChartLoaded(object sender, ChartLoadedEventArgs e)
         {
@@ -105,6 +101,16 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private void CopySettingsViewModelToConfiguration()
         {
             chartConfig.SetSeries(SettingsViewModel.SeriesConfig);
+            chartConfig.IsConfigured = true;
+        }
+
+        private void CopyConfigurationToSettingsViewModel()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                SettingsViewModel.SeriesConfig.Clear();
+                chartConfig.GetSeries().ForEach(SettingsViewModel.SeriesConfig.Add);
+            });
         }
 
         private void OnSaveCompleted(object sender, SaveCompletedEventArgs e)
@@ -115,15 +121,13 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void UpdateListOfDataSources()
         {
-            SetIsLoadingConfig();
-
             storageReader.RefreshDatasources();
         }
 
         private void DatasourcesRefreshed(object sender, EventArgs args)
         {
             AddDatabasesToSettingsViewModel(storageReader.GetDatabases());
-            SetIsNotLoadingConfig();
+            
         }
 
         public void AddDatabasesToSettingsViewModel(IList<string> db)
@@ -163,6 +167,14 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                                       }
                                   });
             }
+        }
+
+        public ChartConfig ChartConfig { get { return chartConfig; } }
+
+        public void UpdateConfiguration(Configuration configuration)
+        {
+            chartConfig = new ChartConfig(configuration);
+            CopyConfigurationToSettingsViewModel();
         }
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)

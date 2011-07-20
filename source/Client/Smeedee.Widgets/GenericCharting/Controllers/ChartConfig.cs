@@ -39,22 +39,22 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public string ChartName
         {
             get { return configuration.GetSetting(chart_setting_name).Value; }
-            set { configuration.NewSetting(chart_setting_name, value); }
+            set { configuration.ChangeSetting(chart_setting_name, value); }
         }
         public string XAxisName
         {
             get { return configuration.GetSetting(x_axis_setting_name).Value; }
-            set { configuration.NewSetting(x_axis_setting_name, value); }
+            set { configuration.ChangeSetting(x_axis_setting_name, value); }
         }
         public string YAxisName
         {
             get { return configuration.GetSetting(y_axis_setting_name).Value; }
-            set { configuration.NewSetting(y_axis_setting_name, value); }
+            set { configuration.ChangeSetting(y_axis_setting_name, value); }
         }
         public string XAxisType
         {
             get { return configuration.GetSetting(x_axis_setting_type).Value;}
-            set { configuration.NewSetting(x_axis_setting_type, value); }
+            set { configuration.ChangeSetting(x_axis_setting_type, value); }
         }
         public bool IsConfigured
         {
@@ -84,17 +84,17 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 names.Add(series.Name);
                 collections.Add(series.Collection);
                 databases.Add(series.Database);
-                legends.Add(series.Legend);
-                actions.Add(series.Action);
-                types.Add(series.ChartType);
+                legends.Add(series.Legend ?? "");
+                actions.Add(series.Action ?? "");
+                types.Add(series.ChartType ?? "");
             }
-
-            configuration.NewSetting(series_setting_name, names.ToArray());
-            configuration.NewSetting(series_setting_collection, collections.ToArray());
-            configuration.NewSetting(series_setting_database, databases.ToArray());
-            configuration.NewSetting(series_setting_legend, legends.ToArray());
-            configuration.NewSetting(series_setting_action, actions.ToArray());
-            configuration.NewSetting(series_setting_type, types.ToArray());
+            
+            configuration.ChangeSetting(series_setting_name, names.ToArray());
+            configuration.ChangeSetting(series_setting_collection, collections.ToArray());
+            configuration.ChangeSetting(series_setting_database, databases.ToArray());
+            configuration.ChangeSetting(series_setting_legend, legends.ToArray());
+            configuration.ChangeSetting(series_setting_action, actions.ToArray());
+            configuration.ChangeSetting(series_setting_type, types.ToArray());
         }
 
         public List<SeriesConfigViewModel> GetSeries()
@@ -125,6 +125,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public Configuration Configuration
         {
             get { return configuration; }
+            set { configuration = value; }
         }
         
         //public bool IsValid
@@ -161,22 +162,23 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         //    }
         //}
 
-        //Not used
-        //public static Configuration NewDefaultConfiguration()
-        //{
-        //    var config = new Configuration("graph-config");
-        //    config.NewSetting(chart_setting_name);
-        //    config.NewSetting(x_axis_setting_name);
-        //    config.NewSetting(y_axis_setting_name);
-        //    config.NewSetting(x_axis_setting_type);
-        //    config.NewSetting(database_setting_name);
-        //    config.NewSetting(collection_setting_name);
-        //    config.NewSetting(data_name_setting);
-        //    config.NewSetting(chart_type_setting);
-        //    config.IsConfigured = false;
+        public static Configuration NewDefaultConfiguration()
+        {
+            var config = new Configuration("GenericCharting");
+            config.NewSetting(chart_setting_name);
+            config.NewSetting(x_axis_setting_name);
+            config.NewSetting(y_axis_setting_name);
+            config.NewSetting(x_axis_setting_type);
+            config.NewSetting(series_setting_name);
+            config.NewSetting(series_setting_collection);
+            config.NewSetting(series_setting_database);
+            config.NewSetting(series_setting_legend);
+            config.NewSetting(series_setting_action);
+            config.NewSetting(series_setting_type);
+            config.IsConfigured = false;
+            return config;
+        }
 
-        //    return config;
-        //}
 
     }
 }

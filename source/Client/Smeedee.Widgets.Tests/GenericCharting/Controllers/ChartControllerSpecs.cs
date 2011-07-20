@@ -81,7 +81,17 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
             [Test]
-            public void Then_null_configurationArgs_should_return_exception()
+            public void Then_null_configPersisterArgs_should_return_exception()
+            {
+                Given("");
+                When("creating new controller with null as configPersister", () => configPersisterFake = null);
+                Then("an ArgumentNullException should be thrown",
+                     () =>
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
+            }
+
+            [Test]
+            public void Then_null_configuration_should_return_exception()
             {
                 Given("");
                 When("creating new controller with null as configuration", () => configuration = null);
@@ -90,47 +100,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                      this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
-            [Test]
-            public void Then_null_configRepoArgs_should_return_exception()
-            {
-                Given("");
-                When("creating new controller with null as configRepo", () => configPersisterFake = null);
-                Then("an ArgumentNullException should be thrown",
-                     () =>
-                     this.ShouldThrowException<ArgumentNullException>(CreateController));
-            }
 
-            [Test]
-            [Ignore]
-            public void Then_assure_Configuration_contains_Database_setting()
-            {
-                Given("a new configuration is made", () => configuration = new Configuration());
-                When("no database setting is entered", () => configuration.NewSetting(ChartConfig.chart_setting_name, ""));
-                Then("", () =>
-                         this.ShouldThrowException<ArgumentException>(CreateController, ex =>
-                        ex.Message.ShouldBe("Config setting is missing; " + ChartConfig.chart_setting_name)));
-            }
-
-            [Test]
-            [Ignore]
-            public void Then_assure_complete_configuration_does_not_throw_exception()
-            {
-                Given("a new configuration is made", () => configuration = new Configuration());
-                When("settings are entered", () =>
-                                                 {
-                                                     configuration.NewSetting(ChartConfig.chart_setting_name, "cName");
-                                                     configuration.NewSetting(ChartConfig.x_axis_setting_name,"xName");
-                                                     configuration.NewSetting(ChartConfig.y_axis_setting_name, "yName");
-                                                     configuration.NewSetting(ChartConfig.x_axis_setting_type, "xType");
-                                                 });
-                Then("no exceptions should be thrown", CreateController);
-            }
-
-            //Tests for:    configuration contains RefreshInterval
-            //              configuration contains Database settings
-            //              configuration contains Collection Settings
-            //              configuration contains XAxisPropertyName
-            //              configuration contains YAxisPropertyName
 
         }
 
@@ -403,7 +373,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When(SaveSettings_is_executed);
                 Then("configuration should contain the given series", () =>
                     {
-                        var series = chartConfig.GetSeries();
+                        var series = controller.ChartConfig.GetSeries();
                         series.Count.ShouldBe(1);
                         series[0].Name.ShouldBe("series1");
                     });
@@ -418,7 +388,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When(SaveSettings_is_executed);
                 Then("configuration should contain the given series", () =>
                 {
-                    var series = chartConfig.GetSeries();
+                    var series = controller.ChartConfig.GetSeries();
                     series.Count.ShouldBe(2);
                     series[0].Name.ShouldBe("series1");
                     series[1].Name.ShouldBe("series2");
@@ -469,14 +439,12 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static ChartViewModel viewModel;
             protected static ChartSettingsViewModel settingsViewModel;
 
-            protected static Configuration configuration;
-            protected static ChartConfig chartConfig;
-
             protected static IUIInvoker uIInvoker;
             protected static Mock<ITimer> timerFake;
             protected static Mock<IProgressbar> loadingNotifierFake;
             protected static Mock<IChartStorageReader> storageReaderFake;
             protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterFake;
+            protected static Configuration configuration;
 
             protected static ITimer GetTimerObject()
             {
@@ -493,12 +461,15 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 return storageReaderFake != null ? storageReaderFake.Object : null;
             }
 
-            protected static IPersistDomainModelsAsync<Configuration> GetConfigurationRepo()
+            protected static IPersistDomainModelsAsync<Configuration> GetConfigPersister()
             {
                 return configPersisterFake != null ? configPersisterFake.Object : null;
             }
 
+          
+
             protected Context the_controller_has_been_created = CreateController;
+            protected When controller_is_created = CreateController;
             
             protected static Context there_are_no_databases = () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string>());
             protected static Context there_is_one_database_TestDatabase =
@@ -534,7 +505,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static void CreateController()
             {
                 controller = new ChartController
-                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigurationRepo());
+                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigPersister());
             }
 
             protected static void StorageReaderLoadChartReturns(Chart chart)
@@ -561,9 +532,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 there_are_no_collections();
 
                 configPersisterFake = new Mock<IPersistDomainModelsAsync<Configuration>>();
-
-                configuration = new Configuration();
-                chartConfig = new ChartConfig(configuration);
+                configuration = ChartConfig.NewDefaultConfiguration();
 
             }
 
