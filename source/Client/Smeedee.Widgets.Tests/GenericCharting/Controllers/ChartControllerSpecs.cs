@@ -326,7 +326,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When(AddDataSettings_is_pressed);
                 Then("SeriesConfig should contain one dataset", () =>
                                                                     {
-                                                                        //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Charting");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("DataSet");

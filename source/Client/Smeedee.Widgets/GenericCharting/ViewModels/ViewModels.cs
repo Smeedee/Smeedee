@@ -577,29 +577,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetCollection(ref string value);
 		partial void OnSetCollection(ref string value);
 
-		public virtual string DatabaseAndCollection
-		{
-			get 
-			{
-				OnGetDatabaseAndCollection(ref _DatabaseAndCollection);
-				 
-				return _DatabaseAndCollection; 
-			}
-			set
-			{
-				if (value != _DatabaseAndCollection)
-				{
-					OnSetDatabaseAndCollection(ref value); 
-					_DatabaseAndCollection = value;
-					TriggerPropertyChanged("DatabaseAndCollection");
-				}
-			}
-		}
-		private string _DatabaseAndCollection;
-
-		partial void OnGetDatabaseAndCollection(ref string value);
-		partial void OnSetDatabaseAndCollection(ref string value);
-
 	
 		
 		//Commands
