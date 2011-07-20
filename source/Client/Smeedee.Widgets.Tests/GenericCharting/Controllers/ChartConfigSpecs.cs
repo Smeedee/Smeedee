@@ -110,6 +110,23 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                         configuration.GetSetting(ChartConfig.x_axis_setting_type).Value.ShouldBe("else");
                     });
             }
+
+            [Test]
+            public void It_should_be_possible_to_set_IsConfigured()
+            {
+                Given(chart_config_has_been_made);
+                When("IsConfigured is set", () => chartConfig.IsConfigured = true);
+                Then("IsConfigured should be set", () => configuration.IsConfigured.ShouldBeTrue());
+            }
+
+            [Test]
+            public void It_should_be_possible_to_change_IsConfigured()
+            {
+                Given(chart_config_has_been_made).
+                    And("IsConfigured has been set", () => chartConfig.IsConfigured = true);
+                When("IsConfigured is changed", () => chartConfig.IsConfigured = false);
+                Then("configuration should be updated", () => configuration.IsConfigured.ShouldBeFalse());
+            }
         }
 
         [TestFixture]
@@ -150,6 +167,50 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When("we want to get XAxisType");
                 Then("correct XAxisType should be returned", () => chartConfig.XAxisType.ShouldBe("XAxisType"));
             }
+
+            [Test]
+            public void It_should_be_possible_to_get_IsConfigured()
+            {
+                Given(chart_config_has_been_made).
+                    And("IsConfigured is set", () => chartConfig.IsConfigured = true);
+                When("we want to get IsConfigured");
+                Then("correct IsConfigured should be returned", () => chartConfig.IsConfigured.ShouldBeTrue());
+            }
+
+
+
+            [Test]
+            public void IsValid_should_return_false_when_no_seriesConfig()
+            {
+                Given(chart_config_has_been_made);
+                When("no series has been made or added");
+                Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeFalse());
+            }
+
+            [Test]
+            public void IsValid_should_return_false_when_no_dataset()
+            {
+                Given(chart_config_has_been_made).
+                    And("seriesConfig is empty", () => seriesConfig.Clear());
+                When(setting_series);
+                Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeFalse());
+            }
+
+            [Test]
+            public void IsValid_should_return_true_when_seriesConfig_contains_a_series()
+            {
+                Given(chart_config_has_been_made).
+                    And("seriesConfig has one entry", () => seriesConfig.Add(series1));
+                When(setting_series);
+                Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeTrue());
+            }
+
+            [Test]
+            public void IsValid_should_return_false_if_no_dataset_is_show()
+            {
+                
+            }
+           
         }
 
         [TestFixture]
@@ -228,13 +289,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 type.Vals.ToList()[row].ShouldBe(series.ChartType);
             }
 
-            private Context series_has_been_set = () => SetSeries();
-            private When setting_series = () => SetSeries();
+            private Context series_has_been_set = SetSeries;
+            
 
-            private static void SetSeries()
-            {
-                chartConfig.SetSeries(seriesConfig);
-            }
+            
         }
 
         [TestFixture]
@@ -321,7 +379,14 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", Action = "Show", ChartType = "Line" };
             protected static SeriesConfigViewModel series2 = new SeriesConfigViewModel { Database = "D2B", Collection = "Col2", Name = "Row2", Legend = "Legend2", Action = "Hide", ChartType = "Area" };
 
-            protected Context chart_config_has_been_made = () => CreateChartConfig();
+            protected Context chart_config_has_been_made = CreateChartConfig;
+
+            protected When setting_series = SetSeries;
+
+            protected static void SetSeries()
+            {
+                chartConfig.SetSeries(seriesConfig);
+            }
 
             protected static Configuration configuration;
             protected static ChartConfig chartConfig;

@@ -35,7 +35,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             this.configuration = configuration;
         }
 
-
         public string ChartName
         {
             get { return configuration.GetSetting(chart_setting_name).Value; }
@@ -46,20 +45,29 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             get { return configuration.GetSetting(x_axis_setting_name).Value; }
             set { configuration.NewSetting(x_axis_setting_name, value); }
         }
-
         public string YAxisName
         {
             get { return configuration.GetSetting(y_axis_setting_name).Value; }
             set { configuration.NewSetting(y_axis_setting_name, value); }
         }
-
         public string XAxisType
         {
             get { return configuration.GetSetting(x_axis_setting_type).Value;}
             set { configuration.NewSetting(x_axis_setting_type, value); }
         }
+        public bool IsConfigured
+        {
+            get { return configuration.IsConfigured; }
+            set { configuration.IsConfigured = value; }
+        }
 
-
+        public bool IsValid
+        {
+            get
+            {
+                return configuration.GetSetting(series_setting_name).Value != null;
+            }
+        }
 
         public void SetSeries(Collection<SeriesConfigViewModel> seriesConfig)
         {
@@ -109,17 +117,14 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                         Action = actions[i],
                         ChartType = types[i]
                     });
-
             }
             return list;
         }
        /*
-        public bool IsConfigured
+        public Configuration Configuration
         {
-            get { return configuration.IsConfigured; }
-            set { configuration.IsConfigured = value; }
+            get { return configuration; }
         }
-
         */
         //public bool IsValid
         //{
