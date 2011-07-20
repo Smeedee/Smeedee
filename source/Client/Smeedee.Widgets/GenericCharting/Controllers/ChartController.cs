@@ -8,6 +8,7 @@ using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
+using Smeedee.DomainModel.Framework;
 using Smeedee.Framework;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 using TinyMVVM.Framework.Services;
@@ -20,6 +21,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private IChartStorageReader storageReader;
         private ChartConfig chartConfig;
         public ChartSettingsViewModel SettingsViewModel { get; private set; }
+        private IPersistDomainModelsAsync<Configuration> configRepository;
 
         public ChartController(
             ChartViewModel chartViewModel,
@@ -28,13 +30,15 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             IUIInvoker uiInvoker,
             IProgressbar loadingNotifier,
             IChartStorageReader storageReader,
-            Configuration configuration
+            Configuration configuration,
+            IPersistDomainModelsAsync<Configuration> configRepository
             )
             : base(chartViewModel, timer, uiInvoker, loadingNotifier)
         {
 
-            Guard.Requires<ArgumentException>(storageReader != null);
-            Guard.Requires<ArgumentException>(configuration != null);
+            Guard.Requires<ArgumentNullException>(storageReader != null);
+            Guard.Requires<ArgumentNullException>(configuration != null);
+            Guard.Requires<ArgumentNullException>(configRepository != null);
 
             chartConfig = new ChartConfig(configuration);
 
@@ -56,6 +60,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             SettingsViewModel.PropertyChanged += SettingsViewModelPropertyChanged;
 
+
+
             UpdateListOfDataSources();
 
             Start();
@@ -72,7 +78,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             //});
         }
 
-        public void AddDataSettings()
+        private void AddDataSettings()
         {
             
             var database = SettingsViewModel.SelectedDatabase;
