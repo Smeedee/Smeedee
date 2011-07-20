@@ -22,6 +22,7 @@ using Smeedee.DomainModel.TaskDefinition;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.DomainModel.TeamPicture;
 using Smeedee.DomainModel.Users;
+using Smeedee.DomainModel.WebSnapshot;
 using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
 using TinyMVVM.Framework.Services.Impl;
@@ -82,6 +83,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IRepository<TaskConfiguration>>().To<TaskConfigurationWebserviceRepository>();
             config.Bind<IRepository<TaskDefinition>>().To<TaskDefinitionWebserviceRepository>();
             config.Bind<IRepository<TeamPicture>>().To<TeamPictureWebserviceRepository>();
+            config.Bind<IRepository<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
             config.Bind<IRepository<User>>().To<UserWebserviceRepositoryProxy>();
             config.Bind<IRepository<Userdb>>().To<UserdbWebserviceRepository>();			
 		}
@@ -95,7 +97,8 @@ namespace Smeedee.Client.Framework
             config.Bind<IPersistDomainModels<RetrospectiveNote>>().To<RetrospectiveNoteWebServiceRepository>();
             config.Bind<IPersistDomainModels<TaskConfiguration>>().To<TaskConfigurationWebserviceRepository>();
             config.Bind<IPersistDomainModels<TeamPicture>>().To<TeamPictureWebserviceRepository>();
-            config.Bind<IPersistDomainModels<Userdb>>().To<UserdbWebserviceRepository>();            
+            config.Bind<IPersistDomainModels<Userdb>>().To<UserdbWebserviceRepository>();
+            config.Bind<IPersistDomainModels<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
         }
 
         private static void BindDomainModelDeleters(DependencyConfigSemantics config)

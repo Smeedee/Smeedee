@@ -19,11 +19,7 @@ namespace Smeedee.Integration.Tests.Database.DomainModel.Repositories
                                                             Name = "WebSnapshot 1",
                                                             PictureFilePath = "url",
                                                             PictureHeight = 100,
-                                                            PictureWidth = 100,
-                                                            CropHeight = 40,
-                                                            CropWidth = 40,
-                                                            CropCoordinateX = 20,
-                                                            CropCoordinateY = 20
+                                                            PictureWidth = 100
                                                         };
 
         protected static WebSnapshotDatabaseRepository repository;
