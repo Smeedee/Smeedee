@@ -52,7 +52,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty Database as string
 		oproperty Collection as string
 
-		oproperty DatabaseAndCollection as string
 
 	
 		

@@ -84,6 +84,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Then_null_configPersisterArgs_should_return_exception()
             {
                 Given("");
+                When("creating new controller with null as configuration", () => configuration = null);
                 When("creating new controller with null as configPersister", () => configPersisterFake = null);
                 Then("an ArgumentNullException should be thrown",
                      () =>
@@ -94,12 +95,44 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Then_null_configuration_should_return_exception()
             {
                 Given("");
+                When("creating new controller with null as configRepo", () => configPersisterFake = null);
                 When("creating new controller with null as configuration", () => configuration = null);
                 Then("an ArgumentNullException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
 
+            [Test]
+            [Ignore]
+            public void Then_assure_Configuration_contains_Database_setting()
+            {
+                Given("a new configuration is made", () => configuration = new Configuration());
+                When("no database setting is entered", () => configuration.NewSetting(ChartConfig.chart_setting_name, ""));
+                Then("", () =>
+                         this.ShouldThrowException<ArgumentException>(CreateController, ex =>
+                        ex.Message.ShouldBe("Config setting is missing; " + ChartConfig.chart_setting_name)));
+            }
+
+            [Test]
+            [Ignore]
+            public void Then_assure_complete_configuration_does_not_throw_exception()
+            {
+                Given("a new configuration is made", () => configuration = new Configuration());
+                When("settings are entered", () =>
+                                                 {
+                                                     configuration.NewSetting(ChartConfig.chart_setting_name, "cName");
+                                                     configuration.NewSetting(ChartConfig.x_axis_setting_name,"xName");
+                                                     configuration.NewSetting(ChartConfig.y_axis_setting_name, "yName");
+                                                     configuration.NewSetting(ChartConfig.x_axis_setting_type, "xType");
+                                                 });
+                Then("no exceptions should be thrown", CreateController);
+            }
+
+            //Tests for:    configuration contains RefreshInterval
+            //              configuration contains Database settings
+            //              configuration contains Collection Settings
+            //              configuration contains XAxisPropertyName
+            //              configuration contains YAxisPropertyName
 
 
         }
@@ -296,7 +329,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When(AddDataSettings_is_pressed);
                 Then("SeriesConfig should contain one dataset", () =>
                                                                     {
-                                                                        //controller.SettingsViewModel.SeriesConfig[0].DatabaseAndCollection.ShouldBe("Charting/Collection");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Database.ShouldBe("Charting");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Collection.ShouldBe("Collection");
                                                                         controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("DataSet");

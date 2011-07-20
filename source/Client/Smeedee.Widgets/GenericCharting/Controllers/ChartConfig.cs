@@ -66,7 +66,13 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             get
             {
-                return configuration.GetSetting(series_setting_name).Value != null;
+                bool isValid = false;
+                foreach (var serie in GetSeries())
+                {
+                    if (serie.Action == "Show")
+                        isValid= true;
+                }
+                return isValid;
             }
         }
 
