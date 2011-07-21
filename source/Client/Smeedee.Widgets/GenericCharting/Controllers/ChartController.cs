@@ -64,49 +64,26 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             Start();
         }
 
+        public ChartConfig ChartConfig { get { return chartConfig; } }
 
-        private void OnAddDataSettings()
+        
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
-            
-            var database = SettingsViewModel.SelectedDatabase;
-            var collection = SettingsViewModel.SelectedCollection;
-            if (database != null && collection != null)
-                storageReader.LoadChart(database, collection, AddDataChartLoaded);
-        }
 
-        public void AddDataChartLoaded(Chart chart)
+        }
+       
+        public void AddDatabasesToSettingsViewModel(IList<string> db)
         {
             uiInvoker.Invoke(() =>
             {
-                foreach (var dataset in chart.DataSets)
+                SettingsViewModel.Databases.Clear();
+                SettingsViewModel.SelectedDatabase = null;
+                SettingsViewModel.Collections.Clear();
+                foreach (var databaseName in db)
                 {
-                    var series = new SeriesConfigViewModel
-                                     {Database = chart.Database, Collection = chart.Collection, Name = dataset.Name};
-                    AddSeriesPropertyChangedEventListener(series);
-                    SettingsViewModel.SeriesConfig.Add(series);
+                    SettingsViewModel.Databases.Add(databaseName);
                 }
             });
-        }
-
-        private void AddSeriesPropertyChangedEventListener(SeriesConfigViewModel series)
-        {
-            series.PropertyChanged += OnSeriesPropertyChanged;
-        }
-
-        private void OnSeriesPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var series = sender as SeriesConfigViewModel;
-            if (series == null) return;
-            if (series.Action == ChartConfig.REMOVE)
-            {
-                uiInvoker.Invoke( () => SettingsViewModel.SeriesConfig.Remove(series));
-            }
-        }
-
-        public void OnReloadSettings()
-        {
-            UpdateListOfDataSources();
-            CopyConfigurationToSettingsViewModel();
         }
 
         private void OnSaveSettings()
@@ -126,27 +103,16 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             chartConfig.IsConfigured = true;
         }
 
-        private void CopyConfigurationToSettingsViewModel()
-        {
-            uiInvoker.Invoke(() =>
-            {
-                SettingsViewModel.ChartName = chartConfig.ChartName;
-                SettingsViewModel.XAxisName = chartConfig.XAxisName;
-                SettingsViewModel.YAxisName = chartConfig.YAxisName;
-                SettingsViewModel.XAxisType = chartConfig.XAxisType;
-                SettingsViewModel.SeriesConfig.Clear();
-                chartConfig.GetSeries().ForEach(SettingsViewModel.SeriesConfig.Add);
-                foreach (var series in SettingsViewModel.SeriesConfig)
-                {
-                    AddSeriesPropertyChangedEventListener(series);
-                }
-            });
-        }
-
         private void OnSaveCompleted(object sender, SaveCompletedEventArgs e)
         {
             // TODO: some error handling
             SetIsNotSavingConfig();
+        }
+
+        public void OnReloadSettings()
+        {
+            UpdateListOfDataSources();
+            CopyConfigurationToSettingsViewModel();
         }
 
         private void UpdateListOfDataSources()
@@ -157,24 +123,64 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private void DatasourcesRefreshed(object sender, EventArgs args)
         {
             AddDatabasesToSettingsViewModel(storageReader.GetDatabases());
-            
+
         }
 
-        public void AddDatabasesToSettingsViewModel(IList<string> db)
+        private void CopyConfigurationToSettingsViewModel()
         {
             uiInvoker.Invoke(() =>
             {
-                SettingsViewModel.Databases.Clear();
-                SettingsViewModel.SelectedDatabase = null;
-                SettingsViewModel.Collections.Clear();
-                foreach (var databaseName in db)
+                SettingsViewModel.ChartName = chartConfig.ChartName;
+                SettingsViewModel.XAxisName = chartConfig.XAxisName;
+                SettingsViewModel.YAxisName = chartConfig.YAxisName;
+                SettingsViewModel.XAxisType = chartConfig.XAxisType;
+                SettingsViewModel.SeriesConfig.Clear();
+                chartConfig.GetSeries().ForEach(AddSeriesToSettingsView);
+            });
+        }
+
+        public void AddSeriesToSettingsView(SeriesConfigViewModel series)
+        {
+            AddSeriesPropertyChangedEventListener(series);
+            SettingsViewModel.SeriesConfig.Add(series);
+        }
+
+        private void AddSeriesPropertyChangedEventListener(SeriesConfigViewModel series)
+        {
+            series.PropertyChanged += OnSeriesPropertyChanged;
+        }
+
+        private void OnSeriesPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var series = sender as SeriesConfigViewModel;
+            if (series.Action == ChartConfig.REMOVE)
+            {
+                uiInvoker.Invoke(() => SettingsViewModel.SeriesConfig.Remove(series));
+            }
+        }
+
+        private void OnAddDataSettings()
+        {
+            
+            var database = SettingsViewModel.SelectedDatabase;
+            var collection = SettingsViewModel.SelectedCollection;
+            if (database != null && collection != null)
+                storageReader.LoadChart(database, collection, AddDataChartLoaded);
+        }
+
+        public void AddDataChartLoaded(Chart chart)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                foreach (var dataset in chart.DataSets)
                 {
-                    SettingsViewModel.Databases.Add(databaseName);
+                    var series = new SeriesConfigViewModel { Database = chart.Database, Collection = chart.Collection, Name = dataset.Name };
+                    AddSeriesToSettingsView(series);
                 }
             });
         }
 
-        private void OnSettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
+        public void OnSettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
         {
             if (eventArgs.PropertyName == "SelectedDatabase")
                 UpdateCollectionsInSettingsViewModel(SettingsViewModel.SelectedDatabase);
@@ -190,26 +196,19 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             if (collections != null && collections.Count() > 0)
             {
                 uiInvoker.Invoke(() =>
-                                  {
-                                      foreach (var collectionName in collections)
-                                      {
-                                          SettingsViewModel.Collections.Add(collectionName);
-                                      }
-                                  });
+                {
+                    foreach (var collectionName in collections)
+                    {
+                        SettingsViewModel.Collections.Add(collectionName);
+                    }
+                });
             }
         }
-
-        public ChartConfig ChartConfig { get { return chartConfig; } }
 
         public void UpdateConfiguration(Configuration configuration)
         {
             chartConfig = new ChartConfig(configuration);
             CopyConfigurationToSettingsViewModel();
-        }
-
-        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
-        {
-            
         }
     }
 }

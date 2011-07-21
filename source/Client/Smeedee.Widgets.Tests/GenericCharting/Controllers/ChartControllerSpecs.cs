@@ -101,40 +101,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                      () =>
                      this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
-
-            [Test]
-            [Ignore]
-            public void Then_assure_Configuration_contains_Database_setting()
-            {
-                Given("a new configuration is made", () => configuration = new Configuration());
-                When("no database setting is entered", () => configuration.NewSetting(ChartConfig.chart_setting_name, ""));
-                Then("", () =>
-                         this.ShouldThrowException<ArgumentException>(CreateController, ex =>
-                        ex.Message.ShouldBe("Config setting is missing; " + ChartConfig.chart_setting_name)));
-            }
-
-            [Test]
-            [Ignore]
-            public void Then_assure_complete_configuration_does_not_throw_exception()
-            {
-                Given("a new configuration is made", () => configuration = new Configuration());
-                When("settings are entered", () =>
-                                                 {
-                                                     configuration.NewSetting(ChartConfig.chart_setting_name, "cName");
-                                                     configuration.NewSetting(ChartConfig.x_axis_setting_name,"xName");
-                                                     configuration.NewSetting(ChartConfig.y_axis_setting_name, "yName");
-                                                     configuration.NewSetting(ChartConfig.x_axis_setting_type, "xType");
-                                                 });
-                Then("no exceptions should be thrown", CreateController);
-            }
-
-            //Tests for:    configuration contains RefreshInterval
-            //              configuration contains Database settings
-            //              configuration contains Collection Settings
-            //              configuration contains XAxisPropertyName
-            //              configuration contains YAxisPropertyName
-
-
         }
 
         [TestFixture]
@@ -158,7 +124,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
         }
 
-        
         [TestFixture]
         public class When_updating_list_of_datasources : Shared
         {
@@ -280,6 +245,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                              settingsViewModel.Collections[0].ShouldBe("TestCollection3");
                          });
             }
+
+            
         }
 
         [TestFixture]
@@ -451,33 +418,24 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                      () => configPersisterFake.Verify(c => c.Save(It.IsAny<Configuration>()), Times.AtLeastOnce()));
             }
 
+            [Test]
+            public void Then_OnSaveCompleted_should_set_isNotSavingConfig()
+            {
+                Given(the_controller_has_been_created).
+                    And(configPersisterFake_has_saveCompletedEvent);
+                When(SaveSettings_is_executed);
+                Then("OnSaveCompleted should set viewmodel isSaving to false", () => viewModel.IsSaving.ShouldBeFalse());
+
+            }
+
+            private Context configPersisterFake_has_saveCompletedEvent =
+               () => configPersisterFake.Setup(s => s.Save(It.IsAny<Configuration>())).Raises(p => p.SaveCompleted += null, new SaveCompletedEventArgs());
 
             private When SaveSettings_is_executed = () => controller.SettingsViewModel.SaveSettings.ExecuteDelegate();
 
-            private Context there_is_a_series_configured_in_viewmodel = () =>
-                    controller.SettingsViewModel.SeriesConfig.Add(
-                        new SeriesConfigViewModel
-                        {
-                            Name = "series1",
-                            Database = "db",
-                            Collection = "col",
-                            Action = "show",
-                            ChartType = "Lines",
-                            Legend = ""
-                        });
+            
 
-            private Context there_is_another_series_configured_in_viewmodel = () =>
-                    controller.SettingsViewModel.SeriesConfig.Add(
-                        new SeriesConfigViewModel
-                        {
-                            Name = "series2",
-                            Database = "db2",
-                            Collection = "col2",
-                            Action = "hide",
-                            ChartType = "Area",
-                            Legend = "legend"
-                        });
-
+           
             private Context there_is_settings_in_viewmodel = () =>
                                                                  {
                                                                      var vm = controller.SettingsViewModel;
@@ -519,16 +477,64 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
             private When update_configuration_is_called = () => controller.UpdateConfiguration(AConfiguration());
 
-            private static Configuration AConfiguration()
+            
+        }
+
+        [TestFixture]
+        public class When_reloading_settings : Shared
+        {
+            [Test]
+            public void Then_list_of_datasources_should_be_updated()
             {
-                var chartConf = new ChartConfig(ChartConfig.NewDefaultConfiguration());
-                chartConf.ChartName = "AName";
-                chartConf.XAxisName = "AnX";
-                chartConf.YAxisName = "AnY";
-                chartConf.XAxisType = "Category";
-                chartConf.SetSeries(new Collection<SeriesConfigViewModel> { new SeriesConfigViewModel {Name="ASeries"} });
-                return chartConf.Configuration;
+                Given(the_controller_has_been_created).
+                    And(there_is_one_database_TestDatabase);
+                When(reloadsettings_is_executed);
+                Then("the list of datasources should be updated", () => controller.SettingsViewModel.Databases.Count.ShouldBe(1));
             }
+
+            
+
+            [Test]
+            public void Then_configuration_should_be_copied_to_viewmodel()
+            {
+                Given(the_controller_has_been_created).
+                    And(a_configuration_exists).
+                    And(chart_name_is_changed);
+                When(reloadsettings_is_executed);
+                Then("the configuration should be copied to viewmodel", () => controller.SettingsViewModel.ChartName.ShouldBe("AName"));
+            }
+
+            private Context a_configuration_exists = () => { controller.UpdateConfiguration(AConfiguration()); };
+            private Context chart_name_is_changed = () => controller.SettingsViewModel.ChartName = "OtherName";
+            
+            private When reloadsettings_is_executed =
+                () => controller.SettingsViewModel.ReloadSettings.ExecuteDelegate();
+        }
+
+        [TestFixture]
+        public class When_changing_action_in_settingsview : Shared
+        {
+
+            [Test]
+            public void Assure_nothing_changes_if_action_is_not_remove()
+            {
+                Given(the_controller_has_been_created).
+                    And(there_is_a_series_configured_in_viewmodel);
+                When(action_is_changed_to_something_other_than_remove);
+                Then("the serie still exists", () => controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(1));
+            }
+
+            [Test]
+            public void Assure_series_is_deleted_if_action_is_remove()
+            {
+                Given(the_controller_has_been_created).
+                   And(there_is_a_series_configured_in_viewmodel);
+                When(action_is_changed_to_remove);
+                Then("the serie is deleted", () => controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(0));
+            }
+
+            private When action_is_changed_to_something_other_than_remove = () => controller.SettingsViewModel.SeriesConfig[0].Action = ChartConfig.SHOW;
+            private When action_is_changed_to_remove = () => controller.SettingsViewModel.SeriesConfig[0].Action = ChartConfig.REMOVE;
         }
 
         public class Shared : ScenarioClass
@@ -543,6 +549,17 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static Mock<IChartStorageReader> storageReaderFake;
             protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterFake;
             protected static Configuration configuration;
+
+            protected static Configuration AConfiguration()
+            {
+                var chartConf = new ChartConfig(ChartConfig.NewDefaultConfiguration());
+                chartConf.ChartName = "AName";
+                chartConf.XAxisName = "AnX";
+                chartConf.YAxisName = "AnY";
+                chartConf.XAxisType = "Category";
+                chartConf.SetSeries(new Collection<SeriesConfigViewModel> { new SeriesConfigViewModel { Name = "ASeries" } });
+                return chartConf.Configuration;
+            }
 
             protected static ITimer GetTimerObject()
             {
@@ -564,11 +581,12 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 return configPersisterFake != null ? configPersisterFake.Object : null;
             }
 
-          
+           
 
             protected Context the_controller_has_been_created = CreateController;
             protected When controller_is_created = CreateController;
-            
+
+
             protected static Context there_are_no_databases = () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string>());
             protected static Context there_is_one_database_TestDatabase =
                 () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string> {"TestDatabase"});
@@ -593,6 +611,31 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
               () => storageReaderFake.Setup(s => s.GetCollectionsInDatabase(It.Is<string>(t => t == "TestDatabase2"))).Returns(new List<string> { "TestCollection3", "TestCollection4", "TestCollection5" });
 
             protected Context onNotifiedToRefresh_has_been_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
+
+            protected Context there_is_a_series_configured_in_viewmodel = () =>
+                    controller.AddSeriesToSettingsView(
+                        new SeriesConfigViewModel
+                        {
+                            Name = "series1",
+                            Database = "db",
+                            Collection = "col",
+                            Action = ChartConfig.SHOW,
+                            ChartType = "Lines",
+                            Legend = ""
+                        }); 
+             protected Context there_is_another_series_configured_in_viewmodel = () =>
+                    controller.AddSeriesToSettingsView(
+                        new SeriesConfigViewModel
+                        {
+                            Name = "series2",
+                            Database = "db2",
+                            Collection = "col2",
+                            Action = ChartConfig.REMOVE,
+                            ChartType = "Area",
+                            Legend = "legend"
+                        });
+
+
 
             protected When onNotifiedToRefresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
             protected When refresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
