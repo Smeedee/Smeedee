@@ -84,7 +84,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                     if (serie.Action == SHOW)
                         isValid= true;
                 }
-                return isValid;
+                return isValid && IsConfigured;
             }
         }
 
