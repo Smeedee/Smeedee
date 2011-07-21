@@ -298,6 +298,24 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		partial void OnGetXAxisType(ref string value);
 		partial void OnSetXAxisType(ref string value);
 
+		public virtual ObservableCollection<string> XAxisTypes 
+		{ 
+			get
+			{
+				OnGetXAxisTypes(ref _XAxisTypes);
+				 
+				return _XAxisTypes; 
+			}
+			set 
+			{
+				OnSetXAxisTypes(ref value); 
+				_XAxisTypes = value; 
+			} 
+		}
+
+		private ObservableCollection<string> _XAxisTypes;
+		partial void OnGetXAxisTypes(ref ObservableCollection<string> value);
+		partial void OnSetXAxisTypes(ref ObservableCollection<string> value);
 		public virtual ObservableCollection<string> Databases
 		{
 			get 
@@ -343,6 +361,29 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 		partial void OnGetCollections(ref ObservableCollection<string> value);
 		partial void OnSetCollections(ref ObservableCollection<string> value);
+
+		public virtual ObservableCollection<SeriesConfigViewModel> SeriesConfig
+		{
+			get 
+			{
+				OnGetSeriesConfig(ref _SeriesConfig);
+				 
+				return _SeriesConfig; 
+			}
+			set
+			{
+				if (value != _SeriesConfig)
+				{
+					OnSetSeriesConfig(ref value); 
+					_SeriesConfig = value;
+					TriggerPropertyChanged("SeriesConfig");
+				}
+			}
+		}
+		private ObservableCollection<SeriesConfigViewModel> _SeriesConfig;
+
+		partial void OnGetSeriesConfig(ref ObservableCollection<SeriesConfigViewModel> value);
+		partial void OnSetSeriesConfig(ref ObservableCollection<SeriesConfigViewModel> value);
 
 		public virtual string SelectedDatabase
 		{
@@ -413,106 +454,152 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
 namespace Smeedee.Widgets.GenericCharting.ViewModels
 {
-	public partial class SetConfigViewModel : TinyMVVM.Framework.ViewModelBase
+	public partial class SeriesConfigViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual string SelectedAction
+		public virtual string Action
 		{
 			get 
 			{
-				OnGetSelectedAction(ref _SelectedAction);
+				OnGetAction(ref _Action);
 				 
-				return _SelectedAction; 
+				return _Action; 
 			}
 			set
 			{
-				if (value != _SelectedAction)
+				if (value != _Action)
 				{
-					OnSetSelectedAction(ref value); 
-					_SelectedAction = value;
-					TriggerPropertyChanged("SelectedAction");
+					OnSetAction(ref value); 
+					_Action = value;
+					TriggerPropertyChanged("Action");
 				}
 			}
 		}
-		private string _SelectedAction;
+		private string _Action;
 
-		partial void OnGetSelectedAction(ref string value);
-		partial void OnSetSelectedAction(ref string value);
+		partial void OnGetAction(ref string value);
+		partial void OnSetAction(ref string value);
 
-		public virtual string DatabaseAndCollection
+		public virtual string Name
 		{
 			get 
 			{
-				OnGetDatabaseAndCollection(ref _DatabaseAndCollection);
+				OnGetName(ref _Name);
 				 
-				return _DatabaseAndCollection; 
+				return _Name; 
 			}
 			set
 			{
-				if (value != _DatabaseAndCollection)
+				if (value != _Name)
 				{
-					OnSetDatabaseAndCollection(ref value); 
-					_DatabaseAndCollection = value;
-					TriggerPropertyChanged("DatabaseAndCollection");
+					OnSetName(ref value); 
+					_Name = value;
+					TriggerPropertyChanged("Name");
 				}
 			}
 		}
-		private string _DatabaseAndCollection;
+		private string _Name;
 
-		partial void OnGetDatabaseAndCollection(ref string value);
-		partial void OnSetDatabaseAndCollection(ref string value);
+		partial void OnGetName(ref string value);
+		partial void OnSetName(ref string value);
 
-		public virtual string DataName
+		public virtual string Legend
 		{
 			get 
 			{
-				OnGetDataName(ref _DataName);
+				OnGetLegend(ref _Legend);
 				 
-				return _DataName; 
+				return _Legend; 
 			}
 			set
 			{
-				if (value != _DataName)
+				if (value != _Legend)
 				{
-					OnSetDataName(ref value); 
-					_DataName = value;
-					TriggerPropertyChanged("DataName");
+					OnSetLegend(ref value); 
+					_Legend = value;
+					TriggerPropertyChanged("Legend");
 				}
 			}
 		}
-		private string _DataName;
+		private string _Legend;
 
-		partial void OnGetDataName(ref string value);
-		partial void OnSetDataName(ref string value);
+		partial void OnGetLegend(ref string value);
+		partial void OnSetLegend(ref string value);
 
-		public virtual string SelectedChartType
+		public virtual string ChartType
 		{
 			get 
 			{
-				OnGetSelectedChartType(ref _SelectedChartType);
+				OnGetChartType(ref _ChartType);
 				 
-				return _SelectedChartType; 
+				return _ChartType; 
 			}
 			set
 			{
-				if (value != _SelectedChartType)
+				if (value != _ChartType)
 				{
-					OnSetSelectedChartType(ref value); 
-					_SelectedChartType = value;
-					TriggerPropertyChanged("SelectedChartType");
+					OnSetChartType(ref value); 
+					_ChartType = value;
+					TriggerPropertyChanged("ChartType");
 				}
 			}
 		}
-		private string _SelectedChartType;
+		private string _ChartType;
 
-		partial void OnGetSelectedChartType(ref string value);
-		partial void OnSetSelectedChartType(ref string value);
+		partial void OnGetChartType(ref string value);
+		partial void OnSetChartType(ref string value);
+
+		public virtual string Database
+		{
+			get 
+			{
+				OnGetDatabase(ref _Database);
+				 
+				return _Database; 
+			}
+			set
+			{
+				if (value != _Database)
+				{
+					OnSetDatabase(ref value); 
+					_Database = value;
+					TriggerPropertyChanged("Database");
+				}
+			}
+		}
+		private string _Database;
+
+		partial void OnGetDatabase(ref string value);
+		partial void OnSetDatabase(ref string value);
+
+		public virtual string Collection
+		{
+			get 
+			{
+				OnGetCollection(ref _Collection);
+				 
+				return _Collection; 
+			}
+			set
+			{
+				if (value != _Collection)
+				{
+					OnSetCollection(ref value); 
+					_Collection = value;
+					TriggerPropertyChanged("Collection");
+				}
+			}
+		}
+		private string _Collection;
+
+		partial void OnGetCollection(ref string value);
+		partial void OnSetCollection(ref string value);
 
 	
 		
 		//Commands
 		
-		public SetConfigViewModel()
+		public SeriesConfigViewModel()
 		{
 	
 			OnInitialize();

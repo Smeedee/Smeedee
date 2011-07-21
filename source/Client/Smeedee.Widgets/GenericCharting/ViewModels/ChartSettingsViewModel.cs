@@ -12,6 +12,24 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
         {
             Databases = new ObservableCollection<string>();
             Collections = new ObservableCollection<string>();
+            SeriesConfig = new ObservableCollection<SeriesConfigViewModel>();
+
+            XAxisTypes = new ObservableCollection<string>{"DateTime", "Category", "Linear"};
+        }
+
+
+    }
+
+    public class SettingsChoices
+    {
+        public ObservableCollection<string> Actions
+        {
+            get { return new ObservableCollection<string> {"Show", "Hide", "Reference", "Remove"}; }
+        }
+
+        public ObservableCollection<string> ChartTypes
+        {
+            get { return new ObservableCollection<string> { "Line", "Area", "Columns" }; }
         }
     }
 

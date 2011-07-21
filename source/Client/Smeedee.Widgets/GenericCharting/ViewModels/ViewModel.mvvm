@@ -29,8 +29,12 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty YAxisName as string
 		oproperty XAxisType as string
 
+		property XAxisTypes as ObservableCollection<string>
+		
 		oproperty Databases as ObservableCollection<string>
 		oproperty Collections as ObservableCollection<string>
+
+		oproperty SeriesConfig as ObservableCollection<SeriesConfigViewModel>
 
 		oproperty SelectedDatabase as string
 		oproperty SelectedCollection as string
@@ -40,12 +44,16 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		command AddDataSettings
 
 
-	viewmodel SetConfigViewModel
+	viewmodel SeriesConfigViewModel
 
-		oproperty SelectedAction as string
-		oproperty DatabaseAndCollection as string
-		oproperty DataName as string
-		oproperty SelectedChartType as string
+		oproperty Action as string
+		oproperty Name as string
+		oproperty Legend as string
+		oproperty ChartType as string
+
+		oproperty Database as string
+		oproperty Collection as string
+
 
 	
 		

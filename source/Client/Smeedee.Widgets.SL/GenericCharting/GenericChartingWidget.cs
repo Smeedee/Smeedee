@@ -23,12 +23,18 @@ namespace Smeedee.Widgets.SL.GenericCharting
         {
             Title = "Generic Charting";
 
+
             var viewModel = GetInstance<ChartViewModel>();
 
             controller = NewController<ChartController>();
 
             View = new ChartView { DataContext = controller.ViewModel };
             SettingsView = new ChartSettingsView { DataContext = controller.SettingsViewModel };
+
+            ConfigurationChanged += (o, e) =>
+            {
+                controller.UpdateConfiguration(Configuration);
+            };
         }
 
         public override void Configure(DependencyConfigSemantics config)
@@ -37,5 +43,9 @@ namespace Smeedee.Widgets.SL.GenericCharting
             config.Bind<ChartSettingsViewModel>().To<ChartSettingsViewModel>().InSingletonScope();
         }
 
+        protected override Configuration NewConfiguration()
+        {
+            return ChartConfig.NewDefaultConfiguration();
+        }
     }
 }
