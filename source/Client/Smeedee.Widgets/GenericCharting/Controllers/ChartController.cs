@@ -86,8 +86,28 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             uiInvoker.Invoke(() =>
             {
                 foreach (var dataset in chart.DataSets)
-                    SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { Database = chart.Database, Collection = chart.Collection, Name = dataset.Name });
+                {
+                    var series = new SeriesConfigViewModel
+                                     {Database = chart.Database, Collection = chart.Collection, Name = dataset.Name};
+                    AddSeriesPropertyChangedEventListener(series);
+                    SettingsViewModel.SeriesConfig.Add(series);
+                }
             });
+        }
+
+        private void AddSeriesPropertyChangedEventListener(SeriesConfigViewModel series)
+        {
+            series.PropertyChanged += OnSeriesPropertyChanged;
+        }
+
+        private void OnSeriesPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var series = sender as SeriesConfigViewModel;
+            if (series == null) return;
+            if (series.Action == "Remove")
+            {
+                uiInvoker.Invoke( () => SettingsViewModel.SeriesConfig.Remove(series));
+            }
         }
 
         public void OnReloadSettings()
@@ -123,6 +143,10 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 SettingsViewModel.XAxisType = chartConfig.XAxisType;
                 SettingsViewModel.SeriesConfig.Clear();
                 chartConfig.GetSeries().ForEach(SettingsViewModel.SeriesConfig.Add);
+                foreach (var series in SettingsViewModel.SeriesConfig)
+                {
+                    AddSeriesPropertyChangedEventListener(series);
+                }
             });
         }
 
