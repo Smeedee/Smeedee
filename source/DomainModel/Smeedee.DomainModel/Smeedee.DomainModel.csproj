@@ -132,6 +132,7 @@
     <Compile Include="Users\UserdbSpecifications.cs" />
     <Compile Include="Users\UserSpecifications.cs" />
     <Compile Include="WebSnapshot\WebSnapshot.cs" />
+    <Compile Include="WebSnapshot\WebSnapshotSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CI\ClassDiagram.cd" />
@@ -199,6 +200,9 @@
     <Content Include="Mappings\Charting.hbm.xml">
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Mappings\WebSnapshot.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

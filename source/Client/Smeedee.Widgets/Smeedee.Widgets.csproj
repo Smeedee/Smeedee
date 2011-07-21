@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack">
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\htmlagilitypack\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -42,15 +43,19 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Browser">
+      <HintPath>..\..\..\..\..\..\Program Files\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\System.Windows.Browser.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
     <Reference Include="TinyMVVM">
       <HintPath>..\..\..\tools\TinyMVVM\TinyMVVM.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Corkboard\Controllers\CorkboardController.cs" />
@@ -78,14 +83,20 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebPage\Controllers\WebPageController.cs" />
+    <Compile Include="WebPage\ViewModel\ViewModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="WebPage\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
-    <Compile Include="WebSnapshot\Controllers\WebSnapshotController.cs" />
+    <Compile Include="WebSnapshot\Util\IWebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\IWebSnapshotter.cs" />
     <Compile Include="WebSnapshot\Util\URLValidator.cs" />
     <Compile Include="WebSnapshot\Util\WebImageFetcher.cs" />
+    <Compile Include="WebSnapshot\Util\WebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\WebSnapshotter.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs" />
     <Compile Include="WebSnapshot\ViewModel\ViewModels.cs">
@@ -136,7 +147,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewModel.mvvm</DependentUpon>
-      <LastGenOutput>ViewModel.txt</LastGenOutput>
+      <LastGenOutput>ViewModel.cs</LastGenOutput>
     </None>
     <None Include="WebSnapshot\ViewModel\ViewModel.mvvm">
       <Generator>T4ScriptFileGenerator</Generator>
@@ -168,11 +179,6 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Content>
-    <Content Include="WebPage\ViewModel\ViewModel.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ViewModel.tt</DependentUpon>
     </Content>
     <Content Include="WebSnapshot\ViewModel\ViewModel.txt">
       <AutoGen>True</AutoGen>
