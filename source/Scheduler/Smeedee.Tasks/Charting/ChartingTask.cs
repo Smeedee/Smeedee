@@ -4,10 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Web.Services;
 using Smeedee.DomainModel.Charting;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.Framework;
 using Smeedee.Integration.Database.DomainModel.Charting;
+using Smeedee.Integration.Database.DomainModel.Repositories;
 using Smeedee.Tasks.Framework;
 using Smeedee.Tasks.Framework.TaskAttributes;
 
@@ -84,6 +87,11 @@ namespace Smeedee.Tasks.Charting
                                                                                }
                                                                                callback(datasets);
                                                                            });
+            }
+            else
+            {
+                ILog logger = new Logger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance));
+                logger.WriteEntry(new ErrorLogEntry(this.Name, filepath + " is an invalid URL of filepath. Did you remember 'http://' or 'file://' in the front?"));
             }
 
         }
