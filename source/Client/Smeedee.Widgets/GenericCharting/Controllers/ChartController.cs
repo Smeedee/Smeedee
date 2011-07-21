@@ -44,8 +44,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             chartConfig = new ChartConfig(configuration);
 
-            //Guard.Requires<ArgumentException>(chartConfig.IsValid, chartConfig.ErrorMsg);
-
             this.configPersister = configPersister;
             this.configPersister.SaveCompleted += OnSaveCompleted;
             
@@ -54,7 +52,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
 
             this.storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
-           // this.storageReader.ChartLoaded += ChartLoaded;
 
             SettingsViewModel = settingsViewModel;
             SettingsViewModel.SaveSettings.ExecuteDelegate = OnSaveSettings;
@@ -67,10 +64,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             Start();
         }
 
-        private void ChartLoaded(object sender, ChartLoadedEventArgs e)
-        {
-            
-        }
 
         private void OnAddDataSettings()
         {
@@ -104,7 +97,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             var series = sender as SeriesConfigViewModel;
             if (series == null) return;
-            if (series.Action == "Remove")
+            if (series.Action == ChartConfig.REMOVE)
             {
                 uiInvoker.Invoke( () => SettingsViewModel.SeriesConfig.Remove(series));
             }

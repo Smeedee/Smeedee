@@ -10,6 +10,19 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 {
     public class ChartConfig
     {
+        public static readonly string SHOW = "Show";
+        public static readonly string HIDE = "Hide";
+        public static readonly string REFERENCE = "Reference";
+        public static readonly string REMOVE = "Remove";
+
+        public static readonly string DATETIME = "Date/Time";
+        public static readonly string CATEGORY = "Category";
+        public static readonly string LINEAR = "Linear";
+
+        public static readonly string LINE = "Line";
+        public static readonly string AREA = "Area";
+        public static readonly string COLUMNS = "Columns";
+
         public static readonly string chart_setting_name = "chartname";
         public static readonly string x_axis_setting_name = "x-axis";
         public static readonly string y_axis_setting_name = "y-axis";
@@ -61,7 +74,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             get { return configuration.IsConfigured; }
             set { configuration.IsConfigured = value; }
         }
-
         public bool IsValid
         {
             get
@@ -69,7 +81,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 bool isValid = false;
                 foreach (var serie in GetSeries())
                 {
-                    if (serie.Action == "Show")
+                    if (serie.Action == SHOW)
                         isValid= true;
                 }
                 return isValid;
@@ -131,43 +143,9 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public Configuration Configuration
         {
             get { return configuration; }
-            set { configuration = value; }
+            //set { configuration = value; }
         }
         
-        //public bool IsValid
-        //{
-        //    get
-        //    {
-        //        return
-        //            configuration.ContainsSetting(ChartConfig.chart_setting_name) &&
-        //            configuration.ContainsSetting(ChartConfig.x_axis_setting_name) &&
-        //            configuration.ContainsSetting(ChartConfig.y_axis_setting_name) &&
-        //            configuration.ContainsSetting(ChartConfig.x_axis_setting_type);
-
-        //        /*       "Config setting is missing; " + GraphConfig.xaxis_property_setting_name);
-        //        Guard.Requires<ArgumentException>(configuration.ContainsSetting(GraphConfig.yaxis_property_Setting_name),
-        //            "Config setting is missing; " + GraphConfig.yaxis_property_Setting_name);*/
-
-        //    }
-        //}
-
-        //public string ErrorMsg
-        //{
-        //    get
-        //    {
-        //        if (configuration.ContainsSetting(chart_setting_name) == false)
-        //            return "Config setting is missing; " + chart_setting_name;
-        //        else if (configuration.ContainsSetting(x_axis_setting_name) == false)
-        //            return "Config setting is missing; " + x_axis_setting_name;
-        //        else if (configuration.ContainsSetting(y_axis_setting_name) == false)
-        //            return "Config setting is missing; " + y_axis_setting_name;
-        //        else if (configuration.ContainsSetting(x_axis_setting_type) == false)
-        //            return "Config setting is missing; " + x_axis_setting_type;
-        //        else
-        //        return string.Empty;
-        //    }
-        //}
-
         public static Configuration NewDefaultConfiguration()
         {
             var config = new Configuration("GenericCharting");
@@ -184,7 +162,5 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             config.IsConfigured = false;
             return config;
         }
-
-
     }
 }
