@@ -190,7 +190,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             SettingsViewModel.Collections.Clear();
             SettingsViewModel.SelectedCollection = null;
-            if (database == null) return;
 
             var collections = storageReader.GetCollectionsInDatabase(database);
             if (collections != null && collections.Count() > 0)

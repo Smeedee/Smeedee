@@ -245,8 +245,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                              settingsViewModel.Collections[0].ShouldBe("TestCollection3");
                          });
             }
-
-            
         }
 
         [TestFixture]
