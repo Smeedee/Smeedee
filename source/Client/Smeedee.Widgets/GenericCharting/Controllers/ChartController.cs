@@ -111,6 +111,10 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             uiInvoker.Invoke(() =>
             {
+                SettingsViewModel.ChartName = chartConfig.ChartName;
+                SettingsViewModel.XAxisName = chartConfig.XAxisName;
+                SettingsViewModel.YAxisName = chartConfig.YAxisName;
+                SettingsViewModel.XAxisType = chartConfig.XAxisType;
                 SettingsViewModel.SeriesConfig.Clear();
                 chartConfig.GetSeries().ForEach(SettingsViewModel.SeriesConfig.Add);
             });

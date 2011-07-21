@@ -488,6 +488,48 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                                                                  };
         }
 
+        [TestFixture]
+        public class When_updating_configuration : Shared
+        {
+            [Test]
+            public void Then_string_settings_should_be_copied_to_viewmodel()
+            {
+                Given(the_controller_has_been_created);
+                When(update_configuration_is_called);
+                Then("string values should be in settingsview", () =>
+                    {
+                        controller.SettingsViewModel.ChartName.ShouldBe("AName");
+                        controller.SettingsViewModel.XAxisName.ShouldBe("AnX");
+                        controller.SettingsViewModel.YAxisName.ShouldBe("AnY");
+                        controller.SettingsViewModel.XAxisType.ShouldBe("Category");
+                    });
+            }
+
+            [Test]
+            public void Then_series_settings_should_be_copied_to_settings_viewmodel()
+            {
+                Given(the_controller_has_been_created);
+                When(update_configuration_is_called);
+                Then("series settings should be in settingsview", () =>
+                    {
+                        controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(1);
+                        controller.SettingsViewModel.SeriesConfig[0].Name.ShouldBe("ASeries");
+                    });
+            }
+
+            private When update_configuration_is_called = () => controller.UpdateConfiguration(AConfiguration());
+
+            private static Configuration AConfiguration()
+            {
+                var chartConf = new ChartConfig(ChartConfig.NewDefaultConfiguration());
+                chartConf.ChartName = "AName";
+                chartConf.XAxisName = "AnX";
+                chartConf.YAxisName = "AnY";
+                chartConf.XAxisType = "Category";
+                chartConf.SetSeries(new Collection<SeriesConfigViewModel> { new SeriesConfigViewModel {Name="ASeries"} });
+                return chartConf.Configuration;
+            }
+        }
 
         public class Shared : ScenarioClass
         {
