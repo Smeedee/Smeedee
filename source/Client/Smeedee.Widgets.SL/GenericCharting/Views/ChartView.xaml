@@ -3,18 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" 
              xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:local="clr-namespace:Smeedee.Widgets.SL.GenericCharting.Views" mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="400">
 
-    <Grid x:Name="LayoutRoot">
-  
+    <UserControl.Resources>
+        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <Converters:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot"
+        VerticalAlignment="Stretch"
+        HorizontalAlignment="Stretch"
+        >
 
-        <local:GenericChart Title="{Binding Name, Mode=OneWay}"
-                            LinesSource="{Binding Lines, Mode=OneWay}"
-                            ColumnsSource="{Binding Columns, Mode=OneWay}"
-                            AreasSource="{Binding Areas, Mode=OneWay}">
+        <TextBlock x:Name="ErrorMessage"
+			Visibility="{Binding Path=ShowErrorMessageInsteadOfChart, Converter={StaticResource BoolToVisibilityConverter}}"
+			Text="{Binding Path=ErrorMessage, Mode=OneWay}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"			
+            FontSize="40" 
+			>
+			<TextBlock.Foreground>
+        		<SolidColorBrush Color="{StaticResource FontColorBright}"/>
+        	</TextBlock.Foreground>
+        </TextBlock>
+
+        <local:GenericChart
+            Title="{Binding Name, Mode=OneWay}"
+            LinesSource="{Binding Lines, Mode=OneWay}"
+            ColumnsSource="{Binding Columns, Mode=OneWay}"
+            AreasSource="{Binding Areas, Mode=OneWay}"
+            Visibility="{Binding Path=ShowErrorMessageInsteadOfChart, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
+            
             <charting:Chart.Axes>
                 <charting:LinearAxis
                         Title="Value"
