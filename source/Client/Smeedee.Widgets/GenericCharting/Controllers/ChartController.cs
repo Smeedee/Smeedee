@@ -7,6 +7,7 @@ using System.Text;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Services;
+using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.Framework;
@@ -53,7 +54,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
 
             this.storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
-            this.storageReader.ChartLoaded += ChartLoaded;
+           // this.storageReader.ChartLoaded += ChartLoaded;
 
             SettingsViewModel = settingsViewModel;
             SettingsViewModel.SaveSettings.ExecuteDelegate = OnSaveSettings;
@@ -68,12 +69,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void ChartLoaded(object sender, ChartLoadedEventArgs e)
         {
-            uiInvoker.Invoke(() =>
-            {
-                foreach (var dataset in e.Chart.DataSets)
-                    SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel 
-                    { Database = e.Chart.Database, Collection = e.Chart.Collection, Name = dataset.Name});
-            });
+            
         }
 
         private void OnAddDataSettings()
@@ -82,12 +78,22 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             var database = SettingsViewModel.SelectedDatabase;
             var collection = SettingsViewModel.SelectedCollection;
             if (database != null && collection != null)
-                storageReader.LoadChart(database, collection);
+                storageReader.LoadChart(database, collection, AddDataChartLoaded);
+        }
+
+        public void AddDataChartLoaded(Chart chart)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                foreach (var dataset in chart.DataSets)
+                    SettingsViewModel.SeriesConfig.Add(new SeriesConfigViewModel { Database = chart.Database, Collection = chart.Collection, Name = dataset.Name });
+            });
         }
 
         private void OnReloadSettings()
         {
             UpdateListOfDataSources();
+            CopyConfigurationToSettingsViewModel();
         }
 
         private void OnSaveSettings()

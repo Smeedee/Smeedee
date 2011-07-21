@@ -140,6 +140,15 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
                 Then(chart_should_contain_complex_data);
             }
 
+            [Test]
+            public void Assure_that_we_can_use_callback_instead_of_event_if_we_want()
+            {
+                Given(the_storage_has_been_created).
+                    And(there_are_two_documents_in_collection);
+                When(loading_chart_with_callback);
+                Then(chart_should_contain_complex_data);
+            }
+
 
             private Context there_are_two_documents_in_collection = () =>
                 NoSqlRepositoryGetDocumentsReturns(testCollection);
@@ -152,6 +161,9 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
 
             private When loading_chart = () =>
                 storage.LoadChart("somedatabase", "somecollection");
+
+            private When loading_chart_with_callback = () =>
+                storage.LoadChart("somedatabase", "somecollection", ChartLoadedCallback);
 
             private Then chart_should_contain_complex_data = () =>
             {
@@ -171,6 +183,11 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
             private static void ChartLoaded(object sender, ChartLoadedEventArgs args)
             {
                 loadedChart = args.Chart;
+            }
+
+            private static void ChartLoadedCallback(Chart chart)
+            {
+                loadedChart = chart;
             }
 
             private static Collection testCollection = new Collection

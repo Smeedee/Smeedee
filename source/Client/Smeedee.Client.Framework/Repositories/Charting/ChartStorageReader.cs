@@ -17,6 +17,7 @@ namespace Smeedee.Client.Framework.Repositories.Charting
         IList<string> GetDatabases();
         IList<string> GetCollectionsInDatabase(string database);
         void LoadChart(string database, string collection);
+        void LoadChart(string database, string collection, Action<Chart> callback);
         void RefreshDatasources();
     }
 
@@ -43,8 +44,13 @@ namespace Smeedee.Client.Framework.Repositories.Charting
         {
             return NoSqlRepository.GetCollectionsInDatabase(database, databases);
         }
-        
+
         public void LoadChart(string database, string collection)
+        {
+            LoadChart(database, collection, null);
+        }
+        
+        public void LoadChart(string database, string collection, Action<Chart> callback)
         {
             repository.GetDocuments(database, collection, c =>
             {
@@ -58,7 +64,10 @@ namespace Smeedee.Client.Framework.Repositories.Charting
 
                     chart.DataSets.Add(dataset);
                 }
-                ChartLoaded(this, new ChartLoadedEventArgs(chart));
+                if (callback != null)
+                    callback(chart);
+                if (ChartLoaded != null)
+                    ChartLoaded(this, new ChartLoadedEventArgs(chart));
             });
 
         }
