@@ -118,6 +118,9 @@
     <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartController.cs">
       <Link>GenericCharting\Controllers\ChartController.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartUpdater.cs">
+      <Link>GenericCharting\Controllers\ChartUpdater.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartSettingsViewModel.cs">
       <Link>GenericCharting\ViewModels\ChartSettingsViewModel.cs</Link>
     </Compile>
