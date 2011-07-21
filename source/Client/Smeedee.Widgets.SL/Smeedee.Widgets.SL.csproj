@@ -124,6 +124,9 @@
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartViewModel.cs">
       <Link>GenericCharting\ViewModels\ChartViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\DataSetViewModel.cs">
+      <Link>GenericCharting\ViewModels\DataSetViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ViewModels.cs">
       <Link>GenericCharting\ViewModels\ViewModels.cs</Link>
     </Compile>

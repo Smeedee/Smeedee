@@ -19,9 +19,9 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public static readonly string CATEGORY = "Category";
         public static readonly string LINEAR = "Linear";
 
-        public static readonly string LINE = "Line";
-        public static readonly string AREA = "Area";
-        public static readonly string COLUMNS = "Columns";
+        public const string LINE = "Line";
+        public const string AREA = "Area";
+        public const string COLUMNS = "Columns";
 
         public static readonly string chart_setting_name = "chartname";
         public static readonly string x_axis_setting_name = "x-axis";
