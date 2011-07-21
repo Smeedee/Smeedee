@@ -1,51 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net;
-using HtmlAgilityPack;
 
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
-    public interface IWebImageProvider
-    {
-        Bitmap GetBitmapFromURL(string url);
-        string GetPictureNodeURLFromXpath(string pageURL, string xpath);
-    }
 
-    public class WebImageProvider : IWebImageProvider
-    {
-        public Bitmap GetBitmapFromURL(string url)
-        {
-            if (!URLValidator.IsPictureURL(url))
-            {
-                return null;
-            }
-
-            Bitmap picture = null;
-            try
-            {
-                WebRequest request = WebRequest.Create(url);
-                WebResponse response = request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                picture = new Bitmap(stream);
-            }
-            catch { }
-
-            return picture;
-        }
-
-        public string GetPictureNodeURLFromXpath(string pageURL, string xpath)
-        {
-            HtmlWeb htmlWeb = new HtmlWeb();
-            HtmlDocument document = htmlWeb.Load(pageURL);
-            var xpathNode = document.DocumentNode.SelectSingleNode(xpath);
-            var attributes = xpathNode.Attributes.ToList();
-            var src = attributes.FindAll(a => a.Name == "src");
-            return src.First().Value;
-        }
-    }
 
     public class WebImageFetcher
     {
@@ -96,7 +54,7 @@ namespace Smeedee.Widgets.WebSnapshot.Util
 
         private string RemoveTrailingSlash(string pictureURL)
         {
-            return pictureURL.TrimEnd(new char[] {'/'});
+            return pictureURL.TrimEnd(new char[] { '/' });
         }
     }
 }

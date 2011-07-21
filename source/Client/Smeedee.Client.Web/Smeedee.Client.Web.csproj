@@ -180,6 +180,9 @@
     <Compile Include="Services\UserRepositoryService.svc.cs">
       <DependentUpon>UserRepositoryService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Services\WebSnapshotRepositoryService.svc.cs">
+      <DependentUpon>WebSnapshotRepositoryService.svc</DependentUpon>
+    </Compile>
     <Compile Include="Services\WidgetMetadataRepositoryService.svc.cs">
       <DependentUpon>WidgetMetadataRepositoryService.svc</DependentUpon>
     </Compile>
@@ -221,6 +224,7 @@
     <Content Include="Services\TaskDefinitionRepositoryService.svc" />
     <Content Include="Services\TeamPictureRepositoryWebservice.svc" />
     <Content Include="Services\UserRepositoryService.svc" />
+    <Content Include="Services\WebSnapshotRepositoryService.svc" />
     <Content Include="Services\WidgetMetadataRepositoryService.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Smeedee-icon-48x48.png">

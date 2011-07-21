@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.WebSnapshot" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.WebSnapshot" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+  <xs:complexType name="WebSnapshotSpecification">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" base="q1:SpecificationOfWebSnapshotdOnq7YmO">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WebSnapshotSpecification" nillable="true" type="tns:WebSnapshotSpecification" />
+  <xs:complexType name="ArrayOfWebSnapshot">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WebSnapshot" nillable="true" type="tns:WebSnapshot" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWebSnapshot" nillable="true" type="tns:ArrayOfWebSnapshot" />
+  <xs:complexType name="WebSnapshot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PictureFilePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PictureHeight" type="xs:int" />
+      <xs:element minOccurs="0" name="PictureWidth" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WebSnapshot" nillable="true" type="tns:WebSnapshot" />
+</xs:schema>

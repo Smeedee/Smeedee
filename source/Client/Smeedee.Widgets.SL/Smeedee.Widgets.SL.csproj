@@ -60,6 +60,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\..\tools\htmlagilitypack\HAPLight\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
@@ -82,11 +85,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.XPath, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="TinyMVVM.SL">
       <HintPath>..\..\..\tools\TinyMVVM-Silverlight\TinyMVVM.SL.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\DomainModel\Smeedee.DomainModel\WebSnapshot\WebSnapshotSpecification.cs">
+      <Link>WebSnapshot\Controller\WebSnapshotSpecification.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\Corkboard\Controllers\CorkboardController.cs">
       <Link>Corkboard\Controllers\CorkboardController.cs</Link>
     </Compile>
@@ -110,9 +117,6 @@
     </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartController.cs">
       <Link>GenericCharting\Controllers\ChartController.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartUpdater.cs">
-      <Link>GenericCharting\Controllers\ChartUpdater.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartSettingsViewModel.cs">
       <Link>GenericCharting\ViewModels\ChartSettingsViewModel.cs</Link>
@@ -258,6 +262,7 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
+    <Compile Include="WebSnapshot\Controller\WebSnapshotController.cs" />
     <Compile Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml.cs">
       <DependentUpon>WebSnapshotSettingsView.xaml</DependentUpon>
     </Compile>

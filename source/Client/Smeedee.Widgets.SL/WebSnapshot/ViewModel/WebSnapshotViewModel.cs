@@ -7,6 +7,5 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
     public partial class WebSnapshotViewModel
     {
-
     }
 }

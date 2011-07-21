@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widgets.SL.WebSnapshot.Views;
+using Smeedee.Widgets.WebSnapshot.Controllers;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
 
 namespace Smeedee.Widgets.SL.WebSnapshot
@@ -19,19 +20,22 @@ namespace Smeedee.Widgets.SL.WebSnapshot
     [WidgetInfo(
         Name = "Web Snapshot",
         Description = "Takes snapshots of web pages or display a picture from an URL, cropable.",
-        Author = "SoC 2011",
+        Author = "Smeedee team",
         Version = "0.1",
         Tags = new[] { CommonTags.Fun})]
     public class WebSnapshotWidget : Client.Framework.ViewModel.Widget
     {
         private WebSnapshotViewModel viewModel;
+        private WebSnapshotController controller;
 
         public WebSnapshotWidget()
         {
             Title = "Web Snapshot";
             viewModel = GetInstance<WebSnapshotViewModel>();
+            controller = NewController<WebSnapshotController>();
             viewModel.PropertyChanged += ViewModelPropertyChanged;
 
+            View = new WebSnapshotView {DataContext = controller.ViewModel};
             SettingsView = new WebSnapshotSettingsView {DataContext = viewModel};
         }
 

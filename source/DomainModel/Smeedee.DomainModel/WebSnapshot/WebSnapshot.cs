@@ -7,9 +7,9 @@ namespace Smeedee.DomainModel.WebSnapshot
 {
     public class WebSnapshot
     {
-        public virtual string InputUrl { get; set; }
-        public virtual string XpathExpression { get; set; }
-        public virtual byte[] Picture { get; set; }
-        public virtual int[] CropCoordinates { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string PictureFilePath { get; set; }
+        public virtual int PictureHeight { get; set; }
+        public virtual int PictureWidth { get; set; }
     }
 }

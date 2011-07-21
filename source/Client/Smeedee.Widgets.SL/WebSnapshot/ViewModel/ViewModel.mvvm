@@ -7,10 +7,18 @@ using System.Windows.Media
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 	
 	viewmodel WebSnapshotSettingsViewModel extends SettingsViewModelBase:
+		oproperty InputUrl as string
+		oproperty ValidatedUrl as string
+		oproperty Xpath as string
+		oproperty RefreshInterval as int
 
+		oproperty ErrorMessage as string
+
+		command FetchAsImage
+		command FetchAsSnapshot
 		command Save
 		command ReloadSettings
 
-	viewmodel WebSnapshotViewModel extends AbstractViewModel:
-		oproperty Snapshot as string
-		oproperty HasStoredImage as bool	
+	viewmodel WebSnapshotViewModel:
+		oproperty Snapshot as WriteableBitmap
+	
