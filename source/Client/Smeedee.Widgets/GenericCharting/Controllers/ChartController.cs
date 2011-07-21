@@ -48,7 +48,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             this.configPersister = configPersister;
             this.configPersister.SaveCompleted += OnSaveCompleted;
-
+            
             this.storageReader = storageReader;
 
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
@@ -90,7 +90,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             });
         }
 
-        private void OnReloadSettings()
+        public void OnReloadSettings()
         {
             UpdateListOfDataSources();
             CopyConfigurationToSettingsViewModel();

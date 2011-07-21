@@ -23,7 +23,6 @@ namespace Smeedee.Widgets.SL.GenericCharting
         {
             Title = "Generic Charting";
 
-
             var viewModel = GetInstance<ChartViewModel>();
 
             controller = NewController<ChartController>();
@@ -34,6 +33,12 @@ namespace Smeedee.Widgets.SL.GenericCharting
             ConfigurationChanged += (o, e) =>
             {
                 controller.UpdateConfiguration(Configuration);
+            };
+
+            PropertyChanged += (o, e) =>
+            {
+                if (e.PropertyName == "IsInSettingsMode")
+                    controller.OnReloadSettings();
             };
         }
 
