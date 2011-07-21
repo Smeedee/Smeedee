@@ -47,5 +47,36 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 
         }
 
+
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                if (value != errorMessage)
+                {
+                    errorMessage = value;
+                    TriggerPropertyChanged("ErrorMessage");
+                }
+            }
+        }
+
+        private bool showErrorMessageInsteadOfChart=false;
+
+        public bool ShowErrorMessageInsteadOfChart
+        {
+            get { return showErrorMessageInsteadOfChart; }
+            set
+            {
+                if (value != showErrorMessageInsteadOfChart)
+                {
+                    showErrorMessageInsteadOfChart = value;
+                    TriggerPropertyChanged("ShowErrorMessageInsteadOfChart");
+                }
+            }
+        }
+
     }
 }
