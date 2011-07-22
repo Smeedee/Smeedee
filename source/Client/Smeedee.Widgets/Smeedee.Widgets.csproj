@@ -43,9 +43,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Browser">
-      <HintPath>..\..\..\..\..\..\Program Files\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\System.Windows.Browser.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -93,7 +90,6 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
-    <Compile Include="WebSnapshot\Controller\WebSnapshotController.cs" />
     <Compile Include="WebSnapshot\Util\IWebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\IWebSnapshotter.cs" />
     <Compile Include="WebSnapshot\Util\URLValidator.cs" />

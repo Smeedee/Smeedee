@@ -60,9 +60,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\..\..\tools\htmlagilitypack\HAPLight\HtmlAgilityPack.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
@@ -156,9 +153,6 @@
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Controller\WebSnapshotController.cs">
-      <Link>WebSnapshot\Controller\WebSnapshotController.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\URLValidator.cs">
       <Link>WebSnapshot\Util\URLValidator.cs</Link>
@@ -268,6 +262,8 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
+    <Compile Include="WebSnapshot\Controller\WebSnapshotController.cs" />
+    <Compile Include="WebSnapshot\Util\CropUtil.cs" />
     <Compile Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml.cs">
       <DependentUpon>WebSnapshotSettingsView.xaml</DependentUpon>
     </Compile>

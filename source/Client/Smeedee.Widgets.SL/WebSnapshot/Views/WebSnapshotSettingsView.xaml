@@ -72,26 +72,23 @@
                               HorizontalScrollBarVisibility="Visible"
                               VerticalScrollBarVisibility="Visible">
                     <Canvas x:Name="canvas"
-                           
                             Background="Transparent">
-                        <!--MouseLeftButtonDown="canvas_MouseLeftButtonDown"
-                    Source="{Binding Image, Mode=TwoWay}"-->
-                        <Image Stretch="Fill"
-                       
+                        <!--MouseLeftButtonDown="canvas_MouseLeftButtonDown"-->
+                    <Image Name="image"
+                           Stretch="Fill"
                            Source="{Binding Image, Mode=TwoWay}" />
                     </Canvas>
-                    
                 </ScrollViewer>
-                    
-
                 <StackPanel Grid.Row="12"
                             Grid.Column="0"
                             HorizontalAlignment="Left"
                             Style="{StaticResource SettingsViewControlButtonsWrapper}">
-                    <Button Content="Crop"
-                            Style="{StaticResource SettingsViewButton}" />
+                    <Button Content="Crop"                            
+                            Style="{StaticResource SettingsViewButton}"
+                            Click="crop_click" />
                     <Button Content="Reset"
                             Style="{StaticResource SettingsViewButton}"
+                            Click="reset_click"
                             Margin="10,0,0,0" />
                 </StackPanel>
                 <StackPanel Grid.Row="13"

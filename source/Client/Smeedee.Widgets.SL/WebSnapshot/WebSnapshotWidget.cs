@@ -40,7 +40,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 
             View = new WebSnapshotView {DataContext = controller.ViewModel};
             SettingsView = new WebSnapshotSettingsView {DataContext = settingsViewModel};
-            //SettingsView = new WebSnapshotSettingsView {DataContext = controller.SettingsViewModel};
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

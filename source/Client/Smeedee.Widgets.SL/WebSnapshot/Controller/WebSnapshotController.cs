@@ -10,8 +10,9 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.WebSnapshot;
 using Smeedee.Framework;
+using Smeedee.Widgets.SL.TeamPicture.ViewModel;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
-using TinyMVVM.Framework.Services;
+using TinyMVVM.Framework.Services.Impl;
 
 namespace Smeedee.Widgets.WebSnapshot.Controllers
 {
@@ -20,7 +21,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private WebSnapshotViewModel webSnapshotViewModel;
         private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
         private Configuration config;
-        private IRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
+        private IRepository<Smeedee.DomainModel.WebSnapshot.WebSnapshot> repository;
         private ILog logger;
 
 
@@ -30,9 +31,9 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             Configuration configuration,
             ITimer timer,   
             ILog logger,
-            IUIInvoker uiInvoker,
+            UIInvoker uiInvoker,
             IProgressbar loadingNotifier,
-            IRepository<DomainModel.WebSnapshot.WebSnapshot> repository
+            IRepository<Smeedee.DomainModel.WebSnapshot.WebSnapshot> repository
             ) : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
             Guard.Requires<ArgumentNullException>(webSnapshotViewModel != null);
@@ -43,7 +44,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.webSnapshotViewModel = webSnapshotViewModel;
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
-            this.repository = repository;
+            //this.repository = repository;
 
             Start();
             LoadData();
@@ -51,28 +52,23 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void LoadData()
         {
-            logger.WriteEntry(new LogEntry("WebSnapshotController", "LoadData() called"));
-            uiInvoker.Invoke(() =>
-                                 {
-                                     SetIsLoadingData();
+         uiInvoker.Invoke(() =>
+                              {
+                                  SetIsLoadingData();
 
-                                     try
-                                     {
-                                         logger.WriteEntry(new LogEntry("WebSnapshotController", "Tries to get snapshot from repository"));
-                                         var specification = new WebSnapshotSpecification();
-                                         logger.WriteEntry(new LogEntry("Specification", "I maded the specification"+specification.ToString()));
-                                         //var snapshot = repository.Get(new WebSnapshotSpecification());
-                                         //var snapshot = repository.Get(specification);
-                                         //UpdateViewModel(snapshot);
-                                     }
-                                     catch (Exception e)
-                                     {
+                                  try
+                                  {
+                                      //var snapshot = repository.Get(new WebSnapshotSpecification());
+                                      //UpdateViewModel(snapshot);
+                                  }
+                                  catch (Exception e)
+                                  {
+                                      
+                                      logger.WriteEntry(new LogEntry("WebSnapshotWidget", e.ToString()));
+                                  }
 
-                                         logger.WriteEntry(new LogEntry("WebSnapshotWidget", e.ToString()));
-                                     }
-
-                                     SetIsNotLoadingData();
-                                 });
+                                  SetIsNotLoadingData();
+                              });
    
         }
 
