@@ -78,5 +78,32 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
             }
         }
 
+        private string xaxis;
+        public string XAxisName
+        {
+            get { return xaxis; }
+            set
+            {
+                if (value != xaxis)
+                {
+                    xaxis = value;
+                    TriggerPropertyChanged("XAxisName");
+                }
+            }
+        }
+
+        private string yaxis;
+        public string YAxisName
+        {
+            get { return yaxis; }
+            set
+            {
+                if (value != yaxis)
+                {
+                    yaxis = value;
+                    TriggerPropertyChanged("YAxisName");
+                }
+            }
+        }
     }
 }

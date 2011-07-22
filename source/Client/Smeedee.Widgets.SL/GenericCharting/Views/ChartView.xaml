@@ -40,23 +40,34 @@
             
             <charting:Chart.Axes>
                 <charting:LinearAxis
-                        Title="Value"
+                        Title="{Binding YAxisName, Mode=OneWay}"
                         Foreground="White"
                         FontSize="15"
                         Orientation="Y"
                         Interval="auto"
                         VerticalAlignment="Stretch"
                         Minimum="0"
-                        ShowGridLines="True"/>
+                        ShowGridLines="True"
+                        />
 
-                <charting:LinearAxis
-                        Title="Time"
+                <!--<charting:LinearAxis
+                        Title="{Binding XAxisName, Mode=OneWay}"
                         Foreground="White"
                         FontSize="15"
                         Orientation="X"
                         Minimum="0"
                         Interval="1"
                         HorizontalAlignment="Stretch"
+                        IsEnabled="False"
+                        />-->
+                
+                <charting:CategoryAxis
+                        Title="{Binding XAxisName, Mode=OneWay}"
+                        Foreground="White"
+                        FontSize="15"
+                        Orientation="X"
+                        HorizontalAlignment="Stretch"
+                        IsEnabled="True"
                         />
             </charting:Chart.Axes>
 
