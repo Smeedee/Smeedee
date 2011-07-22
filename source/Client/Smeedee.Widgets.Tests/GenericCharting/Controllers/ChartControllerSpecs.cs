@@ -649,7 +649,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
             protected static void StorageReaderLoadChartReturns(Chart chart)
             {
-                storageReaderFake.Setup(s => s.LoadChart(It.IsAny<string>(), It.IsAny<string>(), It.Is<Action<Chart>>(c => c == controller.AddDataChartLoaded))).Callback(() => controller.AddDataChartLoaded(chart));
+                storageReaderFake.Setup(s => s.LoadChart(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action<Chart>>())).Callback((string database, string collection, Action<Chart> callback) => { if (callback != null) callback(chart);});
             }
 
             [SetUp]
