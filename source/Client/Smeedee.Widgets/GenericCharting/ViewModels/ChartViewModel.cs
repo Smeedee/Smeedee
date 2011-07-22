@@ -26,7 +26,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
             Areas = new ObservableCollection<DataSetViewModel>();
 
             Refresh = new DelegateCommand();
-            
+
             ApplyConvention(new BindCommandsDelegatesToMethods());
 
         }
@@ -47,7 +47,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
             }
         }
 
-        private bool showErrorMessageInsteadOfChart=false;
+        private bool showErrorMessageInsteadOfChart;
 
         public bool ShowErrorMessageInsteadOfChart
         {

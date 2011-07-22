@@ -1,84 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Moq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
-using TinyMVVM.Framework;
-using TinyMVVM.Framework.Services;
-using TinyMVVM.Framework.Testing.Services;
-using TinyMVVM.IoC;
-using TinyMVVM.Repositories;
+
 
 namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
 {
-
-
     [TestFixture]
-    [Ignore]
     public class When_chartviewmodel_is_created : Shared
     {
         private static ChartViewModel viewModel;
-    }
-
-    [TestFixture]
-    [Ignore]
-    public class When_datapointviewmodel_is_created : Shared
-    {
-        private static DataPointViewModel dataPointViewModel;
+        private Context viewModel_has_been_created = () => viewModel = new ChartViewModel();
 
         [Test]
-        public void Assure_it_has_x_value()
+        public void Assure_it_contains_lines()
         {
-            Given("datapointviewmodel has been created", () => dataPointViewModel = new DataPointViewModel());
-            When("");
-            Then("datapointvievmodel should have a x-value", () => dataPointViewModel.X.ShouldNotBeNull());
+            Given(viewModel_has_been_created);
+            When("it is created");
+            Then("It should contain lines", () => viewModel.Lines.ShouldNotBeNull());
         }
 
         [Test]
-        public void Assure_it_has_y_value()
+        public void Assure_it_contains_columns()
         {
-            Given("datapointviewmodel has been created", () => dataPointViewModel = new DataPointViewModel());
-            When("");
-            Then("datapointvievmodel should have a y-value", () => dataPointViewModel.Y.ShouldNotBeNull());
+            Given(viewModel_has_been_created);
+            When("it is created");
+            Then("It should contain columns", () => viewModel.Columns.ShouldNotBeNull());
         }
-    }
-
-    [TestFixture]
-    [Ignore]
-    public class When_charttypeviewmodel_is_created : Shared
-    {
-        private ChartTypeViewModel chartTypeViewModel;
 
         [Test]
-        public void Assure_it_has_charttype_value()
+        public void Assure_it_contains_areas()
         {
-            Given("chartTypeViewModel has been created", () => chartTypeViewModel = new ChartTypeViewModel());
-            When("");
-            Then("chartTypeViewModel should have a name value", () => chartTypeViewModel.ChartType.ShouldNotBeNull());
+            Given(viewModel_has_been_created);
+            When("it is created");
+            Then("It should contain areas", () => viewModel.Areas.ShouldNotBeNull());
         }
-    }
 
-    [TestFixture]
-    [Ignore]
-    public class When_CollectionViewModel_is_created : Shared
-    {
-        private CollectionViewModel collectionViewModel;
         [Test]
-        public void Assure_it_has_Name()
+        public void Assure_it_contains_refresh()
         {
-            Given("collectionViewModel has been created", () => collectionViewModel = new CollectionViewModel());
-            When("");
-            Then("it should have a name", () => collectionViewModel.Name.ShouldNotBeNull());
+            Given(viewModel_has_been_created);
+            When("it is created");
+            Then("It should contain refresh", () => viewModel.Refresh.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_showErrorMessageInsteadOfChart_is_false_when_created()
+        {
+            Given(viewModel_has_been_created);
+            When("it is created");
+            Then("showErrorMessageInsteadOfChart should be false", () => viewModel.ShowErrorMessageInsteadOfChart.ShouldBeFalse());
         }
     }
 
     [TestFixture]
     public class When_ChartSettingsViewModel_is_created : Shared
     {
+        private static ChartSettingsViewModel chartSettingsViewModel;
+
+        private Context chartSettingsViewModel_has_been_created =
+            () => chartSettingsViewModel = new ChartSettingsViewModel();
+
         [Test]
         public void Assure_it_has_Databases()
         {
@@ -111,20 +94,51 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
             Then("assure it contains correct XAxisTypes", () =>
                                                               {
                                                                   chartSettingsViewModel.XAxisTypes.ShouldNotBeNull();
+                                                                  chartSettingsViewModel.XAxisTypes.ShouldContain(ChartConfig.DATETIME);
+                                                                  chartSettingsViewModel.XAxisTypes.ShouldContain(ChartConfig.CATEGORY);
+                                                                  chartSettingsViewModel.XAxisTypes.ShouldContain(ChartConfig.LINEAR);
                                                               });
         }
+    }
 
+    [TestFixture]
+    public class When_SettingsChoices_is_created : Shared
+    {
+        private static SettingsChoices choices;
+        private Context settingsChoices_has_been_created = () => choices = new SettingsChoices();
 
+        [Test]
+        public void Assure_it_contains_correct_Actions()
+        {
+            Given(settingsChoices_has_been_created);
+            When("it is created");
+            Then("it should contain correct actions", () =>
+                                                  {
+                                                      choices.Actions.ShouldNotBeNull();
+                                                      choices.Actions.Contains(ChartConfig.SHOW);
+                                                      choices.Actions.Contains(ChartConfig.HIDE);
+                                                      choices.Actions.Contains(ChartConfig.REFERENCE);
+                                                      choices.Actions.Contains(ChartConfig.REMOVE);
+                                                  });
+        }
+
+        [Test]
+        public void Assure_it_contains_correct_ChartTypes()
+        {
+            Given(settingsChoices_has_been_created);
+            When("it is created");
+            Then("it should contain correct chartTypes", () =>
+                                                             {
+                                                                 choices.ChartTypes.ShouldNotBeNull();
+                                                                 choices.ChartTypes.Contains(ChartConfig.AREA);
+                                                                 choices.ChartTypes.Contains(ChartConfig.LINE);
+                                                                 choices.ChartTypes.Contains(ChartConfig.COLUMNS);
+                                                             });
+        }
     }
 
     public class Shared : ScenarioClass
     {
-
-        protected static ChartSettingsViewModel chartSettingsViewModel;
-
-        protected Context chartSettingsViewModel_has_been_created =
-            () => chartSettingsViewModel = new ChartSettingsViewModel();
-
         [SetUp]
         public void Setup()
         {
