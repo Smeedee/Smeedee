@@ -54,16 +54,16 @@
                           Width="250"
                           Style="{StaticResource SettingsViewComboBox}"
                           ItemsSource="{Binding AvailableImages}"
-                          SelectedItem="{Binding Image, Mode=TwoWay}" />
+                          SelectedItem="{Binding SelectedImage, Mode=TwoWay}" />
                 <TextBox Grid.Row="2"
                          Grid.Column="1"
-                         Text="{Binding Image}" />
+                         Text="{Binding SelectedImage}" />
                 <Canvas x:Name="canvas"
                         Grid.Row="3"
                         Grid.RowSpan="8"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Background="White">
+                        Background="Transparent">
                     <!--MouseLeftButtonDown="canvas_MouseLeftButtonDown"
                     Source="{Binding Image, Mode=TwoWay}"-->
                     <Image 

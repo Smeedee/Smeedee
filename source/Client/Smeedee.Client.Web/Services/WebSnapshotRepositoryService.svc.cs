@@ -18,6 +18,8 @@ namespace Smeedee.Client.Web.Services
        [OperationContract]
         public IEnumerable<WebSnapshot> Get(Specification<WebSnapshot> specification)
        {
+           //new Logger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance)).WriteEntry(new LogEntry(
+           //    "WebSnapshotRepositoryService.scv.cs", "Get specification stuff " + specification.ToString()));
            WebSnapshotDatabaseRepository repo = new WebSnapshotDatabaseRepository(DefaultSessionFactory.Instance);
            IEnumerable<WebSnapshot> result = new List<WebSnapshot>();
            try
@@ -31,6 +33,7 @@ namespace Smeedee.Client.Web.Services
            }
 
            return result;
+           //return null;
        }
 
         [OperationContract]

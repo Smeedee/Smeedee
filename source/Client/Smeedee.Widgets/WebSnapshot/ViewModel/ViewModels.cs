@@ -12,7 +12,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
     public partial class WebSnapshotSettingsViewModel : ViewModelBase
 	{
 		//State
-
+        
         public virtual ObservableCollection<string> AvailableImages
         {
             get
@@ -36,7 +36,31 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         partial void OnGetAvailableImages(ref ObservableCollection<string> value);
         partial void OnSetAvailableImages(ref ObservableCollection<string> value);
 
-        public virtual string Image 
+        public virtual string SelectedImage 
+        {
+            get
+            {
+                OnGetImage(ref _SelectedImage);
+
+                return _SelectedImage;
+            }
+            set
+            {
+                if (value != _SelectedImage)
+                {
+                    OnSetImage(ref value);
+                    _SelectedImage = value;
+                    TriggerPropertyChanged("SelectedImage");
+                }
+            }
+        }
+
+        private string _SelectedImage;
+
+        partial void OnGetImage(ref string value);
+        partial void OnSetImage(ref string value);
+
+        public virtual BitmapImage Image 
         {
             get
             {
@@ -55,10 +79,10 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
 
-	    private string _Image;
+	    private BitmapImage _Image;
 
-        partial void OnGetImage(ref string value);
-        partial void OnSetImage(ref string value);
+        partial void OnGetImage(ref BitmapImage value);
+        partial void OnSetImage(ref BitmapImage value);
 	
 		
 		//Commands
@@ -74,8 +98,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             Crop = new DelegateCommand();
             Reset = new DelegateCommand();
 
-            Image = "http://www.freeclipartpictures.com/clipart/thumbnails/food007.jpg";
-            AvailableImages = new ObservableCollection<string> { "Image1", "Image2", "Image3" };
+            
 
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
