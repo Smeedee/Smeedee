@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Media.Imaging;
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
@@ -8,8 +10,11 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 
         partial void OnInitialize()
         {
-                       
+            SelectedImage = "http://www.freeclipartpictures.com/clipart/thumbnails/food007.jpg";
+            AvailableImages = new ObservableCollection<string> { "http://www.freeclipartpictures.com/clipart/thumbnails/food007.jpg", "http://www.freeclipartpictures.com/clipart/thumbnails/food017.jpg", "http://www.freeclipartpictures.com/clipart/thumbnails/food027.jpg" };
+            Image = new BitmapImage(new Uri(SelectedImage));
         }
+
 
 
         public bool CanSave()
