@@ -1,4 +1,5 @@
 
+using System.Collections.ObjectModel;
 using TinyMVVM.Framework.Services;
 using TinyMVVM.Framework.Conventions;
 using System;
@@ -8,20 +9,72 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
-	public partial class WebSnapshotSettingsViewModel : SettingsViewModelBase
+	public partial class WebSnapshotSettingsViewModel : AbstractViewModel
 	{
 		//State
+
+        public virtual ObservableCollection<string> AvailableImages
+        {
+            get
+            {
+                OnGetAvailableImages(ref _AvailableImages);
+
+                return _AvailableImages;
+            }
+            set
+            {
+                if (value != _AvailableImages)
+                {
+                    OnSetAvailableImages(ref value);
+                    _AvailableImages = value;
+                    TriggerPropertyChanged("AvailableImages");
+                }
+            }
+        }
+        private ObservableCollection<string> _AvailableImages;
+
+        partial void OnGetAvailableImages(ref ObservableCollection<string> value);
+        partial void OnSetAvailableImages(ref ObservableCollection<string> value);
+
+        public virtual string Image 
+        {
+            get
+            {
+                OnGetImage(ref _Image);
+
+                return _Image;
+            }
+            set
+            {
+                if (value != _Image)
+                {
+                    OnSetImage(ref value);
+                    _Image = value;
+                    TriggerPropertyChanged("Image");
+                }
+            }
+        }
+
+	    private string _Image;
+
+        partial void OnGetImage(ref string value);
+        partial void OnSetImage(ref string value);
 	
 		
 		//Commands
-		public DelegateCommand Save { get; set; }
+		public DelegateCommand SaveSettings { get; set; }
 		public DelegateCommand ReloadSettings { get; set; }
+        public DelegateCommand Crop { get; set; }
+        public DelegateCommand Reset { get; set; }
 		
 		public WebSnapshotSettingsViewModel()
 		{
-			Save = new DelegateCommand();
+			SaveSettings = new DelegateCommand();
 			ReloadSettings = new DelegateCommand();
-	
+            Crop = new DelegateCommand();
+            Reset = new DelegateCommand();
+
+
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
 		}

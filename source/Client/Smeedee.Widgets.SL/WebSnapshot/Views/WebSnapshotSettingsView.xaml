@@ -51,20 +51,35 @@
                 <ComboBox Grid.Row="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="2"
-                          Width="180"
+                          Width="250"
                           Style="{StaticResource SettingsViewComboBox}"
-                          ItemsSource="{Binding AvailablePictures}"
-                          SelectedItem="{Binding SelectedPicture, Mode=TwoWay}" />
-                <Canvas Grid.Row="3"
-                        Grid.RowSpan="8" />
+                          ItemsSource="{Binding AvailableImages}"
+                          SelectedItem="{Binding Image, Mode=TwoWay}" />
+                <TextBlock Grid.Row="2"
+                         Grid.Column="1" 
+                         Text="{Binding Image}"/>
+                <Canvas x:Name="canvas"
+                        Grid.Row="3"
+                        Grid.RowSpan="8"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Background="White">
+                    <!--MouseLeftButtonDown="canvas_MouseLeftButtonDown"
+                    Source="{Binding Image, Mode=TwoWay}"-->
+                    <Image 
+                           Stretch="Fill"
+                           Source="{Binding Image, Mode=TwoWay}" />
+                </Canvas>
 
                 <StackPanel Grid.Row="11"
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             Style="{StaticResource SettingsViewControlButtonsWrapper}">
                     <Button Content="Crop"
                             Style="{StaticResource SettingsViewButton}" />
                     <Button Content="Reset"
-                            Style="{StaticResource SettingsViewButton}" />
+                            Style="{StaticResource SettingsViewButton}"
+                            Margin="10,0,0,0" />
                 </StackPanel>
                 <StackPanel Grid.Row="13"
                             Grid.Column="1"

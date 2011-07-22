@@ -14,6 +14,7 @@ using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widgets.SL.WebSnapshot.Views;
 using Smeedee.Widgets.WebSnapshot.Controllers;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
+using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.SL.WebSnapshot
 {
@@ -49,5 +50,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot
                 OnSettings();
             }
         }
+        
     }
 }
