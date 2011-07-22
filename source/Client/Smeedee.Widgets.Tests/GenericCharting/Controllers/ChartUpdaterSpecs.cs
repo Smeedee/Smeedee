@@ -43,11 +43,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             [Test]
             public void Then_a_valid_configuration_should_hide_error_message()
             {
-                Given("a valid configuration", () =>
-                    {
-                        chartConfig.SetSeries(new Collection<SeriesConfigViewModel> { new SeriesConfigViewModel { Action = ChartConfig.SHOW } });
-                        chartConfig.IsConfigured = true;
-                    });
+                Given(a_valid_configuration);
                 When(calling_update);
                 Then("error message should be hidden", () =>
                     {
@@ -56,7 +52,126 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     });
             }
 
+            [Test]
+            public void Then_updater_should_not_look_for_data_in_storage_if_it_is_invalid_configuration()
+            {
+                Given("default configuration");
+                When(calling_update);
+                Then("storageReader should not be called", () => storageReaderFake.Verify(s => s.LoadChart(It.IsAny<string>(), It.IsAny<string>()), Times.Never()));
+            }
+
+            [Test]
+            public void Then_updater_should_look_for_data_when_there_is_a_valid_configuration()
+            {
+                Given(a_valid_configuration);
+                When(calling_update);
+                Then("storageReader should be called with correct database and collection", () =>
+                    VerifyThatStorageReaderLoadChartWasCalledWithParameters("Charting", "Collection"));
+            }
+
+            [Test]
+            public void Then_updater_should_look_for_more_data_when_there_is_a_more_complex()
+            {
+                Given(a_more_complex_valid_configuration);
+                When(calling_update);
+                Then("storageReader should be called once for each database/collection", () =>
+                    {
+                        VerifyThatStorageReaderLoadChartWasCalledWithParameters("Charting", "SomeCollection");
+                        VerifyThatStorageReaderLoadChartWasCalledWithParameters("Charting", "OtherCollection");
+                        VerifyThatStorageReaderLoadChartWasCalledWithParameters("Other", "Col");
+                    });
+            }
+
+            [Test]
+            public void Then_updater_should_load_data_into_viewmodel()
+            {
+                Given(a_valid_configuration).
+                    And(storage_returns_a_chart);
+                When(calling_update);
+                Then("viewModel should contain a line", () =>
+                    {
+                        viewModel.Lines.ShouldNotBeNull();
+                        viewModel.Lines.Count.ShouldBe(1);
+                        viewModel.Lines[0].Name.ShouldBe("Row");
+                        viewModel.Lines[0].Data.Count.ShouldBe(5);
+                        for (int i=0; i<5; i++)
+                        {
+                            viewModel.Lines[0].Data[i].X.ShouldBe(i);
+                            viewModel.Lines[0].Data[i].Y.ShouldBe(i + 1);
+                        }
+                    });
+            }
+
+            public static int updateFinishedCalled;
+
+            [Test]
+            public void Then_update_view_should_trigger_event_when_finished()
+            {
+                Given(a_valid_configuration).
+                    And(storage_returns_a_chart).
+                    And("listening for chart updated event", () =>
+                        {
+                            updateFinishedCalled = 0;
+                            updater.UpdateFinished += UpdateFinished;
+                        });
+                When(calling_update);
+                Then("UpdateFinished should have been called once", () => updateFinishedCalled.ShouldBe(1));
+
+            }
+
+            private void UpdateFinished(object sender, EventArgs e)
+            {
+                updateFinishedCalled++;
+            }
+
+            private static void VerifyThatStorageReaderLoadChartWasCalledWithParameters(string database, string collection)
+            {
+                storageReaderFake.Verify(s => s.LoadChart(It.Is<string>(d => d == database), It.Is<string>(c => c == collection), It.IsAny<Action<Chart>>()), Times.Exactly(1));
+            }
+
             private When calling_update = () => updater.Update();
+
+            private Context a_valid_configuration = () =>
+                    {
+                        var series = new Collection<SeriesConfigViewModel>
+                                         {
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="Collection", Name="Row", ChartType = ChartConfig.LINE}
+                                         };
+                        chartConfig.SetSeries(series);
+                        chartConfig.IsConfigured = true;
+                    };
+
+            private Context a_more_complex_valid_configuration = () =>
+            {
+                var series = new Collection<SeriesConfigViewModel>
+                                         {
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="SomeCollection", Name="Row1", ChartType = ChartConfig.LINE},
+                                             new SeriesConfigViewModel { Action = ChartConfig.REFERENCE, Database="Charting", Collection="OtherCollection", Name="Row2" },
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Other", Collection="Col", Name="Row3", Legend="Row3Legend", ChartType = ChartConfig.COLUMNS},
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="SomeCollection", Name="Row4", ChartType = ChartConfig.AREA}
+                                         };
+                chartConfig.SetSeries(series);
+                chartConfig.IsConfigured = true;
+            };
+
+            private Context storage_returns_a_chart = () =>
+                StorageReaderFakeReturns("Charting", "Collection", AChart());
+
+            private static Chart AChart()
+            {
+                var chart = new Chart("Charting", "Collection");
+                chart.DataSets.Add(GenerateDataSet("Row", 1, 5));
+                return chart;
+            }
+
+            private static DataSet GenerateDataSet(string name, int offset, int number)
+            {
+                var set = new DataSet {Name = name};
+                for (int i=0;i<number; i++)
+                    set.DataPoints.Add(offset + i);
+                return set;
+            }
+
         }
 
         public class Shared : ScenarioClass
@@ -75,14 +190,24 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 viewModel = new ChartViewModel();
                 storageReaderFake = new Mock<IChartStorageReader>();
                 uiInvoker = new NoUIInvokation();
-                
-                updater = new ChartUpdater(viewModel, chartConfig, uiInvoker);
+
+                updater = new ChartUpdater(viewModel, storageReaderFake.Object, uiInvoker) {ChartConfig = chartConfig};
             }
 
             [TearDown]
             public void TearDown()
             {
                 StartScenario();
+            }
+
+            protected static void StorageReaderFakeReturns(string database, string collection, Chart data)
+            {
+                storageReaderFake.Setup(s => s.LoadChart(
+                    It.Is<string>(d => d == database),
+                    It.Is<string>(c => c == collection),
+                    It.IsAny<Action<Chart>>())).
+                    Callback((string db, string col, Action<Chart> callback) =>
+                        callback(data));
             }
         }
     }

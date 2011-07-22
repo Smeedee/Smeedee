@@ -8,10 +8,6 @@
            xmlns:ViewModel="clr-namespace:Smeedee.Widgets.WebSnapshot.ViewModel"
            d:DesignWidth="300" d:DesignHeight="400">
 
-    <!--<d:DataContext>
-        <ViewModel:WebSnapshotViewModel />
-    </d:DataContext>-->
-    
     <UserControl.Resources>
         <ResourceDictionary x:Key="settingsViewResourceDictionary">
             <ResourceDictionary.MergedDictionaries>
@@ -21,8 +17,79 @@
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <TextBox Margin="72,8,50,0" TextWrapping="Wrap" Text="{Binding InputUrl, Mode=TwoWay}" VerticalAlignment="Top" Height="23" />
-        <Button x:Name="buttonFetchImage" Content="Fetch image" Command="{Binding FetchImage}" HorizontalAlignment="Left" Height="20" Margin="72,40,0,0" VerticalAlignment="Top" Width="78"/>
-    </Grid>
+        <Border Style="{StaticResource SettingsViewBorder}">
+            <Grid Style="{StaticResource SettingsViewGrid}"
+                  Height="500"
+                  Width="600">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0"
+                           Grid.Row="0"
+                           Grid.ColumnSpan="2"
+                           Style="{StaticResource SettingsViewH1}"
+                           Text="Configure WebSnapshot"
+                           Margin="0,0,0,27"
+                           Grid.RowSpan="2" />
+                <ComboBox Grid.Row="2"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
+                          Width="250"
+                          Style="{StaticResource SettingsViewComboBox}"
+                          ItemsSource="{Binding AvailableImages}"
+                          SelectedItem="{Binding SelectedImage, Mode=TwoWay}" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="1"
+                         Text="{Binding SelectedImage}" />
+                <Canvas x:Name="canvas"
+                        Grid.Row="3"
+                        Grid.RowSpan="8"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Background="Transparent">
+                    <!--MouseLeftButtonDown="canvas_MouseLeftButtonDown"
+                    Source="{Binding Image, Mode=TwoWay}"-->
+                    <Image 
+                           Stretch="Fill"
+                           Source="{Binding Image, Mode=TwoWay}" />
+                </Canvas>
 
+                <StackPanel Grid.Row="11"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource SettingsViewControlButtonsWrapper}">
+                    <Button Content="Crop"
+                            Style="{StaticResource SettingsViewButton}" />
+                    <Button Content="Reset"
+                            Style="{StaticResource SettingsViewButton}"
+                            Margin="10,0,0,0" />
+                </StackPanel>
+                <StackPanel Grid.Row="13"
+                            Grid.Column="1"
+                            Style="{StaticResource SettingsViewControlButtonsWrapper}">
+                    <Button Style="{StaticResource SettingsViewSaveButton}"
+                            Command="{Binding SaveSettings}" />
+                    <Button Style="{StaticResource SettingsViewReloadSettingsButton}"
+                            Command="{Binding ReloadSettings}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </UserControl>

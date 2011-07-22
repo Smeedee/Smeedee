@@ -182,7 +182,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             [Test]
             public void IsValid_should_return_false_when_no_seriesConfig()
             {
-                Given(chart_config_has_been_made);
+                Given(chart_config_has_been_made).
+                    And("isConfigured is true", () => chartConfig.IsConfigured = true);
                 When("no series has been made or added");
                 Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeFalse());
             }
@@ -191,7 +192,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void IsValid_should_return_false_when_no_dataset()
             {
                 Given(chart_config_has_been_made).
-                    And("seriesConfig is empty", () => seriesConfig.Clear());
+                    And("seriesConfig is empty", () => seriesConfig.Clear()).
+                    And("isConfigured is true", () => chartConfig.IsConfigured = true);
                 When(setting_series);
                 Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeFalse());
             }
@@ -200,7 +202,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void IsValid_should_return_true_if_a_dataset_has_action_show()
             {
                 Given(chart_config_has_been_made).
-                    And("seriesConfig has one entry", () => seriesConfig.Add(series1));
+                    And("seriesConfig has one entry", () => seriesConfig.Add(series1)).
+                    And("isConfigured is true", () => chartConfig.IsConfigured = true);
                 When(setting_series);
                 Then("IsValid should return true", () => chartConfig.IsValid.ShouldBeTrue());
             }
@@ -209,7 +212,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void IsValid_should_return_false_if_no_dataset_has_action_show()
             {
                 Given(chart_config_has_been_made).
-                    And("seriesConfig has one entry", () => seriesConfig.Add(series2));
+                    And("seriesConfig has one entry", () => seriesConfig.Add(series2)).
+                    And("isConfigured is true", () => chartConfig.IsConfigured = true);
                 When(setting_series);
                 Then("IsValid should return false", () => chartConfig.IsValid.ShouldBeFalse());
             }
@@ -223,9 +227,20 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                                                                   seriesConfig.Add(series2);
                                                                   seriesConfig.Add(series1);
                                                                   seriesConfig.Add(series2);
-                                                              });
+                                                              }).
+                    And("isConfigured is true", () => chartConfig.IsConfigured = true);
                 When(setting_series);
                 Then("IsValid should return true", () => chartConfig.IsValid.ShouldBeTrue());
+            }
+
+            [Test]
+            public void IsValid_should_return_false_if_isConfigured_is_false()
+            {
+                Given(chart_config_has_been_made).
+                    And("seriesConfig has one entry", () => seriesConfig.Add(series1)).
+                    And("isConfigured is false", () => chartConfig.IsConfigured=false);
+                When(setting_series);
+                Then("IsValdid should return false", () => chartConfig.IsValid.ShouldBeFalse());
             }
            
         }
