@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -11,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Smeedee.Widgets.GenericCharting.ViewModels;
 
 namespace Smeedee.Widgets.SL.GenericCharting.Views
 {
@@ -52,7 +55,9 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
             set { SetValue(AreaTemplateProperty, value); }
         }
 
-        private void InitSeries()
+
+
+        private void InitSeries(object s, EventArgs e)
         {
             Series.Clear();
             if (WeHaveAreaTemplateAndAreasSource())
@@ -88,7 +93,8 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
                          let assignDataContext = ((FrameworkElement)seriesItem).DataContext = line
                          select seriesItem;
 
-            series.ToList().ForEach(Series.Add);
+            var list = series.ToList();
+            list.ForEach(Series.Add);
         }
 
         public static readonly DependencyProperty LinesSourceProperty =
@@ -111,14 +117,54 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
 
         private static DependencyProperty MakeSourceDependencyProperty(string name)
         {
-            return DependencyProperty.Register(name, typeof(IEnumerable), typeof(GenericChart),
-                new PropertyMetadata(null, (s, e) => ((GenericChart)s).InitSeries()));
+            //return DependencyProperty.Register(name, typeof(ObservableCollection<DataSetViewModel>), typeof(GenericChart),
+            //    new PropertyMetadata(null, (s, e) => ((GenericChart)s).InitSeries()));
+            return DependencyProperty.Register(name, typeof(ObservableCollection<DataSetViewModel>), typeof(GenericChart),
+                new PropertyMetadata(null, SeriesSourceChanged));
         }
 
         private static DependencyProperty MakeDataTemplateDependencyProperty(string name)
         {
-            return DependencyProperty.Register(name, typeof (DataTemplate), typeof (GenericChart),
-                                               new PropertyMetadata(null, (s, e) => ((GenericChart) s).InitSeries()));
+            //return DependencyProperty.Register(name, typeof(DataTemplate), typeof(GenericChart),
+            //                                   new PropertyMetadata(null, (s, e) => ((GenericChart)s).InitSeries()));
+            return DependencyProperty.Register(name, typeof(DataTemplate), typeof(GenericChart),
+                                               new PropertyMetadata(null, DataTemplatesChanged));
+        }
+
+        private static void DataTemplatesChanged(DependencyObject d, DependencyPropertyChangedEventArgs eventArgs)
+        {
+            var chart = d as GenericChart;
+            if (chart == null)
+            {
+                Debug.WriteLine("Something is wrong, dependency object is not a GenericChart");
+                return;
+            }
+            chart.InitSeries(null, EventArgs.Empty);
+        }
+
+        private static void SeriesSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs eventArgs)
+        {
+            var chart = d as GenericChart;
+            if (chart == null)
+            {
+                Debug.WriteLine("Something is wrong, dependency object is not a GenericChart");
+                return;
+            }
+
+            var old = eventArgs.OldValue as ObservableCollection<DataSetViewModel>;
+            if (old != null)
+                old.CollectionChanged -= chart.InitSeries;
+
+            var newCollection = eventArgs.NewValue as ObservableCollection<DataSetViewModel>;
+            if (newCollection == null)
+            {
+                Debug.WriteLine("Something is wrong, series source is not an ObservableCollection<DataSetViewModel>");
+                return;
+            }
+
+            newCollection.CollectionChanged += chart.InitSeries;
+
+            chart.InitSeries(newCollection, EventArgs.Empty);
         }
 
     }

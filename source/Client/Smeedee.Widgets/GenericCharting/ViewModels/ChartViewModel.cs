@@ -11,6 +11,22 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 {
     public class ChartViewModel : AbstractViewModel
     {
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value != _name)
+                {
+                    _name = value;
+                    TriggerPropertyChanged("Name");
+                }
+            }
+        }
 
         public ObservableCollection<DataSetViewModel> Lines { get; private set; }
         public ObservableCollection<DataSetViewModel> Columns { get; private set; }

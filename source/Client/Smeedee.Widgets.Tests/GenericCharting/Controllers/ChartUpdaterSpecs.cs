@@ -102,6 +102,28 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     });
             }
 
+            public static int updateFinishedCalled;
+
+            [Test]
+            public void Then_update_view_should_trigger_event_when_finished()
+            {
+                Given(a_valid_configuration).
+                    And(storage_returns_a_chart).
+                    And("listening for chart updated event", () =>
+                        {
+                            updateFinishedCalled = 0;
+                            updater.UpdateFinished += UpdateFinished;
+                        });
+                When(calling_update);
+                Then("UpdateFinished should have been called once", () => updateFinishedCalled.ShouldBe(1));
+
+            }
+
+            private void UpdateFinished(object sender, EventArgs e)
+            {
+                updateFinishedCalled++;
+            }
+
             private static void VerifyThatStorageReaderLoadChartWasCalledWithParameters(string database, string collection)
             {
                 storageReaderFake.Verify(s => s.LoadChart(It.Is<string>(d => d == database), It.Is<string>(c => c == collection), It.IsAny<Action<Chart>>()), Times.Exactly(1));
@@ -168,8 +190,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 viewModel = new ChartViewModel();
                 storageReaderFake = new Mock<IChartStorageReader>();
                 uiInvoker = new NoUIInvokation();
-                
-                updater = new ChartUpdater(viewModel, chartConfig, storageReaderFake.Object, uiInvoker);
+
+                updater = new ChartUpdater(viewModel, storageReaderFake.Object, uiInvoker) {ChartConfig = chartConfig};
             }
 
             [TearDown]
