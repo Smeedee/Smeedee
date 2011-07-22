@@ -90,6 +90,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When(calling_update);
                 Then("viewModel should contain a line", () =>
                     {
+                        viewModel.Name.ShouldBeNull();
+                        viewModel.XAxisName.ShouldBeNull();
+                        viewModel.YAxisName.ShouldBeNull();
+                        viewModel.XAxisType.ShouldBe(ChartConfig.CATEGORY);
                         viewModel.Lines.ShouldNotBeNull();
                         viewModel.Lines.Count.ShouldBe(1);
                         viewModel.Lines[0].Name.ShouldBe("Row");
@@ -102,6 +106,15 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     });
             }
 
+            [Test]
+            public void Then_updater_should_load_complex_data_into_viewmodel()
+            {
+                Given(a_more_complex_valid_configuration).
+                    And(storage_returns_many_charts);
+                When(calling_update);
+                Then(viewModel_should_contain_complex_data);
+            }
+
             public static int updateFinishedCalled;
 
             [Test]
@@ -109,17 +122,34 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             {
                 Given(a_valid_configuration).
                     And(storage_returns_a_chart).
-                    And("listening for chart updated event", () =>
-                        {
-                            updateFinishedCalled = 0;
-                            updater.UpdateFinished += UpdateFinished;
-                        });
+                    And(listening_for_chart_updated_event);
+
+
+
+
+
                 When(calling_update);
                 Then("UpdateFinished should have been called once", () => updateFinishedCalled.ShouldBe(1));
 
             }
 
-            private void UpdateFinished(object sender, EventArgs e)
+            [Test]
+            public void Then_update_view_should_trigger_event_even_if_config_is_invalid()
+
+            {
+                Given("default configuration").
+                    And(listening_for_chart_updated_event);
+                When(calling_update);
+                Then("UpdateFinished should have been called once", () => updateFinishedCalled.ShouldBe(1));
+            }
+
+            private Context listening_for_chart_updated_event = () =>
+                        {
+                            updateFinishedCalled = 0;
+                            updater.UpdateFinished += UpdateFinished;
+                        };
+
+            private static void UpdateFinished(object sender, EventArgs e)
             {
                 updateFinishedCalled++;
             }
@@ -150,6 +180,14 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                                              new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Other", Collection="Col", Name="Row3", Legend="Row3Legend", ChartType = ChartConfig.COLUMNS},
                                              new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="SomeCollection", Name="Row4", ChartType = ChartConfig.AREA}
                                          };
+                chartConfig.ChartName = "AChartName";
+                chartConfig.XAxisName = "XAxis";
+                chartConfig.YAxisName = "YAxis";
+                chartConfig.XAxisType = ChartConfig.CATEGORY;
+                chartConfig.ChartName = "AChartName";
+                chartConfig.XAxisName = "XAxis";
+                chartConfig.YAxisName = "YAxis";
+                chartConfig.XAxisType = ChartConfig.LINEAR;
                 chartConfig.SetSeries(series);
                 chartConfig.IsConfigured = true;
             };
@@ -163,6 +201,68 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 chart.DataSets.Add(GenerateDataSet("Row", 1, 5));
                 return chart;
             }
+
+            
+
+            private static Chart Chart1()
+            {
+                var chart = new Chart("Charting", "SomeCollection");
+                chart.DataSets.Add(GenerateDataSet("Row1", 0, 5));
+                chart.DataSets.Add(GenerateDataSet("Row4", 10, 5));
+                return chart;
+            }
+
+            private static Chart Chart2()
+            {
+                var chart = new Chart("Charting", "OtherCollection");
+                chart.DataSets.Add(GenerateDataSet("Row2", 5, 5));
+                return chart;
+            }
+
+            private static Chart Chart3()
+            {
+                var chart = new Chart("Other", "Col");
+                chart.DataSets.Add(GenerateDataSet("Row3", 15, 5));
+                return chart;
+            }
+
+            private Context storage_returns_many_charts = () =>
+                {
+                    StorageReaderFakeReturns("Charting", "SomeCollection", Chart1());
+                    StorageReaderFakeReturns("Charting", "OtherCollection", Chart2());
+                    StorageReaderFakeReturns("Other", "Col", Chart3());
+                };
+
+            private Then viewModel_should_contain_complex_data = () =>
+            {
+                viewModel.Name.ShouldBe("AChartName");
+                viewModel.XAxisName.ShouldBe("XAxis");
+                viewModel.YAxisName.ShouldBe("YAxis");
+                viewModel.XAxisType.ShouldBe(ChartConfig.LINEAR);
+                
+                viewModel.Lines.ShouldNotBeNull();
+                viewModel.Lines.Count.ShouldBe(1);
+                viewModel.Columns.Count.ShouldBe(1);
+                viewModel.Areas.Count.ShouldBe(1);
+
+                viewModel.Lines[0].Name.ShouldBe("Row1");
+                viewModel.Lines[0].Data.Count.ShouldBe(5);
+                viewModel.Columns[0].Name.ShouldBe("Row3Legend");
+                viewModel.Columns[0].Data.Count.ShouldBe(5);
+                viewModel.Areas[0].Name.ShouldBe("Row4");
+                viewModel.Areas[0].Data.Count.ShouldBe(5);
+                for (int i = 0; i < 5; i++)
+                {
+                    viewModel.Lines[0].Data[i].X.ShouldBe(i + 5);
+                    viewModel.Lines[0].Data[i].Y.ShouldBe(i);
+
+                    viewModel.Columns[0].Data[i].X.ShouldBe(i + 5);
+                    viewModel.Columns[0].Data[i].Y.ShouldBe(i + 15);
+
+                    viewModel.Areas[0].Data[i].X.ShouldBe(i + 5);
+                    viewModel.Areas[0].Data[i].Y.ShouldBe(i + 10);
+                }
+            };
 
             private static DataSet GenerateDataSet(string name, int offset, int number)
             {
