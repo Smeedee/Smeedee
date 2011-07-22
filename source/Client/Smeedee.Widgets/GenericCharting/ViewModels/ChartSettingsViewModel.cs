@@ -15,23 +15,20 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
             Collections = new ObservableCollection<string>();
             SeriesConfig = new ObservableCollection<SeriesConfigViewModel>();
 
-            XAxisTypes = new ObservableCollection<string>{ChartConfig.DATETIME, ChartConfig.CATEGORY, ChartConfig.LINEAR};
+            XAxisTypes = new ObservableCollection<string> { ChartConfig.DATETIME, ChartConfig.CATEGORY, ChartConfig.LINEAR };
         }
-
-
     }
 
     public class SettingsChoices
     {
         public ObservableCollection<string> Actions
         {
-            get { return new ObservableCollection<string> {ChartConfig.SHOW, ChartConfig.HIDE, ChartConfig.REFERENCE, ChartConfig.REMOVE}; }
-        }
+            get {return new ObservableCollection<string> { ChartConfig.SHOW, ChartConfig.HIDE, ChartConfig.REFERENCE, ChartConfig.REMOVE };}
+        } 
 
         public ObservableCollection<string> ChartTypes
         {
-            get { return new ObservableCollection<string> { ChartConfig.LINE, ChartConfig.AREA, ChartConfig.COLUMNS }; }
+            get {return new ObservableCollection<string> { ChartConfig.LINE, ChartConfig.AREA, ChartConfig.COLUMNS };}
         }
     }
-
 }
