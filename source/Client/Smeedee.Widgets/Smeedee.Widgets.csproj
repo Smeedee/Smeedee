@@ -92,6 +92,7 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebPage\ViewModel\WebPageViewModel.cs" />
+    <Compile Include="WebSnapshot\Controller\WebSnapshotController.cs" />
     <Compile Include="WebSnapshot\Util\IWebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\IWebSnapshotter.cs" />
     <Compile Include="WebSnapshot\Util\URLValidator.cs" />
