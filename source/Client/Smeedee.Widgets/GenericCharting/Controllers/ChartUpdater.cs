@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Smeedee.Client.Framework.Repositories.Charting;
@@ -15,24 +16,23 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private ChartViewModel viewModel;
         private IUIInvoker uiInvoker;
-        private ChartConfig chartConfig;
+        public ChartConfig ChartConfig { get; set; }
         private IChartStorageReader storageReader;
         private CollectionDownloadManager downloadManager = null;
 
         private List<SeriesConfigViewModel> series;
         private Collection<Chart> downloadedCharts;
 
-        public ChartUpdater(ChartViewModel viewModel, ChartConfig config, IChartStorageReader storageReader, IUIInvoker uiInvoker)
+        public ChartUpdater(ChartViewModel viewModel, IChartStorageReader storageReader, IUIInvoker uiInvoker)
         {
             this.viewModel = viewModel;
             this.uiInvoker = uiInvoker;
-            chartConfig = config;
             this.storageReader = storageReader;
         }
 
         public void Update()
         {
-            if (chartConfig.IsValid)
+            if (ChartConfig.IsValid)
             {
                 DownloadData();
                 HideErrorMessage();
@@ -41,10 +41,12 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 ShowErrorMessage("No chart configured.");
         }
 
+        public event EventHandler UpdateFinished;
+
         private void DownloadData()
         {
             downloadManager = new CollectionDownloadManager(storageReader, DownloadCompleted);
-            series = chartConfig.GetSeries();
+            series = ChartConfig.GetSeries();
             foreach (var s in series)
             {
                 if (s.Action == ChartConfig.SHOW || s.Action == ChartConfig.REFERENCE)
@@ -62,6 +64,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                                      {
                                          AddSeries();
                                          downloadedCharts.Clear();
+                                         if (UpdateFinished != null)
+                                             UpdateFinished(this, EventArgs.Empty);
                                      });
             }
         }
@@ -76,6 +80,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void AddOneSeries(SeriesConfigViewModel series)
         {
+            if (series.Action != ChartConfig.SHOW) return;
             var chart = downloadedCharts.Where(c => c.Database == series.Database && c.Collection == series.Collection).FirstOrDefault();
             if (chart == null) return; // TODO: error handling
             var dataset = chart.DataSets.Where(s => s.Name == series.Name).FirstOrDefault();
@@ -102,7 +107,11 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             var vm = new DataSetViewModel {Name = dataset.Name};
             for (int i = 0; i<dataset.DataPoints.Count; i++)
             {
-                vm.Data.Add(new DataPointViewModel { X = i, Y = dataset.DataPoints[i]});
+                var value = 0;
+                if (int.TryParse(dataset.DataPoints[i].ToString(), out value))
+                    vm.Data.Add(new DataPointViewModel { X = i, Y = value});
+                else
+                    Debug.WriteLine("ERROR PARSING!"); // TODO: need some errorhandling when datapoint could not be converted to a number
             }
             return vm;
         }

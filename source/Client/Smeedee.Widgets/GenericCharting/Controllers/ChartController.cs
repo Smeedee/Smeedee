@@ -25,6 +25,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public ChartSettingsViewModel SettingsViewModel { get; private set; }
         private readonly IPersistDomainModelsAsync<Configuration> configPersister;
 
+        private ChartUpdater chartUpdater;
+
         public ChartController(
             ChartViewModel chartViewModel,
             ChartSettingsViewModel settingsViewModel,
@@ -44,6 +46,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             chartConfig = new ChartConfig(configuration);
 
+            chartUpdater = new ChartUpdater(ViewModel, storageReader, uiInvoker) {ChartConfig = chartConfig};
+            chartUpdater.UpdateFinished += OnUpdateFinished;
             this.configPersister = configPersister;
             this.configPersister.SaveCompleted += OnSaveCompleted;
             
@@ -62,14 +66,25 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
             UpdateListOfDataSources();
             Start();
+            LoadData();
         }
 
         public ChartConfig ChartConfig { get { return chartConfig; } }
 
+        public void LoadData()
+        {
+            SetIsLoadingData();
+            chartUpdater.Update();
+        }
         
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
+            LoadData();
+        }
 
+        private void OnUpdateFinished(object sender, EventArgs e)
+        {
+            SetIsNotLoadingData();
         }
        
         public void AddDatabasesToSettingsViewModel(IList<string> db)
@@ -107,6 +122,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             // TODO: some error handling
             SetIsNotSavingConfig();
+            LoadData();
         }
 
         public void OnReloadSettings()
@@ -168,7 +184,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 storageReader.LoadChart(database, collection, AddDataChartLoaded);
         }
 
-        public void AddDataChartLoaded(Chart chart)
+        private void AddDataChartLoaded(Chart chart)
         {
             uiInvoker.Invoke(() =>
             {
@@ -207,7 +223,9 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public void UpdateConfiguration(Configuration configuration)
         {
             chartConfig = new ChartConfig(configuration);
+            chartUpdater.ChartConfig = chartConfig;
             CopyConfigurationToSettingsViewModel();
+            LoadData();
         }
     }
 }
