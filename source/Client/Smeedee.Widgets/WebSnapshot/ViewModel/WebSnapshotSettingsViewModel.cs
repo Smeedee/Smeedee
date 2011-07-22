@@ -8,7 +8,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 
         partial void OnInitialize()
         {
-           
+                       
         }
 
 
