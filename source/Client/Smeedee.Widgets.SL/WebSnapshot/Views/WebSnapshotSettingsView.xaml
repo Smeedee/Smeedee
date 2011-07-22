@@ -55,9 +55,9 @@
                           Style="{StaticResource SettingsViewComboBox}"
                           ItemsSource="{Binding AvailableImages}"
                           SelectedItem="{Binding Image, Mode=TwoWay}" />
-                <TextBlock Grid.Row="2"
-                         Grid.Column="1" 
-                         Text="{Binding Image}"/>
+                <TextBox Grid.Row="2"
+                         Grid.Column="1"
+                         Text="{Binding Image}" />
                 <Canvas x:Name="canvas"
                         Grid.Row="3"
                         Grid.RowSpan="8"

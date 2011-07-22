@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
-	public partial class WebSnapshotSettingsViewModel : AbstractViewModel
+    public partial class WebSnapshotSettingsViewModel : ViewModelBase
 	{
 		//State
 
@@ -74,6 +74,8 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             Crop = new DelegateCommand();
             Reset = new DelegateCommand();
 
+            Image = "http://www.freeclipartpictures.com/clipart/thumbnails/food007.jpg";
+            AvailableImages = new ObservableCollection<string> { "Image1", "Image2", "Image3" };
 
 			OnInitialize();
 			ApplyConvention(new BindCommandsDelegatesToMethods());
