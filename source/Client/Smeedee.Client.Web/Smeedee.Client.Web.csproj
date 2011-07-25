@@ -134,12 +134,12 @@
     <Compile Include="MobileServices\BuildStatus\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MobileServices\TopCommitters\Index.aspx.cs">
-      <DependentUpon>Index.aspx</DependentUpon>
+    <Compile Include="MobileServices\TopCommitters\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MobileServices\TopCommitters\Index.aspx.designer.cs">
-      <DependentUpon>Index.aspx</DependentUpon>
+    <Compile Include="MobileServices\TopCommitters\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChangesetRepositoryService.svc.cs">
@@ -226,7 +226,7 @@
     <Content Include="Default.htm" />
     <Content Include="Log.aspx" />
     <Content Include="MobileServices\BuildStatus\index.aspx" />
-    <Content Include="MobileServices\TopCommitters\Index.aspx" />
+    <Content Include="MobileServices\TopCommitters\Default.aspx" />
     <Content Include="Services\ChangesetRepositoryService.svc" />
     <Content Include="Services\CIRepositoryService.svc" />
     <Content Include="Services\ConfigurationRepositoryService.svc" />
