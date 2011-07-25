@@ -15,7 +15,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
             Collections = new ObservableCollection<string>();
             SeriesConfig = new ObservableCollection<SeriesConfigViewModel>();
 
-            XAxisTypes = new ObservableCollection<string> { ChartConfig.DATETIME, ChartConfig.CATEGORY, ChartConfig.LINEAR };
+            XAxisTypes = new ObservableCollection<string> { ChartConfig.CATEGORY, ChartConfig.LINEAR };
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Smeedee.Client.Framework.Repositories.Charting;
@@ -15,40 +16,55 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private ChartViewModel viewModel;
         private IUIInvoker uiInvoker;
-        private ChartConfig chartConfig;
+        public ChartConfig ChartConfig { get; set; }
         private IChartStorageReader storageReader;
         private CollectionDownloadManager downloadManager = null;
 
         private List<SeriesConfigViewModel> series;
         private Collection<Chart> downloadedCharts;
 
-        public ChartUpdater(ChartViewModel viewModel, ChartConfig config, IChartStorageReader storageReader, IUIInvoker uiInvoker)
+        private SeriesConfigViewModel referenceSeries = null;
+        private DataSet referenceDataSet = null;
+
+        public ChartUpdater(ChartViewModel viewModel, IChartStorageReader storageReader, IUIInvoker uiInvoker)
         {
             this.viewModel = viewModel;
             this.uiInvoker = uiInvoker;
-            chartConfig = config;
             this.storageReader = storageReader;
         }
 
         public void Update()
         {
-            if (chartConfig.IsValid)
+            if (ChartConfig.IsValid)
             {
                 DownloadData();
                 HideErrorMessage();
             }
             else
+            {
                 ShowErrorMessage("No chart configured.");
+                if (UpdateFinished != null)
+                    UpdateFinished(this, EventArgs.Empty);
+            }
         }
+
+        public event EventHandler UpdateFinished;
 
         private void DownloadData()
         {
             downloadManager = new CollectionDownloadManager(storageReader, DownloadCompleted);
-            series = chartConfig.GetSeries();
+            series = ChartConfig.GetSeries();
+            referenceSeries = null;
+            referenceDataSet = null;
             foreach (var s in series)
             {
                 if (s.Action == ChartConfig.SHOW || s.Action == ChartConfig.REFERENCE)
                     downloadManager.AddDownload(new CollectionDownload(s.Database, s.Collection));
+
+                if (s.Action == ChartConfig.REFERENCE)
+                {
+                    referenceSeries = s;
+                }
             }
             downloadManager.BeginDownload();
         }
@@ -60,14 +76,29 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             {
                 uiInvoker.Invoke(() =>
                                      {
+                                         AddNameData();
                                          AddSeries();
                                          downloadedCharts.Clear();
+                                         if (UpdateFinished != null)
+                                             UpdateFinished(this, EventArgs.Empty);
                                      });
             }
         }
 
+        private void AddNameData()
+        {
+            viewModel.Name = !string.IsNullOrEmpty(ChartConfig.ChartName) ? ChartConfig.ChartName : null;
+            viewModel.XAxisName = !string.IsNullOrEmpty(ChartConfig.XAxisName) ? ChartConfig.XAxisName : null;
+            viewModel.YAxisName = !string.IsNullOrEmpty(ChartConfig.YAxisName) ? ChartConfig.YAxisName : null;
+            viewModel.XAxisType = !string.IsNullOrEmpty(ChartConfig.XAxisType) ? ChartConfig.XAxisType : ChartConfig.CATEGORY;
+        }
+
         private void AddSeries()
         {
+            if (referenceSeries != null)
+            {
+                referenceDataSet = GetDataset(referenceSeries);
+            }
             viewModel.Lines.Clear();
             viewModel.Areas.Clear();
             viewModel.Columns.Clear();
@@ -76,12 +107,15 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void AddOneSeries(SeriesConfigViewModel series)
         {
-            var chart = downloadedCharts.Where(c => c.Database == series.Database && c.Collection == series.Collection).FirstOrDefault();
-            if (chart == null) return; // TODO: error handling
-            var dataset = chart.DataSets.Where(s => s.Name == series.Name).FirstOrDefault();
+            if (series.Action != ChartConfig.SHOW) return;
+            DataSet dataset = GetDataset(series);
+
+
+
             if (dataset == null) return; // TODO: error handling;
 
-            var vm = ConvertDataSetToViewModel(dataset);
+            var vm = ConvertDataSetToViewModel(dataset, series);
+
             switch (series.ChartType)
             {
                 case ChartConfig.LINE:
@@ -97,12 +131,29 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
            
         }
 
-        private DataSetViewModel ConvertDataSetToViewModel(DataSet dataset)
+        private DataSet GetDataset(SeriesConfigViewModel series)
+
         {
-            var vm = new DataSetViewModel {Name = dataset.Name};
+            var chart = downloadedCharts.Where(c => c.Database == series.Database && c.Collection == series.Collection).FirstOrDefault();
+            if (chart == null) return null;
+            return chart.DataSets.Where(s => s.Name == series.Name).FirstOrDefault();
+        }
+
+        private DataSetViewModel ConvertDataSetToViewModel(DataSet dataset, SeriesConfigViewModel series)
+        {
+            var vm = new DataSetViewModel {Name = !string.IsNullOrEmpty(series.Legend) ? series.Legend : dataset.Name};
+
             for (int i = 0; i<dataset.DataPoints.Count; i++)
             {
-                vm.Data.Add(new DataPointViewModel { X = i, Y = dataset.DataPoints[i]});
+                var Yvalue = 0;
+                var Xvalue = referenceDataSet != null ? referenceDataSet.DataPoints[i] : i;
+                if (int.TryParse(dataset.DataPoints[i].ToString(), out Yvalue))
+                    vm.Data.Add(new DataPointViewModel { X = Xvalue, Y = Yvalue});
+
+
+
+                else
+                    Debug.WriteLine("ERROR PARSING!"); // TODO: need some errorhandling when datapoint could not be converted to a number
             }
             return vm;
         }

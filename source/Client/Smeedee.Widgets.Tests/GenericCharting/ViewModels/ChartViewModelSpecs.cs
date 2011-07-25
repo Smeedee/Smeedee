@@ -94,7 +94,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
             Then("assure it contains correct XAxisTypes", () =>
                                                               {
                                                                   chartSettingsViewModel.XAxisTypes.ShouldNotBeNull();
-                                                                  chartSettingsViewModel.XAxisTypes.ShouldContain(ChartConfig.DATETIME);
+                                                                  //chartSettingsViewModel.XAxisTypes.ShouldContain(ChartConfig.DATETIME);
                                                                   chartSettingsViewModel.XAxisTypes.ShouldContain(ChartConfig.CATEGORY);
                                                                   chartSettingsViewModel.XAxisTypes.ShouldContain(ChartConfig.LINEAR);
                                                               });

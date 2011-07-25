@@ -11,6 +11,22 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 {
     public class ChartViewModel : AbstractViewModel
     {
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value != _name)
+                {
+                    _name = value;
+                    TriggerPropertyChanged("Name");
+                }
+            }
+        }
 
         public ObservableCollection<DataSetViewModel> Lines { get; private set; }
         public ObservableCollection<DataSetViewModel> Columns { get; private set; }
@@ -62,5 +78,55 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
             }
         }
 
+        private string _xaxis;
+        public string XAxisName
+        {
+            get
+            {
+                return _xaxis;
+            }
+            set
+            {
+                if (value != _xaxis)
+                {
+                    _xaxis = value;
+                    TriggerPropertyChanged("XAxisName");
+                }
+            }
+        }
+
+        private string _yaxis;
+        public string YAxisName
+        {
+            get
+            {
+                return _yaxis;
+            }
+            set
+            {
+                if (value != _yaxis)
+                {
+                    _yaxis = value;
+                    TriggerPropertyChanged("YAxisName");
+                }
+            }
+        }
+
+        private string _xaxistype;
+        public string XAxisType
+        {
+            get
+            {
+                return _xaxistype;
+            }
+            set
+            {
+                if (value != _xaxistype)
+                {
+                    _xaxistype = value;
+                    TriggerPropertyChanged("XAxisType");
+                }
+            }
+        }
     }
 }

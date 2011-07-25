@@ -14,6 +14,7 @@ using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widgets.SL.WebSnapshot.Views;
 using Smeedee.Widgets.WebSnapshot.Controllers;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
+using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.SL.WebSnapshot
 {
@@ -27,16 +28,18 @@ namespace Smeedee.Widgets.SL.WebSnapshot
     {
         private WebSnapshotViewModel viewModel;
         private WebSnapshotController controller;
+        private WebSnapshotSettingsViewModel settingsViewModel;
 
         public WebSnapshotWidget()
         {
             Title = "Web Snapshot";
             viewModel = GetInstance<WebSnapshotViewModel>();
+            settingsViewModel = GetInstance<WebSnapshotSettingsViewModel>();
             controller = NewController<WebSnapshotController>();
             viewModel.PropertyChanged += ViewModelPropertyChanged;
 
             View = new WebSnapshotView {DataContext = controller.ViewModel};
-            SettingsView = new WebSnapshotSettingsView {DataContext = viewModel};
+            SettingsView = new WebSnapshotSettingsView {DataContext = settingsViewModel};
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -48,6 +51,12 @@ namespace Smeedee.Widgets.SL.WebSnapshot
             {
                 OnSettings();
             }
+        }
+        
+        public override void Configure(DependencyConfigSemantics config)
+        {
+            config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();
+            config.Bind<WebSnapshotSettingsViewModel>().To<WebSnapshotSettingsViewModel>().InSingletonScope();
         }
     }
 }
