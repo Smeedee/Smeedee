@@ -127,12 +127,12 @@
     <Compile Include="Log.aspx.designer.cs">
       <DependentUpon>Log.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MobileServices\BuildStatus\index.aspx.cs">
-      <DependentUpon>index.aspx</DependentUpon>
+    <Compile Include="MobileServices\BuildStatus\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MobileServices\BuildStatus\index.aspx.designer.cs">
-      <DependentUpon>index.aspx</DependentUpon>
+    <Compile Include="MobileServices\BuildStatus\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="MobileServices\TopCommitters\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -225,7 +225,7 @@
     <Content Include="ClientBin\Tskjortebutikken.Widgets.xap" />
     <Content Include="Default.htm" />
     <Content Include="Log.aspx" />
-    <Content Include="MobileServices\BuildStatus\index.aspx" />
+    <Content Include="MobileServices\BuildStatus\Default.aspx" />
     <Content Include="MobileServices\TopCommitters\Default.aspx" />
     <Content Include="Services\ChangesetRepositoryService.svc" />
     <Content Include="Services\CIRepositoryService.svc" />
