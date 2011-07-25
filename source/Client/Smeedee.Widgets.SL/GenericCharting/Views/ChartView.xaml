@@ -36,27 +36,47 @@
             LinesSource="{Binding Lines, Mode=OneWay}"
             ColumnsSource="{Binding Columns, Mode=OneWay}"
             AreasSource="{Binding Areas, Mode=OneWay}"
+            XAxisType="{Binding XAxisType, Mode=OneWay}"
             Visibility="{Binding Path=ShowErrorMessageInsteadOfChart, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
+            
+            <local:GenericChart.CategoryAxisTemplate>
+                <DataTemplate>
+                    <charting:CategoryAxis
+                        Title="{Binding XAxisName, Mode=OneWay}"
+                        Foreground="White"
+                        FontSize="15"
+                        Orientation="X"
+                        Location="Bottom"
+                        HorizontalAlignment="Stretch"
+                        />
+                </DataTemplate>
+            </local:GenericChart.CategoryAxisTemplate>
+            
+            <local:GenericChart.LinearAxisTemplate>
+                <DataTemplate>
+                    <charting:LinearAxis
+                        Title="{Binding XAxisName, Mode=OneWay}"
+                        Foreground="White"
+                        FontSize="15"
+                        Orientation="X"
+                        Minimum="0"
+                        Interval="auto"
+                        Location="Bottom"
+                        HorizontalAlignment="Stretch"
+                        />
+                </DataTemplate>
+            </local:GenericChart.LinearAxisTemplate>
             
             <charting:Chart.Axes>
                 <charting:LinearAxis
-                        Title="Value"
+                        Title="{Binding YAxisName, Mode=OneWay}"
                         Foreground="White"
                         FontSize="15"
                         Orientation="Y"
                         Interval="auto"
                         VerticalAlignment="Stretch"
                         Minimum="0"
-                        ShowGridLines="True"/>
-
-                <charting:LinearAxis
-                        Title="Time"
-                        Foreground="White"
-                        FontSize="15"
-                        Orientation="X"
-                        Minimum="0"
-                        Interval="1"
-                        HorizontalAlignment="Stretch"
+                        ShowGridLines="True"
                         />
             </charting:Chart.Axes>
 
