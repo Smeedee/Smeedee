@@ -67,7 +67,7 @@
                             Click="crop_click" />
                     <Button Content="Reset"
                             Style="{StaticResource SettingsViewButton}"
-                            Click="reset_click"
+                            Command="{Binding OnReset}"
                             Margin="10,0,0,0" />
                 </StackPanel>
                 <StackPanel Grid.Row="4"

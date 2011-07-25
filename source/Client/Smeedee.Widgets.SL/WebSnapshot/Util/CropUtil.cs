@@ -1,7 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Shapes;
 
-namespace Smeedee.Widgets.WebSnapshot.Util
+namespace Smeedee.Widgets.SL.WebSnapshot.Util
 {
     public class CropUtil
     {
@@ -43,6 +44,11 @@ namespace Smeedee.Widgets.WebSnapshot.Util
                 }
             }
             return upperLeft;
+        }
+
+        public static bool OutsidePicture(Point position, Image img)
+        {
+            return position.Y > img.Height || position.X > img.Width || position.X < 0 || position.Y < 0;
         }
     }
 }
