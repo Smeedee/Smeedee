@@ -46,9 +46,6 @@ namespace Smeedee.Client.Web.MobileServices.BuildStatus
         {
             switch (status)
             {
-                case DomainModel.CI.BuildStatus.Building:
-                case DomainModel.CI.BuildStatus.Unknown:
-                    return "Unknown";
                 case DomainModel.CI.BuildStatus.FinishedSuccefully:
                     return "Working";
                 case DomainModel.CI.BuildStatus.FinishedWithFailure:
