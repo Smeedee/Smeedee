@@ -20,12 +20,22 @@ namespace Smeedee.Client.Web.MobileServices.BuildStatus
             var currentBuilds = GetAllCurrentBuilds();
             var allUsers = userdb == null ? new List<User>() : userdb.Users;
 
-            var formattedBuilds = currentBuilds.Select(build => new[]
-                                                                    {
-                                                                        build.Project.ProjectName, build.Trigger.InvokedBy, ConvertBuildStatusToMobileFormat(build.Status), build.FinishedTime.ToString("yyyyMMddHHmmss")
-                                                                    }).ToList();
+            var formattedBuilds = currentBuilds.Select(
+                build => new[]
+                            {
+                                build.Project.ProjectName, 
+                                GetNameFromUserList(build.Trigger.InvokedBy, allUsers), 
+                                ConvertBuildStatusToMobileFormat(build.Status), 
+                                build.FinishedTime.ToString("yyyyMMddHHmmss")
+                            }).ToList();
 
             Response.Write(Csv.ToCsv(formattedBuilds));
+        }
+
+        private static string GetNameFromUserList(string invokedBy, IEnumerable<User> allUsers)
+        {
+            var userData = allUsers.Single(u => u.Username == invokedBy);
+            return (userData != null) ? userData.Firstname + " " + userData.Surname : invokedBy;
         }
 
         private List<Build> GetAllCurrentBuilds()
