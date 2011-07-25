@@ -18,9 +18,10 @@ namespace Smeedee.Client.Web.MobileServices
         protected void Page_Load(object sender, EventArgs e)
         {
             var userdb = new UserdbDatabaseRepository().Get(new DefaultUserdbSpecification()).FirstOrDefault();
-
+            
+            var timeSpan = TimeSpan.FromDays(int.Parse(Request.QueryString["days"] ?? "30"));
             var allUsers = userdb == null ? new List<User>() : userdb.Users;
-            var changesets = GetChangsets(TimeSpan.FromDays(30));
+            var changesets = GetChangsets(timeSpan);
             var topCommitters = CalcTopCommitters(changesets, allUsers);
             Response.Write(Csv.ToCsv(topCommitters));
         }
