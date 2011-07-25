@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TopCommitters.aspx.cs" Inherits="Smeedee.Client.Web.MobileServices.TopCommitters" %>
