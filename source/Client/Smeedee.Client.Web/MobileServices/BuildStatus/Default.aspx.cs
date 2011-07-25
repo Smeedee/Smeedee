@@ -18,7 +18,7 @@ namespace Smeedee.Client.Web.MobileServices.BuildStatus
         {
             var userdb = new UserdbDatabaseRepository().Get(new DefaultUserdbSpecification()).FirstOrDefault();
             var currentBuilds = GetAllCurrentBuilds();
-            var allUsers = userdb == null ? new List<User>() : userdb.Users;
+            var allUsers = (userdb == null) ? new List<User>() : userdb.Users;
 
             var formattedBuilds = currentBuilds.Select(
                 build => new[]
@@ -38,7 +38,7 @@ namespace Smeedee.Client.Web.MobileServices.BuildStatus
             return (userData.Count() > 0) ? userData.First().Firstname + " " + userData.First().Surname : invokedBy;
         }
 
-        private List<Build> GetAllCurrentBuilds()
+        private static IEnumerable<Build> GetAllCurrentBuilds()
         {
             var buildRepo = new CIServerDatabaseRepository();
             var ciServers = buildRepo.Get(new AllSpecification<CIServer>());
@@ -49,7 +49,7 @@ namespace Smeedee.Client.Web.MobileServices.BuildStatus
                 projects.AddRange(server.Projects);
             }
 
-            return projects.Select(p => p.LatestBuild).ToList();
+            return projects.Select(p => p.LatestBuild);
         }
 
         private static string ConvertBuildStatusToMobileFormat(DomainModel.CI.BuildStatus status)
