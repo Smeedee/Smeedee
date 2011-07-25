@@ -141,6 +141,13 @@
     <Compile Include="MobileServices\TopCommitters\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MobileServices\WorkingDaysLeft\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MobileServices\WorkingDaysLeft\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChangesetRepositoryService.svc.cs">
       <DependentUpon>ChangesetRepositoryService.svc</DependentUpon>
@@ -227,6 +234,7 @@
     <Content Include="Log.aspx" />
     <Content Include="MobileServices\BuildStatus\Default.aspx" />
     <Content Include="MobileServices\TopCommitters\Default.aspx" />
+    <Content Include="MobileServices\WorkingDaysLeft\Default.aspx" />
     <Content Include="Services\ChangesetRepositoryService.svc" />
     <Content Include="Services\CIRepositoryService.svc" />
     <Content Include="Services\ConfigurationRepositoryService.svc" />
@@ -282,6 +290,10 @@
     <ProjectReference Include="..\..\Scheduler\Smeedee.Tasks.Framework\Smeedee.Tasks.Framework.csproj">
       <Project>{EB96EC6A-173A-4D65-A266-0E8F6776B394}</Project>
       <Name>Smeedee.Tasks.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Widget\Smeedee.Widget.ProjectInfo\Smeedee.Widget.ProjectInfo.csproj">
+      <Project>{8B63D9B3-7728-413A-94E6-167C30F1B429}</Project>
+      <Name>Smeedee.Widget.ProjectInfo</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
