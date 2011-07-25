@@ -22,7 +22,7 @@ namespace Smeedee.Client.Web.MobileServices.BuildStatus
 
             var formattedBuilds = currentBuilds.Select(build => new[]
                                                                     {
-                                                                        build.Project.ProjectName, build.Trigger.InvokedBy, ConvertBuildStatusToMobileFormat(build.Status), build.FinishedTime.ToString()
+                                                                        build.Project.ProjectName, build.Trigger.InvokedBy, ConvertBuildStatusToMobileFormat(build.Status), build.FinishedTime.ToString("yyyyMMddHHmmss")
                                                                     }).ToList();
 
             Response.Write(Csv.ToCsv(formattedBuilds));
