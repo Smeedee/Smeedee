@@ -21,35 +21,25 @@
     <Grid x:Name="LayoutRoot">
         <Border Style="{StaticResource SettingsViewBorder}">
             <Grid Style="{StaticResource SettingsViewGrid}"
-                  Height="600"
-                  Width="800">
+                  Margin="0,90,0,0"
+                  Height="500"
+                  Width="600">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="1.1*" />
+                    <RowDefinition Height=".9*" />
+                    <RowDefinition Height="9*" />
+                    <RowDefinition Height=".9*" />
+                    <RowDefinition Height=".9*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0"
                            Grid.Row="0"
                            Grid.ColumnSpan="2"
                            Style="{StaticResource SettingsViewH1}"
-                           Text="Configure WebSnapshot"
-                           Margin="0,0,0,27"
-                           Grid.RowSpan="2" />
+                           Text="Configure WebSnapshot" />
                 <ComboBox Grid.Row="1"
                           Grid.Column="0"
                           Grid.ColumnSpan="2"
@@ -57,27 +47,18 @@
                           Style="{StaticResource SettingsViewComboBox}"
                           ItemsSource="{Binding AvailableImages}"
                           SelectedItem="{Binding SelectedImage, Mode=TwoWay}" />
-
-                
                 <Canvas x:Name="canvas"
                         Grid.Row="2"
-                        Grid.RowSpan="10"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Height="600"
-                        Width="1000"
-                        VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-                          Background="Pink">
-                        <Image Name="image"
-                           Height="600"
-                           Width="1000"
+                        Background="Transparent">
+                    <Image Name="image"
+                           Width="600"
+                           Height="350"
                            Stretch="Uniform"
-                               Source="{Binding Image, Mode=TwoWay}" />
-                    </Canvas>
-                
-                
-                <StackPanel Grid.Row="12"
+                           Source="{Binding Image, Mode=TwoWay}" />
+                </Canvas>
+                <StackPanel Grid.Row="3"
                             Grid.Column="0"
                             HorizontalAlignment="Left"
                             Style="{StaticResource SettingsViewControlButtonsWrapper}">
@@ -89,7 +70,7 @@
                             Click="reset_click"
                             Margin="10,0,0,0" />
                 </StackPanel>
-                <StackPanel Grid.Row="13"
+                <StackPanel Grid.Row="4"
                             Grid.Column="1"
                             Style="{StaticResource SettingsViewControlButtonsWrapper}">
                     <Button Style="{StaticResource SettingsViewSaveButton}"
