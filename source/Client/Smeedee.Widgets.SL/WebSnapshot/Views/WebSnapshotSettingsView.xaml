@@ -57,33 +57,31 @@
                           Style="{StaticResource SettingsViewComboBox}"
                           ItemsSource="{Binding AvailableImages}"
                           SelectedItem="{Binding SelectedImage, Mode=TwoWay}" />
-                <!--<TextBox Grid.Row="1"
-                         Grid.Column="0"
-                         Grid.ColumnSpan="2"
-                         Width="600"
-                         Text="{Binding SelectedImage}" />-->
 
-                <ScrollViewer Grid.Row="2"
-                              Grid.RowSpan="10"
-                              Grid.Column="0"
-                              Grid.ColumnSpan="2"
-                              Height="600"
-                              Width="600"
-                              HorizontalScrollBarVisibility="Visible"
-                              VerticalScrollBarVisibility="Visible">
-                    <Canvas x:Name="canvas"
-                            Background="Transparent">
-                        <!--MouseLeftButtonDown="canvas_MouseLeftButtonDown"-->
-                    <Image Name="image"
-                           Stretch="Fill"
-                           Source="{Binding Image, Mode=TwoWay}" />
+                
+                <Canvas x:Name="canvas"
+                        Grid.Row="2"
+                        Grid.RowSpan="10"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Height="600"
+                        Width="1000"
+                        VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+                          Background="Pink">
+                        <Image Name="image"
+                           Height="600"
+                           Width="1000"
+                           Stretch="Uniform"
+                               Source="{Binding Image, Mode=TwoWay}" />
                     </Canvas>
-                </ScrollViewer>
+                
+                
                 <StackPanel Grid.Row="12"
                             Grid.Column="0"
                             HorizontalAlignment="Left"
                             Style="{StaticResource SettingsViewControlButtonsWrapper}">
-                    <Button Content="Crop"                            
+                    <Button Content="Crop"
                             Style="{StaticResource SettingsViewButton}"
                             Click="crop_click" />
                     <Button Content="Reset"
