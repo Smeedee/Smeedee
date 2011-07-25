@@ -13,15 +13,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Save">
-      <soap:operation soapAction="http://smeedee.org/WebSnapshotRepositoryService/Save" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="WebSnapshotRepositoryService">
     <wsdl:port name="BasicHttpBinding_WebSnapshotRepositoryService" binding="tns:BasicHttpBinding_WebSnapshotRepositoryService">

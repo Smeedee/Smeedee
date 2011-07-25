@@ -4,8 +4,8 @@
     <xsd:schema targetNamespace="http://smeedee.org/Imports">
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd3" namespace="http://smeedee.org" />
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.WebSnapshot" />
-      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.WebSnapshot" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="WebSnapshotRepositoryService_Get_InputMessage">
@@ -14,20 +14,10 @@
   <wsdl:message name="WebSnapshotRepositoryService_Get_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetResponse" />
   </wsdl:message>
-  <wsdl:message name="WebSnapshotRepositoryService_Save_InputMessage">
-    <wsdl:part name="parameters" element="tns:Save" />
-  </wsdl:message>
-  <wsdl:message name="WebSnapshotRepositoryService_Save_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SaveResponse" />
-  </wsdl:message>
   <wsdl:portType name="WebSnapshotRepositoryService">
     <wsdl:operation name="Get">
       <wsdl:input wsaw:Action="http://smeedee.org/WebSnapshotRepositoryService/Get" message="tns:WebSnapshotRepositoryService_Get_InputMessage" />
       <wsdl:output wsaw:Action="http://smeedee.org/WebSnapshotRepositoryService/GetResponse" message="tns:WebSnapshotRepositoryService_Get_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="Save">
-      <wsdl:input wsaw:Action="http://smeedee.org/WebSnapshotRepositoryService/Save" message="tns:WebSnapshotRepositoryService_Save_InputMessage" />
-      <wsdl:output wsaw:Action="http://smeedee.org/WebSnapshotRepositoryService/SaveResponse" message="tns:WebSnapshotRepositoryService_Save_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>
