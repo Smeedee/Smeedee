@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Media.Imaging;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
@@ -17,7 +12,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
 
         protected When picture_is_loaded = () =>
                                                {
-                                                   viewmodel.Snapshot = "somePicture.jpg";
+                                                   //viewmodel.Snapshot = "somePicture.jpg";
                                                };
 
         [SetUp]

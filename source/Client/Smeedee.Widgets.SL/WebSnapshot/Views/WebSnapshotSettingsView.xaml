@@ -68,6 +68,7 @@
                     <Button Content="Reset"
                             Style="{StaticResource SettingsViewButton}"
                             Command="{Binding OnReset}"
+                            Click="Button_Click"
                             Margin="10,0,0,0" />
                 </StackPanel>
                 <StackPanel Grid.Row="4"
