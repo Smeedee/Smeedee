@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Windows.Media.Imaging;
+using NUnit.Framework;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
@@ -12,7 +14,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
 
         protected When picture_is_loaded = () =>
                                                {
-                                                   //viewmodel.Snapshot = "somePicture.jpg";
+                                                   viewmodel.Snapshot = new WriteableBitmap(new BitmapImage(new Uri("http://my.pic/somePicture.jpg")));
                                                };
 
         [SetUp]
