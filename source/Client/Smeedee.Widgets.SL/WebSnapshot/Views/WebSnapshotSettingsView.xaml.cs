@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Smeedee.Widgets.WebSnapshot.Util;
+using Smeedee.Widgets.SL.WebSnapshot.Util;
 
 
 namespace Smeedee.Widgets.SL.WebSnapshot.Views
@@ -31,7 +31,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             MousePress.X = point.X;
             MousePress.Y = point.Y;
 
-            if (OutsidePicture(point)) return;
+            if (CropUtil.OutsidePicture(point, image)) return;
             
             rect = new Rectangle();
             origPoint = e.GetPosition(canvas);
@@ -44,11 +44,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
             canvas.MouseMove += canvas_MouseMove;
             canvas.MouseLeftButtonUp += canvas_MouseLeftButtonUp;
-        }
-
-        private bool OutsidePicture(Point position)
-        {
-            return position.Y > image.Height || position.X > image.Width || position.X < 0 || position.Y < 0;
         }
 
         void canvas_MouseMove(object sender, MouseEventArgs e)
@@ -116,11 +111,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         private double NegativeNumber(double number)
         {
             return -Math.Abs(number);
-        }
-
-        private void reset_click(object sender, RoutedEventArgs e)
-        {
-            // Update Image.Source with Image property
         }
     }
 }

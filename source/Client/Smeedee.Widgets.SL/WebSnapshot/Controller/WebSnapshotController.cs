@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
@@ -47,12 +48,23 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
             this.asyncClient = asyncClient;
+            webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
+
 
             Start();
             LoadData();
         }
 
-        protected void LoadData()
+        private void OnReset()
+        {
+            uiInvoker.Invoke(() =>
+                                 {
+                                     //TODO Get SelectedImage and set it as Image
+                                     webSnapshotSettingsViewModel.Image = new BitmapImage(new Uri("http://commentisfree.guardian.co.uk/strawberry.jpg"));
+                                 });
+        }
+
+	protected void LoadData()
         {
             LoadData(new WebSnapshotSpecification());
         }
