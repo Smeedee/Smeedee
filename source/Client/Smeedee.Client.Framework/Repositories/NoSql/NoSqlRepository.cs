@@ -21,8 +21,15 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
 {
     public interface INoSqlRepository
     {
+        [Obsolete]
         void GetDatabases(Action<Collection> callback);
+
+        void GetDatabases(Action<Collection> callback, Action<Exception> onError);
+
+        [Obsolete]
         void GetDocuments(string database, string collection, Action<Collection> callback);
+
+        void GetDocuments(string database, string collection, Action<Collection> callback, Action<Exception> onError);
     }
 
     public class NoSqlRepository : INoSqlRepository
