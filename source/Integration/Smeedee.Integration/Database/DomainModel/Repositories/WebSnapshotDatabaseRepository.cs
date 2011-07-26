@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.WebSnapshot;
 
 namespace Smeedee.Integration.Database.DomainModel.Repositories
@@ -12,7 +13,8 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
         public WebSnapshotDatabaseRepository(ISessionFactory sessionFactory)
             : base(sessionFactory)
         {
-            
+            ILog logger = new Logger(new LogEntryDatabaseRepository(sessionFactory));
+            logger.WriteEntry(new LogEntry("websnapshotdatabaserepository", "Constructor is called"));
         }
     }
 }

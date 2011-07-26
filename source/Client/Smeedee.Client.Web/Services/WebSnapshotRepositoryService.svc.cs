@@ -11,6 +11,7 @@ namespace Smeedee.Client.Web.Services
 {
     [ServiceContract(Namespace = "http://smeedee.org")]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [ServiceKnownType(typeof(Specification<WebSnapshot>))]
     [ServiceKnownType(typeof(WebSnapshotSpecification))]
     public class WebSnapshotRepositoryService
     {

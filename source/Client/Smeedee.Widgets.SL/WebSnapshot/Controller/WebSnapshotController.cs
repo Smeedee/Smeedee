@@ -41,6 +41,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             Guard.Requires<ArgumentNullException>(webSnapshotViewModel != null);
             Guard.Requires<ArgumentNullException>(webSnapshotSettingsViewModel != null);
             Guard.Requires<ArgumentNullException>(configuration != null);
+            //Guard.Requires<ArgumentNullException>(repository != null);
+
 
             config = configuration;
             this.webSnapshotViewModel = webSnapshotViewModel;
@@ -79,9 +81,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void LoadDataSync(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
         {
-            logger.WriteEntry(new LogEntry("WebSnapshotController", "LoadData() called"));
             SetIsLoadingData();
-            logger.WriteEntry(new LogEntry("SetIsLoadingData", "Is loading was set"));
             var snapshot = QuerySnapshot(specification);
             logger.WriteEntry(new LogEntry("Snapshot", "I got the snapshot" + snapshot.ToString()));
 
@@ -111,13 +111,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         protected IEnumerable<DomainModel.WebSnapshot.WebSnapshot> QuerySnapshot(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
         {
-            logger.WriteEntry(new LogEntry("QuerySnapshots", "QuerySnapshots is called"));
             IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshot = null;
             try
             {
-                logger.WriteEntry(new LogEntry("QuerySnapshots", "I'm in your try"));
+                logger.WriteEntry(new LogEntry("QuerySnapshot", "QuerySnapshot called, im in teh try"));
+                logger.WriteEntry(new LogEntry("QuerySnapshot", "the repo is lame "+repository));
                 snapshot = repository.Get(specification);
-                logger.WriteEntry(new LogEntry("QuerySnapshots", "I nao haz snappy"));
+                logger.WriteEntry(new LogEntry("schnappy", "I got the snapshot"));
                 ViewModel.HasConnectionProblems = false;
             }
             catch (Exception e)
