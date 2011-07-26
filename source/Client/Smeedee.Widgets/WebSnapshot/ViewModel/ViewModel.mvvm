@@ -20,4 +20,4 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		
 	viewmodel WebSnapshotViewModel extends AbstractViewModel:
 		oproperty Snapshot as WriteableBitmap
-		oproperty HasStoredImage as bool	
+		oproperty HasStoredImage as bool

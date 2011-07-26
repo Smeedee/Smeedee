@@ -155,5 +155,35 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             ResetImage();
         }
 
+        private void CropCeption()
+        {
+            if (previousPoints == null) return;
+            ResetImage();
+            var length = previousPoints.Count;
+
+            Point point = new Point(0, 0);
+
+            for (int i = 0; i < length; i++)
+            {
+                var prevPoint = previousPoints.Dequeue();
+
+                point.X += prevPoint.X;
+                point.Y += prevPoint.Y;
+            }
+            var rectang = previousRect.Pop();
+            WriteableBitmap wb = CropPicture(point, rectang);
+             //string.Format("X:{0} Y:{1} Height:{2} Width:{3}", point.X, point.Y,rectang.Height, rectang.Width);
+
+
+            SetImage(wb);
+
+
+            wb = null;
+            rectang = null;
+            rect = null;
+            previousRect = null;
+            previousPoints = null;
+        }
+
     }
 }

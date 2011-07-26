@@ -19,7 +19,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             [Test]
             public void Then_assure_it_has_a_save_command()
             {
-                webSnapshotSettingsViewModel.SaveSettings.ShouldNotBeNull();
+                webSnapshotSettingsViewModel.Save.ShouldNotBeNull();
             }
         }
 

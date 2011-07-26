@@ -18,6 +18,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
     {
         private WebSnapshotViewModel webSnapshotViewModel;
         private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private Configuration config;
         private IRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient;
@@ -33,6 +34,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             ILog logger,
             IUIInvoker uiInvoker,
             IProgressbar loadingNotifier,
+            IPersistDomainModelsAsync<Configuration> configPersister,
             IRepository<DomainModel.WebSnapshot.WebSnapshot> repository
             )
             : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
@@ -42,11 +44,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             Guard.Requires<ArgumentNullException>(configuration != null);
 
             config = configuration;
+            this.configPersisterRepository = configPersister;
             this.webSnapshotViewModel = webSnapshotViewModel;
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
             this.asyncClient = asyncClient;
+            webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
             webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
 
 
@@ -54,18 +58,26 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             LoadData();
         }
 
+        private void OnSave()
+        {
+            
+
+            //configPersisterRepository.Save(config);
+            
+        }
+
         private void OnReset()
         {
             uiInvoker.Invoke(() =>
                                  {
-                                     //TODO Get SelectedImage and set it as Image
+                                     //TODO Get(SelectedImage) and set it as Image
                                      webSnapshotSettingsViewModel.Image =
                                          GenerateWriteableBitmap(
                                              "http://www.dvo.com/newsletter/monthly/2007/september/images/strawberry.jpg");
                                  });
         }
 
-        private WriteableBitmap GenerateWriteableBitmap(Uri path)
+        private WriteableBitmap GenerateWriteableBitmap(string path)
         {
             var uri = new Uri(path);
             var bmi = new BitmapImage(uri);
@@ -158,7 +170,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void SetWebSnapshot(string imagePath)
         {
-            //webSnapshotViewModel.Snapshot = imagePath;
+            webSnapshotViewModel.Snapshot = GenerateWriteableBitmap(imagePath);
             webSnapshotViewModel.HasStoredImage = imagePath != null;
         }
 
