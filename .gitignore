@@ -1,0 +1,12 @@
+ClientBin
+bin
+obj
+test-results
+*.userprefs
+*.pidb
+*.suo
+*ReSharper*
+*.user
+*.resources
+*.vsmdi
+*.testsettings
