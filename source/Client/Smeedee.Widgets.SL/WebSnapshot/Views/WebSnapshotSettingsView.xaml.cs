@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,13 +16,19 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         public WebSnapshotSettingsView()
         {
             InitializeComponent();
+
+
+            previousPoints = new Queue<Point>();
+            previousRect = new Stack<Rectangle>();
             canvas.MouseLeftButtonDown += canvas_MouseLeftButtonDown;
         }
 
         private Point MousePress;
         private Point MouseRelease;
-        private  Point origPoint;
+        private Point origPoint;
         private Rectangle rect;
+        private Queue<Point> previousPoints;
+        private Stack<Rectangle> previousRect;
 
         void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -32,7 +39,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             MousePress.Y = point.Y;
 
             if (CropUtil.OutsidePicture(point, image)) return;
-            
+
             rect = new Rectangle();
             origPoint = e.GetPosition(canvas);
             Canvas.SetLeft(rect, origPoint.X);
@@ -89,28 +96,64 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         private void crop_click(object sender, RoutedEventArgs e)
         {
-            WriteableBitmap wb = new WriteableBitmap(Convert.ToInt32(rect.Width), Convert.ToInt32(rect.Height));
-
+            // Crop
             Point upperleftpoint = CropUtil.GetUpperLeftCornerInRectangel(MousePress, MouseRelease, rect);
 
-            TranslateTransform t = new TranslateTransform();
-            t.X = NegativeNumber(upperleftpoint.X);
-            t.Y = NegativeNumber(upperleftpoint.Y);
+            previousPoints.Enqueue(upperleftpoint);
+            previousRect.Push(rect);
+
+            var img = CropPicture(upperleftpoint, rect);
+
+            SetImage(img);
+        }
+
+
+        private WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle)
+        {
+
+            WriteableBitmap wb = null;
+            try
+            {
+                wb = new WriteableBitmap(Convert.ToInt32(rectangle.Width), Convert.ToInt32(rectangle.Height));
+            }
+            catch (Exception)
+            {
+                // todo write log entry ?
+            }
+            var t = new TranslateTransform();
+            t.X = CropUtil.NegativeNumber(upperleftpoint.X);
+            t.Y = CropUtil.NegativeNumber(upperleftpoint.Y);
 
             //Draw to Writable Bitmap
             wb.Render(image, t);
             wb.Invalidate();
 
-            canvas.Children.Clear();
-            canvas.Children.Add(image);
-
-            //Finally set the Image back on to the canvas
             image.Source = wb;
+
+            return wb;
         }
 
-        private double NegativeNumber(double number)
+        private void SetImage(WriteableBitmap img)
         {
-            return -Math.Abs(number);
+            ResetImage();
+            image.Source = img;
         }
+        private void ResetImage()
+        {
+
+            image.Clip = null;
+            canvas.Children.Clear();
+
+            //var uri = new Uri(@"http://www.newfreeware.com/img/scr/7-1013.jpg");
+            //image.Source = new BitmapImage(uri);
+            //canvas.Children.Add(image);
+            //rect = null;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ResetImage();
+        }
+
     }
 }
