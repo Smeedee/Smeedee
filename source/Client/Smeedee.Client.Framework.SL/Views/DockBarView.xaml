@@ -8,7 +8,7 @@
 	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
 	xmlns:Smeedee_Client_SL_Views="clr-namespace:Smeedee.Client.Framework.SL.Views;assembly=Smeedee.Client.Framework.SL" mc:Ignorable="d"
 	x:Class="Smeedee.Client.Framework.SL.Views.DockBarView"
-	d:DesignWidth="300" d:DesignHeight="40" Height="40" Width="300">
+	d:DesignWidth="350" d:DesignHeight="40" Height="40" Width="350">
 	<UserControl.Resources>
 		<ItemsPanelTemplate x:Key="DockBarLayout">
 			<StackPanel Orientation="Horizontal"/>

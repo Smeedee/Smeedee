@@ -91,7 +91,7 @@
                            Height="40" Margin="0,-40,0,0" 
                            VerticalAlignment="Top" 
                            RenderTransformOrigin="0.5,0.5"
-                           DataContext="{Binding DockBar}" HorizontalAlignment="Center" Width="300">
+                           DataContext="{Binding DockBar}" HorizontalAlignment="Center" Width="350">
             <Views:DockBarView.Effect>
                 <DropShadowEffect Color="#FF3B3B3B" ShadowDepth="3"/>
             </Views:DockBarView.Effect>
