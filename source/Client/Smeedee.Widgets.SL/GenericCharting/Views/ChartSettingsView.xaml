@@ -20,33 +20,31 @@
 
     <Grid x:Name="LayoutRoot" >
         <Border Style="{StaticResource SettingsViewBorder}">
-            <Grid Style="{StaticResource SettingsViewGrid}" Height="500" Width="600">
+            <Grid Style="{StaticResource SettingsViewGrid}" 
+                  Height="500" 
+                  Width="600"
+                  Margin="0,90,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="1.2*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="5.5*" />
+                    <RowDefinition Height=".8*" />
+                    <RowDefinition Height=".8*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.ColumnSpan="2"
+                <TextBlock Grid.Row="0"
+                    Grid.ColumnSpan="2"
                     Style="{StaticResource SettingsViewH1}" 
-                    Text="Configure Generic Charting" 
-                    Margin="0,0,0,27" 
-                    Grid.RowSpan="2" />
+                    Text="Configure Generic Charting" />
 
                 <TextBlock 
                     Grid.Row="1" 
@@ -106,7 +104,6 @@
                     Grid.Column="0"
                     Grid.Row="5" 
                     Grid.ColumnSpan="2"
-                    Grid.RowSpan="5"
                     Width="600">
                     <Controls:DataGrid.Columns>
                         <Controls:DataGridTemplateColumn
@@ -158,12 +155,12 @@
 
 
                 <StackPanel Grid.Column="0"
-                            Grid.Row="10">
+                            Grid.Row="6">
                     <TextBlock Text="*Fill in custom legend"
                                FontSize="12" />
                 </StackPanel>
                 <StackPanel Grid.Column="0"
-                            Grid.Row="11"
+                            Grid.Row="7"
                             Orientation="Horizontal">
                     <TextBlock Style="{StaticResource SettingsViewText}"
                                Text="Database:"
@@ -177,7 +174,7 @@
                     <StackPanel
 					Grid.Column="0" 
                     Grid.ColumnSpan="2"
-                    Grid.Row="12"
+                    Grid.Row="8"
 					Orientation="Horizontal">
                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                               ItemsSource="{Binding Databases}"
@@ -195,7 +192,7 @@
                     
                 </StackPanel>
                 <StackPanel
-					Grid.Row="13"
+					Grid.Row="9"
 					Grid.Column="1"
 					Style="{StaticResource SettingsViewControlButtonsWrapper}" >
                     <Button
