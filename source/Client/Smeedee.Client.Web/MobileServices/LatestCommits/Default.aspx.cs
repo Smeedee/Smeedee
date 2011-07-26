@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Smeedee.Client.Web.Framework;
+using Smeedee.DomainModel.Framework;
+using Smeedee.DomainModel.SourceControl;
+using Smeedee.Integration.Database.DomainModel.Repositories;
+
+namespace Smeedee.Client.Web.MobileServices.LatestCommits
+{
+    public partial class Default : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            var changesets = GetAllChangesets().OrderByDescending(c => c.Revision);
+            var revision = long.Parse(Request.QueryString["revision"] ?? "" + changesets.First().Revision);
+            var selectedChangesets = changesets.Where(c => c.Revision <= revision).Take(10);
+            Response.Write(Serialize(selectedChangesets));
+        }
+
+        private IEnumerable<Changeset> GetAllChangesets()
+        {
+            var spec = new AllSpecification<Changeset>();
+            return new ChangesetDatabaseRepository().Get(spec);
+        }
+
+        private string Serialize(IEnumerable<Changeset> selectedChangesets)
+        {
+            var asStrings = selectedChangesets.Select(c => new[] { c.Comment, c.Time.ToString(), c.Author.Username });
+            return Csv.ToCsv(asStrings);
+        }
+    }
+}

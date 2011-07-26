@@ -130,8 +130,6 @@ namespace Smeedee.DomainModel.SourceControl
 
             return a.Revision != b.Revision;
         }
-
-        
     }
 
     public class ChangesetsNotMoreThanNumberSpecification : Specification<Changeset>
