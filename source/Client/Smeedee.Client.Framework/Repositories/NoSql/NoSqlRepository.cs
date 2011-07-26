@@ -40,22 +40,36 @@ namespace Smeedee.Client.Framework.Repositories.NoSql
         }
 
 
+        [Obsolete]
         public void GetDatabases(Action<Collection> callback)
+        {
+            GetDatabases(callback, null);
+        }
+
+        public void GetDatabases(Action<Collection> callback, Action<Exception> onError)
         {
             downloadStringService.DownloadAsync(new Uri(databasesUrl, UriKind.Relative), json =>
             {
                 Collection databases = Collection.Parse(json);
                 callback(databases);
-            });
+            },
+            exception => { if (onError != null) onError(exception); });
         }
 
+        [Obsolete]
         public void GetDocuments(string database, string collection, Action<Collection> callback)
+        {
+            GetDocuments(database, collection, callback, null);
+        }
+
+        public void GetDocuments(string database, string collection, Action<Collection> callback, Action<Exception> onError)
         {
             downloadStringService.DownloadAsync(Url(database, collection), json =>
             {
                 Collection documents = Collection.Parse(json);
                 callback(documents);
-            });
+            },
+            exception => { if (onError != null) onError(exception); });
         }
 
         private Uri Url(string database, string collection)
