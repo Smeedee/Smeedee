@@ -9,12 +9,18 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.Widget.Admin.MobileServices.SL.Views;
 
 namespace Smeedee.Widget.Admin.MobileServices.SL
 {
     [WidgetInfo(Name = "Remote Services Administration")]
     public class MobileServicesAdminWidget : Client.Framework.ViewModel.Widget
     {
+        public MobileServicesAdminWidget()
+        {
+            Title = "Remote Services Administration";
 
+            View = new RemoteServicesAdminView();
+        }
     }
 }
