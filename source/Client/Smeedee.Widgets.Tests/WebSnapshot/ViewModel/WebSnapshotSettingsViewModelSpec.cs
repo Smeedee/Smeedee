@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
+using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
@@ -18,12 +19,12 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             [Test]
             public void Then_assure_it_has_a_save_command()
             {
-                webSnapshotSettingsViewModel.SaveSettings.ShouldNotBeNull();
+                webSnapshotSettingsViewModel.Save.ShouldNotBeNull();
             }
         }
 
 
-        public class Shared
+        public class Shared : ScenarioClass
         {
             protected WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
             protected const string ERROR_MESSAGE = "Invalid URL!";
@@ -33,6 +34,12 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             public void Setup()
             {
                 webSnapshotSettingsViewModel = new WebSnapshotSettingsViewModel();
+            }
+
+            [TearDown]
+            public void TearDown()
+            {
+                StartScenario();
             }
 
         }

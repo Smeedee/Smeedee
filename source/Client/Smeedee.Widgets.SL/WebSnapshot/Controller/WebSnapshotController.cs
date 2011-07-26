@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows.Media.Imaging;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
@@ -20,6 +18,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
     {
         private WebSnapshotViewModel webSnapshotViewModel;
         private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private Configuration config;
         private IRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient;
@@ -27,16 +26,18 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
 
         public WebSnapshotController(
-            WebSnapshotViewModel webSnapshotViewModel, 
+            WebSnapshotViewModel webSnapshotViewModel,
             WebSnapshotSettingsViewModel webSnapshotSettingsViewModel,
             Configuration configuration,
             IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient,
-            ITimer timer,   
+            ITimer timer,
             ILog logger,
             IUIInvoker uiInvoker,
             IProgressbar loadingNotifier,
+            IPersistDomainModelsAsync<Configuration> configPersister,
             IRepository<DomainModel.WebSnapshot.WebSnapshot> repository
-            ) : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
+            )
+            : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
             Guard.Requires<ArgumentNullException>(webSnapshotViewModel != null);
             Guard.Requires<ArgumentNullException>(webSnapshotSettingsViewModel != null);
@@ -45,11 +46,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
 
             config = configuration;
+            this.configPersisterRepository = configPersister;
             this.webSnapshotViewModel = webSnapshotViewModel;
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
             this.asyncClient = asyncClient;
+            webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
             webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
 
 
@@ -57,16 +60,34 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             LoadData();
         }
 
+        private void OnSave()
+        {
+            
+
+            //configPersisterRepository.Save(config);
+            
+        }
+
         private void OnReset()
         {
             uiInvoker.Invoke(() =>
                                  {
-                                     //TODO Get SelectedImage and set it as Image
-                                     webSnapshotSettingsViewModel.Image = new BitmapImage(new Uri("http://commentisfree.guardian.co.uk/strawberry.jpg"));
+                                     //TODO Get(SelectedImage) and set it as Image
+                                     webSnapshotSettingsViewModel.Image =
+                                         GenerateWriteableBitmap(
+                                             "http://www.dvo.com/newsletter/monthly/2007/september/images/strawberry.jpg");
                                  });
         }
 
-	protected void LoadData()
+        private WriteableBitmap GenerateWriteableBitmap(string path)
+        {
+            var uri = new Uri(path);
+            var bmi = new BitmapImage(uri);
+            var wb = new WriteableBitmap(bmi);
+            return wb;
+        }
+
+        protected void LoadData()
         {
             LoadData(new WebSnapshotSpecification());
         }
@@ -87,7 +108,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
             uiInvoker.Invoke(() =>
                                  {
-                                    
+
                                      try
                                      {
                                          //logger.WriteEntry(new LogEntry("WebSnapshotController", "Tries to get snapshot from repository"));
@@ -96,7 +117,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                                          //var snapshot = repository.Get(new WebSnapshotSpecification());
                                          //logger.WriteEntry(new LogEntry("repository", "repository is lame "+repository.GetType() + " - " + repository.ToString()));
                                          //var snapshot = repository.Get(specification);
-                                         
+
                                          UpdateViewModel(snapshot);
                                      }
                                      catch (Exception e)
@@ -131,25 +152,25 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
         {
-            logger.WriteEntry(new LogEntry("UpdateViewModel" , "UpdateViewModel called"));
-           if (snapshots.Count() > 0)
-           {
-               var snapshot = snapshots.First();
-               uiInvoker.Invoke(() =>
-                                    {
-                                        var snapshotPath = snapshot.PictureFilePath;
-                                        SetWebSnapshot(snapshotPath);
-                                    });
-           }
+            logger.WriteEntry(new LogEntry("UpdateViewModel", "UpdateViewModel called"));
+            if (snapshots.Count() > 0)
+            {
+                var snapshot = snapshots.First();
+                uiInvoker.Invoke(() =>
+                                     {
+                                         var snapshotPath = snapshot.PictureFilePath;
+                                         SetWebSnapshot(snapshotPath);
+                                     });
+            }
             else
-           {
-               uiInvoker.Invoke( () => webSnapshotViewModel.HasStoredImage = false);
-           }
+            {
+                uiInvoker.Invoke(() => webSnapshotViewModel.HasStoredImage = false);
+            }
         }
 
         private void SetWebSnapshot(string imagePath)
         {
-            webSnapshotViewModel.Snapshot = imagePath;
+            webSnapshotViewModel.Snapshot = GenerateWriteableBitmap(imagePath);
             webSnapshotViewModel.HasStoredImage = imagePath != null;
         }
 

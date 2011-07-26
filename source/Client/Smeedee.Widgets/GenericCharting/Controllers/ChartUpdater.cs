@@ -37,8 +37,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         {
             if (ChartConfig.IsValid)
             {
-                DownloadData();
                 HideErrorMessage();
+                DownloadData();
             }
             else
             {

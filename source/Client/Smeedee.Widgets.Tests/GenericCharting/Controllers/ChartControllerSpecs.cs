@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Moq;
 using NUnit.Framework;
+using Newtonsoft.Json.Serialization;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
@@ -12,6 +13,7 @@ using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.NoSql;
 using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
@@ -84,7 +86,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Then_null_configPersisterArgs_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as configuration", () => configuration = null);
                 When("creating new controller with null as configPersister", () => configPersisterFake = null);
                 Then("an ArgumentNullException should be thrown",
                      () =>
@@ -95,12 +96,22 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Then_null_configuration_should_return_exception()
             {
                 Given("");
-                When("creating new controller with null as configRepo", () => configPersisterFake = null);
                 When("creating new controller with null as configuration", () => configuration = null);
                 Then("an ArgumentNullException should be thrown",
                      () =>
                      this.ShouldThrowException<ArgumentNullException>(CreateController));
             }
+
+            [Test]
+            public void Then_null_logger_should_return_exception()
+            {
+                Given("");
+                When("creating new controller with null logger", () => loggerFake = null);
+                Then("an ArgumentNullException should be thrown",
+                     () =>
+                     this.ShouldThrowException<ArgumentNullException>(CreateController));
+            }
+
         }
 
         [TestFixture]
@@ -535,6 +546,39 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             private When action_is_changed_to_remove = () => controller.SettingsViewModel.SeriesConfig[0].Action = ChartConfig.REMOVE;
         }
 
+        [TestFixture]
+        public class When_error_occurs_loading_charting_data : Shared
+        {
+            [Test]
+            public void Then_error_message_should_be_shown_in_view()
+            {
+                Given(the_controller_has_been_created).
+                    And("not showing error message", () => controller.ViewModel.ShowErrorMessageInsteadOfChart = false);
+                When(error_event_is_raised);
+                Then("view should show message", () =>
+                                                     {
+                                                         controller.ViewModel.ErrorMessage.ShouldBe("Some message");
+                                                         controller.ViewModel.ShowErrorMessageInsteadOfChart.ShouldBe(true);
+                                                     });
+            }
+
+            [Test]
+            public void Then_error_should_be_logged()
+            {
+                Given(the_controller_has_been_created);
+                When(error_event_is_raised);
+                Then("Verify that logger has been called", () => loggerFake.Verify(l => l.WriteEntry(It.IsAny<LogEntry>())));
+            }
+
+
+            private When error_event_is_raised = () => RaiseErrorEvent("Some message");
+
+            private static void RaiseErrorEvent(string message)
+            {
+                storageReaderFake.Raise(e => e.Error += null, new ChartErrorEventArgs(message, new Exception()));
+            }
+        }
+
         public class Shared : ScenarioClass
         {
             protected static ChartController controller;
@@ -546,6 +590,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static Mock<IProgressbar> loadingNotifierFake;
             protected static Mock<IChartStorageReader> storageReaderFake;
             protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterFake;
+            protected static Mock<ILog> loggerFake;
             protected static Configuration configuration;
 
             protected static Configuration AConfiguration()
@@ -579,6 +624,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 return configPersisterFake != null ? configPersisterFake.Object : null;
             }
 
+            protected static ILog GetLogger()
+            {
+                return loggerFake != null ? loggerFake.Object : null;
+            }
            
 
             protected Context the_controller_has_been_created = CreateController;
@@ -644,7 +693,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static void CreateController()
             {
                 controller = new ChartController
-                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigPersister());
+                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigPersister(), GetLogger());
             }
 
             protected static void StorageReaderLoadChartReturns(Chart chart)
@@ -663,6 +712,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 timerFake = new Mock<ITimer>();
                 uIInvoker = new NoUIInvokation();
                 loadingNotifierFake = new Mock<IProgressbar>();
+                loggerFake = new Mock<ILog>();
                 
                 storageReaderFake = new Mock<IChartStorageReader>();
                 storageReaderFake.Setup(s => s.RefreshDatasources()).Raises(s => s.DatasourcesRefreshed += null, EventArgs.Empty);
