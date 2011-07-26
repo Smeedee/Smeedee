@@ -146,8 +146,8 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
             //var uri = new Uri(@"http://www.newfreeware.com/img/scr/7-1013.jpg");
             //image.Source = new BitmapImage(uri);
-            //canvas.Children.Add(image);
-            //rect = null;
+            canvas.Children.Add(image);
+            rect = null;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
@@ -14,7 +9,6 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.WebSnapshot;
 using Smeedee.Framework;
-using Smeedee.Widgets.SL.WebSnapshot.Util;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
 using TinyMVVM.Framework.Services;
 
@@ -64,12 +58,19 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             uiInvoker.Invoke(() =>
                                  {
-
-                                 
-
                                      //TODO Get SelectedImage and set it as Image
-                                     webSnapshotSettingsViewModel.Image = new BitmapImage(new Uri("http://www.dvo.com/newsletter/monthly/2007/september/images/strawberry.jpg"));
+                                     webSnapshotSettingsViewModel.Image =
+                                         GenerateWriteableBitmap(
+                                             "http://www.dvo.com/newsletter/monthly/2007/september/images/strawberry.jpg");
                                  });
+        }
+
+        private WriteableBitmap GenerateWriteableBitmap(Uri path)
+        {
+            var uri = new Uri(path);
+            var bmi = new BitmapImage(uri);
+            var wb = new WriteableBitmap(bmi);
+            return wb;
         }
 
         protected void LoadData()
@@ -157,7 +158,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void SetWebSnapshot(string imagePath)
         {
-            webSnapshotViewModel.Snapshot = imagePath;
+            //webSnapshotViewModel.Snapshot = imagePath;
             webSnapshotViewModel.HasStoredImage = imagePath != null;
         }
 
