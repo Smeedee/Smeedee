@@ -29,7 +29,7 @@ namespace Smeedee.Client.Web.MobileServices.LatestCommits
 
         private string Serialize(IEnumerable<Changeset> selectedChangesets)
         {
-            var asStrings = selectedChangesets.Select(c => new[] { c.Comment, c.Time.ToString(), c.Author.Username });
+            var asStrings = selectedChangesets.Select(c => new[] { c.Comment, c.Time.ToString(), c.Author.Username, c.Revision.ToString() });
             return Csv.ToCsv(asStrings);
         }
     }
