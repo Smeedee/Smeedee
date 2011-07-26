@@ -14,6 +14,9 @@ namespace Smeedee.Client.Framework.Repositories.Charting
     {
         event EventHandler DatasourcesRefreshed;
         event EventHandler<ChartLoadedEventArgs> ChartLoaded;
+
+        event EventHandler<ChartErrorEventArgs> Error;
+
         IList<string> GetDatabases();
         IList<string> GetCollectionsInDatabase(string database);
         void LoadChart(string database, string collection);
@@ -34,6 +37,7 @@ namespace Smeedee.Client.Framework.Repositories.Charting
 
         public event EventHandler DatasourcesRefreshed;
         public event EventHandler<ChartLoadedEventArgs> ChartLoaded;
+        public event EventHandler<ChartErrorEventArgs> Error;
 
         public IList<string> GetDatabases()
         {
@@ -68,7 +72,13 @@ namespace Smeedee.Client.Framework.Repositories.Charting
                     callback(chart);
                 if (ChartLoaded != null)
                     ChartLoaded(this, new ChartLoadedEventArgs(chart));
-            });
+            }, exception =>
+                   {
+                       if (Error != null)
+                       {
+                           Error(this, new ChartErrorEventArgs("Failed to load chart data.", exception));
+                       }
+                   });
 
         }
 
@@ -77,7 +87,14 @@ namespace Smeedee.Client.Framework.Repositories.Charting
             repository.GetDatabases(d =>
             {
                 databases = d;
-                DatasourcesRefreshed(this, EventArgs.Empty);
+                if (DatasourcesRefreshed != null)
+                    DatasourcesRefreshed(this, EventArgs.Empty);
+            }, exception =>
+            {
+                if (Error != null)
+                {
+                    Error(this, new ChartErrorEventArgs("Failed to refresh datasources.", exception));
+                }
             });
         }
     }
@@ -89,6 +106,18 @@ namespace Smeedee.Client.Framework.Repositories.Charting
         public ChartLoadedEventArgs(Chart chart)
         {
             this.Chart = chart;
+        }
+    }
+
+    public class ChartErrorEventArgs : EventArgs
+    {
+        public Exception Exception { get; private set; }
+        public string Message { get; private set; }
+
+        public ChartErrorEventArgs(string message, Exception exception)
+        {
+            Exception = exception;
+            Message = message;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                 Given(the_repository_has_been_created).
                     And(there_are_no_databases_in_NoSql);
                 When("fetching databases");
-                Then("there should be no databases", () => repository.GetDatabases(collection => collection.Documents.Count.ShouldBe(0)));
+                Then("there should be no databases", () => repository.GetDatabases(collection => collection.Documents.Count.ShouldBe(0), ShouldNotGetHere));
             }
 
             private Context there_are_no_databases_in_NoSql = () => DownloadStringServiceFakeReturns("[]", null);
@@ -45,7 +45,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                         database.Documents.Count.ShouldBe(1);
                         var doc = database.Documents[0];
                         doc["Name"].Value<string>().ShouldBe("TestDatabase");
-                    }));
+                    }, ShouldNotGetHere));
             }
 
 
@@ -60,7 +60,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                     {
                         var doc = database.Documents[0];
                         doc["Collections"][0]["Name"].Value<string>().ShouldBe("TestCollection");
-                    }));
+                    }, ShouldNotGetHere));
             }
 
             private Context there_is_one_database_in_NoSql = () => DownloadStringServiceFakeReturns("[{Name: \"TestDatabase\", Collections: []}]", null);
@@ -81,7 +81,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                     repository.GetDatabases(database =>
                     {
                         database.Documents.Count.ShouldBe(2);
-                    }));
+                    }, ShouldNotGetHere));
             }
 
             private Context there_is_two_databases_in_NoSql = () =>
@@ -99,7 +99,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                 When("fetching documents");
                 Then("the collection should be empty", () =>
                     repository.GetDocuments("database", "collection", collection =>
-                        collection.Documents.Count.ShouldBe(0)));
+                        collection.Documents.Count.ShouldBe(0), ShouldNotGetHere));
             }
 
             [Test]
@@ -114,7 +114,8 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                             collection.Documents.Count.ShouldBe(1);
                             collection.Documents[0]["Test"].Value<int>().ShouldBe(1);
                             collection.Documents[0]["Data"].Value<int>().ShouldBe(2);
-                        }
+                        },
+                        ShouldNotGetHere
                     ));
             }
 
@@ -130,7 +131,8 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                             collection.Documents.Count.ShouldBe(2);
                             collection.Documents[0]["Test"].Value<int>().ShouldBe(1);
                             collection.Documents[1]["Test2"].Value<int>().ShouldBe(3);
-                        }));
+                        },
+                        ShouldNotGetHere));
             }
 
 
@@ -220,8 +222,52 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                 repository.GetDatabases(collection =>
                     {
                         databases = collection;
-                    });
+                    },
+                    ShouldNotGetHere);
 
+        }
+
+        [TestFixture]
+        public class When_exceptions_occur : Shared
+        {
+            private static int onErrorCalled;
+
+            protected override void Before()
+            {
+                onErrorCalled = 0;
+            }
+
+            [Test]
+            public void Then_exception_should_be_forwarded_when_getting_databases()
+            {
+                Given(string_service_returns_exception).
+                    And(the_repository_has_been_created);
+                When("fetching databases", () => repository.GetDatabases(ShouldNotGetHere, OnError));
+                Then(OnError_should_have_been_called);
+            }
+
+            [Test]
+            public void Then_exception_should_be_forwarded_when_getting_documents()
+            {
+                Given(string_service_returns_exception).
+                    And(the_repository_has_been_created);
+                When("fetching documents", () => repository.GetDocuments("database", "collection", ShouldNotGetHere, OnError));
+                Then(OnError_should_have_been_called);
+            }
+
+            private Context string_service_returns_exception = () =>
+                 DownloadStringServiceFakeReturnsException(new Exception("Test"));
+
+            private Then OnError_should_have_been_called = () =>
+                onErrorCalled.ShouldBe(1);
+
+           
+            
+            private static void OnError(Exception exception)
+            {
+                exception.Message.ShouldBe("Test");
+                onErrorCalled++;
+            }
         }
 
         public class Shared : ScenarioClass
@@ -264,7 +310,8 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
             {
                 downloadStringServiceFake.Setup(s => s.DownloadAsync(
                     It.IsAny<Uri>(),
-                    It.IsAny<Action<string>>())).Callback((Uri url, Action<string> callback) =>
+                    It.IsAny<Action<string>>(),
+                    It.IsAny<Action<Exception>>())).Callback((Uri url, Action<string> callback, Action<Exception> onError) =>
                     {
                         callback(data);
 
@@ -273,7 +320,29 @@ namespace Smeedee.Client.Framework.Tests.Repositories.NoSql
                     });
             }
 
-            
+
+            protected static void DownloadStringServiceFakeReturnsException(Exception exception)
+            {
+                downloadStringServiceFake.Setup(s => s.DownloadAsync(
+                    It.IsAny<Uri>(),
+                    It.IsAny<Action<string>>(),
+                    It.IsAny<Action<Exception>>())).Callback((Uri url, Action<string> callback, Action<Exception> onError) =>
+                    {
+                        onError(exception);
+                    });
+            }
+
+            protected static void ShouldNotGetHere(Collection collection)
+            {
+                Assert.Fail("Should not get here!");
+            }
+
+            protected static void ShouldNotGetHere(Exception exception)
+            {
+                Assert.Fail("Should not get here!");
+            }
+
+
         }
     }
 }
