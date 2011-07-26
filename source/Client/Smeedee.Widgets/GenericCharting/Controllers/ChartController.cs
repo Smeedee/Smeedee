@@ -10,6 +10,7 @@ using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.Framework;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 using TinyMVVM.Framework.Services;
@@ -22,6 +23,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private IChartStorageReader storageReader;
         private ChartConfig chartConfig;
+        private ILog logger;
         public ChartSettingsViewModel SettingsViewModel { get; private set; }
         private readonly IPersistDomainModelsAsync<Configuration> configPersister;
 
@@ -35,7 +37,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             IProgressbar loadingNotifier,
             IChartStorageReader storageReader,
             Configuration configuration,
-            IPersistDomainModelsAsync<Configuration> configPersister
+            IPersistDomainModelsAsync<Configuration> configPersister,
+            ILog logger
             )
             : base(chartViewModel, timer, uiInvoker, loadingNotifier)
         {
@@ -43,6 +46,9 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             Guard.Requires<ArgumentNullException>(storageReader != null);
             Guard.Requires<ArgumentNullException>(configPersister != null);
             Guard.Requires<ArgumentNullException>(configuration != null);
+            Guard.Requires<ArgumentNullException>(logger != null);
+
+            this.logger = logger;
 
             chartConfig = new ChartConfig(configuration);
 
@@ -56,6 +62,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             ViewModel.Refresh.AfterExecute += OnNotifiedToRefresh;
 
             this.storageReader.DatasourcesRefreshed += DatasourcesRefreshed;
+            this.storageReader.Error += OnError;
 
             SettingsViewModel = settingsViewModel;
             SettingsViewModel.SaveSettings.ExecuteDelegate = OnSaveSettings;
@@ -226,6 +233,17 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             chartUpdater.ChartConfig = chartConfig;
             CopyConfigurationToSettingsViewModel();
             LoadData();
+        }
+
+        private void OnError(object sender, ChartErrorEventArgs e)
+        {
+            ViewModel.ErrorMessage = e.Message;
+            ViewModel.ShowErrorMessageInsteadOfChart = true;
+            SetIsNotLoadingConfig();
+            SetIsNotLoadingData();
+
+            var entry = ErrorLogEntry.Create(this, e.Message);
+            logger.WriteEntry(entry);
         }
     }
 }
