@@ -11,9 +11,8 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.WebSnapshot;
 using Smeedee.Framework;
-using Smeedee.Widgets.SL.TeamPicture.ViewModel;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
-using TinyMVVM.Framework.Services.Impl;
+using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widgets.WebSnapshot.Controllers
 {
@@ -22,7 +21,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private WebSnapshotViewModel webSnapshotViewModel;
         private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
         private Configuration config;
-        private IRepository<Smeedee.DomainModel.WebSnapshot.WebSnapshot> repository;
+        private IRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
+        private IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient;
         private ILog logger;
 
 
@@ -30,11 +30,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             WebSnapshotViewModel webSnapshotViewModel, 
             WebSnapshotSettingsViewModel webSnapshotSettingsViewModel,
             Configuration configuration,
+            IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient,
             ITimer timer,   
             ILog logger,
-            UIInvoker uiInvoker,
+            IUIInvoker uiInvoker,
             IProgressbar loadingNotifier,
-            IRepository<Smeedee.DomainModel.WebSnapshot.WebSnapshot> repository
+            IRepository<DomainModel.WebSnapshot.WebSnapshot> repository
             ) : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
             Guard.Requires<ArgumentNullException>(webSnapshotViewModel != null);
@@ -45,8 +46,10 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.webSnapshotViewModel = webSnapshotViewModel;
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
+            this.repository = repository;
+            this.asyncClient = asyncClient;
             webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
-            //this.repository = repository;
+
 
             Start();
             LoadData();
@@ -61,30 +64,74 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                                  });
         }
 
-        private void LoadData()
+	protected void LoadData()
         {
-         uiInvoker.Invoke(() =>
-                              {
-                                  SetIsLoadingData();
+            LoadData(new WebSnapshotSpecification());
+        }
 
-                                  try
-                                  {
-                                      //var snapshot = repository.Get(new WebSnapshotSpecification());
-                                      //UpdateViewModel(snapshot);
-                                  }
-                                  catch (Exception e)
-                                  {
-                                      
-                                      logger.WriteEntry(new LogEntry("WebSnapshotWidget", e.ToString()));
-                                  }
+        protected void LoadData(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
+        {
+            if (!ViewModel.IsLoading)
+            {
+                asyncClient.RunAsyncVoid(() => LoadDataSync(specification));
+            }
+        }
 
-                                  SetIsNotLoadingData();
-                              });
-   
+        private void LoadDataSync(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
+        {
+            logger.WriteEntry(new LogEntry("WebSnapshotController", "LoadData() called"));
+            SetIsLoadingData();
+            logger.WriteEntry(new LogEntry("SetIsLoadingData", "Is loading was set"));
+            var snapshot = QuerySnapshot(specification);
+            logger.WriteEntry(new LogEntry("Snapshot", "I got the snapshot" + snapshot.ToString()));
+
+            uiInvoker.Invoke(() =>
+                                 {
+                                    
+                                     try
+                                     {
+                                         //logger.WriteEntry(new LogEntry("WebSnapshotController", "Tries to get snapshot from repository"));
+                                         //var specification = new WebSnapshotSpecification();
+                                         //logger.WriteEntry(new LogEntry("Specification", "I maded the specification"+specification.ToString()));
+                                         //var snapshot = repository.Get(new WebSnapshotSpecification());
+                                         //logger.WriteEntry(new LogEntry("repository", "repository is lame "+repository.GetType() + " - " + repository.ToString()));
+                                         //var snapshot = repository.Get(specification);
+                                         
+                                         UpdateViewModel(snapshot);
+                                     }
+                                     catch (Exception e)
+                                     {
+                                         LogErrorMsg(e);
+                                         ViewModel.HasConnectionProblems = true;
+                                     }
+
+                                 });
+            SetIsNotLoadingData();
+        }
+
+        protected IEnumerable<DomainModel.WebSnapshot.WebSnapshot> QuerySnapshot(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
+        {
+            logger.WriteEntry(new LogEntry("QuerySnapshots", "QuerySnapshots is called"));
+            IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshot = null;
+            try
+            {
+                logger.WriteEntry(new LogEntry("QuerySnapshots", "I'm in your try"));
+                snapshot = repository.Get(specification);
+                logger.WriteEntry(new LogEntry("QuerySnapshots", "I nao haz snappy"));
+                ViewModel.HasConnectionProblems = false;
+            }
+            catch (Exception e)
+            {
+                LogErrorMsg(e);
+                ViewModel.HasConnectionProblems = true;
+            }
+
+            return snapshot;
         }
 
         private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
         {
+            logger.WriteEntry(new LogEntry("UpdateViewModel" , "UpdateViewModel called"));
            if (snapshots.Count() > 0)
            {
                var snapshot = snapshots.First();
@@ -135,6 +182,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
             LoadData();
+        }
+
+        protected void LogErrorMsg(Exception exception)
+        {
+            logger.WriteEntry(ErrorLogEntry.Create(this, exception.ToString()));
         }
     }
 }

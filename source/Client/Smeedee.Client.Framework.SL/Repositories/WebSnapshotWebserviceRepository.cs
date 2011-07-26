@@ -17,39 +17,33 @@ using Smeedee.DomainModel.WebSnapshot;
 
 namespace Smeedee.Client.Framework.SL.Repositories
 {
-    public class WebSnapshotWebserviceRepository : IRepository<WebSnapshot>, IPersistDomainModels<WebSnapshot>
+    public class WebSnapshotWebserviceRepository : IRepository<WebSnapshot>//, IPersistDomainModels<WebSnapshot>
     {
         private ManualResetEvent resetEvent = new ManualResetEvent(false);
-        private List<WebSnapshot> WebSnapshots;
-        private WebSnapshotRepositoryServiceClient client;
+        private IEnumerable<WebSnapshot> getResult;
+        private WebSnapshotRepositoryServiceClient serviceClient;
 
         private Exception invocationException;
 
         public WebSnapshotWebserviceRepository()
         {
-            WebSnapshots = new List<WebSnapshot>();
+            getResult = new List<WebSnapshot>();
 
-            client = new WebSnapshotRepositoryServiceClient();
-            client.Endpoint.Address =
-                WebserviceEndpointResolver.ResolveDynamicEndpointAddress(client.Endpoint.Address);
-            client.GetCompleted += client_GetCompleted;
-        }
+            serviceClient = new WebSnapshotRepositoryServiceClient();
+            serviceClient.Endpoint.Address =
+                WebserviceEndpointResolver.ResolveDynamicEndpointAddress(serviceClient.Endpoint.Address);
 
-        void client_GetCompleted(object sender, GetCompletedEventArgs e)
-        {
-            var resultingWebSnapshots = e.Result;
-            if (resultingWebSnapshots != null)
-            {
-                this.WebSnapshots = resultingWebSnapshots.ToList();
-            }
-
-            invocationException = e.Error;
-            resetEvent.Set();
+            serviceClient.GetCompleted += (sender, eventArgs) =>
+                                       {
+                                           invocationException = eventArgs.Error;
+                                           getResult = eventArgs.Result;
+                                           resetEvent.Set();
+                                       };
         }
         
         public IEnumerable<WebSnapshot> Get(Specification<WebSnapshot> specification)
         {
-            client.GetAsync(specification);
+            serviceClient.GetAsync(specification);
             resetEvent.Reset();
             resetEvent.WaitOne();
 
@@ -58,18 +52,17 @@ namespace Smeedee.Client.Framework.SL.Repositories
                 throw invocationException;
             }
 
-            var servers = WebSnapshots;
-            return servers;
+            return getResult;
         }
 
-        public void Save(WebSnapshot domainModel)
-        {
-            client.SaveAsync(new WebSnapshot[] {domainModel});
-        }
+        //public void Save(WebSnapshot domainModel)
+        //{
+        //    serviceClient.SaveAsync(new List<WebSnapshot> {domainModel});
+        //}
 
-        public void Save(IEnumerable<WebSnapshot> domainModels)
-        {
-            client.SaveAsync(domainModels.ToArray());
-        }
+        //public void Save(IEnumerable<WebSnapshot> domainModels)
+        //{
+        //    serviceClient.SaveAsync(domainModels.ToList());
+        //}
     }
 }
