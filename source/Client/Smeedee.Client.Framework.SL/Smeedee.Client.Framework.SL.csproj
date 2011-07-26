@@ -797,6 +797,9 @@
     <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -19,7 +19,7 @@ namespace Smeedee.Client.Framework.SL.Repositories
 {
     public class WebSnapshotWebserviceRepository : IRepository<WebSnapshot>//, IPersistDomainModels<WebSnapshot>
     {
-        private ManualResetEvent resetEvent = new ManualResetEvent(false);
+        private ManualResetEvent resetEvent;
         private IEnumerable<WebSnapshot> getResult;
         private WebSnapshotRepositoryServiceClient serviceClient;
 
@@ -27,6 +27,7 @@ namespace Smeedee.Client.Framework.SL.Repositories
 
         public WebSnapshotWebserviceRepository()
         {
+            resetEvent = new ManualResetEvent(false);
             getResult = new List<WebSnapshot>();
 
             serviceClient = new WebSnapshotRepositoryServiceClient();

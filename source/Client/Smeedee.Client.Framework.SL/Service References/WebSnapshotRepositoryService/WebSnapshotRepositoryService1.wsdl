@@ -4,8 +4,9 @@
     <xsd:schema targetNamespace="http://smeedee.org/Imports">
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd3" namespace="http://smeedee.org" />
       <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
-      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.WebSnapshot" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.WebSnapshot" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Smeedee.DomainModel.Framework" />
+      <xsd:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd4" namespace="Smeedee.DomainModel.WebSnapshot" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="WebSnapshotRepositoryService_Get_InputMessage">

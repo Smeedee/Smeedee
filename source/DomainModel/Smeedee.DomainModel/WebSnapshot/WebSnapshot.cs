@@ -6,16 +6,16 @@ using System.Text;
 
 namespace Smeedee.DomainModel.WebSnapshot
 {
-    [DataContract]
+    [DataContract(IsReference = true, Name = "WebSnapshot", Namespace = "Smeedee.DomainModel.WebSnapshot")]
     public class WebSnapshot
     {
-        [DataMember]
+        [DataMember(Order = 1)]
         public virtual string Name { get; set; }
-        [DataMember]
+        [DataMember(Order = 2)]
         public virtual string PictureFilePath { get; set; }
-        [DataMember]
+        [DataMember(Order = 3)]
         public virtual int PictureHeight { get; set; }
-        [DataMember]
+        [DataMember(Order = 4)]
         public virtual int PictureWidth { get; set; }
     }
 }
