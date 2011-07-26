@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -19,53 +20,72 @@ namespace Smeedee.Client.Web.MobileServices.WorkingDaysLeft
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var today = DateTime.Now.Date;
-            var endDate = GetEndDate();
-            var holidays = GetHolidays(today, endDate);
-
-            if (endDate == null || holidays == null)
-            {
-                Response.Write("failure");
-                return;
-            }
-
-            var iteration = new Iteration(today, endDate ?? today);
-            var workingDaysLeft = iteration.CalculateWorkingdaysLeft(today, holidays).Days;
-
-            var output = new List<string[]> {new[] {workingDaysLeft.ToString(), endDate.ToString()}};
-            Response.Write(Csv.ToCsv(output));
-        }
-
-        private DateTime? GetEndDate()
-        {
             try
             {
-                var projectInfoServers = new ProjectInfoServerDatabaseRepository().Get(new AllSpecification<ProjectInfoServer>());
-                var projectInfo = projectInfoServers.FirstOrDefault();
-                return projectInfo.Projects.FirstOrDefault().CurrentIteration.EndDate;
-            } catch (NullReferenceException)
+                Response.Write(CreateOutput());
+            } catch (Exception ex)
             {
-                return null;
+                Response.Write("Failed to retrieve sprint end date:" + ex);
             }
         }
 
-        private IEnumerable<DayOfWeek> GetNonWorkingDays()
+        private string CreateOutput()
         {
-            var spec = new AllSpecification<Configuration>();
-            var config = new ConfigurationDatabaseRepository().Get(spec).FirstOrDefault();
-            if (config == null) return null;
-            var nonWorkingDays = config.GetSetting(WorkingDaysLeftController.SETTING_NON_WORK_DAYS).Vals;
-            return nonWorkingDays.Select(str =>
-                                             {
-                                                 DayOfWeek day;
-                                                 DayOfWeek.TryParse(str, out day);
-                                                 return day;
-                                             });
+            var today = DateTime.Now.Date;
+            var config = GetConfiguration();
+            var endDate = GetEndDate(config);
+            var workingDaysLeft = CalcWorkingDaysLeft(config, today, endDate);
+
+            var output = new List<string[]> { new[] { workingDaysLeft.ToString(), endDate.ToString() } };
+            return Csv.ToCsv(output);
         }
         
-        private IEnumerable<Holiday> GetHolidays(DateTime today, DateTime? endDate)
+        private Configuration GetConfiguration()
         {
-            var nonWorkingDays = GetNonWorkingDays();
+            var spec = new LinqSpecification<Configuration>(c => c.Name == WorkingDaysLeftController.CONFIG_NAME);
+            return new ConfigurationDatabaseRepository().Get(spec).FirstOrDefault();
+        }
+
+        private DateTime GetEndDate(Configuration config)
+        {
+            var isManuallyConfigured = config.GetSetting(WorkingDaysLeftController.SETTING_IS_MANUALLY_CONFIGURED);
+            return bool.Parse(isManuallyConfigured.Value)
+                       ? GetEndDateFromConfig(config)
+                       : GetEndDateFromProjectInfo();
+        }
+
+        private static DateTime GetEndDateFromProjectInfo()
+        {
+            var projectInfoServers = new ProjectInfoServerDatabaseRepository().Get(new AllSpecification<ProjectInfoServer>());
+            var projectInfo = projectInfoServers.FirstOrDefault();
+            return projectInfo.Projects.FirstOrDefault().CurrentIteration.EndDate;
+        }
+
+        private DateTime GetEndDateFromConfig(Configuration config)
+        {
+            var endDate = config.GetSetting(WorkingDaysLeftController.SETTING_END_DATE).Value;
+            return DateTime.Parse(endDate, CultureInfo.InvariantCulture);
+        }
+
+
+        private int CalcWorkingDaysLeft(Configuration config, DateTime today, DateTime endDate)
+        {
+            int workingDaysLeft;
+            if (endDate < today)
+            {
+                workingDaysLeft = (endDate - today).Days;
+            }
+            else
+            {
+                var holidays = GetHolidays(config, today, endDate);
+                workingDaysLeft = new Iteration(today, endDate).CalculateWorkingdaysLeft(today, holidays).Days;
+            }
+            return workingDaysLeft;
+        }
+        
+        private IEnumerable<Holiday> GetHolidays(Configuration config, DateTime today, DateTime? endDate)
+        {
+            var nonWorkingDays = GetNonWorkingDays(config);
             if (endDate == null) return null;
             var spec = new HolidaySpecification()
                            {
@@ -76,5 +96,15 @@ namespace Smeedee.Client.Web.MobileServices.WorkingDaysLeft
             return new HolidayDatabaseRepository().Get(spec);
         }
 
+        private IEnumerable<DayOfWeek> GetNonWorkingDays(Configuration config)
+        {
+            var nonWorkingDays = config.GetSetting(WorkingDaysLeftController.SETTING_NON_WORK_DAYS).Vals;
+            return nonWorkingDays.Select(str =>
+            {
+                DayOfWeek day;
+                DayOfWeek.TryParse(str, out day);
+                return day;
+            });
+        }
     }
 }
