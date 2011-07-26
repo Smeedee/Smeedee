@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.Widget.Admin.MobileServices.SL.Views;
+using Smeedee.Widget.Admin.MobileServices.ViewModels;
 
 namespace Smeedee.Widget.Admin.MobileServices.SL
 {
@@ -20,7 +21,9 @@ namespace Smeedee.Widget.Admin.MobileServices.SL
         {
             Title = "Remote Services Administration";
 
-            View = new RemoteServicesAdminView();
+            var viewModel =  new MobileServicesAuthenticationViewModel();
+
+            View = new MobileServicesAdminView() { DataContext = viewModel };
         }
     }
 }

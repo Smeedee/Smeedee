@@ -73,6 +73,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Smeedee.Widget.Admin.MobileServices\ViewModels\MobileServicesAuthenticationViewModel.cs">
+      <Link>ViewModels\MobileServicesAuthenticationViewModel.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -81,8 +84,8 @@
     </Compile>
     <Compile Include="MobileServicesAdminWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\RemoteServicesAdminView.xaml.cs">
-      <DependentUpon>RemoteServicesAdminView.xaml</DependentUpon>
+    <Compile Include="Views\MobileServicesAdminView.xaml.cs">
+      <DependentUpon>MobileServicesAdminView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +97,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RemoteServicesAdminView.xaml">
+    <Page Include="Views\MobileServicesAdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -108,9 +111,7 @@
       <Name>Smeedee.Client.Framework.SL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 
 namespace Smeedee.Widget.Admin.MobileServices.SL.Views
 {
-    public partial class RemoteServicesAdminView : UserControl
+    public partial class MobileServicesAdminView : UserControl
     {
-        public RemoteServicesAdminView()
+        public MobileServicesAdminView()
         {
             InitializeComponent();
         }

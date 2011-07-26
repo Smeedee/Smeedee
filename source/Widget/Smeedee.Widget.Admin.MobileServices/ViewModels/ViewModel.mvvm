@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using TinyMVVM.Framework;
+
+namespace Smeedee.Widget.Admin.Users.ViewModels:
+	viewmodel UsersViewModel:
+
+		oproperty Key as string
+	
+		command GenerateNewKey
+		command AddCustomKey
+		command Refresh
+		command Save	
