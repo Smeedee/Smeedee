@@ -18,7 +18,7 @@ using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widget.Admin.MobileServices.SL
 {
-    [WidgetInfo(Name = "Remote Services Administration")]
+    [WidgetInfo(Name = "Smeedee for Mobile Devices")]
     public class MobileServicesAdminWidget : Client.Framework.ViewModel.Widget
     {
         private MobileServicesAuthenticationViewModel viewModel;
