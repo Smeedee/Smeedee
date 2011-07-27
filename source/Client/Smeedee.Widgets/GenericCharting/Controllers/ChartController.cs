@@ -242,7 +242,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             SetIsNotLoadingConfig();
             SetIsNotLoadingData();
 
-            var entry = ErrorLogEntry.Create(this, e.Message);
+            var entry = ErrorLogEntry.Create(this, e.Exception.Message);
             logger.WriteEntry(entry);
         }
     }
