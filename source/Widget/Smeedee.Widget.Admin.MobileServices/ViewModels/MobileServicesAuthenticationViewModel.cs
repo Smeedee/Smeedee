@@ -14,17 +14,26 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
     public class MobileServicesAuthenticationViewModel : ViewModelBase
     {
         private const string MOBILE_SERVICES_CONFIGURATION_KEY = "MobileServices";
+        private const string MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY = "ApiKey";
+
+        private const string LEGAL_KEY_ITEMS = "abcdefgijkmnopqrstwxyzABCDEFGHJKLMNPQRSTWXYZ123456789*$-+_=!";
+
         private const string GENERATING_NEW_KEY_MESSAGE = "Generating new key. Please Wait...";
-        private IAsyncRepository<Configuration> repo;
-        private IPersistDomainModelsAsync<Configuration> persister;
-        private IProgressbar loadingNotifier;
-        private IUIInvoker uiInvoker;
-        
+        private const string NEW_KEY_GENERATED_MESSAGE = "New key generated. Loading...";
+        private const string PLEASE_WAIT_MESSAGE = "Please wait...";
+
+        private readonly IAsyncRepository<Configuration> repo;
+        private readonly IPersistDomainModelsAsync<Configuration> persister;
+        private readonly IUIInvoker uiInvoker;
+        private Configuration configuration;
+
+
+        public DelegateCommand GenerateNewKey { get; private set; }
+
 
         public MobileServicesAuthenticationViewModel(
             IAsyncRepository<Configuration> settingsRepository, 
             IPersistDomainModelsAsync<Configuration> settingsPersister,
-            IProgressbar loadingNotifier,
             IUIInvoker uiInvoker)
         {
             this.uiInvoker = uiInvoker;
@@ -32,15 +41,49 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
             persister = settingsPersister;
 
 
+            AddDelegateCommands();
+            AddEventHandlers();
+            RetrieveCurrentKey();
+        }
+
+        private void AddDelegateCommands()
+        {
             GenerateNewKey = new DelegateCommand(CreateNewKey);
+        }
 
-            
-            settingsRepository.GetCompleted += settingsRepository_GetCompleted;
+        private void AddEventHandlers()
+        {
+            repo.GetCompleted += settingsRepository_GetCompleted;
             persister.SaveCompleted += persister_SaveCompleted;
+        }
 
-            uiInvoker.Invoke(() => ApiKey = "Please wait..."); // TODO
-           
-            settingsRepository.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
+        private void RetrieveCurrentKey()
+        {
+            uiInvoker.Invoke(() => ApiKey = PLEASE_WAIT_MESSAGE);
+            repo.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
+        }
+
+        void persister_SaveCompleted(object sender, SaveCompletedEventArgs e)
+        {
+            uiInvoker.Invoke(() => ApiKey = NEW_KEY_GENERATED_MESSAGE);
+            repo.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
+        }
+
+        void settingsRepository_GetCompleted(object sender, GetCompletedEventArgs<Configuration> e)
+        {
+
+            if (e.Result.Count() > 0)
+            {
+                configuration = e.Result.First();
+                if (configuration.ContainsSetting(MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY))
+                    uiInvoker.Invoke(() => ApiKey = configuration.GetSetting(MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY).Value);
+                else
+                    CreateNewKey();
+            }
+            else
+            {
+                CreateNewKey();
+            }
         }
 
         private void CreateNewKey()
@@ -49,47 +92,30 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
             SaveNewConfigWithRandomKey();
         }
 
-        void persister_SaveCompleted(object sender, SaveCompletedEventArgs e)
-        {
-            uiInvoker.Invoke(() => ApiKey = "New key generated. Loading...");
-            repo.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
-        }
-
-        void settingsRepository_GetCompleted(object sender, GetCompletedEventArgs<Configuration> e)
-        {
-            
-            if (e.Result.Count() > 0)
-            {
-                var apiKeySetting = e.Result.First().GetSetting("ApiKey");
-                if (apiKeySetting != null)
-                {
-                    uiInvoker.Invoke(() => ApiKey  = apiKeySetting.Value);
-                }
-                else
-                {
-                    uiInvoker.Invoke(() => ApiKey = GENERATING_NEW_KEY_MESSAGE);
-                    e.Result.First().NewSetting("ApiKey", GenerateRandomKey());
-                    persister.Save(e.Result.First());
-                }
-            }
-            else
-            {
-                uiInvoker.Invoke(() => ApiKey = GENERATING_NEW_KEY_MESSAGE);
-                SaveNewConfigWithRandomKey();
-            }
-        }
-
         private void SaveNewConfigWithRandomKey()
         {
-            var passwordConfig = new Configuration(MOBILE_SERVICES_CONFIGURATION_KEY);
-            passwordConfig.NewSetting("ApiKey", GenerateRandomKey());
-            persister.Save(passwordConfig);
+            if (configuration == null)
+                configuration = new Configuration(MOBILE_SERVICES_CONFIGURATION_KEY);
+            configuration.IsConfigured = true;
+
+            if (configuration.ContainsSetting(MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY))
+                configuration.ChangeSetting(MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY, GenerateRandomKeyString());
+            else
+                configuration.NewSetting(MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY, GenerateRandomKeyString());
+
+            persister.Save(configuration);
         }
 
-        private string GenerateRandomKey()
+        private static string GenerateRandomKeyString()
         {
-            //TODO: Proper keygen
-            return "TODOGenerateNiceKey";
+            var randomString = "";
+            var randomGenerator = new Random();
+            for (int i = 0; i < 8; i++)
+            {
+                var randomPosition = randomGenerator.Next(0, LEGAL_KEY_ITEMS.Count());
+                randomString += LEGAL_KEY_ITEMS[randomPosition];
+            }
+            return randomString;
         }
 
         private string _apiKey;
@@ -100,10 +126,8 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
             {
                 if (value == _apiKey) return;
                 _apiKey = value;
-                TriggerPropertyChanged("ApiKey");
+                TriggerPropertyChanged(MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY);
             }
         }
-
-        public DelegateCommand GenerateNewKey { get; private set; }
     }
 }

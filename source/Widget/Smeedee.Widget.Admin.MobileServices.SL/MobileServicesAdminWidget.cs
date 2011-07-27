@@ -25,14 +25,13 @@ namespace Smeedee.Widget.Admin.MobileServices.SL
 
         public MobileServicesAdminWidget()
         {
-            Title = "Remote Services Administration";
+            Title = "View data using Smeedee Mobile";
 
             var configRepo = GetInstance<IAsyncRepository<Configuration>>();
             var configSaver = GetInstance<IPersistDomainModelsAsync<Configuration>>();
-            var loadingNotifier = GetInstance<IProgressbar>();
             var uiInvoker = GetInstance<IUIInvoker>();
 
-            viewModel =  new MobileServicesAuthenticationViewModel(configRepo, configSaver, loadingNotifier, uiInvoker);
+            viewModel =  new MobileServicesAuthenticationViewModel(configRepo, configSaver, uiInvoker);
 
             View = new MobileServicesAdminView() { DataContext = viewModel };
         }
