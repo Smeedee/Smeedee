@@ -1,15 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Smeedee.Client.Framework.Services;
-using Smeedee.Client.Framework.ViewModel;
+﻿using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.Widget.Admin.MobileServices.SL.Views;
@@ -33,7 +22,7 @@ namespace Smeedee.Widget.Admin.MobileServices.SL
 
             viewModel =  new MobileServicesAuthenticationViewModel(configRepo, configSaver, uiInvoker);
 
-            View = new MobileServicesAdminView() { DataContext = viewModel };
+            View = new MobileServicesAdminView { DataContext = viewModel };
         }
     }
 }
