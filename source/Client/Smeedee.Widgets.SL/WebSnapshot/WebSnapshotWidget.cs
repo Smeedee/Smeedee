@@ -20,10 +20,10 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 {
     [WidgetInfo(
         Name = "Web Snapshot",
-        Description = "Takes snapshots of web pages or display a picture from an URL, also supports XPath and cropping.",
+        Description = "Takes snapshots of web pages or display a picture from an URL. Supports XPath and cropping.",
         Author = "Smeedee team",
         Version = "0.2",
-        Tags = new[] { CommonTags.Fun})]
+        Tags = new[] { CommonTags.Fun })]
     public class WebSnapshotWidget : Client.Framework.ViewModel.Widget
     {
         private WebSnapshotViewModel viewModel;
@@ -38,8 +38,8 @@ namespace Smeedee.Widgets.SL.WebSnapshot
             controller = NewController<WebSnapshotController>();
             viewModel.PropertyChanged += ViewModelPropertyChanged;
 
-            View = new WebSnapshotView {DataContext = controller.ViewModel};
-            SettingsView = new WebSnapshotSettingsView {DataContext = settingsViewModel};
+            View = new WebSnapshotView { DataContext = controller.ViewModel };
+            SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -52,7 +52,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
                 OnSettings();
             }
         }
-        
+
         public override void Configure(DependencyConfigSemantics config)
         {
             config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();
