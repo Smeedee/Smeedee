@@ -25,7 +25,7 @@
         
         <Button Grid.Row="2" Grid.Column="0"
                 Content="Generate new password"
-                Command="{Binding GenerateNewPassword}"/>
+                Command="{Binding GenerateNewKey}"/>
        
         <Button Grid.Row="2" Grid.Column="1" 
                 Content="Set your own password" />

@@ -110,6 +110,14 @@
       <Project>{DB3A158F-D0F2-46F2-BC90-1BB163EA76AB}</Project>
       <Name>Smeedee.Client.Framework.SL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework.SL\Smeedee.DomainModel.Framework.SL.csproj">
+      <Project>{124594EB-B92D-49B1-9E1D-F3557A0413D8}</Project>
+      <Name>Smeedee.DomainModel.Framework.SL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.SL.csproj">
+      <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
+      <Name>Smeedee.DomainModel.SL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
