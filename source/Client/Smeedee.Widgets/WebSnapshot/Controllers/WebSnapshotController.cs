@@ -24,9 +24,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient;
         private ILog logger;
 
-        private const string url = "webSnaphotURL";
-        private const string refresh_interval = "webSnapshotRefreshInterval";
-
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
             WebSnapshotSettingsViewModel webSnapshotSettingsViewModel,
@@ -209,33 +206,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             logger.WriteEntry(ErrorLogEntry.Create(this, exception.ToString()));
         }
 
-        public static Configuration GetDefaultConfiguration()
-        {
-            var config = new Configuration("websnapshot");
 
-            config.NewSetting(url, "");
-            config.NewSetting(refresh_interval, "15");
-
-            return config;
-        }
-
-        public void UpdateConfiguration(Configuration config)
-        {
-            Guard.Requires<ArgumentNullException>(config != null);
-            Guard.Requires<ArgumentException>(config.ContainsSetting(url));
-            Guard.Requires<ArgumentException>(config.ContainsSetting(refresh_interval));
-
-            this.config = config;
-
-            //webSnapshotViewModel.InputUrl = config.GetSetting(url).Value;
-        }
-
-        public Configuration SaveConfiguration()
-        {
-            //config.ChangeSetting(url, webSnapshotViewModel.InputUrl);
-            //config.ChangeSetting(refresh_interval, webSnapshotViewModel.RefreshInterval.ToString());
-
-            return config;
-        }
     }
 }
