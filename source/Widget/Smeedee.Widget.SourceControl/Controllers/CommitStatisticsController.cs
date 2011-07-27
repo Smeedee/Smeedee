@@ -399,5 +399,11 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 ViewModel.Data.Add(commitsToday);
             }
         }
+
+        public void ConfigurationChanged(object sender, EventArgs eventArgs)
+        {
+            configIsChanged = true;
+            LoadSettingsAndData();
+        }
     }
 }
