@@ -130,21 +130,29 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     {
         private static Dictionary<string, string> brushes = new Dictionary<string, string>
         {   
-            {"grey", "GreyGradientBrush"},
-            {"white", "WhiteGradientBrush"},
-            {"cyan", "CyanGradientBrush"},
-            {"skyblue", "SkyBlueGradientBrush"},
-            {"blue", "BlueGradientBrush"},
-            {"chameleon", "ChameleonGradientBrush"},
-            {"green", "GreenGradientBrush"},
-            {"yellow", "YellowGradientBrush"},
-            {"butter", "ButterGradientBrush"},
-            {"orange", "OrangeGradientBrush"},
-            {"chocolate", "ChocolateGradientBrush"},
+            {"grey", "DarkGreyGradientBrush"},
+            {"darkGrey", "GreyGradientBrush"},
+            {"lightGrey", "LightGreyGradientBrush"},
+
+            {"lightBrown", "LightBrownGradientBrush"},
+            {"brown", "BrownGradientBrush"},
+            {"darkBrown", "DarkBrownGradientBrush"},
+
             {"red", "RedGradientBrush"},
+            {"orange", "OrangeGradientBrush"},
+            {"yellow", "YellowGradientBrush"},
+
+            {"lightGreen", "LightGreenGradientBrush"},
+            {"green", "MediumGreenGradientBrush"},
+            {"darkGreen", "GreenGradientBrush"},
+
+            {"lightBlue", "LightBlueGradientBrush"},
+            {"blue", "BlueGradientBrush"},
+            {"darkBlue", "DarkBlueGradientBrush"},
+          
             {"pink", "PinkGradientBrush"},
             {"purple", "PurpleGradientBrush"},
-            {"plum", "PlumGradientBrush"}
+            {"darkPurple", "DarkPurpleGradientBrush"}
           
         };
 
