@@ -801,7 +801,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
 
             Then(() =>
             {
-                progressbarMock.Verify(l => l.HideInBothViews(), Times.Exactly(3));
+                progressbarMock.Verify(l => l.HideInBothViews(), Times.AtLeastOnce());
                 controller.ViewModel.IsLoadingConfig.ShouldBe(false);
             });
         } 
@@ -1152,6 +1152,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
         [SetUp]
         public void Setup()
         {
+            Scenario("");
             configPersisterRepositoryMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
             configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
             logger = new Mock<ILog>();
