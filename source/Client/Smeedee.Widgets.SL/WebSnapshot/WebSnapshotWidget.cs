@@ -18,12 +18,12 @@ using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.SL.WebSnapshot
 {
-    [WidgetInfo(
-        Name = "Web Snapshot",
-        Description = "Takes snapshots of web pages or display a picture from an URL, also supports XPath and cropping.",
-        Author = "Smeedee team",
-        Version = "0.2",
-        Tags = new[] { CommonTags.Fun})]
+    //[WidgetInfo(
+    //    Name = "Web Snapshot",
+    //    Description = "Takes snapshots of web pages or display a picture from an URL, also supports XPath and cropping.",
+    //    Author = "Smeedee team",
+    //    Version = "0.2",
+    //    Tags = new[] { CommonTags.Fun })]
     public class WebSnapshotWidget : Client.Framework.ViewModel.Widget
     {
         private WebSnapshotViewModel viewModel;
