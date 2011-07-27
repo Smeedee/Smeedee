@@ -17,7 +17,7 @@ namespace Smeedee.Client.Web.MobileServices.LatestCommits
         {
             var changesets = GetAllChangesets().OrderByDescending(c => c.Revision);
             var revision = long.Parse(Request.QueryString["revision"] ?? "" + changesets.First().Revision);
-            var selectedChangesets = changesets.Where(c => c.Revision <= revision).Take(10);
+            var selectedChangesets = changesets.Where(c => c.Revision < revision).Take(10);
             Response.Write(Serialize(selectedChangesets));
         }
 
