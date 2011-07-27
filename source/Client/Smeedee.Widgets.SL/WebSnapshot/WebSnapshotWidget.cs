@@ -38,8 +38,8 @@ namespace Smeedee.Widgets.SL.WebSnapshot
             controller = NewController<WebSnapshotController>();
             viewModel.PropertyChanged += ViewModelPropertyChanged;
 
-            View = new WebSnapshotView {DataContext = controller.ViewModel};
-            SettingsView = new WebSnapshotSettingsView {DataContext = settingsViewModel};
+            View = new WebSnapshotView { DataContext = controller.ViewModel };
+            SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -52,7 +52,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
                 OnSettings();
             }
         }
-        
+
         public override void Configure(DependencyConfigSemantics config)
         {
             config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();

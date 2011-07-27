@@ -777,7 +777,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                 And(the_keyword_fix_is_bound_to_green_in_settings_db).
                 And(the_controller_has_been_created);
             When("the keyword fix exists in comment");
-            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("GreenGradientBrush"));
+            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("MediumGreenGradientBrush"));
         }
 
         [Test]
@@ -787,7 +787,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                And(the_keyword_fix_is_bound_to_green_in_settings_db).
                And(the_controller_has_been_created);
             When("the keyword Fix exists in comment");
-            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("GreenGradientBrush"));
+            Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("MediumGreenGradientBrush"));
         }
 
     }
