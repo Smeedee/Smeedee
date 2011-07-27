@@ -8,7 +8,7 @@
     
     <Grid x:Name="LayoutRoot">
     	<Viewbox Margin="0" Width="48" Height="48">
-    		<Grid Height="49" Width="49">
+    		<Grid Height="49" Width="25">
     			<Path Data="F1M290.862,63.322C285.87,63.322,281.804,67.387,281.804,72.382L281.804,72.382L281.804,102.958C281.804,107.953,285.87,112.02,290.862,112.02L290.862,112.02L321.438,112.02C326.432,112.02,330.497,107.953,330.497,102.958L330.497,102.958L330.497,72.382C330.497,67.387,326.432,63.322,321.438,63.322L321.438,63.322z" Stretch="Fill" Margin="0,0,0.307,0.302" UseLayoutRounding="False">
     				<Path.Fill>
     					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
@@ -31,12 +31,8 @@
     					</LinearGradientBrush>
     				</Path.Fill>
     			</Path>
-    			<Path Data="M291.5674,78.2876L322.9114,78.2876L291.5674,78.2876z" Height="1.037" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF8C8C8C" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="9.245,14.447,7.374,0" UseLayoutRounding="False" VerticalAlignment="Top"/>
-    			<Path Data="M291.5674,88.6606L322.9114,88.6606L291.5674,88.6606z" Height="1.037" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF8C8C8C" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="9.245,0,7.374,23.143" UseLayoutRounding="False" VerticalAlignment="Bottom"/>
-    			<Path Data="M291.5674,99.0332L322.9114,99.0332L291.5674,99.0332z" Height="1.037" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF8C8C8C" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="9.245,0,7.374,12.77" UseLayoutRounding="False" VerticalAlignment="Bottom"/>
-    			<Path Data="M291.5674,77.5098L322.9114,77.5098L291.5674,77.5098z" Height="1.037" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF363636" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="9.245,13.669,7.374,0" UseLayoutRounding="False" VerticalAlignment="Top"/>
-    			<Path Data="M291.5674,87.8823L322.9114,87.8823L291.5674,87.8823z" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF363636" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="9.245,24.042,7.374,23.921" UseLayoutRounding="False"/>
-    			<Path Data="M291.5674,98.2554L322.9114,98.2554L291.5674,98.2554z" Height="1.037" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF363636" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="9.245,0,7.374,13.548" UseLayoutRounding="False" VerticalAlignment="Bottom"/>
+    			<Path Data="M291.5674,99.0332L322.9114,99.0332L291.5674,99.0332z" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF8C8C8C" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="6.072,5.555,5.626,0" UseLayoutRounding="False" Height="1.037" VerticalAlignment="Top"/>
+    			<Path Data="M291.5674,98.2554L322.9114,98.2554L291.5674,98.2554z" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF363636" StrokeThickness="1.037" StrokeMiterLimit="4" StrokeLineJoin="Miter" Margin="6.072,4.777,5.626,0" UseLayoutRounding="False" Height="1.607" VerticalAlignment="Top"/>
     			<Path Data="F1M311.072,76.299L311.072,79.411C311.072,80.844,312.234,82.005,313.667,82.005L313.667,82.005C315.096,82.005,316.26,80.844,316.26,79.411L316.26,79.411L316.26,76.299C316.26,74.867,315.096,73.706,313.667,73.706L313.667,73.706C312.234,73.706,311.072,74.867,311.072,76.299" Height="0" Stretch="Fill" Width="0" HorizontalAlignment="Right" Margin="0,10.384,19.732,0" UseLayoutRounding="False" VerticalAlignment="Top">
     				<Path.Fill>
     					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
@@ -45,7 +41,7 @@
     					</LinearGradientBrush>
     				</Path.Fill>
     			</Path>
-    			<Path Data="F1M294.311,86.876L294.311,89.971C294.311,91.402,295.472,92.563,296.905,92.563L296.905,92.563C298.336,92.563,299.498,91.402,299.498,89.971L299.498,89.971L299.498,86.876C299.498,85.444,298.336,84.283,296.905,84.283L296.905,84.283C295.472,84.283,294.311,85.444,294.311,86.876" Stretch="Fill" Width="24.889" HorizontalAlignment="Left" Margin="12.507,20.961,0,19.759" UseLayoutRounding="False">
+    			<Path Data="F1 M294.311,86.875999 L294.311,91.320068 C294.311,92.751068 295.47198,92.563004 296.905,92.563004 L296.905,92.563004 C298.336,92.563004 299.49799,92.840965 299.49799,91.409966 L299.49799,92.129448 L299.49799,85.52697 C299.49799,84.094971 298.336,84.282997 296.905,84.282997 L296.905,84.282997 C295.47198,84.282997 294.311,84.094971 294.311,85.52697" Stretch="Fill" Width="20.979" HorizontalAlignment="Left" Margin="1.954,7.962,0,10.074" UseLayoutRounding="False">
     				<Path.Fill>
     					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
     						<GradientStop Color="#FF858585" Offset="0"/>
@@ -58,6 +54,16 @@
     					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
     						<GradientStop Color="#FF858585" Offset="0"/>
     						<GradientStop Color="#FFF2F2F2" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Path.Fill>
+    			</Path>
+    			<Path Data="F1 M294.311,86.875999 L294.311,91.320068 C294.311,92.751068 295.47198,92.563004 296.905,92.563004 L296.905,92.563004 C298.336,92.563004 299.49799,92.840965 299.49799,91.409966 L299.49799,92.129448 L299.49799,85.52697 C299.49799,84.094971 298.336,84.282997 296.905,84.282997 L296.905,84.282997 C295.47198,84.282997 294.311,84.094971 294.311,85.52697" Stretch="Fill" Width="6.286" HorizontalAlignment="Center" Margin="0,0,0,2.271" UseLayoutRounding="False" Height="6.634" VerticalAlignment="Bottom" StrokeThickness="0">
+    				<Path.Fill>
+    					<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    						<GradientStop Color="Black" Offset="0"/>
+    						<GradientStop Color="#FF999999" Offset="1"/>
+    						<GradientStop Color="#FF717171" Offset="0.859"/>
+    						<GradientStop Color="#FF717171" Offset="0.551"/>
     					</LinearGradientBrush>
     				</Path.Fill>
     			</Path>
