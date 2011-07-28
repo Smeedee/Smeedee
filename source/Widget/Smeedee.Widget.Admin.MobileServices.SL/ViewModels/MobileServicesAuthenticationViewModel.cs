@@ -28,7 +28,7 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
 
 
         public MobileServicesAuthenticationViewModel(
-            IAsyncRepository<Configuration> settingsRepository, 
+            IAsyncRepository<Configuration> settingsRepository,
             IPersistDomainModelsAsync<Configuration> settingsPersister,
             IUIInvoker uiInvoker)
         {

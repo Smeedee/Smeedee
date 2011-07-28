@@ -1,3 +1,0 @@
-<#@ template language="C#" hostspecific="True" debug="True" #>
-<#@ output extension="txt" #>
-<#@ include file="T4Toolbox.tt" #>
