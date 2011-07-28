@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using Smeedee.DomainModel.Config;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 
@@ -35,6 +34,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         public static readonly string series_setting_name = series_setting_prefix + "name";
         public static readonly string series_setting_legend = series_setting_prefix + "legend";
         public static readonly string series_setting_type = series_setting_prefix + "type";
+        public static readonly string series_setting_brush = series_setting_prefix + "brush";
 
         public static readonly string series_setting_database = series_setting_prefix + "database";
         public static readonly string series_setting_collection = series_setting_prefix + "collection";
@@ -96,6 +96,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             var legends = new List<string>();
             var actions = new List<string>();
             var types = new List<string>();
+            var brushes = new List<string>();
 
             foreach (var series in seriesConfig)
             {
@@ -105,6 +106,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 legends.Add(series.Legend ?? "");
                 actions.Add(series.Action ?? "");
                 types.Add(series.ChartType ?? "");
+                brushes.Add(series.Brush ?? "");
             }
             
             configuration.ChangeSetting(series_setting_name, names.ToArray());
@@ -113,6 +115,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             configuration.ChangeSetting(series_setting_legend, legends.ToArray());
             configuration.ChangeSetting(series_setting_action, actions.ToArray());
             configuration.ChangeSetting(series_setting_type, types.ToArray());
+            configuration.ChangeSetting(series_setting_brush, brushes.ToArray());
         }
 
         public List<SeriesConfigViewModel> GetSeries()
@@ -124,6 +127,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             var legends = configuration.GetSetting(series_setting_legend).Vals.ToArray();
             var actions = configuration.GetSetting(series_setting_action).Vals.ToArray();
             var types = configuration.GetSetting(series_setting_type).Vals.ToArray();
+            var brushes = configuration.GetSetting(series_setting_brush).Vals.ToArray();
 
             for (int i = 0; i < names.Count(); i++)
             {
@@ -134,7 +138,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                         Database = databases[i],
                         Legend = legends[i],
                         Action = actions[i],
-                        ChartType = types[i]
+                        ChartType = types[i],
+                        Brush = i < brushes.Count() ? brushes[i] : null
                     });
             }
             return list;
@@ -159,6 +164,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             config.NewSetting(series_setting_legend);
             config.NewSetting(series_setting_action);
             config.NewSetting(series_setting_type);
+            config.NewSetting(series_setting_brush);
             config.IsConfigured = false;
             return config;
         }

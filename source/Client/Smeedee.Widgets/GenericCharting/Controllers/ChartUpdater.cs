@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Smeedee.Client.Framework.Repositories.Charting;
+using Smeedee.Client.Framework.Resources;
 using Smeedee.DomainModel.Charting;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 using TinyMVVM.Framework.Services;
@@ -141,7 +142,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private DataSetViewModel ConvertDataSetToViewModel(DataSet dataset, SeriesConfigViewModel series)
         {
-            var vm = new DataSetViewModel {Name = !string.IsNullOrEmpty(series.Legend) ? series.Legend : dataset.Name};
+            var vm = new DataSetViewModel {Name = !string.IsNullOrEmpty(series.Legend) ? series.Legend : dataset.Name, Brush = BrushProvider.GetBrushName(series.Brush)};
 
             for (int i = 0; i<dataset.DataPoints.Count; i++)
             {

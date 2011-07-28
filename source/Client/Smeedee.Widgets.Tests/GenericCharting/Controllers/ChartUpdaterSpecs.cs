@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Repositories.NoSql;
+using Smeedee.Client.Framework.Resources;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.DomainModel.Charting;
@@ -98,6 +99,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                         viewModel.Lines.Count.ShouldBe(1);
                         viewModel.Lines[0].Name.ShouldBe("Row");
                         viewModel.Lines[0].Data.Count.ShouldBe(5);
+                        viewModel.Lines[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[0]));
                         for (int i=0; i<5; i++)
                         {
                             viewModel.Lines[0].Data[i].X.ShouldBe(i);
@@ -165,7 +167,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     {
                         var series = new Collection<SeriesConfigViewModel>
                                          {
-                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="Collection", Name="Row", ChartType = ChartConfig.LINE}
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="Collection", Name="Row", ChartType = ChartConfig.LINE, Brush=BrushProvider.GetBrushKeys()[0] }
                                          };
                         chartConfig.SetSeries(series);
                         chartConfig.IsConfigured = true;
@@ -175,10 +177,10 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             {
                 var series = new Collection<SeriesConfigViewModel>
                                          {
-                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="SomeCollection", Name="Row1", ChartType = ChartConfig.LINE},
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="SomeCollection", Name="Row1", ChartType = ChartConfig.LINE, Brush=BrushProvider.GetBrushKeys()[1]},
                                              new SeriesConfigViewModel { Action = ChartConfig.REFERENCE, Database="Charting", Collection="OtherCollection", Name="Row2" },
-                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Other", Collection="Col", Name="Row3", Legend="Row3Legend", ChartType = ChartConfig.COLUMNS},
-                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="SomeCollection", Name="Row4", ChartType = ChartConfig.AREA}
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Other", Collection="Col", Name="Row3", Legend="Row3Legend", ChartType = ChartConfig.COLUMNS, Brush=BrushProvider.GetBrushKeys()[3]},
+                                             new SeriesConfigViewModel { Action = ChartConfig.SHOW, Database="Charting", Collection="SomeCollection", Name="Row4", ChartType = ChartConfig.AREA, Brush=BrushProvider.GetBrushKeys()[4]}
                                          };
                 chartConfig.ChartName = "AChartName";
                 chartConfig.XAxisName = "XAxis";
@@ -247,10 +249,17 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
                 viewModel.Lines[0].Name.ShouldBe("Row1");
                 viewModel.Lines[0].Data.Count.ShouldBe(5);
+                viewModel.Lines[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[1]));
+
                 viewModel.Columns[0].Name.ShouldBe("Row3Legend");
                 viewModel.Columns[0].Data.Count.ShouldBe(5);
+                viewModel.Columns[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[3]));
+
                 viewModel.Areas[0].Name.ShouldBe("Row4");
                 viewModel.Areas[0].Data.Count.ShouldBe(5);
+                viewModel.Areas[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[4]));
+
+                
                 for (int i = 0; i < 5; i++)
                 {
                     viewModel.Lines[0].Data[i].X.ShouldBe(i + 5);

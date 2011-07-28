@@ -10,7 +10,7 @@ namespace Smeedee.Client.Framework.SL.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Application.Current.Resources[value.ToString()];
+            return value != null ? Application.Current.Resources[value.ToString()] : null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

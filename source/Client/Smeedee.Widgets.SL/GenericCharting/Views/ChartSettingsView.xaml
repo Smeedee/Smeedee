@@ -5,24 +5,40 @@
     xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:src="clr-namespace:Smeedee.Widgets.GenericCharting.ViewModels"
+             
+             xmlns:conv="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
+            xmlns:brushes="clr-namespace:Smeedee.Client.Framework.Resources;assembly=Smeedee.Client.Framework.SL"
     mc:Ignorable="d"
     d:DesignHeight="600" d:DesignWidth="600">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
+                <ResourceDictionary Source="/Smeedee.Client.SL;component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
+            <conv:StringToResourceConverter x:Key="StringToResourceConverter" />
+            <brushes:BrushProvider x:Key="brushProvider" />
+
+
+            <DataTemplate x:Key="BrushColorText">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="15"
+                    Height="15"
+                    Margin="5"
+                    Fill="{Binding BrushName, Converter={StaticResource StringToResourceConverter}}" />
+                    <TextBlock Text="{Binding BrushKey}" />
+                </StackPanel>
+            </DataTemplate>
+            <src:SettingsChoices x:Key="settingsChoices" />
         </ResourceDictionary>
-        <src:SettingsChoices x:Key="settingsChoices" />
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" >
         <Border Style="{StaticResource SettingsViewBorder}">
             <Grid Style="{StaticResource SettingsViewGrid}" 
                   Height="500" 
-                  Width="600"
+                  Width="auto"
                   Margin="0,90,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -96,16 +112,19 @@
                     ItemsSource="{Binding XAxisTypes, Mode=TwoWay}"
                     SelectedValue="{Binding XAxisType, Mode=TwoWay}" />
 
-                <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
-                    AutoGenerateColumns="False" 
-                    VerticalScrollBarVisibility="Visible"
-                    HorizontalScrollBarVisibility="Hidden"
-                    FontSize="14" 
-                    Grid.Column="0"
+                <ScrollViewer Grid.Column="0"
                     Grid.Row="5" 
                     Grid.ColumnSpan="2"
-                    Width="600">
+                    Width="750">
+                <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
+                    AutoGenerateColumns="False" 
+                    HorizontalScrollBarVisibility="Hidden"
+                    FontSize="14" 
+                    VirtualizingStackPanel.VirtualizationMode="Standard"
+                    >
+                    
                     <Controls:DataGrid.Columns>
+                        
                         <Controls:DataGridTemplateColumn
                             Header="Action"
                             Width="111">
@@ -150,9 +169,45 @@
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>
                         </Controls:DataGridTemplateColumn>
+                        
+                        <Controls:DataGridTemplateColumn
+                            Header="Color"
+                            Width="160" VirtualizingStackPanel.VirtualizationMode="Standard" >
+                            <Controls:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
+                                              SelectedValuePath="BrushKey"
+                                              SelectedValue="{Binding Brush, Mode=TwoWay}"
+                                              ItemTemplate="{StaticResource BrushColorText}" >
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                </DataTemplate>
+
+                            </Controls:DataGridTemplateColumn.CellTemplate>
+                            <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
+                                              SelectedValuePath="BrushKey"
+                                              SelectedValue="{Binding Brush, Mode=TwoWay}"
+                                              ItemTemplate="{StaticResource BrushColorText}" >
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                        </Controls:DataGridTemplateColumn>
+                        
+                        
                     </Controls:DataGrid.Columns>
                 </Controls:DataGrid>
-
+                </ScrollViewer>
 
                 <StackPanel Grid.Column="0"
                             Grid.Row="6">
