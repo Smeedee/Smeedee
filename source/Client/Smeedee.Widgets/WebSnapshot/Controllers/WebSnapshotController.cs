@@ -20,8 +20,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
         private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private Configuration config;
-        private IRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
-        private IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient;
+        private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
+        //private IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient;
         private ILog logger;
 
         public WebSnapshotController(
@@ -34,13 +34,14 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             IUIInvoker uiInvoker,
             IProgressbar loadingNotifier,
             IPersistDomainModelsAsync<Configuration> configPersister,
-            IRepository<DomainModel.WebSnapshot.WebSnapshot> repository
+            IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository
             )
             : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
             Guard.Requires<ArgumentNullException>(webSnapshotViewModel != null);
             Guard.Requires<ArgumentNullException>(webSnapshotSettingsViewModel != null);
             Guard.Requires<ArgumentNullException>(configuration != null);
+            Guard.Requires<ArgumentNullException>(logger != null);
             //Guard.Requires<ArgumentNullException>(repository != null);
 
 
@@ -50,18 +51,70 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
-            this.asyncClient = asyncClient;
+            //this.asyncClient = asyncClient;
             webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
             webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
 
+            repository.GetCompleted += OnGetCompleted;
+
 
             Start();
-            LoadData();
+            BeginLoadData();
+        }
+
+        protected void BeginLoadData()
+        {
+            if (!ViewModel.IsLoading)
+            {
+                SetIsLoadingData();
+                repository.BeginGet(new AllSpecification<DomainModel.WebSnapshot.WebSnapshot>());
+            }
+
+        }
+
+        private void OnGetCompleted(object sender, GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot> eventArgs)
+        {
+
+            if (eventArgs.Result != null)
+            {
+                var SnapshotDataFromDB = eventArgs.Result;
+                logger.WriteEntry(new LogEntry("SnapshotDataFromDB", "Did I get it? " + SnapshotDataFromDB.First().PictureFilePath));
+                UpdateViewModel(SnapshotDataFromDB);
+            }
+            else
+            {
+                logger.WriteEntry(new LogEntry("OnGetCompleted", "eventArgs was null"));
+            }
+
+            SetIsNotLoadingData();
+        }
+
+        private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
+        {
+            logger.WriteEntry(new LogEntry("UpdateViewModel", "UpdateViewModel called"));
+            if (snapshots.Count() > 0)
+            {
+                var snapshot = snapshots.First();
+                uiInvoker.Invoke(() =>
+                {
+                    var snapshotPath = snapshot.PictureFilePath;
+                    SetWebSnapshot(snapshotPath);
+                });
+            }
+            else
+            {
+                uiInvoker.Invoke(() => webSnapshotViewModel.HasStoredImage = false);
+            }
+        }
+
+        private void SetWebSnapshot(string imagePath)
+        {
+            webSnapshotViewModel.Snapshot = GenerateWriteableBitmap(imagePath);
+            webSnapshotViewModel.HasStoredImage = imagePath != null;
         }
 
         private void OnSave()
         {
-
 
             //configPersisterRepository.Save(config);
 
@@ -90,92 +143,26 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             return wb;
         }
 
-        protected void LoadData()
-        {
-            LoadData(new WebSnapshotSpecification());
-        }
 
-        protected void LoadData(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
-        {
-            if (!ViewModel.IsLoading)
-            {
-                asyncClient.RunAsyncVoid(() => LoadDataSync(specification));
-            }
-        }
+        //protected IEnumerable<DomainModel.WebSnapshot.WebSnapshot> QuerySnapshot(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
+        //{
+        //    IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshot = null;
+        //    try
+        //    {
+        //        logger.WriteEntry(new LogEntry("QuerySnapshot", "in try. repository is: " + repository));
+        //        snapshot = repository.Get(specification);
+        //        ViewModel.HasConnectionProblems = false;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        LogErrorMsg(e);
+        //        ViewModel.HasConnectionProblems = true;
+        //    }
 
-        private void LoadDataSync(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
-        {
-            SetIsLoadingData();
-            var snapshot = QuerySnapshot(specification);
-            logger.WriteEntry(new LogEntry("Snapshot", "I got the snapshot" + snapshot.ToString()));
+        //    return snapshot;
+        //}
 
-            uiInvoker.Invoke(() =>
-            {
 
-                try
-                {
-                    //logger.WriteEntry(new LogEntry("WebSnapshotController", "Tries to get snapshot from repository"));
-                    //var specification = new WebSnapshotSpecification();
-                    //logger.WriteEntry(new LogEntry("Specification", "I maded the specification"+specification.ToString()));
-                    //var snapshot = repository.Get(new WebSnapshotSpecification());
-                    //logger.WriteEntry(new LogEntry("repository", "repository is lame "+repository.GetType() + " - " + repository.ToString()));
-                    //var snapshot = repository.Get(specification);
-
-                    UpdateViewModel(snapshot);
-                }
-                catch (Exception e)
-                {
-                    LogErrorMsg(e);
-                    ViewModel.HasConnectionProblems = true;
-                }
-
-            });
-            SetIsNotLoadingData();
-        }
-
-        protected IEnumerable<DomainModel.WebSnapshot.WebSnapshot> QuerySnapshot(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
-        {
-            IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshot = null;
-            try
-            {
-                logger.WriteEntry(new LogEntry("QuerySnapshot", "QuerySnapshot called, im in teh try"));
-                logger.WriteEntry(new LogEntry("QuerySnapshot", "the repo is lame " + repository));
-                snapshot = repository.Get(specification);
-                logger.WriteEntry(new LogEntry("schnappy", "I got the snapshot"));
-                ViewModel.HasConnectionProblems = false;
-            }
-            catch (Exception e)
-            {
-                LogErrorMsg(e);
-                ViewModel.HasConnectionProblems = true;
-            }
-
-            return snapshot;
-        }
-
-        private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
-        {
-            logger.WriteEntry(new LogEntry("UpdateViewModel", "UpdateViewModel called"));
-            if (snapshots.Count() > 0)
-            {
-                var snapshot = snapshots.First();
-                uiInvoker.Invoke(() =>
-                {
-                    var snapshotPath = snapshot.PictureFilePath;
-                    SetWebSnapshot(snapshotPath);
-                });
-            }
-            else
-            {
-                uiInvoker.Invoke(() => webSnapshotViewModel.HasStoredImage = false);
-            }
-        }
-
-        private void SetWebSnapshot(string imagePath)
-        {
-            webSnapshotViewModel.Snapshot = GenerateWriteableBitmap(imagePath);
-            webSnapshotViewModel.HasStoredImage = imagePath != null;
-        }
 
         //public void UpdateConfiguration(Configuration config)
         //{
@@ -198,7 +185,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
-            LoadData();
+            BeginLoadData();
         }
 
         protected void LogErrorMsg(Exception exception)

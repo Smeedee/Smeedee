@@ -641,9 +641,6 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         };
     }
 
-
-
-
     [TestFixture]
     public class Notify_when_loading : Shared
     {
@@ -757,9 +754,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             );
             repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
         };
-
  
-        
 
         [Test]
         public void Assure_that_changeset_has_default_color_when_no_word_is_found()
@@ -781,6 +776,16 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         }
 
         [Test]
+        public void Assure_that_color_is_updated_when_changeset_has_complex_keyword()
+        {
+            Given(there_is_one_changeset_in_sourcecontrol_containing_the_word_fix).
+                And(the_keyword_fix_is_bound_to_dark_brown_in_settings_db).
+                And(the_controller_has_been_created);
+            When("the keyword fix exists in comment");
+            Then("the changeset viewModel should have have dark brown color", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("DarkBrownGradientBrush"));
+        }
+
+        [Test]
         public void Assure_that_keywords_are_case_insensitive()
         {
             Given(there_is_one_changeset_in_sourcecontrol_containing_the_word_Fix_with_capital_f).
@@ -790,8 +795,101 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("MediumGreenGradientBrush"));
         }
 
+        private Context the_keyword_fix_is_bound_to_dark_brown_in_settings_db = () =>
+        {
+            var configs = new List<Configuration>();
+            var config = GenerateSettings(40, false);
+            config.NewSetting("commentKeywords", new[] { "fix", "dark brown" });
+            configs.Add(config);
+            configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
+        };
+
+
     }
 
+    [TestFixture]
+    public class When_adding_keywordColorPairs : Shared
+    {
+
+        [Test]
+        public void Assure_that_a_keywordcolorpair_without_set_color_has_default_color()
+        {
+            Given(the_controller_has_been_created).
+                And(there_are_changesets_in_sourcecontrol);
+            When(add_word_and_color_button_is_pressed);
+            Then("the default color should be grey", () => viewModel.KeywordList[0].ColorName.ShouldBe("grey"));
+        }
+
+        [Test]
+        public void Assure_that_a_keywordcolorpair_with_set_keyword_but_without_set_color_has_default_color()
+        {
+            Given(the_controller_has_been_created).
+                And(there_are_changesets_in_sourcecontrol).
+                And(add_word_and_color_button_has_been_pressed).
+                And("keyword is set to hello", () => viewModel.KeywordList[0].Keyword="hello");
+            When(save_button_is_pressed);
+            Then("the default color should be grey", () =>
+                                                         {
+                                                             viewModel.KeywordList[0].Keyword.ShouldBe("hello");
+                                                             viewModel.KeywordList[0].ColorName.ShouldBe("grey");
+                                                             viewModel.Changesets[0].BackgroundColor.ShouldBe("GreyGradientBrush");
+                                                         });
+        }
+
+        [Test]
+        public void Assure_that_a_single_letter_as_a_keyword_sets_correct_color()
+        {
+            Given(the_controller_has_been_created).
+                And(there_are_10_changesets_in_Changesets).
+                And(add_word_and_color_button_has_been_pressed).
+                And("keyword is set to e, and color to yellow", () =>
+                                                                    {
+                                                                        viewModel.KeywordList[0].Keyword = "a";
+                                                                        viewModel.KeywordList[0].ColorName = "yellow";
+                                                                    });
+            When(save_button_is_pressed);
+            Then("the color should be yellow",
+                 () => viewModel.Changesets[0].BackgroundColor.ShouldBe("YellowGradientBrush"));
+        }
+
+        [Test]
+        public void Assure_that_space_as_a_keyword_sets_correct_color()
+        {
+            Given(the_controller_has_been_created).
+                And(there_are_10_changesets_in_Changesets).
+                And(add_word_and_color_button_has_been_pressed).
+                And("keyword is set to space, and color to yellow", () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = " ", ColorName = "yellow" }));
+            When(save_button_is_pressed);
+            Then("the color should be yellow",
+                 () => viewModel.Changesets[0].BackgroundColor.ShouldBe("YellowGradientBrush"));
+        }
+
+        [Test]
+        public void Assure_that_dot_as_a_keyword_sets_correct_color()
+        {
+            Given(the_controller_has_been_created).
+                And(there_are_10_changesets_in_Changesets).
+                And(add_word_and_color_button_has_been_pressed).
+                And("keyword is set to dot, and color to yellow", () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = ".", ColorName = "yellow" }));
+            When(save_button_is_pressed);
+            Then("the color should be yellow",
+                 () => viewModel.Changesets[1].BackgroundColor.ShouldBe("YellowGradientBrush"));
+        }
+
+        [Test]
+        public void Assure_that_a_colorpair_with_empty_key_is_not_saved()
+        {
+            Given(the_controller_has_been_created).
+                And(add_word_and_color_button_has_been_pressed).
+                And("keyword is null", () => viewModel.KeywordList[0].Keyword = "");
+            When(save_button_is_pressed);
+            Then("the pair should not be saved", () => viewModel.KeywordList.Count.ShouldBe(0));
+        }
+  
+        private Context add_word_and_color_button_has_been_pressed = () => viewModel.AddWordAndColorSettings.ExecuteDelegate();
+    }
+
+    
 
     public class Shared : ScenarioClass
     {
@@ -837,7 +935,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                     new Changeset
                     {
                         Revision = 201222 + i,
-                        Comment = "Added hello world method ",
+                        Comment = "Added hello world method. ",
                         Time = new DateTime(1986, 5, 20),
                         Author = new Author { Username = "goeran" }
                     }
