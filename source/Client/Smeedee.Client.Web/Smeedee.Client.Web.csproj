@@ -134,6 +134,13 @@
     <Compile Include="MobileServices\BuildStatus\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MobileServices\LatestCommits\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MobileServices\LatestCommits\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MobileServices\TopCommitters\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -234,6 +241,7 @@
     <Content Include="Default.htm" />
     <Content Include="Log.aspx" />
     <Content Include="MobileServices\BuildStatus\Default.aspx" />
+    <Content Include="MobileServices\LatestCommits\Default.aspx" />
     <Content Include="MobileServices\TopCommitters\Default.aspx" />
     <Content Include="MobileServices\WorkingDaysLeft\Default.aspx" />
     <Content Include="Services\ChangesetRepositoryService.svc" />
