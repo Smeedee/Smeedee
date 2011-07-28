@@ -95,8 +95,8 @@ namespace Smeedee.Widget.CI.Controllers
             settingsViewModel.Servers = WrapServersAndConfig(dummyServers, dummyConfig);
             settings.LoadIntoViewModel(dummyConfig);
 
-            Start();
             LoadData();
+            Start();
         }
 
         #endregion
@@ -104,6 +104,7 @@ namespace Smeedee.Widget.CI.Controllers
 
         public void ConfigurationUpdated(object sender, EventArgs eventArgs)
         {
+            lastDbCheck = DateTime.MinValue;
             LoadData();
         }
 
