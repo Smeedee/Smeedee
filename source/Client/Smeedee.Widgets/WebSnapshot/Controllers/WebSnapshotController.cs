@@ -19,8 +19,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private WebSnapshotViewModel webSnapshotViewModel;
         private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
         private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
-        private Configuration config;
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
+        private WebSnapshotConfig webSnapshotConfig;
         private ILog logger;
 
         public WebSnapshotController(
@@ -41,8 +41,9 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             Guard.Requires<ArgumentNullException>(configuration != null);
             Guard.Requires<ArgumentNullException>(logger != null);
 
-            config = configuration;
+            webSnapshotConfig = new WebSnapshotConfig(configuration);
             this.configPersisterRepository = configPersister;
+            configPersisterRepository.SaveCompleted += OnSaveCompleted;
             this.webSnapshotViewModel = webSnapshotViewModel;
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
@@ -53,8 +54,75 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             repository.GetCompleted += OnGetCompleted;
 
 
+
             Start();
             BeginLoadData();
+
+        }
+
+        private void OnSaveCompleted(object sender, SaveCompletedEventArgs e)
+        {
+            SetIsNotSavingConfig();
+            BeginLoadData();
+        }
+
+        private void OnSave()
+        {
+            SetIsSavingConfig();
+            CopySettingsViewModelToConfiguration();
+            configPersisterRepository.Save(webSnapshotConfig.Configuration);
+
+        }
+
+        private void CopySettingsViewModelToConfiguration()
+        {
+            webSnapshotConfig.URL = webSnapshotSettingsViewModel.SelectedImage;
+            webSnapshotConfig.CoordinateX = webSnapshotSettingsViewModel.CropCoordinateX;
+            webSnapshotConfig.CoordinateY = webSnapshotSettingsViewModel.CropCoordinateY;
+            webSnapshotConfig.RectangleHeight = webSnapshotSettingsViewModel.CropRectangleHeight;
+            webSnapshotConfig.RectangleWidth = webSnapshotSettingsViewModel.CropRectangleWidth;
+            webSnapshotConfig.IsConfigured = true;
+        }
+
+        private void CopyConfigurationToSettingsViewModel()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                webSnapshotSettingsViewModel.SelectedImage = webSnapshotConfig.URL;
+                webSnapshotSettingsViewModel.CropCoordinateX = webSnapshotConfig.CoordinateX;
+                webSnapshotSettingsViewModel.CropCoordinateY = webSnapshotConfig.CoordinateY;
+                webSnapshotSettingsViewModel.CropRectangleHeight = webSnapshotConfig.RectangleHeight;
+                webSnapshotSettingsViewModel.CropRectangleWidth = webSnapshotConfig.RectangleWidth;
+            });
+        }
+
+        public void UpdateConfiguration(Configuration configuration)
+        {
+            webSnapshotConfig = new WebSnapshotConfig(configuration);
+            CopyConfigurationToSettingsViewModel();
+            BeginLoadData();
+        }
+
+
+        private void OnReset()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                //TODO Get(SelectedImage) and set it as Image
+                //webSnapshotSettingsViewModel.Image = GenerateWriteableBitmap("http://www.dvo.com/newsletter/monthly/2007/september/images/strawberry.jpg");
+            });
+        }
+
+        private WriteableBitmap GenerateWriteableBitmap(string path)
+        {
+            var uri = new Uri(path);
+            var bmi = new BitmapImage(uri);
+            var wb = new WriteableBitmap(bmi);
+
+            uri = null;
+            bmi = null;
+
+            return wb;
         }
 
         protected void BeginLoadData()
@@ -64,8 +132,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 SetIsLoadingData();
                 repository.BeginGet(new WebSnapshotSpecification());
             }
-
         }
+
 
         private void OnGetCompleted(object sender, GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot> eventArgs)
         {
@@ -108,35 +176,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             webSnapshotViewModel.HasStoredImage = imagePath != null;
         }
 
-        private void OnSave()
-        {
 
-            //configPersisterRepository.Save(config);
-
-        }
-
-        private void OnReset()
-        {
-            uiInvoker.Invoke(() =>
-            {
-                //TODO Get(SelectedImage) and set it as Image
-                webSnapshotSettingsViewModel.Image =
-                    GenerateWriteableBitmap(
-                        "http://www.dvo.com/newsletter/monthly/2007/september/images/strawberry.jpg");
-            });
-        }
-
-        private WriteableBitmap GenerateWriteableBitmap(string path)
-        {
-            var uri = new Uri(path);
-            var bmi = new BitmapImage(uri);
-            var wb = new WriteableBitmap(bmi);
-
-            uri = null;
-            bmi = null;
-
-            return wb;
-        }
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {

@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widgets.SL.WebSnapshot.Views;
 using Smeedee.Widgets.WebSnapshot.Controllers;
@@ -40,6 +41,8 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 
             View = new WebSnapshotView { DataContext = controller.ViewModel };
             SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
+
+            ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -57,6 +60,11 @@ namespace Smeedee.Widgets.SL.WebSnapshot
         {
             config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();
             config.Bind<WebSnapshotSettingsViewModel>().To<WebSnapshotSettingsViewModel>().InSingletonScope();
+        }
+
+        protected override Configuration NewConfiguration()
+        {
+            return WebSnapshotConfig.NewDefaultConfiguration();
         }
     }
 }

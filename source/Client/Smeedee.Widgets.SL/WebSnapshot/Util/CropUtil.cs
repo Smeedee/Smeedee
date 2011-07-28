@@ -9,7 +9,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Util
     {
         public static Point GetUpperLeftCornerInRectangel(Point press, Point release, Rectangle rectangle)
         {
-            var upperLeft  = new Point(200,200);
+            var upperLeft  = new Point(0,0);
             
             if(press.X.CompareTo(release.X) < 0)
             {
@@ -49,7 +49,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Util
 
         public static bool OutsidePicture(Point position, Image img)
         {
-            return position.Y > img.Height || position.X > img.Width || position.X < 0 || position.Y < 0;
+            return position.Y > img.ActualHeight || position.X > img.ActualWidth || position.X < 0 || position.Y < 0;
         }
         public static double NegativeNumber(double number)
         {
