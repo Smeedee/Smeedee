@@ -40,7 +40,7 @@ namespace Smeedee.Client.Web.MobileServices.WorkingDaysLeft
             var endDate = GetEndDate(config);
             var workingDaysLeft = CalcWorkingDaysLeft(config, today, endDate);
 
-            var output = new List<string[]> { new[] { workingDaysLeft.ToString(), endDate.ToString() } };
+            var output = new List<string[]> { new[] { workingDaysLeft.ToString(), endDate.ToString("yyyyMMddHHmmss") } };
             return Csv.ToCsv(output);
         }
         
