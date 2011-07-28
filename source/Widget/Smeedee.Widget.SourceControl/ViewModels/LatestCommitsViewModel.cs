@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Smeedee.Client.Framework.Resources;
 using Smeedee.Client.Framework.ViewModel;
 using TinyMVVM.Framework;
 
@@ -36,7 +37,6 @@ namespace Smeedee.Widget.SourceControl.ViewModels
         public DelegateCommand SaveSettings { get; set; }
         public DelegateCommand ReloadSettings { get; set; }
         public DelegateCommand AddWordAndColorSettings { get; set; }
-        
 
         public const int NUMBER_OF_COMMITS_DEFAULT = 8;
         public const bool BLINK_WHEN_NO_COMMENT_DEFAULT = false;
@@ -142,33 +142,5 @@ namespace Smeedee.Widget.SourceControl.ViewModels
             foreach (var item in keywordListResetPoint)
                 KeywordList.Add(item.Clone());
         }
-    }
-
-    public class ColorProvider
-    {
-       
-        public List<ColorProviderPart> ColorList
-        {
-            get
-            {
-                var list = new List<ColorProviderPart>();
-                foreach (var color in ChangesetBackgroundProvider.GetColors())
-                {
-                    list.Add(new ColorProviderPart(color, ChangesetBackgroundProvider.GetBrushName(color)));
-                }
-                return list;
-            }
-        }
-    }
-
-    public class ColorProviderPart
-    {
-        public ColorProviderPart(string name, string brush)
-        {
-            ShortName = name;
-            BrushName = brush;
-        }
-        public string ShortName { get; set; }
-        public string BrushName { get; set; }
     }
 }

@@ -123,47 +123,5 @@ namespace Smeedee.Widget.SourceControl.ViewModels
                 }
             }
         }
-
     }
-
-    public static class ChangesetBackgroundProvider
-    {
-        private static Dictionary<string, string> brushes = new Dictionary<string, string>
-        {   
-            {"dark grey", "DarkGreyGradientBrush"},
-            {"grey", "GreyGradientBrush"},
-            {"light grey", "LightGreyGradientBrush"},
-
-            {"light brown", "LightBrownGradientBrush"},
-            {"brown", "BrownGradientBrush"},
-            {"dark brown", "DarkBrownGradientBrush"},
-
-            {"red", "RedGradientBrush"},
-            {"orange", "OrangeGradientBrush"},
-            {"yellow", "YellowGradientBrush"},
-
-            {"light green", "LightGreenGradientBrush"},
-            {"green", "MediumGreenGradientBrush"},
-            {"dark green", "GreenGradientBrush"},
-
-            {"light blue", "LightBlueGradientBrush"},
-            {"blue", "BlueGradientBrush"},
-            {"dark blue", "DarkBlueGradientBrush"},
-          
-            {"pink", "PinkGradientBrush"},
-            {"purple", "PurpleGradientBrush"},
-            {"dark purple", "DarkPurpleGradientBrush"}
-          
-        };
-
-        public static string GetBrushName(string color)
-        {
-            return brushes.ContainsKey(color) ? brushes[color] : ChangesetViewModel.DEFAULT_BACKGROUND_COLOR;
-        }
-
-        public static string[] GetColors()
-        {
-            return brushes.Keys.ToArray();
-        }
-    }   
 }
