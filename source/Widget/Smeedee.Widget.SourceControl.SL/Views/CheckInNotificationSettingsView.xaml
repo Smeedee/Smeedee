@@ -73,14 +73,14 @@
                             Value="{Binding NumberOfCommits, Mode=TwoWay}"
                             Margin="0,3,10,0"
                             Minimum="1"
-                            Maximum="25"
+                            Maximum="50"
                             VerticalAlignment="Top" />
                     <inputToolkit:NumericUpDown x:Name="NumberOfCommitsToShow"
                                                 Style="{StaticResource SettingsViewNumericUpDown}"
                                                 Value="{Binding NumberOfCommits, Mode=TwoWay}"
                                                 Margin="0,2,0,0"
                                                 Minimum="1"
-                                                Maximum="20"
+                                                Maximum="50"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top" />
                 </StackPanel>
@@ -89,7 +89,7 @@
                               Grid.ColumnSpan="2"
                               Grid.Row="3"
                               VerticalScrollBarVisibility="Visible"
-                              Width="293"
+                              Width="350"
                               HorizontalAlignment="Left">
                     <Controls:DataGrid AutoGenerateColumns="False"
                                        Name="keywordAndColorGrid"
@@ -99,16 +99,17 @@
                         <Controls:DataGrid.Columns>
                             <Controls:DataGridTextColumn Header="Keyword"
                                                          Binding="{Binding Keyword, Mode=TwoWay}"
-                                                         MinWidth="130" />
+                                                         MinWidth="160" />
                             <Controls:DataGridTemplateColumn Header="Color"
-                                                             MinWidth="129">
+                                                             MinWidth="161">
                                 <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}"
                                                   SelectedValue="{Binding ColorName, Mode=TwoWay}"
                                                   SelectedValuePath="ShortName"
                                                   Style="{StaticResource SettingsViewComboBox}"
-                                                  MinWidth="130">
+                                                  Height="27"
+                                                  MinWidth="160">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">

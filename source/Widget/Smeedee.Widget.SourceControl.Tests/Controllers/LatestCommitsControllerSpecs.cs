@@ -885,14 +885,6 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             When(save_button_is_pressed);
             Then("the pair should not be saved", () => viewModel.KeywordList.Count.ShouldBe(0));
         }
-
-        [Test]
-        public void Testing_loadcolorsetting()
-        {
-            Given(there_are_10_changesets_in_Changesets);
-            When(the_controller_is_created);
-            Then("we want the count");
-        }
   
         private Context add_word_and_color_button_has_been_pressed = () => viewModel.AddWordAndColorSettings.ExecuteDelegate();
     }
