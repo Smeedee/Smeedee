@@ -13,10 +13,12 @@ namespace Smeedee.Client.Web.MobileServices
 {
     public partial class TopCommitters : System.Web.UI.Page
     {
-
+        private readonly MobileServicesAuthenticator authenticator = new MobileServicesAuthenticator();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!authenticator.IsApiKeyValid(Request.QueryString["apiKey"] ?? "")) return;
+
             var userdb = new UserdbDatabaseRepository().Get(new DefaultUserdbSpecification()).FirstOrDefault();
             
             var timeSpan = TimeSpan.FromDays(int.Parse(Request.QueryString["days"] ?? "30"));

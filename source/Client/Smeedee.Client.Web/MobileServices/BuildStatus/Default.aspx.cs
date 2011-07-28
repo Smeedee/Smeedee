@@ -14,8 +14,12 @@ namespace Smeedee.Client.Web.MobileServices.BuildStatus
 {
     public partial class Default : System.Web.UI.Page
     {
+        private readonly MobileServicesAuthenticator authenticator = new MobileServicesAuthenticator();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!authenticator.IsApiKeyValid(Request.QueryString["apiKey"] ?? "")) return;
+
             var userdb = new UserdbDatabaseRepository().Get(new DefaultUserdbSpecification()).FirstOrDefault();
             var currentBuilds = GetAllCurrentBuilds();
             var allUsers = (userdb == null) ? new List<User>() : userdb.Users;

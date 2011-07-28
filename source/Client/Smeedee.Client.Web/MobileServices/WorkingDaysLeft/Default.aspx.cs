@@ -18,8 +18,12 @@ namespace Smeedee.Client.Web.MobileServices.WorkingDaysLeft
 {
     public partial class Default : System.Web.UI.Page
     {
+        private readonly MobileServicesAuthenticator authenticator = new MobileServicesAuthenticator();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!authenticator.IsApiKeyValid(Request.QueryString["apiKey"] ?? "")) return;
+
             try
             {
                 Response.Write(CreateOutput());

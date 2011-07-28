@@ -13,8 +13,12 @@ namespace Smeedee.Client.Web.MobileServices.LatestCommits
 {
     public partial class Default : System.Web.UI.Page
     {
+        private readonly MobileServicesAuthenticator authenticator = new MobileServicesAuthenticator();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!authenticator.IsApiKeyValid(Request.QueryString["apiKey"] ?? "")) return;
+
             var changesets = GetAllChangesets().OrderByDescending(c => c.Revision);
             var revision = long.Parse(Request.QueryString["revision"] ?? "" + changesets.First().Revision);
             var selectedChangesets = changesets.Where(c => c.Revision < revision).Take(10);
