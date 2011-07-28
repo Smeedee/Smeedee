@@ -75,9 +75,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Smeedee.Widget.Admin.MobileServices\ViewModels\MobileServicesAuthenticationViewModel.cs">
-      <Link>ViewModels\MobileServicesAuthenticationViewModel.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -89,6 +86,7 @@
     <Compile Include="SampleData\SampleDataSource\SampleDataSource.xaml.cs">
       <DependentUpon>SampleDataSource.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MobileServicesAuthenticationViewModel.cs" />
     <Compile Include="Views\MobileServicesAdminView.xaml.cs">
       <DependentUpon>MobileServicesAdminView.xaml</DependentUpon>
     </Compile>
