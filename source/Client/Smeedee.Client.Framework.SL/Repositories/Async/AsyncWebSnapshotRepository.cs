@@ -30,7 +30,7 @@ namespace Smeedee.Client.Framework.SL.Repositories.Async
             //client.SaveCompleted += client_SaveCompleted;
         }
 
-        void client_GetCompleted(object sender, GetCompletedEventArgs e)
+        private void client_GetCompleted(object sender, GetCompletedEventArgs e)
         {
             if (GetCompleted != null)
             {
