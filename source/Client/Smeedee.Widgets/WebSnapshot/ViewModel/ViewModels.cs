@@ -35,7 +35,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		partial void OnGetAvailableImages(ref ObservableCollection<string> value);
 		partial void OnSetAvailableImages(ref ObservableCollection<string> value);
 
-		public virtual WriteableBitmap SelectedImage
+		public virtual string SelectedImage
 		{
 			get 
 			{
@@ -53,10 +53,10 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 				}
 			}
 		}
-		private WriteableBitmap _SelectedImage;
+		private string _SelectedImage;
 
-		partial void OnGetSelectedImage(ref WriteableBitmap value);
-		partial void OnSetSelectedImage(ref WriteableBitmap value);
+		partial void OnGetSelectedImage(ref string value);
+		partial void OnSetSelectedImage(ref string value);
 
 		public virtual WriteableBitmap Image
 		{

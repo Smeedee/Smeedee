@@ -47,6 +47,19 @@
                           Style="{StaticResource SettingsViewComboBox}"
                           ItemsSource="{Binding AvailableImages}"
                           SelectedItem="{Binding SelectedImage, Mode=TwoWay}" />
+						  
+                <TextBox Text="{Binding CropCoordinateX, Mode=TwoWay}"
+                         Name="Xbox" HorizontalAlignment="Left" Width="66" Margin="8,0,0,0" Grid.Column="1" Height="24" VerticalAlignment="Top" />
+                <TextBox Text="{Binding CropCoordinateY, Mode=TwoWay}"
+                         Name="Ybox" Height="24" VerticalAlignment="Bottom" Margin="8,0,0,-5" HorizontalAlignment="Left" Width="66" d:LayoutOverrides="HorizontalAlignment" Grid.Column="1"
+                          />
+                <TextBox Text="{Binding CropRectangleHeight, Mode=TwoWay}"
+                         Name="Heightbox" Margin="80,0,0,19" Grid.Column="1" HorizontalAlignment="Left" Width="66"
+                          />
+                <TextBox Text="{Binding CropRectangleWidth, Mode=TwoWay}"
+                         Name="Widthbox" Margin="80,0,0,-1" HorizontalAlignment="Left" Width="66" Grid.Column="1" Height="20" VerticalAlignment="Bottom"
+                          />
+						  
                 <Canvas x:Name="canvas"
                         Grid.Row="2"
                         Grid.Column="0"
@@ -62,22 +75,22 @@
                             Grid.Column="0"
                             HorizontalAlignment="Left"
                             Style="{StaticResource SettingsViewControlButtonsWrapper}">
-                    <Button Content="Crop"
+                    <Button x:Name="CropButton" Content="Crop"
                             Style="{StaticResource SettingsViewButton}"
                             Click="crop_click" />
                     <Button Content="Reset"
                             Style="{StaticResource SettingsViewButton}"
                             Command="{Binding OnReset}"
-                            Click="Button_Click"
+                            Click="reset_click"
                             Margin="10,0,0,0" />
                 </StackPanel>
                 <StackPanel Grid.Row="4"
                             Grid.Column="1"
                             Style="{StaticResource SettingsViewControlButtonsWrapper}">
                     <Button Style="{StaticResource SettingsViewSaveButton}"
-                            Command="{Binding SaveSettings}" />
+                            Command="{Binding Save}" />
                     <Button Style="{StaticResource SettingsViewReloadSettingsButton}"
-                            Command="{Binding ReloadSettings}" />
+                            Command="{Binding Reload}" />
                 </StackPanel>
             </Grid>
         </Border>

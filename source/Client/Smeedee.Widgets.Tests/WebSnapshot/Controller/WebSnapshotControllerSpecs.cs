@@ -2,7 +2,9 @@
 using System.Windows.Media.Imaging;
 using Moq;
 using NUnit.Framework;
+using Smeedee.Client.Framework.Repositories;
 using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
@@ -34,6 +36,10 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
                                                       };
 
         protected When OnReset_is_called = () => settingsViewModel.Reset.ExecuteDelegate();
+        protected When OnSave_is_called = () => settingsViewModel.Save.ExecuteDelegate();
+
+
+
 
         [SetUp]
         public void SetUp()
@@ -42,7 +48,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
              
             viewModel = new WebSnapshotViewModel();
             settingsViewModel = new WebSnapshotSettingsViewModel();
-            config = new Configuration();
+            config = WebSnapshotConfig.NewDefaultConfiguration();
             backgroundWorker = new Mock<IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>>>();
             timer = new Mock<ITimer>();
             logger = new Mock<ILog>();
@@ -87,11 +93,30 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             Then("image is reset", () => settingsViewModel.Image.ShouldBeNull());
         }
 
-        [Test]
-        [Ignore]
-        public void assure_we_get_data_from_repo()
-        {
+    }
 
+    [TestFixture]
+    public class When_saving_configuration : Shared
+    {
+        private Context there_is_settings_in_viewmodel = () =>
+                                                             {
+
+                                                             };
+        [Test]
+        public void Then_save_should_be_called_on_configPersister()
+        {
+            Given(controller_is_created);
+            When(OnSave_is_called);
+            Then("save should be called on the configPersister",
+                 () => configPersister.Verify(c => c.Save(It.IsAny<Configuration>()), Times.AtLeastOnce()));
+        }
+
+        [Test]
+        public void Then_string_settings_from_viewmodel_should_be_copied_into_configuration()
+        {
+            Given(controller_is_created).And(there_is_settings_in_viewmodel); ;
+            When("");
+            Then("");
         }
     }
 }
