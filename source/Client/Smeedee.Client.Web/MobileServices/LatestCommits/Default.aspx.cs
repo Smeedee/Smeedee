@@ -37,7 +37,7 @@ namespace Smeedee.Client.Web.MobileServices.LatestCommits
             var users = UsernameToUserMapping.Map(usernames);
             var asStrings = selectedChangesets.Select(c => new[]
             {
-                c.Comment, c.Time.ToString(), c.Author.Username, c.Revision.ToString("yyyyMMddHHmmss"), users[c.Author.Username].ImageUrl.ToString()
+                c.Comment, c.Time.ToString("yyyyMMddHHmmss"), c.Author.Username, c.Revision.ToString(), users[c.Author.Username].ImageUrl.ToString()
             });
             return Csv.ToCsv(asStrings);
         }
