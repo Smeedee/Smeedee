@@ -21,14 +21,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private Configuration config;
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
-        //private IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient;
         private ILog logger;
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
             WebSnapshotSettingsViewModel webSnapshotSettingsViewModel,
             Configuration configuration,
-            IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>> asyncClient,
             ITimer timer,
             ILog logger,
             IUIInvoker uiInvoker,
@@ -42,8 +40,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             Guard.Requires<ArgumentNullException>(webSnapshotSettingsViewModel != null);
             Guard.Requires<ArgumentNullException>(configuration != null);
             Guard.Requires<ArgumentNullException>(logger != null);
-            //Guard.Requires<ArgumentNullException>(repository != null);
-
 
             config = configuration;
             this.configPersisterRepository = configPersister;
@@ -51,7 +47,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
-            //this.asyncClient = asyncClient;
             webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
             webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
 
@@ -67,7 +62,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             if (!ViewModel.IsLoading)
             {
                 SetIsLoadingData();
-                repository.BeginGet(new AllSpecification<DomainModel.WebSnapshot.WebSnapshot>());
+                repository.BeginGet(new WebSnapshotSpecification());
             }
 
         }
@@ -142,46 +137,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
             return wb;
         }
-
-
-        //protected IEnumerable<DomainModel.WebSnapshot.WebSnapshot> QuerySnapshot(Specification<DomainModel.WebSnapshot.WebSnapshot> specification)
-        //{
-        //    IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshot = null;
-        //    try
-        //    {
-        //        logger.WriteEntry(new LogEntry("QuerySnapshot", "in try. repository is: " + repository));
-        //        snapshot = repository.Get(specification);
-        //        ViewModel.HasConnectionProblems = false;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        LogErrorMsg(e);
-        //        ViewModel.HasConnectionProblems = true;
-        //    }
-
-        //    return snapshot;
-        //}
-
-
-
-        //public void UpdateConfiguration(Configuration config)
-        //{
-        //    Guard.Requires<ArgumentNullException>(config != null);
-        //    Guard.Requires<ArgumentException>(config.ContainsSetting(url));
-        //    Guard.Requires<ArgumentException>(config.ContainsSetting(refresh_interval));
-
-        //    this.config = config;
-
-        //    webSnapshotSettingsViewModel.InputUrl = config.GetSetting(url).Value;
-        //}
-
-        //public Configuration SaveConfiguration()
-        //{
-        //    config.ChangeSetting(url, webSnapshotSettingsViewModel.InputUrl);
-        //    config.ChangeSetting(refresh_interval, webSnapshotSettingsViewModel.RefreshInterval.ToString());
-
-        //    return config;
-        //}
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
