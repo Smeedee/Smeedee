@@ -51,7 +51,7 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Widget.SourceControl.Tests.Controllers
 {
-   
+
     [TestFixture]
     public class When_controller_is_spawned : Shared
     {
@@ -67,19 +67,17 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         [Test]
         public void Should_load_changeset_data_into_the_ViewModel()
         {
-                Given(there_are_changesets_in_sourcecontrol).
-                    And(user_info_exist_in_userdb);
+            Given(there_are_changesets_in_sourcecontrol).
+                And(user_info_exist_in_userdb);
 
-                When(the_controller_is_created);
+            When(the_controller_is_created);
 
-                Then("changeset data should be loaded into the ViewModel", () =>
-                {
-                    //viewModel.Message.ShouldBe("Added hello world method");
-                    //viewModel.Date.ShouldBe(new DateTime(1986, 5, 20));
-                    viewModel.Changesets.Count.ShouldNotBe(0);
-                    viewModel.Changesets.First().Message.ShouldBe("Added hello world method");
-                    viewModel.Changesets.First().Date.ShouldBe(new DateTime(1986, 5, 20));
-                });
+            Then("changeset data should be loaded into the ViewModel", () =>
+            {
+                viewModel.Changesets.Count.ShouldNotBe(0);
+                viewModel.Changesets.First().Message.ShouldBe("Added hello world method");
+                viewModel.Changesets.First().Date.ShouldBe(new DateTime(1986, 5, 20));
+            });
         }
 
         [Test]
@@ -88,15 +86,15 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(there_are_changesets_in_sourcecontrol).
                     And(user_info_exist_in_userdb);
 
-                When(the_controller_is_created);
+            When(the_controller_is_created);
 
-                Then("user info data should be loaded into the ViewModel", () =>
-                {
-                    Person developer = viewModel.Changesets.First().Developer;
-                    developer.Name.ShouldBe("Gøran Hansen");
-                    developer.Email.ShouldBe("mail@goeran.no");
-                    developer.ImageUrl.ShouldBe("http://goeran.no/avatar.jpg");
-                });
+            Then("user info data should be loaded into the ViewModel", () =>
+            {
+                Person developer = viewModel.Changesets.First().Developer;
+                developer.Name.ShouldBe("Gøran Hansen");
+                developer.Email.ShouldBe("mail@goeran.no");
+                developer.ImageUrl.ShouldBe("http://goeran.no/avatar.jpg");
+            });
         }
 
         [Test]
@@ -105,21 +103,21 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(there_are_changesets_in_sourcecontrol)
                     .And(user_info_exist_in_userdb);
 
-                When(the_controller_is_created);
+            When(the_controller_is_created);
 
-                Then(assure_it_queried_Changeset_Repository_for_the_newest_changeset);
+            Then(assure_it_queried_Changeset_Repository_for_the_newest_changeset);
         }
 
         [Test]
         public void Should_query_userdb_repository_for_userinfo()
         {
-                Given(there_are_changesets_in_sourcecontrol).
-                    And(user_info_exist_in_userdb);
+            Given(there_are_changesets_in_sourcecontrol).
+                And(user_info_exist_in_userdb);
 
-                When(the_controller_is_created);
-    
-                Then("it should fetch user info",() => 
-                    userRepositoryMock.Verify(r => r.Get(It.IsAny<AllSpecification<User>>()), Times.Once()));
+            When(the_controller_is_created);
+
+            Then("it should fetch user info", () =>
+                userRepositoryMock.Verify(r => r.Get(It.IsAny<AllSpecification<User>>()), Times.Once()));
         }
 
         [Test]
@@ -127,7 +125,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         {
             Given(there_are_config_settings_in_db);
             When(the_controller_is_created);
-            Then("the settings should be fetched", () => 
+            Then("the settings should be fetched", () =>
                 configRepositoryMock.Verify(r => r.Get(It.IsAny<ConfigurationByName>()), Times.AtLeastOnce()));
         }
     }
@@ -139,25 +137,26 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         [Test]
         public void Should_query_Changeset_repository_for_newest_changeset()
         {
-            
-                Given(there_are_changesets_in_sourcecontrol).
-                    And(user_info_exist_in_userdb).
-                    And(the_controller_has_been_created);
 
-                When("notified to refresh", () => ITimerMock.Raise(n => n.Elapsed += null,new EventArgs()));
+            Given(there_are_changesets_in_sourcecontrol).
+                And(user_info_exist_in_userdb).
+                And(the_controller_has_been_created);
 
-                Then("assure it queried Changeset Repository for the newest changeset", 
-                    () => repositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()),Times.Exactly(2)));
+            When("notified to refresh", () => ITimerMock.Raise(n => n.Elapsed += null, new EventArgs()));
+
+            Then("assure it queried Changeset Repository for the newest changeset",
+                () => repositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2)));
         }
 
         [Test]
         public void Assure_refresh_does_not_throw_exception()
         {
             Given(the_controller_has_been_created);
-            When("notified to refresh", () => ITimerMock.Raise(n => n.Elapsed += null,new EventArgs()));
-            Then("assure no exceptions are caught", 
+            When("notified to refresh", () => ITimerMock.Raise(n => n.Elapsed += null, new EventArgs()));
+            Then("assure no exceptions are caught",
                 () => loggerMock.Verify(r => r.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.Never()));
         }
+
         [Test]
         public void Assure_five_refresh_does_not_throw_exception()
         {
@@ -199,19 +198,19 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         public void
             Assure_ImplementationViolationException_is_thrown_if_Changeset_repository_return_a_null_reference()
         {
-            
-                Given("there are no changesets in sourcecontrol").
-                    And(Changeset_repository_return_a_null_reference_value).
-                    And(user_info_exist_in_userdb);
 
-                When("the controller is created");
+            Given("there are no changesets in sourcecontrol").
+                And(Changeset_repository_return_a_null_reference_value).
+                And(user_info_exist_in_userdb);
 
-                Then("assure ImplementationViolationException is thrown",
-                              () => this.ShouldThrowException<Exception>(
-                                        () => the_controller_is_created(),
-                                        exception =>
-                                        exception.Message.ShouldBe(
-                                            "Violation of IChangesetRepository. Does not accept a null reference as a return value.")));
+            When("the controller is created");
+
+            Then("assure ImplementationViolationException is thrown",
+                          () => this.ShouldThrowException<Exception>(
+                                    () => the_controller_is_created(),
+                                    exception =>
+                                    exception.Message.ShouldBe(
+                                        "Violation of IChangesetRepository. Does not accept a null reference as a return value.")));
         }
     }
 
@@ -240,10 +239,10 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(There_are_no_changesets_in_sourceControl).
                     And(user_info_exist_in_userdb);
 
-                When(the_controller_is_created);
+            When(the_controller_is_created);
 
-                Then("assure userinfo is not loaded into the viewModel",
-                              () => { viewModel.Changesets.Count.ShouldBe(0); });
+            Then("assure userinfo is not loaded into the viewModel",
+                          () => { viewModel.Changesets.Count.ShouldBe(0); });
         }
     }
 
@@ -252,7 +251,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
     {
         // TODO: Move to new tests in the Framework
         [Test]
-        public void Assure_state_in_ViewModel_is_set_to_Loading() {}
+        public void Assure_state_in_ViewModel_is_set_to_Loading() { }
 
         //[Test]
         //public void Assure_DisplayLoadingAnimationCmdPublisher_is_notified()
@@ -298,43 +297,40 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                     And(user_info_exist_in_userdb).
                     And(the_controller_has_been_created).
                     And("and data is loaded");
+            When("data is reloaded from repository");
+            Then("assure only new changesets are added to the viewmodel", () =>
+            {
+                ObservableCollection<ChangesetViewModel> oldChangesets = viewModel.Changesets;
+                var oldFirstChangeset = oldChangesets.First();
 
-                When("data is reloaded from repository");
-
-
-                Then("assure only new changesets are added to the viewmodel", () =>
+                var changesets = new List<Changeset>();
+                changesets.Add(new Changeset() //this changeset already exists in db.
                 {
-                    ObservableCollection<ChangesetViewModel> oldChangesets = viewModel.Changesets;
-                    var oldFirstChangeset = oldChangesets.First();
-
-                    var changesets = new List<Changeset>();
-                    changesets.Add(new Changeset() //this changeset already exists in db.
+                    Revision = 201222,
+                    Comment = "Added hello world method",
+                    Time = new DateTime(1986, 5, 20),
+                    Author = new Author()
                     {
-                        Revision = 201222,
-                        Comment = "Added hello world method",
-                        Time = new DateTime(1986, 5, 20),
-                        Author = new Author()
-                        {
-                            Username = "goeran"
-                        }
-                    });
-                    changesets.Add(new Changeset()
-                    {
-                        Revision = 201223,
-                        Comment = "New thing with comments",
-                        Time = new DateTime(1986, 5, 23),
-                        Author = new Author()
-                        {
-                            Username = "jask"
-                        }
-                    });
-                    repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
-
-                    ITimerMock.Raise(n => n.Elapsed += null, new EventArgs());
-
-                    viewModel.Changesets.Count.ShouldBe(2);
-                    oldFirstChangeset.ShouldBeSameAs(viewModel.Changesets.Last());
+                        Username = "goeran"
+                    }
                 });
+                changesets.Add(new Changeset()
+                {
+                    Revision = 201223,
+                    Comment = "New thing with comments",
+                    Time = new DateTime(1986, 5, 23),
+                    Author = new Author()
+                    {
+                        Username = "jask"
+                    }
+                });
+                repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
+
+                ITimerMock.Raise(n => n.Elapsed += null, new EventArgs());
+
+                viewModel.Changesets.Count.ShouldBe(2);
+                oldFirstChangeset.ShouldBeSameAs(viewModel.Changesets.Last());
+            });
         }
 
         [Test]
@@ -343,11 +339,9 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(there_are_changesets_in_sourcecontrol).
                     And(user_info_exist_in_userdb).
                     And(the_controller_has_been_created);
-
-                When("data is loaded");
-
-                Then("assure state in ViewModel is changed to Ready",
-                              () => viewModel.IsLoading.ShouldBeFalse());
+            When("data is loaded");
+            Then("assure state in ViewModel is changed to Ready",
+                          () => viewModel.IsLoading.ShouldBeFalse());
         }
 
         [Test]
@@ -358,19 +352,13 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                 .And("the number of commits to show is set to 4", () => viewModel.NumberOfCommits = 4)
                 .And("this number of commits is loaded into the view model", () =>
                     ITimerMock.Raise(t => t.Elapsed += null, new EventArgs()));
-
             When("the number of commits is increased", () =>
             {
                 viewModel.NumberOfCommits = 9;
                 viewModel.SaveSettings.ExecuteDelegate();
             });
-
-            Then("the number of displayed commits should have been increased", () =>
-            {
-                viewModel.Changesets.Count.ShouldBe(9);
-            });
+            Then("the number of displayed commits should have been increased", () => viewModel.Changesets.Count.ShouldBe(9));
         }
-
     }
 
     [TestFixture]
@@ -413,7 +401,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             controller.ViewModel.BlinkWhenNoComment = bool.Parse(configExample.GetSetting("blinkOnBlankComment").Value);
         }
     }
-    
+
     [TestFixture]
     public class When_settings_are_loaded_and_saved_to_db : Shared
     {
@@ -441,7 +429,8 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         [Test]
         public void Assure_that_change_in_color_settings_in_db_lead_to_changes_in_ViewModel()
         {
-            Given(the_controller_has_been_created).And(the_keyword_fix_is_bound_to_green_in_settings_db);
+            Given(the_controller_has_been_created).
+                And(the_keyword_fix_is_bound_to_green_in_settings_db);
 
             When(refresh_is_triggered);
 
@@ -483,7 +472,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
             When(reload_settings_button_is_pressed);
 
-            Then("numberOfCommits should be back to default 8", 
+            Then("numberOfCommits should be back to default 8",
                 () => viewModel.NumberOfCommits.ShouldBe(8));
         }
 
@@ -508,7 +497,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
             When(reload_settings_button_is_pressed);
 
-            Then("blinkWhenNoComment should be back to default false", 
+            Then("blinkWhenNoComment should be back to default false",
                 () => viewModel.BlinkWhenNoComment.ShouldBeFalse());
         }
 
@@ -533,7 +522,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
             When(reload_settings_button_is_pressed);
 
-            Then("keywordlist should be empty", 
+            Then("keywordlist should be empty",
                 () => viewModel.KeywordList.ShouldBeEmpty());
         }
 
@@ -586,7 +575,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
             When(reload_settings_button_is_pressed);
 
-            Then("the_keyword_should_be_fix_again", 
+            Then("the_keyword_should_be_fix_again",
                 () => viewModel.KeywordList[0].Keyword.ShouldBe("fix"));
 
 
@@ -600,7 +589,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
 
             When(fix_keyword_is_set_to_an_empty_string);
 
-            Then("keyword list should be empty", 
+            Then("keyword list should be empty",
                 () => viewModel.KeywordList.Count.ShouldBe(0));
         }
 
@@ -609,11 +598,11 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
         private Context number_of_commits_has_been_changed = () => viewModel.NumberOfCommits = 42;
         private Context save_button_has_been_pressed = () => viewModel.SaveSettings.ExecuteDelegate();
         private Context blink_when_no_comment_has_been_changed = () => viewModel.BlinkWhenNoComment = true;
-        
-        private Context fix_green_binding_has_been_added_to_keywordlist = 
-            () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = "fix", ColorName = "green", KeywordChanged = controller.KeywordChangedHandler});
+
+        private Context fix_green_binding_has_been_added_to_keywordlist =
+            () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = "fix", ColorName = "green", KeywordChanged = controller.KeywordChangedHandler });
         protected Context gul_yellow_binding_has_been_added_to_keywordlist =
-            () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = "gul", ColorName = "yellow", KeywordChanged = controller.KeywordChangedHandler});
+            () => viewModel.KeywordList.Add(new KeywordColorPairViewModel { Keyword = "gul", ColorName = "yellow", KeywordChanged = controller.KeywordChangedHandler });
 
         private Context fix_green_binding_has_been_deleted = () => viewModel.KeywordList.RemoveAt(0);
         private Context the_keyword_fix_has_been_changed = () => viewModel.KeywordList[0].Keyword = "change";
@@ -717,7 +706,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(the_keyword_fix_is_bound_to_green_in_settings_db).And(the_controller_has_been_created);
             When(the_keyword_green_is_replaced_with_an_empty_string);
             Then("there should not be items in KeywordList", () => viewModel.KeywordList.Count.ShouldBe(0));
-        }                                                                                               
+        }
     }
 
     [TestFixture]
@@ -754,7 +743,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             );
             repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
         };
- 
+
 
         [Test]
         public void Assure_that_changeset_has_default_color_when_no_word_is_found()
@@ -826,7 +815,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Given(the_controller_has_been_created).
                 And(there_are_changesets_in_sourcecontrol).
                 And(add_word_and_color_button_has_been_pressed).
-                And("keyword is set to hello", () => viewModel.KeywordList[0].Keyword="hello");
+                And("keyword is set to hello", () => viewModel.KeywordList[0].Keyword = "hello");
             When(save_button_is_pressed);
             Then("the default color should be grey", () =>
                                                          {
@@ -885,11 +874,11 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             When(save_button_is_pressed);
             Then("the pair should not be saved", () => viewModel.KeywordList.Count.ShouldBe(0));
         }
-  
+
         private Context add_word_and_color_button_has_been_pressed = () => viewModel.AddWordAndColorSettings.ExecuteDelegate();
     }
 
-    
+
 
     public class Shared : ScenarioClass
     {
@@ -1043,7 +1032,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                 config.NewSetting("commentKeywords", keywordColors);
             else
                 config.NewSetting("commentKeywords", new string[0]);
-    
+
             return config;
         }
 

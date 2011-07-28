@@ -6,9 +6,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
-    xmlns:src="clr-namespace:Smeedee.Widget.SourceControl.ViewModels" 
-    xmlns:conv="clr-namespace:Smeedee.Widget.SourceControl.SL.Converters" 
-    mc:Ignorable="d"
+    xmlns:conv="clr-namespace:Smeedee.Widget.SourceControl.SL.Converters"
+	xmlns:Resources="clr-namespace:Smeedee.Client.Framework.Resources;assembly=Smeedee.Client.Framework.SL"
+	xmlns:Converters="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
+	mc:Ignorable="d"
 	d:DesignWidth="640" d:DesignHeight="480">
     
     <UserControl.Resources>
@@ -16,9 +17,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
+            <Resources:BrushProvider x:Key="brushProvider" />
+            <Converters:StringToResourceConverter x:Key="StringToResourceConverter" />
         </ResourceDictionary>
-        <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
-        <src:ColorProvider x:Key="colorProvider" />
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
         <Border Style="{StaticResource SettingsViewBorder}"
@@ -95,7 +97,7 @@
                                        Name="keywordAndColorGrid"
                                        FontSize="14"
                                        Background="White"
-                                       ItemsSource="{Binding Path=KeywordList}">
+                                       ItemsSource="{Binding Path= KeywordList}">
                         <Controls:DataGrid.Columns>
                             <Controls:DataGridTextColumn Header="Keyword"
                                                          Binding="{Binding Keyword, Mode=TwoWay}"
@@ -104,9 +106,9 @@
                                                              MinWidth="161">
                                 <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding ColorList, Source={StaticResource colorProvider}}"
+                                        <ComboBox ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
                                                   SelectedValue="{Binding ColorName, Mode=TwoWay}"
-                                                  SelectedValuePath="ShortName"
+                                                  SelectedValuePath="BrushKey"
                                                   Style="{StaticResource SettingsViewComboBox}"
                                                   Height="27"
                                                   MinWidth="160">
@@ -116,8 +118,8 @@
                                                         <Rectangle Width="15"
                                                                    Height="15"
                                                                    Margin="5"
-                                                                   Fill="{Binding BrushName, Converter={StaticResource StringToBrushConverter}}" />
-                                                        <TextBlock Text="{Binding ShortName}" />
+                                                                   Fill="{Binding BrushName, Converter={StaticResource StringToResourceConverter}}" />
+                                                        <TextBlock Text="{Binding BrushKey}" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>

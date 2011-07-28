@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using Smeedee.Client.Framework.Controller;
+using Smeedee.Client.Framework.Resources;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
@@ -132,8 +133,6 @@ namespace Smeedee.Widget.SourceControl.Controllers
             SetIsLoadingConfig();
             var currentSettings = configRepo.Get(new ConfigurationByName(SettingsEntryName)).SingleOrDefault();
 
-
-
             if (ConfigurationHasSettings(currentSettings) && DbSettingsIsChanged(currentSettings))
             {
                 SetSettings(currentSettings);
@@ -209,7 +208,6 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 {
                     ViewModel.KeywordList.Add(new KeywordColorPairViewModel() { Keyword = config[i], ColorName = config[i + 1], KeywordChanged = this.KeywordChangedHandler });
                 }
-
             });
         }
 
@@ -301,7 +299,7 @@ namespace Smeedee.Widget.SourceControl.Controllers
                 if (lowerCaseKeyword.Length == 0)
                     continue;
                 if (comment.Contains(lowerCaseKeyword))
-                    return ChangesetBackgroundProvider.GetBrushName(binding.ColorName);
+                    return BrushProvider.GetBrushName(binding.ColorName);
             }
             return ChangesetViewModel.DEFAULT_BACKGROUND_COLOR;
         }
