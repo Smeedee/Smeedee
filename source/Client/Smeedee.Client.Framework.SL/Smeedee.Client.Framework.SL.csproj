@@ -158,6 +158,9 @@
     <Compile Include="..\Smeedee.Client.Framework\ResourceParsing\XamlResourceDictionary.cs">
       <Link>ResourceReading\XamlResourceDictionary.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Resources\BrushProvider.cs">
+      <Link>Resources\BrushProvider.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\IDockBarService.cs">
       <Link>Services\IDockBarService.cs</Link>
     </Compile>
@@ -305,6 +308,7 @@
     </Compile>
     <Compile Include="Controls\IDataTemplateSelector.cs" />
     <Compile Include="Controls\ItemsControlEx.cs" />
+    <Compile Include="Converters\StringToResourceConverter.cs" />
     <Compile Include="MEF\DeploymentFolderCatalog.cs" />
     <Compile Include="MEF\Package.cs" />
     <Compile Include="MEF\Services\HttpDownloadService.cs" />

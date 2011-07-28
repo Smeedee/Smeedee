@@ -78,6 +78,7 @@
     <Compile Include="Messages\OpenModalDialogMessage.cs" />
     <Compile Include="Repositories\Charting\ChartStorageReader.cs" />
     <Compile Include="Repositories\NoSql\NoSqlRepository.cs" />
+    <Compile Include="Resources\BrushProvider.cs" />
     <Compile Include="Services\Impl\EventAggregator.cs" />
     <Compile Include="Factories\ModuleLoaderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
