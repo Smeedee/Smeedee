@@ -65,7 +65,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         protected static WebSnapshotViewModel viewModel;
         protected static WebSnapshotSettingsViewModel settingsViewModel;
         protected static Configuration config;
-        protected static Mock<IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>>> backgroundWorker;
         protected static Mock<ITimer> timer;
         protected static Mock<ILog> logger;
         protected static Mock<IUIInvoker> uiInvoker;
@@ -83,7 +82,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
                 viewModel, 
                 settingsViewModel, 
                 config, 
-                backgroundWorker.Object, 
                 timer.Object, 
                 logger.Object, 
                 uiInvoker.Object, 
@@ -113,7 +111,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             viewModel = new WebSnapshotViewModel();
             settingsViewModel = new WebSnapshotSettingsViewModel();
             config = new Configuration();
-            backgroundWorker = new Mock<IInvokeBackgroundWorker<IEnumerable<DomainModel.WebSnapshot.WebSnapshot>>>();
             timer = new Mock<ITimer>();
             logger = new Mock<ILog>();
             uiInvoker = new Mock<IUIInvoker>();
