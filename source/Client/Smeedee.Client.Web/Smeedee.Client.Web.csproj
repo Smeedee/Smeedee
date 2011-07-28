@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Framework\Csv.cs" />
+    <Compile Include="Framework\MobileServicesAuthenticator.cs" />
     <Compile Include="Log.aspx.cs">
       <DependentUpon>Log.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
