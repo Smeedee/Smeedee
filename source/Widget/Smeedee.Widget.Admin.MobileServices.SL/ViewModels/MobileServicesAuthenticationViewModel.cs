@@ -12,7 +12,7 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
         private const string MOBILE_SERVICES_CONFIGURATION_KEY = "MobileServices";
         private const string MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY = "ApiKey";
 
-        private const string LEGAL_KEY_ITEMS = "abcdefgijkmnopqrstwxyzABCDEFGHJKLMNPQRSTWXYZ123456789*$-+_=!";
+        private const string LEGAL_KEY_ITEMS = "abcdefgijkmnopqrstwxyzABCDEFGHJKLMNPQRSTWXYZ123456789";
 
         private const string GENERATING_NEW_KEY_MESSAGE = "Generating new key. Please Wait...";
         private const string NEW_KEY_GENERATED_MESSAGE = "New key generated. Loading...";
