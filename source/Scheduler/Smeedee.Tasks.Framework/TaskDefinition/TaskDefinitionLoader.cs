@@ -42,7 +42,7 @@ namespace Smeedee.Tasks.Framework.TaskDefinitions
                 catch (Exception e)
                 {
                     var logEntry = ErrorLogEntry.Create(this,
-                                                        "Failed to load TaskDefinition from Dll. Exception: " + e.Message);
+                                                        "Failed to load TaskDefinition from Dll: " +dll+". Exception: " + e.Message);
                     if (e is ReflectionTypeLoadException)
                         logEntry.Message += "\r\nLoader Exception: "+((ReflectionTypeLoadException)e).LoaderExceptions[0].Message;
                     _logger.WriteEntry(logEntry);

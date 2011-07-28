@@ -54,6 +54,8 @@ namespace Smeedee.Widget.SourceControl.SL
             var controller = NewController<CommitStatisticsController>();
 			PropertyChanged += controller.ToggleRefreshInSettingsMode;
 
+            ConfigurationChanged += controller.ConfigurationChanged;
+
 			View = new CommitStatisticsView() { DataContext = viewModel };
 			SettingsView = new CommitStatisticsSettingsView { DataContext = settingsViewModel };
         }

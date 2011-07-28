@@ -96,6 +96,33 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
                 
             }
 
+            [Test]
+            public void Assure_that_no_error_is_returned_when_refreshing_datasources_without_exceptions()
+            {
+                Given(the_storage_has_been_created).
+                    And(there_is_a_database_with_collections);
+                When(calling_refresh_datasources);
+                Then("error should not have triggered", ()
+                    => onErrorCalled.ShouldBe(0));
+
+            }
+
+            [Test]
+            public void Assure_that_we_can_handle_errors_when_refreshing_datasources()
+            {
+                Given(the_storage_has_been_created).
+                    And(we_are_listening_for_refresh_event).
+                    And("error occurs", () => NoSqlRepositoryGetDatabasesReturnsException(new Exception("TestError")));
+                When(calling_refresh_datasources);
+                Then("error event should have triggered", () =>
+                {
+                    refresh_event_raised.ShouldBe(0);
+                    onErrorCalled.ShouldBe(1);
+                    onErrorException.Message.ShouldBe("TestError");
+                    onErrorMessage.ShouldBe("Failed to refresh datasources.");
+                });
+            }
+
             private Context there_are_no_databases = () =>
                 NoSqlRepositoryGetDatabasesReturns(new Collection());
 
@@ -149,6 +176,32 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
                 Then(chart_should_contain_complex_data);
             }
 
+            [Test]
+            public void Assure_that_no_error_is_triggered_when_data_is_loaded()
+            {
+                Given(the_storage_has_been_created).
+                    And(there_are_two_documents_in_collection);
+                When(loading_chart);
+                Then("No error should have happened", () =>
+                    onErrorCalled.ShouldBe(0));
+            }
+
+            [Test]
+            public void Assure_that_we_can_handle_errors_when_loading_charts()
+            {
+                Given(the_storage_has_been_created).
+                    And(we_are_listening_to_chart_loaded_event).
+                    And("error occurs", () => NoSqlRepositoryGetDocumentsReturnsException(new Exception("TestError")));
+                When(loading_chart_with_callback);
+                Then("error event should have triggered", () =>
+                                                              {
+                                                                  onErrorCalled.ShouldBe(1);
+                                                                  onErrorException.Message.ShouldBe("TestError");
+                                                                  onErrorMessage.ShouldBe("Failed to load chart data.");
+                                                                  loadedChart.ShouldBe(null);
+                                                              });
+            }
+
 
             private Context there_are_two_documents_in_collection = () =>
                 NoSqlRepositoryGetDocumentsReturns(testCollection);
@@ -200,6 +253,7 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
             };
         }
 
+        
 
         public class Shared : ScenarioClass
         {
@@ -208,8 +262,18 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
 
             protected static ChartStorageReader storage;
 
+            protected static int onErrorCalled;
+            protected static Exception onErrorException;
+            protected static string onErrorMessage;
+
             protected Context the_storage_has_been_created = () =>
+            {
                 storage = new ChartStorageReader(noSqlRepositoryMock.Object);
+                onErrorCalled = 0;
+                onErrorException = null;
+                onErrorMessage = null;
+                storage.Error += OnError;
+            };
 
             [SetUp]
             public void SetUp()
@@ -228,14 +292,33 @@ namespace Smeedee.Client.Framework.Tests.Repositories.Charting
 
             protected static void NoSqlRepositoryGetDatabasesReturns(Collection databases)
             {
-                noSqlRepositoryMock.Setup(s => s.GetDatabases(It.IsAny<Action<Collection>>())).
-                    Callback((Action<Collection> callback) => callback(databases));
+                noSqlRepositoryMock.Setup(s => s.GetDatabases(It.IsAny<Action<Collection>>(), It.IsAny<Action<Exception>>())).
+                    Callback((Action<Collection> callback, Action<Exception> onError) => callback(databases));
+            }
+
+            protected static void NoSqlRepositoryGetDatabasesReturnsException(Exception exception)
+            {
+                noSqlRepositoryMock.Setup(s => s.GetDatabases(It.IsAny<Action<Collection>>(), It.IsAny<Action<Exception>>())).
+                    Callback((Action<Collection> callback, Action<Exception> onError) => onError(exception));
             }
 
             protected static void NoSqlRepositoryGetDocumentsReturns(Collection documents)
             {
-                noSqlRepositoryMock.Setup(s => s.GetDocuments(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action<Collection>>())).
-                    Callback((string d, string c, Action<Collection> callback) => callback(documents));                
+                noSqlRepositoryMock.Setup(s => s.GetDocuments(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action<Collection>>(), It.IsAny<Action<Exception>>())).
+                    Callback((string d, string c, Action<Collection> callback, Action<Exception> onError) => callback(documents));
+            }
+
+            protected static void NoSqlRepositoryGetDocumentsReturnsException(Exception exception)
+            {
+                noSqlRepositoryMock.Setup(s => s.GetDocuments(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action<Collection>>(), It.IsAny<Action<Exception>>())).
+                    Callback((string d, string c, Action<Collection> callback, Action<Exception> onError) => onError(exception));
+            }
+
+            protected static void OnError(object sender, ChartErrorEventArgs eventArgs)
+            {
+                onErrorCalled++;
+                onErrorException = eventArgs.Exception;
+                onErrorMessage = eventArgs.Message;
             }
         }
     }

@@ -55,6 +55,8 @@ namespace Smeedee.Widget.SourceControl.SL
 
             viewModel.SaveSettings.AfterExecute += (s,e) => SaveSettings.Execute();
 
+            ConfigurationChanged += controller.ConfigurationUpdated;
+
             View = new TopCommiters() { DataContext = viewModel };
 			SettingsView = new TopCommitersSettings() { DataContext = viewModel };
         }

@@ -56,6 +56,7 @@ namespace Smeedee.Widget.CI.SL
 			SettingsView = new CISettingsView{ DataContext = settingsViewModel };
 
             PropertyChanged += controller.ToggleRefreshInSettingsMode;
+            ConfigurationChanged += controller.ConfigurationUpdated;
             controller.ViewModel.PropertyChanged += ViewModelPropertyChanged;
         }
 

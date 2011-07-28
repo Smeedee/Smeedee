@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Media.Imaging;
 using NUnit.Framework;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
@@ -17,7 +14,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
 
         protected When picture_is_loaded = () =>
                                                {
-                                                   viewmodel.Snapshot = "somePicture.jpg";
+                                                   viewmodel.Snapshot = new WriteableBitmap(new BitmapImage(new Uri("http://my.pic/somePicture.jpg")));
                                                };
 
         [SetUp]

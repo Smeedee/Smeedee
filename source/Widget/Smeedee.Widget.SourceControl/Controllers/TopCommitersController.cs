@@ -175,11 +175,10 @@ namespace Smeedee.Widget.SourceControl.Controllers
         private void ConfigRepositoryGetCompleted(object sender, GetCompletedEventArgs<Configuration> eventArgs)
         {
             var config = eventArgs.Result.FirstOrDefault();
-
+            SetIsNotLoadingConfig();
             SetSettingsOnViewModel(config);
 
-            if(!ViewModel.IsLoadingConfig)
-                UpdateViewModel();
+            UpdateViewModel();
         }
 
         private void SetSettingsOnViewModel(Configuration config)
@@ -446,6 +445,12 @@ namespace Smeedee.Widget.SourceControl.Controllers
         protected override void AfterQueryAllChangesets()
         {
             allUsers = userRepository.Get(new AllSpecification<User>());
+        }
+
+        public void ConfigurationUpdated(object sender, EventArgs eventArgs)
+        {
+            configIsChanged = true;
+            LoadConfigAndData();
         }
     }
 }

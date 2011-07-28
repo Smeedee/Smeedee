@@ -130,15 +130,30 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     {
         private static Dictionary<string, string> brushes = new Dictionary<string, string>
         {   
-            {"white", "WhiteGradientBrush"},
-            {"cyan", "CyanGradientBrush"},
-            {"blue", "BlueGradientBrush"},
-            {"green", "GreenGradientBrush"},
-            {"yellow", "YellowGradientBrush"},
+            {"grey", "DarkGreyGradientBrush"},
+            {"darkGrey", "GreyGradientBrush"},
+            {"lightGrey", "LightGreyGradientBrush"},
+
+            {"lightBrown", "LightBrownGradientBrush"},
+            {"brown", "BrownGradientBrush"},
+            {"darkBrown", "DarkBrownGradientBrush"},
+
+            {"red", "RedGradientBrush"},
             {"orange", "OrangeGradientBrush"},
+            {"yellow", "YellowGradientBrush"},
+
+            {"lightGreen", "LightGreenGradientBrush"},
+            {"green", "MediumGreenGradientBrush"},
+            {"darkGreen", "GreenGradientBrush"},
+
+            {"lightBlue", "LightBlueGradientBrush"},
+            {"blue", "BlueGradientBrush"},
+            {"darkBlue", "DarkBlueGradientBrush"},
+          
             {"pink", "PinkGradientBrush"},
-            {"purple", "PurpleGradientBrush"}
-            
+            {"purple", "PurpleGradientBrush"},
+            {"darkPurple", "DarkPurpleGradientBrush"}
+          
         };
 
         public static string GetBrushName(string color)

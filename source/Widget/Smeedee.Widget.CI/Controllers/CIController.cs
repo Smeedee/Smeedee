@@ -101,6 +101,12 @@ namespace Smeedee.Widget.CI.Controllers
 
         #endregion
         
+
+        public void ConfigurationUpdated(object sender, EventArgs eventArgs)
+        {
+            LoadData();
+        }
+
         private void LoadData()
         {
             asyncClient.RunAsyncVoid(() =>

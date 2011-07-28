@@ -121,7 +121,8 @@ namespace Smeedee.Client.Framework
             config.Bind<IAsyncRepository<TaskConfiguration>>().To<AsyncTaskConfigurationRepository>();
             config.Bind<IAsyncRepository<TaskDefinition>>().To<AsyncTaskDefinitionRepository>();
             config.Bind<IAsyncRepository<TeamPicture>>().To<AsyncTeamPictureRepository>();
-            config.Bind<IAsyncRepository<Userdb>>().To<AsyncUserdbRepository>();            
+            config.Bind<IAsyncRepository<Userdb>>().To<AsyncUserdbRepository>();
+            config.Bind<IAsyncRepository<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
         }
 
         private static void BindAsyncPersisters(DependencyConfigSemantics config)
@@ -134,7 +135,8 @@ namespace Smeedee.Client.Framework
             config.Bind<IPersistDomainModelsAsync<SlideConfiguration>>().To<AsyncSlideConfigurationRepository>();
             config.Bind<IPersistDomainModelsAsync<TaskConfiguration>>().To<AsyncTaskConfigurationRepository>();
             config.Bind<IPersistDomainModelsAsync<TeamPicture>>().To<AsyncTeamPictureRepository>();
-            config.Bind<IPersistDomainModelsAsync<Userdb>>().To<AsyncUserdbRepository>();            
+            config.Bind<IPersistDomainModelsAsync<Userdb>>().To<AsyncUserdbRepository>();
+            config.Bind<IPersistDomainModelsAsync<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
         }
 
         private static void BindAsyncIDomainModelDeleters(DependencyConfigSemantics config)
@@ -156,7 +158,8 @@ namespace Smeedee.Client.Framework
             config.Bind<IInvokeBackgroundWorker<IEnumerable<TaskConfiguration>>>().To<AsyncClient<IEnumerable<TaskConfiguration>>>();
             config.Bind<IInvokeBackgroundWorker<IEnumerable<TaskDefinition>>>().To<AsyncClient<IEnumerable<TaskDefinition>>>();
             config.Bind<IInvokeBackgroundWorker<IEnumerable<TeamPicture>>>().To<AsyncClient<IEnumerable<TeamPicture>>>();
-			config.Bind<IInvokeBackgroundWorker<IEnumerable<Userdb>>>().To<AsyncClient<IEnumerable<Userdb>>>();            
+			config.Bind<IInvokeBackgroundWorker<IEnumerable<Userdb>>>().To<AsyncClient<IEnumerable<Userdb>>>();
+            config.Bind<IInvokeBackgroundWorker<IEnumerable<WebSnapshot>>>().To<AsyncClient<IEnumerable<WebSnapshot>>>();
         }
     }
 }
