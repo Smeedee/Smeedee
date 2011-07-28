@@ -6,11 +6,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
     public class WebSnapshotConfig
     {
         private Configuration configuration;
-        public static readonly string url = "URL";
-        public static readonly string coordinateX ="Coordinate X";
-        public static readonly string coordinateY = "Coordinate Y";
-        public static readonly string rectangleHeight ="Crop rectangle height";
-        public static readonly string rectangleWidth= "Crop rectangle width";
+        public static readonly string url = "url";
+        public static readonly string coordinateX ="cropCoordinateX";
+        public static readonly string coordinateY = "cropCoordinateY";
+        public static readonly string rectangleHeight ="rectangle-height";
+        public static readonly string rectangleWidth= "rectangle-width";
 
         public WebSnapshotConfig(Configuration configuration)
         {

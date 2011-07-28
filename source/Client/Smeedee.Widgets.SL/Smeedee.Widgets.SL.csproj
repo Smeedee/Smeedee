@@ -154,6 +154,9 @@
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Controllers\WebSnapshotConfig.cs">
+      <Link>WebSnapshot\Controller\WebSnapshotConfig.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\WebSnapshot\Controllers\WebSnapshotController.cs">
       <Link>WebSnapshot\Controller\WebSnapshotController.cs</Link>
     </Compile>
