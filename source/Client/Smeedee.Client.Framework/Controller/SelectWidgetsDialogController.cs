@@ -12,7 +12,7 @@ namespace Smeedee.Client.Framework.Controller
 {
     public class SelectWidgetsDialogController
     {
-        private List<string> adminWidgets = new List<string> {"Holidays", "Task Administration", "User Administration"};
+        private List<string> adminWidgets = new List<string> { "Holidays", "Task Administration", "User Administration", "Smeedee for Mobile Devices" };
         private SelectWidgetsDialog viewModel;
         private IAsyncRepository<WidgetMetadata> repository;
         private readonly IPersistDomainModelsAsync<SlideConfiguration> slideConfigPersister;

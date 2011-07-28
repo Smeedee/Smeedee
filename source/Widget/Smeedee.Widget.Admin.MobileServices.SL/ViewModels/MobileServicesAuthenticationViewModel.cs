@@ -23,6 +23,9 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
         private readonly IUIInvoker uiInvoker;
         private Configuration configuration;
 
+        private bool isSaving;
+        private bool isLoading;
+
 
         public DelegateCommand GenerateNewKey { get; private set; }
 
@@ -56,17 +59,29 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
         private void RetrieveCurrentKey()
         {
             uiInvoker.Invoke(() => ApiKey = PLEASE_WAIT_MESSAGE);
-            repo.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
+            if (!isLoading)
+            {
+                repo.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
+                isLoading = true;
+            }
+            
         }
 
         void persister_SaveCompleted(object sender, SaveCompletedEventArgs e)
         {
+            isSaving = false;
+            
             uiInvoker.Invoke(() => ApiKey = NEW_KEY_GENERATED_MESSAGE);
-            repo.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
+            if (!isLoading)
+            {
+                repo.BeginGet(new ConfigurationByName(MOBILE_SERVICES_CONFIGURATION_KEY));
+                isLoading = true;
+            }
         }
 
         void settingsRepository_GetCompleted(object sender, GetCompletedEventArgs<Configuration> e)
         {
+            isLoading = false;
 
             if (e.Result.Count() > 0)
             {
@@ -99,7 +114,12 @@ namespace Smeedee.Widget.Admin.MobileServices.ViewModels
             else
                 configuration.NewSetting(MOBILE_SERVICES_API_KEY_CONFIGURATION_KEY, GenerateRandomKeyString());
 
-            persister.Save(configuration);
+            if (!isSaving)
+            {
+                persister.Save(configuration);
+                isSaving = true;
+            }
+            
         }
 
         private static string GenerateRandomKeyString()
