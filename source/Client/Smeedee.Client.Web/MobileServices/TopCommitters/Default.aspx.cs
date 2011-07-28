@@ -18,35 +18,20 @@ namespace Smeedee.Client.Web.MobileServices
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!authenticator.IsApiKeyValid(Request.QueryString["apiKey"] ?? "")) return;
-
-            var userdb = new UserdbDatabaseRepository().Get(new DefaultUserdbSpecification()).FirstOrDefault();
             
             var timeSpan = TimeSpan.FromDays(int.Parse(Request.QueryString["days"] ?? "30"));
-            var allUsers = userdb == null ? new List<User>() : userdb.Users;
             var changesets = GetChangsets(timeSpan);
-            var topCommitters = CalcTopCommitters(changesets, allUsers);
+            var topCommitters = CalcTopCommitters(changesets);
             Response.Write(Csv.ToCsv(topCommitters));
         }
 
-        private IEnumerable<string[]> CalcTopCommitters(IEnumerable<Changeset> changesets, IEnumerable<User> allUsers)
+        private IEnumerable<string[]> CalcTopCommitters(IEnumerable<Changeset> changesets)
         {
             var counts = CountCommitsPerAuthor(changesets);
-            var users = CreateUsernameToUserMap(counts.Keys, allUsers);
+            var users = UsernameToUserMapping.Map(counts.Keys);
             return counts.Keys.Select(username => new[] { users[username].Name, counts[username].ToString(), users[username].ImageUrl });
         }
 
-        private Dictionary<string, User> CreateUsernameToUserMap(IEnumerable<string> usernames, IEnumerable<User> users)
-        {
-            var map = new Dictionary<string, User>();
-            foreach (var username in usernames)
-            {
-                var match = users.Where(u => u.Username == username);
-                map[username] = match.Count() > 0
-                                    ? match.First()
-                                    : new User(username) {ImageUrl = ""};
-            }
-            return map;
-        }
 
         private static Dictionary<string, int> CountCommitsPerAuthor(IEnumerable<Changeset> changesets)
         {
