@@ -52,7 +52,7 @@ namespace Smeedee.Client.Framework.Resources
 
         public static string GetBrushName(string color)
         {
-            return color != null && brushes.ContainsKey(color) ? brushes[color] : null;
+            return color != null && brushes.ContainsKey(color) ? brushes[color] : DEFAULT_BRUSH;
         }
 
         public static string[] GetBrushKeys()

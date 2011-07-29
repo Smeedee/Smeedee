@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Smeedee.Widget.SourceControl.SL.Converters;
 using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 
@@ -20,6 +22,8 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
 {
     public class GenericChart : Chart
     {
+        private static readonly StringToBrushConverter converter = new StringToBrushConverter();
+
         public IEnumerable LinesSource
         {
             get { return (IEnumerable) GetValue(LinesSourceProperty); }
@@ -106,8 +110,8 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
         private void InitSeries(object s, EventArgs e)
         {
             Series.Clear();
-            if (WeHaveAreaTemplateAndAreasSource())
-                AddSeriesFrom(AreasSource, AreaTemplate);
+            if (WeHaveAreasSource())
+                AddAreaSeriesProgrammatically(AreasSource);
 
             if (WeHaveColumnTemplateAndColumnsSource())
                 AddSeriesFrom(ColumnsSource, ColumnTemplate);
@@ -116,9 +120,9 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
                 AddSeriesFrom(LinesSource, LineTemplate);
         }
 
-        private bool WeHaveAreaTemplateAndAreasSource()
+        private bool WeHaveAreasSource()
         {
-            return AreaTemplate != null && AreasSource != null;
+            return AreasSource != null;
         }
 
         private bool WeHaveColumnTemplateAndColumnsSource()
@@ -129,6 +133,78 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
         private bool WeHaveLineTemplateAndLinesSource()
         {
             return LineTemplate != null && LinesSource != null;
+        }
+
+        private void AddAreaSeriesProgrammatically(IEnumerable source)
+        {
+            var areas = from area in source.OfType<DataSetViewModel>()
+                        select area;
+            foreach (var area in areas)
+            {
+                Series.Add(CreateArea(area));
+            }
+        }
+
+        private AreaSeries CreateArea(DataSetViewModel viewModel)
+        {
+            var series = new AreaSeries
+            {
+                ItemsSource = viewModel.Data,
+                Title = viewModel.Name,
+                DependentValuePath = "Y",
+                IndependentValuePath = "X"
+            };
+            if (!string.IsNullOrEmpty(viewModel.Brush))
+            {
+                series.DataPointStyle = CreateStyle(viewModel, typeof(AreaDataPoint));
+            }
+            return series;
+
+        }
+        
+        private LineSeries CreateLine(DataSetViewModel viewModel)
+        {
+            var series = new LineSeries
+            {
+                ItemsSource = viewModel.Data,
+                Title = viewModel.Name,
+                DependentValuePath = "Y",
+                IndependentValuePath = "X"
+            };
+            if (!string.IsNullOrEmpty(viewModel.Brush))
+            {
+                series.DataPointStyle = CreateStyle(viewModel, typeof(LineDataPoint));
+            }
+            return series;
+        }
+        
+        private ColumnSeries CreateColumn(DataSetViewModel viewModel)
+        {
+            var series = new ColumnSeries
+            {
+                ItemsSource = viewModel.Data,
+                Title = viewModel.Name,
+                DependentValuePath = "Y",
+                IndependentValuePath = "X"
+            };
+            if (!string.IsNullOrEmpty(viewModel.Brush))
+            {
+                series.DataPointStyle = CreateStyle(viewModel, typeof(ColumnDataPoint));
+            }
+            return series;
+        }
+
+        private Style CreateStyle(DataSetViewModel viewModel, Type type)
+        {
+            var style = new Style(type);
+            var setter = new Setter(BackgroundProperty, CreateBrush(viewModel));
+            style.Setters.Add(setter);
+            return style;
+        }
+
+        private object CreateBrush(DataSetViewModel viewModel)
+        {
+            return converter.Convert(viewModel.Brush, typeof (Brush), null, CultureInfo.CurrentUICulture);
         }
 
         private void AddSeriesFrom(IEnumerable source, DataTemplate template)
