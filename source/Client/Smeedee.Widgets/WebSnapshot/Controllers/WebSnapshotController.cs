@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Smeedee.Client.Framework.Controller;
@@ -48,16 +49,35 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.logger = logger;
             this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
+            webSnapshotSettingsViewModel.PropertyChanged += webSnapshotSettingsViewModel_PropertyChanged;
             webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
-            webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
+            webSnapshotSettingsViewModel.ReloadSettings.ExecuteDelegate += OnReLoadSettings;
+            webSnapshotSettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
 
             repository.GetCompleted += OnGetCompleted;
 
-
-
             Start();
             BeginLoadData();
+        }
 
+        private void webSnapshotSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedImage")
+            {
+                uiInvoker.Invoke(() => webSnapshotSettingsViewModel.Image = new BitmapImage(new Uri(webSnapshotSettingsViewModel.SelectedImage)));
+            }
+        }
+
+        private void OnReloadSettingsCompleted(object sender, EventArgs e)
+        {
+            SetIsNotLoadingConfig();
+            BeginLoadData();
+        }
+
+        private void OnReLoadSettings()
+        {
+            SetIsLoadingConfig();
+            CopyConfigurationToSettingsViewModel();
         }
 
         private void OnSaveCompleted(object sender, SaveCompletedEventArgs e)
@@ -70,6 +90,9 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             SetIsSavingConfig();
             CopySettingsViewModelToConfiguration();
+
+            uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = webSnapshotSettingsViewModel.Image);
+
             configPersisterRepository.Save(webSnapshotConfig.Configuration);
 
         }
@@ -103,30 +126,9 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             BeginLoadData();
         }
 
-
-        private void OnReset()
-        {
-            uiInvoker.Invoke(() =>
-            {
-                //TODO Get(SelectedImage) and set it as Image
-                //webSnapshotSettingsViewModel.Image = GenerateWriteableBitmap("http://www.dvo.com/newsletter/monthly/2007/september/images/strawberry.jpg");
-            });
-        }
-
-        private WriteableBitmap GenerateWriteableBitmap(string path)
-        {
-            var uri = new Uri(path);
-            var bmi = new BitmapImage(uri);
-            var wb = new WriteableBitmap(bmi);
-
-            uri = null;
-            bmi = null;
-
-            return wb;
-        }
-
         protected void BeginLoadData()
         {
+            return;
             if (!ViewModel.IsLoading)
             {
                 SetIsLoadingData();
@@ -172,7 +174,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void SetWebSnapshot(string imagePath)
         {
-            webSnapshotViewModel.Snapshot = GenerateWriteableBitmap(imagePath);
+            webSnapshotViewModel.Snapshot = new BitmapImage(new Uri(imagePath));
             webSnapshotViewModel.HasStoredImage = imagePath != null;
         }
 

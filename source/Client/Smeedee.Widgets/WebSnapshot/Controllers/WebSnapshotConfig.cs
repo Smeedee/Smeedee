@@ -26,25 +26,25 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         public string CoordinateX
         {
             get { return configuration.GetSetting(coordinateX).Value; }
-            set { configuration.ChangeSetting(coordinateX, value); }
+            set { configuration.ChangeSetting(coordinateX, string.IsNullOrEmpty(value) ? "0" : value); }
         }
 
         public string CoordinateY
         {
             get { return configuration.GetSetting(coordinateY).Value; }
-            set { configuration.ChangeSetting(coordinateY, value); }
+            set { configuration.ChangeSetting(coordinateY, string.IsNullOrEmpty(value) ? "0" : value); }
         }
 
         public string RectangleHeight 
         {
             get { return configuration.GetSetting(rectangleHeight).Value; }
-            set { configuration.ChangeSetting(rectangleHeight, value); }
+            set { configuration.ChangeSetting(rectangleHeight, string.IsNullOrEmpty(value) ? "0" : value); }
         }
 
         public string RectangleWidth
         {
             get { return configuration.GetSetting(rectangleWidth).Value; }
-            set { configuration.ChangeSetting(rectangleWidth, value); }
+            set { configuration.ChangeSetting(rectangleWidth, string.IsNullOrEmpty(value) ? "0" : value); }
         }
         
         public bool IsConfigured

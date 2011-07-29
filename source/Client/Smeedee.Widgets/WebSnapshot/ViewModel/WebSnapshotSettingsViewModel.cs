@@ -8,17 +8,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
     {
         partial void OnInitialize()
         {
-
-            var uri = new Uri("http://www.newfreeware.com/img/scr/7-1013.jpg");
-            var bmi = new BitmapImage(uri);
-
-//#if SILVERLIGHT
-//                        var wb = new WriteableBitmap(bmi);
-//                        Image = wb;
-//#endif
-
-            //SelectedImage = wb;
-            AvailableImages = new ObservableCollection<string> { "Just", "some", "items" };;
+            AvailableImages = new ObservableCollection<string> { "http://i.imgur.com/tmsTg.png", "http://www.newfreeware.com/img/scr/7-1013.jpg" }; ;
         }
 
         public bool CanSave()
@@ -45,7 +35,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             get { return cropCoordinateX; }
             set
             {
-                if(value != cropCoordinateX)
+                if (value != cropCoordinateX)
                 {
                     cropCoordinateX = value;
                     TriggerPropertyChanged("CropCoordinateX");
@@ -53,7 +43,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
         private string cropCoordinateX;
-        
+
         public string CropCoordinateY
         {
             get { return cropCoordinateY; }
