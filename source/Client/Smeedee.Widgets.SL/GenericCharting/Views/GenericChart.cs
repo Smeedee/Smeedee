@@ -30,42 +30,6 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        public IEnumerable LinesSource
-        {
-            get { return (IEnumerable) GetValue(LinesSourceProperty); }
-            set { SetValue(LinesSourceProperty, value); }
-        }
-
-        public DataTemplate LineTemplate
-        {
-            get { return (DataTemplate)GetValue(LineTemplateProperty); }
-            set { SetValue(LineTemplateProperty, value); }
-        }
-
-        public IEnumerable ColumnsSource
-        {
-            get { return (IEnumerable) GetValue(ColumnsSourceProperty); }
-            set { SetValue(ColumnsSourceProperty, value); }
-        }
-
-        public DataTemplate ColumnTemplate
-        {
-            get { return (DataTemplate) GetValue(ColumnTemplateProperty); }
-            set { SetValue(ColumnTemplateProperty, value); }
-        }
-
-        public IEnumerable AreasSource
-        {
-            get { return (IEnumerable) GetValue(AreasSourceProperty); }
-            set { SetValue(AreasSourceProperty, value); }
-        }
-
-        public DataTemplate AreaTemplate
-        {
-            get { return (DataTemplate) GetValue(AreaTemplateProperty); }
-            set { SetValue(AreaTemplateProperty, value); }
-        }
-
         public DataTemplate LinearAxisTemplate
         {
             get { return (DataTemplate)GetValue(LinearAxisTemplateProperty); }
@@ -118,35 +82,11 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
             Series.Clear();
             if (WeHaveItemsSource())
                 AddSeries(ItemsSource);
-
-            if (WeHaveAreasSource())
-                AddAreaSeriesProgrammatically(AreasSource);
-
-            if (WeHaveColumnTemplateAndColumnsSource())
-                AddSeriesFrom(ColumnsSource, ColumnTemplate);
-
-            if (WeHaveLineTemplateAndLinesSource())
-                AddSeriesFrom(LinesSource, LineTemplate);
         }
 
         private bool WeHaveItemsSource()
         {
             return ItemsSource != null;
-        }
-
-        private bool WeHaveAreasSource()
-        {
-            return AreasSource != null;
-        }
-
-        private bool WeHaveColumnTemplateAndColumnsSource()
-        {
-            return ColumnTemplate != null && ColumnsSource != null;
-        }
-
-        private bool WeHaveLineTemplateAndLinesSource()
-        {
-            return LineTemplate != null && LinesSource != null;
         }
 
         private void AddSeries(IEnumerable source)
@@ -167,16 +107,6 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
                         Series.Add(CreateLine(s));
                         break;
                 }
-            }
-        }
-
-        private void AddAreaSeriesProgrammatically(IEnumerable source)
-        {
-            var areas = from area in source.OfType<DataSetViewModel>()
-                        select area;
-            foreach (var area in areas)
-            {
-                Series.Add(CreateArea(area));
             }
         }
 
@@ -242,38 +172,8 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
             return converter.Convert(viewModel.Brush, typeof (Brush), null, CultureInfo.CurrentUICulture);
         }
 
-        private void AddSeriesFrom(IEnumerable source, DataTemplate template)
-        {
-            var series = from line in source.OfType<object>()
-                         let seriesItem = template.LoadContent() as ISeries
-                         where seriesItem != null && seriesItem is FrameworkElement
-                         let assignDataContext = ((FrameworkElement)seriesItem).DataContext = line
-                         select seriesItem;
-
-            var list = series.ToList();
-            list.ForEach(Series.Add);
-        }
-
         public static readonly DependencyProperty ItemsSourceProperty =
             MakeSourceDependencyProperty("ItemsSource");
-
-        public static readonly DependencyProperty LinesSourceProperty =
-            MakeSourceDependencyProperty("LinesSource");
-
-        public static readonly DependencyProperty LineTemplateProperty =
-            MakeDataTemplateDependencyProperty("LineTemplate");
-
-        public static readonly DependencyProperty ColumnsSourceProperty =
-            MakeSourceDependencyProperty("ColumnsSource");
-
-        public static readonly DependencyProperty ColumnTemplateProperty =
-            MakeDataTemplateDependencyProperty("ColumnTemplate");
-
-        public static readonly DependencyProperty AreasSourceProperty =
-            MakeSourceDependencyProperty("AreasSource");
-
-        public static readonly DependencyProperty AreaTemplateProperty =
-            MakeDataTemplateDependencyProperty("AreaTemplate");
 
         public static readonly DependencyProperty LinearAxisTemplateProperty =
             MakeDataTemplateDependencyProperty("LinearAxisTemplate");

@@ -83,22 +83,6 @@
                         ShowGridLines="True"
                         />
             </charting:Chart.Axes>
-
-            <local:GenericChart.AreaTemplate>
-                <DataTemplate>
-                    <charting:AreaSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
-                </DataTemplate>
-            </local:GenericChart.AreaTemplate>
-            <local:GenericChart.ColumnTemplate>
-                <DataTemplate>
-                    <charting:ColumnSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
-                </DataTemplate>
-            </local:GenericChart.ColumnTemplate>
-            <local:GenericChart.LineTemplate>
-                <DataTemplate>
-                    <charting:LineSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
-                </DataTemplate>
-            </local:GenericChart.LineTemplate>
         </local:GenericChart>
 
     </Grid>
