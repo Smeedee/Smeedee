@@ -127,11 +127,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         protected void BeginLoadData()
         {
-            //if (!ViewModel.IsLoading)
-            //{
-            //    SetIsLoadingData();
-            //    repository.BeginGet(new WebSnapshotSpecification());
-            //}
+            if (!ViewModel.IsLoading)
+            {
+                SetIsLoadingData();
+                repository.BeginGet(new WebSnapshotSpecification());
+            }
         }
 
 
@@ -140,8 +140,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             if (eventArgs.Result != null)
             {
                 var SnapshotDataFromDB = eventArgs.Result;
-                logger.WriteEntry(new LogEntry("SnapshotDataFromDB", "Did I get it? " + SnapshotDataFromDB.First().PictureFilePath));
-                UpdateViewModel(SnapshotDataFromDB);
+                //logger.WriteEntry(new LogEntry("SnapshotDataFromDB", "Did I get it? " + SnapshotDataFromDB.First().PictureFilePath));
+                //UpdateViewModel(SnapshotDataFromDB);
             }
             else
             {

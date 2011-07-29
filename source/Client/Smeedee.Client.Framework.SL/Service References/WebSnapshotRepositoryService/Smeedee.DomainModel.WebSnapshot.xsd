@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="Smeedee.DomainModel.WebSnapshot" elementFormDefault="qualified" targetNamespace="Smeedee.DomainModel.WebSnapshot" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="ArrayOfWebSnapshot">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="WebSnapshot" nillable="true" type="tns:WebSnapshot" />

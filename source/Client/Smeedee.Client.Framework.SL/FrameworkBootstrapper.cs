@@ -85,7 +85,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IRepository<TeamPicture>>().To<TeamPictureWebserviceRepository>();
             config.Bind<IRepository<User>>().To<UserWebserviceRepositoryProxy>();
             config.Bind<IRepository<Userdb>>().To<UserdbWebserviceRepository>();
-            config.Bind<IRepository<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
+            //config.Bind<IRepository<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
 		}
 
         private static void BindDomainModelPersisters(DependencyConfigSemantics config)
