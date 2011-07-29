@@ -17,5 +17,7 @@ namespace Smeedee.DomainModel.WebSnapshot
         public virtual int PictureHeight { get; set; }
         [DataMember(Order = 4)]
         public virtual int PictureWidth { get; set; }
+        [DataMember(Order = 5)]
+        public virtual string Timestamp { get; set; }
     }
 }
