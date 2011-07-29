@@ -87,7 +87,7 @@ namespace Smeedee.Tasks.WebSnapshot
                 //{  
                     var model = new DomainModel.WebSnapshot.WebSnapshot
                                     {
-                                        Name = GetCurrentTimeStamp(),//config.Name,
+                                        Name = config.Name,
                                         PictureFilePath = filePath,
                                         PictureHeight = picture.Height,
                                         PictureWidth = picture.Width,
