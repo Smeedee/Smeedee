@@ -179,7 +179,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             //webSnapshotViewModel.Snapshot = CropImage(snapshot);
             //previousTimestamp = timestamp;
         }
-
+        /*
         private BitmapImage CropImage(DomainModel.WebSnapshot.WebSnapshot snapshot)
         {
              //= webSnapshotConfig.URL;
@@ -187,10 +187,10 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
              //= webSnapshotConfig.CoordinateY;
              //= webSnapshotConfig.RectangleHeight;
              //= webSnapshotConfig.RectangleWidth;
-
+            
 
         }
-
+        */
         private void SetWebSnapshot(string imagePath)
         {
             webSnapshotViewModel.Snapshot = new BitmapImage(new Uri(imagePath));
