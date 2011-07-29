@@ -327,7 +327,6 @@
     <Compile Include="Repositories\Async\AsyncTeamPictureRepository.cs" />
     <Compile Include="Repositories\Async\AsyncUserdbRepository.cs" />
     <Compile Include="Repositories\Async\AsyncUserRepository.cs" />
-    <Compile Include="Repositories\Async\AsyncWebSnapshotRepository.cs" />
     <Compile Include="Repositories\ChangesetWebserviceRepository.cs" />
     <Compile Include="Repositories\CIServerWebserviceRepository.cs" />
     <Compile Include="Repositories\ConfigurationWebserviceRepository.cs" />
@@ -340,7 +339,6 @@
     <Compile Include="Repositories\TeamPictureWebserviceRepository.cs" />
     <Compile Include="Repositories\UserdbWebserviceRepository.cs" />
     <Compile Include="Repositories\UserWebserviceRepositoryProxy.cs" />
-    <Compile Include="Repositories\WebSnapshotWebserviceRepository.cs" />
     <Compile Include="Resources\Graphic\Icons\AddWidgetIcon.xaml.cs">
       <DependentUpon>AddWidgetIcon.xaml</DependentUpon>
     </Compile>
@@ -378,11 +376,6 @@
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\SlideConfigurationService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\WebSnapshotRepositoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -512,7 +505,6 @@
     <DesignTimeOnly Include="SampleData\LoadingNotificationSampleDataSource\LoadingNotificationSampleDataSource.xsd" />
     <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource.xsd" />
     <DesignTimeOnly Include="SampleData\SelectWidgetsDialogSampleSource\SelectWidgetsDialogSampleSource.xsd" />
-    <None Include="Properties\DataSources\Smeedee.DomainModel.WebSnapshot.WebSnapshot.datasource" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.xsd">
       <SubType>Designer</SubType>
@@ -703,13 +695,6 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService.disco" />
-    <None Include="Service References\WebSnapshotRepositoryService\configuration91.svcinfo" />
-    <None Include="Service References\WebSnapshotRepositoryService\configuration.svcinfo" />
-    <None Include="Service References\WebSnapshotRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -785,23 +770,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\UserRepositoryService\UserRepositoryService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService.wsdl" />
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService1.wsdl" />
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService4.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -941,7 +909,6 @@
     <WCFMetadataStorage Include="Service References\TaskDefinitionRepositoryService\" />
     <WCFMetadataStorage Include="Service References\TeamPictureService\" />
     <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
-    <WCFMetadataStorage Include="Service References\WebSnapshotRepositoryService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.disco" />

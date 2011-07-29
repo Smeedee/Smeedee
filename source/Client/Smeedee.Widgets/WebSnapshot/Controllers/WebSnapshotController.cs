@@ -31,8 +31,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             ILog logger,
             IUIInvoker uiInvoker,
             IProgressbar loadingNotifier,
-            IPersistDomainModelsAsync<Configuration> configPersister,
-            IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository
+            IPersistDomainModelsAsync<Configuration> configPersister/*,
+            IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository*/
             )
             : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
@@ -51,12 +51,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
             webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
 
-            repository.GetCompleted += OnGetCompleted;
+           // repository.GetCompleted += OnGetCompleted;
 
 
 
             Start();
-            BeginLoadData();
+      //      BeginLoadData();
 
         }
 
@@ -127,11 +127,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         protected void BeginLoadData()
         {
-            //if (!ViewModel.IsLoading)
-            //{
-            //    SetIsLoadingData();
-            //    repository.BeginGet(new WebSnapshotSpecification());
-            //}
+            if (!ViewModel.IsLoading)
+            {
+                SetIsLoadingData();
+                repository.BeginGet(new WebSnapshotSpecification());
+            }
         }
 
 
@@ -140,8 +140,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             if (eventArgs.Result != null)
             {
                 var SnapshotDataFromDB = eventArgs.Result;
-                logger.WriteEntry(new LogEntry("SnapshotDataFromDB", "Did I get it? " + SnapshotDataFromDB.First().PictureFilePath));
-                UpdateViewModel(SnapshotDataFromDB);
+                //logger.WriteEntry(new LogEntry("SnapshotDataFromDB", "Did I get it? " + SnapshotDataFromDB.First().PictureFilePath));
+                //UpdateViewModel(SnapshotDataFromDB);
             }
             else
             {
