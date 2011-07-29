@@ -10,6 +10,8 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
 {
     public class WebSnapshotDatabaseRepository : GenericDatabaseRepository<WebSnapshot>
     {
+        public WebSnapshotDatabaseRepository() : base() {}
+
         public WebSnapshotDatabaseRepository(ISessionFactory sessionFactory)
             : base(sessionFactory)
         {

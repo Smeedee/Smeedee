@@ -83,9 +83,9 @@ namespace Smeedee.Client.Framework
             config.Bind<IRepository<TaskConfiguration>>().To<TaskConfigurationWebserviceRepository>();
             config.Bind<IRepository<TaskDefinition>>().To<TaskDefinitionWebserviceRepository>();
             config.Bind<IRepository<TeamPicture>>().To<TeamPictureWebserviceRepository>();
-            config.Bind<IRepository<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
             config.Bind<IRepository<User>>().To<UserWebserviceRepositoryProxy>();
-            config.Bind<IRepository<Userdb>>().To<UserdbWebserviceRepository>();			
+            config.Bind<IRepository<Userdb>>().To<UserdbWebserviceRepository>();
+            config.Bind<IRepository<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
 		}
 
         private static void BindDomainModelPersisters(DependencyConfigSemantics config)
@@ -98,7 +98,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IPersistDomainModels<TaskConfiguration>>().To<TaskConfigurationWebserviceRepository>();
             config.Bind<IPersistDomainModels<TeamPicture>>().To<TeamPictureWebserviceRepository>();
             config.Bind<IPersistDomainModels<Userdb>>().To<UserdbWebserviceRepository>();
-            config.Bind<IPersistDomainModels<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
+            //config.Bind<IPersistDomainModels<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
         }
 
         private static void BindDomainModelDeleters(DependencyConfigSemantics config)
@@ -136,7 +136,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IPersistDomainModelsAsync<TaskConfiguration>>().To<AsyncTaskConfigurationRepository>();
             config.Bind<IPersistDomainModelsAsync<TeamPicture>>().To<AsyncTeamPictureRepository>();
             config.Bind<IPersistDomainModelsAsync<Userdb>>().To<AsyncUserdbRepository>();
-            config.Bind<IPersistDomainModelsAsync<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
+            //config.Bind<IPersistDomainModelsAsync<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
         }
 
         private static void BindAsyncIDomainModelDeleters(DependencyConfigSemantics config)
