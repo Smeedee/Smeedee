@@ -8,7 +8,6 @@ using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
-using Smeedee.DomainModel.WebSnapshot;
 using Smeedee.Framework;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
 using TinyMVVM.Framework.Services;
@@ -162,12 +161,34 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 {
                     var snapshotPath = snapshot.PictureFilePath;
                     SetWebSnapshot(snapshotPath);
+                    //SetWebSnapshot(snapshot);
                 });
             }
             else
             {
                 uiInvoker.Invoke(() => webSnapshotViewModel.HasStoredImage = false);
             }
+        }
+
+        private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
+        {
+            //var timestamp = snapshot.Timestamp;
+            
+            //if (previousTimestamp == timestamp) return;
+
+            //webSnapshotViewModel.Snapshot = CropImage(snapshot);
+            //previousTimestamp = timestamp;
+        }
+
+        private BitmapImage CropImage(DomainModel.WebSnapshot.WebSnapshot snapshot)
+        {
+             //= webSnapshotConfig.URL;
+             //= webSnapshotConfig.CoordinateX;
+             //= webSnapshotConfig.CoordinateY;
+             //= webSnapshotConfig.RectangleHeight;
+             //= webSnapshotConfig.RectangleWidth;
+
+
         }
 
         private void SetWebSnapshot(string imagePath)
