@@ -6,7 +6,6 @@
              xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" 
              xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:local="clr-namespace:Smeedee.Widgets.SL.GenericCharting.Views"
-             xmlns:ConvertersSL="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="400">
@@ -15,7 +14,6 @@
         <ResourceDictionary>
             <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <Converters:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter"/>
-            <ConvertersSL:StringToResourceConverter x:Key="StringToResourceConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -35,12 +33,13 @@
         		<SolidColorBrush Color="{StaticResource FontColorBright}"/>
         	</TextBlock.Foreground>
         </TextBlock>
-
+        <!--LinesSource="{Binding Lines, Mode=OneWay}"
+            ColumnsSource="{Binding Columns, Mode=OneWay}"
+            AreasSource="{Binding Areas, Mode=OneWay}"-->
         <local:GenericChart
             Title="{Binding Name, Mode=OneWay}"
-            LinesSource="{Binding Lines, Mode=OneWay}"
-            ColumnsSource="{Binding Columns, Mode=OneWay}"
-            AreasSource="{Binding Areas, Mode=OneWay}"
+           
+            ItemsSource="{Binding Series, Mode=OneWay}"
             XAxisType="{Binding XAxisType, Mode=OneWay}"
             Visibility="{Binding Path=ShowErrorMessageInsteadOfChart, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
             
@@ -87,35 +86,17 @@
 
             <local:GenericChart.AreaTemplate>
                 <DataTemplate>
-                    <charting:AreaSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X">
-              <!--          <charting:AreaSeries.DataPointStyle>
-                            <Style TargetType="charting:AreaDataPoint">
-                                <Setter Property="Background" Value="{Binding Brush, Converter={StaticResource StringToResourceConverter}}" />
-                            </Style>
-                        </charting:AreaSeries.DataPointStyle>-->
-                    </charting:AreaSeries>
+                    <charting:AreaSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
                 </DataTemplate>
             </local:GenericChart.AreaTemplate>
             <local:GenericChart.ColumnTemplate>
                 <DataTemplate>
-                    <charting:ColumnSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X">
-                    <!--    <charting:ColumnSeries.DataPointStyle>
-                            <Style TargetType="Control">
-                                <Setter Property="Background" Value="{Binding Brush, Converter={StaticResource StringToResourceConverter}}" />
-                            </Style>
-                        </charting:ColumnSeries.DataPointStyle>-->
-                    </charting:ColumnSeries>
+                    <charting:ColumnSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
                 </DataTemplate>
             </local:GenericChart.ColumnTemplate>
             <local:GenericChart.LineTemplate>
                 <DataTemplate>
-                    <charting:LineSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" >
-                        <!--<charting:LineSeries.DataPointStyle>
-                            <Style TargetType="Control">
-                                <Setter Property="Background" Value="{Binding Brush, Converter={StaticResource StringToResourceConverter}}" />
-                            </Style>
-                        </charting:LineSeries.DataPointStyle>-->
-                    </charting:LineSeries>
+                    <charting:LineSeries ItemsSource="{Binding Data}" Title="{Binding Name}" DependentValuePath="Y" IndependentValuePath="X" />
                 </DataTemplate>
             </local:GenericChart.LineTemplate>
         </local:GenericChart>

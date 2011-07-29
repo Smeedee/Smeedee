@@ -24,6 +24,12 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
     {
         private static readonly StringToBrushConverter converter = new StringToBrushConverter();
 
+        public IEnumerable ItemsSource
+        {
+            get { return (IEnumerable) GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
+
         public IEnumerable LinesSource
         {
             get { return (IEnumerable) GetValue(LinesSourceProperty); }
@@ -110,6 +116,9 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
         private void InitSeries(object s, EventArgs e)
         {
             Series.Clear();
+            if (WeHaveItemsSource())
+                AddSeries(ItemsSource);
+
             if (WeHaveAreasSource())
                 AddAreaSeriesProgrammatically(AreasSource);
 
@@ -118,6 +127,11 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
 
             if (WeHaveLineTemplateAndLinesSource())
                 AddSeriesFrom(LinesSource, LineTemplate);
+        }
+
+        private bool WeHaveItemsSource()
+        {
+            return ItemsSource != null;
         }
 
         private bool WeHaveAreasSource()
@@ -133,6 +147,27 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
         private bool WeHaveLineTemplateAndLinesSource()
         {
             return LineTemplate != null && LinesSource != null;
+        }
+
+        private void AddSeries(IEnumerable source)
+        {
+            var series = from single in source.OfType<DataSetViewModel>()
+                         select single;
+            foreach (var s in series)
+            {
+                switch (s.Type)
+                {
+                    case ChartConfig.AREA:
+                        Series.Add(CreateArea(s));
+                        break;
+                    case ChartConfig.COLUMNS:
+                        Series.Add(CreateColumn(s));
+                        break;
+                    case ChartConfig.LINE:
+                        Series.Add(CreateLine(s));
+                        break;
+                }
+            }
         }
 
         private void AddAreaSeriesProgrammatically(IEnumerable source)
@@ -218,6 +253,9 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
             var list = series.ToList();
             list.ForEach(Series.Add);
         }
+
+        public static readonly DependencyProperty ItemsSourceProperty =
+            MakeSourceDependencyProperty("ItemsSource");
 
         public static readonly DependencyProperty LinesSourceProperty =
             MakeSourceDependencyProperty("LinesSource");
