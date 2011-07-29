@@ -102,9 +102,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             {
                 referenceDataSet = GetDataset(referenceSeries);
             }
-            viewModel.Lines.Clear();
-            viewModel.Areas.Clear();
-            viewModel.Columns.Clear();
             viewModel.Series.Clear();
 
             allSeries = new List<DataSetViewModel>();
@@ -128,20 +125,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             if (dataset == null) return; // TODO: error handling;
 
             var vm = ConvertDataSetToViewModel(dataset, series);
-
-            switch (series.ChartType)
-            {
-                case ChartConfig.LINE:
-                    viewModel.Lines.Add(vm);
-                    break;
-                case ChartConfig.COLUMNS:
-                    viewModel.Columns.Add(vm);
-                    break;
-                case ChartConfig.AREA:
-                    viewModel.Areas.Add(vm);
-                    break;
-            }
-
             allSeries.Add(vm);
         }
 
