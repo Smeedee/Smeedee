@@ -56,7 +56,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             When(creating_controller);
             Then("Controller should get data from repository", () =>
                 repository.Verify(r => r.BeginGet(
-                    It.IsAny<AllSpecification<DomainModel.WebSnapshot.WebSnapshot>>()),
+                    It.IsAny<Specification<DomainModel.WebSnapshot.WebSnapshot>>()),
                     Times.Once()));
 
         }
