@@ -8,6 +8,7 @@ using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
+using Smeedee.DomainModel.WebSnapshot;
 using Smeedee.Framework;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
 using TinyMVVM.Framework.Services;
