@@ -122,7 +122,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IAsyncRepository<TaskDefinition>>().To<AsyncTaskDefinitionRepository>();
             config.Bind<IAsyncRepository<TeamPicture>>().To<AsyncTeamPictureRepository>();
             config.Bind<IAsyncRepository<Userdb>>().To<AsyncUserdbRepository>();
-           // config.Bind<IAsyncRepository<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
+            config.Bind<IAsyncRepository<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
         }
 
         private static void BindAsyncPersisters(DependencyConfigSemantics config)

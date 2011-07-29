@@ -31,8 +31,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             ILog logger,
             IUIInvoker uiInvoker,
             IProgressbar loadingNotifier,
-            IPersistDomainModelsAsync<Configuration> configPersister/*,
-            IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository*/
+            IPersistDomainModelsAsync<Configuration> configPersister,
+            IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository
             )
             : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
@@ -51,12 +51,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
             webSnapshotSettingsViewModel.Reset.ExecuteDelegate += OnReset;
 
-           // repository.GetCompleted += OnGetCompleted;
+            repository.GetCompleted += OnGetCompleted;
 
 
 
             Start();
-      //      BeginLoadData();
+            BeginLoadData();
 
         }
 

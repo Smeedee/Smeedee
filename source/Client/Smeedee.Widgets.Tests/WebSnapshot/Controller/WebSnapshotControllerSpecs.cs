@@ -90,8 +90,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
                 logger.Object,
                 uiInvoker.Object,
                 progressbar.Object,
-                configPersister.Object/*,
-                repository.Object*/);
+                configPersister.Object,
+                repository.Object);
         }
 
         protected static void SetupWebSnapshotRepositoryMock(List<DomainModel.WebSnapshot.WebSnapshot> listOfSnapshots)
