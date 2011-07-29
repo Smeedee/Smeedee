@@ -137,7 +137,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void OnGetCompleted(object sender, GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot> eventArgs)
         {
-
             if (eventArgs.Result != null)
             {
                 var SnapshotDataFromDB = eventArgs.Result;
@@ -146,7 +145,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             }
             else
             {
-                logger.WriteEntry(new LogEntry("OnGetCompleted", "eventArgs was null"));
+                logger.WriteEntry(new LogEntry("OnGetCompleted,eventArgs was null", eventArgs.Error.ToString()));
             }
 
             SetIsNotLoadingData();

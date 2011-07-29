@@ -56,14 +56,6 @@ namespace Smeedee.Client.Framework.SL.Repositories
             return getResult;
         }
 
-        //public void Save(WebSnapshot domainModel)
-        //{
-        //    serviceClient.SaveAsync(new List<WebSnapshot> {domainModel});
-        //}
 
-        //public void Save(IEnumerable<WebSnapshot> domainModels)
-        //{
-        //    serviceClient.SaveAsync(domainModels.ToList());
-        //}
     }
 }

@@ -36,24 +36,8 @@ namespace Smeedee.Client.Web.Services
            }
 
            return result;
-           //return null;
        }
 
-       //[OperationContract]
-       //[ServiceKnownType(typeof(Specification<WebSnapshot>))]
-       //[ServiceKnownType(typeof(WebSnapshotSpecification))]
-       //public void Save(IEnumerable<WebSnapshot> webSnapshots)
-       // {
-       //    WebSnapshotDatabaseRepository repo = new WebSnapshotDatabaseRepository(DefaultSessionFactory.Instance);
-       //     try
-       //     {
-       //         repo.Save(webSnapshots);
-       //     }
-       //     catch (Exception exception)
-       //     {
-       //         ILog logger = new Logger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance));
-       //         logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString()));
-       //     }
-       // }
+
     }
 }
