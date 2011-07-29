@@ -32,6 +32,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
         public ObservableCollection<DataSetViewModel> Columns { get; private set; }
         public ObservableCollection<DataSetViewModel> Areas { get; private set; }
 
+        public ObservableCollection<DataSetViewModel> Series { get; private set; }
+
         //Commands
         public DelegateCommand Refresh { get; set; }
 
@@ -40,6 +42,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
             Lines = new ObservableCollection<DataSetViewModel>();
             Columns = new ObservableCollection<DataSetViewModel>();
             Areas = new ObservableCollection<DataSetViewModel>();
+
+            Series = new ObservableCollection<DataSetViewModel>();
 
             Refresh = new DelegateCommand();
 
@@ -128,5 +132,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
                 }
             }
         }
+
+        
     }
 }

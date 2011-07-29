@@ -105,6 +105,24 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		private ObservableCollection<DataPointViewModel> _Data;
 		partial void OnGetData(ref ObservableCollection<DataPointViewModel> value);
 		partial void OnSetData(ref ObservableCollection<DataPointViewModel> value);
+		public virtual string Type 
+		{ 
+			get
+			{
+				OnGetType(ref _Type);
+				 
+				return _Type; 
+			}
+			set 
+			{
+				OnSetType(ref value); 
+				_Type = value; 
+			} 
+		}
+
+		private string _Type;
+		partial void OnGetType(ref string value);
+		partial void OnSetType(ref string value);
 		public virtual string Brush
 		{
 			get 

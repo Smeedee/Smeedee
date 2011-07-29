@@ -27,6 +27,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private SeriesConfigViewModel referenceSeries = null;
         private DataSet referenceDataSet = null;
 
+        private List<DataSetViewModel> allSeries = null;
+
         public ChartUpdater(ChartViewModel viewModel, IChartStorageReader storageReader, IUIInvoker uiInvoker)
         {
             this.viewModel = viewModel;
@@ -103,7 +105,17 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             viewModel.Lines.Clear();
             viewModel.Areas.Clear();
             viewModel.Columns.Clear();
+            viewModel.Series.Clear();
+
+            allSeries = new List<DataSetViewModel>();
             series.ForEach(AddOneSeries);
+
+            allSeries.Where(s => s.Type == ChartConfig.AREA).ToList().ForEach(viewModel.Series.Add);
+            allSeries.Where(s => s.Type == ChartConfig.COLUMNS).ToList().ForEach(viewModel.Series.Add);
+            allSeries.Where(s => s.Type == ChartConfig.LINE).ToList().ForEach(viewModel.Series.Add);            
+
+            allSeries.Clear();
+            allSeries = null;
         }
 
         private void AddOneSeries(SeriesConfigViewModel series)
@@ -129,7 +141,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                     viewModel.Areas.Add(vm);
                     break;
             }
-           
+
+            allSeries.Add(vm);
         }
 
         private DataSet GetDataset(SeriesConfigViewModel series)
@@ -142,7 +155,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private DataSetViewModel ConvertDataSetToViewModel(DataSet dataset, SeriesConfigViewModel series)
         {
-            var vm = new DataSetViewModel {Name = !string.IsNullOrEmpty(series.Legend) ? series.Legend : dataset.Name, Brush = BrushProvider.GetBrushName(series.Brush)};
+            var vm = new DataSetViewModel {Name = !string.IsNullOrEmpty(series.Legend) ? series.Legend : dataset.Name, Brush = BrushProvider.GetBrushName(series.Brush), Type = series.ChartType};
 
             for (int i = 0; i<dataset.DataPoints.Count; i++)
             {
@@ -150,9 +163,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 var Xvalue = referenceDataSet != null ? referenceDataSet.DataPoints[i] : i;
                 if (int.TryParse(dataset.DataPoints[i].ToString(), out Yvalue))
                     vm.Data.Add(new DataPointViewModel { X = Xvalue, Y = Yvalue});
-
-
-
                 else
                     Debug.WriteLine("ERROR PARSING!"); // TODO: need some errorhandling when datapoint could not be converted to a number
             }

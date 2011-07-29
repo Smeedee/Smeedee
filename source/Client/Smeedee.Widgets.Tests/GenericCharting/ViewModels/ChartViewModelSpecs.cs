@@ -46,6 +46,14 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
         }
 
         [Test]
+        public void Assure_it_contains_series()
+        {
+            Given(viewModel_has_been_created);
+            When("");
+            Then("It should contain series", () => viewModel.Series.ShouldNotBeNull());
+        }
+
+        [Test]
         public void Assure_showErrorMessageInsteadOfChart_is_false_when_created()
         {
             Given(viewModel_has_been_created);

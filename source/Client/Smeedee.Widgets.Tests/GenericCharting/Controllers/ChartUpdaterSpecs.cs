@@ -84,7 +84,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
             [Test]
-            public void Then_updater_should_load_data_into_viewmodel()
+            public void Then_updater_should_load_data_into_viewmodel_old()
             {
                 Given(a_valid_configuration).
                     And(storage_returns_a_chart);
@@ -105,7 +105,42 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                             viewModel.Lines[0].Data[i].X.ShouldBe(i);
                             viewModel.Lines[0].Data[i].Y.ShouldBe(i + 1);
                         }
+
                     });
+            }
+
+            [Test]
+            public void Then_updater_should_load_data_into_viewmodel()
+            {
+                Given(a_valid_configuration).
+                    And(storage_returns_a_chart);
+                When(calling_update);
+                Then("viewModel should contain a line", () =>
+                {
+                    viewModel.Name.ShouldBeNull();
+                    viewModel.XAxisName.ShouldBeNull();
+                    viewModel.YAxisName.ShouldBeNull();
+                    viewModel.XAxisType.ShouldBe(ChartConfig.CATEGORY);
+
+                    viewModel.Series[0].Name.ShouldBe("Row");
+                    viewModel.Series[0].Data.Count.ShouldBe(5);
+                    viewModel.Series[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[0]));
+                    viewModel.Series[0].Type.ShouldBe(ChartConfig.LINE);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        viewModel.Series[0].Data[i].X.ShouldBe(i);
+                        viewModel.Series[0].Data[i].Y.ShouldBe(i + 1);
+                    }
+                });
+            }
+
+            [Test]
+            public void Then_updater_should_load_complex_data_into_viewmodel_old()
+            {
+                Given(a_more_complex_valid_configuration).
+                    And(storage_returns_many_charts);
+                When(calling_update);
+                Then(viewModel_should_contain_complex_data_old);
             }
 
             [Test]
@@ -247,6 +282,46 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 viewModel.Columns.Count.ShouldBe(1);
                 viewModel.Areas.Count.ShouldBe(1);
 
+                viewModel.Series[2].Name.ShouldBe("Row1");
+                viewModel.Series[2].Data.Count.ShouldBe(5);
+                viewModel.Series[2].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[1]));
+                viewModel.Series[2].Type.ShouldBe(ChartConfig.LINE);
+
+                viewModel.Series[1].Name.ShouldBe("Row3Legend");
+                viewModel.Series[1].Data.Count.ShouldBe(5);
+                viewModel.Series[1].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[3]));
+                viewModel.Series[1].Type.ShouldBe(ChartConfig.COLUMNS);
+
+                viewModel.Series[0].Name.ShouldBe("Row4");
+                viewModel.Series[0].Data.Count.ShouldBe(5);
+                viewModel.Series[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[4]));
+                viewModel.Series[0].Type.ShouldBe(ChartConfig.AREA);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    viewModel.Series[2].Data[i].X.ShouldBe(i + 5);
+                    viewModel.Series[2].Data[i].Y.ShouldBe(i);
+
+                    viewModel.Series[1].Data[i].X.ShouldBe(i + 5);
+                    viewModel.Series[1].Data[i].Y.ShouldBe(i + 15);
+
+                    viewModel.Series[0].Data[i].X.ShouldBe(i + 5);
+                    viewModel.Series[0].Data[i].Y.ShouldBe(i + 10);
+                }
+            };
+
+            private Then viewModel_should_contain_complex_data_old = () =>
+            {
+                viewModel.Name.ShouldBe("AChartName");
+                viewModel.XAxisName.ShouldBe("XAxis");
+                viewModel.YAxisName.ShouldBe("YAxis");
+                viewModel.XAxisType.ShouldBe(ChartConfig.LINEAR);
+
+                viewModel.Lines.ShouldNotBeNull();
+                viewModel.Lines.Count.ShouldBe(1);
+                viewModel.Columns.Count.ShouldBe(1);
+                viewModel.Areas.Count.ShouldBe(1);
+
                 viewModel.Lines[0].Name.ShouldBe("Row1");
                 viewModel.Lines[0].Data.Count.ShouldBe(5);
                 viewModel.Lines[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[1]));
@@ -259,7 +334,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 viewModel.Areas[0].Data.Count.ShouldBe(5);
                 viewModel.Areas[0].Brush.ShouldBe(BrushProvider.GetBrushName(BrushProvider.GetBrushKeys()[4]));
 
-                
                 for (int i = 0; i < 5; i++)
                 {
                     viewModel.Lines[0].Data[i].X.ShouldBe(i + 5);
