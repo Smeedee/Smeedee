@@ -31,40 +31,40 @@ namespace Smeedee.Widgets.SL.WebSnapshot
         private WebSnapshotController controller;
         private WebSnapshotSettingsViewModel settingsViewModel;
 
-        public WebSnapshotWidget()
-        {
-            Title = "Web Snapshot";
-            viewModel = GetInstance<WebSnapshotViewModel>();
-            settingsViewModel = GetInstance<WebSnapshotSettingsViewModel>();
-            controller = NewController<WebSnapshotController>();
-            viewModel.PropertyChanged += ViewModelPropertyChanged;
+		public WebSnapshotWidget()
+		{
+		    Title = "Web Snapshot";
+		    viewModel = GetInstance<WebSnapshotViewModel>();
+		    settingsViewModel = GetInstance<WebSnapshotSettingsViewModel>();
+		    controller = NewController<WebSnapshotController>();
+		    viewModel.PropertyChanged += ViewModelPropertyChanged;
 
-            View = new WebSnapshotView { DataContext = controller.ViewModel };
-            SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
+		    View = new WebSnapshotView { DataContext = controller.ViewModel };
+		    SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
 
-            ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
-        }
+		    ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
+		}
 
-        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var tempViewModel = sender as WebSnapshotSettingsViewModel;
-            var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);
+		private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+		    var tempViewModel = sender as WebSnapshotSettingsViewModel;
+		    var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);
 
-            if (isDoneSaving && IsInSettingsMode)
-            {
-                OnSettings();
-            }
-        }
+		    if (isDoneSaving && IsInSettingsMode)
+		    {
+			OnSettings();
+		    }
+		}
 
-        public override void Configure(DependencyConfigSemantics config)
-        {
-            config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();
-            config.Bind<WebSnapshotSettingsViewModel>().To<WebSnapshotSettingsViewModel>().InSingletonScope();
-        }
+		public override void Configure(DependencyConfigSemantics config)
+		{
+		    config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();
+		    config.Bind<WebSnapshotSettingsViewModel>().To<WebSnapshotSettingsViewModel>().InSingletonScope();
+		}
 
-        protected override Configuration NewConfiguration()
-        {
-            return WebSnapshotConfig.NewDefaultConfiguration();
-        }
-    }
-}
+		protected override Configuration NewConfiguration()
+		{
+		    return WebSnapshotConfig.NewDefaultConfiguration();
+		}
+	    }
+	}

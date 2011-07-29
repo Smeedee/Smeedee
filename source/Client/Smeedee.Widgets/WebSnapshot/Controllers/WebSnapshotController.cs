@@ -127,11 +127,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         protected void BeginLoadData()
         {
-            if (!ViewModel.IsLoading)
-            {
-                SetIsLoadingData();
-                repository.BeginGet(new WebSnapshotSpecification());
-            }
+            //if (!ViewModel.IsLoading)
+            //{
+            //    SetIsLoadingData();
+            //    repository.BeginGet(new WebSnapshotSpecification());
+            //}
         }
 
 
