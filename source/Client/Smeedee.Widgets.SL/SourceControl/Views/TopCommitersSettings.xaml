@@ -7,27 +7,27 @@
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" 
     xmlns:APD_Client_Framework_Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" 
     xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
-    x:Class="Smeedee.Widget.SourceControl.SL.Views.TopCommitersSettings"
+    x:Class="Smeedee.Widgets.SL.SourceControl.Views.TopCommitersSettings"
     mc:Ignorable="d"
     d:DesignHeight="1087" d:DesignWidth="1182">
-    
-	<UserControl.Resources>
+
+    <UserControl.Resources>
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
-				<ResourceDictionary>
-					 <APD_Client_Framework_Converters:DateToStringConverter x:Key="DateToStringConverter"/>
-					 <SampleData:TopCommittersDataSource x:Key="TopCommittersDataSource" d:IsDataSource="True"/>
-        			 <APD_Client_Framework_Converters:BoolToDoubleConverter x:Key="BoolToDoubleConverter" TrueValue="1" FalseValue="0.4"/>
-				</ResourceDictionary>
+                <ResourceDictionary>
+                    <APD_Client_Framework_Converters:DateToStringConverter x:Key="DateToStringConverter"/>
+                    <SampleData:TopCommittersDataSource x:Key="TopCommittersDataSource" d:IsDataSource="True"/>
+                    <APD_Client_Framework_Converters:BoolToDoubleConverter x:Key="BoolToDoubleConverter" TrueValue="1" FalseValue="0.4"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-       
-	</UserControl.Resources>
+
+    </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" 
-          d:DataContext="{Binding Source={StaticResource TopCommittersDataSource}}">        
+          d:DataContext="{Binding Source={StaticResource TopCommittersDataSource}}">
         <Border Style="{StaticResource SettingsViewBorder}">
             <Grid Style="{StaticResource SettingsViewGrid}">
                 <Grid.ColumnDefinitions>
@@ -42,8 +42,8 @@
                     <RowDefinition  />
                     <RowDefinition  />
                     <RowDefinition  />
-					<RowDefinition />
-					<RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <TextBlock 
@@ -70,7 +70,7 @@
                     Margin="10,0,0,0"
                     Opacity="{Binding IsUsingDate, Mode=OneWay, Converter={StaticResource BoolToDoubleConverter}}"
                     Text="Set the start date"/>
-                
+
                 <sdk:DatePicker
                     x:Name="SinceDatePicker"
                     Grid.Column="1"
@@ -109,7 +109,7 @@
                         Maximum="200" 
                         Margin="10,0,10,0"
                         d:LayoutOverrides="GridBox" />
-                    
+
                     <inputToolkit:NumericUpDown
                         x:Name="TimeSpanNumericUpDown"
                         Style="{StaticResource SettingsViewNumericUpDown}"
@@ -125,7 +125,7 @@
                     Text="Start date:" 
                     Margin="10,0,0,0" 
                     Grid.Row="5"/>
-                
+
                 <TextBlock
                     x:Name="actualDateUsed"
                     Style="{StaticResource SettingsViewText}"
@@ -134,8 +134,8 @@
                     Grid.Row="5" 
                     Grid.Column="1" />
 
-                
-                
+
+
                 <TextBlock 
                 	x:Name="maxNumOfCommiters"
                 	Style="{StaticResource SettingsViewText}"
@@ -166,8 +166,8 @@
                 	<Run Text="Acknowledge others (below top "/>
 					<Run Text="{Binding MaxNumOfCommiters, Mode=OneWay}" />
 					<Run Text=")"/>
-					</TextBlock>
-                
+                </TextBlock>
+
                 <CheckBox 
 				    x:Name="ackOthersChkBox"
 				    Content=""		

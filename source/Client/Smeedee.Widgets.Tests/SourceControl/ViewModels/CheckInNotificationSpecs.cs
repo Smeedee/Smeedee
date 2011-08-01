@@ -31,7 +31,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Moq;
-using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.Tests;
 using Smeedee.Tests;
 using NUnit.Framework;

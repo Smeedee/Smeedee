@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Smeedee.Widget.SourceControl.SL.Views
+namespace Smeedee.Widgets.SL.SourceControl.Views
 {
     public partial class TopCommitersSettings : UserControl
     {

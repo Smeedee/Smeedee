@@ -203,7 +203,6 @@
     <Content Include="ClientBin\Smeedee.Widget.BurndownChart.xap" />
     <Content Include="ClientBin\Smeedee.Widget.CI.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widget.Corkboard.SL.xap" />
-    <Content Include="ClientBin\Smeedee.Widget.SourceControl.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widget.TeamPicture.xap" />
     <Content Include="ClientBin\Smeedee.Widget.Twitter.xap" />
     <Content Include="ClientBin\Smeedee.Widget.TeamMembers.SL.xap" />

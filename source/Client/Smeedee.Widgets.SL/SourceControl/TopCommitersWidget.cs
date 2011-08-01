@@ -30,15 +30,15 @@ using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widget.SourceControl.Controllers;
 using Smeedee.Widget.SourceControl.SL.Views;
 using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SL.SourceControl.Views;
 using TinyMVVM.Framework;
 
-
-namespace Smeedee.Widget.SourceControl.SL
+namespace Smeedee.Widgets.SL.SourceControl
 {
     [WidgetInfo(Name = "Top committers", 
                 Description = "Aggregates the number of commits to the source control done by users and displays a graph of who has commited most often within a given timespan.",
                 Author = "Smeedee team",
-                Version = "1.0",
+                Version = "1.01",
                 Tags = new[] { CommonTags.SourceControl, CommonTags.Fun })
     ]
     public class TopCommitersWidget : Client.Framework.ViewModel.Widget

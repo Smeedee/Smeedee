@@ -23,30 +23,21 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
-using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
-using Smeedee.DomainModel.Framework;
-using Smeedee.DomainModel.Framework.Logging;
-using Smeedee.DomainModel.SourceControl;
-using Smeedee.DomainModel.Users;
 using Smeedee.Widget.SourceControl.Controllers;
+using Smeedee.Widget.SourceControl.SL;
 using Smeedee.Widget.SourceControl.SL.Views;
 using Smeedee.Widget.SourceControl.ViewModels;
 using TinyMVVM.Framework;
-using TinyMVVM.Framework.Services;
 
-
-namespace Smeedee.Widget.SourceControl.SL
+namespace Smeedee.Widgets.SL.SourceControl
 {
     [WidgetInfo(Name = "Latest commits",
                 Description = "A simple widget that shows the latest commits in any configured source control system.",
                 Author = "Smeedee team",
-                Version = "1.0",
+                Version = "1.01",
                 Tags = new[] { CommonTags.SourceControl, CommonTags.TeamCommunication, CommonTags.VCS, CommonTags.Agile })]
     public class SourceControlWidget : Client.Framework.ViewModel.Widget
     {

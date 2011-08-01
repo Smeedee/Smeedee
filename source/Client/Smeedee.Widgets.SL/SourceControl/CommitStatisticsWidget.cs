@@ -23,7 +23,6 @@
 
 #endregion
 
-using System;
 using System.ComponentModel;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config.SlideConfig;
@@ -32,12 +31,12 @@ using Smeedee.Widget.SourceControl.SL.Views;
 using Smeedee.Widget.SourceControl.ViewModels;
 using TinyMVVM.Framework;
 
-namespace Smeedee.Widget.SourceControl.SL
+namespace Smeedee.Widgets.SL.SourceControl
 {
     [WidgetInfo(Name = "Commit statistics",
                 Description = "Shows a graph of the number of commits to the source control in a given time span.",
                 Author = "Smeedee team",
-                Version = "1.0",
+                Version = "1.01",
                 Tags = new[] { CommonTags.ProjectManagement, CommonTags.SourceControl, CommonTags.VCS, CommonTags.Agile })]
     public class CommitStatisticsWidget : Client.Framework.ViewModel.Widget
     {
