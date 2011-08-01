@@ -194,12 +194,12 @@ namespace Smeedee.Client.Tests.ViewModel
 
             public void Report(string msg)
             {
-                ReportFailure(msg);
+                ShowErrorMessage(msg);
             }
 
             public void RemoveReport()
             {
-                NoFailure();
+                NoErrors();
             }
         }
 

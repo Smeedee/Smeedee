@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
@@ -38,9 +37,10 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             IChartStorageReader storageReader,
             Configuration configuration,
             IPersistDomainModelsAsync<Configuration> configPersister,
-            ILog logger
+            ILog logger,
+            IWidget widget
             )
-            : base(chartViewModel, timer, uiInvoker, loadingNotifier)
+            : base(chartViewModel, timer, uiInvoker, loadingNotifier, widget, configPersister)
         {
 
             Guard.Requires<ArgumentNullException>(storageReader != null);
@@ -55,7 +55,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             chartUpdater = new ChartUpdater(ViewModel, storageReader, uiInvoker) {ChartConfig = chartConfig};
             chartUpdater.UpdateFinished += OnUpdateFinished;
             this.configPersister = configPersister;
-            this.configPersister.SaveCompleted += OnSaveCompleted;
+            //this.configPersister.SaveCompleted += OnSaveCompleted;
             
             this.storageReader = storageReader;
 
@@ -110,9 +110,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void OnSaveSettings()
         {
-            SetIsSavingConfig();
             CopySettingsViewModelToConfiguration();
-            configPersister.Save(chartConfig.Configuration);
+            SaveConfiguration();
         }
 
         private void CopySettingsViewModelToConfiguration()
@@ -123,13 +122,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             chartConfig.XAxisType = SettingsViewModel.XAxisType;
             chartConfig.SetSeries(SettingsViewModel.SeriesConfig);
             chartConfig.IsConfigured = true;
-        }
-
-        private void OnSaveCompleted(object sender, SaveCompletedEventArgs e)
-        {
-            // TODO: some error handling
-            SetIsNotSavingConfig();
-            LoadData();
         }
 
         public void OnReloadSettings()
@@ -225,6 +217,11 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                     }
                 });
             }
+        }
+
+        protected override void OnConfigurationChanged(Configuration configuration)
+        {
+            UpdateConfiguration(configuration);
         }
 
         public void UpdateConfiguration(Configuration configuration)

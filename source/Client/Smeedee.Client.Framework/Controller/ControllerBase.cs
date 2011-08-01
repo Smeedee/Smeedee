@@ -27,6 +27,8 @@ using System;
 using System.ComponentModel;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.DomainModel.Config;
+using Smeedee.DomainModel.Framework;
 using Smeedee.Framework;
 using TinyMVVM.Framework.Services;
 
@@ -39,6 +41,9 @@ namespace Smeedee.Client.Framework.Controller
         protected IUIInvoker uiInvoker;
         protected int REFRESH_INTERVAL = 1 * 60 * 1000;
         protected readonly IProgressbar loadingNotifier;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersister; 
+
+        protected IWidget Widget { get; private set; }
 
         protected const string SAVING_DATA_MESSAGE = "Saving data...";
         protected const string LOADING_DATA_MESSAGE = "Loading data from server...";
@@ -48,11 +53,21 @@ namespace Smeedee.Client.Framework.Controller
         protected const string LOADING_REAL_CONFIG_MESSAGE =
             "The default configuration is now loaded. We are still trying to load the real configuration";
 
-
         public ControllerBase(T viewModel, 
             ITimer timer, 
             IUIInvoker uiInvoker, 
             IProgressbar loadingNotifier)
+            : this(viewModel, timer, uiInvoker, loadingNotifier, null, null)
+        {
+            // TODO: this constructor should be removed as soon as old controllers don't depend on it
+        }
+
+        public ControllerBase(T viewModel, 
+            ITimer timer, 
+            IUIInvoker uiInvoker, 
+            IProgressbar loadingNotifier,
+            IWidget widget,
+            IPersistDomainModelsAsync<Configuration> configPersister)
         {
             Guard.Requires<ArgumentNullException>(timer != null, "timer");
             Guard.Requires<ArgumentNullException>(uiInvoker != null, "uiInvoker");
@@ -65,18 +80,54 @@ namespace Smeedee.Client.Framework.Controller
 
             ViewModel = viewModel;
             refreshNotifier.Elapsed += OnNotifiedToRefresh;
-        }
 
-        protected void ThrowIfNull(object obj, string parameterName)
-        {
-            if (obj == null)
+            Widget = widget;
+
+            if (Widget != null)
             {
-                throw new ArgumentException("The" + parameterName + " argument cannot be null");
+                Widget.ConfigurationChanged += ConfigurationChanged;
+            }
+
+            this.configPersister = configPersister;
+            if (configPersister != null)
+            {
+                configPersister.SaveCompleted += OnConfigurationSaveCompleted;
             }
         }
 
-        protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
+        private void ConfigurationChanged(object sender, EventArgs e)
+        {
+            OnConfigurationChanged(Widget.Configuration);
+        }
 
+        protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
+        protected virtual void OnConfigurationChanged(Configuration configuration)
+        {
+            // TODO: this should be made abstract as soon as it will not break old widget controllers.
+        }
+
+        protected void SaveConfiguration()
+        {
+            if (configPersister != null)
+            {
+                SetIsSavingConfig();
+                configPersister.Save(Widget.Configuration);
+            }
+        }
+
+        private void OnConfigurationSaveCompleted(object sender, SaveCompletedEventArgs e)
+        {
+            SetIsNotSavingConfig();
+            if (e.Error != null)
+            {
+                Widget.ShowErrorMessage("Failed to save settings :(");
+            }
+            else
+            {
+                Widget.NoErrors();
+                OnConfigurationChanged(Widget.Configuration);
+            }
+        }
 
         public void Start()
         {
