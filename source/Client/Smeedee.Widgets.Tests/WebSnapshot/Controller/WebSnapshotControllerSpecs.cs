@@ -75,7 +75,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         protected static Mock<IProgressbar> progressbar;
         protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersister;
         protected static Mock<IAsyncRepository<Smeedee.DomainModel.WebSnapshot.WebSnapshot>> repository;
-        protected static DomainModel.WebSnapshot.WebSnapshot snapshot = new DomainModel.WebSnapshot.WebSnapshot { Name = "New WebSnapshot Task", PictureFilePath = @"C:\path\to\picture.png", PictureHeight = 500, PictureWidth = 600 };
+        protected static DomainModel.WebSnapshot.WebSnapshot snapshot = new DomainModel.WebSnapshot.WebSnapshot { Name = "New WebSnapshot Task", PictureFilePath = @"C:\path\to\picture.png", PictureHeight = 500, PictureWidth = 600, Timestamp = "201108011141209678" };
 
         protected Context controller_is_created = CreateController;
         protected When creating_controller = CreateController;
