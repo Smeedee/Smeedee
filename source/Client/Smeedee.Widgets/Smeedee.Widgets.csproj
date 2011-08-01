@@ -74,6 +74,18 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceControl\Controllers\ChangesetStandAloneController.cs" />
+    <Compile Include="SourceControl\Controllers\CommitStatisticsController.cs" />
+    <Compile Include="SourceControl\Controllers\LatestCommitsController.cs" />
+    <Compile Include="SourceControl\Controllers\TopCommitersController.cs" />
+    <Compile Include="SourceControl\ViewModels\ChangesetViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\CodeCommiterViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\CommitStatisticsForDate.cs" />
+    <Compile Include="SourceControl\ViewModels\CommitStatisticsSettingsViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\KeywordColorPairViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\LatestCommitsViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\RevisionCounterViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\TopCommitersViewModel.cs" />
     <Compile Include="TeamMembers\Controllers\TeamMembersController.cs" />
     <Compile Include="TeamMembers\ViewModels\TeamMembersSettingsViewModel.cs" />
     <Compile Include="TeamMembers\ViewModels\TeamMembersViewModel.cs" />

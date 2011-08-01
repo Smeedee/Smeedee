@@ -76,6 +76,16 @@
     <Compile Include="GenericCharting\Controllers\ChartUpdaterSpecs.cs" />
     <Compile Include="GenericCharting\ViewModels\ChartViewModelSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceControl\Controllers\CommitStatisticsControllerSpecs.cs" />
+    <Compile Include="SourceControl\Controllers\LatestCommitsControllerSpecs.cs" />
+    <Compile Include="SourceControl\Controllers\TopCommitersControllerSpecs.cs" />
+    <Compile Include="SourceControl\Integration\CommitStatisticsSpecs.cs" />
+    <Compile Include="SourceControl\ViewModels\ChangesetSpecs.cs" />
+    <Compile Include="SourceControl\ViewModels\CheckInNotificationSpecs.cs" />
+    <Compile Include="SourceControl\ViewModels\CodeCommiterViewModelSpecs.cs" />
+    <Compile Include="SourceControl\ViewModels\CommitStatisticsForDateTests.cs" />
+    <Compile Include="SourceControl\ViewModels\RevisionCounterViewModelSpecs.cs" />
+    <Compile Include="SourceControl\ViewModels\TopCommitersViewModelSpecs.cs" />
     <Compile Include="TeamMembers\Controllers\TeamMembersControllerSpecs.cs" />
     <Compile Include="TeamMembers\ViewModels\TeamMembersSettingsViewModelSpecs.cs" />
     <Compile Include="TeamMembers\ViewModels\TeamMembersViewModelSpecs.cs" />

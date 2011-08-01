@@ -1,0 +1,124 @@
+﻿<UserControl
+    x:Class="Smeedee.Widget.SourceControl.SL.Views.ChangesetView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.ChangesetSampleData" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:di="clr-namespace:Smeedee.Widget.DeveloperInfo.SL.Views;assembly=Smeedee.Widget.DeveloperInfo.SL"
+    xmlns:APD_Client_Framework_Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL"
+    xmlns:Converters="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
+    mc:Ignorable="d" 
+    d:DesignWidth="600" d:DesignHeight="180">
+    
+    <UserControl.Resources>
+    	<APD_Client_Framework_Converters:DateTimeToPrettyStringConverter x:Key="DateTimeToPrettyStringConverter"/>
+        <SampleData:ChangesetSampleData x:Key="ChangesetSampleData" d:IsDataSource="True"/>
+        <Converters:StringToResourceConverter x:Key="StringToResourceConverter" />
+    </UserControl.Resources>
+	
+    <Border x:Name="BoundingBorder" 
+            Style="{StaticResource DefaultBorder}"
+            Padding="5" 
+            Background="{Binding BackgroundColor, Converter={StaticResource StringToResourceConverter}}">
+        <VisualStateManager.VisualStateGroups>
+        	
+            <VisualStateGroup x:Name="VisualStateGroup">
+        		<VisualStateGroup.Transitions>
+        			<VisualTransition GeneratedDuration="00:00:02" To="CommentIsBad">
+        				<Storyboard>
+        					<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+        						<EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+        						<EasingDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
+        					</DoubleAnimationUsingKeyFrames>
+        				</Storyboard>
+        			</VisualTransition>
+        		</VisualStateGroup.Transitions>
+        		<VisualState x:Name="CommentIsBad">
+        			<Storyboard x:Name="test" AutoReverse="True" RepeatBehavior="Forever">
+        				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+        					<EasingColorKeyFrame KeyTime="00:00:00" Value="#00AD1717">
+        						<EasingColorKeyFrame.EasingFunction>
+        							<CubicEase EasingMode="EaseInOut"/>
+        						</EasingColorKeyFrame.EasingFunction>
+        					</EasingColorKeyFrame>
+        					<EasingColorKeyFrame KeyTime="00:00:01" Value="#7FAD1717">
+        						<EasingColorKeyFrame.EasingFunction>
+        							<CubicEase EasingMode="EaseInOut"/>
+        						</EasingColorKeyFrame.EasingFunction>
+        					</EasingColorKeyFrame>
+        				</ColorAnimationUsingKeyFrames>
+        			</Storyboard>
+        		</VisualState>
+        		<VisualState x:Name="IdleState">
+        			<Storyboard AutoReverse="False" RepeatBehavior="1x">
+        				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+        					<EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+        					<EasingDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
+        				</DoubleAnimationUsingKeyFrames>
+        			</Storyboard>
+        		</VisualState>
+        	</VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid x:Name="LayoutRoot" d:DataContext="{Binding Source={StaticResource ChangesetSampleData}}" Background="#00FF0000" Opacity="0.995">
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition  Width="100"/>
+        		<ColumnDefinition/>
+        	</Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/> 
+            </Grid.RowDefinitions>
+			
+            <di:UserInfo DataContext="{Binding Developer, Mode=OneWay}" Grid.RowSpan="2" VerticalAlignment="Top" Margin="2,0" />
+			
+        	<TextBlock x:Name="Message" 
+						Text="{Binding Message, Mode=OneWay}" 
+						FontFamily="{StaticResource FontFamily}" 
+						Foreground="{StaticResource FontBrushBright}"
+						TextWrapping="Wrap" 
+						HorizontalAlignment="Stretch" 
+						FontSize="20" 
+						Grid.Column="1" Margin="10,0,0,0"/>
+						
+			<StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="0" Grid.Row="2">
+						
+						
+			<TextBlock 	Text="Revision " 
+						Foreground="{StaticResource FontBrushBright}"
+						FontFamily="{StaticResource FontFamily}"
+						FontSize="12"
+						Opacity="0.8"
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Center" />
+			
+			<TextBlock x:Name="Revision" 
+						Text="{Binding Revision}" 
+						Foreground="{StaticResource FontBrushBright}"
+						FontFamily="{StaticResource FontFamily}"
+						FontSize="12"
+						Opacity="0.8"
+						HorizontalAlignment="Left" 
+						VerticalAlignment="Center"
+						/>
+						
+						</StackPanel>
+			
+        	<TextBlock x:Name="Timestamp" 
+						Text="{Binding Date, Converter={StaticResource DateTimeToPrettyStringConverter}, Mode=OneWay}" 
+						Foreground="{StaticResource FontBrushBright}"
+						FontFamily="{StaticResource FontFamily}"
+						FontSize="18" 
+						FontWeight="Bold" 
+						HorizontalAlignment="Right" 
+						VerticalAlignment="Bottom"
+						Grid.Row="2"
+						Grid.Column="1" />
+			
+
+        </Grid>
+    </Border>
+	
+</UserControl>
