@@ -40,7 +40,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             ILog logger,
             IWidget widget
             )
-            : base(chartViewModel, timer, uiInvoker, loadingNotifier, widget)
+            : base(chartViewModel, timer, uiInvoker, loadingNotifier, widget, configPersister)
         {
 
             Guard.Requires<ArgumentNullException>(storageReader != null);
@@ -55,7 +55,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             chartUpdater = new ChartUpdater(ViewModel, storageReader, uiInvoker) {ChartConfig = chartConfig};
             chartUpdater.UpdateFinished += OnUpdateFinished;
             this.configPersister = configPersister;
-            this.configPersister.SaveCompleted += OnSaveCompleted;
+            //this.configPersister.SaveCompleted += OnSaveCompleted;
             
             this.storageReader = storageReader;
 
@@ -110,9 +110,8 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void OnSaveSettings()
         {
-            SetIsSavingConfig();
             CopySettingsViewModelToConfiguration();
-            configPersister.Save(chartConfig.Configuration);
+            SaveConfiguration();
         }
 
         private void CopySettingsViewModelToConfiguration()
@@ -123,13 +122,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             chartConfig.XAxisType = SettingsViewModel.XAxisType;
             chartConfig.SetSeries(SettingsViewModel.SeriesConfig);
             chartConfig.IsConfigured = true;
-        }
-
-        private void OnSaveCompleted(object sender, SaveCompletedEventArgs e)
-        {
-            // TODO: some error handling
-            SetIsNotSavingConfig();
-            LoadData();
         }
 
         public void OnReloadSettings()

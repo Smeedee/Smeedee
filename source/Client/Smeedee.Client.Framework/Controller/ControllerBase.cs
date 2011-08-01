@@ -28,6 +28,7 @@ using System.ComponentModel;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
+using Smeedee.DomainModel.Framework;
 using Smeedee.Framework;
 using TinyMVVM.Framework.Services;
 
@@ -40,6 +41,7 @@ namespace Smeedee.Client.Framework.Controller
         protected IUIInvoker uiInvoker;
         protected int REFRESH_INTERVAL = 1 * 60 * 1000;
         protected readonly IProgressbar loadingNotifier;
+        private readonly IPersistDomainModelsAsync<Configuration> configPersister; 
 
         protected IWidget Widget { get; private set; }
 
@@ -51,12 +53,11 @@ namespace Smeedee.Client.Framework.Controller
         protected const string LOADING_REAL_CONFIG_MESSAGE =
             "The default configuration is now loaded. We are still trying to load the real configuration";
 
-
         public ControllerBase(T viewModel, 
             ITimer timer, 
             IUIInvoker uiInvoker, 
             IProgressbar loadingNotifier)
-            : this(viewModel, timer, uiInvoker, loadingNotifier, null)
+            : this(viewModel, timer, uiInvoker, loadingNotifier, null, null)
         {
         }
 
@@ -64,7 +65,8 @@ namespace Smeedee.Client.Framework.Controller
             ITimer timer, 
             IUIInvoker uiInvoker, 
             IProgressbar loadingNotifier,
-            IWidget widget)
+            IWidget widget,
+            IPersistDomainModelsAsync<Configuration> configPersister)
         {
             Guard.Requires<ArgumentNullException>(timer != null, "timer");
             Guard.Requires<ArgumentNullException>(uiInvoker != null, "uiInvoker");
@@ -84,6 +86,12 @@ namespace Smeedee.Client.Framework.Controller
             {
                 Widget.ConfigurationChanged += ConfigurationChanged;
             }
+
+            this.configPersister = configPersister;
+            if (configPersister != null)
+            {
+                configPersister.SaveCompleted += OnConfigurationSaveCompleted;
+            }
         }
 
         private void ConfigurationChanged(object sender, EventArgs e)
@@ -94,6 +102,29 @@ namespace Smeedee.Client.Framework.Controller
         protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
         protected virtual void OnConfigurationChanged(Configuration configuration)
         {
+        }
+
+        protected void SaveConfiguration()
+        {
+            if (configPersister != null)
+            {
+                SetIsSavingConfig();
+                configPersister.Save(Widget.Configuration);
+            }
+        }
+
+        private void OnConfigurationSaveCompleted(object sender, SaveCompletedEventArgs e)
+        {
+            SetIsNotSavingConfig();
+            if (e.Error != null)
+            {
+                Widget.ShowErrorMessage("Failed to save settings :(");
+            }
+            else
+            {
+                Widget.NoErrors();
+                OnConfigurationChanged(Widget.Configuration);
+            }
         }
 
         public void Start()

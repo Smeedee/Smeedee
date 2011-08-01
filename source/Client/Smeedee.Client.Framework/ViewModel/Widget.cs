@@ -16,6 +16,9 @@ namespace Smeedee.Client.Framework.ViewModel
     {
         event EventHandler ConfigurationChanged;
         Configuration Configuration { get; }
+
+        void ShowErrorMessage(string message);
+        void NoErrors();
     }
 
     public partial class Widget : IWidget
@@ -107,13 +110,14 @@ namespace Smeedee.Client.Framework.ViewModel
             IsInSettingsMode = !IsInSettingsMode;
         }
 
-        protected void ReportFailure(string message)
+
+        public void ShowErrorMessage(string message)
         {
             ErrorInfo.HasError = true;
             ErrorInfo.ErrorMessage = message;
         }
 
-        protected void NoFailure()
+        public void NoErrors()
         {
             ErrorInfo.HasError = false;
             ErrorInfo.ErrorMessage = string.Empty;
