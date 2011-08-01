@@ -6,7 +6,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
 	xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
-    xmlns:conv="clr-namespace:Smeedee.Widget.SourceControl.SL.Converters"
 	xmlns:Resources="clr-namespace:Smeedee.Client.Framework.Resources;assembly=Smeedee.Client.Framework.SL"
 	xmlns:Converters="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
 	mc:Ignorable="d"
@@ -17,7 +16,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Smeedee.Client.SL;Component/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
             <Resources:BrushProvider x:Key="brushProvider" />
             <Converters:StringToResourceConverter x:Key="StringToResourceConverter" />
         </ResourceDictionary>

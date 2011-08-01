@@ -7,20 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:di="clr-namespace:Smeedee.Widget.DeveloperInfo.SL.Views;assembly=Smeedee.Widget.DeveloperInfo.SL"
     xmlns:APD_Client_Framework_Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL"
-    xmlns:conv="clr-namespace:Smeedee.Widget.SourceControl.SL.Converters" 
+    xmlns:Converters="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
     mc:Ignorable="d" 
     d:DesignWidth="600" d:DesignHeight="180">
     
     <UserControl.Resources>
     	<APD_Client_Framework_Converters:DateTimeToPrettyStringConverter x:Key="DateTimeToPrettyStringConverter"/>
         <SampleData:ChangesetSampleData x:Key="ChangesetSampleData" d:IsDataSource="True"/>
-        <conv:StringToBrushConverter x:Key="StringToBrushConverter" />
+        <Converters:StringToResourceConverter x:Key="StringToResourceConverter" />
     </UserControl.Resources>
 	
     <Border x:Name="BoundingBorder" 
             Style="{StaticResource DefaultBorder}"
             Padding="5" 
-            Background="{Binding BackgroundColor, Converter={StaticResource StringToBrushConverter}}">
+            Background="{Binding BackgroundColor, Converter={StaticResource StringToResourceConverter}}">
         <VisualStateManager.VisualStateGroups>
         	
             <VisualStateGroup x:Name="VisualStateGroup">
