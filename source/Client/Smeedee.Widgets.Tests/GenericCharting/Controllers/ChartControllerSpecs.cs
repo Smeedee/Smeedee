@@ -10,6 +10,7 @@ using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
+using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
@@ -593,6 +594,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static Mock<ILog> loggerFake;
             protected static Configuration configuration;
 
+            protected static Widget widget;
+
             protected static Configuration AConfiguration()
             {
                 var chartConf = new ChartConfig(ChartConfig.NewDefaultConfiguration());
@@ -693,7 +696,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static void CreateController()
             {
                 controller = new ChartController
-                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigPersister(), GetLogger());
+                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigPersister(), GetLogger(), widget);
             }
 
             protected static void StorageReaderLoadChartReturns(Chart chart)
@@ -721,6 +724,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
                 configPersisterFake = new Mock<IPersistDomainModelsAsync<Configuration>>();
                 configuration = ChartConfig.NewDefaultConfiguration();
+
+                widget = new Widget();
 
             }
 

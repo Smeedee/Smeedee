@@ -27,6 +27,7 @@ using System;
 using System.ComponentModel;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.DomainModel.Config;
 using Smeedee.Framework;
 using TinyMVVM.Framework.Services;
 
@@ -39,6 +40,8 @@ namespace Smeedee.Client.Framework.Controller
         protected IUIInvoker uiInvoker;
         protected int REFRESH_INTERVAL = 1 * 60 * 1000;
         protected readonly IProgressbar loadingNotifier;
+
+        protected Widget Widget { get; private set; }
 
         protected const string SAVING_DATA_MESSAGE = "Saving data...";
         protected const string LOADING_DATA_MESSAGE = "Loading data from server...";
@@ -53,6 +56,15 @@ namespace Smeedee.Client.Framework.Controller
             ITimer timer, 
             IUIInvoker uiInvoker, 
             IProgressbar loadingNotifier)
+            : this(viewModel, timer, uiInvoker, loadingNotifier, null)
+        {
+        }
+
+        public ControllerBase(T viewModel, 
+            ITimer timer, 
+            IUIInvoker uiInvoker, 
+            IProgressbar loadingNotifier,
+            Widget widget)
         {
             Guard.Requires<ArgumentNullException>(timer != null, "timer");
             Guard.Requires<ArgumentNullException>(uiInvoker != null, "uiInvoker");
@@ -65,18 +77,24 @@ namespace Smeedee.Client.Framework.Controller
 
             ViewModel = viewModel;
             refreshNotifier.Elapsed += OnNotifiedToRefresh;
-        }
 
-        protected void ThrowIfNull(object obj, string parameterName)
-        {
-            if (obj == null)
+            Widget = widget;
+
+            if (Widget != null)
             {
-                throw new ArgumentException("The" + parameterName + " argument cannot be null");
+                Widget.ConfigurationChanged += ConfigurationChanged;
             }
         }
 
-        protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
+        private void ConfigurationChanged(object sender, EventArgs e)
+        {
+            OnConfigurationChanged(Widget.Configuration);
+        }
 
+        protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
+        protected virtual void OnConfigurationChanged(Configuration configuration)
+        {
+        }
 
         public void Start()
         {

@@ -30,11 +30,6 @@ namespace Smeedee.Widgets.SL.GenericCharting
             View = new ChartView { DataContext = controller.ViewModel };
             SettingsView = new ChartSettingsView { DataContext = controller.SettingsViewModel };
 
-            ConfigurationChanged += (o, e) =>
-            {
-                controller.UpdateConfiguration(Configuration);
-            };
-
             PropertyChanged += (o, e) =>
             {
                 if (e.PropertyName == "IsInSettingsMode")

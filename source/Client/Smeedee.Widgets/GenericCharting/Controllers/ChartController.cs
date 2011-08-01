@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Services;
@@ -38,9 +36,10 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             IChartStorageReader storageReader,
             Configuration configuration,
             IPersistDomainModelsAsync<Configuration> configPersister,
-            ILog logger
+            ILog logger,
+            Client.Framework.ViewModel.Widget widget
             )
-            : base(chartViewModel, timer, uiInvoker, loadingNotifier)
+            : base(chartViewModel, timer, uiInvoker, loadingNotifier, widget)
         {
 
             Guard.Requires<ArgumentNullException>(storageReader != null);
@@ -225,6 +224,11 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                     }
                 });
             }
+        }
+
+        protected override void OnConfigurationChanged(Configuration configuration)
+        {
+            UpdateConfiguration(configuration);
         }
 
         public void UpdateConfiguration(Configuration configuration)
