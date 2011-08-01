@@ -25,9 +25,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using Smeedee.Client.Framework;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
@@ -35,11 +33,9 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
 using Smeedee.Framework;
-using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
 
-
-namespace Smeedee.Widget.SourceControl.Controllers
+namespace Smeedee.Widgets.SourceControl.Controllers
 {
     public abstract class ChangesetStandAloneController<T> : ControllerBase<BindableViewModel<T>>
         where T : AbstractViewModel

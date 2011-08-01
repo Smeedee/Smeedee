@@ -26,6 +26,7 @@
 using System;
 using System.Collections.ObjectModel;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyMVVM.Framework;
 
 namespace Smeedee.Widget.SourceControl.ViewModels

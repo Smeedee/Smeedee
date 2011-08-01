@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SourceControl.ViewModels;
 
-namespace Smeedee.Widget.SourceControl.SL.Views
+namespace Smeedee.Widgets.SL.SourceControl.Views
 {
     public partial class ChangesetView : UserControl
     {

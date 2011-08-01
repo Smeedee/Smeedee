@@ -25,9 +25,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Resources;
 using Smeedee.Client.Framework.Services;
@@ -36,10 +34,10 @@ using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.Users;
-using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyMVVM.Framework.Services;
 
-namespace Smeedee.Widget.SourceControl.Controllers
+namespace Smeedee.Widgets.SourceControl.Controllers
 {
     public class LatestCommitsController : ControllerBase<LatestCommitsViewModel>
     {

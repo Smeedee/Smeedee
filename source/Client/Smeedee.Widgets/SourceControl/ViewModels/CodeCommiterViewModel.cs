@@ -29,7 +29,7 @@
 
 using Smeedee.Client.Framework.ViewModel;
 
-namespace Smeedee.Widget.SourceControl.ViewModels
+namespace Smeedee.Widgets.SourceControl.ViewModels
 {
     public class CodeCommiterViewModel : Person
     {

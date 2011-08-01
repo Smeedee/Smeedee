@@ -1,4 +1,4 @@
-﻿namespace Smeedee.Widget.SourceControl.SL.Views
+﻿namespace Smeedee.Widgets.SL.SourceControl.Views
 {
     public partial class CheckInNotification
     {

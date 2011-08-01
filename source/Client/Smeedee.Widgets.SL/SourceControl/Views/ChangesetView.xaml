@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Smeedee.Widget.SourceControl.SL.Views.ChangesetView"
+    x:Class="Smeedee.Widgets.SL.SourceControl.Views.ChangesetView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.ChangesetSampleData" 

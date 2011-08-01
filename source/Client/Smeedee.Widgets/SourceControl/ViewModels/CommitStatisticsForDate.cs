@@ -31,8 +31,7 @@ using System;
 using System.Diagnostics;
 using Smeedee.Client.Framework.ViewModel;
 
-
-namespace Smeedee.Widget.SourceControl.ViewModels
+namespace Smeedee.Widgets.SourceControl.ViewModels
 {
 
     [DebuggerDisplay("CommitStatisticsForDate ({Date}: {NumberOfCommits}")]

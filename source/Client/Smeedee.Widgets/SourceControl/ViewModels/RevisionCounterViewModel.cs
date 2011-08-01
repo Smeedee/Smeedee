@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using Smeedee.Client.Framework.ViewModel;
 
-namespace Smeedee.Widget.SourceControl.ViewModels
+namespace Smeedee.Widgets.SourceControl.ViewModels
 {
     public class RevisionCounterViewModel : AbstractViewModel
     {

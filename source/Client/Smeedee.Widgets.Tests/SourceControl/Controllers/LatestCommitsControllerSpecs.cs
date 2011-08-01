@@ -44,8 +44,8 @@ using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.Users;
 using Smeedee.Tests;
-using Smeedee.Widget.SourceControl.Controllers;
-using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SourceControl.Controllers;
+using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 

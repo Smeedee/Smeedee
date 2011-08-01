@@ -1,10 +1,8 @@
 ﻿using System;
 using Smeedee.Client.Framework.ViewModel;
-using Smeedee.DomainModel.Config;
-using Smeedee.DomainModel.Framework;
 using TinyMVVM.Framework;
 
-namespace Smeedee.Widget.SourceControl.ViewModels
+namespace Smeedee.Widgets.SourceControl.ViewModels
 {
     public class CommitStatisticsSettingsViewModel : AbstractViewModel
     {

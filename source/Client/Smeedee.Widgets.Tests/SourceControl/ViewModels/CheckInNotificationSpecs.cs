@@ -34,7 +34,7 @@ using Moq;
 using Smeedee.Client.Framework.Tests;
 using Smeedee.Tests;
 using NUnit.Framework;
-using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
 

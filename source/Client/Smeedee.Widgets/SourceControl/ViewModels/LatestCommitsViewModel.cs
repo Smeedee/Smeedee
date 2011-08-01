@@ -24,13 +24,11 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Smeedee.Client.Framework.Resources;
 using Smeedee.Client.Framework.ViewModel;
 using TinyMVVM.Framework;
 
-namespace Smeedee.Widget.SourceControl.ViewModels
+namespace Smeedee.Widgets.SourceControl.ViewModels
 {
     public class LatestCommitsViewModel : AbstractViewModel
     {

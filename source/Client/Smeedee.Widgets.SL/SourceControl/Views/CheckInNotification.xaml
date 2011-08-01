@@ -4,9 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.ChangesetsSampleDataSource"
-    xmlns:local1="clr-namespace:Smeedee.Widget.SourceControl.SL.Views"
-    xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" 
-    x:Class="Smeedee.Widget.SourceControl.SL.Views.CheckInNotification"
+    xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:local1="clr-namespace:Smeedee.Widgets.SL.SourceControl.Views"
+    x:Class="Smeedee.Widgets.SL.SourceControl.Views.CheckInNotification"
 	d:DesignHeight="654" d:DesignWidth="1280">
 	
     <UserControl.Resources>

@@ -37,10 +37,10 @@ using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
 using Smeedee.DomainModel.Users;
 using Smeedee.Framework;
-using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyMVVM.Framework.Services;
 
-namespace Smeedee.Widget.SourceControl.Controllers
+namespace Smeedee.Widgets.SourceControl.Controllers
 {
     public class TopCommitersController : ChangesetStandAloneController<CodeCommiterViewModel>
     {

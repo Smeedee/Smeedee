@@ -1,6 +1,4 @@
-﻿using System.Windows.Media;
-
-namespace Smeedee.Widget.SourceControl.SL
+﻿namespace Smeedee.Widgets.SL.SourceControl.Views
 {
 	public partial class CheckInNotificationSettingsView
 	{

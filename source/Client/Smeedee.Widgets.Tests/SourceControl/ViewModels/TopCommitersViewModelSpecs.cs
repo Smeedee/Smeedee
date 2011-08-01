@@ -29,7 +29,7 @@
 
 using NUnit.Framework;
 using Smeedee.Client.Framework.ViewModel;
-using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
 using Smeedee.Tests;

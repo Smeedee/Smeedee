@@ -26,9 +26,9 @@
 using System.ComponentModel;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config.SlideConfig;
-using Smeedee.Widget.SourceControl.Controllers;
-using Smeedee.Widget.SourceControl.SL.Views;
-using Smeedee.Widget.SourceControl.ViewModels;
+using Smeedee.Widgets.SL.SourceControl.Views;
+using Smeedee.Widgets.SourceControl.Controllers;
+using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.SL.SourceControl

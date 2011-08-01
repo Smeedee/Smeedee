@@ -28,12 +28,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Smeedee.Client.Framework.ViewModel;
 
-
-namespace Smeedee.Widget.SourceControl.ViewModels
+namespace Smeedee.Widgets.SourceControl.ViewModels
 {
     public class ChangesetViewModel : AbstractViewModel
     {
