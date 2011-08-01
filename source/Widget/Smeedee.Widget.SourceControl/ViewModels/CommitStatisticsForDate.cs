@@ -39,7 +39,20 @@ namespace Smeedee.Widget.SourceControl.ViewModels
     public class CommitStatisticsForDate : AbstractViewModel, IComparable<CommitStatisticsForDate>
     {
         public DateTime Date { get; set; }
-        public int NumberOfCommits { get; set; }
+        
+        private int _num;
+        public int NumberOfCommits
+        {
+            get { return _num; }
+            set
+            {
+                if (value != _num)
+                {
+                    _num = value;
+                    TriggerPropertyChanged("NumberOfCommits");
+                }
+            }
+        }
 
         #region IComparable<CommitStatisticsForDate> Members
 
