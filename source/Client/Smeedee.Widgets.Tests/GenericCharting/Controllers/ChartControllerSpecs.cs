@@ -463,7 +463,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Then_string_settings_should_be_copied_to_viewmodel()
             {
                 Given(the_controller_has_been_created);
-                When(update_configuration_is_called);
+                When(configuration_is_changed);
                 Then("string values should be in settingsview", () =>
                     {
                         controller.SettingsViewModel.ChartName.ShouldBe("AName");
@@ -477,7 +477,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             public void Then_series_settings_should_be_copied_to_settings_viewmodel()
             {
                 Given(the_controller_has_been_created);
-                When(update_configuration_is_called);
+                When(configuration_is_changed);
                 Then("series settings should be in settingsview", () =>
                     {
                         controller.SettingsViewModel.SeriesConfig.Count.ShouldBe(1);
@@ -485,7 +485,12 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     });
             }
 
-            private When update_configuration_is_called = () => controller.UpdateConfiguration(AConfiguration());
+            private When configuration_is_changed = () =>
+                {
+                    WidgetConfigurationIs(AConfiguration());
+                    widgetFake.Raise(e => e.ConfigurationChanged += null, EventArgs.Empty);
+                };
+
 
             
         }
@@ -594,7 +599,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static Mock<ILog> loggerFake;
             protected static Configuration configuration;
 
-            protected static Widget widget;
+            protected static Mock<IWidget> widgetFake;
 
             protected static Configuration AConfiguration()
             {
@@ -620,6 +625,11 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static IChartStorageReader GetStorageReader()
             {
                 return storageReaderFake != null ? storageReaderFake.Object : null;
+            }
+
+            protected static IWidget GetWidget()
+            {
+                return widgetFake != null ? widgetFake.Object : null;
             }
 
             protected static IPersistDomainModelsAsync<Configuration> GetConfigPersister()
@@ -696,12 +706,17 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             protected static void CreateController()
             {
                 controller = new ChartController
-                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigPersister(), GetLogger(), widget);
+                    (viewModel, settingsViewModel, GetTimerObject(), uIInvoker, GetLoadingNotifier(), GetStorageReader(), configuration, GetConfigPersister(), GetLogger(), GetWidget());
             }
 
             protected static void StorageReaderLoadChartReturns(Chart chart)
             {
                 storageReaderFake.Setup(s => s.LoadChart(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Action<Chart>>())).Callback((string database, string collection, Action<Chart> callback) => { if (callback != null) callback(chart);});
+            }
+
+            protected static void WidgetConfigurationIs(Configuration config)
+            {
+                widgetFake.SetupGet(w => w.Configuration).Returns(config);
             }
 
             [SetUp]
@@ -716,7 +731,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 uIInvoker = new NoUIInvokation();
                 loadingNotifierFake = new Mock<IProgressbar>();
                 loggerFake = new Mock<ILog>();
-                
+                widgetFake = new Mock<IWidget>();
+
                 storageReaderFake = new Mock<IChartStorageReader>();
                 storageReaderFake.Setup(s => s.RefreshDatasources()).Raises(s => s.DatasourcesRefreshed += null, EventArgs.Empty);
                 there_are_no_databases(); // defaults to no databases
@@ -725,7 +741,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 configPersisterFake = new Mock<IPersistDomainModelsAsync<Configuration>>();
                 configuration = ChartConfig.NewDefaultConfiguration();
 
-                widget = new Widget();
 
             }
 

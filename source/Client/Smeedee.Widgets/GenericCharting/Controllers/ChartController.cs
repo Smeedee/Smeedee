@@ -5,6 +5,7 @@ using System.Linq;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Repositories.Charting;
 using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
@@ -37,7 +38,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             Configuration configuration,
             IPersistDomainModelsAsync<Configuration> configPersister,
             ILog logger,
-            Client.Framework.ViewModel.Widget widget
+            IWidget widget
             )
             : base(chartViewModel, timer, uiInvoker, loadingNotifier, widget)
         {

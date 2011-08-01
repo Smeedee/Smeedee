@@ -12,7 +12,13 @@ using TinyMVVM.IoC;
 
 namespace Smeedee.Client.Framework.ViewModel
 {
-    public partial class Widget
+    public interface IWidget
+    {
+        event EventHandler ConfigurationChanged;
+        Configuration Configuration { get; }
+    }
+
+    public partial class Widget : IWidget
     {
         private IPersistDomainModelsAsync<Configuration> configRepo;
 
@@ -56,6 +62,7 @@ namespace Smeedee.Client.Framework.ViewModel
 				config.MergeInGlobalDependenciesConfig = true;
 				config.Bind<IProgressbar>().ToInstance(ProgressbarService);
 			    config.Bind<Configuration>().ToInstance(Configuration);
+			    config.Bind<IWidget>().ToInstance(this);
 			    config.Bind<Widget>().ToInstance(this);
 			    config.Bind<IAsyncRepository<Configuration>>().ToInstance(widgetConfigRepository);
 			    config.Bind<IRepository<Configuration>>().ToInstance(widgetConfigRepository);

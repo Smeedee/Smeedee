@@ -41,7 +41,7 @@ namespace Smeedee.Client.Framework.Controller
         protected int REFRESH_INTERVAL = 1 * 60 * 1000;
         protected readonly IProgressbar loadingNotifier;
 
-        protected Widget Widget { get; private set; }
+        protected IWidget Widget { get; private set; }
 
         protected const string SAVING_DATA_MESSAGE = "Saving data...";
         protected const string LOADING_DATA_MESSAGE = "Loading data from server...";
@@ -64,7 +64,7 @@ namespace Smeedee.Client.Framework.Controller
             ITimer timer, 
             IUIInvoker uiInvoker, 
             IProgressbar loadingNotifier,
-            Widget widget)
+            IWidget widget)
         {
             Guard.Requires<ArgumentNullException>(timer != null, "timer");
             Guard.Requires<ArgumentNullException>(uiInvoker != null, "uiInvoker");
