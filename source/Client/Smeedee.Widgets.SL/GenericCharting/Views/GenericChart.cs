@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Smeedee.Widget.SourceControl.SL.Converters;
+using Smeedee.Client.Framework.SL.Converters;
 using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 
@@ -22,7 +22,7 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
 {
     public class GenericChart : Chart
     {
-        private static readonly StringToBrushConverter converter = new StringToBrushConverter();
+        private static readonly StringToResourceConverter converter = new StringToResourceConverter();
 
         public IEnumerable ItemsSource
         {
