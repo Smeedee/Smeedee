@@ -59,6 +59,7 @@ namespace Smeedee.Client.Framework.Controller
             IProgressbar loadingNotifier)
             : this(viewModel, timer, uiInvoker, loadingNotifier, null, null)
         {
+            // TODO: this constructor should be removed as soon as old controllers don't depend on it
         }
 
         public ControllerBase(T viewModel, 
@@ -102,6 +103,7 @@ namespace Smeedee.Client.Framework.Controller
         protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
         protected virtual void OnConfigurationChanged(Configuration configuration)
         {
+            // TODO: this should be made abstract as soon as it will not break old widget controllers.
         }
 
         protected void SaveConfiguration()
