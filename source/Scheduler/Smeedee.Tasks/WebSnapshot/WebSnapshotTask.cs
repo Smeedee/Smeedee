@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
@@ -22,6 +23,7 @@ namespace Smeedee.Tasks.WebSnapshot
         Webpage = "http://smeedee.org")]
     [TaskSetting(1, WEBPAGE, typeof(string), "http://", "Webpage or image URL")]
     [TaskSetting(2, XPATH, typeof(string), "", "XPath expression to an image tag")]
+    
 
     public class WebSnapshotTask : TaskBase
     {
@@ -34,7 +36,6 @@ namespace Smeedee.Tasks.WebSnapshot
         private string lastWebpageValue;
         private string lastXpathValue;
         private string lastConfigName;
-        private bool FirstRun;
 
 
         public WebSnapshotTask(TaskConfiguration config,  IPersistDomainModels<Smeedee.DomainModel.WebSnapshot.WebSnapshot> databasePersister)
@@ -48,13 +49,12 @@ namespace Smeedee.Tasks.WebSnapshot
 
 
             webImageFetcher = new WebImageFetcher(new WebImageProvider());
-            filename = Path.GetRandomFileName() + ".png";
+            filename = GenerateFilename() + ".png";
             filePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 filename);
 
 
-            FirstRun = true;
         }
 
         public const string WEBPAGE = "Webpage URL";
@@ -83,22 +83,17 @@ namespace Smeedee.Tasks.WebSnapshot
             {
                 picture.Save(filePath, ImageFormat.Png);
 
-                //if (ConfigValuesHasChanged() || FirstRun)
-                //{  
-                    var model = new DomainModel.WebSnapshot.WebSnapshot
-                                    {
-                                        Name = config.Name,
-                                        PictureFilePath = filePath,
-                                        PictureHeight = picture.Height,
-                                        PictureWidth = picture.Width,
-                                        Timestamp = GetCurrentTimeStamp(),
-                                    };
+                var model = new DomainModel.WebSnapshot.WebSnapshot
+                                {
+                                    Name = config.Name,
+                                    PictureFilePath = filePath,
+                                    PictureHeight = picture.Height,
+                                    PictureWidth = picture.Width,
+                                    Timestamp = GetCurrentTimeStamp(),
+                                };
 
-
-                    //FirstRun = false;
-                    databasepersister.Save(model);
-                    UpdateConfigValues();
-                //}
+                databasepersister.Save(model);
+                UpdateConfigValues();
             }
         }
 
@@ -127,5 +122,15 @@ namespace Smeedee.Tasks.WebSnapshot
             return DateTime.Now.ToString("yyyyMMddHHmmssffff");
         }
 
+        public string GenerateFilename()
+        {
+            return Regex.Replace(config.Name, @"[^a-zA-Z_0-9]", string.Empty) + "-" +
+                Regex.Replace(config.ReadEntryValue(WEBPAGE) as string, @"[^a-zA-Z_0-9]", string.Empty);
+        }
+
+        public bool ValidateFilename(string filename)
+        {
+            return filename.IndexOfAny(Path.GetInvalidFileNameChars()) == -1;
+        }
     }
 }
