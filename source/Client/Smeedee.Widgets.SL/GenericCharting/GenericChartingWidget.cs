@@ -11,7 +11,7 @@ namespace Smeedee.Widgets.SL.GenericCharting
     [WidgetInfo(Name = "Generic Charting",
                 Description = "Used to add generic charting",
                 Author = "Smeedee team",
-                Version = "0.1",
+                Version = "0.9",
                 Tags = new[] { CommonTags.Charting })]
     public class GenericChartingWidget : Client.Framework.ViewModel.Widget
     {
