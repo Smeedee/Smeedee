@@ -21,7 +21,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 {
     [WidgetInfo(
         Name = "Web Snapshot",
-        Description = "Takes snapshots of web pages or display a picture from an URL. Supports XPath and cropping.",
+        Description = "Display snapshots taken by the \"Web Snapshot\" task",
         Author = "Smeedee team",
         Version = "0.2",
         Tags = new[] { CommonTags.Fun })]
