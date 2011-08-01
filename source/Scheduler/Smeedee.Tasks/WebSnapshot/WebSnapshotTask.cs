@@ -47,14 +47,11 @@ namespace Smeedee.Tasks.WebSnapshot
             Guard.Requires<TaskConfigurationException>(lastWebpageValue != null);
             Guard.Requires<TaskConfigurationException>(URLValidator.IsValidUrl(lastWebpageValue));
 
-
             webImageFetcher = new WebImageFetcher(new WebImageProvider());
             filename = GenerateFilename() + ".png";
             filePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 filename);
-
-
         }
 
         public const string WEBPAGE = "Webpage URL";

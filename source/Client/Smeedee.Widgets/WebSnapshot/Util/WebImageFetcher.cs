@@ -21,7 +21,14 @@ namespace Smeedee.Widgets.WebSnapshot.Util
 
         public Bitmap GetBitmapFromURL(string url, string xpath)
         {
-            return imageProvider.GetBitmapFromURL(FindImageURLInWebpage(url, xpath));
+            var imageUrl = FindImageURLInWebpage(url, xpath);
+
+            if(imageUrl == null)
+            {
+                return null;
+            }
+
+            return imageProvider.GetBitmapFromURL(imageUrl);
         }
 
         private string FindImageURLInWebpage(string pageURL, string xpath)
@@ -31,6 +38,11 @@ namespace Smeedee.Widgets.WebSnapshot.Util
                 return pageURL;
             }
             var pictureURL = imageProvider.GetPictureNodeURLFromXpath(pageURL, xpath);
+            
+            if(pictureURL == null)
+            {
+                return null;
+            }
 
             if (!URLValidator.IsValidUrl(pictureURL))
             {

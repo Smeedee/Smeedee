@@ -35,13 +35,21 @@ namespace Smeedee.Widgets.WebSnapshot.Util
 
         public string GetPictureNodeURLFromXpath(string pageURL, string xpath)
         {
-            HtmlWeb htmlWeb = new HtmlWeb();
-            HtmlDocument document = htmlWeb.Load(pageURL);
-            var xpathNode = document.DocumentNode.SelectSingleNode(xpath);
+            try
+            {
+                HtmlWeb htmlWeb = new HtmlWeb();
+                HtmlDocument document = htmlWeb.Load(pageURL);
+                var xpathNode = document.DocumentNode.SelectSingleNode(xpath);
 
-            var attributes = xpathNode.Attributes.ToList();
-            var src = attributes.FindAll(a => a.Name == "src");
-            return src.First().Value;
+                var attributes = xpathNode.Attributes.ToList();
+                var src = attributes.FindAll(a => a.Name == "src");
+
+                return src.First().Value;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
