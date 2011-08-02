@@ -14,9 +14,6 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
 
         public WebSnapshotDatabaseRepository(ISessionFactory sessionFactory)
             : base(sessionFactory)
-        {
-            ILog logger = new Logger(new LogEntryDatabaseRepository(sessionFactory));
-            logger.WriteEntry(new LogEntry("websnapshotdatabaserepository", "Constructor is called"));
-        }
+        {}
     }
 }
