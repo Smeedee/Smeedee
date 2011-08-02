@@ -74,7 +74,7 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SourceControl\Controllers\ChangesetStandAloneController.cs" />
+    <Compile Include="SourceControl\Controllers\ChangesetControllerBase.cs" />
     <Compile Include="SourceControl\Controllers\CommitStatisticsController.cs" />
     <Compile Include="SourceControl\Controllers\LatestCommitsController.cs" />
     <Compile Include="SourceControl\Controllers\TopCommitersController.cs" />

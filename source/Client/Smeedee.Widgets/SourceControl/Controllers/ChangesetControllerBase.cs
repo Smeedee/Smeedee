@@ -37,7 +37,7 @@ using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widgets.SourceControl.Controllers
 {
-    public abstract class ChangesetStandAloneController<T> : ControllerBase<BindableViewModel<T>>
+    public abstract class ChangesetControllerBase<T> : ControllerBase<BindableViewModel<T>>
         where T : AbstractViewModel
     {
         protected IRepository<Changeset> changesetRepository;
@@ -45,7 +45,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         protected ILog logger;
         protected bool configIsChanged;
 
-        protected ChangesetStandAloneController(
+        protected ChangesetControllerBase(
             BindableViewModel<T> viewModel, 
             IRepository<Changeset> changesetRepo, 
             IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient, 

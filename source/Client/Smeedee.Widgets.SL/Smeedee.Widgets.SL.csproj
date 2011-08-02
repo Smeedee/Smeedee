@@ -131,8 +131,8 @@
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ViewModels.cs">
       <Link>GenericCharting\ViewModels\ViewModels.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\ChangesetStandAloneController.cs">
-      <Link>SourceControl\Controllers\ChangesetStandAloneController.cs</Link>
+    <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\ChangesetControllerBase.cs">
+      <Link>SourceControl\Controllers\ChangesetControllerBase.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\CommitStatisticsController.cs">
       <Link>SourceControl\Controllers\CommitStatisticsController.cs</Link>
@@ -145,9 +145,6 @@
     </Compile>
     <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\ChangesetViewModel.cs">
       <Link>SourceControl\ViewModels\ChangesetViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\CheckInNotification.cs">
-      <Link>SourceControl\ViewModels\CheckInNotification.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\CodeCommiterViewModel.cs">
       <Link>SourceControl\ViewModels\CodeCommiterViewModel.cs</Link>

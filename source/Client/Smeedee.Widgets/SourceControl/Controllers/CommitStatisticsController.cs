@@ -40,7 +40,7 @@ using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widgets.SourceControl.Controllers
 {
-    public class CommitStatisticsController : ChangesetStandAloneController<CommitStatisticsForDate>
+    public class CommitStatisticsController : ChangesetControllerBase<CommitStatisticsForDate>
     {
         private readonly IAsyncRepository<Configuration> configRepository;
         private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;

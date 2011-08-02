@@ -42,7 +42,7 @@ using TinyMVVM.Framework.Services;
 
 namespace Smeedee.Widgets.SourceControl.Controllers
 {
-    public class TopCommitersController : ChangesetStandAloneController<CodeCommiterViewModel>
+    public class TopCommitersController : ChangesetControllerBase<CodeCommiterViewModel>
     {
         private IEnumerable<User> allUsers;
         private readonly IRepository<User> userRepository;
