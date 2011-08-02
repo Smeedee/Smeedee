@@ -8,7 +8,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
     {
         partial void OnInitialize()
         {
-            AvailableImages = new ObservableCollection<string> { "http://i.imgur.com/tmsTg.png", "http://www.newfreeware.com/img/scr/7-1013.jpg" }; ;
+            AvailableImages = new ObservableCollection<string>();
         }
 
         public bool CanSave()

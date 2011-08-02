@@ -143,10 +143,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             {
                 var SnapshotDataFromDB = eventArgs.Result;
                 UpdateViewModel(SnapshotDataFromDB);
+                PopulateAvailableImages(SnapshotDataFromDB);
             }
             else
             {
-                logger.WriteEntry(new LogEntry("OnGetCompleted,eventArgs was null", eventArgs.Error.ToString()));
+                logger.WriteEntry(new LogEntry("OnGetCompleted, eventArgs was null", eventArgs.Error.ToString()));
             }
 
             SetIsNotLoadingData();
@@ -207,6 +208,18 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         protected void LogErrorMsg(Exception exception)
         {
             logger.WriteEntry(ErrorLogEntry.Create(this, exception.ToString()));
+        }
+
+        private void PopulateAvailableImages(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshotDataFromDb)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                foreach (var snapshot in snapshotDataFromDb)
+                {
+                    SettingsViewModel.AvailableImages.Add(snapshot.PictureFilePath);
+                }
+                                     
+            });
         }
 
 
