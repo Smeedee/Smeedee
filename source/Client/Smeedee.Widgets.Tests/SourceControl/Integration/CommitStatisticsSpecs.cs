@@ -37,7 +37,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Integration
             _controller = new CommitStatisticsController(new BindableViewModel<CommitStatisticsForDate>(), 
                                                         settingsViewModel,
                                                         new Mock<IAsyncRepository<Changeset>>().Object,
-                                                        new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
+                                                        //new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
                                                         new Mock<ITimer>().Object,
                                                         new NoUIInvokation(),
                                                         configRepository.Object,
