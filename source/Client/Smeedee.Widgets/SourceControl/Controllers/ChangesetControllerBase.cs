@@ -29,6 +29,7 @@ using System.Linq;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
@@ -50,8 +51,11 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             ITimer timer, 
             IUIInvoker uiInvoke,
             ILog logger,
-            IProgressbar loadingNotifier)
-            : base(viewModel, timer, uiInvoke, loadingNotifier)
+            IProgressbar loadingNotifier,
+            IWidget widget,
+            IPersistDomainModelsAsync<Configuration> configPersister
+            )
+            : base(viewModel, timer, uiInvoke, loadingNotifier, widget, configPersister)
         {
             Guard.Requires<ArgumentException>(logger != null, "logger");
             Guard.Requires<ArgumentException>(changesetRepo != null, "changesetRepo");

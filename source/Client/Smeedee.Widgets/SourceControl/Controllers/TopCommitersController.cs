@@ -72,8 +72,9 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             IPersistDomainModelsAsync<Configuration> configPersister,
             IRepository<User> userRepo,
             ILog logger,
-            IProgressbar loadingNotifier)
-            : base(viewModel, changesetRepo, timer, uiInvoke, logger, loadingNotifier)
+            IProgressbar loadingNotifier,
+            IWidget widget)
+            : base(viewModel, changesetRepo, timer, uiInvoke, logger, loadingNotifier, widget, configPersister)
         {
             Guard.Requires<ArgumentException>(userRepo != null, "userRepo");
             Guard.Requires<ArgumentException>(configRepo != null, "configRepo");

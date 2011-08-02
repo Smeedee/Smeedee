@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.ViewModel;
-using Smeedee.Client.Widget.SourceControlTests.Controllers.CommitStatisticsControllerSpecs;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
+using Smeedee.Widget.SourceControl.Tests.Controllers;
 using Smeedee.Widgets.SourceControl.Controllers;
 using Smeedee.Widgets.SourceControl.ViewModels;
+using Smeedee.Widgets.Tests.SourceControl.Controllers;
 using TinyBDD.Dsl.GivenWhenThen;
-using TinyMVVM.Framework;
-using TinyMVVM.Framework.Services;
 
-namespace Smeedee.Widget.SourceControl.Tests.Integration
+namespace Smeedee.Widgets.Tests.SourceControl.Integration
 {
     [TestFixture]
     class CommitStatisticsSpecs : ScenarioClass
     {
         private CommitStatisticsController _controller;
+        private static Mock<IWidget> widgetMock;
         private Mock<IAsyncRepository<Configuration>> configRepository;
         private static CommitStatisticsSettingsViewModel settingsViewModel;
         private static Mock<IPersistDomainModelsAsync<Configuration>> configPersister;
@@ -33,6 +29,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Integration
         [SetUp]
         public void Setup()
         {
+            widgetMock = new Mock<IWidget>();
             MockRepository();
             configPersister = new Mock<IPersistDomainModelsAsync<Configuration>>();
             settingsViewModel = new CommitStatisticsSettingsViewModel();
@@ -46,7 +43,8 @@ namespace Smeedee.Widget.SourceControl.Tests.Integration
                                                         configRepository.Object,
                                                         configPersister.Object,
                                                         new Logger(new LogEntryMockPersister()),
-                                                        loadingNotifyerMock.Object);
+                                                        loadingNotifyerMock.Object,
+                                                        widgetMock.Object);
         }
 
         private void MockRepository()
@@ -60,11 +58,13 @@ namespace Smeedee.Widget.SourceControl.Tests.Integration
             configRepository.Setup(
                 r => r.BeginGet(It.IsAny<Specification<Configuration>>())).Raises(
                 t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(fakeConfig, null));
+
+            widgetMock.SetupGet(w => w.Configuration).Returns(config);
         }
 
         private When save_command_is_called = () =>
         {
-            settingsViewModel.SaveSettings.Execute(null);
+            settingsViewModel.SaveSettings.ExecuteDelegate();
         };
 
         private Then configPersister_Save_is_called_exactly_once = () =>
@@ -75,7 +75,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Integration
         [Test]
         public void Assure_save_command_calls_save_once()
         {
-            Given("view_model_is_instantiated");
+            Given("view model is instantiated");
             When(save_command_is_called);
             Then(configPersister_Save_is_called_exactly_once);
         }
