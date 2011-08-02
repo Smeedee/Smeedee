@@ -90,13 +90,56 @@ namespace Smeedee.Tasks.Tests.WebSnapshot
         public void Setup()
         {
             Scenario("");
-            config = new TaskConfiguration { Entries = new List<TaskConfigurationEntry>() { new TaskConfigurationEntry { Name = WebSnapshotTask.WEBPAGE, Value = "http://smeedee.org/", Type = typeof(string) }, new TaskConfigurationEntry { Name = WebSnapshotTask.XPATH, Value = "/html/body/div[2]/div[2]/div/div/div/img", Type = typeof(string) } } };
+            config = new TaskConfiguration
+                         {
+                             Entries =
+                                 new List<TaskConfigurationEntry>()
+                                     {
+                                         new TaskConfigurationEntry
+                                             {
+                                                 Name = WebSnapshotTask.WEBPAGE,
+                                                 Value = "http://smeedee.org/",
+                                                 Type = typeof (string)
+                                             },
+                                         new TaskConfigurationEntry
+                                             {
+                                                 Name = WebSnapshotTask.XPATH,
+                                                 Value = "/html/body/div[2]/div[2]/div/div/div/img",
+                                                 Type = typeof (string)
+                                             },
+                                         new TaskConfigurationEntry
+                                             {
+                                                 Name = WebSnapshotTask.SMEEDEEPATH,
+                                                 Value = @"C:\path\to\smeedee",
+                                                 Type = typeof (string)
+                                             }
+                                     }
+                         };
             config.Name = "New Websnapshot Task";
 
-            brokenConfig = new TaskConfiguration { Entries = new List<TaskConfigurationEntry>() { new TaskConfigurationEntry { Name = WebSnapshotTask.WEBPAGE, Value = "http://smeedee.org/", Type = typeof(string) }, new TaskConfigurationEntry { Name = WebSnapshotTask.XPATH, Value = "", Type = typeof(string) } } };
+            brokenConfig = new TaskConfiguration
+                               {
+                                   Entries =
+                                       new List<TaskConfigurationEntry>()
+                                           {
+                                               new TaskConfigurationEntry
+                                                   {
+                                                       Name = WebSnapshotTask.WEBPAGE,
+                                                       Value = "http://smeedee.org/",
+                                                       Type = typeof (string)
+                                                   },
+                                               new TaskConfigurationEntry
+                                                   {Name = WebSnapshotTask.XPATH, Value = "", Type = typeof (string)},
+                                               new TaskConfigurationEntry
+                                                   {
+                                                       Name = WebSnapshotTask.SMEEDEEPATH,
+                                                       Value = @"C:\path\to\smeedee",
+                                                       Type = typeof (string)
+                                                   }
+                                           }
+                               };
             brokenConfig.Name = "Not valid//in some:; \\ / &^ filesystems!@#$%()";
             
-
             databasepersister = new Mock<IPersistDomainModels<DomainModel.WebSnapshot.WebSnapshot>>();
         }
 
