@@ -13,7 +13,6 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
         public WebSnapshotDatabaseRepository() : base() {}
 
         public WebSnapshotDatabaseRepository(ISessionFactory sessionFactory)
-            : base(sessionFactory)
-        {}
+            : base(sessionFactory) {}
     }
 }
