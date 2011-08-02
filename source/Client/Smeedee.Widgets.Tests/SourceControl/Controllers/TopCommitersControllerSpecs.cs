@@ -152,7 +152,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
             When(the_Controller_is_created);
 
             Then("assure it query ChangesetRepository for all changesets", () =>
-                changesetRepositoryMock.Verify(r =>r.Get(It.IsAny<Specification<Changeset>>()),Times.Once()));
+                changesetRepositoryMock.Verify(r =>r.BeginGet(It.IsAny<Specification<Changeset>>()),Times.Once()));
         }
 
         [Test]
@@ -223,6 +223,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
     public class Loading_data : Shared
     {
         [Test]
+        [Ignore("We are using async repository for dataloading")]
         public void Assure_data_loading_is_performed_on_the_specified_thread()
         {
             Given(there_are_3_users_in_userdb)
@@ -397,7 +398,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
 
                 Then(() =>
                 {
-                    changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                    changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
                     viewModelChanged.ShouldBeTrue();
                 });
 
@@ -424,7 +425,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
 
                 Then(() =>
                 {
-                    changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                    changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
                     viewModelChanged.ShouldBeTrue();
                 });
 
@@ -451,7 +452,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
 
                 Then(() =>
                 {
-                    changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                    changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
                     viewModelChanged.ShouldBeTrue();
                 });
 
@@ -478,7 +479,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
 
                 Then(() =>
                 {
-                    changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                    changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
                     viewModelChanged.ShouldBeTrue();
                 });
 
@@ -505,7 +506,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
 
                 Then(() =>
                 {
-                    changesetRepositoryMock.Verify(r => r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                    changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
                     viewModelChanged.ShouldBeTrue();
                 });
 
@@ -569,7 +570,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
             When(the_Controller_is_notified_to_refresh);
 
             Then("it should query repository for changesets", () =>
-                changesetRepositoryMock.Verify(r =>r.Get(It.IsAny<Specification<Changeset>>()), Times.Exactly(2)));
+                changesetRepositoryMock.Verify(r =>r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2)));
         }
 
         [Test]
@@ -810,7 +811,7 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
     public class Shared : ScenarioClass
     {
         protected static int changesetRepositoryGetThreadId;
-        protected static Mock<IRepository<Changeset>> changesetRepositoryMock = new Mock<IRepository<Changeset>>();
+        protected static Mock<IAsyncRepository<Changeset>> changesetRepositoryMock = new Mock<IAsyncRepository<Changeset>>();
         protected static TopCommitersController controller;
         protected static Mock<ITimer> ITimerMock;
         protected static Mock<IRepository<User>> userRepositoryMock = new Mock<IRepository<User>>();
@@ -940,13 +941,15 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
                 Author = new Author { Username = "goeran" }
             });
 
-            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).
-                Returns(changesets.Where(c => c.Revision == 4)).Callback(
-                () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
+            changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Changeset>>())).
+                Raises(e => e.GetCompleted += null,
+                       new GetCompletedEventArgs<Changeset>(changesets.Where(c => c.Revision == 4),
+                                                            new AllChangesetsSpecification()));
 
-            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
-                Returns(changesets).Callback(
-                () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
+            changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<AllChangesetsSpecification>())).
+                Raises(e => e.GetCompleted += null,
+                       new GetCompletedEventArgs<Changeset>(changesets.Where(c => c.Revision == 4),
+                                                            new AllChangesetsSpecification()));
         };
 
         protected Context a_new_changeset_with_a_new_user_is_committed = () =>
@@ -961,26 +964,23 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
                 Author = new Author { Username = "heine" }
             });
 
-            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).
-                Returns((Specification<Changeset> spec) => changesets.Where(c=>spec.IsSatisfiedBy(c))).Callback(
-                () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
+            ChangesetRepositoryContains(changesets);
         };
+
+        
 
         protected Context there_are_changesets_for_2_users_in_SourceControl_system = () =>
         {
-            changesetRepositoryMock = new Mock<IRepository<Changeset>>();
+            changesetRepositoryMock = new Mock<IAsyncRepository<Changeset>>();
 
-            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).
-                Returns((Specification<Changeset> spec) => GenerateChangesetData().Where(c => spec.IsSatisfiedBy(c))).Callback(
-                () => changesetRepositoryGetThreadId = Thread.CurrentThread.ManagedThreadId);
+            ChangesetRepositoryContains(GenerateChangesetData());
         };
 
         protected Context there_are_changesets_with_null_Author = () =>
         {
-            changesetRepositoryMock = new Mock<IRepository<Changeset>>();
+            changesetRepositoryMock = new Mock<IAsyncRepository<Changeset>>();
 
-            changesetRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).
-                Returns(new List<Changeset>
+            ChangesetRepositoryContains(new List<Changeset>
                 {
                     new Changeset
                     {
@@ -1090,6 +1090,21 @@ namespace Smeedee.Client.Widget.SourceControlTests.Controllers.TopCommitersContr
             });
 
             return changesets;
+        }
+
+        protected static void ChangesetRepositoryContains(IEnumerable<Changeset> changesets)
+        {
+            changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Changeset>>())).
+                Callback((Specification<Changeset> specs) =>
+                {
+                    changesetRepositoryMock.Raise(e => e.GetCompleted += null,
+                        new GetCompletedEventArgs<Changeset>(changesets.Where(c => specs.IsSatisfiedBy(c)),
+                                               specs));
+                });
+
+            changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<AllChangesetsSpecification>())).
+                Raises(e => e.GetCompleted += null,
+                       new GetCompletedEventArgs<Changeset>(changesets, new AllChangesetsSpecification()));
         }
 
         private static void SetupConfigRepositoryMock(int timespan, DateTime date, bool isUsingDate, int numberOfCommiters, bool acknowledgeOthers)

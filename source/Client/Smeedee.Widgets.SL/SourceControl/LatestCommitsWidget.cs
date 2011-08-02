@@ -38,9 +38,9 @@ namespace Smeedee.Widgets.SL.SourceControl
                 Author = "Smeedee team",
                 Version = "1.01",
                 Tags = new[] { CommonTags.SourceControl, CommonTags.TeamCommunication, CommonTags.VCS, CommonTags.Agile })]
-    public class SourceControlWidget : Client.Framework.ViewModel.Widget
+    public class LatestCommitsWidget : Client.Framework.ViewModel.Widget
     {
-        public SourceControlWidget()
+        public LatestCommitsWidget()
         {
             Title = "Latest commits";
 
@@ -50,8 +50,8 @@ namespace Smeedee.Widgets.SL.SourceControl
 			var controller = NewController<LatestCommitsController>();
 			PropertyChanged += controller.ToggleRefreshInSettingsMode;
 
-			View = new CheckInNotification() { DataContext = viewModel };
-			SettingsView = new CheckInNotificationSettingsView() { DataContext = viewModel };
+			View = new LatestCommitsView() { DataContext = viewModel };
+			SettingsView = new LatestCommitsSettingsView() { DataContext = viewModel };
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

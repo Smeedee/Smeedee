@@ -6,7 +6,7 @@
     mc:Ignorable="d" xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.ChangesetsSampleDataSource"
     xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     xmlns:local1="clr-namespace:Smeedee.Widgets.SL.SourceControl.Views"
-    x:Class="Smeedee.Widgets.SL.SourceControl.Views.CheckInNotification"
+    x:Class="Smeedee.Widgets.SL.SourceControl.Views.LatestCommitsView"
 	d:DesignHeight="654" d:DesignWidth="1280">
 	
     <UserControl.Resources>
