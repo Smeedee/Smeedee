@@ -65,7 +65,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
 
         public TopCommitersController(
             BindableViewModel<CodeCommiterViewModel> viewModel, 
-            IRepository<Changeset> changesetRepo, 
+            IAsyncRepository<Changeset> changesetRepo, 
             IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker, 
             ITimer timer, IUIInvoker uiInvoke, 
             IAsyncRepository<Configuration> configRepo, 
@@ -73,7 +73,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             IRepository<User> userRepo,
             ILog logger,
             IProgressbar loadingNotifier)
-            : base(viewModel, changesetRepo, backgroundWorker, timer, uiInvoke, logger, loadingNotifier)
+            : base(viewModel, changesetRepo, timer, uiInvoke, logger, loadingNotifier)
         {
             Guard.Requires<ArgumentException>(userRepo != null, "userRepo");
             Guard.Requires<ArgumentException>(configRepo != null, "configRepo");

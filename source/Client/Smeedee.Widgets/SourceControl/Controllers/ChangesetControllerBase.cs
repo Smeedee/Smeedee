@@ -40,15 +40,13 @@ namespace Smeedee.Widgets.SourceControl.Controllers
     public abstract class ChangesetControllerBase<T> : ControllerBase<BindableViewModel<T>>
         where T : AbstractViewModel
     {
-        protected IRepository<Changeset> changesetRepository;
-        protected IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient;
+        protected IAsyncRepository<Changeset> changesetRepository;
         protected ILog logger;
         protected bool configIsChanged;
 
         protected ChangesetControllerBase(
             BindableViewModel<T> viewModel, 
-            IRepository<Changeset> changesetRepo, 
-            IInvokeBackgroundWorker<IEnumerable<Changeset>> asyncClient, 
+            IAsyncRepository<Changeset> changesetRepo,
             ITimer timer, 
             IUIInvoker uiInvoke,
             ILog logger,
@@ -57,11 +55,10 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         {
             Guard.Requires<ArgumentException>(logger != null, "logger");
             Guard.Requires<ArgumentException>(changesetRepo != null, "changesetRepo");
-            Guard.Requires<ArgumentException>(asyncClient != null, "asyncClient");
             
             this.logger = logger;
             this.changesetRepository = changesetRepo;
-            this.asyncClient = asyncClient;
+            this.changesetRepository.GetCompleted += OnGetCompleted;
         }
 
         protected void LoadData()
@@ -73,54 +70,45 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         {
             if (!ViewModel.IsLoading)
             {
-                asyncClient.RunAsyncVoid(() => LoadDataSync(specification));
+                SetIsLoadingData();
+                QueryChangesets(specification);
             }
-        }
-
-        protected void LoadDataSync(Specification<Changeset> specification)
-        {
-            //Loads the data synchronously, and invokes the UI asynchronusly
-            SetIsLoadingData();
-            var changesets = QueryChangesets(specification);
-            uiInvoker.Invoke(() =>
-            {
-                try
-                {
-                    LoadDataIntoViewModel(changesets);
-                }
-                catch (Exception e)
-                {
-                    LogErrorMsg(e);
-                    ViewModel.HasConnectionProblems = true;
-                }
-            });
-            SetIsNotLoadingData();
         }
         
-        protected IEnumerable<Changeset> QueryChangesets(Specification<Changeset> specification)
+        protected void QueryChangesets(Specification<Changeset> specification)
         {
-            IEnumerable<Changeset> changesets = null;
-            try
-            {
-                changesets = changesetRepository.Get(specification);
-                ViewModel.HasConnectionProblems = false;
-                AfterQueryAllChangesets();
-            }
-            catch (Exception e)
-            {
-                LogErrorMsg(e);
-                ViewModel.HasConnectionProblems = true;
-            }
-
-            if (changesets == null)
-            {
-                throw new Exception(
-                    "Violation of IChangesetRepository. Does not accept a null reference as a return value.");
-            }
-
-            return changesets;
-
+            changesetRepository.BeginGet(specification);
         }
+
+        private void OnGetCompleted(object sender, GetCompletedEventArgs<Changeset> e)
+        {
+            if (e.Error != null)
+            {
+                LogErrorMsg(e.Error);
+                ViewModel.HasConnectionProblems = true;
+            } else
+            {
+                ViewModel.HasConnectionProblems = false;
+                
+                if (e.Result == null)
+                {
+                    throw new Exception(
+                        "Violation of IChangesetRepository. Does not accept a null reference as a return value.");
+                }
+
+                AfterQueryAllChangesets();
+                try
+                {
+                    LoadDataIntoViewModel(e.Result);
+                }
+                catch (Exception exception)
+                {
+                    LogErrorMsg(exception);
+                    ViewModel.HasConnectionProblems = true;
+                }
+            }
+            SetIsNotLoadingData();
+        }     
 
         protected void UpdateRevision(IEnumerable<Changeset> changesets)
         {

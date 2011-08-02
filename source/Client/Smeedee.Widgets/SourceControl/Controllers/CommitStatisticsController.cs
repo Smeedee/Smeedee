@@ -66,7 +66,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         public CommitStatisticsController(
             BindableViewModel<CommitStatisticsForDate> viewModel,
             CommitStatisticsSettingsViewModel settingsViewModel,
-            IRepository<Changeset> changesetRepo,
+            IAsyncRepository<Changeset> changesetRepo,
             IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker,
             ITimer timer,
             IUIInvoker uiInvoke,
@@ -74,7 +74,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             IPersistDomainModelsAsync<Configuration> configPersister,
             ILog logger,
             IProgressbar loadingNotifier)
-            : base(viewModel, changesetRepo, backgroundWorker, timer, uiInvoke, logger, loadingNotifier)
+            : base(viewModel, changesetRepo, timer, uiInvoke, logger, loadingNotifier)
         {
             Guard.Requires<ArgumentException>(configRepo != null, "configRepo");
             Guard.Requires<ArgumentException>(configPersister != null, "configPersister");
