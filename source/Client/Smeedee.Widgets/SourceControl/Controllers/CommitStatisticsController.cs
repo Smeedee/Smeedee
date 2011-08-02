@@ -42,8 +42,6 @@ namespace Smeedee.Widgets.SourceControl.Controllers
 {
     public class CommitStatisticsController : ChangesetControllerBase<CommitStatisticsForDate>
     {
-        //private readonly IAsyncRepository<Configuration> configRepository;
-        //private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private readonly CommitStatisticsSettingsViewModel settingsViewModel;
         private DateTime projectStart;
         private DateTime dateToModelFrom;
@@ -81,12 +79,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             Guard.Requires<ArgumentException>(configPersister != null, "configPersister");
             Guard.Requires<ArgumentException>(settingsViewModel != null, "settingsViewModel");
 
-            //this.configRepository = configRepo;
-            //this.configPersisterRepository = configPersister;
             this.settingsViewModel = settingsViewModel;
-
-            //configRepository.GetCompleted += GetCurrentSettingsCompleted;
-            //configPersisterRepository.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
 
             settingsViewModel.SaveSettings.ExecuteDelegate += OnSaveClicked;
             settingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadClicked;            
