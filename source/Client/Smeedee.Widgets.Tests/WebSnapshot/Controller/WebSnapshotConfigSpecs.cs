@@ -30,6 +30,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             config.ContainsSetting(WebSnapshotConfig.coordinateY).ShouldBeTrue();
             config.ContainsSetting(WebSnapshotConfig.rectangleHeight).ShouldBeTrue();
             config.ContainsSetting(WebSnapshotConfig.rectangleWidth).ShouldBeTrue();
+            config.ContainsSetting(WebSnapshotConfig.timestamp).ShouldBeTrue();
             
             config.ShouldNotBeNull();
         }
