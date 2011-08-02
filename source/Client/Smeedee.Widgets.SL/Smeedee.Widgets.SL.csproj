@@ -134,9 +134,6 @@
     <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\ChangesetStandAloneController.cs">
       <Link>SourceControl\Controllers\ChangesetStandAloneController.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\CheckInNotificationController.cs">
-      <Link>SourceControl\Controllers\CheckInNotificationController.cs</Link>
-    </Compile>
     <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\CommitStatisticsController.cs">
       <Link>SourceControl\Controllers\CommitStatisticsController.cs</Link>
     </Compile>
@@ -251,16 +248,16 @@
     <Compile Include="SourceControl\SampleData\TopCommittersDataSource\TopCommittersDataSource.xaml.cs">
       <DependentUpon>TopCommittersDataSource.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SourceControl\SourceControlWidget.cs" />
+    <Compile Include="SourceControl\LatestCommitsWidget.cs" />
     <Compile Include="SourceControl\TopCommitersWidget.cs" />
     <Compile Include="SourceControl\Views\ChangesetView.xaml.cs">
       <DependentUpon>ChangesetView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SourceControl\Views\CheckInNotification.xaml.cs">
-      <DependentUpon>CheckInNotification.xaml</DependentUpon>
+    <Compile Include="SourceControl\Views\LatestCommitsView.xaml.cs">
+      <DependentUpon>LatestCommitsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SourceControl\Views\CheckInNotificationSettingsView.xaml.cs">
-      <DependentUpon>CheckInNotificationSettingsView.xaml</DependentUpon>
+    <Compile Include="SourceControl\Views\LatestCommitsSettingsView.xaml.cs">
+      <DependentUpon>LatestCommitsSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="SourceControl\Views\CommitStatisticsSettingsView.xaml.cs">
       <DependentUpon>CommitStatisticsSettingsView.xaml</DependentUpon>
@@ -403,11 +400,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SourceControl\Views\CheckInNotification.xaml">
+    <Page Include="SourceControl\Views\LatestCommitsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <ApplicationDefinition Include="SourceControl\Views\CheckInNotificationSettingsView.xaml">
+    <ApplicationDefinition Include="SourceControl\Views\LatestCommitsSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>

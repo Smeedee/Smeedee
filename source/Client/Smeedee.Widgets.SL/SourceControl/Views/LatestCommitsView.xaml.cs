@@ -1,8 +1,8 @@
 ﻿namespace Smeedee.Widgets.SL.SourceControl.Views
 {
-    public partial class CheckInNotification
+    public partial class LatestCommitsView
     {
-        public CheckInNotification()
+        public LatestCommitsView()
         {
             InitializeComponent();
         }

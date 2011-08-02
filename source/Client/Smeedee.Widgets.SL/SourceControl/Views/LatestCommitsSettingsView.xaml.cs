@@ -1,8 +1,8 @@
 ﻿namespace Smeedee.Widgets.SL.SourceControl.Views
 {
-	public partial class CheckInNotificationSettingsView
+	public partial class LatestCommitsSettingsView
 	{
-		public CheckInNotificationSettingsView()
+		public LatestCommitsSettingsView()
 		{
 			// Required to initialize variables
 			InitializeComponent();
