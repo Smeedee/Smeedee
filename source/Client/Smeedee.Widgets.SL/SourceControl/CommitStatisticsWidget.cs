@@ -25,6 +25,7 @@
 
 using System.ComponentModel;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widgets.SL.SourceControl.Views;
 using Smeedee.Widgets.SourceControl.Controllers;
@@ -53,8 +54,6 @@ namespace Smeedee.Widgets.SL.SourceControl
             var controller = NewController<CommitStatisticsController>();
 			PropertyChanged += controller.ToggleRefreshInSettingsMode;
 
-            ConfigurationChanged += controller.ConfigurationChanged;
-
 			View = new CommitStatisticsView() { DataContext = viewModel };
 			SettingsView = new CommitStatisticsSettingsView { DataContext = settingsViewModel };
         }
@@ -74,5 +73,10 @@ namespace Smeedee.Widgets.SL.SourceControl
 			config.Bind<CommitStatisticsSettingsViewModel>().To<CommitStatisticsSettingsViewModel>().InSingletonScope();
 			config.Bind<BindableViewModel<CommitStatisticsForDate>>().To<BindableViewModel<CommitStatisticsForDate>>().InSingletonScope();
 		}
+
+        protected override Configuration NewConfiguration()
+        {
+            return CommitStatisticsController.CreateDefaultConfig();
+        }      
     }
 }

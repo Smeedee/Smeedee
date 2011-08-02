@@ -101,8 +101,6 @@ namespace Smeedee.Widgets.SourceControl.ViewModels
             }
         }
 
-        public event EventHandler SaveClicked;
-        public event EventHandler ReloadClicked;
         public DelegateCommand SaveSettings { get; set; }
         public DelegateCommand ReloadSettings { get; set; }
 
@@ -112,24 +110,9 @@ namespace Smeedee.Widgets.SourceControl.ViewModels
 
         public CommitStatisticsSettingsViewModel()
         {
-            SaveSettings = new DelegateCommand(Save, () => true);
-            ReloadSettings = new DelegateCommand(Reload, () => true);
+            SaveSettings = new DelegateCommand();
+            ReloadSettings = new DelegateCommand();
             SinceDate = defaultSinceDate;
-        }
-
-        private void Save()
-        {
-            if (SaveClicked != null)
-            {
-                SaveClicked(this, new EventArgs());
-            }
-        }
-        private void Reload()
-        {
-            if (ReloadClicked != null)
-            {
-                ReloadClicked(this, new EventArgs());
-            }
         }
     }
 }

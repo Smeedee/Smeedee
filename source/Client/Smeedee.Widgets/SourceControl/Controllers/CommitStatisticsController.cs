@@ -42,8 +42,6 @@ namespace Smeedee.Widgets.SourceControl.Controllers
 {
     public class CommitStatisticsController : ChangesetControllerBase<CommitStatisticsForDate>
     {
-        private readonly IAsyncRepository<Configuration> configRepository;
-        private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private readonly CommitStatisticsSettingsViewModel settingsViewModel;
         private DateTime projectStart;
         private DateTime dateToModelFrom;
@@ -67,79 +65,37 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             BindableViewModel<CommitStatisticsForDate> viewModel,
             CommitStatisticsSettingsViewModel settingsViewModel,
             IAsyncRepository<Changeset> changesetRepo,
-            IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker,
+            //IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker,
             ITimer timer,
             IUIInvoker uiInvoke,
             IAsyncRepository<Configuration> configRepo,
             IPersistDomainModelsAsync<Configuration> configPersister,
             ILog logger,
-            IProgressbar loadingNotifier)
-            : base(viewModel, changesetRepo, timer, uiInvoke, logger, loadingNotifier)
+            IProgressbar loadingNotifier,
+            IWidget widget)
+            : base(viewModel, changesetRepo, timer, uiInvoke, logger, loadingNotifier, widget, configPersister)
         {
             Guard.Requires<ArgumentException>(configRepo != null, "configRepo");
             Guard.Requires<ArgumentException>(configPersister != null, "configPersister");
             Guard.Requires<ArgumentException>(settingsViewModel != null, "settingsViewModel");
 
-            this.configRepository = configRepo;
-            this.configPersisterRepository = configPersister;
             this.settingsViewModel = settingsViewModel;
 
-            configRepository.GetCompleted += GetCurrentSettingsCompleted;
-            configPersisterRepository.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
-
-            settingsViewModel.SaveClicked += SaveAndReload;
-            settingsViewModel.ReloadClicked += ReloadSettings;            
+            settingsViewModel.SaveSettings.ExecuteDelegate += OnSaveClicked;
+            settingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadClicked;            
 
             settingsViewModel.PropertyChanged += ViewModelPropertyChanged;
 
-            base.Start();
+            Start();
 
             LoadDummyDataIntoViewModel();
-            LoadDefaultSettings();
-            LoadSettingsAndData();
+            CopyConfigurationToViewModel(Widget.Configuration);
+            LoadNewData();
         }
 
-        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        public static Configuration CreateDefaultConfig()
         {
-            LoadSettingsAndData();
-        }
-
-        private void SaveAndReload(object sender, EventArgs e)
-        {
-                SaveSettings(); 
-        }
-
-        private void SaveSettings()
-        {
-            var newSinceDate = settingsViewModel.SinceDate;
-            var newTimespan = settingsViewModel.CommitTimespanDays;
-            var newUsingDate = settingsViewModel.IsUsingDate;
-            var newUsingTimespan = settingsViewModel.IsUsingTimespan;
-            SetIsSavingConfig();
-                try
-                {
-                    var config = CreateConfig(
-                        newSinceDate,
-                        newTimespan,
-                        newUsingDate,
-                        newUsingTimespan);
-                    config.IsConfigured = true;
-                    
-                    configPersisterRepository.Save(config);
-                }
-                catch (Exception exception)
-                {
-                    LogErrorMsg(exception);
-                }
-        }
-
-        private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs saveCompletedEventArgs)
-        {
-            SetIsNotSavingConfig();
-            if (configIsChanged)
-            {
-                LoadNewData();
-            }
+            return CreateConfig(DateTime.Today, 14, false, true);
         }
 
         private static Configuration CreateConfig(DateTime sinceDate, int timeSpan, bool isUsingDate, bool isUsingTimespan)
@@ -152,19 +108,28 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             newConfig.NewSetting(Using_Date_Entry_Name, isUsingDate.ToString());
             return newConfig;
         }
-
-        private void LoadSettingsAndData()
+       
+        private void OnSaveClicked()
         {
-            LoadSettingsSync();
+            SaveSettings(); 
         }
 
-
-        private void LoadSettingsSync()
+        private void SaveSettings()
         {
+            var newSinceDate = settingsViewModel.SinceDate;
+            var newTimespan = settingsViewModel.CommitTimespanDays;
+            var newUsingDate = settingsViewModel.IsUsingDate;
+            var newUsingTimespan = settingsViewModel.IsUsingTimespan;
             try
             {
-                BeginGetCurrentSettings();
+                var config = Widget.Configuration;
+                config.ChangeSetting(Timespan_Entry_Name, newTimespan.ToString());
+                config.ChangeSetting(Date_Entry_Name, newSinceDate.ToString(dateFormatingRules));
+                config.ChangeSetting(Using_Timespan_Entry_Name, newUsingTimespan.ToString());
+                config.ChangeSetting(Using_Date_Entry_Name, newUsingDate.ToString());
+                config.IsConfigured = true;
 
+                SaveConfiguration();
             }
             catch (Exception exception)
             {
@@ -172,49 +137,22 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             }
         }
 
-        private void BeginGetCurrentSettings()
+        protected override void OnConfigurationChanged(Configuration configuration)
         {
-            SetIsLoadingConfig();
-            configRepository.BeginGet(new ConfigurationByName(Commit_Statistics_Configuration_Name));
-                                   
-        }
-        private void GetCurrentSettingsCompleted(object sender, GetCompletedEventArgs<Configuration> eventArgs)
-        {
-            if (eventArgs.Error != null)
-            {
-                LogErrorMsg(eventArgs.Error);
-            }
-            var configuration = eventArgs.Result.LastOrDefault() ?? defaultConfig;
-
-            SetSettingsOnViewModel(configuration);
-
+            configIsChanged = true;
+            CopyConfigurationToViewModel(configuration);
             LoadNewData();
         }
 
-
-        private void SetSettingsOnViewModel(Configuration configuration)
+        private void CopyConfigurationToViewModel(Configuration configuration)
         {
-           uiInvoker.Invoke(() =>
+            uiInvoker.Invoke(() =>
             {
                 foreach (var entry in settingsEntryList)
                 {
                     TrySetSpecificSetting(configuration, entry);
                 }
-
-                SetIsNotLoadingConfig();
             });
-        }
-
-        private void LoadNewData()
-        {
-            if (configIsChanged)
-            {
-                LoadData(new AllChangesetsSpecification());
-            }
-            else
-            {
-                LoadData(new ChangesetsAfterRevisionSpecification(ViewModel.CurrentRevision));
-            }
         }
 
         private void TrySetSpecificSetting(Configuration config, string entry)
@@ -251,34 +189,16 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             }
         }
 
-        private void LoadDefaultSettings()
+        private void LoadNewData()
         {
-            settingsViewModel.IsUsingTimespan = true;
-        }
-
-        private void ReloadSettings(object sender, EventArgs e)
-        {
-            LoadSettingsAndData();
-        }
-
-        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs propertyEvent)
-        {
-            configIsChanged |= settingsEntryList.Contains(propertyEvent.PropertyName);
-        }
-        
-        private void LoadDummyDataIntoViewModel()
-        {
-
-            ViewModel.Data.Add(new CommitStatisticsForDate()
+            if (configIsChanged)
             {
-                Date = DateTime.Today,
-                NumberOfCommits = 0
-            });
-            ViewModel.Data.Add(new CommitStatisticsForDate()
+                LoadData(new AllChangesetsSpecification());
+            }
+            else
             {
-                Date = DateTime.Today.AddDays(1),
-                NumberOfCommits = 0
-            });
+                LoadData(new ChangesetsAfterRevisionSpecification(ViewModel.CurrentRevision));
+            }
         }
 
         protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets)
@@ -291,10 +211,10 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             modelTimeStart = settingsViewModel.ActualDateUsed.Date;
             projectStart = qChangesets.Min(c => c.Time.Date).Date;
             dateToModelFrom = projectStart > modelTimeStart ? projectStart.Date : modelTimeStart.Date;
-            
+
             var commitStatisticsForDates = GetCommitStatisticsForDates(qChangesets);
 
-            if(configIsChanged)
+            if (configIsChanged)
             {
                 ViewModel.Data.Clear();
                 configIsChanged = false;
@@ -306,9 +226,9 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             {
                 AddDaysOfNoCommitsInBetween(commit);
 
-                var existingPointOnDate = ViewModel.Data.Where(c=> c.Date.Equals(commit.Date)).SingleOrDefault();
+                var existingPointOnDate = ViewModel.Data.Where(c => c.Date.Equals(commit.Date)).SingleOrDefault();
 
-                if(existingPointOnDate != null)
+                if (existingPointOnDate != null)
                 {
                     existingPointOnDate.NumberOfCommits += commit.NumberOfCommits;
                 }
@@ -316,7 +236,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 {
                     ViewModel.Data.Add(commit);
                 }
-                
+
             }
 
             InsertPointTodayIfNeeded(commitStatisticsForDates);
@@ -340,11 +260,6 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                         }).OrderBy(r => r.Date);
         }
 
-//        private void UpdateLatestRevision(IEnumerable<Changeset> changesets)
-//        {
-//            ViewModel.CurrentRevision = changesets.Max(c => c.Revision);
-//        }
-
         private void InsertPointsToImproveTheGraph(IEnumerable<CommitStatisticsForDate> commitStatisticsForDates)
         {
             if (ThereAreNoCommitDataOnDate(dateToModelFrom, commitStatisticsForDates))
@@ -353,7 +268,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             }
 
             //Modelling one day is not pretty so in thoose cases this inserts a dummypoint on the next day
-            if(modelTimeStart.Date.Equals(DateTime.Today.Date))
+            if (modelTimeStart.Date.Equals(DateTime.Today.Date) && ViewModel.Data.Count < 2)
             {
                 ViewModel.Data.Add(new CommitStatisticsForDate() { Date = dateToModelFrom.AddDays(1), NumberOfCommits = 0 });
             }
@@ -399,10 +314,42 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             }
         }
 
-        public void ConfigurationChanged(object sender, EventArgs eventArgs)
+        private void LoadDummyDataIntoViewModel()
         {
-            configIsChanged = true;
-            LoadSettingsAndData();
+
+            ViewModel.Data.Add(new CommitStatisticsForDate()
+            {
+                Date = DateTime.Today,
+                NumberOfCommits = 0
+            });
+            ViewModel.Data.Add(new CommitStatisticsForDate()
+            {
+                Date = DateTime.Today.AddDays(1),
+                NumberOfCommits = 0
+            });
         }
+
+        private void OnReloadClicked()
+        {
+            CopyConfigurationToViewModel(Widget.Configuration);
+            configIsChanged = true;
+            LoadNewData();
+        }
+
+        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs propertyEvent)
+        {
+            configIsChanged |= settingsEntryList.Contains(propertyEvent.PropertyName);
+        }
+
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        {
+            LoadNewData();
+        }
+
+//        private void UpdateLatestRevision(IEnumerable<Changeset> changesets)
+//        {
+//            ViewModel.CurrentRevision = changesets.Max(c => c.Revision);
+//        }
+
     }
 }
