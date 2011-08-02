@@ -67,7 +67,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 When(the_Controller_is_created);
 
                 Then("assure Configuration is created if it doesn't exist", () =>
-                configPersisterRepositoryMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Once()));
+                configPersisterMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Once()));
             }
 
             [Test]
@@ -692,7 +692,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 When(SaveSettings_delegate_is_executed);
 
                 Then("the mock should recieve exactly 1 save", () =>
-                    configPersisterRepositoryMock.Verify(c => c.Save(It.IsAny<Configuration>()), Times.Exactly(1)));
+                    configPersisterMock.Verify(c => c.Save(It.IsAny<Configuration>()), Times.Exactly(1)));
             }
 
             [Test]
@@ -814,7 +814,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected static Mock<ITimer> ITimerMock;
             protected static Mock<IRepository<User>> userRepositoryMock = new Mock<IRepository<User>>();
             protected static Mock<ILog> logger;
-            protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterRepositoryMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
+            protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
             protected static Mock<IAsyncRepository<Configuration>> configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
             protected static Mock<IProgressbar> progressbarMock = new Mock<IProgressbar>();
             protected static Mock<IWidget> widgetMock = new Mock<IWidget>();
@@ -920,7 +920,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
             protected Context configPersisterRepositoryMock_setup_to_return_savecomplete = () =>
             {
-                configPersisterRepositoryMock.Setup(r => r.Save(It.IsAny<Configuration>())).Raises(t => t.SaveCompleted += null, new SaveCompletedEventArgs());
+                configPersisterMock.Setup(r => r.Save(It.IsAny<Configuration>())).Raises(t => t.SaveCompleted += null, new SaveCompletedEventArgs());
             };
 
             protected Context configRepository_does_not_return_GetCompleted = () =>
@@ -1046,7 +1046,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
 
             protected Context mock_is_initialized_to_1_2010_01_01_false_12_false = () =>
-                configPersisterRepositoryMock.Setup(p => p.Save(It.IsAny<Configuration>())).Callback((Configuration config) =>
+                configPersisterMock.Setup(p => p.Save(It.IsAny<Configuration>())).Callback((Configuration config) =>
                         {
                             config.ContainsSetting(TIMESPAN_ENTRY_NAME).ShouldBeTrue();
                             config.ContainsSetting(DATE_ENTRY_NAME).ShouldBeTrue();
@@ -1148,7 +1148,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                                                         ITimerMock.Object,
                                                         new NoUIInvokation(),
                                                         configRepositoryMock.Object,
-                                                        configPersisterRepositoryMock.Object,
+                                                        configPersisterMock.Object,
                                                         userRepositoryMock.Object,
                                                         logger.Object,
                                                         progressbarMock.Object,
@@ -1168,7 +1168,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             public void Setup()
             {
                 Scenario("");
-                configPersisterRepositoryMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
+                configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
                 configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
                 logger = new Mock<ILog>();
                 progressbarMock = new Mock<IProgressbar>();

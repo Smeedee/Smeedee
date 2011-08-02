@@ -112,7 +112,15 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 }
             }
             SetIsNotLoadingData();
-        }     
+        }
+
+        protected virtual void AfterQueryAllChangesets()
+        {
+
+        }
+
+        protected abstract void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets);
+
 
         protected void UpdateRevision(IEnumerable<Changeset> changesets)
         {
@@ -141,14 +149,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         }
         
 
-        protected abstract void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets);
-
         protected abstract override void OnNotifiedToRefresh(object sender, EventArgs e);
-
-        protected virtual void AfterQueryAllChangesets()
-        {
-            
-        }
 
         
     }
