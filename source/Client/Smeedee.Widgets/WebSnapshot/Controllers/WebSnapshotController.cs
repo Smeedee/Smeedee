@@ -18,7 +18,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
     public class WebSnapshotController : ControllerBase<WebSnapshotViewModel>
     {
         private WebSnapshotViewModel webSnapshotViewModel;
-        private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
+        private WebSnapshotSettingsViewModel SettingsViewModel;
         private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private WebSnapshotConfig webSnapshotConfig;
@@ -26,7 +26,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
-            WebSnapshotSettingsViewModel webSnapshotSettingsViewModel,
+            WebSnapshotSettingsViewModel settingsViewModel,
             Configuration configuration,
             ITimer timer,
             ILog logger,
@@ -38,7 +38,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
             Guard.Requires<ArgumentNullException>(webSnapshotViewModel != null);
-            Guard.Requires<ArgumentNullException>(webSnapshotSettingsViewModel != null);
+            Guard.Requires<ArgumentNullException>(settingsViewModel != null);
             Guard.Requires<ArgumentNullException>(configuration != null);
             Guard.Requires<ArgumentNullException>(logger != null);
 
@@ -47,12 +47,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             configPersisterRepository.SaveCompleted += OnSaveCompleted;
             this.webSnapshotViewModel = webSnapshotViewModel;
             this.logger = logger;
-            this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
-            webSnapshotSettingsViewModel.PropertyChanged += webSnapshotSettingsViewModel_PropertyChanged;
-            webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
-            webSnapshotSettingsViewModel.ReloadSettings.ExecuteDelegate += OnReLoadSettings;
-            webSnapshotSettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
+
+            SettingsViewModel = settingsViewModel;
+            SettingsViewModel.PropertyChanged += webSnapshotSettingsViewModel_PropertyChanged;
+            SettingsViewModel.Save.ExecuteDelegate += OnSaveSettings;
+            SettingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadSettings;
+            SettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
 
             repository.GetCompleted += OnGetCompleted;
 
@@ -64,7 +65,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             if (e.PropertyName == "SelectedImage")
             {
-                uiInvoker.Invoke(() => webSnapshotSettingsViewModel.Image = new BitmapImage(new Uri(webSnapshotSettingsViewModel.SelectedImage)));
+                uiInvoker.Invoke(() => SettingsViewModel.Image = new BitmapImage(new Uri(SettingsViewModel.SelectedImage)));
             }
         }
 
@@ -74,7 +75,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             BeginLoadData();
         }
 
-        private void OnReLoadSettings()
+        private void OnReloadSettings()
         {
             SetIsLoadingConfig();
             CopyConfigurationToSettingsViewModel();
@@ -86,12 +87,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             BeginLoadData();
         }
 
-        private void OnSave()
+        private void OnSaveSettings()
         {
             SetIsSavingConfig();
             CopySettingsViewModelToConfiguration();
 
-            uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = webSnapshotSettingsViewModel.Image);
+            uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = SettingsViewModel.Image);
 
             configPersisterRepository.Save(webSnapshotConfig.Configuration);
 
@@ -99,11 +100,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void CopySettingsViewModelToConfiguration()
         {
-            webSnapshotConfig.URL = webSnapshotSettingsViewModel.SelectedImage;
-            webSnapshotConfig.CoordinateX = webSnapshotSettingsViewModel.CropCoordinateX;
-            webSnapshotConfig.CoordinateY = webSnapshotSettingsViewModel.CropCoordinateY;
-            webSnapshotConfig.RectangleHeight = webSnapshotSettingsViewModel.CropRectangleHeight;
-            webSnapshotConfig.RectangleWidth = webSnapshotSettingsViewModel.CropRectangleWidth;
+            webSnapshotConfig.URL = SettingsViewModel.SelectedImage;
+            webSnapshotConfig.CoordinateX = SettingsViewModel.CropCoordinateX;
+            webSnapshotConfig.CoordinateY = SettingsViewModel.CropCoordinateY;
+            webSnapshotConfig.RectangleHeight = SettingsViewModel.CropRectangleHeight;
+            webSnapshotConfig.RectangleWidth = SettingsViewModel.CropRectangleWidth;
             webSnapshotConfig.IsConfigured = true;
         }
 
@@ -111,11 +112,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             uiInvoker.Invoke(() =>
             {
-                webSnapshotSettingsViewModel.SelectedImage = webSnapshotConfig.URL;
-                webSnapshotSettingsViewModel.CropCoordinateX = webSnapshotConfig.CoordinateX;
-                webSnapshotSettingsViewModel.CropCoordinateY = webSnapshotConfig.CoordinateY;
-                webSnapshotSettingsViewModel.CropRectangleHeight = webSnapshotConfig.RectangleHeight;
-                webSnapshotSettingsViewModel.CropRectangleWidth = webSnapshotConfig.RectangleWidth;
+                SettingsViewModel.SelectedImage = webSnapshotConfig.URL;
+                SettingsViewModel.CropCoordinateX = webSnapshotConfig.CoordinateX;
+                SettingsViewModel.CropCoordinateY = webSnapshotConfig.CoordinateY;
+                SettingsViewModel.CropRectangleHeight = webSnapshotConfig.RectangleHeight;
+                SettingsViewModel.CropRectangleWidth = webSnapshotConfig.RectangleWidth;
             });
         }
 
@@ -141,8 +142,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             if (eventArgs.Result != null)
             {
                 var SnapshotDataFromDB = eventArgs.Result;
-                //logger.WriteEntry(new LogEntry("SnapshotDataFromDB", "Did I get it? " + SnapshotDataFromDB.First().PictureFilePath));
-                //UpdateViewModel(SnapshotDataFromDB);
+                UpdateViewModel(SnapshotDataFromDB);
             }
             else
             {
@@ -154,7 +154,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
         {
-            logger.WriteEntry(new LogEntry("UpdateViewModel", "UpdateViewModel called"));
             if (snapshots.Count() > 0)
             {
                 var snapshot = snapshots.First();
