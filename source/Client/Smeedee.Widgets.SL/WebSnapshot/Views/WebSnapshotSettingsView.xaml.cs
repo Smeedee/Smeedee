@@ -20,6 +20,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         private Point MouseRelease;
         private Queue<Point> previousPoints;
         private Stack<Rectangle> previousRect;
+        private bool selectionDisabled;
 
         public WebSnapshotSettingsView()
         {
@@ -32,6 +33,9 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (selectionDisabled)
+                return;
+
             Point point = e.GetPosition(image);
 
             if (CropUtil.OutsidePicture(point, image)) return;
@@ -41,6 +45,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
             Xbox.Text = MousePress.X.ToString();
             Ybox.Text = MousePress.Y.ToString();
+
 
             rect = new Rectangle();
             origPoint = e.GetPosition(canvas);
@@ -114,9 +119,17 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
             var img = CropPicture(upperleftpoint, rect);
 
+            if (img == null)
+            {
+                ResetImage();
+                ResetCoordinateBoxes();
+                return;
+            }
+
             SetImage(img);
 
             CropButton.IsEnabled = false;
+            selectionDisabled = true;
             rect = null;
         }
 
@@ -124,6 +137,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         {
             ResetImage();
             image.Source = img;
+            img.Invalidate();
         }
 
         private WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle)
@@ -132,9 +146,11 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             try
             {
                 wb = new WriteableBitmap(Convert.ToInt32(rectangle.Width), Convert.ToInt32(rectangle.Height));
-                TranslateTransform t = new TranslateTransform();
-                t.X = CropUtil.NegativeNumber(upperleftpoint.X);
-                t.Y = CropUtil.NegativeNumber(upperleftpoint.Y);
+                var t = new TranslateTransform
+                {
+                    X = CropUtil.NegativeNumber(upperleftpoint.X),
+                    Y = CropUtil.NegativeNumber(upperleftpoint.Y)
+                };
 
                 //Draw to Writable Bitmap
                 wb.Render(image, t);
@@ -154,7 +170,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         {
             image.Clip = null;
             canvas.Children.Clear();
-            image.Source = new BitmapImage(new Uri(TaskNames.Tag.ToString()));
+            image.Source = new BitmapImage(new Uri(TaskNames.SelectedItem.ToString()));
             canvas.Children.Add(image);
             rect = null;
         }
@@ -173,7 +189,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             ResetImage(); 
             ResetCoordinateBoxes();
             CropButton.IsEnabled = true;
-
+            selectionDisabled = false;
         }
     }
 }
