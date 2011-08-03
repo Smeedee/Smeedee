@@ -105,6 +105,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             webSnapshotConfig.CoordinateY = SettingsViewModel.CropCoordinateY;
             webSnapshotConfig.RectangleHeight = SettingsViewModel.CropRectangleHeight;
             webSnapshotConfig.RectangleWidth = SettingsViewModel.CropRectangleWidth;
+            webSnapshotConfig.Timestamp = "0";
             webSnapshotConfig.IsConfigured = true;
         }
 
