@@ -722,7 +722,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                     Revision = 201222,
                     Comment = "Added fix to hello world method ",
                     Time = new DateTime(1986, 5, 20),
-                    Author = new Author { Username = "goeran" }
+                    Author = new Author { Username = "USERNAME" }
                 }
             );
             repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
@@ -738,7 +738,7 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
                     Revision = 201222,
                     Comment = "Added Fix to hello world method ",
                     Time = new DateTime(1986, 5, 20),
-                    Author = new Author { Username = "goeran" }
+                    Author = new Author { Username = "USERNAME" }
                 }
             );
             repositoryMock.Setup(r => r.Get(It.IsAny<Specification<Changeset>>())).Returns(changesets);
@@ -784,11 +784,31 @@ namespace Smeedee.Widget.SourceControl.Tests.Controllers
             Then("the changeset viewModel should have have green colors", () => viewModel.Changesets[0].BackgroundColor.ShouldBe("MediumGreenGradientBrush"));
         }
 
+        [Test]
+        public void Assure_that_colorbinding_also_searches_username()
+        {
+            Given(there_is_one_changeset_in_sourcecontrol_containing_the_word_fix).
+                And(the_keyword_USERNAME_is_bound_to_dark_brown_in_settings_db).
+                And(the_controller_has_been_created);
+            When("the username USERNAME exists in changeset");
+            Then("the changeset viewModel should have green colros",
+                 () => viewModel.Changesets[0].BackgroundColor.ShouldBe("DarkBrownGradientBrush"));
+        }
+
         private Context the_keyword_fix_is_bound_to_dark_brown_in_settings_db = () =>
         {
             var configs = new List<Configuration>();
             var config = GenerateSettings(40, false);
             config.NewSetting("commentKeywords", new[] { "fix", "dark brown" });
+            configs.Add(config);
+            configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
+        };
+
+        private Context the_keyword_USERNAME_is_bound_to_dark_brown_in_settings_db = () =>
+        {
+            var configs = new List<Configuration>();
+            var config = GenerateSettings(40, false);
+            config.NewSetting("commentKeywords", new[] { "USERNAME", "dark brown" });
             configs.Add(config);
             configRepositoryMock.Setup(r => r.Get(It.IsAny<ConfigurationByName>())).Returns(configs);
         };
