@@ -49,7 +49,7 @@ namespace Smeedee.Widget.CI.Controllers
         private CISettingsViewModel settingsViewModel;
 
         private IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient;
-        private IEnumerable<CIProject> projects = new List<CIProject>();
+       // private IEnumerable<CIProject> projects = new List<CIProject>();
         private readonly ILog logger;
         private IRepository<CIServer> ciServerRepository;
         private IRepository<Configuration> ciConfigRepository;
@@ -114,7 +114,7 @@ namespace Smeedee.Widget.CI.Controllers
             {
                 SetIsLoadingData();
 
-                projects = TryGetProjects();
+                var projects = TryGetProjects();
                 LoadDataIntoViewModel(projects);
 
                 SetIsNotLoadingData();
@@ -123,20 +123,45 @@ namespace Smeedee.Widget.CI.Controllers
 
         public IEnumerable<CIProject> GetSelectedAndActiveProjects()
         {
-            GetServersFromDbOrCache();
-            settingsViewModel.EachProject(project => MakePlaceholderBuildIfNeeded(project.Project));
+            var ciServers = GetServersFromDbOrCache().ToList();
+            if (ciServers == null) throw new Exception("We should not get null here");
 
-            return from server in settingsViewModel.Servers
-                   from project in server.Projects
-                   where project.IsSelected && ProjectIsActive(project)
-                   select project.Project;
+            EachProject(MakePlaceholderBuildIfNeeded, ciServers);
+
+            var projectList = new List<CIProject>();
+
+            foreach (ServerConfigViewModel server in settingsViewModel.Servers)
+            {
+                foreach (var project in server.Projects)
+                {
+                    if (project.IsSelected && ProjectIsActive(project))
+                    {
+                        ServerConfigViewModel vmServer = server;
+                        ProjectConfigViewModel vmProject = project;
+                        var newproj = from ciServer in ciServers
+                                     where ciServer.Name == vmServer.ServerName && ciServer.Url == vmServer.ServerUrl
+                                     from ciProject in ciServer.Projects
+                                     where ciProject.ProjectName == vmProject.ProjectName
+                                     select ciProject;
+                        projectList.Add(newproj.SingleOrDefault());
+                    }
+                }
+            }
+            return projectList;
         }
 
-        private void GetServersFromDbOrCache()
+        private void EachProject(Action<CIProject> func, IEnumerable<CIServer> servers)
         {
-            bool cacheHasExpired = (DateTime.Now - lastDbCheck).TotalMilliseconds > DB_CACHE_EXPIRATION_IN_MS;
-            if (cacheHasExpired)
-            {
+            foreach (var server in servers)
+                foreach (var project in server.Projects)
+                    func(project);
+        }
+
+        private IEnumerable<CIServer> GetServersFromDbOrCache()
+        {
+            //bool cacheHasExpired = (DateTime.Now - lastDbCheck).TotalMilliseconds > DB_CACHE_EXPIRATION_IN_MS;
+            //if (cacheHasExpired)
+            //{
                 lastDbCheck = DateTime.Now;
                 var newServers = ciServerRepository.Get(new AllSpecification<CIServer>());
                 var config = settings.LoadConfigFromDb(ciConfigRepository, newServers);
@@ -147,14 +172,15 @@ namespace Smeedee.Widget.CI.Controllers
                     settings.LoadIntoViewModel(config);
                     settings.SetResetPoint();
                 });
-            }
+                return newServers;
+            //}
         }
 
         private bool ProjectIsActive(ProjectConfigViewModel projectWrap)
         {
             if (!settingsViewModel.FilterInactiveProjects)
                 return true;
-            return projectWrap.Project.LatestBuild.StartTime > DateTime.Now.AddDays(-settingsViewModel.InactiveProjectThreshold);
+            return projectWrap.LatestBuildStartTime > DateTime.Now.AddDays(-settingsViewModel.InactiveProjectThreshold);
         }
 
         private void MakePlaceholderBuildIfNeeded(CIProject project)
@@ -202,8 +228,10 @@ namespace Smeedee.Widget.CI.Controllers
         {
             try
             {
-                projects = GetSelectedAndActiveProjects();
+                var projects = GetSelectedAndActiveProjects();
                 ViewModel.HasConnectionProblems = false;
+                projects = SortProjects(projects);
+                return projects;
             }
             catch( Exception exception )
             {
@@ -215,9 +243,8 @@ namespace Smeedee.Widget.CI.Controllers
                                           TimeStamp = DateTime.Now
                                       });
             }
-            projects = SortProjects(projects);
 
-            return projects;
+            return new List<CIProject>();
         }
 
         private IOrderedEnumerable<CIProject> SortProjects(IEnumerable<CIProject> activeProjects)

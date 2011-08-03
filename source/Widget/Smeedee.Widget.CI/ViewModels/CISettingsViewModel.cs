@@ -151,16 +151,21 @@ namespace Smeedee.Widget.CI.ViewModels
      * to settings entries, that we can save when we want to.*/
     public class ServerConfigViewModel
     {
-        public CIServer Server { get; set; }
         public IEnumerable<ProjectConfigViewModel> Projects { get; private set; }
-        public string Name { 
+
+        public string Name
+        {
             get { 
-                return String.Format("{0} ({1})", Server.Name, Server.Url);
+                return String.Format("{0} ({1})", ServerName, ServerUrl);
             }
         }
+
+        public string ServerName { get; private set; }
+        public string ServerUrl { get; private set; }
         public ServerConfigViewModel(CIServer server, Configuration config)
         {
-            Server = server;
+            ServerName = server.Name;
+            ServerUrl = server.Url;
             Projects = (from project in server.Projects select new ProjectConfigViewModel(project, config)).ToList();
         }
     }
@@ -168,8 +173,13 @@ namespace Smeedee.Widget.CI.ViewModels
 
     public class ProjectConfigViewModel : AbstractViewModel
     {
-        public CIProject Project { get; private set; }
-        public string ProjectName { get { return Project.ProjectName; } }
+        //public CIProject Project { get; private set; }
+
+        public string ProjectName { get; private set; }
+
+        public DateTime LatestBuildStartTime { get; private set; }
+
+        private string selectedSettingsName;
 
         public SettingsEntry SelectedSetting;
         public bool IsSelected
@@ -180,7 +190,7 @@ namespace Smeedee.Widget.CI.ViewModels
             }
             set
             {
-                SelectedSetting = new SettingsEntry(CISettingsViewModel.GetProjectSelectedSettingName(Project), value.ToString());
+                SelectedSetting = new SettingsEntry(selectedSettingsName, value.ToString());
                 TriggerPropertyChanged<ProjectConfigViewModel>(t => t.IsSelected);
             }
         }
@@ -198,8 +208,12 @@ namespace Smeedee.Widget.CI.ViewModels
         
         public ProjectConfigViewModel(CIProject project, Configuration config)
         {
-            this.Project = project;
-            this.SelectedSetting = config.GetSetting(CISettingsViewModel.GetProjectSelectedSettingName(project));
+            //this.Project = project;
+            this.LatestBuildStartTime = project.LatestBuild.StartTime;
+            ProjectName = project.ProjectName;
+
+            selectedSettingsName = CISettingsViewModel.GetProjectSelectedSettingName(project);
+            this.SelectedSetting = config.GetSetting(selectedSettingsName);
             this.initialSelectedState = Boolean.Parse(SelectedSetting.Value);
         }
     }
