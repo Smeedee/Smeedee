@@ -280,7 +280,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 Revision = changeset.Revision,
                 CommentIsBad = !changeset.IsValidComment(),
                 ShouldBlink = ViewModel.BlinkWhenNoComment,
-                BackgroundColor = FindBrushForChangeset(changeset.Comment)
+                BackgroundColor = FindBrushForChangeset(changeset)
             };
 
             newChangeset.Developer.Username = changeset.Author.Username;
@@ -288,15 +288,18 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             ViewModel.Changesets.Insert(0, newChangeset);
         }
 
-        private string FindBrushForChangeset(String changesetComment)
+        private string FindBrushForChangeset(Changeset changeset)
         {
-            string comment = changesetComment.ToLower();
+            string comment = changeset.Comment.ToLower();
+            string author = changeset.Author.Username.ToLower();
             foreach (var binding in ViewModel.KeywordList)
             {
                 var lowerCaseKeyword = binding.Keyword.ToLower();
                 if (lowerCaseKeyword.Length == 0)
                     continue;
                 if (comment.Contains(lowerCaseKeyword))
+                    return BrushProvider.GetBrushName(binding.ColorName);
+                if (author.Contains(lowerCaseKeyword))
                     return BrushProvider.GetBrushName(binding.ColorName);
             }
             return ChangesetViewModel.DEFAULT_BACKGROUND_COLOR;
