@@ -4,7 +4,6 @@ using System.Drawing;
 namespace Smeedee.Widgets.WebSnapshot.Util
 {
 
-
     public class WebImageFetcher
     {
         private IWebImageProvider imageProvider;
@@ -31,7 +30,7 @@ namespace Smeedee.Widgets.WebSnapshot.Util
             return imageProvider.GetBitmapFromURL(imageUrl);
         }
 
-        private string FindImageURLInWebpage(string pageURL, string xpath)
+        public string FindImageURLInWebpage(string pageURL, string xpath)
         {
             if (URLValidator.IsPictureURL(pageURL))
             {
@@ -48,25 +47,41 @@ namespace Smeedee.Widgets.WebSnapshot.Util
             {
                 pictureURL = AppendBaseURLWithPictureURL(pageURL, pictureURL);
             }
-
             pictureURL = RemoveTrailingSlash(pictureURL);
             return pictureURL;
         }
 
         private string AppendBaseURLWithPictureURL(string pageURL, string pictureURL)
         {
-            if (!pageURL.EndsWith("/"))
-            {
-                pageURL += "/";
-            }
-
-            pageURL += pictureURL;
-            return pageURL;
+            pageURL = AddTrailingSlash(pageURL);
+            pictureURL = RemoveLeadingSlash(pictureURL);
+            
+            return pageURL + pictureURL;
         }
 
-        private string RemoveTrailingSlash(string pictureURL)
+        private string RemoveTrailingSlash(string url)
         {
-            return pictureURL.TrimEnd(new char[] { '/' });
+            return url.TrimEnd(new char[] { '/' });
         }
+
+        private string AddTrailingSlash(string url)
+        {
+            if (!url.EndsWith("/"))
+            {
+                url += "/";
+            }
+            return url;
+        }
+
+        private string RemoveLeadingSlash(string url)
+        {
+            if (url.StartsWith("/"))
+            {
+                url = url.Remove(0, 1);
+            }
+            return url;
+        }
+
+
     }
 }
