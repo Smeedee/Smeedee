@@ -16,6 +16,8 @@
                      Color="White" />
     <SolidColorBrush x:Key="FontBrushDark"
                      Color="#FF414141" />
+    <SolidColorBrush x:Key="FontBrushBlack"
+                     Color="#FF000000" />
     <SolidColorBrush x:Key="DOHIColor"
                      Color="#FFE214DB" />
 

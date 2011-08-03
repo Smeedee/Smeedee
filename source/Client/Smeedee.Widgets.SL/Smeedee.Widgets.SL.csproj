@@ -235,6 +235,7 @@
     <Compile Include="GenericCharting\Views\GenericChart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceControl\CommitStatisticsWidget.cs" />
+    <Compile Include="SourceControl\Converters\BackgroundToFontBrushConverter.cs" />
     <Compile Include="SourceControl\Converters\DayCountToChartLegendIntervalConverter.cs" />
     <Compile Include="SourceControl\SampleData\ChangesetSampleData\ChangesetSampleData.xaml.cs">
       <DependentUpon>ChangesetSampleData.xaml</DependentUpon>

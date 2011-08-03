@@ -50,6 +50,17 @@ namespace Smeedee.Client.Framework.Resources
           
         };
 
+        private static List<string> brightBrushes = new List<string>
+                                                        {
+                                                            "LightGreyGradientBrush",
+                                                            "LightBrownGradientBrush",
+                                                            "OrangeGradientBrush",
+                                                            "YellowGradientBrush",
+                                                            "LightGreenGradientBrush",
+                                                            "LightBlueGradientBrush",
+                                                            "PinkGradientBrush"
+                                                        };
+
         public static string GetBrushName(string color)
         {
             return color != null && brushes.ContainsKey(color) ? brushes[color] : DEFAULT_BRUSH;
@@ -58,6 +69,11 @@ namespace Smeedee.Client.Framework.Resources
         public static string[] GetBrushKeys()
         {
             return brushes.Keys.ToArray();
+        }
+
+        public static bool IsBrightBrush(string brushName)
+        {
+            return brightBrushes.Contains(brushName);
         }
     }
 
