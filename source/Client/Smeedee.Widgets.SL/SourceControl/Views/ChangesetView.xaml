@@ -8,13 +8,18 @@
     xmlns:di="clr-namespace:Smeedee.Widget.DeveloperInfo.SL.Views;assembly=Smeedee.Widget.DeveloperInfo.SL"
     xmlns:APD_Client_Framework_Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL"
     xmlns:Converters="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
-    mc:Ignorable="d" 
-    d:DesignWidth="600" d:DesignHeight="180">
+    xmlns:LocalConv="clr-namespace:Smeedee.Widgets.SL.SourceControl.Converters"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d"
+    d:DesignWidth="600" d:DesignHeight="180" >
     
     <UserControl.Resources>
     	<APD_Client_Framework_Converters:DateTimeToPrettyStringConverter x:Key="DateTimeToPrettyStringConverter"/>
         <SampleData:ChangesetSampleData x:Key="ChangesetSampleData" d:IsDataSource="True"/>
         <Converters:StringToResourceConverter x:Key="StringToResourceConverter" />
+        <LocalConv:BackgroundToFontBrushConverter x:Key="BackgroundToFontBrushConverter" />
+        
+ 
     </UserControl.Resources>
 	
     <Border x:Name="BoundingBorder" 
@@ -71,13 +76,13 @@
 				<RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/> 
             </Grid.RowDefinitions>
-			
-            <di:UserInfo DataContext="{Binding Developer, Mode=OneWay}" Grid.RowSpan="2" VerticalAlignment="Top" Margin="2,0" />
+
+            <di:UserInfo x:Name="DeveloperInfo" DataContext="{Binding Developer, Mode=OneWay}" Grid.RowSpan="2" VerticalAlignment="Top" Margin="2,0" />
 			
         	<TextBlock x:Name="Message" 
 						Text="{Binding Message, Mode=OneWay}" 
 						FontFamily="{StaticResource FontFamily}" 
-						Foreground="{StaticResource FontBrushBright}"
+						Foreground="{Binding BackgroundColor, Converter={StaticResource BackgroundToFontBrushConverter}}"
 						TextWrapping="Wrap" 
 						HorizontalAlignment="Stretch" 
 						FontSize="20" 
@@ -87,7 +92,7 @@
 						
 						
 			<TextBlock 	Text="Revision " 
-						Foreground="{StaticResource FontBrushBright}"
+						Foreground="{Binding BackgroundColor, Converter={StaticResource BackgroundToFontBrushConverter}}"
 						FontFamily="{StaticResource FontFamily}"
 						FontSize="12"
 						Opacity="0.8"
@@ -96,7 +101,7 @@
 			
 			<TextBlock x:Name="Revision" 
 						Text="{Binding Revision}" 
-						Foreground="{StaticResource FontBrushBright}"
+						Foreground="{Binding BackgroundColor, Converter={StaticResource BackgroundToFontBrushConverter}}"
 						FontFamily="{StaticResource FontFamily}"
 						FontSize="12"
 						Opacity="0.8"
@@ -108,7 +113,7 @@
 			
         	<TextBlock x:Name="Timestamp" 
 						Text="{Binding Date, Converter={StaticResource DateTimeToPrettyStringConverter}, Mode=OneWay}" 
-						Foreground="{StaticResource FontBrushBright}"
+						Foreground="{Binding BackgroundColor, Converter={StaticResource BackgroundToFontBrushConverter}}"
 						FontFamily="{StaticResource FontFamily}"
 						FontSize="18" 
 						FontWeight="Bold" 
