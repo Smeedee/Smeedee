@@ -26,7 +26,10 @@ namespace Smeedee.Tasks.SourceControl
     public class TFSChangesetHarvesterTask : ChangesetHarvesterBase
     {
         public const string PROJECT_SETTING_NAME = "Project";
+        public const string REQUIRED_PREFIX = "$\\";
         public override string Name { get { return "TFS Changeset Harvester"; } }
+
+        public string ProjectSettingValue { get; set; }
 
         public TFSChangesetHarvesterTask(IRepository<Changeset> changesetDbRepository, IPersistDomainModels<Changeset> databasePersister, TaskConfiguration config) 
             : base(changesetDbRepository, databasePersister, config)
@@ -36,14 +39,21 @@ namespace Smeedee.Tasks.SourceControl
             Guard.Requires<ArgumentNullException>(config != null);
             Guard.Requires<TaskConfigurationException>(config.Entries.Count() >= 4);
 
-            var projectSettingValue = config.ReadEntryValue(PROJECT_SETTING_NAME) as string;
-
-            Guard.Requires<ArgumentException>(
-                projectSettingValue != null &&
-                projectSettingValue.StartsWith("$\\"),
-                string.Format("The setting named '{0}' needs to start with $\\, but was '{1}'", PROJECT_SETTING_NAME, projectSettingValue ?? "null" ));
-
+            setProjectSettingValueWithPrefix(config.ReadEntryValue(PROJECT_SETTING_NAME) as string);
+            
             Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);
+        }
+
+        private void setProjectSettingValueWithPrefix(string projectSettingName)
+        {
+            if (projectSettingName.Contains(REQUIRED_PREFIX))
+            {
+                ProjectSettingValue = projectSettingName;
+            }
+            else
+            {
+                ProjectSettingValue = REQUIRED_PREFIX + projectSettingName;
+            }
         }
 
         public override void Execute()
@@ -62,7 +72,7 @@ namespace Smeedee.Tasks.SourceControl
 
             return new TFSChangesetRepository(
                    (string)config.ReadEntryValue(URL_SETTING_NAME),
-                   (string)config.ReadEntryValue(PROJECT_SETTING_NAME),
+                   ProjectSettingValue,
                    cred);
         }
     }

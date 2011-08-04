@@ -9,8 +9,10 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         partial void OnInitialize()
         {
             AvailableImages = new ObservableCollection<string>();
-            AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/test.png");
-            
+            //AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/github-httpsgithubcomSmeedeeSmeedeecommitssprint3.png");
+            //AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/smeedeeorg.png");
+            //AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/NewWebSnapshotTask-httpsmeedeeorg.png");
+
         }
 
         public bool CanSave()

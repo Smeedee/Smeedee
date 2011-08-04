@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Smeedee.Client.SL;
 using Smeedee.Widgets.SL.WebSnapshot.Util;
 
 
@@ -29,6 +30,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             previousPoints = new Queue<Point>();
             previousRect = new Stack<Rectangle>();
             LayoutRoot.MouseLeftButtonDown += canvas_MouseLeftButtonDown;
+            
         }
 
         void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -37,7 +39,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
                 return;
 
             Point point = e.GetPosition(image);
-
+            
             if (CropUtil.OutsidePicture(point, image)) return;
 
             MousePress.X = point.X;
@@ -45,7 +47,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
             Xbox.Text = MousePress.X.ToString();
             Ybox.Text = MousePress.Y.ToString();
-
 
             rect = new Rectangle();
             origPoint = e.GetPosition(canvas);
@@ -55,7 +56,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             rect.StrokeThickness = 2;
 
             canvas.Children.Add(rect);
-
             canvas.MouseMove += canvas_MouseMove;
             canvas.MouseLeftButtonUp += canvas_MouseLeftButtonUp;
         }
@@ -111,8 +111,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         private void crop_click(object sender, RoutedEventArgs e)
         {
-            // Crop
-            Point upperleftpoint = CropUtil.GetUpperLeftCornerInRectangel(MousePress, MouseRelease, rect);
+            Point upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease, rect);
 
             previousPoints.Enqueue(upperleftpoint);
             previousRect.Push(rect);
@@ -170,7 +169,8 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         {
             image.Clip = null;
             canvas.Children.Clear();
-            image.Source = new BitmapImage(new Uri(TaskNames.SelectedItem.ToString()));
+            var WebSnapshotURI = new Uri(App.Current.Host.Source, "../" + TaskNames.SelectedItem);
+            image.Source = new BitmapImage(WebSnapshotURI);
             canvas.Children.Add(image);
             rect = null;
         }

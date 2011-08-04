@@ -7,7 +7,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Util
 {
     public class CropUtil
     {
-        public static Point GetUpperLeftCornerInRectangel(Point press, Point release, Rectangle rectangle)
+        public static Point GetUpperLeftCornerInRectangle(Point press, Point release, Rectangle rectangle)
         {
             var upperLeft  = new Point(0,0);
             
