@@ -25,6 +25,7 @@
 
 using System.ComponentModel;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.Widget.CI.Controllers;
 using Smeedee.Widget.CI.SL.Views;
@@ -36,7 +37,7 @@ namespace Smeedee.Widget.CI.SL
     [WidgetInfo(Name = "Build status",
                 Description = "This widget shows all the projects on any configured build server and their current status (broken, building or green). It also displays name and picture of the person who triggered the current build.",
                 Author = "Smeedee team",
-                Version = "1.0",
+                Version = "1.01",
                 Tags = new[] { CommonTags.TeamCommunication, CommonTags.ContinuousIntegration, CommonTags.Agile })
     ]
     public class CIWidget : Client.Framework.ViewModel.Widget
@@ -56,7 +57,6 @@ namespace Smeedee.Widget.CI.SL
 			SettingsView = new CISettingsView{ DataContext = settingsViewModel };
 
             PropertyChanged += controller.ToggleRefreshInSettingsMode;
-            ConfigurationChanged += controller.ConfigurationUpdated;
             controller.ViewModel.PropertyChanged += ViewModelPropertyChanged;
         }
 
@@ -74,5 +74,10 @@ namespace Smeedee.Widget.CI.SL
 			config.Bind<CIViewModel>().To<CIViewModel>().InSingletonScope();
 			config.Bind<CISettingsViewModel>().To<CISettingsViewModel>().InSingletonScope();
 		}
+
+        protected override Configuration NewConfiguration()
+        {
+            return CIController.GetDefaultConfiguration();
+        }
     }
 }

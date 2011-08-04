@@ -43,19 +43,13 @@ namespace Smeedee.Widget.CI.Controllers
 {
     public class CIController : ControllerBase<CIViewModel>
     {
-        private const int DB_CACHE_EXPIRATION_IN_MS = 33 * 1000;
-
         private readonly IRepository<User> userRepository;
         private CISettingsViewModel settingsViewModel;
 
         private IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient;
-       // private IEnumerable<CIProject> projects = new List<CIProject>();
         private readonly ILog logger;
         private IRepository<CIServer> ciServerRepository;
-        private IRepository<Configuration> ciConfigRepository;
-        private IPersistDomainModelsAsync<Configuration> ciConfigPersister;
         private SettingsHandler settings;
-        private DateTime lastDbCheck = DateTime.MinValue;
 
         private bool isSoundEnabled = false;
 
@@ -65,46 +59,40 @@ namespace Smeedee.Widget.CI.Controllers
             CISettingsViewModel settingsViewModel, 
             IRepository<User> userRepository, 
             IRepository<CIServer> ciServerRepository,
-            IRepository<Configuration> ciConfigRepository,
             IPersistDomainModelsAsync<Configuration> ciConfigPersister,
             IInvokeBackgroundWorker<IEnumerable<CIProject>> asyncClient, 
             ITimer timer, 
             IUIInvoker uiInvoke, 
             ILog logger, 
-            IProgressbar progressbar)
-            : base(viewModel, timer, uiInvoke, progressbar)
+            IProgressbar progressbar,
+            IWidget widget)
+            : base(viewModel, timer, uiInvoke, progressbar, widget, ciConfigPersister)
         {
             this.settingsViewModel = settingsViewModel;
             this.userRepository = userRepository;
             this.asyncClient = asyncClient;
             this.ciServerRepository = ciServerRepository;
-            this.ciConfigRepository = ciConfigRepository;
-            this.ciConfigPersister = ciConfigPersister;
             this.logger = logger;
 
             settings = new SettingsHandler(settingsViewModel);
 
-            settingsViewModel.SaveSettings.AfterExecute += (o, e) => LoadData();
-
-            ciConfigPersister.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
             settingsViewModel.SaveSettings.ExecuteDelegate = Save;
             settingsViewModel.ReloadSettings = new DelegateCommand(() => settings.Reset());
 
-            var dummyServers = new List<CIServer>() { new CIServer("Loading server list", "") };
-            var dummyConfig = settings.GetDummyConfig(dummyServers);
-            settingsViewModel.Servers = WrapServersAndConfig(dummyServers, dummyConfig);
-            settings.LoadIntoViewModel(dummyConfig);
+            //var dummyServers = new List<CIServer>() { new CIServer("Loading server list", "") };
+            //var dummyConfig = SettingsHandler.GetDummyConfig(dummyServers);
+            //settingsViewModel.Servers = WrapServersAndConfig(dummyServers, dummyConfig);
+            //settings.LoadIntoViewModel(dummyConfig);
 
             LoadData();
             Start();
         }
 
         #endregion
-        
 
-        public void ConfigurationUpdated(object sender, EventArgs eventArgs)
+
+        protected override void OnConfigurationChanged(Configuration configuration)
         {
-            lastDbCheck = DateTime.MinValue;
             LoadData();
         }
 
@@ -112,6 +100,8 @@ namespace Smeedee.Widget.CI.Controllers
         {
             asyncClient.RunAsyncVoid(() =>
             {
+                
+
                 SetIsLoadingData();
 
                 var projects = TryGetProjects();
@@ -121,9 +111,32 @@ namespace Smeedee.Widget.CI.Controllers
             });
         }
 
+        private IEnumerable<CIProject> TryGetProjects()
+        {
+            try
+            {
+                var projects = GetSelectedAndActiveProjects();
+                ViewModel.HasConnectionProblems = false;
+                projects = SortProjects(projects);
+                return projects;
+            }
+            catch (Exception exception)
+            {
+                ViewModel.HasConnectionProblems = true;
+                logger.WriteEntry(new ErrorLogEntry()
+                {
+                    Message = exception.ToString(),
+                    Source = this.GetType().ToString(),
+                    TimeStamp = DateTime.Now
+                });
+            }
+
+            return new List<CIProject>();
+        }
+
         public IEnumerable<CIProject> GetSelectedAndActiveProjects()
         {
-            var ciServers = GetServersFromDbOrCache().ToList();
+            var ciServers = GetServersFromDb().ToList();
             if (ciServers == null) throw new Exception("We should not get null here");
 
             EachProject(MakePlaceholderBuildIfNeeded, ciServers);
@@ -150,6 +163,20 @@ namespace Smeedee.Widget.CI.Controllers
             return projectList;
         }
 
+        private IEnumerable<CIServer> GetServersFromDb()
+        {
+            var newServers = ciServerRepository.Get(new AllSpecification<CIServer>()).ToList();
+            var config = settings.GetUpdatedConfiguration(Widget.Configuration, newServers);
+
+            uiInvoker.Invoke(() =>
+            {
+                settingsViewModel.Servers = WrapServersAndConfig(newServers, config);
+                settings.LoadIntoViewModel(config);
+                settings.SetResetPoint();
+            });
+            return newServers;
+        }
+
         private void EachProject(Action<CIProject> func, IEnumerable<CIServer> servers)
         {
             foreach (var server in servers)
@@ -157,24 +184,7 @@ namespace Smeedee.Widget.CI.Controllers
                     func(project);
         }
 
-        private IEnumerable<CIServer> GetServersFromDbOrCache()
-        {
-            //bool cacheHasExpired = (DateTime.Now - lastDbCheck).TotalMilliseconds > DB_CACHE_EXPIRATION_IN_MS;
-            //if (cacheHasExpired)
-            //{
-                lastDbCheck = DateTime.Now;
-                var newServers = ciServerRepository.Get(new AllSpecification<CIServer>());
-                var config = settings.LoadConfigFromDb(ciConfigRepository, newServers);
-
-                uiInvoker.Invoke(() =>
-                {
-                    settingsViewModel.Servers = WrapServersAndConfig(newServers, config);
-                    settings.LoadIntoViewModel(config);
-                    settings.SetResetPoint();
-                });
-                return newServers;
-            //}
-        }
+        
 
         private bool ProjectIsActive(ProjectConfigViewModel projectWrap)
         {
@@ -200,17 +210,12 @@ namespace Smeedee.Widget.CI.Controllers
         private void Save()
         {
             settings.SetResetPoint();
-            lastDbCheck = DateTime.Now;
 
-            SetIsSavingConfig();
-
-            ciConfigPersister.Save(settings.GetUpdatedConfig());
+            settings.GetUpdatedConfig(Widget.Configuration);
+            SaveConfiguration();
         }
 
-        private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs e)
-        {
-            SetIsNotSavingConfig();
-        }
+
 
         private ObservableCollection<ServerConfigViewModel> WrapServersAndConfig(IEnumerable<CIServer> servers, Configuration config)
         {
@@ -220,32 +225,10 @@ namespace Smeedee.Widget.CI.Controllers
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
-            if (!ViewModel.IsLoading)
-                LoadData();
+            LoadData();
         }
 
-        private IEnumerable<CIProject> TryGetProjects()
-        {
-            try
-            {
-                var projects = GetSelectedAndActiveProjects();
-                ViewModel.HasConnectionProblems = false;
-                projects = SortProjects(projects);
-                return projects;
-            }
-            catch( Exception exception )
-            {
-                ViewModel.HasConnectionProblems = true;
-                logger.WriteEntry(new ErrorLogEntry()
-                                      {
-                                          Message = exception.ToString(),
-                                          Source = this.GetType().ToString(),
-                                          TimeStamp = DateTime.Now
-                                      });
-            }
-
-            return new List<CIProject>();
-        }
+        
 
         private IOrderedEnumerable<CIProject> SortProjects(IEnumerable<CIProject> activeProjects)
         {
@@ -337,6 +320,11 @@ namespace Smeedee.Widget.CI.Controllers
             return returnPerson;
         }
 
+        public static Configuration GetDefaultConfiguration()
+        {
+            return SettingsHandler.GetDummyConfig(new List<CIServer> { new CIServer("Loading server list", "") });
+        }
+
         private class SettingsHandler
         {
             private const string CONFIG_NAME = "CIWidgetSettings";
@@ -369,10 +357,13 @@ namespace Smeedee.Widget.CI.Controllers
                 this.settingsViewModel = viewModel;
             }
 
-            public Configuration GetUpdatedConfig()
+            public Configuration GetUpdatedConfig(Configuration config)
             {
-                var config = new Configuration(CONFIG_NAME);
-                settingsViewModel.EachProject(project => config.NewSetting(project.SelectedSetting));
+                //foreach (var server in settingsViewModel.Servers)
+                //    foreach (var project in server.Projects)
+                //        AddIfNotExists(config, project.SelectedSetting.Name, project.IsSelected.ToString());
+
+                settingsViewModel.EachProject(project => config.ChangeSetting(project.SelectedSetting.Name, project.SelectedSetting.Value.ToString()));
                 config.NewSetting(THRESHOLD_SETTING_NAME, settingsViewModel.InactiveProjectThreshold.ToString());
                 config.NewSetting(FILTER_SETTING_NAME, settingsViewModel.FilterInactiveProjects.ToString());
                 config.NewSetting(SHOW_DURATION_SETTING_NAME, settingsViewModel.ShowDuration.ToString());
@@ -385,7 +376,7 @@ namespace Smeedee.Widget.CI.Controllers
                 return config;
             }
 
-            public Configuration GetDummyConfig(IEnumerable<CIServer> servers)
+            public static Configuration GetDummyConfig(IEnumerable<CIServer> servers)
             {
                 return FillInMissingValues(new Configuration(CONFIG_NAME), servers);
             }
@@ -401,15 +392,12 @@ namespace Smeedee.Widget.CI.Controllers
                 settingsViewModel.ShowTriggeredBy = bool.Parse(config.GetSetting(SHOW_TRIGGEREDBY_SETTING_NAME).Value);
             }
 
-            public Configuration LoadConfigFromDb(IRepository<Configuration> configRepo, IEnumerable<CIServer> servers)
+            public Configuration GetUpdatedConfiguration(Configuration config, IEnumerable<CIServer> servers)
             {
-                var spec = new AllSpecification<Configuration>();
-                var config = configRepo.Get(spec).Where(c => c.Name == CONFIG_NAME).FirstOrDefault();
-                config = config ?? new Configuration(CONFIG_NAME);
                 return FillInMissingValues(config, servers);
             }
 
-            private Configuration FillInMissingValues(Configuration config, IEnumerable<CIServer> servers)
+            private static Configuration FillInMissingValues(Configuration config, IEnumerable<CIServer> servers)
             {
                 foreach (var server in servers)
                     foreach (var project in server.Projects)
@@ -425,7 +413,7 @@ namespace Smeedee.Widget.CI.Controllers
                 return config;
             }
 
-            private void AddIfNotExists(Configuration config, string name, string value)
+            private static void AddIfNotExists(Configuration config, string name, string value)
             {
                 if (!config.ContainsSetting(name))
                     config.NewSetting(name, value);
