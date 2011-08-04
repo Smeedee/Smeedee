@@ -19,6 +19,7 @@ namespace Smeedee.Client.Framework.Repositories.Charting
 
         IList<string> GetDatabases();
         IList<string> GetCollectionsInDatabase(string database);
+        
         void LoadChart(string database, string collection);
         void LoadChart(string database, string collection, Action<Chart> callback);
         void RefreshDatasources();

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using Moq;
 using NUnit.Framework;
-using Newtonsoft.Json.Serialization;
 using Smeedee.Client.Framework.Repositories.Charting;
-using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.ViewModel;
@@ -15,14 +11,11 @@ using Smeedee.DomainModel.Charting;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
-using Smeedee.DomainModel.NoSql;
 using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 using TinyMVVM.Framework.Services;
-using TinyMVVM.Framework.Testing.Services;
-using TinyMVVM.IoC;
 
 namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 {
@@ -157,10 +150,11 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     And(the_controller_has_been_created);
                 When("finished loading");
                 Then("settingsViewModel should contain a database", () =>
-                {
-                    settingsViewModel.Databases.Count.ShouldBe(1);
-                    settingsViewModel.Databases[0].ShouldBe("TestDatabase");
-                });
+                                                                        {
+                                                                            settingsViewModel.Databases.Count.ShouldBe(1);
+                                                                            settingsViewModel.Databases[0].ShouldBe(
+                                                                                "TestDatabase");
+                                                                        });
             }
 
             [Test]
@@ -420,7 +414,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
             }
 
             [Test]
-            public void Then_save_should_be_called_on_on_configPersister()
+            public void Then_save_should_be_called_on_configPersister()
             {
                 Given(the_controller_has_been_created);
                 When(SaveSettings_is_executed);
@@ -444,9 +438,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
             private When SaveSettings_is_executed = () => controller.SettingsViewModel.SaveSettings.ExecuteDelegate();
 
-            
-
-           
             private Context there_is_settings_in_viewmodel = () =>
                                                                  {
                                                                      var vm = controller.SettingsViewModel;
@@ -454,7 +445,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                                                                      vm.XAxisName = "X-Axis";
                                                                      vm.YAxisName = "Y-Axis";
                                                                      vm.XAxisType = "Linear";
-                                                                 };
+                                                                  };
         }
 
         [TestFixture]
@@ -491,9 +482,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                     WidgetConfigurationIs(AConfiguration());
                     widgetFake.Raise(e => e.ConfigurationChanged += null, EventArgs.Empty);
                 };
-
-
-            
+ 
         }
 
         [TestFixture]
@@ -507,8 +496,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 When(reloadsettings_is_executed);
                 Then("the list of datasources should be updated", () => controller.SettingsViewModel.Databases.Count.ShouldBe(1));
             }
-
-            
 
             [Test]
             public void Then_configuration_should_be_copied_to_viewmodel()
@@ -577,7 +564,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 Then("Verify that logger has been called", () => loggerFake.Verify(l => l.WriteEntry(It.IsAny<LogEntry>())));
             }
 
-
             private When error_event_is_raised = () => RaiseErrorEvent("Some message");
 
             private static void RaiseErrorEvent(string message)
@@ -643,10 +629,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 return loggerFake != null ? loggerFake.Object : null;
             }
            
-
             protected Context the_controller_has_been_created = CreateController;
             protected When controller_is_created = CreateController;
-
 
             protected static Context there_are_no_databases = () => storageReaderFake.Setup(s => s.GetDatabases()).Returns(new List<string>());
             protected static Context there_is_one_database_TestDatabase =
@@ -696,8 +680,6 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                             Legend = "legend"
                         });
 
-
-
             protected When onNotifiedToRefresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
             protected When refresh_is_called = () => timerFake.Raise(t => t.Elapsed += null, EventArgs.Empty);
 
@@ -742,9 +724,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 configPersisterFake = new Mock<IPersistDomainModelsAsync<Configuration>>();
                 configuration = ChartConfig.NewDefaultConfiguration();
 
-
             }
-
 
             [TearDown]
             public void TearDown()
