@@ -67,7 +67,13 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 When(the_Controller_is_created);
 
                 Then("assure Configuration is created if it doesn't exist", () =>
-                configPersisterMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.Once()));
+                    {
+                        controller.ViewModel.AcknowledgeOthers.ShouldBeTrue();
+                        controller.ViewModel.IsUsingDate.ShouldBeTrue();
+                        controller.ViewModel.TimeSpanInDays.ShouldBe(10);
+                        controller.ViewModel.SinceDate.ShouldBe(DateTime.Now.Date);
+                        controller.ViewModel.MaxNumOfCommiters.ShouldBe(15);
+                    });
             }
 
             [Test]
@@ -100,7 +106,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 Then(() =>
                 {
-                    configRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Configuration>>()), Times.Once());
+                    changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Once());
                     TestExtensions.ShouldBe(controller.ViewModel.TimeSpanInDays, 1);
                     TestExtensions.ShouldBe(controller.ViewModel.SinceDate, new DateTime(2010, 01, 01));
                     TestExtensions.ShouldBe(controller.ViewModel.IsUsingDate, false);
@@ -130,7 +136,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 When(the_Controller_is_created);
 
-                Then(() => TestExtensions.ShouldBe(controller.ViewModel.ActualDateUsed.Date, new DateTime(2010, 01, 01)));
+                Then(() => controller.ViewModel.ActualDateUsed.ShouldBe(new DateTime(2010, 01, 01)));
             }
 
             [Test]
@@ -199,14 +205,18 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             }
 
             [Test]
-            public void Assure_log_entry_is_created_when_configRepo_throws_an_exception()
+            public void Assure_log_entry_is_created_when_changesetRepo_throws_an_exception()
             {
                 Given(there_are_3_users_in_userdb).
-                    And(config_repository_throws_an_exception);
+                    And(changeset_repository_throws_an_exception);
 
                 When(the_Controller_is_created);
 
-                Then(() => logger.Verify(l => l.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.AtLeastOnce()));
+                Then(() =>
+                         {
+                             controller.ViewModel.HasConnectionProblems.ShouldBeTrue();
+                             logger.Verify(l => l.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.AtLeastOnce());
+                         });
             }
 
             [Test]
@@ -217,7 +227,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 When(the_Controller_is_created);
 
-                Then(() => logger.Verify(l => l.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.Once()));
+                Then(() => logger.Verify(l => l.WriteEntry(It.IsAny<ErrorLogEntry>()), Times.AtLeastOnce()));
             }
         }
 
@@ -309,36 +319,33 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 });
             }
 
-            [Test]
-            public void Assure_IsUsingDate_changes_when_IsUsingTimespan_changes()
-            {
-                var oldIsUsingDate = false;
+            protected Context IsUsingTimespan_changes_to_false = () => { controller.ViewModel.IsUsingTimespan = false; };
+            private When Configuration_is_updated = () => UpdateConfiguration();
 
+            [Test]
+            public void Assure_IsUsingDate_changes_to_true_when_IsUsingTimespan_changes_to_false()
+            {
                 Given(there_are_3_users_in_userdb).
                     And(config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
                     And(there_are_changesets_for_2_users_in_SourceControl_system).
-                    And(the_Controller_is_spawned).
-                    And(() => oldIsUsingDate = controller.ViewModel.IsUsingDate);
+                    And(the_Controller_is_spawned).And(IsUsingTimespan_changes_to_false);
 
-                When(IsUsingTipespan_changes);
+                When(Configuration_is_updated);
 
-                Then(() => oldIsUsingDate.ShouldNotBe(controller.ViewModel.IsUsingDate));
+                Then("Assure IsUsingDate is changed to true", () => controller.ViewModel.IsUsingDate.ShouldBeTrue());
             }
 
             [Test]
-            public void Assure_IsUsingTimespan_changes_when_IsUsingDate_changes()
+            public void Assure_IsUsingTimespan_changes_to_true_when_IsUsingDate_changes_to_false()
             {
-                var oldIsUsingTimespan = false;
-
                 Given(there_are_3_users_in_userdb).
                     And(config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
                     And(there_are_changesets_for_2_users_in_SourceControl_system).
-                    And(the_Controller_is_spawned).
-                    And(() => oldIsUsingTimespan = controller.ViewModel.IsUsingTimespan);
+                    And(the_Controller_is_spawned);
 
-                When(IsUsingDate_changes);
+                When(IsUsingDate_changes_to_true);
 
-                Then(() => oldIsUsingTimespan.ShouldNotBe(controller.ViewModel.IsUsingTimespan));
+                Then("Assure IsUsingTimespan is changed to true", () => controller.ViewModel.IsUsingTimespan.ShouldBeTrue());
             }
 
         }
@@ -375,139 +382,102 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             [TestFixture]
             public class When_config_value_is_changed_before_notified_to_refresh : Shared
             {
+                
                 [Test]
                 public void Assure_timeSpan_changed_will_update_the_ViewModel()
                 {
-                    var timeSpanChanged = config_is_changed_to_1_2010_01_01_false_12_false;
                     var viewModelChanged = false;
 
-                    Given(there_are_changesets_for_2_users_in_SourceControl_system).
-                        And(there_are_3_users_in_userdb).
-                        And(config_with_timespan_2_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
-                        And(the_Controller_is_spawned).
-                        And(timeSpanChanged)
+                    Given(the_Controller_is_spawned).
+                        And("subscribe to ViewModel CollectionChanged", () =>
+                            controller.ViewModel.Data.CollectionChanged += (o, e) => { viewModelChanged = true; });
 
-                        .And("subscribe to ViewModel CollectionChanged", () =>
-                        {
-                            controller.ViewModel.Data.CollectionChanged += (o, e) => { viewModelChanged = true; };
-                        });
-
-                    When(the_Controller_is_notified_to_refresh);
+                    When(timeSpan_is_changed);
 
                     Then(() =>
                     {
-                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.AtLeastOnce());
                         viewModelChanged.ShouldBeTrue();
                     });
-
                 }
 
                 [Test]
                 public void Assure_date_changed_will_update_the_ViewModel()
                 {
-                    var dateChanged = config_is_changed_to_2_2010_01_02_false_12_false;
                     var viewModelChanged = false;
 
-                    Given(there_are_changesets_for_2_users_in_SourceControl_system).
-                        And(there_are_3_users_in_userdb).
-                        And(config_with_timespan_2_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
-                        And(the_Controller_is_spawned).
-                        And(dateChanged)
-
-                        .And("subscribe to ViewModel CollectionChanged", () =>
+                    Given(the_Controller_is_spawned).
+                        And("subscribe to ViewModel CollectionChanged", () =>
                         {
                             controller.ViewModel.Data.CollectionChanged += (o, e) => { viewModelChanged = true; };
                         });
 
-                    When(the_Controller_is_notified_to_refresh);
+                    When(date_is_changed);
 
                     Then(() =>
                     {
-                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.AtLeastOnce());
                         viewModelChanged.ShouldBeTrue();
                     });
-
                 }
 
                 [Test]
                 public void Assure_isUsingDate_changed_will_update_the_ViewModel()
                 {
-                    var isUsingDateChanged = config_is_changed_to_2_2010_01_01_true_12_false;
                     var viewModelChanged = false;
 
-                    Given(there_are_changesets_for_2_users_in_SourceControl_system).
-                        And(there_are_3_users_in_userdb).
-                        And(config_with_timespan_2_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
-                        And(the_Controller_is_spawned).
-                        And(isUsingDateChanged)
-
-                        .And("subscribe to ViewModel CollectionChanged", () =>
+                    Given(the_Controller_is_spawned).
+                        And("subscribe to ViewModel CollectionChanged", () =>
                         {
                             controller.ViewModel.Data.CollectionChanged += (o, e) => { viewModelChanged = true; };
                         });
 
-                    When(the_Controller_is_notified_to_refresh);
+                    When(isUsingDate_is_changed);
 
                     Then(() =>
                     {
-                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.AtLeastOnce());
                         viewModelChanged.ShouldBeTrue();
                     });
-
                 }
 
                 [Test]
                 public void Assure_numOfCommiters_changed_will_update_the_ViewModel()
                 {
-                    var numOfCommitersChanged = config_is_changed_to_2_2010_01_01_false_10_false;
                     var viewModelChanged = false;
 
-                    Given(there_are_changesets_for_2_users_in_SourceControl_system).
-                        And(there_are_3_users_in_userdb).
-                        And(config_with_timespan_2_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
-                        And(the_Controller_is_spawned).
-                        And(numOfCommitersChanged)
-
-                        .And("subscribe to ViewModel CollectionChanged", () =>
+                    Given(the_Controller_is_spawned).
+                        And("subscribe to ViewModel CollectionChanged", () =>
                         {
                             controller.ViewModel.Data.CollectionChanged += (o, e) => { viewModelChanged = true; };
                         });
 
-                    When(the_Controller_is_notified_to_refresh);
+                    When(numOfCommiters_is_changed);
 
                     Then(() =>
                     {
-                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.AtLeastOnce());
                         viewModelChanged.ShouldBeTrue();
                     });
-
                 }
 
                 [Test]
                 public void Assure_ackOthers_changed_will_update_the_ViewModel()
                 {
-                    var ackOthersChanged = config_is_changed_to_2_2010_01_01_false_12_true;
                     var viewModelChanged = false;
 
-                    Given(there_are_changesets_for_2_users_in_SourceControl_system).
-                        And(there_are_3_users_in_userdb).
-                        And(config_with_timespan_2_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
-                        And(the_Controller_is_spawned).
-                        And(ackOthersChanged)
+                    Given(the_Controller_is_spawned).
+                        And("subscribe to ViewModel CollectionChanged", () =>
+                            controller.ViewModel.Data.CollectionChanged += (o, e) => { viewModelChanged = true; }
+                        );
 
-                        .And("subscribe to ViewModel CollectionChanged", () =>
-                        {
-                            controller.ViewModel.Data.CollectionChanged += (o, e) => { viewModelChanged = true; };
-                        });
-
-                    When(the_Controller_is_notified_to_refresh);
+                    When(ackOthers_is_changed);
 
                     Then(() =>
                     {
-                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Exactly(2));
+                        changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.AtLeastOnce());
                         viewModelChanged.ShouldBeTrue();
                     });
-
                 }
             }
 
@@ -776,6 +746,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             }
 
             [Test]
+            [Ignore("Not the controllers responsibility to load settings when started anymore")]
             public void Assure_progressbar_is_shown_while_loading_settings()
             {
                 Given(configRepository_does_not_return_GetCompleted);
@@ -790,6 +761,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             }
 
             [Test]
+            [Ignore("Not the controllers responsibility to load settings when started anymore")]
             public void Assure_progressbar_is_hidden_after_loading_settings()
             {
                 Given(config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
@@ -801,7 +773,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then(() =>
                 {
                     progressbarMock.Verify(l => l.HideInBothViews(), Times.AtLeastOnce());
-                    TestExtensions.ShouldBe(controller.ViewModel.IsLoadingConfig, false);
+                    controller.ViewModel.IsLoadingConfig.ShouldBeFalse();
                 });
             }
         }
@@ -829,18 +801,29 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected When the_Controller_is_created = CreateController;
             protected Context the_Controller_is_spawned = CreateController;
 
-            protected When SaveSettings_delegate_is_executed = () => controller.ViewModel.SaveSettings.Execute(null);
-            protected Context SaveSettings_delegate_has_been_executed = () => controller.ViewModel.SaveSettings.Execute(null);
-            protected When ReloadFromRepository_delegate_is_executed = () => controller.ViewModel.ReloadFromRepository.Execute(null);
+            protected When SaveSettings_delegate_is_executed = () => controller.ViewModel.SaveSettings.ExecuteDelegate();
+            protected Context SaveSettings_delegate_has_been_executed = () => controller.ViewModel.SaveSettings.ExecuteDelegate();
+            protected When ReloadFromRepository_delegate_is_executed = () => controller.ViewModel.ReloadFromRepository.ExecuteDelegate();
 
-            protected When IsUsingTipespan_changes = () => controller.ViewModel.IsUsingTimespan ^= true;
-            protected When IsUsingDate_changes = () => controller.ViewModel.IsUsingDate ^= true;
+            protected When IsUsingTimespan_changes_to_false = () => { controller.ViewModel.IsUsingTimespan = false; };
+
+            protected When IsUsingDate_changes_to_true = () => { controller.ViewModel.IsUsingDate = true; };
 
             protected When the_Controller_is_notified_to_refresh = () => NotifyToRefresh(1);
 
             protected When three_loadData_are_run = () => NotifyToRefresh(3);
 
             protected When timespan_in_ViewModel_is_changed_to_1 = () => controller.ViewModel.TimeSpanInDays = 1;
+
+            protected When timeSpan_is_changed = () => SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), false, 12, false);
+            
+            protected When date_is_changed = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 02), false, 12, false);
+
+            protected When isUsingDate_is_changed = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), true, 12, false);
+
+            protected When numOfCommiters_is_changed = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 10, false);
+
+            protected When ackOthers_is_changed = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 12, true);
 
             protected Context viewModel_data_is_changed_to_2_2010_01_02_false_12_false = () =>
             {
@@ -851,82 +834,47 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 controller.ViewModel.AcknowledgeOthers = false;
             };
 
-            protected Context config_repository_throws_an_exception = () =>
+            protected Context changeset_repository_throws_an_exception = () =>
             {
-                configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).Throws(new Exception());
+                changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Changeset>>())).Throws(new Exception());
+
             };
 
             protected Context config_repository_returns_a_invalid_setting = () => SetupConfigRepositoryMockWithInvalidValues();
 
             protected Context date_is_changed_to_2010_06_30 = () => controller.ViewModel.SinceDate = new DateTime(2010, 06, 30);
 
-            protected Context config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false = () =>
-            {
-                SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), false, 12, false);
-            };
+            protected Context config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false = () => SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), false, 12, false);
 
-            protected Context config_with_timespan_2_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false = () =>
-            {
-                SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 12, false);
-            };
+            protected Context config_with_timespan_2_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 12, false);
 
-            protected Context config_with_timespan_1_date_2010_01_01_isUsingDate_true_numOfCom_1_ackOthers_false = () =>
-            {
-                SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), true, 1, false);
-            };
+            protected Context config_with_timespan_1_date_2010_01_01_isUsingDate_true_numOfCom_1_ackOthers_false = () => SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), true, 1, false);
 
-            protected Context config_with_timespan_1_date_2010_01_01_isUsingDate_true_numOfCom_1_ackOthers_true = () =>
-            {
-                SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), true, 1, true);
-            };
+            protected Context config_with_timespan_1_date_2010_01_01_isUsingDate_true_numOfCom_1_ackOthers_true = () => SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), true, 1, true);
 
-            protected Context config_is_changed_to_1_2010_01_01_false_12_false = () =>
-            {
-                SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), false, 12, false);
-            };
+            protected Context config_is_changed_to_1_2010_01_01_false_12_false = () => SetupConfigRepositoryMock(1, new DateTime(2010, 01, 01), false, 12, false);
 
-            protected Context config_is_changed_to_2_2010_01_02_false_12_false = () =>
-            {
-                SetupConfigRepositoryMock(2, new DateTime(2010, 01, 02), false, 12, false);
-            };
+            protected Context config_is_changed_to_2_2010_01_02_false_12_false = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 02), false, 12, false);
 
-            protected Context config_is_changed_to_2_2010_01_01_true_12_false = () =>
-            {
-                SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), true, 12, false);
-            };
+            protected Context config_is_changed_to_2_2010_01_01_true_12_false = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), true, 12, false);
 
-            protected Context config_is_changed_to_2_2010_01_01_false_10_false = () =>
-            {
-                SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 10, false);
-            };
+            protected Context config_is_changed_to_2_2010_01_01_false_10_false = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 10, false);
 
-            protected Context config_is_changed_to_2_2010_01_01_false_12_true = () =>
-            {
-                SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 12, true);
-            };
+            protected Context config_is_changed_to_2_2010_01_01_false_12_true = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 01), false, 12, true);
 
-            protected Context config_is_changed_to_2_2010_01_02_false_12_true = () =>
-            {
-                SetupConfigRepositoryMock(2, new DateTime(2010, 01, 02), false, 12, true);
-            };
+            protected Context config_is_changed_to_2_2010_01_02_false_12_true = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 02), false, 12, true);
 
             protected Context configuration_entry_does_not_exist = () =>
             {
-                var configList = new List<Configuration>();
+                //var configList = new List<Configuration>();
 
-                configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
-                    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
+                //configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
+                //    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
             };
 
-            protected Context configPersisterRepositoryMock_setup_to_return_savecomplete = () =>
-            {
-                configPersisterMock.Setup(r => r.Save(It.IsAny<Configuration>())).Raises(t => t.SaveCompleted += null, new SaveCompletedEventArgs());
-            };
+            protected Context configPersisterRepositoryMock_setup_to_return_savecomplete = () => configPersisterMock.Setup(r => r.Save(It.IsAny<Configuration>())).Raises(t => t.SaveCompleted += null, new SaveCompletedEventArgs());
 
-            protected Context configRepository_does_not_return_GetCompleted = () =>
-            {
-                configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
-            };
+            protected Context configRepository_does_not_return_GetCompleted = () => configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
 
             protected Context a_new_changeset_is_committed = () =>
             {
@@ -1106,6 +1054,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                            new GetCompletedEventArgs<Changeset>(changesets, new AllChangesetsSpecification()));
             }
 
+            protected static void UpdateConfiguration()
+            {
+                widgetMock.Raise(w => w.ConfigurationChanged += null, EventArgs.Empty);
+            }
+
             private static void SetupConfigRepositoryMock(int timespan, DateTime date, bool isUsingDate, int numberOfCommiters, bool acknowledgeOthers)
             {
                 var configuration = new Configuration(SETTINGS_ENTRY_NAME);
@@ -1118,8 +1071,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 var configList = new List<Configuration> { configuration };
 
-                configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
-                    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
+                //configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
+                //    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
+
+                widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
+                UpdateConfiguration();
             }
 
             private static void SetupConfigRepositoryMockWithInvalidValues()
@@ -1134,8 +1090,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 var configList = new List<Configuration> { configuration };
 
-                configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
-                    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
+                //configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
+                //    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
+
+                widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
+                UpdateConfiguration();
             }
 
             private static void CreateController()
@@ -1172,6 +1131,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
                 logger = new Mock<ILog>();
                 progressbarMock = new Mock<IProgressbar>();
+
+                widgetMock.SetupGet(w => w.Configuration).Returns(TopCommitersController.defaultConfig);
             }
 
             [TearDown]

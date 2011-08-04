@@ -52,9 +52,9 @@ namespace Smeedee.Widgets.SL.SourceControl
 			var controller = NewController<TopCommitersController>();
 			PropertyChanged += controller.ToggleRefreshInSettingsMode;
 
-            viewModel.SaveSettings.AfterExecute += (s,e) => SaveSettings.Execute();
+            //viewModel.SaveSettings.AfterExecute += (s,e) => SaveSettings.Execute();
 
-            ConfigurationChanged += controller.ConfigurationUpdated;
+            //ConfigurationChanged += controller.ConfigurationUpdated;
 
             View = new TopCommiters() { DataContext = viewModel };
 			SettingsView = new TopCommitersSettings() { DataContext = viewModel };
