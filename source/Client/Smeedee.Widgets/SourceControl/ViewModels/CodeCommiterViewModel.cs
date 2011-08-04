@@ -28,6 +28,7 @@
 #endregion
 
 using Smeedee.Client.Framework.ViewModel;
+using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.SourceControl.ViewModels
 {

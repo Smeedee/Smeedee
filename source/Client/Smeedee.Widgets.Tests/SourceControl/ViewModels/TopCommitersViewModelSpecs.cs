@@ -36,55 +36,58 @@ using Smeedee.Tests;
 
 namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.TopCommitersViewModelSpecs
 {
-    public class Shared : ScenarioClass
+    internal class TopCommitersViewModelSpecs
     {
-        protected static TopCommitersViewModel viewModel;
-        protected static PropertyChangedRecorder changeRecorder;
+        public class Shared : ScenarioClass
+        {
+            protected static TopCommitersViewModel viewModel;
+            protected static PropertyChangedRecorder changeRecorder;
+        }
+
+        [TestFixture]
+        public class When_ViewModel_is_spawned : Shared
+        {
+            [SetUp]
+            public void Setup()
+            {
+                viewModel = new TopCommitersViewModel();
+            }
+
+            [Test]
+            public void Assure_ViewModel_is_a_AbstractViewModel()
+            {
+                (viewModel is AbstractViewModel).ShouldBeTrue();
+            }
+
+            [Test]
+            public void Assure_it_has_a_Developers_property()
+            {
+                viewModel.Developers.ShouldNotBeNull();
+            }
+        }
+
+        [TestFixture]
+        public class When_properties_change : Shared
+        {
+            private Context the_ViewModel_is_created = () =>
+                                                           {
+                                                               viewModel = new TopCommitersViewModel();
+                                                               changeRecorder =
+                                                                   new PropertyChangedRecorder(viewModel.Developers);
+                                                           };
+
+            [Test]
+            public void Assure_observers_are_notified_when_content_in_Developer_property_changes()
+            {
+                Given(the_ViewModel_is_created);
+
+                When("content in Developer property changes", () =>
+                                                              viewModel.Developers.Add(new CodeCommiterViewModel()));
+
+                Then("assure observers are notified", () =>
+                                                      changeRecorder.ChangedProperties.Count.ShouldNotBe(0));
+            }
+
+        }
     }
-
-    [TestFixture]
-    public class When_ViewModel_is_spawned : Shared
-    {
-        [SetUp]
-        public void Setup()
-        {
-            viewModel = new TopCommitersViewModel();
-        }
-
-        [Test]
-        public void Assure_ViewModel_is_a_AbstractViewModel()
-        {
-            (viewModel is AbstractViewModel).ShouldBeTrue();
-        }
-
-        [Test]
-        public void Assure_it_has_a_Developers_property()
-        {
-            viewModel.Developers.ShouldNotBeNull();
-        }
-    }
-
-    [TestFixture]
-    public class When_properties_change : Shared
-    {
-        Context the_ViewModel_is_created = () =>
-        {
-            viewModel = new TopCommitersViewModel();
-            changeRecorder = new PropertyChangedRecorder(viewModel.Developers);
-        };
-
-        [Test]
-        public void Assure_observers_are_notified_when_content_in_Developer_property_changes()
-        {
-            Given(the_ViewModel_is_created);
-
-            When("content in Developer property changes", () =>
-                viewModel.Developers.Add(new CodeCommiterViewModel()));
-
-            Then("assure observers are notified", () =>
-                 changeRecorder.ChangedProperties.Count.ShouldNotBe(0));
-        }
-
-    }
-
 }

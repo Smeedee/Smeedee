@@ -46,8 +46,6 @@ namespace Smeedee.Widgets.SourceControl.Controllers
     {
         private IEnumerable<User> allUsers;
         private readonly IRepository<User> userRepository;
-        private readonly IAsyncRepository<Configuration> configRepository;
-        private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
 
         private const string SETTINGS_ENTRY_NAME = "TopCommiters";
         private const string DATE_ENTRY_NAME = "SinceDate";
@@ -64,11 +62,9 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         public static readonly Configuration defaultConfig = CreateConfiguration(DateTime.Now.Date, 10, true, 15, true);
 
         public TopCommitersController(
-            BindableViewModel<CodeCommiterViewModel> viewModel, 
-            IAsyncRepository<Changeset> changesetRepo, 
-            IInvokeBackgroundWorker<IEnumerable<Changeset>> backgroundWorker, 
-            ITimer timer, IUIInvoker uiInvoke, 
-            IAsyncRepository<Configuration> configRepo, 
+            BindableViewModel<CodeCommiterViewModel> viewModel,
+            IAsyncRepository<Changeset> changesetRepo,
+            ITimer timer, IUIInvoker uiInvoke,
             IPersistDomainModelsAsync<Configuration> configPersister,
             IRepository<User> userRepo,
             ILog logger,
@@ -77,155 +73,58 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             : base(viewModel, changesetRepo, timer, uiInvoke, logger, loadingNotifier, widget, configPersister)
         {
             Guard.Requires<ArgumentException>(userRepo != null, "userRepo");
-            Guard.Requires<ArgumentException>(configRepo != null, "configRepo");
             Guard.Requires<ArgumentException>(configPersister != null, "configPersister");
-            
-            userRepository = userRepo;
-            configRepository = configRepo;
-            configPersisterRepository = configPersister;
 
-            ViewModel.SaveSettings.AfterExecute += (s, e) =>  SaveAndReload();
-            ViewModel.ReloadFromRepository.AfterExecute += (s, e) => LoadConfigAndData();
+            userRepository = userRepo;
+
+            ViewModel.SaveSettings.ExecuteDelegate += SaveSettings;
+            ViewModel.ReloadFromRepository.ExecuteDelegate += ReloadSettings;
 
             ViewModel.PropertyChanged += ViewModelPropertyChanged;
-            configPersisterRepository.SaveCompleted += ConfigPersisterRepositorySaveCompleted;
-            configRepository.GetCompleted += ConfigRepositoryGetCompleted;
 
             Start();
 
-            LoadDefaultValuesIntoViewModel();
-            LoadConfigAndData();
+            CopyConfigurationToViewModel(Widget.Configuration);
+            LoadNewData();
         }
 
-        private void ConfigPersisterRepositorySaveCompleted(object sender, SaveCompletedEventArgs e)
+        private static Configuration CreateConfiguration(DateTime date, int timespan, bool isUsingDate, int maxNumOfCommiters, bool acknowledgeOthers)
         {
-            SetIsNotSavingConfig();
+            var newConfig = new Configuration(SETTINGS_ENTRY_NAME) { IsConfigured = true };
+
+            newConfig.NewSetting(DATE_ENTRY_NAME, date.ToString(dateFormatingRules));
+            newConfig.NewSetting(TIMESPAN_ENTRY_NAME, timespan.ToString());
+            newConfig.NewSetting(IS_USING_DATE_ENTRY_NAME, isUsingDate.ToString());
+            newConfig.NewSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME, maxNumOfCommiters.ToString());
+            newConfig.NewSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME, acknowledgeOthers.ToString());
+
+            return newConfig;
         }
 
-        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (listOfSettings.Contains(e.PropertyName))
-            {
-                configIsChanged = true;
-            }
-        }
-
-        private void SaveAndReload()
-        {
-            SaveConfigToRepository();
-            ReloadViewModelData();
-        }
-
-        private void SaveConfigToRepository()
-        {
-            SetIsSavingConfig();
-
-            var newConfig = CreateConfiguration(ViewModel.SinceDate, ViewModel.TimeSpanInDays, ViewModel.IsUsingDate,
-                                                ViewModel.MaxNumOfCommiters, ViewModel.AcknowledgeOthers);
-
-            configPersisterRepository.Save(newConfig);
-        }
-
-        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
-        {
-            LoadConfigAndData();
-        }
-
-        private void UpdateViewModel()
-        {
-            if (configIsChanged)
-            {
-                ReloadViewModelData();
-            }
-            else
-            {
-                LoadData(new ChangesetsAfterRevisionSpecification(ViewModel.CurrentRevision));
-            }
-        }
-
-        private void ReloadViewModelData()
+        private void CopyConfigurationToViewModel(Configuration configuration)
         {
             uiInvoker.Invoke(() =>
             {
-                ViewModel.Data.Clear();
-                ViewModel.CurrentRevision = 0;
+                foreach (var entry in listOfSettings)
+                {
+                    TryToLoadSpecificSetting(configuration, entry);
+                }
             });
-            
-            LoadData();
         }
 
-        private void LoadDefaultValuesIntoViewModel()
-        {
-            LoadSettings(defaultConfig);
-        }
-
-        private void LoadConfigAndData()
-        {
-            try
-            {
-                SetIsLoadingConfig();
-                configRepository.BeginGet(new ConfigurationByName(SETTINGS_ENTRY_NAME));
-            }
-            catch (Exception exception)
-            {
-                LogErrorMsg(exception);
-                SetIsNotLoadingConfig();
-            }
-        }
-
-        private void ConfigRepositoryGetCompleted(object sender, GetCompletedEventArgs<Configuration> eventArgs)
-        {
-            var config = eventArgs.Result.FirstOrDefault();
-            SetIsNotLoadingConfig();
-            SetSettingsOnViewModel(config);
-
-            UpdateViewModel();
-        }
-
-        private void SetSettingsOnViewModel(Configuration config)
-        {
-            if (ConfigurationContainsSettings(config))
-            {
-                LoadSettings(config);
-            }
-            else
-            {
-                configPersisterRepository.Save(defaultConfig);
-                SetIsNotLoadingConfig();
-            }
-            
-        }
-
-        private static bool ConfigurationContainsSettings(Configuration config)
-        {
-            return config != null && config.Settings.Count() != 0;
-        }
-       
-        private void LoadSettings(Configuration config)
+        private void TryToLoadSpecificSetting(Configuration config, string entry)
         {
             uiInvoker.Invoke(() =>
             {
-                TryToLoadSpecificSetting(config.GetSetting(DATE_ENTRY_NAME));
-                TryToLoadSpecificSetting(config.GetSetting(TIMESPAN_ENTRY_NAME));
-                TryToLoadSpecificSetting(config.GetSetting(IS_USING_DATE_ENTRY_NAME));
-                TryToLoadSpecificSetting(config.GetSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME));
-                TryToLoadSpecificSetting(config.GetSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME));
-
-                SetIsNotLoadingConfig();
+                try
+                {
+                    LoadSpecificSetting(config.GetSetting(entry));
+                }
+                catch (Exception exception)
+                {
+                    LogErrorMsg(exception);
+                }
             });
-           
-        }
-
-        private void TryToLoadSpecificSetting(SettingsEntry setting)
-        {
-            try
-            {
-                LoadSpecificSetting(setting);
-            }
-            catch (Exception exception)
-            {
-                LogErrorMsg(exception);
-            }
         }
 
         private void LoadSpecificSetting(SettingsEntry setting)
@@ -250,17 +149,32 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             }
         }
 
-        private static Configuration CreateConfiguration(DateTime date, int timespan, bool isUsingDate, int maxNumOfCommiters, bool acknowledgeOthers)
+
+        private void LoadNewData()
         {
-            var newConfig = new Configuration(SETTINGS_ENTRY_NAME){IsConfigured = true};
+            if (configIsChanged)
+            {
+                ReloadViewModelData();
+                LoadData(new AllChangesetsSpecification());
+            }
+            else
+            {
+                LoadData(new ChangesetsAfterRevisionSpecification(ViewModel.CurrentRevision));
+            }
+        }
 
-            newConfig.NewSetting(DATE_ENTRY_NAME, date.ToString(dateFormatingRules));
-            newConfig.NewSetting(TIMESPAN_ENTRY_NAME, timespan.ToString());
-            newConfig.NewSetting(IS_USING_DATE_ENTRY_NAME, isUsingDate.ToString());
-            newConfig.NewSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME, maxNumOfCommiters.ToString());
-            newConfig.NewSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME, acknowledgeOthers.ToString());
+        private void ReloadViewModelData()
+        {
+            uiInvoker.Invoke(() =>
+            {
+                ViewModel.Data.Clear();
+                ViewModel.CurrentRevision = 0;
+            });
+        }
 
-            return newConfig;
+        protected override void AfterQueryAllChangesets()
+        {
+            allUsers = userRepository.Get(new AllSpecification<User>());
         }
 
         protected override void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets)
@@ -273,9 +187,10 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             UpdateCommitersInViewModel(qChangesets);
 
             UpdateNumberOfCommitsShown();
-
+          
             configIsChanged = false;
         }
+
 
         private static IEnumerable<Changeset> FilterChangesets(IEnumerable<Changeset> qChangesets)
         {
@@ -372,7 +287,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         private IEnumerable<CodeCommiterViewModel> RestrictCommitersToMax(IEnumerable<CodeCommiterViewModel> commiters)
         {
             var restrictedCommiters = new List<CodeCommiterViewModel>();
-            var sumOfOtherCommiters = new CodeCommiterViewModel { Firstname = "Others", Username = "Others"};
+            var sumOfOtherCommiters = new CodeCommiterViewModel { Firstname = "Others", Username = "Others" };
 
             var i = 0;
 
@@ -389,10 +304,10 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 i++;
             }
 
-            if(ViewModel.AcknowledgeOthers && sumOfOtherCommiters.NumberOfCommits != 0)
-                {
-                    restrictedCommiters.Add(sumOfOtherCommiters);
-                }
+            if (ViewModel.AcknowledgeOthers && sumOfOtherCommiters.NumberOfCommits != 0)
+            {
+                restrictedCommiters.Add(sumOfOtherCommiters);
+            }
 
             return restrictedCommiters;
         }
@@ -409,7 +324,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             return atLestOneUsernameDiffers;
         }
 
-        private void ReloadCommitters(IEnumerable<CodeCommiterViewModel> committers) 
+        private void ReloadCommitters(IEnumerable<CodeCommiterViewModel> committers)
         {
             ViewModel.Data.Clear();
 
@@ -443,15 +358,60 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             ViewModel.NumberOfCommitsShown = ViewModel.Data.Sum(commiter => commiter.NumberOfCommits);
         }
 
-        protected override void AfterQueryAllChangesets()
+
+        private void SaveSettings()
         {
-            allUsers = userRepository.Get(new AllSpecification<User>());
+            SaveConfigToRepository();
         }
 
-        public void ConfigurationUpdated(object sender, EventArgs eventArgs)
+        private void SaveConfigToRepository()
+        {
+            var newSinceDate = ViewModel.SinceDate;
+            var newTimespan = ViewModel.TimeSpanInDays;
+            var newUsingDate = ViewModel.IsUsingDate;
+            var newMaxNum = ViewModel.MaxNumOfCommiters;
+            var newAckOthers = ViewModel.AcknowledgeOthers;
+            try
+            {
+                var config = Widget.Configuration;
+                config.ChangeSetting(DATE_ENTRY_NAME, newSinceDate.ToString(dateFormatingRules));
+                config.ChangeSetting(TIMESPAN_ENTRY_NAME, newTimespan.ToString());
+                config.ChangeSetting(IS_USING_DATE_ENTRY_NAME, newUsingDate.ToString(dateFormatingRules));
+                config.ChangeSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME, newMaxNum.ToString());
+                config.ChangeSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME, newAckOthers.ToString());
+                config.IsConfigured = true;
+
+                SaveConfiguration();
+            }
+            catch (Exception exception)
+            {
+                LogErrorMsg(exception);
+            }
+        }
+
+        protected override void OnConfigurationChanged(Configuration configuration)
         {
             configIsChanged = true;
-            LoadConfigAndData();
+            CopyConfigurationToViewModel(configuration);
+            LoadNewData();
+        }
+
+        private void ReloadSettings()
+        {
+            CopyConfigurationToViewModel(Widget.Configuration);
+        }
+
+        protected override void OnNotifiedToRefresh(object sender, EventArgs e)
+        {
+            LoadNewData();
+        }
+
+        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (listOfSettings.Contains(e.PropertyName))
+            {
+                configIsChanged = true;
+            }
         }
     }
 }

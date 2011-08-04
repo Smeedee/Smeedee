@@ -8,7 +8,6 @@ using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.SourceControl;
-using Smeedee.Widget.SourceControl.Tests.Controllers;
 using Smeedee.Widgets.SourceControl.Controllers;
 using Smeedee.Widgets.SourceControl.ViewModels;
 using Smeedee.Widgets.Tests.SourceControl.Controllers;

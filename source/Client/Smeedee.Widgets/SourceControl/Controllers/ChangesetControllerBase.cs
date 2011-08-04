@@ -46,20 +46,19 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         protected bool configIsChanged;
 
         protected ChangesetControllerBase(
-            BindableViewModel<T> viewModel, 
+            BindableViewModel<T> viewModel,
             IAsyncRepository<Changeset> changesetRepo,
-            ITimer timer, 
+            ITimer timer,
             IUIInvoker uiInvoke,
             ILog logger,
             IProgressbar loadingNotifier,
             IWidget widget,
-            IPersistDomainModelsAsync<Configuration> configPersister
-            )
+            IPersistDomainModelsAsync<Configuration> configPersister)
             : base(viewModel, timer, uiInvoke, loadingNotifier, widget, configPersister)
         {
             Guard.Requires<ArgumentException>(logger != null, "logger");
             Guard.Requires<ArgumentException>(changesetRepo != null, "changesetRepo");
-            
+
             this.logger = logger;
             this.changesetRepository = changesetRepo;
             this.changesetRepository.GetCompleted += OnGetCompleted;
@@ -78,10 +77,20 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 QueryChangesets(specification);
             }
         }
-        
+
         protected void QueryChangesets(Specification<Changeset> specification)
         {
-            changesetRepository.BeginGet(specification);
+            try
+            {
+                changesetRepository.BeginGet(specification);
+            }
+            catch (Exception e)
+            {
+                LogErrorMsg(e);
+                ViewModel.HasConnectionProblems = true;
+            }
+            
+
         }
 
         private void OnGetCompleted(object sender, GetCompletedEventArgs<Changeset> e)
@@ -90,10 +99,11 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             {
                 LogErrorMsg(e.Error);
                 ViewModel.HasConnectionProblems = true;
-            } else
+            }
+            else
             {
                 ViewModel.HasConnectionProblems = false;
-                
+
                 if (e.Result == null)
                 {
                     throw new Exception(
@@ -112,7 +122,15 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 }
             }
             SetIsNotLoadingData();
-        }     
+        }
+
+        protected virtual void AfterQueryAllChangesets()
+        {
+
+        }
+
+        protected abstract void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets);
+
 
         protected void UpdateRevision(IEnumerable<Changeset> changesets)
         {
@@ -130,7 +148,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             logger.WriteEntry(ErrorLogEntry.Create(this, exception.ToString()));
         }
 
-        protected void LogWarningMsg (Exception exception)
+        protected void LogWarningMsg(Exception exception)
         {
             logger.WriteEntry(new WarningLogEntry()
             {
@@ -139,17 +157,10 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 TimeStamp = DateTime.Now
             });
         }
-        
 
-        protected abstract void LoadDataIntoViewModel(IEnumerable<Changeset> qChangesets);
 
         protected abstract override void OnNotifiedToRefresh(object sender, EventArgs e);
 
-        protected virtual void AfterQueryAllChangesets()
-        {
-            
-        }
 
-        
     }
 }

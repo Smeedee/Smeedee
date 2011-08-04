@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerBaseSpecs.cs" />
+    <Compile Include="Controller\ControllerBaseSpecs.cs" />
     <Compile Include="Controller\SelectWidgetsDialogControllerSpecs.cs" />
     <Compile Include="Controller\WidgetControllerSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

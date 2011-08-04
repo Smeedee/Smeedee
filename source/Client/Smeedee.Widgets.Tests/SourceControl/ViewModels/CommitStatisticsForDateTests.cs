@@ -31,10 +31,8 @@ using System;
 using NUnit.Framework;
 using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyBDD.Specification.NUnit;
-using Smeedee.Client.Framework;
 
-
-namespace Smeedee.Client.Widget.SourceControlTests.ViewModels
+namespace Smeedee.Widgets.Tests.SourceControl.ViewModels
 {
     [TestFixture]
     public class CommitStatisticsForDateTests

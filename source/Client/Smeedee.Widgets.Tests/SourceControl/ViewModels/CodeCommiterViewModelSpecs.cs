@@ -35,54 +35,57 @@ using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 using Smeedee.Tests;
 
-
-namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.CodeCommiterViewModelSpecs
+namespace Smeedee.Widgets.Tests.SourceControl.ViewModels
 {
-    public class Shared : ScenarioClass
+    internal class CodeCommiterViewModelSpecs
     {
-        protected static CodeCommiterViewModel viewModel;
-        protected static PropertyChangedRecorder changeRecorder;
-
-        protected Context the_ViewModel_is_created = () =>
+        public class Shared : ScenarioClass
         {
-            viewModel = new CodeCommiterViewModel();
-            changeRecorder = new PropertyChangedRecorder(viewModel);
-        };
-    }
+            protected static CodeCommiterViewModel viewModel;
+            protected static PropertyChangedRecorder changeRecorder;
 
-    [TestFixture]
-    public class When_ViewModel_is_spawned : Shared
-    {
-        [SetUp]
-        public void Setup()
-        {
-            viewModel = new CodeCommiterViewModel();
+            protected Context the_ViewModel_is_created = () =>
+                                                             {
+                                                                 viewModel = new CodeCommiterViewModel();
+                                                                 changeRecorder = new PropertyChangedRecorder(viewModel);
+                                                             };
         }
 
-        [Test]
-        public void Assure_ViewModel_is_a_PersonViewModel()
+        [TestFixture]
+        public class When_ViewModel_is_spawned : Shared
         {
-            (viewModel is Person).ShouldBeTrue();
-        }
-    }
+            [SetUp]
+            public void Setup()
+            {
+                viewModel = new CodeCommiterViewModel();
+            }
 
-    [TestFixture]
-    public class When_properties_change : Shared
-    {
-        [Test]
-        public void Assure_observers_are_notified_when_NumberOfCommits_changes()
-        {
-            Given(the_ViewModel_is_created);
-
-            When("the NumberOfCommits property is changed", () =>
-                viewModel.NumberOfCommits = 10);
-
-            Then("assure observers are notified", () =>
-                changeRecorder.ChangedProperties.Any(p => p == "NumberOfCommits").ShouldBeTrue()).
-            And("assure the value is changed", () =>
-                viewModel.NumberOfCommits.ShouldBe(10));
+            [Test]
+            public void Assure_ViewModel_is_a_PersonViewModel()
+            {
+                (viewModel is Person).ShouldBeTrue();
+            }
         }
 
-    }
+        [TestFixture]
+        public class When_properties_change : Shared
+        {
+            [Test]
+            public void Assure_observers_are_notified_when_NumberOfCommits_changes()
+            {
+                Given(the_ViewModel_is_created);
 
+                When("the NumberOfCommits property is changed", () =>
+                                                                viewModel.NumberOfCommits = 10);
+
+                Then("assure observers are notified", () =>
+                                                      Enumerable.Any<string>(changeRecorder.ChangedProperties,
+                                                                             p => p == "NumberOfCommits").ShouldBeTrue())
+                    .
+                    And("assure the value is changed", () =>
+                                                       TestExtensions.ShouldBe(viewModel.NumberOfCommits, 10));
+            }
+
+        }
+    }
 }
