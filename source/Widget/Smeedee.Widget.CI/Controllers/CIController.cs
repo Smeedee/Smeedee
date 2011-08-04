@@ -148,15 +148,17 @@ namespace Smeedee.Widget.CI.Controllers
                 foreach (var project in server.Projects)
                 {
                     if (project.IsSelected && ProjectIsActive(project))
-                    {
+                    {    
                         ServerConfigViewModel vmServer = server;
                         ProjectConfigViewModel vmProject = project;
                         var newproj = from ciServer in ciServers
-                                     where ciServer.Name == vmServer.ServerName && ciServer.Url == vmServer.ServerUrl
-                                     from ciProject in ciServer.Projects
-                                     where ciProject.ProjectName == vmProject.ProjectName
-                                     select ciProject;
+                                        where
+                                            ciServer.Name == vmServer.ServerName && ciServer.Url == vmServer.ServerUrl
+                                        from ciProject in ciServer.Projects
+                                        where ciProject.ProjectName == vmProject.ProjectName
+                                        select ciProject;
                         projectList.Add(newproj.SingleOrDefault());
+                        
                     }
                 }
             }
@@ -165,7 +167,7 @@ namespace Smeedee.Widget.CI.Controllers
 
         private IEnumerable<CIServer> GetServersFromDb()
         {
-            var newServers = ciServerRepository.Get(new AllSpecification<CIServer>()).ToList();
+            var newServers = (ciServerRepository.Get(new AllSpecification<CIServer>()) ?? new List<CIServer>()).ToList();
             var config = settings.GetUpdatedConfiguration(Widget.Configuration, newServers);
 
             uiInvoker.Invoke(() =>
@@ -239,19 +241,20 @@ namespace Smeedee.Widget.CI.Controllers
 
         private void LoadDataIntoViewModel(IEnumerable<CIProject> projects)
         {
+            var dataList = new List<ProjectInfoViewModel>();
+            foreach (var projectInfo in projects)
+            {
+                var model = new ProjectInfoViewModel();
+                AddProjectInfo(model, projectInfo);
+                dataList.Add(model);
+            }
+
             uiInvoker.Invoke(() =>
             {
                 ViewModel.Data.Clear();
-                foreach (var projectInfo in projects)
-                    AddProject(projectInfo);
+                foreach (var data in dataList)
+                    ViewModel.Data.Add(data);
             });
-        }
-
-        private void AddProject(CIProject CIProject)
-        {
-            var model = new ProjectInfoViewModel();
-            AddProjectInfo(model, CIProject);
-            ViewModel.Data.Add(model);
         }
 
         private void AddProjectInfo(ProjectInfoViewModel model, CIProject CIProject)

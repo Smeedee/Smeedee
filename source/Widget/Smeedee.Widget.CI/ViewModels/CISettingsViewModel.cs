@@ -16,6 +16,7 @@ namespace Smeedee.Widget.CI.ViewModels
         public CISettingsViewModel()
         {
             SaveSettings = new DelegateCommand();
+            Servers = new ObservableCollection<ServerConfigViewModel>();
         }
 
         public void EachProject(Action<ProjectConfigViewModel> func)
