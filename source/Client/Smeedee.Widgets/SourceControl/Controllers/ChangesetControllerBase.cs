@@ -53,8 +53,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             ILog logger,
             IProgressbar loadingNotifier,
             IWidget widget,
-            IPersistDomainModelsAsync<Configuration> configPersister
-            )
+            IPersistDomainModelsAsync<Configuration> configPersister)
             : base(viewModel, timer, uiInvoke, loadingNotifier, widget, configPersister)
         {
             Guard.Requires<ArgumentException>(logger != null, "logger");

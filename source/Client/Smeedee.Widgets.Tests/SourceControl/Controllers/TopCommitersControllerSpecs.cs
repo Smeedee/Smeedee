@@ -188,7 +188,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then(() =>
                                     {
                                         TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 2);
-                                        Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Firstname.Equals("Others")).First().NumberOfCommits.ShouldBe(1);
+                                        Enumerable.Where(controller.ViewModel.Data, d => d.Firstname.Equals("Others")).First().NumberOfCommits.ShouldBe(1);
                                     });
             }
 
@@ -279,8 +279,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then("assure data is correctly loaded into the viewModel", () =>
                 {
                     TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 2);
-                    Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
-                    Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
+                    Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
+                    Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
                 });
             }
 
@@ -297,8 +297,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then("assure data is correctly loaded into the viewModel", () =>
             {
                 TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 2);
-                Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
-                Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
+                Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
+                Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
             });
             }
 
@@ -319,35 +319,47 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 });
             }
 
-            protected Context IsUsingTimespan_changes_to_false = () => { controller.ViewModel.IsUsingTimespan = false; };
-            private When Configuration_is_updated = () => UpdateConfiguration();
-
             [Test]
-            public void Assure_IsUsingDate_changes_to_true_when_IsUsingTimespan_changes_to_false()
+            public void Assure_IsUsingDate_and_IsUsingTimespan_doesnt_have_the_same_value()
             {
-                Given(there_are_3_users_in_userdb).
-                    And(config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
-                    And(there_are_changesets_for_2_users_in_SourceControl_system).
-                    And(the_Controller_is_spawned).And(IsUsingTimespan_changes_to_false);
+                Given(the_Controller_is_spawned);
 
-                When(Configuration_is_updated);
+                When("it has spawned");
 
-                Then("Assure IsUsingDate is changed to true", () => controller.ViewModel.IsUsingDate.ShouldBeTrue());
+                Then("Assure IsUsingDate and IsUsingTimeSpan doesnt have the same value", () =>
+                {
+                    controller.ViewModel.IsUsingDate.ShouldBeTrue();
+                    controller.ViewModel.IsUsingTimespan.ShouldBeFalse();
+                });
             }
 
             [Test]
-            public void Assure_IsUsingTimespan_changes_to_true_when_IsUsingDate_changes_to_false()
+            public void Assure_IsUsingDate_and_IsUsingTimespan_is_changed_correctly_when_IsUsingDate_is_changed()
             {
-                Given(there_are_3_users_in_userdb).
-                    And(config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false).
-                    And(there_are_changesets_for_2_users_in_SourceControl_system).
-                    And(the_Controller_is_spawned);
+                Given(the_Controller_is_spawned);
 
-                When(IsUsingDate_changes_to_true);
+                When("IsUsingDate is changed", () => controller.ViewModel.IsUsingDate=false);
 
-                Then("Assure IsUsingTimespan is changed to true", () => controller.ViewModel.IsUsingTimespan.ShouldBeTrue());
+                Then("Assure IsUsingDate and IsUsingTimeSpan doesnt have the same value", () =>
+                {
+                    controller.ViewModel.IsUsingDate.ShouldBeFalse();
+                    controller.ViewModel.IsUsingTimespan.ShouldBeTrue();
+                });
             }
 
+            [Test]
+            public void Assure_IsUsingDate_and_IsUsingTimespan_is_changed_correctly_when_IsUsingTimespan_is_changed()
+            {
+                Given(the_Controller_is_spawned);
+
+                When("IsUsingTimespan is changed", () => controller.ViewModel.IsUsingTimespan = true);
+
+                Then("Assure IsUsingDate and IsUsingTimeSpan doesnt have the same value", () =>
+                {
+                    controller.ViewModel.IsUsingTimespan.ShouldBeTrue();
+                    controller.ViewModel.IsUsingDate.ShouldBeFalse();
+                });
+            }
         }
 
         [TestFixture]
@@ -373,8 +385,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then("assure new NumberOfCommits is loaded into the viewModel", () =>
                     {
                         TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 2);
-                        Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(3);
-                        Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
+                        Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(3);
+                        Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
                     }).
                     And("the CollectionChanged event in ViewModel should not have been fired", () => viewModelChanged.ShouldBeFalse());
             }
@@ -501,9 +513,9 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then("the viewmodel should be updated", () =>
                 {
                     TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 3);
-                    Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
-                    Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
-                    Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("heine")).First().NumberOfCommits.ShouldBe(1);
+                    Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
+                    Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
+                    Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("heine")).First().NumberOfCommits.ShouldBe(1);
                 }).
                     And("the CollectionChanged event in ViewModel should have been fired", () => viewModelChanged.ShouldBeTrue());
             }
@@ -522,8 +534,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then("the viewmodel should be updated", () =>
                 {
                     TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 2);
-                    Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
-                    Enumerable.Where<CodeCommiterViewModel>(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
+                    Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("goeran")).First().NumberOfCommits.ShouldBe(2);
+                    Enumerable.Where(controller.ViewModel.Data, d => d.Username.Equals("dagolap")).First().NumberOfCommits.ShouldBe(1);
                 });
             }
 
@@ -683,7 +695,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
         [TestFixture]
         public class When_loading_and_saving_data_and_settings : Shared
         {
-
             [Test]
             public void Assure_progressbar_is_shown_while_loading_data()
             {
@@ -692,11 +703,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 When(the_Controller_is_notified_to_refresh);
 
-                Then("the loadingNotifyer should be shown during spawn and on refresh", () =>
-                {
-                    progressbarMock.Verify(l => l.ShowInView(It.IsAny<string>()), Times.Exactly(2));
-                    //controller.ViewModel.IsLoading.ShouldBe(true); when async get is implemented
-                });
+                Then("the loadingNotifyer should be shown during spawn and on refresh", () => progressbarMock.Verify(l => l.ShowInView(It.IsAny<string>()), Times.Exactly(2)));
             }
 
             [Test]
@@ -749,7 +756,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             [Ignore("Not the controllers responsibility to load settings when started anymore")]
             public void Assure_progressbar_is_shown_while_loading_settings()
             {
-                Given(configRepository_does_not_return_GetCompleted);
+                Given("configRepository_does_not_return_GetCompleted");
 
                 When(the_Controller_is_created);
 
@@ -787,7 +794,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected static Mock<IRepository<User>> userRepositoryMock = new Mock<IRepository<User>>();
             protected static Mock<ILog> logger;
             protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
-            protected static Mock<IAsyncRepository<Configuration>> configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
             protected static Mock<IProgressbar> progressbarMock = new Mock<IProgressbar>();
             protected static Mock<IWidget> widgetMock = new Mock<IWidget>();
 
@@ -804,10 +810,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected When SaveSettings_delegate_is_executed = () => controller.ViewModel.SaveSettings.ExecuteDelegate();
             protected Context SaveSettings_delegate_has_been_executed = () => controller.ViewModel.SaveSettings.ExecuteDelegate();
             protected When ReloadFromRepository_delegate_is_executed = () => controller.ViewModel.ReloadFromRepository.ExecuteDelegate();
-
-            protected When IsUsingTimespan_changes_to_false = () => { controller.ViewModel.IsUsingTimespan = false; };
-
-            protected When IsUsingDate_changes_to_true = () => { controller.ViewModel.IsUsingDate = true; };
 
             protected When the_Controller_is_notified_to_refresh = () => NotifyToRefresh(1);
 
@@ -834,11 +836,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 controller.ViewModel.AcknowledgeOthers = false;
             };
 
-            protected Context changeset_repository_throws_an_exception = () =>
-            {
-                changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Changeset>>())).Throws(new Exception());
-
-            };
+            protected Context changeset_repository_throws_an_exception = () => changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Changeset>>())).Throws(new Exception());
 
             protected Context config_repository_returns_a_invalid_setting = () => SetupConfigRepositoryMockWithInvalidValues();
 
@@ -864,17 +862,9 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
             protected Context config_is_changed_to_2_2010_01_02_false_12_true = () => SetupConfigRepositoryMock(2, new DateTime(2010, 01, 02), false, 12, true);
 
-            protected Context configuration_entry_does_not_exist = () =>
-            {
-                //var configList = new List<Configuration>();
-
-                //configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
-                //    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
-            };
-
+            protected Context configuration_entry_does_not_exist = () => { };
+       
             protected Context configPersisterRepositoryMock_setup_to_return_savecomplete = () => configPersisterMock.Setup(r => r.Save(It.IsAny<Configuration>())).Raises(t => t.SaveCompleted += null, new SaveCompletedEventArgs());
-
-            protected Context configRepository_does_not_return_GetCompleted = () => configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
 
             protected Context a_new_changeset_is_committed = () =>
             {
@@ -913,8 +903,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 ChangesetRepositoryContains(changesets);
             };
-
-
 
             protected Context there_are_changesets_for_2_users_in_SourceControl_system = () =>
             {
@@ -1042,12 +1030,9 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected static void ChangesetRepositoryContains(IEnumerable<Changeset> changesets)
             {
                 changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Changeset>>())).
-                    Callback((Specification<Changeset> specs) =>
-                    {
-                        changesetRepositoryMock.Raise(e => e.GetCompleted += null,
-                            new GetCompletedEventArgs<Changeset>(changesets.Where(c => specs.IsSatisfiedBy(c)),
-                                                   specs));
-                    });
+                    Callback((Specification<Changeset> specs) => changesetRepositoryMock.Raise(e => e.GetCompleted += null,
+                                                                                               new GetCompletedEventArgs<Changeset>(changesets.Where(specs.IsSatisfiedBy),
+                                                                                                                                    specs)));
 
                 changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<AllChangesetsSpecification>())).
                     Raises(e => e.GetCompleted += null,
@@ -1069,11 +1054,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 configuration.NewSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME, numberOfCommiters.ToString());
                 configuration.NewSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME, acknowledgeOthers.ToString());
 
-                var configList = new List<Configuration> { configuration };
-
-                //configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
-                //    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
-
                 widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
                 UpdateConfiguration();
             }
@@ -1088,11 +1068,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 configuration.NewSetting(MAX_NUM_OF_COMMITERS_ENTRY_NAME, "12");
                 configuration.NewSetting(ACKNOWLEDGE_OTHERS_ENTRY_NAME, "False");
 
-                var configList = new List<Configuration> { configuration };
-
-                //configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Configuration>>())).
-                //    Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
-
                 widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
                 UpdateConfiguration();
             }
@@ -1103,10 +1078,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 controller = new TopCommitersController(new BindableViewModel<CodeCommiterViewModel>(),
                                                         changesetRepositoryMock.Object,
-                                                        new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
                                                         ITimerMock.Object,
                                                         new NoUIInvokation(),
-                                                        configRepositoryMock.Object,
                                                         configPersisterMock.Object,
                                                         userRepositoryMock.Object,
                                                         logger.Object,
@@ -1128,7 +1101,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             {
                 Scenario("");
                 configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
-                configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
                 logger = new Mock<ILog>();
                 progressbarMock = new Mock<IProgressbar>();
 
