@@ -13,8 +13,9 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 
 		oproperty AvailableImages as ObservableCollection<string>
 		oproperty SelectedImage as string
+		oproperty LoadedImage as object
 		oproperty Image as object
-		
+
 	viewmodel WebSnapshotViewModel extends AbstractViewModel:
 		oproperty Snapshot as object
 		oproperty HasStoredImage as bool

@@ -111,10 +111,10 @@
     <Compile Include="WebSnapshot\Util\WebImageFetcher.cs" />
     <Compile Include="WebSnapshot\Util\WebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\WebSnapshotter.cs" />
-    <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs" />
     <Compile Include="WebSnapshot\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

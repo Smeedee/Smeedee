@@ -10,7 +10,7 @@
              d:DesignHeight="400">
 
     <d:DataContext>
-        <ViewModel:WebSnapshotViewModel />
+        <ViewModel:WebSnapshotSettingsViewModel />
     </d:DataContext>
 
     <Grid x:Name="LayoutRoot">
@@ -58,8 +58,8 @@
                  Height="20"
                  VerticalAlignment="Bottom"
                  Visibility="Collapsed" />
-        <TextBox Text="{Binding SelectedImage, Mode=OneWay}"
-                 Name="ImageBox"
+        <Image Source="{Binding LoadedImage, Mode=OneWay}"
+                 Name="sourceImage"
                  Visibility="Collapsed" />
     </Grid>
 
