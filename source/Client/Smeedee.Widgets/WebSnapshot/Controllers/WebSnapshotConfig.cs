@@ -11,6 +11,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         public static readonly string coordinateY = "cropCoordinateY";
         public static readonly string rectangleHeight ="rectangle-height";
         public static readonly string rectangleWidth= "rectangle-width";
+        public static readonly string timestamp = "timestamp";
 
         public WebSnapshotConfig(Configuration configuration)
         {
@@ -46,6 +47,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             get { return configuration.GetSetting(rectangleWidth).Value; }
             set { configuration.ChangeSetting(rectangleWidth, string.IsNullOrEmpty(value) ? "0" : value); }
         }
+
+        public string Timestamp
+        {
+            get { return configuration.GetSetting(timestamp).Value; }
+            set { configuration.ChangeSetting(timestamp, string.IsNullOrEmpty(value) ? "0" : value); }
+        }
         
         public bool IsConfigured
         {
@@ -66,6 +73,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             config.NewSetting(coordinateY);
             config.NewSetting(rectangleHeight);
             config.NewSetting(rectangleWidth);
+            config.NewSetting(timestamp);
             config.IsConfigured = false;
             return config;
         }

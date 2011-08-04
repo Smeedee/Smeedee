@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Smeedee.Client.Framework.Controller;
@@ -18,7 +19,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
     public class WebSnapshotController : ControllerBase<WebSnapshotViewModel>
     {
         private WebSnapshotViewModel webSnapshotViewModel;
-        private WebSnapshotSettingsViewModel webSnapshotSettingsViewModel;
+        private WebSnapshotSettingsViewModel SettingsViewModel;
         private readonly IPersistDomainModelsAsync<Configuration> configPersisterRepository;
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private WebSnapshotConfig webSnapshotConfig;
@@ -26,7 +27,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
-            WebSnapshotSettingsViewModel webSnapshotSettingsViewModel,
+            WebSnapshotSettingsViewModel settingsViewModel,
             Configuration configuration,
             ITimer timer,
             ILog logger,
@@ -38,7 +39,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             : base(webSnapshotViewModel, timer, uiInvoker, loadingNotifier)
         {
             Guard.Requires<ArgumentNullException>(webSnapshotViewModel != null);
-            Guard.Requires<ArgumentNullException>(webSnapshotSettingsViewModel != null);
+            Guard.Requires<ArgumentNullException>(settingsViewModel != null);
             Guard.Requires<ArgumentNullException>(configuration != null);
             Guard.Requires<ArgumentNullException>(logger != null);
 
@@ -47,12 +48,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             configPersisterRepository.SaveCompleted += OnSaveCompleted;
             this.webSnapshotViewModel = webSnapshotViewModel;
             this.logger = logger;
-            this.webSnapshotSettingsViewModel = webSnapshotSettingsViewModel;
             this.repository = repository;
-            webSnapshotSettingsViewModel.PropertyChanged += webSnapshotSettingsViewModel_PropertyChanged;
-            webSnapshotSettingsViewModel.Save.ExecuteDelegate += OnSave;
-            webSnapshotSettingsViewModel.ReloadSettings.ExecuteDelegate += OnReLoadSettings;
-            webSnapshotSettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
+
+            SettingsViewModel = settingsViewModel;
+            SettingsViewModel.PropertyChanged += webSnapshotSettingsViewModel_PropertyChanged;
+            SettingsViewModel.Save.ExecuteDelegate += OnSaveSettings;
+            SettingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadSettings;
+            SettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
 
             repository.GetCompleted += OnGetCompleted;
 
@@ -64,7 +66,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             if (e.PropertyName == "SelectedImage")
             {
-                uiInvoker.Invoke(() => webSnapshotSettingsViewModel.Image = new BitmapImage(new Uri(webSnapshotSettingsViewModel.SelectedImage)));
+                uiInvoker.Invoke(() => SettingsViewModel.Image = new BitmapImage(new Uri(SettingsViewModel.SelectedImage)));
             }
         }
 
@@ -74,7 +76,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             BeginLoadData();
         }
 
-        private void OnReLoadSettings()
+        private void OnReloadSettings()
         {
             SetIsLoadingConfig();
             CopyConfigurationToSettingsViewModel();
@@ -86,12 +88,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             BeginLoadData();
         }
 
-        private void OnSave()
+        private void OnSaveSettings()
         {
             SetIsSavingConfig();
             CopySettingsViewModelToConfiguration();
 
-            uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = webSnapshotSettingsViewModel.Image);
+            //uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = SettingsViewModel.Image);
 
             configPersisterRepository.Save(webSnapshotConfig.Configuration);
 
@@ -99,11 +101,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void CopySettingsViewModelToConfiguration()
         {
-            webSnapshotConfig.URL = webSnapshotSettingsViewModel.SelectedImage;
-            webSnapshotConfig.CoordinateX = webSnapshotSettingsViewModel.CropCoordinateX;
-            webSnapshotConfig.CoordinateY = webSnapshotSettingsViewModel.CropCoordinateY;
-            webSnapshotConfig.RectangleHeight = webSnapshotSettingsViewModel.CropRectangleHeight;
-            webSnapshotConfig.RectangleWidth = webSnapshotSettingsViewModel.CropRectangleWidth;
+            webSnapshotConfig.URL = SettingsViewModel.SelectedImage;
+            webSnapshotConfig.CoordinateX = SettingsViewModel.CropCoordinateX;
+            webSnapshotConfig.CoordinateY = SettingsViewModel.CropCoordinateY;
+            webSnapshotConfig.RectangleHeight = SettingsViewModel.CropRectangleHeight;
+            webSnapshotConfig.RectangleWidth = SettingsViewModel.CropRectangleWidth;
+            webSnapshotConfig.Timestamp = "0";
             webSnapshotConfig.IsConfigured = true;
         }
 
@@ -111,11 +114,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             uiInvoker.Invoke(() =>
             {
-                webSnapshotSettingsViewModel.SelectedImage = webSnapshotConfig.URL;
-                webSnapshotSettingsViewModel.CropCoordinateX = webSnapshotConfig.CoordinateX;
-                webSnapshotSettingsViewModel.CropCoordinateY = webSnapshotConfig.CoordinateY;
-                webSnapshotSettingsViewModel.CropRectangleHeight = webSnapshotConfig.RectangleHeight;
-                webSnapshotSettingsViewModel.CropRectangleWidth = webSnapshotConfig.RectangleWidth;
+                SettingsViewModel.SelectedImage = webSnapshotConfig.URL;
+                SettingsViewModel.CropCoordinateX = webSnapshotConfig.CoordinateX;
+                SettingsViewModel.CropCoordinateY = webSnapshotConfig.CoordinateY;
+                SettingsViewModel.CropRectangleHeight = webSnapshotConfig.RectangleHeight;
+                SettingsViewModel.CropRectangleWidth = webSnapshotConfig.RectangleWidth;
             });
         }
 
@@ -141,12 +144,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             if (eventArgs.Result != null)
             {
                 var SnapshotDataFromDB = eventArgs.Result;
-                //logger.WriteEntry(new LogEntry("SnapshotDataFromDB", "Did I get it? " + SnapshotDataFromDB.First().PictureFilePath));
-                //UpdateViewModel(SnapshotDataFromDB);
+                UpdateViewModel(SnapshotDataFromDB);
+                PopulateAvailableImages(SnapshotDataFromDB);
             }
             else
             {
-                logger.WriteEntry(new LogEntry("OnGetCompleted,eventArgs was null", eventArgs.Error.ToString()));
+                logger.WriteEntry(new LogEntry("OnGetCompleted, eventArgs was null", eventArgs.Error.ToString()));
             }
 
             SetIsNotLoadingData();
@@ -154,15 +157,14 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
         {
-            logger.WriteEntry(new LogEntry("UpdateViewModel", "UpdateViewModel called"));
             if (snapshots.Count() > 0)
             {
                 var snapshot = snapshots.First();
                 uiInvoker.Invoke(() =>
                 {
                     var snapshotPath = snapshot.PictureFilePath;
-                    SetWebSnapshot(snapshotPath);
-                    //SetWebSnapshot(snapshot);
+                    //SetWebSnapshot(snapshotPath);
+                    SetWebSnapshot(snapshot);
                 });
             }
             else
@@ -173,25 +175,22 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
         {
-            //var timestamp = snapshot.Timestamp;
-            
-            //if (previousTimestamp == timestamp) return;
+            var timestamp = snapshot.Timestamp;
 
-            //webSnapshotViewModel.Snapshot = CropImage(snapshot);
-            //previousTimestamp = timestamp;
+            if (webSnapshotConfig.Timestamp == timestamp)
+            {
+                //webSnapshotViewModel.IsTimeToCrop = false;
+                SettingsViewModel.IsTimeToCrop = false;
+            }
+            else
+            {
+                webSnapshotConfig.Timestamp = timestamp;
+                SettingsViewModel.Image = new BitmapImage(new Uri(snapshot.PictureFilePath));
+                //webSnapshotViewModel.IsTimeToCrop = true;
+                SettingsViewModel.IsTimeToCrop = true;
+            }
         }
-        /*
-        private BitmapImage CropImage(DomainModel.WebSnapshot.WebSnapshot snapshot)
-        {
-             //= webSnapshotConfig.URL;
-             //= webSnapshotConfig.CoordinateX;
-             //= webSnapshotConfig.CoordinateY;
-             //= webSnapshotConfig.RectangleHeight;
-             //= webSnapshotConfig.RectangleWidth;
-            
-
-        }
-        */
+        
         private void SetWebSnapshot(string imagePath)
         {
             webSnapshotViewModel.Snapshot = new BitmapImage(new Uri(imagePath));
@@ -208,6 +207,20 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         protected void LogErrorMsg(Exception exception)
         {
             logger.WriteEntry(ErrorLogEntry.Create(this, exception.ToString()));
+        }
+
+        private void PopulateAvailableImages(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshotDataFromDb)
+        {
+            uiInvoker.Invoke(() =>
+            {
+                SettingsViewModel.AvailableImages.Clear();
+
+                foreach (var snapshot in snapshotDataFromDb)
+                {
+                    var fileName = Path.GetFileName(snapshot.PictureFilePath);
+                    SettingsViewModel.AvailableImages.Add("WebSnapshots/"+fileName);
+                }    
+            });
         }
 
 

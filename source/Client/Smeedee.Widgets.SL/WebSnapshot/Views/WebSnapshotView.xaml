@@ -1,19 +1,66 @@
-﻿<UserControl x:Class="Smeedee.Widgets.SL.WebSnapshot.Views.WebSnapshotView" 
-           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           mc:Ignorable="d"
-           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation" xmlns:ViewModel="clr-namespace:Smeedee.Widgets.WebSnapshot.ViewModel" d:DesignWidth="300" d:DesignHeight="400">
+﻿<UserControl x:Class="Smeedee.Widgets.SL.WebSnapshot.Views.WebSnapshotView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+             xmlns:ViewModel="clr-namespace:Smeedee.Widgets.WebSnapshot.ViewModel"
+             d:DesignWidth="300"
+             d:DesignHeight="400">
 
     <d:DataContext>
         <ViewModel:WebSnapshotViewModel />
     </d:DataContext>
 
     <Grid x:Name="LayoutRoot">
-        <Border Grid.Column="0" BorderThickness="1" CornerRadius="4">
-            <Image Margin="0" Source="{Binding Snapshot}" Stretch="Uniform" />
+        <Border Grid.Column="0"
+                BorderThickness="1"
+                CornerRadius="4">
+            <Image Margin="0"
+                   Source="{Binding Image}"
+                   Stretch="Uniform"
+                   Name="Snapshot" />
+            <!--Binding Snapshot-->
         </Border>
+        <TextBox Text="{Binding CropCoordinateX, Mode=OneWay}"
+                 Name="Xbox"
+                 HorizontalAlignment="Left"
+                 Width="66"
+                 Margin="8,0,0,0"
+                 Grid.Column="1"
+                 Height="24"
+                 VerticalAlignment="Top"
+                 Visibility="Collapsed" />
+        <TextBox Text="{Binding CropCoordinateY, Mode=OneWay}"
+                 Name="Ybox"
+                 Height="24"
+                 VerticalAlignment="Bottom"
+                 Margin="8,0,0,-5"
+                 HorizontalAlignment="Left"
+                 Width="66"
+                 d:LayoutOverrides="HorizontalAlignment"
+                 Grid.Column="1"
+                 Visibility="Collapsed" />
+        <TextBox Text="{Binding CropRectangleHeight, Mode=OneWay}"
+                 Name="Heightbox"
+                 Margin="80,0,0,19"
+                 Grid.Column="1"
+                 HorizontalAlignment="Left"
+                 Width="66"
+                 Visibility="Collapsed" />
+        <TextBox Text="{Binding CropRectangleWidth, Mode=OneWay}"
+                 Name="Widthbox"
+                 Margin="80,0,0,-1"
+                 HorizontalAlignment="Left"
+                 Width="66"
+                 Grid.Column="1"
+                 Height="20"
+                 VerticalAlignment="Bottom"
+                 Visibility="Collapsed" />
+        <TextBox Text="{Binding SelectedImage, Mode=OneWay}"
+                 Name="ImageBox"
+                 Visibility="Collapsed" />
     </Grid>
 
 </UserControl>

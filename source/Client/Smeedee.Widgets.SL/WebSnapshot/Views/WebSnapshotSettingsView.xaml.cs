@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Smeedee.Client.SL;
 using Smeedee.Widgets.SL.WebSnapshot.Util;
 
 
@@ -20,6 +21,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         private Point MouseRelease;
         private Queue<Point> previousPoints;
         private Stack<Rectangle> previousRect;
+        private bool selectionDisabled;
 
         public WebSnapshotSettingsView()
         {
@@ -28,12 +30,16 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             previousPoints = new Queue<Point>();
             previousRect = new Stack<Rectangle>();
             LayoutRoot.MouseLeftButtonDown += canvas_MouseLeftButtonDown;
+            
         }
 
         void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Point point = e.GetPosition(image);
+            if (selectionDisabled)
+                return;
 
+            Point point = e.GetPosition(image);
+            
             if (CropUtil.OutsidePicture(point, image)) return;
 
             MousePress.X = point.X;
@@ -50,7 +56,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             rect.StrokeThickness = 2;
 
             canvas.Children.Add(rect);
-
             canvas.MouseMove += canvas_MouseMove;
             canvas.MouseLeftButtonUp += canvas_MouseLeftButtonUp;
         }
@@ -106,17 +111,24 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         private void crop_click(object sender, RoutedEventArgs e)
         {
-            // Crop
-            Point upperleftpoint = CropUtil.GetUpperLeftCornerInRectangel(MousePress, MouseRelease, rect);
+            Point upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease, rect);
 
             previousPoints.Enqueue(upperleftpoint);
             previousRect.Push(rect);
 
-            var img = CropPicture(upperleftpoint, rect);
+            var img = CropPicture(upperleftpoint, rect, image);
+
+            if (img == null)
+            {
+                ResetImage();
+                ResetCoordinateBoxes();
+                return;
+            }
 
             SetImage(img);
 
             CropButton.IsEnabled = false;
+            selectionDisabled = true;
             rect = null;
         }
 
@@ -124,23 +136,26 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         {
             ResetImage();
             image.Source = img;
+            img.Invalidate();
         }
 
-        private WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle)
+        public WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle, Image img)
         {
             WriteableBitmap wb = null;
             try
             {
                 wb = new WriteableBitmap(Convert.ToInt32(rectangle.Width), Convert.ToInt32(rectangle.Height));
-                TranslateTransform t = new TranslateTransform();
-                t.X = CropUtil.NegativeNumber(upperleftpoint.X);
-                t.Y = CropUtil.NegativeNumber(upperleftpoint.Y);
+                var t = new TranslateTransform
+                {
+                    X = CropUtil.NegativeNumber(upperleftpoint.X),
+                    Y = CropUtil.NegativeNumber(upperleftpoint.Y)
+                };
 
                 //Draw to Writable Bitmap
-                wb.Render(image, t);
+                wb.Render(img, t);
                 wb.Invalidate();
 
-                image.Source = wb;
+                //image.Source = wb;
             }
             catch (Exception)
             {
@@ -154,7 +169,8 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         {
             image.Clip = null;
             canvas.Children.Clear();
-            image.Source = new BitmapImage(new Uri(TaskNames.Tag.ToString()));
+            var WebSnapshotURI = new Uri(App.Current.Host.Source, "../" + TaskNames.SelectedItem);
+            image.Source = new BitmapImage(WebSnapshotURI);
             canvas.Children.Add(image);
             rect = null;
         }
@@ -173,7 +189,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             ResetImage(); 
             ResetCoordinateBoxes();
             CropButton.IsEnabled = true;
-
+            selectionDisabled = false;
         }
     }
 }
