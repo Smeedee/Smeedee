@@ -60,19 +60,19 @@ namespace Smeedee.Client.Framework.Repositories.Charting
             repository.GetDocuments(database, collection, c =>
             {
                 var chart = new Chart(database, collection);
+                
                 foreach (var document in c.Documents)
                 {
-                    var dataset = new DataSet {Name = document["Name"].Value<string>()};
-
-                    foreach (var point in document["DataPoints"].Values<object>().ToList<object>())
-                        dataset.DataPoints.Add(point);
+                    var dataset = CreateDataSetFromDocument(document);
 
                     chart.DataSets.Add(dataset);
                 }
+
                 if (callback != null)
                     callback(chart);
                 if (ChartLoaded != null)
                     ChartLoaded(this, new ChartLoadedEventArgs(chart));
+            
             }, exception =>
                    {
                        if (Error != null)
@@ -81,6 +81,16 @@ namespace Smeedee.Client.Framework.Repositories.Charting
                        }
                    });
 
+        }
+
+        private DataSet CreateDataSetFromDocument(Document document)
+        {
+            var dataset = new DataSet { Name = document["Name"].Value<string>() };
+
+            foreach (var point in document["DataPoints"].Values<object>().ToList<object>())
+                dataset.DataPoints.Add(point);
+
+            return dataset;
         }
 
         public void RefreshDatasources()
