@@ -187,11 +187,8 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             UpdateCommitersInViewModel(qChangesets);
 
             UpdateNumberOfCommitsShown();
-            if (configIsChanged)
-            {
-
-                configIsChanged = false;
-            }
+          
+            configIsChanged = false;
         }
 
 
@@ -401,7 +398,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
 
         private void ReloadSettings()
         {
-            OnConfigurationChanged(Widget.Configuration);
+            CopyConfigurationToViewModel(Widget.Configuration);
         }
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)

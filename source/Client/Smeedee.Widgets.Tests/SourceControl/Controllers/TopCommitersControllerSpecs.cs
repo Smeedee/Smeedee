@@ -715,7 +715,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 Then("", () =>
                 {
-                    progressbarMock.Verify(l => l.HideInView(), Times.Once());
+                    progressbarMock.Verify(l => l.HideInView(), Times.AtLeastOnce());
                     TestExtensions.ShouldBe(controller.ViewModel.IsLoading, false);
                 });
             }
@@ -979,7 +979,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 userRepositoryMock.Setup(r => r.Get(It.IsAny<Specification<User>>())).Returns(users);
             };
-
 
             protected Context mock_is_initialized_to_1_2010_01_01_false_12_false = () =>
                 configPersisterMock.Setup(p => p.Save(It.IsAny<Configuration>())).Callback((Configuration config) =>

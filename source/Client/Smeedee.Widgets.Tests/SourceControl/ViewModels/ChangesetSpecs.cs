@@ -32,54 +32,55 @@ using NUnit.Framework;
 using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyBDD.Specification.NUnit;
 
-
-namespace Smeedee.Client.Widget.SourceControlTests.ViewModels.ChangesetSpecs
+namespace Smeedee.Widgets.Tests.SourceControl.ViewModels
 {
-    [TestFixture]
-    public class When_ViewModel_is_spawned
+    class ChangesetSpecs
     {
-        ChangesetViewModel viewModel;
-
-        [SetUp]
-        public void Setup()
+        [TestFixture]
+        public class When_ViewModel_is_spawned
         {
-            viewModel = new ChangesetViewModel();
+            private ChangesetViewModel viewModel;
+
+            [SetUp]
+            public void Setup()
+            {
+                viewModel = new ChangesetViewModel();
+            }
+
+            [Test]
+            public void Should_have_a_Message_property()
+            {
+                viewModel.Message.ShouldBeNull();
+            }
+
+            [Test]
+            public void Should_have_a_Date_property()
+            {
+                viewModel.Date.ShouldBe(DateTime.MinValue);
+            }
+
+            [Test]
+            public void Should_have_Person_property()
+            {
+                viewModel.Developer.ShouldNotBeNull();
+                viewModel.Developer.Name.ShouldBeNull();
+                viewModel.Developer.Email.ShouldBeNull();
+            }
+
+
+            [Test]
+            public void Should_have_CommentIsBad_property()
+            {
+                viewModel.CommentIsBad.ShouldNotBeNull();
+                viewModel.CommentIsBad = true;
+                viewModel.CommentIsBad.ShouldBe(true);
+            }
+
+            [Test]
+            public void Should_have_BackgroundColor_property()
+            {
+                viewModel.BackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_BACKGROUND_COLOR);
+            }
         }
-
-        [Test]
-        public void Should_have_a_Message_property()
-        {
-            viewModel.Message.ShouldBeNull();
-        }
-
-        [Test]
-        public void Should_have_a_Date_property()
-        {
-            viewModel.Date.ShouldBe(DateTime.MinValue);
-        }
-
-        [Test]
-        public void Should_have_Person_property()
-        {
-            viewModel.Developer.ShouldNotBeNull();
-            viewModel.Developer.Name.ShouldBeNull();
-            viewModel.Developer.Email.ShouldBeNull();
-        }
-
-
-        [Test]
-        public void Should_have_CommentIsBad_property()
-        {
-            viewModel.CommentIsBad.ShouldNotBeNull();
-            viewModel.CommentIsBad = true;
-            viewModel.CommentIsBad.ShouldBe(true);
-        }
-
-        [Test]
-        public void Should_have_BackgroundColor_property()
-        {
-            viewModel.BackgroundColor.ShouldBe(ChangesetViewModel.DEFAULT_BACKGROUND_COLOR);
-        }
-
     }
 }
