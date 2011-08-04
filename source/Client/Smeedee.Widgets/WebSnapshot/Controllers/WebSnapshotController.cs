@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Smeedee.Client.Framework.Controller;
@@ -215,11 +216,14 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             uiInvoker.Invoke(() =>
             {
+                SettingsViewModel.AvailableImages.Clear();
+
                 foreach (var snapshot in snapshotDataFromDb)
                 {
-                    SettingsViewModel.AvailableImages.Add(snapshot.PictureFilePath);
-                }
-                                     
+                    var fileName = Path.GetFileName(snapshot.PictureFilePath);
+                    SettingsViewModel.AvailableImages.Add("WebSnapshots/"+fileName);
+                }    
+
             });
         }
 

@@ -5,7 +5,10 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Web;
+using Smeedee.DomainModel.Framework;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.WebSnapshot;
+using Smeedee.Integration.Database.DomainModel.Repositories;
 
 namespace Smeedee.Client.Web.Services
 {
@@ -17,7 +20,20 @@ namespace Smeedee.Client.Web.Services
         [OperationContract]
         public IEnumerable<WebSnapshot> Get()
         {
-            return new List<WebSnapshot>();
+            IEnumerable<WebSnapshot> result = new List<WebSnapshot>();
+            var repo = new WebSnapshotDatabaseRepository(DefaultSessionFactory.Instance);
+
+            try
+            {
+                result = repo.Get(new WebSnapshotSpecification());
+            }
+            catch (Exception exception)
+            {
+                ILog logger = new Logger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance));
+                logger.WriteEntry(new ErrorLogEntry(this.GetType().ToString(), exception.ToString())); ;
+            }
+
+            return result;
         }
     }
 }
