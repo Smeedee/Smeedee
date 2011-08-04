@@ -117,7 +117,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             previousPoints.Enqueue(upperleftpoint);
             previousRect.Push(rect);
 
-            var img = CropPicture(upperleftpoint, rect);
+            var img = CropPicture(upperleftpoint, rect, image);
 
             if (img == null)
             {
@@ -140,7 +140,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             img.Invalidate();
         }
 
-        private WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle)
+        public WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle, Image img)
         {
             WriteableBitmap wb = null;
             try
@@ -153,10 +153,10 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
                 };
 
                 //Draw to Writable Bitmap
-                wb.Render(image, t);
+                wb.Render(img, t);
                 wb.Invalidate();
 
-                image.Source = wb;
+                //image.Source = wb;
             }
             catch (Exception)
             {

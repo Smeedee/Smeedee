@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.Widgets.SL.WebSnapshot.Views;
 using Smeedee.Widgets.WebSnapshot.Controllers;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
@@ -30,6 +31,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
         private WebSnapshotViewModel viewModel;
         private WebSnapshotController controller;
         private WebSnapshotSettingsViewModel settingsViewModel;
+        private WebSnapshotView snapshotView;
 
 		public WebSnapshotWidget()
 		{
@@ -37,15 +39,28 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 		    viewModel = GetInstance<WebSnapshotViewModel>();
 		    settingsViewModel = GetInstance<WebSnapshotSettingsViewModel>();
 		    controller = NewController<WebSnapshotController>();
-		    viewModel.PropertyChanged += ViewModelPropertyChanged;
 
-		    View = new WebSnapshotView { DataContext = controller.ViewModel };
-		    SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
+            viewModel.PropertyChanged += ViewModelPropertyChanged;
+
+		    PropertyChanged += WebSnapshot_Propertychanged;
+
+		    snapshotView = new WebSnapshotView { DataContext = settingsViewModel /*controller.ViewModel*/ };
+		    View = snapshotView;
+            
+            SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
 
 		    ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
 		}
 
-		private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void WebSnapshot_Propertychanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsTimeToCrop")
+            {
+                snapshotView.CropImage();
+            }
+        }
+
+        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 		    var tempViewModel = sender as WebSnapshotSettingsViewModel;
 		    var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);

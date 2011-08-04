@@ -92,7 +92,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             SetIsSavingConfig();
             CopySettingsViewModelToConfiguration();
 
-            uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = SettingsViewModel.Image);
+            //uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = SettingsViewModel.Image);
 
             configPersisterRepository.Save(webSnapshotConfig.Configuration);
 
@@ -161,8 +161,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 uiInvoker.Invoke(() =>
                 {
                     var snapshotPath = snapshot.PictureFilePath;
-                    SetWebSnapshot(snapshotPath);
-                    //SetWebSnapshot(snapshot);
+                    //SetWebSnapshot(snapshotPath);
+                    SetWebSnapshot(snapshot);
                 });
             }
             else
@@ -173,25 +173,22 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
         {
-            //var timestamp = snapshot.Timestamp;
-            
-            //if (previousTimestamp == timestamp) return;
+            var timestamp = snapshot.Timestamp;
 
-            //webSnapshotViewModel.Snapshot = CropImage(snapshot);
-            //previousTimestamp = timestamp;
+            if (webSnapshotConfig.Timestamp == timestamp)
+            {
+                //webSnapshotViewModel.IsTimeToCrop = false;
+                SettingsViewModel.IsTimeToCrop = false;
+            }
+            else
+            {
+                webSnapshotConfig.Timestamp = timestamp;
+                SettingsViewModel.Image = new BitmapImage(new Uri(snapshot.PictureFilePath));
+                //webSnapshotViewModel.IsTimeToCrop = true;
+                SettingsViewModel.IsTimeToCrop = true;
+            }
         }
-        /*
-        private BitmapImage CropImage(DomainModel.WebSnapshot.WebSnapshot snapshot)
-        {
-             //= webSnapshotConfig.URL;
-             //= webSnapshotConfig.CoordinateX;
-             //= webSnapshotConfig.CoordinateY;
-             //= webSnapshotConfig.RectangleHeight;
-             //= webSnapshotConfig.RectangleWidth;
-            
-
-        }
-        */
+        
         private void SetWebSnapshot(string imagePath)
         {
             webSnapshotViewModel.Snapshot = new BitmapImage(new Uri(imagePath));
@@ -218,7 +215,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 {
                     SettingsViewModel.AvailableImages.Add(snapshot.PictureFilePath);
                 }
-                                     
+
             });
         }
 

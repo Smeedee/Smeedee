@@ -9,6 +9,8 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         partial void OnInitialize()
         {
             AvailableImages = new ObservableCollection<string>();
+            AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/test.png");
+            
         }
 
         public bool CanSave()
@@ -83,6 +85,29 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
         private string cropRectangleWidth;
+
+        public virtual bool IsTimeToCrop
+        {
+            get
+            {
+                OnGetIsTimeToCrop(ref _IsTimeToCrop);
+
+                return _IsTimeToCrop;
+            }
+            set
+            {
+                if (value != _IsTimeToCrop)
+                {
+                    OnSetIsTimeToCrop(ref value);
+                    _IsTimeToCrop = value;
+                    TriggerPropertyChanged("IsTimeToCrop");
+                }
+            }
+        }
+        private bool _IsTimeToCrop;
+
+        partial void OnGetIsTimeToCrop(ref bool value);
+        partial void OnSetIsTimeToCrop(ref bool value);
 
     }
 }
