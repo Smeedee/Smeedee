@@ -81,7 +81,7 @@
     <Compile Include="SourceControl\Controllers\TopCommitersControllerSpecs.cs" />
     <Compile Include="SourceControl\Integration\CommitStatisticsSpecs.cs" />
     <Compile Include="SourceControl\ViewModels\ChangesetSpecs.cs" />
-    <Compile Include="SourceControl\ViewModels\CheckInNotificationSpecs.cs" />
+    <Compile Include="SourceControl\ViewModels\LatestCommitsSpecs.cs" />
     <Compile Include="SourceControl\ViewModels\CodeCommiterViewModelSpecs.cs" />
     <Compile Include="SourceControl\ViewModels\CommitStatisticsForDateTests.cs" />
     <Compile Include="SourceControl\ViewModels\RevisionCounterViewModelSpecs.cs" />

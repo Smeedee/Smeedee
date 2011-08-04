@@ -31,7 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
@@ -49,7 +48,7 @@ using Smeedee.Widgets.SourceControl.ViewModels;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 
-namespace Smeedee.Widget.SourceControl.Tests.Controllers
+namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 {
 
     [TestFixture]
