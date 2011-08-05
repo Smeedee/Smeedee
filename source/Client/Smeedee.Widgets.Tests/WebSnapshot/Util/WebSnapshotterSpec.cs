@@ -16,7 +16,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
         public class When_URL_is_specified : Shared
         {
 
-
             [Test]
             public void Then_assure_property_was_set_to_URL()
             {
@@ -54,8 +53,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
                 var webSnapshotter = webSnapshotterMock.Object;
                 webSnapshotter.IsBlank(blankBitmap).ShouldBeTrue();
             }
-
-
         }
 
         [TestFixture]
@@ -86,7 +83,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
                 webSnapshotter.IsBlank(snapshot).ShouldBeTrue();
             }
         }
-
 
         public class Shared
         {
@@ -128,6 +124,5 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
                 return colorfulBitmap;
             }
         }
-
     }
 }

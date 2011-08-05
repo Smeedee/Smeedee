@@ -87,11 +87,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 Then(() =>
                 {
-                    TestExtensions.ShouldBe(controller.ViewModel.SinceDate, DateTime.Now.Date);
-                    TestExtensions.ShouldBe(controller.ViewModel.TimeSpanInDays, 10);
-                    TestExtensions.ShouldBe(controller.ViewModel.IsUsingDate, true);
-                    TestExtensions.ShouldBe(controller.ViewModel.MaxNumOfCommiters, 15);
-                    TestExtensions.ShouldBe(controller.ViewModel.AcknowledgeOthers, true);
+                    controller.ViewModel.SinceDate.ShouldBe(DateTime.Now.Date);
+                    controller.ViewModel.TimeSpanInDays.ShouldBe(10);
+                    controller.ViewModel.IsUsingDate.ShouldBe(true);
+                    controller.ViewModel.MaxNumOfCommiters.ShouldBe(15);
+                    controller.ViewModel.AcknowledgeOthers.ShouldBe(true);
                 });
             }
 
@@ -107,11 +107,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then(() =>
                 {
                     changesetRepositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<Changeset>>()), Times.Once());
-                    TestExtensions.ShouldBe(controller.ViewModel.TimeSpanInDays, 1);
-                    TestExtensions.ShouldBe(controller.ViewModel.SinceDate, new DateTime(2010, 01, 01));
-                    TestExtensions.ShouldBe(controller.ViewModel.IsUsingDate, false);
-                    TestExtensions.ShouldBe(controller.ViewModel.MaxNumOfCommiters, 12);
-                    TestExtensions.ShouldBe(controller.ViewModel.AcknowledgeOthers, false);
+                    controller.ViewModel.SinceDate.ShouldBe(new DateTime(2010, 01, 01));
+                    controller.ViewModel.TimeSpanInDays.ShouldBe(1);
+                    controller.ViewModel.IsUsingDate.ShouldBe(false);
+                    controller.ViewModel.MaxNumOfCommiters.ShouldBe(12);
+                    controller.ViewModel.AcknowledgeOthers.ShouldBe(false);
                 });
             }
 
@@ -124,7 +124,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 When(the_Controller_is_created);
 
-                Then(() => TestExtensions.ShouldBe(controller.ViewModel.ActualDateUsed.Date, DateTime.Now.Date.AddDays(-1)));
+                Then(() => controller.ViewModel.ActualDateUsed.Date.ShouldBe(DateTime.Now.Date.AddDays(-1)));
             }
 
             [Test]
@@ -148,7 +148,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 When(the_Controller_is_created);
 
-                Then(() => TestExtensions.ShouldNotBe(controller.ViewModel.IsUsingDate, controller.ViewModel.IsUsingTimespan));
+                Then(() => controller.ViewModel.IsUsingDate.ShouldNotBe(controller.ViewModel.IsUsingTimespan));
             }
 
             [Test]
@@ -173,7 +173,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 When(the_Controller_is_created);
 
-                Then(() => TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 1));
+                Then(() => controller.ViewModel.Data.Count.ShouldBe(1));
             }
 
             [Test]
@@ -187,7 +187,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 Then(() =>
                                     {
-                                        TestExtensions.ShouldBe(controller.ViewModel.Data.Count, 2);
+                                        controller.ViewModel.Data.Count.ShouldBe(2);
                                         Enumerable.Where(controller.ViewModel.Data, d => d.Firstname.Equals("Others")).First().NumberOfCommits.ShouldBe(1);
                                     });
             }
@@ -201,7 +201,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 When(the_Controller_is_created);
 
-                Then(() => TestExtensions.ShouldBe(controller.ViewModel.NumberOfCommitsShown, 3));
+                Then(() => controller.ViewModel.NumberOfCommitsShown.ShouldBe(3));
             }
 
             [Test]
@@ -234,21 +234,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
         [TestFixture]
         public class Loading_data : Shared
         {
-            [Test]
-            [Ignore("We are using async repository for dataloading")]
-            public void Assure_data_loading_is_performed_on_the_specified_thread()
-            {
-                Given(there_are_3_users_in_userdb)
-                    .And(there_are_changesets_for_2_users_in_SourceControl_system)
-                    .And(config_with_timespan_1_date_2010_01_01_isUsingDate_false_numOfCom_12_ackOthers_false)
-                    .And(the_Controller_is_spawned);
-
-                When("data is loading");
-
-                Then("assure data loading is performed on the supplied thread (this case: current thread)", () =>
-                    TestExtensions.ShouldBe(changesetRepositoryGetThreadId, Thread.CurrentThread.ManagedThreadId));
-            }
-
+            
             [Test]
             public void Assure_the_controller_can_handle_null_author()
             {
@@ -338,7 +324,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             {
                 Given(the_Controller_is_spawned);
 
-                When("IsUsingDate is changed", () => controller.ViewModel.IsUsingDate=false);
+                When("IsUsingDate is changed", () => controller.ViewModel.IsUsingDate = false);
 
                 Then("Assure IsUsingDate and IsUsingTimeSpan doesnt have the same value", () =>
                 {
@@ -692,6 +678,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             }
         }
 
+
         [TestFixture]
         public class When_loading_and_saving_data_and_settings : Shared
         {
@@ -785,6 +772,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             }
         }
 
+       
         public class Shared : ScenarioClass
         {
             protected static int changesetRepositoryGetThreadId;

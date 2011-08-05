@@ -56,8 +56,8 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             IPersistDomainModelsAsync<Configuration> configPersister)
             : base(viewModel, timer, uiInvoke, loadingNotifier, widget, configPersister)
         {
-            Guard.Requires<ArgumentException>(logger != null, "logger");
-            Guard.Requires<ArgumentException>(changesetRepo != null, "changesetRepo");
+            Guard.Requires<ArgumentNullException>(logger != null, "logger");
+            Guard.Requires<ArgumentNullException>(changesetRepo != null, "changesetRepo");
 
             this.logger = logger;
             this.changesetRepository = changesetRepo;

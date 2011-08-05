@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media.Imaging;
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
@@ -9,11 +11,23 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         partial void OnInitialize()
         {
             AvailableImages = new ObservableCollection<string>();
+            AvailableImagesUri = new ObservableCollection<string>();
         }
 
-        public bool CanSave()
+        public ObservableCollection<string> AvailableImagesUri;
+
+        public string UriOfSelectedImage
         {
-            return true;
+            get
+            {
+                var selected = SelectedImage;
+                if (AvailableImagesUri.Count > 0 && selected != null)
+                {
+                    return AvailableImagesUri.ElementAt(AvailableImages.IndexOf(selected));
+                }
+                return string.Empty;
+            }
+            set {  }
         }
 
         public bool IsSaving
@@ -57,6 +71,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
         private string cropCoordinateY;
+
         public string CropRectangleHeight
         {
             get { return cropRectangleHeight; }
@@ -70,6 +85,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
         private string cropRectangleHeight;
+
         public string CropRectangleWidth
         {
             get { return cropRectangleWidth; }

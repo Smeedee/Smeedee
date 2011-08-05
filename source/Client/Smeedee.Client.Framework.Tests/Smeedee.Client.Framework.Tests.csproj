@@ -76,7 +76,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControllerBaseSpecs.cs" />
     <Compile Include="Controller\ControllerBaseSpecs.cs" />
     <Compile Include="Controller\SelectWidgetsDialogControllerSpecs.cs" />
     <Compile Include="Controller\WidgetControllerSpecs.cs" />
@@ -139,6 +138,10 @@
     <ProjectReference Include="..\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
       <Project>{F4DC446D-0F08-4D32-877D-CE4C6D84A497}</Project>
       <Name>Smeedee.Client.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smeedee.Widgets\Smeedee.Widgets.csproj">
+      <Project>{5C51D91C-8A5B-4308-8963-C522888ADB4D}</Project>
+      <Name>Smeedee.Widgets</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
