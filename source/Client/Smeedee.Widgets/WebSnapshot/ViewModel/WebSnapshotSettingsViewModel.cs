@@ -15,6 +15,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         }
 
         public ObservableCollection<string> AvailableImagesUri;
+
         public string UriOfSelectedImage
         {
             get
@@ -27,11 +28,6 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
                 return string.Empty;
             }
             set {  }
-        }
-
-        public bool CanSave()
-        {
-            return true;
         }
 
         public bool IsSaving
@@ -75,6 +71,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
         private string cropCoordinateY;
+
         public string CropRectangleHeight
         {
             get { return cropRectangleHeight; }
@@ -88,6 +85,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
             }
         }
         private string cropRectangleHeight;
+
         public string CropRectangleWidth
         {
             get { return cropRectangleWidth; }
