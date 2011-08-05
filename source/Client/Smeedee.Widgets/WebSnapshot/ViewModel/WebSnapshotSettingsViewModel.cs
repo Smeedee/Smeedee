@@ -9,10 +9,6 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         partial void OnInitialize()
         {
             AvailableImages = new ObservableCollection<string>();
-            //AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/github-httpsgithubcomSmeedeeSmeedeecommitssprint3.png");
-            //AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/smeedeeorg.png");
-            //AvailableImages.Add(@"http://localhost:1155/Smeedee/WebSnapshots/NewWebSnapshotTask-httpsmeedeeorg.png");
-
         }
 
         public bool CanSave()
@@ -88,28 +84,28 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         }
         private string cropRectangleWidth;
 
-        public virtual bool IsTimeToCrop
+        public virtual bool IsTimeToUpdate
         {
             get
             {
-                OnGetIsTimeToCrop(ref _IsTimeToCrop);
+                OnGetIsTimeToUpdate(ref _IsTimeToUpdate);
 
-                return _IsTimeToCrop;
+                return _IsTimeToUpdate;
             }
             set
             {
-                if (value != _IsTimeToCrop)
+                if (value != _IsTimeToUpdate)
                 {
-                    OnSetIsTimeToCrop(ref value);
-                    _IsTimeToCrop = value;
-                    TriggerPropertyChanged("IsTimeToCrop");
+                    OnSetIsTimeToUpdate(ref value);
+                    _IsTimeToUpdate = value;
+                    TriggerPropertyChanged("IsTimeToUpdate");
                 }
             }
         }
-        private bool _IsTimeToCrop;
+        private bool _IsTimeToUpdate;
 
-        partial void OnGetIsTimeToCrop(ref bool value);
-        partial void OnSetIsTimeToCrop(ref bool value);
+        partial void OnGetIsTimeToUpdate(ref bool value);
+        partial void OnSetIsTimeToUpdate(ref bool value);
 
     }
 }

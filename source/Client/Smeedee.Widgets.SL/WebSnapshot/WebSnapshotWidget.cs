@@ -8,8 +8,10 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
+using Smeedee.Client.SL;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.DomainModel.Framework.Logging;
@@ -32,54 +34,87 @@ namespace Smeedee.Widgets.SL.WebSnapshot
         private WebSnapshotController controller;
         private WebSnapshotSettingsViewModel settingsViewModel;
         private WebSnapshotView snapshotView;
+        private WebSnapshotSettingsView settingsView;
 
-		public WebSnapshotWidget()
-		{
-		    Title = "Web Snapshot";
-		    viewModel = GetInstance<WebSnapshotViewModel>();
-		    settingsViewModel = GetInstance<WebSnapshotSettingsViewModel>();
-		    controller = NewController<WebSnapshotController>();
+        public WebSnapshotWidget()
+        {
+            Title = "Web Snapshot";
+            viewModel = GetInstance<WebSnapshotViewModel>();
+            settingsViewModel = GetInstance<WebSnapshotSettingsViewModel>();
+            controller = NewController<WebSnapshotController>();
 
             viewModel.PropertyChanged += ViewModelPropertyChanged;
-
-		    PropertyChanged += WebSnapshot_Propertychanged;
-
-		    snapshotView = new WebSnapshotView { DataContext = settingsViewModel /*controller.ViewModel*/ };
-		    View = snapshotView;
             
-            SettingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
+            //PropertyChanged += WebSnapshot_Propertychanged;
+            settingsViewModel.PropertyChanged += WebSnapshot_Propertychanged;
 
-		    ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
-		}
+            snapshotView = new WebSnapshotView { DataContext = settingsViewModel /*controller.ViewModel*/ };
+            View = snapshotView;
+
+            settingsView= new WebSnapshotSettingsView { DataContext = settingsViewModel };
+            SettingsView = settingsView;
+
+            ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
+        }
 
         private void WebSnapshot_Propertychanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsTimeToCrop")
+            if (e.PropertyName == "IsTimeToUpdate")
             {
-                snapshotView.CropImage();
+                snapshotView.UpdateImage();
             }
+            else if (e.PropertyName == "SelectedImage")
+            {
+                //var WebSnapshotURI = new Uri(App.Current.Host.Source, "../" + settingsViewModel.SelectedImage);
+                LoadImageFunction();
+            }
+            else if (e.PropertyName == "LoadedImage")
+            {
+                controller.ShowImageInSettingsView();
+                settingsView.LoadedImageCB = settingsViewModel.LoadedImage as WriteableBitmap;
+            }
+
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-		    var tempViewModel = sender as WebSnapshotSettingsViewModel;
-		    var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);
+        {
+            var tempViewModel = sender as WebSnapshotSettingsViewModel;
+            var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);
 
-		    if (isDoneSaving && IsInSettingsMode)
-		    {
-			OnSettings();
-		    }
-		}
+            if (isDoneSaving && IsInSettingsMode)
+            {
+                OnSettings();
+            }
+        }
 
-		public override void Configure(DependencyConfigSemantics config)
-		{
-		    config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();
-		    config.Bind<WebSnapshotSettingsViewModel>().To<WebSnapshotSettingsViewModel>().InSingletonScope();
-		}
+        public override void Configure(DependencyConfigSemantics config)
+        {
+            config.Bind<WebSnapshotViewModel>().To<WebSnapshotViewModel>().InSingletonScope();
+            config.Bind<WebSnapshotSettingsViewModel>().To<WebSnapshotSettingsViewModel>().InSingletonScope();
+        }
 
-		protected override Configuration NewConfiguration()
-		{
-		    return WebSnapshotConfig.NewDefaultConfiguration();
-		}
-	    }
-	}
+        protected override Configuration NewConfiguration()
+        {
+            return WebSnapshotConfig.NewDefaultConfiguration();
+        }
+
+
+        BitmapImage _imageFromServer;
+        void LoadImageFunction()
+        {
+            _imageFromServer = new BitmapImage();
+            _imageFromServer.ImageOpened += bi_ImageOpened;
+            _imageFromServer.ImageFailed += bi_ImageFailed;
+            _imageFromServer.CreateOptions = BitmapCreateOptions.None;
+            _imageFromServer.UriSource = new Uri(App.Current.Host.Source, "../" + settingsViewModel.SelectedImage);
+        }
+
+        void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e) {}
+
+        void bi_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            var wb = new WriteableBitmap(_imageFromServer);
+            settingsViewModel.LoadedImage = wb;
+        }
+    }
+}

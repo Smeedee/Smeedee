@@ -55,6 +55,29 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		partial void OnGetSelectedImage(ref string value);
 		partial void OnSetSelectedImage(ref string value);
 
+		public virtual object LoadedImage
+		{
+			get 
+			{
+				OnGetLoadedImage(ref _LoadedImage);
+				 
+				return _LoadedImage; 
+			}
+			set
+			{
+				if (value != _LoadedImage)
+				{
+					OnSetLoadedImage(ref value); 
+					_LoadedImage = value;
+					TriggerPropertyChanged("LoadedImage");
+				}
+			}
+		}
+		private object _LoadedImage;
+
+		partial void OnGetLoadedImage(ref object value);
+		partial void OnSetLoadedImage(ref object value);
+
 		public virtual object Image
 		{
 			get 

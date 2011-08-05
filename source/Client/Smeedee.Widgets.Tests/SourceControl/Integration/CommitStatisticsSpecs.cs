@@ -20,7 +20,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Integration
     {
         private CommitStatisticsController _controller;
         private static Mock<IWidget> widgetMock;
-        private Mock<IAsyncRepository<Configuration>> configRepository;
         private static CommitStatisticsSettingsViewModel settingsViewModel;
         private static Mock<IPersistDomainModelsAsync<Configuration>> configPersister;
         protected static Mock<IProgressbar> loadingNotifyerMock = new Mock<IProgressbar>();
@@ -36,10 +35,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Integration
             _controller = new CommitStatisticsController(new BindableViewModel<CommitStatisticsForDate>(), 
                                                         settingsViewModel,
                                                         new Mock<IAsyncRepository<Changeset>>().Object,
-                                                        //new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
                                                         new Mock<ITimer>().Object,
                                                         new NoUIInvokation(),
-                                                        configRepository.Object,
                                                         configPersister.Object,
                                                         new Logger(new LogEntryMockPersister()),
                                                         loadingNotifyerMock.Object,
@@ -52,11 +49,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Integration
             var config = new Configuration("Commit Statistics");
             config.NewSetting("timespan", "4");
             var fakeConfig = new List<Configuration> { config };
-
-            configRepository = new Mock<IAsyncRepository<Configuration>>();
-            configRepository.Setup(
-                r => r.BeginGet(It.IsAny<Specification<Configuration>>())).Raises(
-                t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(fakeConfig, null));
 
             widgetMock.SetupGet(w => w.Configuration).Returns(config);
         }

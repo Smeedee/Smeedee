@@ -19,6 +19,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         private Rectangle rect;
         private Point MousePress;
         private Point MouseRelease;
+        private Point upperleftpoint;
         private Queue<Point> previousPoints;
         private Stack<Rectangle> previousRect;
         private bool selectionDisabled;
@@ -31,7 +32,9 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             previousRect = new Stack<Rectangle>();
             LayoutRoot.MouseLeftButtonDown += canvas_MouseLeftButtonDown;
             
+            
         }
+
 
         void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -111,7 +114,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         private void crop_click(object sender, RoutedEventArgs e)
         {
-            Point upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease, rect);
+            upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease, rect);
 
             previousPoints.Enqueue(upperleftpoint);
             previousRect.Push(rect);
@@ -147,15 +150,18 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
                 wb = new WriteableBitmap(Convert.ToInt32(rectangle.Width), Convert.ToInt32(rectangle.Height));
                 var t = new TranslateTransform
                 {
-                    X = CropUtil.NegativeNumber(upperleftpoint.X),
-                    Y = CropUtil.NegativeNumber(upperleftpoint.Y)
+                    X =  CropUtil.NegativeNumber(upperleftpoint.X),
+                    Y =  CropUtil.NegativeNumber(upperleftpoint.Y)
                 };
 
                 //Draw to Writable Bitmap
                 wb.Render(img, t);
-                wb.Invalidate();
 
-                //image.Source = wb;
+                //wb.Crop((int)upperleftpoint.X, (int)upperleftpoint.Y,
+                //    (int)rectangle.Width, (int)rectangle.Height);
+
+                wb.Invalidate();
+                
             }
             catch (Exception)
             {
@@ -165,12 +171,13 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             return wb;
         }
 
+        public WriteableBitmap LoadedImageCB { private get; set; }
+
         private void ResetImage()
         {
             image.Clip = null;
             canvas.Children.Clear();
-            var WebSnapshotURI = new Uri(App.Current.Host.Source, "../" + TaskNames.SelectedItem);
-            image.Source = new BitmapImage(WebSnapshotURI);
+            image.Source = LoadedImageCB;
             canvas.Children.Add(image);
             rect = null;
         }
@@ -191,5 +198,33 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             CropButton.IsEnabled = true;
             selectionDisabled = false;
         }
+
+        //BitmapImage _imageFromServer;
+        //WriteableBitmap _croppedImage;
+
+        //void LoadImageFunction()
+        //{
+        //    _imageFromServer = new BitmapImage();
+        //    _imageFromServer.ImageOpened += bi_ImageOpened;
+        //    _imageFromServer.ImageFailed += bi_ImageFailed;
+        //    _imageFromServer.CreateOptions = BitmapCreateOptions.None;
+        //    _imageFromServer.UriSource = new Uri(App.Current.Host.Source, "../" + TaskNames.SelectedItem);
+        //}
+
+        //void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        //{
+        //    //somebody set us up the bomb
+        //}
+
+        
+
+        //void bi_ImageOpened(object sender, RoutedEventArgs e)
+        //{
+
+        //    var wb = new WriteableBitmap(_imageFromServer);
+
+            
+        //    _croppedImage = wb;
+        //}
     }
 }
