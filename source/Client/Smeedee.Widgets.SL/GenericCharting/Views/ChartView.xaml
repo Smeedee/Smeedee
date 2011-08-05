@@ -6,7 +6,7 @@
              xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" 
              xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:local="clr-namespace:Smeedee.Widgets.SL.GenericCharting.Views"
-             mc:Ignorable="d"
+             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="400">
 
@@ -14,6 +14,12 @@
         <ResourceDictionary>
             <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <Converters:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter"/>
+
+            <Style x:Key="TitleStyle" TargetType="toolkit:Title">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -33,15 +39,14 @@
         		<SolidColorBrush Color="{StaticResource FontColorBright}"/>
         	</TextBlock.Foreground>
         </TextBlock>
-        <!--LinesSource="{Binding Lines, Mode=OneWay}"
-            ColumnsSource="{Binding Columns, Mode=OneWay}"
-            AreasSource="{Binding Areas, Mode=OneWay}"-->
+        
         <local:GenericChart
             Title="{Binding Name, Mode=OneWay}"
-           
+            TitleStyle="{StaticResource TitleStyle}"
             ItemsSource="{Binding Series, Mode=OneWay}"
             XAxisType="{Binding XAxisType, Mode=OneWay}"
             Visibility="{Binding Path=ShowErrorMessageInsteadOfChart, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
+            
             
             <local:GenericChart.CategoryAxisTemplate>
                 <DataTemplate>
