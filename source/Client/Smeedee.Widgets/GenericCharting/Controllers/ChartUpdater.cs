@@ -34,6 +34,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             this.viewModel = viewModel;
             this.uiInvoker = uiInvoker;
             this.storageReader = storageReader;
+            downloadedCharts = null;
         }
 
         public void Update()
@@ -74,6 +75,12 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void DownloadCompleted(Collection<Chart> downloadedCharts)
         {
+            if (DownloadedChartsHasNotChanged(downloadedCharts))
+            {
+                if (UpdateFinished != null)
+                    UpdateFinished(this, EventArgs.Empty);
+                return;
+            }
             this.downloadedCharts = downloadedCharts;
             if (downloadedCharts.Count > 0)
             {
@@ -81,11 +88,38 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                                      {
                                          AddNameData();
                                          AddSeries();
-                                         downloadedCharts.Clear();
                                          if (UpdateFinished != null)
                                              UpdateFinished(this, EventArgs.Empty);
                                      });
             }
+        }
+
+        private bool DownloadedChartsHasNotChanged(Collection<Chart> newCharts)
+        {
+            var oldCharts = this.downloadedCharts;
+            if (oldCharts == null) return false;
+            if (newCharts.Count != oldCharts.Count) return false;
+
+            foreach (var newOne in newCharts)
+            {
+                var oldOne = oldCharts.FirstOrDefault(c => c.Database == newOne.Database && c.Collection == newOne.Collection);
+                if (oldOne == null) return false;
+
+                if (newOne.DataSets.Count != oldOne.DataSets.Count) return false;
+
+                for (int i=0; i<oldOne.DataSets.Count; i++)
+                {
+                    if (newOne.DataSets[i].Name != oldOne.DataSets[i].Name) return false;
+                    if (newOne.DataSets[i].DataPoints.Count != oldOne.DataSets[i].DataPoints.Count) return false;
+
+                    for (int j=0; j<oldOne.DataSets[i].DataPoints.Count; j++)
+                    {
+                        if (newOne.DataSets[i].DataPoints[j].ToString() != oldOne.DataSets[i].DataPoints[j].ToString()) return false;
+                    }
+
+                }
+            }
+            return true;
         }
 
         private void AddNameData()
