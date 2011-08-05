@@ -76,6 +76,7 @@
     <Compile Include="GenericCharting\Controllers\ChartUpdaterSpecs.cs" />
     <Compile Include="GenericCharting\ViewModels\ChartViewModelSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceControl\Controllers\ChangesetControllerBaseSpecs.cs" />
     <Compile Include="SourceControl\Controllers\CommitStatisticsControllerSpecs.cs" />
     <Compile Include="SourceControl\Controllers\LatestCommitsControllerSpecs.cs" />
     <Compile Include="SourceControl\Controllers\TopCommitersControllerSpecs.cs" />

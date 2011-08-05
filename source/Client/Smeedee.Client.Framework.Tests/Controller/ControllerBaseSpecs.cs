@@ -123,7 +123,7 @@ namespace Smeedee.Client.Framework.Tests.Controller
         }
 
         [TestFixture]
-        public class When_other_things : Shared
+        public class When_starting_and_stopping_refreshNotifier : Shared
         {
             private int REFRESH_INTERVAL = 1 * 60 * 1000;
 
@@ -377,7 +377,7 @@ namespace Smeedee.Client.Framework.Tests.Controller
                 configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
                 uiInvokerMock = new Mock<IUIInvoker>();
 
-                 RemoveAllGlobalDependencies.ForAllViewModels();
+                RemoveAllGlobalDependencies.ForAllViewModels();
                 ConfigureGlobalDependencies.ForAllViewModels(
                     config =>
                         {
@@ -407,6 +407,7 @@ namespace Smeedee.Client.Framework.Tests.Controller
                 StartScenario();
             }
         }
+
         public class MyControllerBase : ControllerBase<AbstractViewModel>
         {
             public bool WasNotified;
