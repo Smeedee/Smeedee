@@ -61,7 +61,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 settingsViewModel.CommitTimespanDays.ShouldBe(14));
             }
 
-
             [Test]
             public void Should_get_timespan_from_configrepo_if_settings_are_set()
             {
@@ -105,10 +104,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                     And(Configuration_timespan_entry_is_correctly_setup_for_10_days).
                     And(controller_is_spawned);
                 When("data is loaded");
-                Then("exception should not be thrown", () =>
-                {
-                    LogEntryMockPersister.entries.Count.ShouldBe(0);
-                });
+                Then("exception should not be thrown", () => LogEntryMockPersister.entries.Count.ShouldBe(0));
             }
 
             [Test]
@@ -116,55 +112,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             {
                 Given(there_are_changesets_in_SourceControl_system).And(Configuration_timespan_entry_is_correctly_setup_for_14_days);
                 When(the_controller_is_created);
-                Then("all the changesets on the same date sould be grouped", () =>
-                {
-                    controller.ViewModel.Data.Count.ShouldBe(1);
-                });
-            }
-
-            [Test]
-            [Ignore("We are using async repository for dataloading")]
-            public void Assure_data_loading_is_performed_on_the_specified_thread()
-            {
-                Given(there_are_changesets_in_SourceControl_system);
-
-                When(the_controller_is_created);
-
-                Then("assure data loading is performed on the supplied thread (this case: current thread)", () =>
-                    changesetRepositoryGetThreadId.ShouldBe(Thread.CurrentThread.ManagedThreadId));
-            }
-
-            [Test]
-            [Ignore("We are using async repository for dataloading")]
-            public void Assure_data_loading_is_delegated_to_backgroundWorkerInvoker()
-            {
-                ITimerMock = new Mock<ITimer>();
-                Given(there_are_changesets_in_SourceControl_system).
-                    And("the controller is spawned using a BackgroundWorkerInvoker mock", () =>
-                    {
-                        backgroundWorkerInvokerMock =
-                            new Mock<IInvokeBackgroundWorker<IEnumerable<Changeset>>>();
-
-                        controller = new CommitStatisticsController(new BindableViewModel<CommitStatisticsForDate>(),
-                                                                    new CommitStatisticsSettingsViewModel(),
-                                                                    changesetRepositoryMock.Object,
-                                                                    //backgroundWorkerInvokerMock.Object,
-                                                                    ITimerMock.Object,
-                                                                    new NoUIInvokation(),
-                                                                    //configRepositoryMock.Object,
-                                                                    configPersisterRepositoryMock.Object,
-                                                                    new Logger(new LogEntryMockPersister()),
-                                                                    loadingNotifierMock.Object,
-                                                                    new Mock<IWidget>().Object
-                                                                    );
-                    });
-
-                When("data is loading");
-
-                Then("assure data loading is performed delegated to the BackgroundWorkerInvoker object", () =>
-                {
-                    backgroundWorkerInvokerMock.Verify(w => w.RunAsyncVoid(It.IsAny<Action>()), Times.AtLeast(1));
-                });
+                Then("all the changesets on the same date sould be grouped", () => controller.ViewModel.Data.Count.ShouldBe(1));
             }
 
             [Test]
@@ -285,10 +233,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                             (o, e) => { viewModelChanged = true; };
                     });
 
-                When("configuration is changed", () =>
-                {
-                    Configuration_timespan_entry_is_changed_to_5();
-                });
+                When("configuration is changed", () => Configuration_timespan_entry_is_changed_to_5());
 
                 Then("assure data is loaded into the viewModel according to config value", () =>
                 {
@@ -312,16 +257,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 And(config_is_changed);
                 When(save_button_is_pressed);
                 Then("", () => configPersisterRepositoryMock.Verify(r => r.Save(It.IsAny<Configuration>()), Times.AtLeastOnce()));
-            }
-
-            [Test]
-            [Ignore("Not relevant, as we just reuse the old configuration object")]
-            public void Assure_that_pressing_the_reloadSettings_button_leads_to_a_get_to_the_nonfigrepository()
-            {
-                //Given(controller_is_spawned);
-                //When(reload_button_is_pressed);
-                //Then("",
-                //    () => configRepositoryMock.Verify(r => r.BeginGet(It.IsAny<ConfigurationByName>()), Times.Exactly(2)));
             }
         }
         [TestFixture]
@@ -433,7 +368,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 Then("", () =>
                              {
                                  viewModel.Data.Count.ShouldBe(2);
-
                                  viewModel.Data.Where(c => c.Date.Equals(DateTime.Today)).
                                      SingleOrDefault().NumberOfCommits.ShouldBe(0);
                              });
@@ -459,7 +393,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                                    .SingleOrDefault().NumberOfCommits.ShouldBe(1);
                              });
             }
-
         }
 
         [TestFixture]
@@ -509,6 +442,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
         }
 
+
         public class Shared : ScenarioClass
         {
             protected static Mock<IAsyncRepository<Changeset>> changesetRepositoryMock;
@@ -529,7 +463,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 var configuration = new Configuration("Commit Statistics");
                 configuration.NewSetting("CommitTimespanDays", timespan.ToString());
                 configuration.NewSetting("isUsingTimespan", true.ToString());
-                var configList = new List<Configuration> { configuration };
 
                 widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
                 UpdateConfiguration();
@@ -540,7 +473,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 var configuration = new Configuration("Commit Statistics");
                 configuration.NewSetting("SinceDate", date.ToString(new CultureInfo("en-US")));
                 configuration.NewSetting("IsUsingDate", true.ToString());
-                var configList = new List<Configuration> { configuration };
 
                 widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
                 UpdateConfiguration();
@@ -549,55 +481,25 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected Context new_configPersister =
                 () => configPersisterRepositoryMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
 
-            protected Context Configuration_date_entry_is_correctly_setup_for_today = () =>
-            {
-                SetupConfigRepositoryMockItSinceDate(DateTime.Today);
-            };
+            protected Context Configuration_date_entry_is_correctly_setup_for_today = () => SetupConfigRepositoryMockItSinceDate(DateTime.Today);
 
-            protected When Configuration_date_entry_is_correctly_setup_for_six_days_ago = () =>
-            {
-                SetupConfigRepositoryMockItSinceDate(DateTime.Today.AddDays(-6));
-            };
+            protected When Configuration_date_entry_is_correctly_setup_for_six_days_ago = () => SetupConfigRepositoryMockItSinceDate(DateTime.Today.AddDays(-6));
 
-            protected Context Configuration_timespan_entry_is_correctly_setup_for_14_days = () =>
-            {
-                SetupConfigRepositoryMock(14);
-            };
+            protected Context Configuration_timespan_entry_is_correctly_setup_for_14_days = () => SetupConfigRepositoryMock(14);
 
-            protected Context Configuration_timespan_entry_is_correctly_setup_for_10_days = () =>
-            {
-                SetupConfigRepositoryMock(10);
-            };
+            protected Context Configuration_timespan_entry_is_correctly_setup_for_10_days = () => SetupConfigRepositoryMock(10);
 
-            protected Context Configuration_timespan_entry_is_correctly_setup_for_3_days = () =>
-            {
-                SetupConfigRepositoryMock(3);
-            };
+            protected Context Configuration_timespan_entry_is_correctly_setup_for_3_days = () => SetupConfigRepositoryMock(3);
 
-            protected Context Configuration_timespan_entry_is_correctly_setup_for_2_days = () =>
-            {
-                SetupConfigRepositoryMock(2);
-            };
+            protected Context Configuration_timespan_entry_is_correctly_setup_for_2_days = () => SetupConfigRepositoryMock(2);
 
-            protected Context Configuration_timespan_entry_is_changed_to_5 = () =>
-            {
-                SetupConfigRepositoryMock(5);
-            };
+            protected Context Configuration_timespan_entry_is_changed_to_5 = () => SetupConfigRepositoryMock(5);
 
-            protected Context Configuration_timespan_entry_is_set_up_for_1_day = () =>
-            {
-                SetupConfigRepositoryMock(0);
-            };
+            protected Context Configuration_timespan_entry_is_set_up_for_1_day = () => SetupConfigRepositoryMock(0);
 
-            protected Context Configuration_timespan_entry_is_set_up_for_0_days = () =>
-            {
-                SetupConfigRepositoryMock(0);
-            };
+            protected Context Configuration_timespan_entry_is_set_up_for_0_days = () => SetupConfigRepositoryMock(0);
 
-            protected Context Configuration_is_set_up_with_negative_timespan = () =>
-            {
-                SetupConfigRepositoryMock(-2);
-            };
+            protected Context Configuration_is_set_up_with_negative_timespan = () => SetupConfigRepositoryMock(-2);
 
             protected Context there_are_changesets_in_SourceControl_system = () =>
             {
@@ -634,7 +536,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                         Username = "dagolap"
                     }
                 });
-
                 ChangesetRepositoryContains(changesets);
             };
 
@@ -653,7 +554,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                         Username = "goeran"
                     }
                 });
-
                 ChangesetRepositoryContains(changesets);
             };
 
@@ -701,10 +601,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                         Username = "dagolap"
                     }
                 });
-
                 ChangesetRepositoryContains(changesets);
             };
-
 
             protected Context controller_is_spawned = CreateController;
 
@@ -753,15 +651,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                         Username = "dagolap"
                     }
                 });
-
                 ChangesetRepositoryContains(changesets);
             };
 
-            protected Context config_is_changed = () =>
-            {
-                settingsViewModel.CommitTimespanDays++;
-            };
-
+            protected Context config_is_changed = () => settingsViewModel.CommitTimespanDays++;
+       
 
             protected When the_controller_is_created = CreateController;
             protected When the_ViewModel_is_updated = () => NotifyToRefresh(1);
@@ -807,7 +701,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                         Username = "dagolap"
                     }
                 });
-
                 ChangesetRepositoryContains(changesets);
                 NotifyToRefresh(1);
             };
@@ -845,7 +738,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                         Username = "dagolap"
                     }
                 });
-
                 ChangesetRepositoryContains(changesets);
                 NotifyToRefresh(1);
             };
@@ -881,12 +773,9 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected static void ChangesetRepositoryContains(IEnumerable<Changeset> changesets)
             {
                 changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<Specification<Changeset>>())).
-                    Callback((Specification<Changeset> specs) =>
-                    {
-                        changesetRepositoryMock.Raise(e => e.GetCompleted += null,
-                            new GetCompletedEventArgs<Changeset>(changesets.Where(c => specs.IsSatisfiedBy(c)),
-                                                   specs));
-                    });
+                    Callback((Specification<Changeset> specs) => changesetRepositoryMock.Raise(e => e.GetCompleted += null,
+                                                                                               new GetCompletedEventArgs<Changeset>(changesets.Where(specs.IsSatisfiedBy),
+                                                                                                                                    specs)));
 
                 changesetRepositoryMock.Setup(r => r.BeginGet(It.IsAny<AllChangesetsSpecification>())).
                     Raises(e => e.GetCompleted += null,
@@ -916,7 +805,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                          r => r.Save(It.IsAny<Configuration>())).Raises(
                          t => t.SaveCompleted += null, new SaveCompletedEventArgs());
 
-                widgetMock.SetupGet(w => w.Configuration).Returns(CommitStatisticsController.CreateDefaultConfig());
+                widgetMock.SetupGet(w => w.Configuration).Returns(CommitStatisticsController.CreateDefaultConfig);
             }
 
             [TearDown]
