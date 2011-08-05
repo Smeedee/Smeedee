@@ -6,7 +6,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
     public class WebSnapshotConfig
     {
         private Configuration configuration;
-        public static readonly string url = "url";
+        public static readonly string taskname = "taskname";
         public static readonly string coordinateX ="cropCoordinateX";
         public static readonly string coordinateY = "cropCoordinateY";
         public static readonly string rectangleHeight ="rectangle-height";
@@ -18,10 +18,10 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.configuration = configuration;
         }
 
-        public string URL
+        public string TaskName
         {
-            get { return configuration.GetSetting(url).Value; }
-            set { configuration.ChangeSetting(url, value); }
+            get { return configuration.GetSetting(taskname).Value; }
+            set { configuration.ChangeSetting(taskname, value); }
         }
 
         public string CoordinateX
@@ -68,7 +68,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         public static Configuration NewDefaultConfiguration()
         {
             var config = new Configuration("WebSnapshot");
-            config.NewSetting(url);
+            config.NewSetting(taskname);
             config.NewSetting(coordinateX);
             config.NewSetting(coordinateY);
             config.NewSetting(rectangleHeight);

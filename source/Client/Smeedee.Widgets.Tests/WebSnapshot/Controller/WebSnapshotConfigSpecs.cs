@@ -25,7 +25,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         public void WebSnapshotConfig_should_have_default_configuration()
         {
             var config = WebSnapshotConfig.NewDefaultConfiguration();
-            config.ContainsSetting(WebSnapshotConfig.url).ShouldBeTrue();
+            config.ContainsSetting(WebSnapshotConfig.taskname).ShouldBeTrue();
             config.ContainsSetting(WebSnapshotConfig.coordinateX).ShouldBeTrue();
             config.ContainsSetting(WebSnapshotConfig.coordinateY).ShouldBeTrue();
             config.ContainsSetting(WebSnapshotConfig.rectangleHeight).ShouldBeTrue();
@@ -40,27 +40,27 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
     public class When_setting_string_values : SharedConfig
     {
         [Test]
-        public void It_should_be_possible_to_set_URL()
+        public void It_should_be_possible_to_set_TaskName()
         {
-            var url = "http://my.url";
+            var taskName = "default task";
             
             Given(config_is_created);
-            When("setting ChartName", () => webSnapshotConfig.URL = url);
+            When("setting taskName", () => webSnapshotConfig.TaskName = taskName);
             Then("configuration should have that value",
-                 () => configuration.GetSetting(WebSnapshotConfig.url).Value.ShouldBe(url));
+                 () => configuration.GetSetting(WebSnapshotConfig.taskname).Value.ShouldBe(taskName));
         }
 
         [Test]
-        public void It_should_be_possible_to_change_URL()
+        public void It_should_be_possible_to_change_TaskName()
         {
             Given(config_is_created).
-                And("URL is set", () => webSnapshotConfig.URL = "something");
-            When("changing URL", () => webSnapshotConfig.URL = "else");
+                And("TaskName is set", () => webSnapshotConfig.TaskName = "something");
+            When("changing TaskName", () => webSnapshotConfig.TaskName = "else");
             Then("configuration should be updated",
                 () =>
                 {
-                    configuration.GetSetting(webSnapshotConfig.URL).HasMultipleValues.ShouldBeFalse();
-                    configuration.GetSetting(webSnapshotConfig.URL).Value.ShouldBe("else");
+                    configuration.GetSetting(webSnapshotConfig.TaskName).HasMultipleValues.ShouldBeFalse();
+                    configuration.GetSetting(webSnapshotConfig.TaskName).Value.ShouldBe("else");
                 });
         }
     }
