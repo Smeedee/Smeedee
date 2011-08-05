@@ -106,7 +106,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
             _imageFromServer.ImageOpened += bi_ImageOpened;
             _imageFromServer.ImageFailed += bi_ImageFailed;
             _imageFromServer.CreateOptions = BitmapCreateOptions.None;
-            _imageFromServer.UriSource = new Uri(App.Current.Host.Source, "../" + settingsViewModel.SelectedImage);
+            _imageFromServer.UriSource = new Uri(App.Current.Host.Source, "../" + settingsViewModel.UriOfSelectedImage);
         }
 
         void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e) {}

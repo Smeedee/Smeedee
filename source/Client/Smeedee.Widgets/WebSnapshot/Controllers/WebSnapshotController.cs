@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Media.Imaging;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Config;
@@ -86,16 +84,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             SetIsSavingConfig();
             CopySettingsViewModelToConfiguration();
-
-            //uiInvoker.Invoke(() => webSnapshotViewModel.Snapshot = SettingsViewModel.Image);
-
             configPersisterRepository.Save(webSnapshotConfig.Configuration);
 
         }
 
         private void CopySettingsViewModelToConfiguration()
         {
-            webSnapshotConfig.URL = SettingsViewModel.SelectedImage;
+            webSnapshotConfig.TaskName = SettingsViewModel.SelectedImage;
             webSnapshotConfig.CoordinateX = SettingsViewModel.CropCoordinateX;
             webSnapshotConfig.CoordinateY = SettingsViewModel.CropCoordinateY;
             webSnapshotConfig.RectangleHeight = SettingsViewModel.CropRectangleHeight;
@@ -107,13 +102,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private void CopyConfigurationToSettingsViewModel()
         {
             uiInvoker.Invoke(() =>
-            {
-                SettingsViewModel.SelectedImage = webSnapshotConfig.URL;
-                SettingsViewModel.CropCoordinateX = webSnapshotConfig.CoordinateX;
-                SettingsViewModel.CropCoordinateY = webSnapshotConfig.CoordinateY;
-                SettingsViewModel.CropRectangleHeight = webSnapshotConfig.RectangleHeight;
-                SettingsViewModel.CropRectangleWidth = webSnapshotConfig.RectangleWidth;
-            });
+                                 {
+                                     SettingsViewModel.SelectedImage = webSnapshotConfig.TaskName;
+                                     SettingsViewModel.CropCoordinateX = webSnapshotConfig.CoordinateX;
+                                     SettingsViewModel.CropCoordinateY = webSnapshotConfig.CoordinateY;
+                                     SettingsViewModel.CropRectangleHeight = webSnapshotConfig.RectangleHeight;
+                                     SettingsViewModel.CropRectangleWidth = webSnapshotConfig.RectangleWidth;
+                                 });
         }
 
         public void UpdateConfiguration(Configuration configuration)
@@ -154,7 +149,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             if (snapshots.Count() > 0)
             {
                 var snapshot = snapshots.First();
-                uiInvoker.Invoke(() => SetWebSnapshot(snapshot));   
+                uiInvoker.Invoke(() => SetWebSnapshot(snapshot));
             }
         }
 
@@ -183,21 +178,20 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             logger.WriteEntry(ErrorLogEntry.Create(this, exception.ToString()));
         }
 
+
         private void PopulateAvailableImages(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshotDataFromDb)
         {
             uiInvoker.Invoke(() =>
             {
-                var selected = SettingsViewModel.SelectedImage;
                 SettingsViewModel.AvailableImages.Clear();
+                SettingsViewModel.AvailableImagesUri.Clear();
 
                 foreach (var snapshot in snapshotDataFromDb)
                 {
                     var fileName = Path.GetFileName(snapshot.PictureFilePath);
-                    SettingsViewModel.AvailableImages.Add("WebSnapshots/"+fileName);
+                    SettingsViewModel.AvailableImagesUri.Add("WebSnapshots/" + fileName);
+                    SettingsViewModel.AvailableImages.Add(snapshot.Name);
                 }
-
-                if (selected != null)
-                    SettingsViewModel.SelectedImage = selected;
             });
         }
 
@@ -205,7 +199,5 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             uiInvoker.Invoke(() => SettingsViewModel.Image = SettingsViewModel.LoadedImage);
         }
-
-
     }
 }
