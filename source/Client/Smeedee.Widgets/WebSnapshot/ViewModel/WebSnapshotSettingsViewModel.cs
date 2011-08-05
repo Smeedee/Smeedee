@@ -104,6 +104,22 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         }
         private bool _IsTimeToUpdate;
 
+
+        public string ScalingFactor
+        {
+            get { return scalingFactor; }
+            set
+            {
+                if (value != scalingFactor)
+                {
+                    scalingFactor = value;
+                    TriggerPropertyChanged("ScalingFactor");
+                }
+            }
+        }
+        private string scalingFactor;
+
+
         partial void OnGetIsTimeToUpdate(ref bool value);
         partial void OnSetIsTimeToUpdate(ref bool value);
 

@@ -197,34 +197,9 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             ResetCoordinateBoxes();
             CropButton.IsEnabled = true;
             selectionDisabled = false;
+            ScalingFactorBox.Text = "H:"+image.Height +" - W:"+image.Width;
         }
 
-        //BitmapImage _imageFromServer;
-        //WriteableBitmap _croppedImage;
 
-        //void LoadImageFunction()
-        //{
-        //    _imageFromServer = new BitmapImage();
-        //    _imageFromServer.ImageOpened += bi_ImageOpened;
-        //    _imageFromServer.ImageFailed += bi_ImageFailed;
-        //    _imageFromServer.CreateOptions = BitmapCreateOptions.None;
-        //    _imageFromServer.UriSource = new Uri(App.Current.Host.Source, "../" + TaskNames.SelectedItem);
-        //}
-
-        //void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        //{
-        //    //somebody set us up the bomb
-        //}
-
-        
-
-        //void bi_ImageOpened(object sender, RoutedEventArgs e)
-        //{
-
-        //    var wb = new WriteableBitmap(_imageFromServer);
-
-            
-        //    _croppedImage = wb;
-        //}
     }
 }

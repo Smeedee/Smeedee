@@ -84,6 +84,16 @@
                          Height="20"
                          VerticalAlignment="Bottom"
                          Visibility="Collapsed" />
+                <TextBox Text="{Binding ScalingFactor, Mode=TwoWay}"
+                         Name="ScalingFactorBox"
+                         Visibility="Visible" 
+                         Margin="80,0,0,-1"
+                         HorizontalAlignment="Left"
+                         Width="66"
+                         Grid.Column="1"
+                         Height="20"
+                         VerticalAlignment="Bottom" />
+
 
                 <Canvas x:Name="canvas"
                         Grid.Row="2"
