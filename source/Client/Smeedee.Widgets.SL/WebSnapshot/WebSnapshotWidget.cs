@@ -45,27 +45,30 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 
             viewModel.PropertyChanged += ViewModelPropertyChanged;
             
-            //PropertyChanged += WebSnapshot_Propertychanged;
             settingsViewModel.PropertyChanged += WebSnapshot_Propertychanged;
 
-            snapshotView = new WebSnapshotView { DataContext = settingsViewModel /*controller.ViewModel*/ };
+            snapshotView = new WebSnapshotView { DataContext = settingsViewModel };
             View = snapshotView;
 
             settingsView= new WebSnapshotSettingsView { DataContext = settingsViewModel };
             SettingsView = settingsView;
 
-            ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
+            ConfigurationChanged += (o, e) =>
+                                        {
+                                            if (!IsInSettingsMode)
+                                                controller.UpdateConfiguration(Configuration);
+                                        };
         }
 
         private void WebSnapshot_Propertychanged(object sender, PropertyChangedEventArgs e)
         {
+
             if (e.PropertyName == "IsTimeToUpdate")
             {
                 snapshotView.UpdateImage();
             }
             else if (e.PropertyName == "SelectedImage")
             {
-                //var WebSnapshotURI = new Uri(App.Current.Host.Source, "../" + settingsViewModel.SelectedImage);
                 LoadImageFunction();
             }
             else if (e.PropertyName == "LoadedImage")
@@ -73,12 +76,11 @@ namespace Smeedee.Widgets.SL.WebSnapshot
                 controller.ShowImageInSettingsView();
                 settingsView.LoadedImageCB = settingsViewModel.LoadedImage as WriteableBitmap;
             }
-
         }
 
         private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var tempViewModel = sender as WebSnapshotSettingsViewModel;
+            var tempViewModel = sender as WebSnapshotViewModel;
             var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);
 
             if (isDoneSaving && IsInSettingsMode)
@@ -109,7 +111,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
             _imageFromServer.UriSource = new Uri(App.Current.Host.Source, "../" + settingsViewModel.UriOfSelectedImage);
         }
 
-        void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e) {}
+        void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e) { }
 
         void bi_ImageOpened(object sender, RoutedEventArgs e)
         {
