@@ -51,7 +51,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             this.repository = repository;
 
             SettingsViewModel = settingsViewModel;
-            SettingsViewModel.PropertyChanged += webSnapshotSettingsViewModel_PropertyChanged;
             SettingsViewModel.Save.ExecuteDelegate += OnSaveSettings;
             SettingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadSettings;
             SettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
@@ -60,14 +59,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
             Start();
             BeginLoadData();
-        }
-
-        private void webSnapshotSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "SelectedImage")
-            {
-                uiInvoker.Invoke(() => SettingsViewModel.Image = new BitmapImage(new Uri(SettingsViewModel.SelectedImage)));
-            }
         }
 
         private void OnReloadSettingsCompleted(object sender, EventArgs e)
@@ -85,6 +76,9 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private void OnSaveCompleted(object sender, SaveCompletedEventArgs e)
         {
             SetIsNotSavingConfig();
+            SettingsViewModel.IsTimeToUpdate = false;
+            SettingsViewModel.IsTimeToUpdate = true;
+
             BeginLoadData();
         }
 
@@ -160,16 +154,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             if (snapshots.Count() > 0)
             {
                 var snapshot = snapshots.First();
-                uiInvoker.Invoke(() =>
-                {
-                    var snapshotPath = snapshot.PictureFilePath;
-                    //SetWebSnapshot(snapshotPath);
-                    SetWebSnapshot(snapshot);
-                });
-            }
-            else
-            {
-                uiInvoker.Invoke(() => webSnapshotViewModel.HasStoredImage = false);
+                uiInvoker.Invoke(() => SetWebSnapshot(snapshot));   
             }
         }
 
@@ -179,25 +164,14 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
             if (webSnapshotConfig.Timestamp == timestamp)
             {
-                //webSnapshotViewModel.IsTimeToCrop = false;
-                SettingsViewModel.IsTimeToCrop = false;
+                SettingsViewModel.IsTimeToUpdate = false;
             }
             else
             {
                 webSnapshotConfig.Timestamp = timestamp;
-                SettingsViewModel.Image = new BitmapImage(new Uri(snapshot.PictureFilePath));
-                //webSnapshotViewModel.IsTimeToCrop = true;
-                SettingsViewModel.IsTimeToCrop = true;
+                SettingsViewModel.IsTimeToUpdate = true;
             }
         }
-        
-        private void SetWebSnapshot(string imagePath)
-        {
-            webSnapshotViewModel.Snapshot = new BitmapImage(new Uri(imagePath));
-            webSnapshotViewModel.HasStoredImage = imagePath != null;
-        }
-
-
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
         {
@@ -213,14 +187,23 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             uiInvoker.Invoke(() =>
             {
+                var selected = SettingsViewModel.SelectedImage;
                 SettingsViewModel.AvailableImages.Clear();
 
                 foreach (var snapshot in snapshotDataFromDb)
                 {
                     var fileName = Path.GetFileName(snapshot.PictureFilePath);
                     SettingsViewModel.AvailableImages.Add("WebSnapshots/"+fileName);
-                }    
+                }
+
+                if (selected != null)
+                    SettingsViewModel.SelectedImage = selected;
             });
+        }
+
+        public void ShowImageInSettingsView()
+        {
+            uiInvoker.Invoke(() => SettingsViewModel.Image = SettingsViewModel.LoadedImage);
         }
 
 

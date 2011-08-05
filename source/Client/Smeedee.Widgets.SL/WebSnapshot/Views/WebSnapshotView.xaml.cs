@@ -11,20 +11,32 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 {
     public partial class WebSnapshotView : UserControl
     {
+        private Rectangle rect;
         public WebSnapshotView()
         {
             InitializeComponent();
+            rect = new Rectangle();
         }
-        public void CropImage()
+        public void UpdateImage()
         {
-
-            var sv = new WebSnapshotSettingsView();
-
-            var rect = new Rectangle();
             rect.Height = double.Parse(Heightbox.Text);
             rect.Width = double.Parse(Widthbox.Text);
-            Snapshot.Source = new BitmapImage(new Uri(ImageBox.Text));
-            Snapshot.Source = sv.CropPicture(new Point(double.Parse(Xbox.Text), double.Parse(Ybox.Text)), rect, Snapshot);
+            Snapshot.Source = sourceImage.Source;
+            var wb = Snapshot.Source as WriteableBitmap;
+
+            if (ShouldCrop())
+            {
+                Snapshot.Source = wb.Crop(int.Parse(Xbox.Text), int.Parse(Ybox.Text), (int)rect.Width, (int)rect.Height);
+                
+            } else
+            {
+                Snapshot.Source = wb;
+            }
+        }
+
+        private bool ShouldCrop()
+        {
+            return 0 != int.Parse(Xbox.Text) + int.Parse(Ybox.Text) + (int) rect.Width + (int) rect.Height;
         }
     }
 }
