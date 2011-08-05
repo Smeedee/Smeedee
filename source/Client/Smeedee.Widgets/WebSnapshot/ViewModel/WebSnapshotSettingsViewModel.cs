@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media.Imaging;
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
@@ -9,6 +11,22 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
         partial void OnInitialize()
         {
             AvailableImages = new ObservableCollection<string>();
+            AvailableImagesUri = new ObservableCollection<string>();
+        }
+
+        public ObservableCollection<string> AvailableImagesUri;
+        public string UriOfSelectedImage
+        {
+            get
+            {
+                var selected = SelectedImage;
+                if (AvailableImagesUri.Count > 0 && selected != null)
+                {
+                    return AvailableImagesUri.ElementAt(AvailableImages.IndexOf(selected));
+                }
+                return string.Empty;
+            }
+            set {  }
         }
 
         public bool CanSave()
