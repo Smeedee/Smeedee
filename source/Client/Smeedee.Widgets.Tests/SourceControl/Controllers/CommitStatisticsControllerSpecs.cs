@@ -53,7 +53,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             public void Assure_Configuration_is_created_if_it_does_not_exist()
             {
                 Given(there_are_changesets_in_SourceControl_system).
-                    And(Configuration_entry_does_not_exist);
+                    And("only default configuration exists");
 
                 When(the_controller_is_created);
 
@@ -80,7 +80,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             public void Should_use_the_projectStart_if_timespan_is_neagative_or_zero()
             {
                 Given(there_are_changesets_in_SourceControl_system).
-                    And(Configuration_entry_does_not_exist).
+                    And("only default configuration exists").
                     And(controller_is_spawned);
                 When("data is loaded");
                 Then("viweModel should have one data point",
@@ -151,7 +151,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                                                                     //backgroundWorkerInvokerMock.Object,
                                                                     ITimerMock.Object,
                                                                     new NoUIInvokation(),
-                                                                    configRepositoryMock.Object,
+                                                                    //configRepositoryMock.Object,
                                                                     configPersisterRepositoryMock.Object,
                                                                     new Logger(new LogEntryMockPersister()),
                                                                     loadingNotifierMock.Object,
@@ -318,10 +318,10 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             [Ignore("Not relevant, as we just reuse the old configuration object")]
             public void Assure_that_pressing_the_reloadSettings_button_leads_to_a_get_to_the_nonfigrepository()
             {
-                Given(controller_is_spawned);
-                When(reload_button_is_pressed);
-                Then("",
-                    () => configRepositoryMock.Verify(r => r.BeginGet(It.IsAny<ConfigurationByName>()), Times.Exactly(2)));
+                //Given(controller_is_spawned);
+                //When(reload_button_is_pressed);
+                //Then("",
+                //    () => configRepositoryMock.Verify(r => r.BeginGet(It.IsAny<ConfigurationByName>()), Times.Exactly(2)));
             }
         }
         [TestFixture]
@@ -507,35 +507,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 });
             }
 
-            [Test]
-            [Ignore("Not the controllers responsibility to load settings when started anymore")]
-            public void Assure_progressbar_is_shown_while_loading_settings()
-            {
-                Given(Setup_configPersister_NOT_to_raise_save_completed);
-                When(the_controller_is_created);
-                Then(() =>
-                {
-                    loadingNotifierMock.Verify(l => l.ShowInBothViews(It.IsAny<string>()), Times.AtLeastOnce());
-                    controller.ViewModel.IsLoadingConfig.ShouldBe(true);
-
-                });
-            }
-
-            [Test]
-            [Ignore("Not the controllers responsibility to load settings when started anymore")]
-            public void Assure_progressbar_is_hidden_after_loading_settings()
-            {
-                Given(controller_is_spawned);
-
-                When(settingsViewModel.ReloadSettings.Execute);
-
-                Then(() =>
-                {
-                    loadingNotifierMock.Verify(l => l.HideInBothViews(), Times.AtLeastOnce());
-                    controller.ViewModel.IsLoadingConfig.ShouldBe(false);
-                });
-            }
-
         }
 
         public class Shared : ScenarioClass
@@ -547,8 +518,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             protected static Mock<IInvokeBackgroundWorker<IEnumerable<Changeset>>> backgroundWorkerInvokerMock;
             protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterRepositoryMock =
                 new Mock<IPersistDomainModelsAsync<Configuration>>();
-            protected static Mock<IAsyncRepository<Configuration>> configRepositoryMock =
-                new Mock<IAsyncRepository<Configuration>>();
             protected static Mock<IProgressbar> loadingNotifierMock = new Mock<IProgressbar>();
             protected static CommitStatisticsSettingsViewModel settingsViewModel = new CommitStatisticsSettingsViewModel();
             protected static BindableViewModel<CommitStatisticsForDate> viewModel = new BindableViewModel<CommitStatisticsForDate>();
@@ -564,12 +533,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
                 UpdateConfiguration();
-
-
-                //configRepositoryMock.Setup(
-                //    r => r.BeginGet(It.IsAny<ConfigurationByName>())).Raises(
-                //    t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
             }
+
             private static void SetupConfigRepositoryMockItSinceDate(DateTime date)
             {
                 var configuration = new Configuration("Commit Statistics");
@@ -579,20 +544,10 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
                 widgetMock.SetupGet(w => w.Configuration).Returns(configuration);
                 UpdateConfiguration();
-
-                //configRepositoryMock.Setup(
-                //    r => r.BeginGet(It.IsAny<ConfigurationByName>())).Raises(
-                //    t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configList, null));
             }
+
             protected Context new_configPersister =
                 () => configPersisterRepositoryMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
-            protected Context Configuration_entry_does_not_exist = () =>
-            {
-                //var configlist = new List<Configuration>();
-                //configRepositoryMock.Setup(
-                //     r => r.BeginGet(It.IsAny<ConfigurationByName>())).Raises(
-                //     t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(configlist, null));
-            };
 
             protected Context Configuration_date_entry_is_correctly_setup_for_today = () =>
             {
@@ -720,11 +675,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 ChangesetRepositoryContains(changesets);
             };
 
-            protected Context Setup_configPersister_NOT_to_raise_save_completed =
-                () =>
-                {
-                    configRepositoryMock.Setup(r => r.BeginGet(It.IsAny<ConfigurationByName>()));
-                };
 
             protected Context older_changesets_are_added_to_the_system = () =>
             {
@@ -755,16 +705,6 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 ChangesetRepositoryContains(changesets);
             };
 
-            /*protected Context Changeset_repository_is_empty_and_slow = () =>
-            {
-                changesetRepositoryMock = new Mock<IRepository<Changeset>>();
-                changesetRepositoryMock.Setup(r => r.Get(It.IsAny<AllChangesetsSpecification>())).
-                    Returns(() =>
-                    {
-                        Thread.Sleep(3000);
-                        return new List<Changeset>();
-                    });
-            };*/
 
             protected Context controller_is_spawned = CreateController;
 
@@ -929,10 +869,8 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 controller = new CommitStatisticsController(viewModel,
                                                             settingsViewModel,
                                                             changesetRepositoryMock.Object,
-                                                            //new NoBackgroundWorkerInvocation<IEnumerable<Changeset>>(),
                                                             ITimerMock.Object,
                                                             new NoUIInvokation(),
-                                                            configRepositoryMock.Object,
                                                             configPersisterRepositoryMock.Object,
                                                             new Logger(new LogEntryMockPersister()),
                                                             loadingNotifierMock.Object,
@@ -971,13 +909,9 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 viewModel = new BindableViewModel<CommitStatisticsForDate>();
                 settingsViewModel = new CommitStatisticsSettingsViewModel();
                 changesetRepositoryMock = new Mock<IAsyncRepository<Changeset>>();
-                configRepositoryMock = new Mock<IAsyncRepository<Configuration>>();
                 configPersisterRepositoryMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
                 loadingNotifierMock = new Mock<IProgressbar>();
                 ITimerMock = new Mock<ITimer>();
-                configRepositoryMock.Setup(
-                     r => r.BeginGet(It.IsAny<ConfigurationByName>())).Raises(
-                     t => t.GetCompleted += null, new GetCompletedEventArgs<Configuration>(new List<Configuration>(), null));
                 configPersisterRepositoryMock.Setup(
                          r => r.Save(It.IsAny<Configuration>())).Raises(
                          t => t.SaveCompleted += null, new SaveCompletedEventArgs());
