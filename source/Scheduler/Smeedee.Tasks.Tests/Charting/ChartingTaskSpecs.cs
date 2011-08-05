@@ -16,9 +16,8 @@ namespace Smeedee.Tasks.Tests.Charting
     [TestFixture]
     public class When_Spawned : Shared
     {
-
-        [SetUp]
-        public void SetUp()
+        
+        protected override void Before()
         {
             Given(Task_is_created);
             When("");
