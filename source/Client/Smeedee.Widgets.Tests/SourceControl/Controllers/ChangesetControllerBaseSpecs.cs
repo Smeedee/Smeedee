@@ -299,7 +299,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
         {
             protected static MyChangeSetControllerBase myChangesetControllerBase;
 
-            protected static BindableViewModel<AbstractViewModel> viewModel;
+            protected static BindableViewModel<BasicViewModel> viewModel;
             protected static Mock<IAsyncRepository<Changeset>> changesetRepoMock;
             protected static Mock<ITimer> timerMock;
             protected static IUIInvoker uiInvoker;
@@ -364,7 +364,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             {
                 Scenario("");
 
-                viewModel = new BindableViewModel<AbstractViewModel>();
+                viewModel = new BindableViewModel<BasicViewModel>();
                 changesetRepoMock = new Mock<IAsyncRepository<Changeset>>();
                 timerMock = new Mock<ITimer>();
                 uiInvoker = new NoUIInvokation();
@@ -383,11 +383,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             }
         }
 
-        public class MyChangeSetControllerBase : ChangesetControllerBase<AbstractViewModel>
+        public class MyChangeSetControllerBase : ChangesetControllerBase<BasicViewModel>
         {
             public bool LoadDataIntoViewModelOk;
 
-            public MyChangeSetControllerBase(BindableViewModel<AbstractViewModel> viewModel,
+            public MyChangeSetControllerBase(BindableViewModel<BasicViewModel> viewModel,
                                              IAsyncRepository<Changeset> changesetRepo,
                                              ITimer timer,
                                              IUIInvoker uiInvoke,

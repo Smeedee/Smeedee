@@ -126,6 +126,7 @@
     <Compile Include="ViewModel\Dialogs\SelectWidgetsDialog.cs" />
     <Compile Include="ViewModel\Slide.cs" />
     <Compile Include="ViewModel\Slideshow.cs" />
+    <Compile Include="ViewModel\BasicViewModel.cs" />
     <Compile Include="ViewModel\Traybar.cs" />
     <Compile Include="ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
