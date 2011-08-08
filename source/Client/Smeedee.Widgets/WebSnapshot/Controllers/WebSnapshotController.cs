@@ -22,6 +22,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private WebSnapshotConfig webSnapshotConfig;
         private ILog logger;
+        private string previousTimestamp;
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
@@ -158,7 +159,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             var timestamp = snapshot.Timestamp;
 
-            if (webSnapshotConfig.Timestamp == timestamp)
+            if (previousTimestamp == timestamp)
             {
                 SettingsViewModel.IsTimeToUpdate = false;
             }
@@ -167,6 +168,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 webSnapshotConfig.Timestamp = timestamp;
                 SettingsViewModel.IsTimeToUpdate = true;
             }
+            previousTimestamp = timestamp;
         }
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
