@@ -33,30 +33,36 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
             if (ShouldCrop())
             {
-                var scaling = ResolveScaling(wb.PixelWidth, wb.PixelHeight);
+                float scaleFactor = ResolveScaleFactor(wb.PixelWidth, wb.PixelHeight);
                 int paddingWidth = 0;
                 int paddingHeight = 0;
                 int x = 0;
                 int y = 0;
 
-                if (scaling == 1.0)
+                if (ShouldScale(scaleFactor))
+                {
+                    paddingWidth = (int)Math.Round((((scaleFactor * VIEW_HEIGHT) - VIEW_HEIGHT) / 2) * scaleFactor);
+                    paddingHeight = (int)Math.Round((((scaleFactor * VIEW_WIDTH) - VIEW_WIDTH) / 2) * scaleFactor);
+
+                    //x = (int)Math.Round(int.Parse(Xbox.Text) * scaleFactor) - paddingWidth;
+                    //y = (int)Math.Round(int.Parse(Ybox.Text) * scaleFactor) - paddingHeight;
+
+                    x = (int) Math.Round(int.Parse(Xbox.Text)*scaleFactor);
+                    y = (int) Math.Round(int.Parse(Ybox.Text)*scaleFactor);
+                    if (paddingHeight > 0) { y -= paddingHeight; }
+                    if (paddingWidth > 0) { x -= paddingWidth; }
+
+                }
+                else
                 {
                     paddingWidth = ResolvePaddingWidth(wb.PixelWidth);
                     paddingHeight = ResolvePaddingHeight(wb.PixelHeight);
                     x = int.Parse(Xbox.Text) - paddingWidth;
                     y = int.Parse(Ybox.Text) - paddingHeight;
                 }
-                else
-                {
-                    paddingWidth = (int) Math.Round((((scaling*VIEW_HEIGHT) - VIEW_HEIGHT)/2)*scaling);
-                    paddingHeight = (int) Math.Round((((scaling*VIEW_WIDTH) - VIEW_WIDTH)/2)*scaling);
-
-                    x = (int)Math.Round(int.Parse(Xbox.Text) * scaling) - paddingWidth;
-                    y = (int)Math.Round(int.Parse(Ybox.Text) * scaling) - paddingHeight;
-                }
-                
-                int rectangleWidth = (int) (Math.Round(rect.Width)*scaling);
-                int rectangleHeight = (int) (Math.Round(rect.Height)*scaling);
+  
+                int rectangleWidth = (int) (rect.Width*scaleFactor);
+                int rectangleHeight = (int) (rect.Height*scaleFactor);
 
                 Snapshot.Source = wb.Crop(x, y, rectangleWidth, rectangleHeight);
                 
@@ -66,26 +72,33 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             }
         }
 
-        private double ResolveScaling(int actualWidth, int actualHeight)
+        private bool ShouldScale(float scaleFactor)
         {
-            double scaling = 1.0;
+            return scaleFactor != 1.0f;
+        }
+
+        private float ResolveScaleFactor(int actualWidth, int actualHeight)
+        {
+            float scaleFactor = 1.0f;
 
             var heightOverflow = actualHeight - VIEW_HEIGHT;
             var widthOverflow = actualWidth - VIEW_WIDTH;
 
-            if (heightOverflow + widthOverflow == 0)
-                return scaling;
+            if (heightOverflow == 0 && widthOverflow == 0)
+                return scaleFactor;
             
-            if (heightOverflow > 0 && widthOverflow <= 0)
+            if (heightOverflow > 0 && widthOverflow <= 0 ||
+                heightOverflow > widthOverflow)
             {
-                scaling = (double)actualHeight/VIEW_HEIGHT;
+                scaleFactor = (float)actualHeight/VIEW_HEIGHT;
             } 
-            else if (widthOverflow > 0 && heightOverflow <= 0)
+            else if (widthOverflow > 0 && heightOverflow <= 0 ||
+                widthOverflow > heightOverflow)
             {
-                scaling = (double)actualWidth/VIEW_WIDTH;
+                scaleFactor = (float)actualWidth/VIEW_WIDTH;
             }
 
-            return scaling;
+            return scaleFactor;
         }
 
         private int ResolvePaddingHeight(int actualHeight)
