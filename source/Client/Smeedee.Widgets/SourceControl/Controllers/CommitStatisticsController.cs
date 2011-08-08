@@ -177,7 +177,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 }
                 catch (Exception e)
                 {
-                    LogWarningMsg(e);
+                    LogErrorMsg(e);
                 }
             });
         }

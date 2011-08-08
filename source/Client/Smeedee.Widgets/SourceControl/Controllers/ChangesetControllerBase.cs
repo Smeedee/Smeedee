@@ -60,6 +60,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             Guard.Requires<ArgumentNullException>(changesetRepo != null, "changesetRepo");
 
             this.logger = logger;
+
             this.changesetRepository = changesetRepo;
             this.changesetRepository.GetCompleted += OnGetCompleted;
         }
