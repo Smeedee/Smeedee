@@ -100,6 +100,10 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             MouseRelease.X = point.X;
             MouseRelease.Y = point.Y;
 
+            var upperLeft = CropUtil.GetUpperLeftCornerInRectangle(MousePress, point);
+            Xbox.Text = upperLeft.X.ToString();
+            Ybox.Text = upperLeft.Y.ToString();
+
             Heightbox.Text = rect.Height.ToString();
             Widthbox.Text = rect.Width.ToString();
 
