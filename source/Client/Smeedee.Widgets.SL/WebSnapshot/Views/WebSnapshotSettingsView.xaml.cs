@@ -31,8 +31,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             previousPoints = new Queue<Point>();
             previousRect = new Stack<Rectangle>();
             LayoutRoot.MouseLeftButtonDown += canvas_MouseLeftButtonDown;
-            
-            
         }
 
 
@@ -199,7 +197,5 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             selectionDisabled = false;
             ScalingFactorBox.Text = "H:"+image.Height +" - W:"+image.Width;
         }
-
-
     }
 }

@@ -61,13 +61,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void OnReloadSettingsCompleted(object sender, EventArgs e)
         {
-            SetIsNotLoadingConfig();
+            //SetIsNotLoadingConfig();
             BeginLoadData();
         }
 
-        private void OnReloadSettings()
+        public void OnReloadSettings()
         {
-            SetIsLoadingConfig();
+            //SetIsLoadingConfig();
             CopyConfigurationToSettingsViewModel();
         }
 
@@ -138,7 +138,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             }
             else
             {
-                logger.WriteEntry(new LogEntry("OnGetCompleted, eventArgs was null", eventArgs.Error.ToString()));
+                logger.WriteEntry(new LogEntry("WebSnapshotController", string.Format("EventAargs as null. {0}", eventArgs.Error.ToString())));
             }
 
             SetIsNotLoadingData();
@@ -151,6 +151,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 var snapshot = snapshots.First();
                 uiInvoker.Invoke(() => SetWebSnapshot(snapshot));
             }
+
         }
 
         private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
@@ -182,17 +183,19 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private void PopulateAvailableImages(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshotDataFromDb)
         {
             uiInvoker.Invoke(() =>
-            {
-                SettingsViewModel.AvailableImages.Clear();
-                SettingsViewModel.AvailableImagesUri.Clear();
+                                 {
+                                     var selected = SettingsViewModel.SelectedImage;
+                                     SettingsViewModel.AvailableImages.Clear();
+                                     SettingsViewModel.AvailableImagesUri.Clear();
 
-                foreach (var snapshot in snapshotDataFromDb)
-                {
-                    var fileName = Path.GetFileName(snapshot.PictureFilePath);
-                    SettingsViewModel.AvailableImagesUri.Add("WebSnapshots/" + fileName);
-                    SettingsViewModel.AvailableImages.Add(snapshot.Name);
-                }
-            });
+                                     foreach (var snapshot in snapshotDataFromDb)
+                                     {
+                                         var fileName = Path.GetFileName(snapshot.PictureFilePath);
+                                         SettingsViewModel.AvailableImagesUri.Add("WebSnapshots/" + fileName);
+                                         SettingsViewModel.AvailableImages.Add(snapshot.Name);
+                                     }
+                                     SettingsViewModel.SelectedImage = selected;
+                                 });
         }
 
         public void ShowImageInSettingsView()
