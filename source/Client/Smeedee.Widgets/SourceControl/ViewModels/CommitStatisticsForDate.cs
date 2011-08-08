@@ -35,7 +35,7 @@ namespace Smeedee.Widgets.SourceControl.ViewModels
 {
 
     [DebuggerDisplay("CommitStatisticsForDate ({Date}: {NumberOfCommits}")]
-    public class CommitStatisticsForDate : AbstractViewModel, IComparable<CommitStatisticsForDate>
+    public class CommitStatisticsForDate : BasicViewModel, IComparable<CommitStatisticsForDate>
     {
         public DateTime Date { get; set; }
         
