@@ -22,7 +22,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private WebSnapshotConfig webSnapshotConfig;
         private ILog logger;
-        private string previousTimestamp;
+        private string previousTimestamp = "invalidTimestamp";
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
@@ -90,27 +90,42 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
         {
-            if (snapshots.Count() > 0)
+            if (snapshots.Count() <= 0) return;
+            
+            foreach (var webSnapshot in snapshots)
             {
-                var snapshot = snapshots.First();
-                uiInvoker.Invoke(() => SetWebSnapshot(snapshot));
+                if (webSnapshot.Name == SettingsViewModel.SelectedImage)
+                {
+                    uiInvoker.Invoke(() => SetWebSnapshot(webSnapshot));
+                    break;
+                }
             }
+
+            if (SettingsViewModel.Image == null)
+            {
+                TriggerUpdate();
+            }
+        }
+
+        private void TriggerUpdate()
+        {
+            SettingsViewModel.IsTimeToUpdate = false;
+            SettingsViewModel.IsTimeToUpdate = true;
         }
 
         private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
         {
             var timestamp = snapshot.Timestamp;
 
-            if (previousTimestamp == timestamp)
+            if (previousTimestamp != timestamp)
             {
-                SettingsViewModel.IsTimeToUpdate = false;
+                previousTimestamp = timestamp;
+                TriggerUpdate();
             }
             else
             {
-                webSnapshotConfig.Timestamp = timestamp;
-                SettingsViewModel.IsTimeToUpdate = true;
+                SettingsViewModel.IsTimeToUpdate = false;
             }
-            previousTimestamp = timestamp;
         }
 
         private void PopulateAvailableImages(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshotDataFromDb)
@@ -154,13 +169,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             SetIsNotSavingConfig();
 
-            //this triggers a propertyChanged in WebSnapshotWidget
-            SettingsViewModel.IsTimeToUpdate = false;
-            SettingsViewModel.IsTimeToUpdate = true;
+            TriggerUpdate();
 
             BeginLoadData();
         }
-       
+
 
         public void OnReloadSettings()
         {
