@@ -57,12 +57,6 @@ namespace Smeedee.Client.Widget.CI.Tests.ProjectInfoViewModelSpecs
         }
 
         [Test]
-        public void should_have_IsLoading_property()
-        {
-            viewModel.IsLoading.ShouldNotBeNull();
-        }
-
-        [Test]
         public void should_have_ProjectName_property()
         {
             viewModel.ProjectName.ShouldBeNull();
