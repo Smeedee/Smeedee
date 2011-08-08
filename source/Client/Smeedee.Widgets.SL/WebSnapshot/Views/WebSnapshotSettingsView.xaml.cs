@@ -112,7 +112,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         private void crop_click(object sender, RoutedEventArgs e)
         {
-            upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease, rect);
+            upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease);
 
             previousPoints.Enqueue(upperleftpoint);
             previousRect.Push(rect);
