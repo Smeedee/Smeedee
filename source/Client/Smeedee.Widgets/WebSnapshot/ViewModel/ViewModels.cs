@@ -65,12 +65,12 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 			}
 			set
 			{
-				if (value != _LoadedImage)
-				{
+                if (value != _LoadedImage)
+                {
 					OnSetLoadedImage(ref value); 
 					_LoadedImage = value;
 					TriggerPropertyChanged("LoadedImage");
-				}
+                }
 			}
 		}
 		private object _LoadedImage;
