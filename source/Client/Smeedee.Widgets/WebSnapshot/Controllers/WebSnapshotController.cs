@@ -155,7 +155,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         }
 
-        private string previousTimestamp;
         private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
         {
             var timestamp = snapshot.Timestamp;
