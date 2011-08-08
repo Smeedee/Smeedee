@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Documents;
-using System.Windows.Media.Imaging;
 using Moq;
 using NUnit.Framework;
-using Smeedee.Client.Framework.Repositories;
 using Smeedee.Client.Framework.Services;
-using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
@@ -18,12 +14,11 @@ using TinyMVVM.Framework.Services;
 namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
 {
 
-
     [TestFixture]
     public class When_Spawned : Shared
     {
         [Test]
-        public void assure_controller_is_created()
+        public void Assure_controller_is_created()
         {
             Given(controller_is_created);
             When("");
@@ -40,7 +35,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         }
 
         [Test]
-        public void assure_we_get_data_from_repo()
+        public void Assure_we_get_data_from_repo()
         {
             Given(there_is_one_snapshot_in_repository);
             When(creating_controller);
@@ -63,7 +58,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
                  () => configPersister.Verify(c => c.Save(It.IsAny<Configuration>()), Times.AtLeastOnce()));
         }
     }
-
 
     public class Shared : ScenarioClass
     {
@@ -108,7 +102,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         protected Context there_is_one_snapshot_in_repository =
             () => SetupWebSnapshotRepositoryMock(new List<DomainModel.WebSnapshot.WebSnapshot> { snapshot });
 
-
         [SetUp]
         public void SetUp()
         {
@@ -125,11 +118,11 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             repository = new Mock<IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot>>();
 
         }
+
         [TearDown]
         public void TearDown()
         {
             StartScenario();
         }
-
     }
 }
