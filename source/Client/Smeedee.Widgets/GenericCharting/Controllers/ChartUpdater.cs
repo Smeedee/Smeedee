@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Smeedee.Client.Framework.Repositories.Charting;
+using Smeedee.Client.Framework.Resources;
 using Smeedee.DomainModel.Charting;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 using TinyMVVM.Framework.Services;
@@ -26,11 +27,14 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private SeriesConfigViewModel referenceSeries = null;
         private DataSet referenceDataSet = null;
 
+        private List<DataSetViewModel> allSeries = null;
+
         public ChartUpdater(ChartViewModel viewModel, IChartStorageReader storageReader, IUIInvoker uiInvoker)
         {
             this.viewModel = viewModel;
             this.uiInvoker = uiInvoker;
             this.storageReader = storageReader;
+            downloadedCharts = null;
         }
 
         public void Update()
@@ -71,6 +75,12 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void DownloadCompleted(Collection<Chart> downloadedCharts)
         {
+            if (DownloadedChartsHasNotChanged(downloadedCharts))
+            {
+                if (UpdateFinished != null)
+                    UpdateFinished(this, EventArgs.Empty);
+                return;
+            }
             this.downloadedCharts = downloadedCharts;
             if (downloadedCharts.Count > 0)
             {
@@ -78,11 +88,38 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                                      {
                                          AddNameData();
                                          AddSeries();
-                                         downloadedCharts.Clear();
                                          if (UpdateFinished != null)
                                              UpdateFinished(this, EventArgs.Empty);
                                      });
             }
+        }
+
+        private bool DownloadedChartsHasNotChanged(Collection<Chart> newCharts)
+        {
+            var oldCharts = this.downloadedCharts;
+            if (oldCharts == null) return false;
+            if (newCharts.Count != oldCharts.Count) return false;
+
+            foreach (var newOne in newCharts)
+            {
+                var oldOne = oldCharts.FirstOrDefault(c => c.Database == newOne.Database && c.Collection == newOne.Collection);
+                if (oldOne == null) return false;
+
+                if (newOne.DataSets.Count != oldOne.DataSets.Count) return false;
+
+                for (int i=0; i<oldOne.DataSets.Count; i++)
+                {
+                    if (newOne.DataSets[i].Name != oldOne.DataSets[i].Name) return false;
+                    if (newOne.DataSets[i].DataPoints.Count != oldOne.DataSets[i].DataPoints.Count) return false;
+
+                    for (int j=0; j<oldOne.DataSets[i].DataPoints.Count; j++)
+                    {
+                        if (newOne.DataSets[i].DataPoints[j].ToString() != oldOne.DataSets[i].DataPoints[j].ToString()) return false;
+                    }
+
+                }
+            }
+            return true;
         }
 
         private void AddNameData()
@@ -99,10 +136,17 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             {
                 referenceDataSet = GetDataset(referenceSeries);
             }
-            viewModel.Lines.Clear();
-            viewModel.Areas.Clear();
-            viewModel.Columns.Clear();
+            viewModel.Series.Clear();
+
+            allSeries = new List<DataSetViewModel>();
             series.ForEach(AddOneSeries);
+
+            allSeries.Where(s => s.Type == ChartConfig.AREA).ToList().ForEach(viewModel.Series.Add);
+            allSeries.Where(s => s.Type == ChartConfig.COLUMNS).ToList().ForEach(viewModel.Series.Add);
+            allSeries.Where(s => s.Type == ChartConfig.LINE).ToList().ForEach(viewModel.Series.Add);            
+
+            allSeries.Clear();
+            allSeries = null;
         }
 
         private void AddOneSeries(SeriesConfigViewModel series)
@@ -115,20 +159,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             if (dataset == null) return; // TODO: error handling;
 
             var vm = ConvertDataSetToViewModel(dataset, series);
-
-            switch (series.ChartType)
-            {
-                case ChartConfig.LINE:
-                    viewModel.Lines.Add(vm);
-                    break;
-                case ChartConfig.COLUMNS:
-                    viewModel.Columns.Add(vm);
-                    break;
-                case ChartConfig.AREA:
-                    viewModel.Areas.Add(vm);
-                    break;
-            }
-           
+            allSeries.Add(vm);
         }
 
         private DataSet GetDataset(SeriesConfigViewModel series)
@@ -141,7 +172,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private DataSetViewModel ConvertDataSetToViewModel(DataSet dataset, SeriesConfigViewModel series)
         {
-            var vm = new DataSetViewModel {Name = !string.IsNullOrEmpty(series.Legend) ? series.Legend : dataset.Name};
+            var vm = new DataSetViewModel {Name = !string.IsNullOrEmpty(series.Legend) ? series.Legend : dataset.Name, Brush = BrushProvider.GetBrushName(series.Brush), Type = series.ChartType};
 
             for (int i = 0; i<dataset.DataPoints.Count; i++)
             {
@@ -149,9 +180,6 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                 var Xvalue = referenceDataSet != null ? referenceDataSet.DataPoints[i] : i;
                 if (int.TryParse(dataset.DataPoints[i].ToString(), out Yvalue))
                     vm.Data.Add(new DataPointViewModel { X = Xvalue, Y = Yvalue});
-
-
-
                 else
                     Debug.WriteLine("ERROR PARSING!"); // TODO: need some errorhandling when datapoint could not be converted to a number
             }

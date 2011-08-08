@@ -11,7 +11,7 @@ namespace Smeedee.Widgets.SL.GenericCharting
     [WidgetInfo(Name = "Generic Charting",
                 Description = "Used to add generic charting",
                 Author = "Smeedee team",
-                Version = "0.1",
+                Version = "0.9",
                 Tags = new[] { CommonTags.Charting })]
     public class GenericChartingWidget : Client.Framework.ViewModel.Widget
     {
@@ -29,11 +29,6 @@ namespace Smeedee.Widgets.SL.GenericCharting
 
             View = new ChartView { DataContext = controller.ViewModel };
             SettingsView = new ChartSettingsView { DataContext = controller.SettingsViewModel };
-
-            ConfigurationChanged += (o, e) =>
-            {
-                controller.UpdateConfiguration(Configuration);
-            };
 
             PropertyChanged += (o, e) =>
             {

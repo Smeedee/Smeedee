@@ -159,6 +159,9 @@
     <Compile Include="..\Smeedee.Client.Framework\ResourceParsing\XamlResourceDictionary.cs">
       <Link>ResourceReading\XamlResourceDictionary.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\Resources\BrushProvider.cs">
+      <Link>Resources\BrushProvider.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\IDockBarService.cs">
       <Link>Services\IDockBarService.cs</Link>
     </Compile>
@@ -306,6 +309,7 @@
     </Compile>
     <Compile Include="Controls\IDataTemplateSelector.cs" />
     <Compile Include="Controls\ItemsControlEx.cs" />
+    <Compile Include="Converters\StringToResourceConverter.cs" />
     <Compile Include="MEF\DeploymentFolderCatalog.cs" />
     <Compile Include="MEF\Package.cs" />
     <Compile Include="MEF\Services\HttpDownloadService.cs" />
@@ -337,7 +341,6 @@
     <Compile Include="Repositories\TeamPictureWebserviceRepository.cs" />
     <Compile Include="Repositories\UserdbWebserviceRepository.cs" />
     <Compile Include="Repositories\UserWebserviceRepositoryProxy.cs" />
-    <Compile Include="Repositories\WebSnapshotWebserviceRepository.cs" />
     <Compile Include="Resources\Graphic\Icons\AddWidgetIcon.xaml.cs">
       <DependentUpon>AddWidgetIcon.xaml</DependentUpon>
     </Compile>
@@ -703,7 +706,6 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService.disco" />
     <None Include="Service References\WebSnapshotRepositoryService\configuration91.svcinfo" />
     <None Include="Service References\WebSnapshotRepositoryService\configuration.svcinfo" />
     <None Include="Service References\WebSnapshotRepositoryService\Reference.svcmap">
@@ -724,7 +726,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
     <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd">
       <SubType>Designer</SubType>
@@ -787,21 +788,15 @@
     <None Include="Service References\UserRepositoryService\UserRepositoryService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService.wsdl" />
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService.xsd">
+    <None Include="Service References\WebSnapshotRepositoryService\service.wsdl" />
+    <None Include="Service References\WebSnapshotRepositoryService\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService1.wsdl" />
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService1.xsd">
+    <None Include="Service References\WebSnapshotRepositoryService\Smeedee.DomainModel.WebSnapshot.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\WebSnapshotRepositoryService4.xsd">
+    <None Include="Service References\WebSnapshotRepositoryService\smeedee.org.wsdl" />
+    <None Include="Service References\WebSnapshotRepositoryService\smeedee.org.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

@@ -40,6 +40,7 @@
       <HintPath>..\..\..\tools\JSON\DotNet\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -73,6 +74,18 @@
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceControl\Controllers\ChangesetControllerBase.cs" />
+    <Compile Include="SourceControl\Controllers\CommitStatisticsController.cs" />
+    <Compile Include="SourceControl\Controllers\LatestCommitsController.cs" />
+    <Compile Include="SourceControl\Controllers\TopCommitersController.cs" />
+    <Compile Include="SourceControl\ViewModels\ChangesetViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\CodeCommiterViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\CommitStatisticsForDate.cs" />
+    <Compile Include="SourceControl\ViewModels\CommitStatisticsSettingsViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\KeywordColorPairViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\LatestCommitsViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\RevisionCounterViewModel.cs" />
+    <Compile Include="SourceControl\ViewModels\TopCommitersViewModel.cs" />
     <Compile Include="TeamMembers\Controllers\TeamMembersController.cs" />
     <Compile Include="TeamMembers\ViewModels\TeamMembersSettingsViewModel.cs" />
     <Compile Include="TeamMembers\ViewModels\TeamMembersViewModel.cs" />
@@ -98,10 +111,10 @@
     <Compile Include="WebSnapshot\Util\WebImageFetcher.cs" />
     <Compile Include="WebSnapshot\Util\WebImageProvider.cs" />
     <Compile Include="WebSnapshot\Util\WebSnapshotter.cs" />
-    <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs" />
     <Compile Include="WebSnapshot\ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

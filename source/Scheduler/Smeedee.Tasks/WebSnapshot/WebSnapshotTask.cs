@@ -4,10 +4,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
+using Smeedee.Framework;
 using Smeedee.Tasks.Framework;
 using Smeedee.Tasks.Framework.TaskAttributes;
 using Smeedee.Widgets.WebSnapshot.Util;
@@ -16,11 +18,14 @@ namespace Smeedee.Tasks.WebSnapshot
 {
     [Task("WebSnapshot Task",
         Author = "Smeedee Team",
-        Description = "Takes snapshots of web pages, recommended update interval is no less than 10 minutes as it is an expensive operation",
+        Description = "Takes snapshots of web pages or downloads images. Provides images for the Web Snapshot Widget. " +
+                      "An current limitation is probably due to Javascript-heavy sites, which results in a blank snapshot.",
         Version = 1,
         Webpage = "http://smeedee.org")]
-    [TaskSetting(1, WEBPAGE, typeof(Uri), "http://", "Webpage or image URL")]
-    [TaskSetting(2, XPATH, typeof(string), "", "XPath expression to an image tag")]
+    [TaskSetting(1, WEBPAGE, typeof(string), "http://", "URL to webpage for snapshotting or image for downloading")]
+    [TaskSetting(2, XPATH, typeof(string), "", "Optional XPath expression, that matches an image tag on the given URL, will download the image instead of snapshotting the entire page")]
+    [TaskSetting(3, SMEEDEEPATH, typeof(string), @"C:\Program Files\Smeedee", "Path to Smeedee base directory, where snapshots will be stored to be accessible on the server")]
+    
 
     public class WebSnapshotTask : TaskBase
     {
@@ -33,26 +38,28 @@ namespace Smeedee.Tasks.WebSnapshot
         private string lastWebpageValue;
         private string lastXpathValue;
         private string lastConfigName;
-        private bool FirstRun;
+        private string lastPathName;
+
 
         public WebSnapshotTask(TaskConfiguration config,  IPersistDomainModels<Smeedee.DomainModel.WebSnapshot.WebSnapshot> databasePersister)
         {
             this.config = config;
             this.databasepersister = databasePersister;
-            webImageFetcher = new WebImageFetcher(new WebImageProvider());
-            filename = Path.GetRandomFileName() + ".png";
-            filePath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                filename);
+            UpdateConfigValues();
+            
+            Guard.Requires<TaskConfigurationException>(lastWebpageValue != null);
+            Guard.Requires<TaskConfigurationException>(URLValidator.IsValidUrl(lastWebpageValue));
+            Guard.Requires<TaskConfigurationException>(lastPathName != null);
 
-            lastWebpageValue = config.ReadEntryValue(WEBPAGE) as string;
-            lastXpathValue = config.ReadEntryValue(XPATH) as string;
-            lastConfigName = config.Name;
-            FirstRun = true;
+            webImageFetcher = new WebImageFetcher(new WebImageProvider());
+            filename = GenerateFilename() + ".png";
+            filePath = Path.Combine(lastPathName, "WebSnapshots", filename);
+            
         }
 
-        public const string WEBPAGE = "Webpage URL";
+        public const string WEBPAGE = "Webpage or Image URL";
         public const string XPATH = "Optional XPath expression";
+        public const string SMEEDEEPATH = "Path to Smeedee install";
 
         public override string Name
         {
@@ -77,22 +84,24 @@ namespace Smeedee.Tasks.WebSnapshot
             {
                 picture.Save(filePath, ImageFormat.Png);
 
-                if (ConfigValuesHasChanged() || FirstRun)
-                {  
-                    var model = new DomainModel.WebSnapshot.WebSnapshot
-                                    {
-                                        Name = config.Name,
-                                        PictureFilePath = filePath,
-                                        PictureHeight = picture.Height,
-                                        PictureWidth = picture.Width,
-                                    };
+                var model = new DomainModel.WebSnapshot.WebSnapshot
+                                {
+                                    Name = config.Name,
+                                    PictureFilePath = filePath,
+                                    PictureHeight = picture.Height,
+                                    PictureWidth = picture.Width,
+                                    Timestamp = GetCurrentTimeStamp(),
+                                };
 
-
-                    FirstRun = false;
-                    databasepersister.Save(model);
-                    UpdateConfigValues();
-                }
+                databasepersister.Save(model);
+                UpdateConfigValues();
             }
+        }
+
+        private bool ConfigValuesHasChanged()
+        {
+            var currentConfigName = config.Name;
+            return PictureValuesHasChanged() || !currentConfigName.Equals(lastConfigName);
         }
 
         private bool PictureValuesHasChanged()
@@ -101,19 +110,29 @@ namespace Smeedee.Tasks.WebSnapshot
             var currentXpath = config.ReadEntryValue(XPATH) as string;
             return !currentWeb.Equals(lastWebpageValue) || !currentXpath.Equals(lastXpathValue);
         }
-
-        private bool ConfigValuesHasChanged()
-        {
-            var currentConfigName = config.Name;
-            return PictureValuesHasChanged() || !currentConfigName.Equals(lastConfigName);
-        }
         
         private void UpdateConfigValues()
         {
-                lastWebpageValue = config.ReadEntryValue(WEBPAGE) as string;
-                lastXpathValue = config.ReadEntryValue(XPATH) as string;
-                lastConfigName = config.Name;
+            lastWebpageValue = config.ReadEntryValue(WEBPAGE) as string;
+            lastXpathValue = config.ReadEntryValue(XPATH) as string;
+            lastConfigName = config.Name;
+            lastPathName = config.ReadEntryValue(SMEEDEEPATH) as string;
         }
 
+        private string GetCurrentTimeStamp()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmssffff");
+        }
+
+        public string GenerateFilename()
+        {
+            return Regex.Replace(config.Name, @"[^a-zA-Z_0-9]", string.Empty) + "-" +
+                Regex.Replace(config.ReadEntryValue(WEBPAGE) as string, @"[^a-zA-Z_0-9]", string.Empty);
+        }
+
+        public bool ValidateFilename(string filename)
+        {
+            return filename.IndexOfAny(Path.GetInvalidFileNameChars()) == -1;
+        }
     }
 }

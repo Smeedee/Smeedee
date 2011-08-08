@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="384f891e-9808-4713-ac69-93e37289756c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="360c311e-3fea-4500-abd2-00f2f722f7b0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -9,7 +9,7 @@
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
     <CollectionMappings>
-      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
     </CollectionMappings>
     <GenerateSerializableTypes>false</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
@@ -20,17 +20,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WebSnapshotRepositoryService.wsdl" MetadataType="Wsdl" ID="65737933-2c4b-496b-8741-0938924b15af" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?wsdl" />
-    <MetadataFile FileName="WebSnapshotRepositoryService.xsd" MetadataType="Schema" ID="ebec3da9-30fa-40d5-b8b3-8ca2247a6f2e" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd3" />
-    <MetadataFile FileName="WebSnapshotRepositoryService1.xsd" MetadataType="Schema" ID="fe0bc785-cb09-4e63-b686-497a1077660e" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd4" />
-    <MetadataFile FileName="WebSnapshotRepositoryService2.xsd" MetadataType="Schema" ID="292778d6-1541-4c62-a745-8c1de3b0170e" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd1" />
-    <MetadataFile FileName="WebSnapshotRepositoryService.disco" MetadataType="Disco" ID="f52abc6b-3e86-4022-952b-5a2a88ba0c86" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?disco" />
-    <MetadataFile FileName="WebSnapshotRepositoryService1.wsdl" MetadataType="Wsdl" ID="ffb41cef-be48-4e87-af80-7b993289bb84" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="WebSnapshotRepositoryService3.xsd" MetadataType="Schema" ID="ee342da8-2f2c-4970-ab88-c0dc309e4961" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd2" />
-    <MetadataFile FileName="WebSnapshotRepositoryService4.xsd" MetadataType="Schema" ID="4a7fb179-e4f2-4eb0-8c9d-32ceef98f01b" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc?xsd=xsd0" />
+    <MetadataFile FileName="smeedee.org.wsdl" MetadataType="Wsdl" ID="637cc418-8b9b-4b89-94d6-ef7bab2d090d" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="0fc182e3-5207-4e10-8f1f-0e487e750be9" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc/mex" />
+    <MetadataFile FileName="smeedee.org.xsd" MetadataType="Schema" ID="d58de6ee-80a1-40bc-8ce0-f90219f93476" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="f89c92b9-4523-495a-bc20-97dd8bb7fc38" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc/mex" />
+    <MetadataFile FileName="Smeedee.DomainModel.WebSnapshot.xsd" MetadataType="Schema" ID="b06fb7fa-03a4-4373-b5bf-459591accc65" SourceId="1" SourceUrl="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

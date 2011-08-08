@@ -15,6 +15,8 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 	viewmodel DataSetViewModel:
 		property Name as string
 		property Data as ObservableCollection<DataPointViewModel>
+		property Type as string
+		oproperty Brush as string
 		
 	viewmodel ChartTypeViewModel:
 		oproperty ChartType as string
@@ -50,6 +52,7 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		oproperty Name as string
 		oproperty Legend as string
 		oproperty ChartType as string
+		oproperty Brush as string
 
 		oproperty Database as string
 		oproperty Collection as string

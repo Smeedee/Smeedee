@@ -14,35 +14,19 @@ namespace Smeedee.Widgets.Tests.GenericCharting.ViewModels
         private Context viewModel_has_been_created = () => viewModel = new ChartViewModel();
 
         [Test]
-        public void Assure_it_contains_lines()
-        {
-            Given(viewModel_has_been_created);
-            When("it is created");
-            Then("It should contain lines", () => viewModel.Lines.ShouldNotBeNull());
-        }
-
-        [Test]
-        public void Assure_it_contains_columns()
-        {
-            Given(viewModel_has_been_created);
-            When("it is created");
-            Then("It should contain columns", () => viewModel.Columns.ShouldNotBeNull());
-        }
-
-        [Test]
-        public void Assure_it_contains_areas()
-        {
-            Given(viewModel_has_been_created);
-            When("it is created");
-            Then("It should contain areas", () => viewModel.Areas.ShouldNotBeNull());
-        }
-
-        [Test]
         public void Assure_it_contains_refresh()
         {
             Given(viewModel_has_been_created);
             When("it is created");
             Then("It should contain refresh", () => viewModel.Refresh.ShouldNotBeNull());
+        }
+
+        [Test]
+        public void Assure_it_contains_series()
+        {
+            Given(viewModel_has_been_created);
+            When("");
+            Then("It should contain series", () => viewModel.Series.ShouldNotBeNull());
         }
 
         [Test]

@@ -1,12 +1,9 @@
 
 using TinyMVVM.Framework.Services;
 using TinyMVVM.Framework.Conventions;
-using System;
 using TinyMVVM.Framework;
 using System.Collections.ObjectModel;
 using Smeedee.Client.Framework.ViewModel;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 {
 	public partial class WebSnapshotSettingsViewModel : SettingsViewModelBase
@@ -35,7 +32,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		partial void OnGetAvailableImages(ref ObservableCollection<string> value);
 		partial void OnSetAvailableImages(ref ObservableCollection<string> value);
 
-		public virtual WriteableBitmap SelectedImage
+		public virtual string SelectedImage
 		{
 			get 
 			{
@@ -53,12 +50,35 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 				}
 			}
 		}
-		private WriteableBitmap _SelectedImage;
+		private string _SelectedImage;
 
-		partial void OnGetSelectedImage(ref WriteableBitmap value);
-		partial void OnSetSelectedImage(ref WriteableBitmap value);
+		partial void OnGetSelectedImage(ref string value);
+		partial void OnSetSelectedImage(ref string value);
 
-		public virtual WriteableBitmap Image
+		public virtual object LoadedImage
+		{
+			get 
+			{
+				OnGetLoadedImage(ref _LoadedImage);
+				 
+				return _LoadedImage; 
+			}
+			set
+			{
+                if (value != _LoadedImage)
+                {
+					OnSetLoadedImage(ref value); 
+					_LoadedImage = value;
+					TriggerPropertyChanged("LoadedImage");
+                }
+			}
+		}
+		private object _LoadedImage;
+
+		partial void OnGetLoadedImage(ref object value);
+		partial void OnSetLoadedImage(ref object value);
+
+		public virtual object Image
 		{
 			get 
 			{
@@ -76,10 +96,10 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 				}
 			}
 		}
-		private WriteableBitmap _Image;
+		private object _Image;
 
-		partial void OnGetImage(ref WriteableBitmap value);
-		partial void OnSetImage(ref WriteableBitmap value);
+		partial void OnGetImage(ref object value);
+		partial void OnSetImage(ref object value);
 
 	
 		
@@ -109,7 +129,7 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 	public partial class WebSnapshotViewModel : AbstractViewModel
 	{
 		//State
-		public virtual WriteableBitmap Snapshot
+		public virtual object Snapshot
 		{
 			get 
 			{
@@ -127,10 +147,10 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 				}
 			}
 		}
-		private WriteableBitmap _Snapshot;
+		private object _Snapshot;
 
-		partial void OnGetSnapshot(ref WriteableBitmap value);
-		partial void OnSetSnapshot(ref WriteableBitmap value);
+		partial void OnGetSnapshot(ref object value);
+		partial void OnSetSnapshot(ref object value);
 
 		public virtual bool HasStoredImage
 		{

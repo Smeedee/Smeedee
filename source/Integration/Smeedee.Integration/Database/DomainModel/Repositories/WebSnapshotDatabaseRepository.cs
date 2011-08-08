@@ -10,11 +10,9 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
 {
     public class WebSnapshotDatabaseRepository : GenericDatabaseRepository<WebSnapshot>
     {
+        public WebSnapshotDatabaseRepository() : base() {}
+
         public WebSnapshotDatabaseRepository(ISessionFactory sessionFactory)
-            : base(sessionFactory)
-        {
-            ILog logger = new Logger(new LogEntryDatabaseRepository(sessionFactory));
-            logger.WriteEntry(new LogEntry("websnapshotdatabaserepository", "Constructor is called"));
-        }
+            : base(sessionFactory) {}
     }
 }

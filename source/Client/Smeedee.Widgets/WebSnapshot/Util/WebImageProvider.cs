@@ -19,29 +19,36 @@ namespace Smeedee.Widgets.WebSnapshot.Util
                 return new WebSnapshotter().GetSnapshot(url);
             }
 
-            Bitmap picture = null;
-
             try
             {
                 WebRequest request = WebRequest.Create(url);
                 WebResponse response = request.GetResponse();
                 Stream stream = response.GetResponseStream();
-                picture = new Bitmap(stream);
-            }
-            catch { }
 
-            return picture;
+                return new Bitmap(stream);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public string GetPictureNodeURLFromXpath(string pageURL, string xpath)
         {
-            HtmlWeb htmlWeb = new HtmlWeb();
-            HtmlDocument document = htmlWeb.Load(pageURL);
-            var xpathNode = document.DocumentNode.SelectSingleNode(xpath);
+            try
+            {
+                HtmlWeb htmlWeb = new HtmlWeb();
+                HtmlDocument document = htmlWeb.Load(pageURL);
+                var xpathNode = document.DocumentNode.SelectSingleNode(xpath);
+                var attributes = xpathNode.Attributes.ToList();
+                var src = attributes.FindAll(a => a.Name == "src");
 
-            var attributes = xpathNode.Attributes.ToList();
-            var src = attributes.FindAll(a => a.Name == "src");
-            return src.First().Value;
+                return src.First().Value;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

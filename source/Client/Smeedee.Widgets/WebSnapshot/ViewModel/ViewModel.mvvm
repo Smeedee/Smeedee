@@ -1,9 +1,6 @@
-﻿using System
-using TinyMVVM.Framework
+﻿using TinyMVVM.Framework
 using System.Collections.ObjectModel;
 using Smeedee.Client.Framework.ViewModel
-using System.Windows.Media.Imaging
-using System.Windows.Media
 
 namespace Smeedee.Widgets.WebSnapshot.ViewModel
 	
@@ -15,9 +12,10 @@ namespace Smeedee.Widgets.WebSnapshot.ViewModel
 		command Crop
 
 		oproperty AvailableImages as ObservableCollection<string>
-		oproperty SelectedImage as WriteableBitmap
-		oproperty Image as WriteableBitmap
-		
+		oproperty SelectedImage as string
+		oproperty LoadedImage as object
+		oproperty Image as object
+
 	viewmodel WebSnapshotViewModel extends AbstractViewModel:
-		oproperty Snapshot as WriteableBitmap
+		oproperty Snapshot as object
 		oproperty HasStoredImage as bool

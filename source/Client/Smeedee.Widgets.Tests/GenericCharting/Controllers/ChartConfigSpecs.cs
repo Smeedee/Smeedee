@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Moq;
 using NUnit.Framework;
+using Smeedee.Client.Framework.Resources;
 using Smeedee.DomainModel.Config;
 using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
@@ -17,7 +18,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
     {
 
         [TestFixture]
-        public class When_setting_string_values : Shared
+        public class When_setting_values : Shared
         {
             [Test]
             public void It_should_be_possible_to_set_ChartName()
@@ -130,7 +131,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
         }
 
         [TestFixture]
-        public class When_getting_string_values : Shared
+        public class When_getting_values : Shared
         {
             [Test]
             public void It_should_be_possible_to_get_ChartName()
@@ -312,6 +313,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 var legend = configuration.GetSetting(ChartConfig.series_setting_legend);
                 var action = configuration.GetSetting(ChartConfig.series_setting_action);
                 var type = configuration.GetSetting(ChartConfig.series_setting_type);
+                var brush = configuration.GetSetting(ChartConfig.series_setting_brush);
 
                 name.Vals.ToList()[row].ShouldBe(series.Name);
                 collection.Vals.ToList()[row].ShouldBe(series.Collection);
@@ -319,6 +321,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 legend.Vals.ToList()[row].ShouldBe(series.Legend);
                 action.Vals.ToList()[row].ShouldBe(series.Action);
                 type.Vals.ToList()[row].ShouldBe(series.ChartType);
+                brush.Vals.ToList()[row].ShouldBe(series.Brush);
             }
 
             private Context series_has_been_set = SetSeries;
@@ -361,6 +364,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                         s.Legend.ShouldBe("TestLegend");
                         s.Action.ShouldBe("Show");
                         s.ChartType.ShouldBe("Columns");
+                        s.Brush.ShouldBe("green");
                     });
             }
 
@@ -386,6 +390,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 configuration.NewSetting(ChartConfig.series_setting_legend, new[] { "TestLegend" });
                 configuration.NewSetting(ChartConfig.series_setting_action, new[] { "Show" });
                 configuration.NewSetting(ChartConfig.series_setting_type, new[] { "Columns" });
+                configuration.NewSetting(ChartConfig.series_setting_brush, new [] { "green" });
             };
 
             private Context two_series_has_been_set = () =>
@@ -403,6 +408,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 given.Legend.ShouldBe(expected.Legend);
                 given.ChartType.ShouldBe(expected.ChartType);
                 given.Action.ShouldBe(expected.Action);
+                given.Brush.ShouldBe(expected.Brush);
             }
         }
 
@@ -421,6 +427,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
                 config.ContainsSetting(ChartConfig.series_setting_name).ShouldBeTrue();
                 config.ContainsSetting(ChartConfig.series_setting_legend).ShouldBeTrue();
                 config.ContainsSetting(ChartConfig.series_setting_type).ShouldBeTrue();
+                config.ContainsSetting(ChartConfig.series_setting_brush).ShouldBeTrue();
                 config.ContainsSetting(ChartConfig.series_setting_database).ShouldBeTrue();
                 config.ContainsSetting(ChartConfig.series_setting_collection).ShouldBeTrue();
                 config.IsConfigured.ShouldBeFalse();
@@ -429,8 +436,8 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
 
         public class Shared : ScenarioClass
         {
-            protected static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", Action = "Show", ChartType = "Line" };
-            protected static SeriesConfigViewModel series2 = new SeriesConfigViewModel { Database = "D2B", Collection = "Col2", Name = "Row2", Legend = "Legend2", Action = "Hide", ChartType = "Area" };
+            protected static SeriesConfigViewModel series1 = new SeriesConfigViewModel { Database = "DB", Collection = "Col", Name = "Row1", Legend = "Legend1", Action = "Show", ChartType = "Line", Brush = BrushProvider.GetBrushKeys()[0] };
+            protected static SeriesConfigViewModel series2 = new SeriesConfigViewModel { Database = "D2B", Collection = "Col2", Name = "Row2", Legend = "Legend2", Action = "Hide", ChartType = "Area", Brush = BrushProvider.GetBrushKeys()[1] };
 
             protected Context chart_config_has_been_made = CreateChartConfig;
 

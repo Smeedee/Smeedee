@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Smeedee.Client.Framework.SL.Converters;
 using Smeedee.Widgets.GenericCharting.Controllers;
 using Smeedee.Widgets.GenericCharting.ViewModels;
 
@@ -20,40 +22,12 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
 {
     public class GenericChart : Chart
     {
-        public IEnumerable LinesSource
-        {
-            get { return (IEnumerable) GetValue(LinesSourceProperty); }
-            set { SetValue(LinesSourceProperty, value); }
-        }
+        private static readonly StringToResourceConverter converter = new StringToResourceConverter();
 
-        public DataTemplate LineTemplate
+        public IEnumerable ItemsSource
         {
-            get { return (DataTemplate)GetValue(LineTemplateProperty); }
-            set { SetValue(LineTemplateProperty, value); }
-        }
-
-        public IEnumerable ColumnsSource
-        {
-            get { return (IEnumerable) GetValue(ColumnsSourceProperty); }
-            set { SetValue(ColumnsSourceProperty, value); }
-        }
-
-        public DataTemplate ColumnTemplate
-        {
-            get { return (DataTemplate) GetValue(ColumnTemplateProperty); }
-            set { SetValue(ColumnTemplateProperty, value); }
-        }
-
-        public IEnumerable AreasSource
-        {
-            get { return (IEnumerable) GetValue(AreasSourceProperty); }
-            set { SetValue(AreasSourceProperty, value); }
-        }
-
-        public DataTemplate AreaTemplate
-        {
-            get { return (DataTemplate) GetValue(AreaTemplateProperty); }
-            set { SetValue(AreaTemplateProperty, value); }
+            get { return (IEnumerable) GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
         }
 
         public DataTemplate LinearAxisTemplate
@@ -106,60 +80,100 @@ namespace Smeedee.Widgets.SL.GenericCharting.Views
         private void InitSeries(object s, EventArgs e)
         {
             Series.Clear();
-            if (WeHaveAreaTemplateAndAreasSource())
-                AddSeriesFrom(AreasSource, AreaTemplate);
-
-            if (WeHaveColumnTemplateAndColumnsSource())
-                AddSeriesFrom(ColumnsSource, ColumnTemplate);
-
-            if (WeHaveLineTemplateAndLinesSource())
-                AddSeriesFrom(LinesSource, LineTemplate);
+            if (WeHaveItemsSource())
+                AddSeries(ItemsSource);
         }
 
-        private bool WeHaveAreaTemplateAndAreasSource()
+        private bool WeHaveItemsSource()
         {
-            return AreaTemplate != null && AreasSource != null;
+            return ItemsSource != null;
         }
 
-        private bool WeHaveColumnTemplateAndColumnsSource()
+        private void AddSeries(IEnumerable source)
         {
-            return ColumnTemplate != null && ColumnsSource != null;
+            var series = from single in source.OfType<DataSetViewModel>()
+                         select single;
+            foreach (var s in series)
+            {
+                switch (s.Type)
+                {
+                    case ChartConfig.AREA:
+                        Series.Add(CreateArea(s));
+                        break;
+                    case ChartConfig.COLUMNS:
+                        Series.Add(CreateColumn(s));
+                        break;
+                    case ChartConfig.LINE:
+                        Series.Add(CreateLine(s));
+                        break;
+                }
+            }
         }
 
-        private bool WeHaveLineTemplateAndLinesSource()
+        private AreaSeries CreateArea(DataSetViewModel viewModel)
         {
-            return LineTemplate != null && LinesSource != null;
-        }
+            var series = new AreaSeries
+            {
+                ItemsSource = viewModel.Data,
+                Title = viewModel.Name,
+                DependentValuePath = "Y",
+                IndependentValuePath = "X"
+            };
+            if (!string.IsNullOrEmpty(viewModel.Brush))
+            {
+                series.DataPointStyle = CreateStyle(viewModel, typeof(AreaDataPoint));
+            }
+            return series;
 
-        private void AddSeriesFrom(IEnumerable source, DataTemplate template)
+        }
+        
+        private LineSeries CreateLine(DataSetViewModel viewModel)
         {
-            var series = from line in source.OfType<object>()
-                         let seriesItem = template.LoadContent() as ISeries
-                         where seriesItem != null && seriesItem is FrameworkElement
-                         let assignDataContext = ((FrameworkElement)seriesItem).DataContext = line
-                         select seriesItem;
-
-            var list = series.ToList();
-            list.ForEach(Series.Add);
+            var series = new LineSeries
+            {
+                ItemsSource = viewModel.Data,
+                Title = viewModel.Name,
+                DependentValuePath = "Y",
+                IndependentValuePath = "X"
+            };
+            if (!string.IsNullOrEmpty(viewModel.Brush))
+            {
+                series.DataPointStyle = CreateStyle(viewModel, typeof(LineDataPoint));
+            }
+            return series;
+        }
+        
+        private ColumnSeries CreateColumn(DataSetViewModel viewModel)
+        {
+            var series = new ColumnSeries
+            {
+                ItemsSource = viewModel.Data,
+                Title = viewModel.Name,
+                DependentValuePath = "Y",
+                IndependentValuePath = "X"
+            };
+            if (!string.IsNullOrEmpty(viewModel.Brush))
+            {
+                series.DataPointStyle = CreateStyle(viewModel, typeof(ColumnDataPoint));
+            }
+            return series;
         }
 
-        public static readonly DependencyProperty LinesSourceProperty =
-            MakeSourceDependencyProperty("LinesSource");
+        private Style CreateStyle(DataSetViewModel viewModel, Type type)
+        {
+            var style = new Style(type);
+            var setter = new Setter(BackgroundProperty, CreateBrush(viewModel));
+            style.Setters.Add(setter);
+            return style;
+        }
 
-        public static readonly DependencyProperty LineTemplateProperty =
-            MakeDataTemplateDependencyProperty("LineTemplate");
+        private object CreateBrush(DataSetViewModel viewModel)
+        {
+            return converter.Convert(viewModel.Brush, typeof (Brush), null, CultureInfo.CurrentUICulture);
+        }
 
-        public static readonly DependencyProperty ColumnsSourceProperty =
-            MakeSourceDependencyProperty("ColumnsSource");
-
-        public static readonly DependencyProperty ColumnTemplateProperty =
-            MakeDataTemplateDependencyProperty("ColumnTemplate");
-
-        public static readonly DependencyProperty AreasSourceProperty =
-            MakeSourceDependencyProperty("AreasSource");
-
-        public static readonly DependencyProperty AreaTemplateProperty =
-            MakeDataTemplateDependencyProperty("AreaTemplate");
+        public static readonly DependencyProperty ItemsSourceProperty =
+            MakeSourceDependencyProperty("ItemsSource");
 
         public static readonly DependencyProperty LinearAxisTemplateProperty =
             MakeDataTemplateDependencyProperty("LinearAxisTemplate");

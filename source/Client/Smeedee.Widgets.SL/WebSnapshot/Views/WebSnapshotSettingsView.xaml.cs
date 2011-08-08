@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Smeedee.Client.SL;
 using Smeedee.Widgets.SL.WebSnapshot.Util;
 
 
@@ -13,42 +14,49 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 {
     public partial class WebSnapshotSettingsView : UserControl
     {
+
+        private Point origPoint;
+        private Rectangle rect;
+        private Point MousePress;
+        private Point MouseRelease;
+        private Point upperleftpoint;
+        private Queue<Point> previousPoints;
+        private Stack<Rectangle> previousRect;
+        private bool selectionDisabled;
+
         public WebSnapshotSettingsView()
         {
             InitializeComponent();
 
-
             previousPoints = new Queue<Point>();
             previousRect = new Stack<Rectangle>();
-            canvas.MouseLeftButtonDown += canvas_MouseLeftButtonDown;
+            LayoutRoot.MouseLeftButtonDown += canvas_MouseLeftButtonDown;
         }
 
-        private Point MousePress;
-        private Point MouseRelease;
-        private Point origPoint;
-        private Rectangle rect;
-        private Queue<Point> previousPoints;
-        private Stack<Rectangle> previousRect;
 
         void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (selectionDisabled)
+                return;
 
             Point point = e.GetPosition(image);
+            
+            if (CropUtil.OutsidePicture(point, image)) return;
 
             MousePress.X = point.X;
             MousePress.Y = point.Y;
 
-            if (CropUtil.OutsidePicture(point, image)) return;
+            Xbox.Text = MousePress.X.ToString();
+            Ybox.Text = MousePress.Y.ToString();
 
             rect = new Rectangle();
             origPoint = e.GetPosition(canvas);
             Canvas.SetLeft(rect, origPoint.X);
             Canvas.SetTop(rect, origPoint.Y);
-            rect.Stroke = new SolidColorBrush(Colors.Cyan);
+            rect.Stroke = new SolidColorBrush(Colors.Red);
             rect.StrokeThickness = 2;
 
             canvas.Children.Add(rect);
-
             canvas.MouseMove += canvas_MouseMove;
             canvas.MouseLeftButtonUp += canvas_MouseLeftButtonUp;
         }
@@ -58,6 +66,9 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             if (rect != null)
             {
                 Point curPoint = e.GetPosition(canvas);
+
+                if (CropUtil.OutsidePicture(curPoint, image)) return;
+
                 if (curPoint.X > origPoint.X)
                 {
                     rect.Width = curPoint.X - origPoint.X;
@@ -84,8 +95,13 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
         {
             Point point = e.GetPosition(image);
 
+            if (CropUtil.OutsidePicture(point, image)) return;
+
             MouseRelease.X = point.X;
             MouseRelease.Y = point.Y;
+
+            Heightbox.Text = rect.Height.ToString();
+            Widthbox.Text = rect.Width.ToString();
 
             if (rect != null)
             {
@@ -96,94 +112,90 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         private void crop_click(object sender, RoutedEventArgs e)
         {
-            // Crop
-            Point upperleftpoint = CropUtil.GetUpperLeftCornerInRectangel(MousePress, MouseRelease, rect);
+            upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease, rect);
 
             previousPoints.Enqueue(upperleftpoint);
             previousRect.Push(rect);
 
-            var img = CropPicture(upperleftpoint, rect);
+            var img = CropPicture(upperleftpoint, rect, image);
+
+            if (img == null)
+            {
+                ResetImage();
+                ResetCoordinateBoxes();
+                return;
+            }
 
             SetImage(img);
-        }
 
-
-        private WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle)
-        {
-
-            WriteableBitmap wb = null;
-            try
-            {
-                wb = new WriteableBitmap(Convert.ToInt32(rectangle.Width), Convert.ToInt32(rectangle.Height));
-            }
-            catch (Exception)
-            {
-                // todo write log entry ?
-            }
-            var t = new TranslateTransform();
-            t.X = CropUtil.NegativeNumber(upperleftpoint.X);
-            t.Y = CropUtil.NegativeNumber(upperleftpoint.Y);
-
-            //Draw to Writable Bitmap
-            wb.Render(image, t);
-            wb.Invalidate();
-
-            image.Source = wb;
-
-            return wb;
+            CropButton.IsEnabled = false;
+            selectionDisabled = true;
+            rect = null;
         }
 
         private void SetImage(WriteableBitmap img)
         {
             ResetImage();
             image.Source = img;
+            img.Invalidate();
         }
+
+        public WriteableBitmap CropPicture(Point upperleftpoint, Rectangle rectangle, Image img)
+        {
+            WriteableBitmap wb = null;
+            try
+            {
+                wb = new WriteableBitmap(Convert.ToInt32(rectangle.Width), Convert.ToInt32(rectangle.Height));
+                var t = new TranslateTransform
+                {
+                    X =  CropUtil.NegativeNumber(upperleftpoint.X),
+                    Y =  CropUtil.NegativeNumber(upperleftpoint.Y)
+                };
+
+                //Draw to Writable Bitmap
+                wb.Render(img, t);
+
+                //wb.Crop((int)upperleftpoint.X, (int)upperleftpoint.Y,
+                //    (int)rectangle.Width, (int)rectangle.Height);
+
+                wb.Invalidate();
+                
+            }
+            catch (Exception)
+            {
+                // TODO insert log entry?
+            }
+
+            return wb;
+        }
+
+        public WriteableBitmap LoadedImageCB { private get; set; }
+
         private void ResetImage()
         {
-
             image.Clip = null;
             canvas.Children.Clear();
-
-            //var uri = new Uri(@"http://www.newfreeware.com/img/scr/7-1013.jpg");
-            //image.Source = new BitmapImage(uri);
+            image.Source = LoadedImageCB;
             canvas.Children.Add(image);
             rect = null;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ResetCoordinateBoxes()
         {
-            ResetImage();
+            Xbox.Text = "0";
+            Ybox.Text = "0";
+            Heightbox.Text = string.Empty;
+            Widthbox.Text = string.Empty;
         }
 
-        private void CropCeption()
+
+        private void reset_click(object sender, RoutedEventArgs e)
         {
-            if (previousPoints == null) return;
-            ResetImage();
-            var length = previousPoints.Count;
-
-            Point point = new Point(0, 0);
-
-            for (int i = 0; i < length; i++)
-            {
-                var prevPoint = previousPoints.Dequeue();
-
-                point.X += prevPoint.X;
-                point.Y += prevPoint.Y;
-            }
-            var rectang = previousRect.Pop();
-            WriteableBitmap wb = CropPicture(point, rectang);
-             //string.Format("X:{0} Y:{1} Height:{2} Width:{3}", point.X, point.Y,rectang.Height, rectang.Width);
-
-
-            SetImage(wb);
-
-
-            wb = null;
-            rectang = null;
-            rect = null;
-            previousRect = null;
-            previousPoints = null;
+            ResetImage(); 
+            ResetCoordinateBoxes();
+            CropButton.IsEnabled = true;
+            selectionDisabled = false;
+            ScalingFactorBox.Text = "H:"+image.Height +" - W:"+image.Width;
         }
-
     }
 }
