@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScript
 		Buildscripts\Smeedee.msbuild = Buildscripts\Smeedee.msbuild
 		Buildscripts\Smeedee.Projects.msbuild = Buildscripts\Smeedee.Projects.msbuild
 		Buildscripts\Smeedee.Targets.msbuild = Buildscripts\Smeedee.Targets.msbuild
-		Buildscripts\Smeedee.TestProjects.msbuild = Buildscripts\Smeedee.TestProjects.msbuild
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{C8A901E0-BFBC-472A-87C9-8A7DB2EE30D8}"

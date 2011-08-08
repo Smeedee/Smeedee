@@ -18,7 +18,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
     {
 
         [TestFixture]
-        public class When_setting_string_values : Shared
+        public class When_setting_values : Shared
         {
             [Test]
             public void It_should_be_possible_to_set_ChartName()
@@ -131,7 +131,7 @@ namespace Smeedee.Widgets.Tests.GenericCharting.Controllers
         }
 
         [TestFixture]
-        public class When_getting_string_values : Shared
+        public class When_getting_values : Shared
         {
             [Test]
             public void It_should_be_possible_to_get_ChartName()
