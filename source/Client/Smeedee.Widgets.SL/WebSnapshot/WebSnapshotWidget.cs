@@ -1,20 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.Client.SL;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Config.SlideConfig;
-using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.Widgets.SL.WebSnapshot.Views;
 using Smeedee.Widgets.WebSnapshot.Controllers;
 using Smeedee.Widgets.WebSnapshot.ViewModel;
@@ -43,47 +34,44 @@ namespace Smeedee.Widgets.SL.WebSnapshot
             settingsViewModel = GetInstance<WebSnapshotSettingsViewModel>();
             controller = NewController<WebSnapshotController>();
 
-            viewModel.PropertyChanged += ViewModelPropertyChanged;
-            
-            //PropertyChanged += WebSnapshot_Propertychanged;
+            PropertyChanged += (o,e) =>
+                                   {
+                                       if (e.PropertyName == "IsInSettingsMode")
+                                           controller.OnReloadSettings();
+                                   } ;
+
             settingsViewModel.PropertyChanged += WebSnapshot_Propertychanged;
 
-            snapshotView = new WebSnapshotView { DataContext = settingsViewModel /*controller.ViewModel*/ };
+            snapshotView = new WebSnapshotView { DataContext = settingsViewModel };
             View = snapshotView;
 
-            settingsView= new WebSnapshotSettingsView { DataContext = settingsViewModel };
+            settingsView = new WebSnapshotSettingsView { DataContext = settingsViewModel };
             SettingsView = settingsView;
 
-            ConfigurationChanged += (o, e) => controller.UpdateConfiguration(Configuration);
+            ConfigurationChanged += (o, e) =>
+                                        {
+                                            if (!IsInSettingsMode)
+                                                controller.UpdateConfiguration(Configuration);
+                                        };
         }
 
+        
         private void WebSnapshot_Propertychanged(object sender, PropertyChangedEventArgs e)
         {
+
             if (e.PropertyName == "IsTimeToUpdate")
             {
+                LoadImageFunction();
                 snapshotView.UpdateImage();
             }
-            else if (e.PropertyName == "SelectedImage")
+            if (e.PropertyName == "SelectedImage")
             {
-                //var WebSnapshotURI = new Uri(App.Current.Host.Source, "../" + settingsViewModel.SelectedImage);
                 LoadImageFunction();
             }
-            else if (e.PropertyName == "LoadedImage")
+            if (e.PropertyName == "LoadedImage")
             {
                 controller.ShowImageInSettingsView();
                 settingsView.LoadedImageCB = settingsViewModel.LoadedImage as WriteableBitmap;
-            }
-
-        }
-
-        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var tempViewModel = sender as WebSnapshotSettingsViewModel;
-            var isDoneSaving = (tempViewModel != null && e.PropertyName.Equals("IsSaving") && !tempViewModel.IsSaving);
-
-            if (isDoneSaving && IsInSettingsMode)
-            {
-                OnSettings();
             }
         }
 
@@ -105,15 +93,16 @@ namespace Smeedee.Widgets.SL.WebSnapshot
             _imageFromServer = new BitmapImage();
             _imageFromServer.ImageOpened += bi_ImageOpened;
             _imageFromServer.ImageFailed += bi_ImageFailed;
-            _imageFromServer.CreateOptions = BitmapCreateOptions.None;
+            _imageFromServer.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
             _imageFromServer.UriSource = new Uri(App.Current.Host.Source, "../" + settingsViewModel.UriOfSelectedImage);
         }
 
-        void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e) {}
+        void bi_ImageFailed(object sender, ExceptionRoutedEventArgs e) { }
 
         void bi_ImageOpened(object sender, RoutedEventArgs e)
         {
-            var wb = new WriteableBitmap(_imageFromServer);
+            var bm = (BitmapImage)sender;
+            var wb = new WriteableBitmap(bm);
             settingsViewModel.LoadedImage = wb;
         }
     }
