@@ -48,7 +48,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         private DateTime modelTimeStart;
 
         private static readonly CultureInfo dateFormatingRules = new CultureInfo("en-US");
-        private static readonly Configuration defaultConfig = CreateConfig(DateTime.Now, 14, false, true);
+        public static readonly Configuration defaultConfig = CreateConfig(DateTime.Now, 14, false, true);
 
         private const string Commit_Statistics_Configuration_Name = "Commit Statistics";
         private const string Date_Entry_Name = "SinceDate";
@@ -78,8 +78,8 @@ namespace Smeedee.Widgets.SourceControl.Controllers
 
             this.settingsViewModel = settingsViewModel;
 
-            settingsViewModel.SaveSettings.ExecuteDelegate += OnSaveClicked;
-            settingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadClicked;            
+            settingsViewModel.SaveSettings.ExecuteDelegate += SaveSettings;
+            settingsViewModel.ReloadSettings.ExecuteDelegate += ReloadSettings;            
 
             settingsViewModel.PropertyChanged += ViewModelPropertyChanged;
 
@@ -93,6 +93,21 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         public static Configuration CreateDefaultConfig()
         {
             return CreateConfig(DateTime.Today, 14, false, true);
+        } 
+
+        private void LoadDummyDataIntoViewModel()
+        {
+
+            ViewModel.Data.Add(new CommitStatisticsForDate()
+            {
+                Date = DateTime.Today,
+                NumberOfCommits = 0
+            });
+            ViewModel.Data.Add(new CommitStatisticsForDate()
+            {
+                Date = DateTime.Today.AddDays(1),
+                NumberOfCommits = 0
+            });
         }
 
         private static Configuration CreateConfig(DateTime sinceDate, int timeSpan, bool isUsingDate, bool isUsingTimespan)
@@ -106,12 +121,12 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             return newConfig;
         }
        
-        private void OnSaveClicked()
+        private void SaveSettings()
         {
-            SaveSettings(); 
+            SaveConfigToRepository(); 
         }
 
-        private void SaveSettings()
+        private void SaveConfigToRepository()
         {
             var newSinceDate = settingsViewModel.SinceDate;
             var newTimespan = settingsViewModel.CommitTimespanDays;
@@ -147,12 +162,12 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             {
                 foreach (var entry in settingsEntryList)
                 {
-                    TrySetSpecificSetting(configuration, entry);
+                    TryToLoadSpecificSetting(configuration, entry);
                 }
             });
         }
 
-        private void TrySetSpecificSetting(Configuration config, string entry)
+        private void TryToLoadSpecificSetting(Configuration config, string entry)
         {
             uiInvoker.Invoke(() =>
             {
@@ -162,7 +177,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
                 }
                 catch (Exception e)
                 {
-                    LogWarningMsg(e);
+                    LogErrorMsg(e);
                 }
             });
         }
@@ -311,22 +326,7 @@ namespace Smeedee.Widgets.SourceControl.Controllers
             }
         }
 
-        private void LoadDummyDataIntoViewModel()
-        {
-
-            ViewModel.Data.Add(new CommitStatisticsForDate()
-            {
-                Date = DateTime.Today,
-                NumberOfCommits = 0
-            });
-            ViewModel.Data.Add(new CommitStatisticsForDate()
-            {
-                Date = DateTime.Today.AddDays(1),
-                NumberOfCommits = 0
-            });
-        }
-
-        private void OnReloadClicked()
+        private void ReloadSettings()
         {
             CopyConfigurationToViewModel(Widget.Configuration);
             configIsChanged = true;
@@ -342,11 +342,5 @@ namespace Smeedee.Widgets.SourceControl.Controllers
         {
             LoadNewData();
         }
-
-//        private void UpdateLatestRevision(IEnumerable<Changeset> changesets)
-//        {
-//            ViewModel.CurrentRevision = changesets.Max(c => c.Revision);
-//        }
-
     }
 }

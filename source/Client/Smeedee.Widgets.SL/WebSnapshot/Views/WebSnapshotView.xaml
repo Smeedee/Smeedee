@@ -59,8 +59,11 @@
                  VerticalAlignment="Bottom"
                  Visibility="Collapsed" />
         <Image Source="{Binding LoadedImage, Mode=OneWay}"
-                 Name="sourceImage"
-                 Visibility="Collapsed" />
+               Name="sourceImage"
+               Visibility="Collapsed"
+               Width="600"
+               Height="350" />
+        
     </Grid>
 
 </UserControl>
