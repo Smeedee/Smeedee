@@ -59,19 +59,17 @@ namespace Smeedee.Widgets.SL.WebSnapshot
         private void WebSnapshot_Propertychanged(object sender, PropertyChangedEventArgs e)
         {
 
-            if (e.PropertyName == "IsTimeToUpdate")
+            switch (e.PropertyName)
             {
-                LoadImageFunction();
-                snapshotView.UpdateImage();
-            }
-            if (e.PropertyName == "SelectedImage")
-            {
-                LoadImageFunction();
-            }
-            if (e.PropertyName == "LoadedImage")
-            {
-                controller.ShowImageInSettingsView();
-                settingsView.LoadedImageCB = settingsViewModel.LoadedImage as WriteableBitmap;
+                case "SelectedImage":
+                case "IsTimeToUpdate":
+                    LoadImageFunction();
+                    break;
+                case "LoadedImage":
+                    controller.ShowImageInSettingsView();
+                    settingsView.LoadedImageCB = settingsViewModel.LoadedImage as WriteableBitmap;
+                    snapshotView.UpdateImage();
+                    break;
             }
         }
 
