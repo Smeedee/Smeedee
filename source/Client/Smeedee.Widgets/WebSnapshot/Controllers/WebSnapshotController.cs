@@ -23,6 +23,8 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private WebSnapshotConfig webSnapshotConfig;
         private ILog logger;
         private string previousTimestamp = "invalidTimestamp";
+        private bool firstRun = true;
+
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
@@ -91,7 +93,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
         {
             if (snapshots.Count() <= 0) return;
-            
+
             foreach (var webSnapshot in snapshots)
             {
                 if (webSnapshot.Name == SettingsViewModel.SelectedImage)
@@ -119,7 +121,11 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
             if (previousTimestamp != timestamp)
             {
-                previousTimestamp = timestamp;
+                if (!firstRun)
+                {
+                    previousTimestamp = timestamp;
+                    firstRun = false;
+                }
                 TriggerUpdate();
             }
             else
