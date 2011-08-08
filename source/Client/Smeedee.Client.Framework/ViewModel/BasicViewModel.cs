@@ -27,10 +27,7 @@ namespace Smeedee.Client.Framework.ViewModel
                 propertyName = ((MemberExpression)exp.Body).Member.Name;
 
             if (PropertyChanged != null)
-            {
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

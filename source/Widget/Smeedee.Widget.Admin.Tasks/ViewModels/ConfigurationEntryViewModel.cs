@@ -41,7 +41,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
                 if (value != _Name)
                 {
                     _Name = value;
-                    TriggerPropertyChanged("Name");
+                    TriggerPropertyChanged<ConfigurationEntryViewModel>(vm => vm.Name);
                 }
             }
         }
