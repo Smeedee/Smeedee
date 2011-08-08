@@ -27,7 +27,7 @@ using Smeedee.Client.Framework.ViewModel;
 
 namespace Smeedee.Widget.CI.ViewModels
 {
-    public class ProjectInfoViewModel : AbstractViewModel
+    public class ProjectInfoViewModel : BasicViewModel
     {
         public ProjectInfoViewModel()
         {
