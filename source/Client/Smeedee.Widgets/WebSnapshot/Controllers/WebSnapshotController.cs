@@ -22,6 +22,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private WebSnapshotConfig webSnapshotConfig;
         private ILog logger;
+        private string previousTimestamp;
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
