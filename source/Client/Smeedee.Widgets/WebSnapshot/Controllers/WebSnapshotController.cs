@@ -138,7 +138,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             }
             else
             {
-                logger.WriteEntry(new LogEntry("OnGetCompleted, eventArgs was null", eventArgs.Error.ToString()));
+                logger.WriteEntry(new LogEntry("WebSnapshotController", string.Format("EventAargs as null. {0}", eventArgs.Error.ToString())));
             }
 
             SetIsNotLoadingData();
@@ -184,7 +184,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             uiInvoker.Invoke(() =>
                                  {
-
                                      var selected = SettingsViewModel.SelectedImage;
                                      SettingsViewModel.AvailableImages.Clear();
                                      SettingsViewModel.AvailableImagesUri.Clear();
@@ -195,9 +194,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                                          SettingsViewModel.AvailableImagesUri.Add("WebSnapshots/" + fileName);
                                          SettingsViewModel.AvailableImages.Add(snapshot.Name);
                                      }
-
                                      SettingsViewModel.SelectedImage = selected;
-
                                  });
         }
 
