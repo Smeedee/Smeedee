@@ -154,11 +154,12 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
 
         }
 
+        private string previousTimestamp;
         private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
         {
             var timestamp = snapshot.Timestamp;
 
-            if (webSnapshotConfig.Timestamp == timestamp)
+            if (previousTimestamp == timestamp)
             {
                 SettingsViewModel.IsTimeToUpdate = false;
             }
@@ -167,6 +168,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 webSnapshotConfig.Timestamp = timestamp;
                 SettingsViewModel.IsTimeToUpdate = true;
             }
+            previousTimestamp = timestamp;
         }
 
         protected override void OnNotifiedToRefresh(object sender, EventArgs e)
