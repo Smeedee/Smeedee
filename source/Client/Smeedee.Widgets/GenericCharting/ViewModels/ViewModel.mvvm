@@ -8,21 +8,6 @@ using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.GenericCharting.ViewModels
 
-	viewmodel DataPointViewModel:
-		property X as Object
-		property Y as Object
-
-	viewmodel DataSetViewModel:
-		property Name as string
-		property Data as ObservableCollection<DataPointViewModel>
-		property Type as string
-		oproperty Brush as string
-		
-	viewmodel ChartTypeViewModel:
-		oproperty ChartType as string
-
-	viewmodel CollectionViewModel:
-		property Name as string
 
 	viewmodel ChartSettingsViewModel:
 
@@ -45,17 +30,6 @@ namespace Smeedee.Widgets.GenericCharting.ViewModels
 		command ReloadSettings
 		command AddDataSettings
 
-
-	viewmodel SeriesConfigViewModel
-
-		oproperty Action as string
-		oproperty Name as string
-		oproperty Legend as string
-		oproperty ChartType as string
-		oproperty Brush as string
-
-		oproperty Database as string
-		oproperty Collection as string
 
 
 	

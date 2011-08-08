@@ -122,11 +122,23 @@
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartSettingsViewModel.cs">
       <Link>GenericCharting\ViewModels\ChartSettingsViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartTypeViewModel.cs">
+      <Link>GenericCharting\ViewModels\ChartTypeViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartViewModel.cs">
       <Link>GenericCharting\ViewModels\ChartViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\CollectionViewModel.cs">
+      <Link>GenericCharting\ViewModels\CollectionViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\DataPointViewModel.cs">
+      <Link>GenericCharting\ViewModels\DataPointViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\DataSetViewModel.cs">
       <Link>GenericCharting\ViewModels\DataSetViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\SeriesConfigViewModel.cs">
+      <Link>GenericCharting\ViewModels\SeriesConfigViewModel.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ViewModels.cs">
       <Link>GenericCharting\ViewModels\ViewModels.cs</Link>

@@ -68,10 +68,15 @@
     <Compile Include="GenericCharting\Controllers\ChartController.cs" />
     <Compile Include="GenericCharting\Controllers\ChartUpdater.cs" />
     <Compile Include="GenericCharting\ViewModels\ChartSettingsViewModel.cs" />
+    <Compile Include="GenericCharting\ViewModels\ChartTypeViewModel.cs" />
     <Compile Include="GenericCharting\ViewModels\ChartViewModel.cs" />
+    <Compile Include="GenericCharting\ViewModels\CollectionViewModel.cs" />
+    <Compile Include="GenericCharting\ViewModels\DataPointViewModel.cs" />
     <Compile Include="GenericCharting\ViewModels\DataSetViewModel.cs" />
+    <Compile Include="GenericCharting\ViewModels\SeriesConfigViewModel.cs" />
     <Compile Include="GenericCharting\ViewModels\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceControl\Controllers\ChangesetControllerBase.cs" />
@@ -134,10 +139,10 @@
       <LastGenOutput>ViewModel.tt</LastGenOutput>
     </None>
     <None Include="GenericCharting\ViewModels\ViewModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ViewModel.mvvm</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ViewModel.txt</LastGenOutput>
     </None>
     <None Include="TeamMembers\ViewModels\ViewModel.mvvm">
@@ -184,9 +189,9 @@
       <DesignTime>True</DesignTime>
     </Content>
     <Content Include="GenericCharting\ViewModels\ViewModel.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ViewModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Content>
     <Content Include="TeamMembers\ViewModels\ViewModel.txt">
       <DependentUpon>ViewModel.tt</DependentUpon>
