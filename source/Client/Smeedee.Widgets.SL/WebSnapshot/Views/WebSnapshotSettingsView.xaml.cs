@@ -195,7 +195,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             ResetCoordinateBoxes();
             CropButton.IsEnabled = true;
             selectionDisabled = false;
-            ScalingFactorBox.Text = "H:"+image.Height +" - W:"+image.Width;
         }
     }
 }
