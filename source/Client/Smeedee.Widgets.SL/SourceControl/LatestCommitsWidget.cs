@@ -36,7 +36,7 @@ namespace Smeedee.Widgets.SL.SourceControl
     [WidgetInfo(Name = "Latest commits",
                 Description = "A simple widget that shows the latest commits in any configured source control system.",
                 Author = "Smeedee team",
-                Version = "1.01",
+                Version = "1.1",
                 Tags = new[] { CommonTags.SourceControl, CommonTags.TeamCommunication, CommonTags.VCS, CommonTags.Agile })]
     public class LatestCommitsWidget : Client.Framework.ViewModel.Widget
     {
