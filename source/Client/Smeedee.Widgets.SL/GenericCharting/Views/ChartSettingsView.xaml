@@ -115,7 +115,8 @@
                 <ScrollViewer Grid.Column="0"
                     Grid.Row="5" 
                     Grid.ColumnSpan="2"
-                    Width="750">
+                    Width="750"
+                    HorizontalScrollBarVisibility="Auto"          >
                 <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
                     AutoGenerateColumns="False" 
                     HorizontalScrollBarVisibility="Hidden"
@@ -127,13 +128,13 @@
                         
                         <Controls:DataGridTemplateColumn
                             Header="Action"
-                            Width="111">
+                            MinWidth="111">
                             <Controls:DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                                               ItemsSource="{Binding Actions, Mode=TwoWay, Source={StaticResource settingsChoices}}"
                                               SelectedValue="{Binding Action, Mode=TwoWay}"
-                                              Width="110" />
+                                              MinWidth="110" />
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellTemplate>
                         </Controls:DataGridTemplateColumn>
@@ -159,20 +160,20 @@
                         
                         <Controls:DataGridTemplateColumn 
                             Header="Type"
-                            Width="111">
+                            MinWidth="111">
                             <Controls:DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                                               ItemsSource="{Binding ChartTypes, Source={StaticResource settingsChoices}}"
                                               SelectedValue="{Binding ChartType, Mode=TwoWay}"
-                                              Width="110" />
+                                              MinWidth="110" />
                                 </DataTemplate>
                             </Controls:DataGridTemplateColumn.CellEditingTemplate>
                         </Controls:DataGridTemplateColumn>
                         
                         <Controls:DataGridTemplateColumn
                             Header="Color"
-                            Width="160" VirtualizingStackPanel.VirtualizationMode="Standard" >
+                            MinWidth="139" VirtualizingStackPanel.VirtualizationMode="Standard" >
                             <Controls:DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
