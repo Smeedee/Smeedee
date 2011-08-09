@@ -10,7 +10,7 @@ namespace Smeedee.DomainModel.TaskInstanceConfiguration
         public TaskConfigurationEntry()
         {
             PersistableType = typeof (string).AssemblyQualifiedName;
-            PersistableValue = "Placeholder object";
+            PersistableValue = "";
         }
         public virtual TaskConfiguration TaskConfiguration { get; set; }
 
