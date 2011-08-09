@@ -41,6 +41,8 @@ namespace Smeedee.Tasks.Charting
             this.chartStorage = chartStorage;
             _configuration = configuration;
             this.downloadStringService = downloadStringService;
+
+            Interval = TimeSpan.FromMilliseconds(configuration.DispatchInterval);
         }
 
         public override string Name
