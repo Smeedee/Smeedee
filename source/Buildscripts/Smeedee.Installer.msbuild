@@ -32,7 +32,8 @@
     <APDClientWebOutputUserImages Include="..\Client\Smeedee.Client.Web\UserImages\*.jpg"/>
     
     <APDClientWebOutputServices Include="..\Client\Smeedee.Client.Web\Services\*.svc"/>
-
+    <APDClientWebOutputServicesNoSql Include="..\Client\Smeedee.Client.Web\Services\NoSql\*.*" />
+    
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\*.dll"/>
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\Smeedee.Scheduler.Service.exe"/>
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\Smeedee.Scheduler.Service.exe.config"/>
@@ -104,6 +105,7 @@
     <MakeDir Directories="$(WorkingDirectory)\ClientBin"/>
     <MakeDir Directories="$(WorkingDirectory)\UserImages"/>
     <MakeDir Directories="$(WorkingDirectory)\Services"/>
+    <MakeDir Directories="$(WorkingDirectory)\Services\NoSql"/>
 	  <MakeDir Directories="$(WorkingDirectory)\Splash"/>
     <MakeDir Directories="$(WorkingDirectory)\WebSnapshots"/>
   </Target>
@@ -116,6 +118,7 @@
     <Copy SourceFiles="@(APDClientWebOutputUserImages)" DestinationFolder="$(WorkingDirectory)\UserImages"/>
     <Copy SourceFiles="@(APDClientWebOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
     <Copy SourceFiles="@(APDClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
+    <Copy SourceFiles="@(APDClientWebOutputServicesNoSql)" DestinationFolder="$(WorkingDirectory)\Services\NoSql" />
     <Copy SourceFiles="@(APDClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
     <Copy SourceFiles="@(DataCollectorConsoleOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
     <Copy SourceFiles="@(APDIntegrationOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
