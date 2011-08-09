@@ -72,6 +72,15 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             Then("the timer should have started",
                  () => timerMock.Verify(t => t.Start(It.IsAny<int>()), Times.Once()));
         }
+
+        [Test]
+        public void Assure_notified_to_refresh()
+        {
+            Given(controller_is_created);
+            When("timer has elapsed", () => timerMock.Raise(n => n.Elapsed += null, new EventArgs()));
+            Then("onNotifiedToRefresh and loaddata is called", 
+                () => repositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<DomainModel.WebSnapshot.WebSnapshot>>())));
+        }
     }
 
     [TestFixture]
@@ -148,9 +157,95 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         public void Assure_error_is_logged_when_load_is_completed_with_result_null()
         {
             Given(controller_is_created);
-            When(repositoryMock_raises_getCompleted_with_error);
+            When(repositoryMock_raises_getCompleted_with_null_result);
             Then("", () => loggerMock.Verify(l => l.WriteEntry(It.IsAny<LogEntry>())));
         }
+
+        [Test]
+        public void Assure_returns_and_clears_when_load_has_empty_snapshotlist()
+        {
+            Given(controller_is_created).
+                And(there_is_one_snapshot_in_repository);
+            When(repositoryMock_raises_getCompleted);
+            Then("return when gets to updateviewmodel", () =>
+            {
+                settingsViewModel.IsTimeToUpdate.ShouldBeFalse();
+                settingsViewModel.AvailableImages.Count.ShouldBe(0);
+            });
+        }
+
+        [Test]
+        public void Assure_updates_availableImages_when_load_has_populated_snapshotlist()
+        {
+            Given(controller_is_created).
+                And(there_is_one_snapshot_in_repository);
+            When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
+            Then(() => settingsViewModel.AvailableImages.Count.ShouldBe(2));
+        }
+
+        [Test]
+        public void Assure_something_when_snapshot_element_is_same_as_selected_image()
+        {
+            Given(controller_is_created).And("an image is selected", () => settingsViewModel.SelectedImage = "WebSnapshotTask2");
+            When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
+            Then(() => settingsViewModel.IsTimeToUpdate.ShouldBeTrue());
+        }
+
+
+        private static IEnumerable<DomainModel.WebSnapshot.WebSnapshot> result = new List<DomainModel.WebSnapshot.WebSnapshot>();
+        private static Specification<DomainModel.WebSnapshot.WebSnapshot> specification = new WebSnapshotSpecification();
+
+        private Context repository_has_getCompleted = () => repositoryMock.Setup(r => r.BeginGet(It.IsAny<AllSpecification<DomainModel.WebSnapshot.WebSnapshot>>())).
+            Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(result, specification));
+
+        private When repositoryMock_raises_getCompleted =
+            () =>
+            repositoryMock.Raise(r => r.GetCompleted += null,
+                                 new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(result, specification));
+
+        private When repositoryMock_raises_getCompleted_with_error =
+            () =>
+            repositoryMock.Raise(r => r.GetCompleted += null,
+                                 new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(specification, new Exception("Error!")));
+
+        private When repositoryMock_raises_getCompleted_with_null_result =
+            () =>
+            repositoryMock.Raise(r => r.GetCompleted += null,
+                         new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(null, specification));
+
+        private static IEnumerable<DomainModel.WebSnapshot.WebSnapshot> populatedResult = new List<DomainModel.WebSnapshot.WebSnapshot> { snapshot1, snapshot2 };
+        private When repositoryMock_raises_getCompleted_with_populated_snapshotlist = () => repositoryMock.Raise(r => r.GetCompleted += null,
+                                 new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(populatedResult, specification));
+    }
+
+    [TestFixture]
+    public class When_reloading_settings : Shared
+    {
+        [Test]
+        public void Assure_settings_are_copied_to_settingsviewmodel()
+        {
+            Given(controller_is_created);
+            When(reloadsettings_is_called);
+            Then("", () =>
+            {
+                settingsViewModel.SelectedImage.ShouldBe(webSnapshotConfig.TaskName);
+                settingsViewModel.CropCoordinateX.ShouldBe(webSnapshotConfig.CoordinateX);
+                settingsViewModel.CropCoordinateY.ShouldBe(webSnapshotConfig.CoordinateY);
+                settingsViewModel.CropRectangleHeight.ShouldBe(webSnapshotConfig.RectangleHeight);
+                settingsViewModel.CropRectangleWidth.ShouldBe(webSnapshotConfig.RectangleWidth);
+            });
+        }
+
+        [Test]
+        public void Assure_load_data_is_called_when_reload_settings_is_finished()
+        {
+            Given(controller_is_created);
+            When(reloadsettings_is_called);
+            Then("load data should be called", () => repositoryMock.Verify(r => r.BeginGet(It.IsAny<Specification<DomainModel.WebSnapshot.WebSnapshot>>())));
+        }
+
+        private When reloadsettings_is_called = () => settingsViewModel.ReloadSettings.ExecuteDelegate();
+
     }
 
     public class Shared : ScenarioClass
@@ -158,6 +253,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         protected static WebSnapshotController controller;
         protected static WebSnapshotViewModel viewModel;
         protected static WebSnapshotSettingsViewModel settingsViewModel;
+        protected static WebSnapshotConfig webSnapshotConfig;
         protected static Configuration configuration;
         protected static Mock<ITimer> timerMock;
         protected static Mock<ILog> loggerMock;
@@ -165,7 +261,9 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         protected static Mock<IProgressbar> progressbarMock;
         protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterMock;
         protected static Mock<IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot>> repositoryMock;
-        protected static DomainModel.WebSnapshot.WebSnapshot snapshot = new DomainModel.WebSnapshot.WebSnapshot { Name = "New WebSnapshot Task", PictureFilePath = @"C:\path\to\picture.png", PictureHeight = 500, PictureWidth = 600, Timestamp = "201108011141209678" };
+
+        protected static DomainModel.WebSnapshot.WebSnapshot snapshot1 = new DomainModel.WebSnapshot.WebSnapshot { Name = "WebSnapshotTask1", PictureFilePath = @"C:\path\to\picture1.png", PictureHeight = 500, PictureWidth = 600, Timestamp = "201108011141209678" };
+        protected static DomainModel.WebSnapshot.WebSnapshot snapshot2 = new DomainModel.WebSnapshot.WebSnapshot { Name = "WebSnapshotTask2", PictureFilePath = @"C:\path\to\picture2.png", PictureHeight = 500, PictureWidth = 600, Timestamp = "201108011141209678" };
 
         protected Context controller_is_created = CreateController;
         protected When creating_controller = CreateController;
@@ -189,27 +287,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             return loggerMock != null ? loggerMock.Object : null;
         }
 
-        protected static IEnumerable<DomainModel.WebSnapshot.WebSnapshot> result = new List<DomainModel.WebSnapshot.WebSnapshot>{snapshot};
-        protected static Specification<DomainModel.WebSnapshot.WebSnapshot> specification = new WebSnapshotSpecification(); 
-
-        protected Context repository_has_getCompleted = () => repositoryMock.Setup(r => r.BeginGet(It.IsAny<AllSpecification<DomainModel.WebSnapshot.WebSnapshot>>())).
-            Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(result, specification));
-
-        protected When repositoryMock_raises_getCompleted =
-            () =>
-            repositoryMock.Raise(r => r.GetCompleted += null,
-                                 new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(result, specification));
-
-        protected When repositoryMock_raises_getCompleted_with_error =
-            () =>
-            repositoryMock.Raise(r => r.GetCompleted += null,
-                                 new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(specification, new Exception("Error!")));
-
-        protected When repositoryMock_raises_getCompleted_with_null_result =
-            () =>
-            repositoryMock.Raise(r => r.GetCompleted += null,
-                         new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(null, specification));
-
+        
 
         protected static void SetupWebSnapshotRepositoryMock(List<DomainModel.WebSnapshot.WebSnapshot> listOfSnapshots)
         {
@@ -221,7 +299,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         protected When save_is_called = () => settingsViewModel.Save.ExecuteDelegate();
 
         protected Context there_is_one_snapshot_in_repository =
-            () => SetupWebSnapshotRepositoryMock(new List<DomainModel.WebSnapshot.WebSnapshot> { snapshot });
+            () => SetupWebSnapshotRepositoryMock(new List<DomainModel.WebSnapshot.WebSnapshot> { snapshot1 });
 
         [SetUp]
         public void SetUp()
@@ -231,6 +309,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             viewModel = new WebSnapshotViewModel();
             settingsViewModel = new WebSnapshotSettingsViewModel();
             configuration = WebSnapshotConfig.NewDefaultConfiguration();
+            webSnapshotConfig = new WebSnapshotConfig(configuration);
             timerMock = new Mock<ITimer>();
             loggerMock = new Mock<ILog>();
   
