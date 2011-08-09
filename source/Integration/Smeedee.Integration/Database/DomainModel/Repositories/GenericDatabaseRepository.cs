@@ -57,11 +57,11 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
         {
             using (var session = sessionFactory.OpenSession())
             {
-                var results = session.CreateCriteria(typeof(TDomainModelType))
-                                     .List<TDomainModelType>()
-                                     .Where(cs => specification.IsSatisfiedBy(cs));
+                var results = session.CreateCriteria(typeof(TDomainModelType));
+                var r2 = results.List<TDomainModelType>();
+                var r3 = r2.Where(cs => specification.IsSatisfiedBy(cs));
 
-                return results;
+                return r3;
             }
         }
 
