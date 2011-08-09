@@ -104,7 +104,8 @@
     <MakeDir Directories="$(WorkingDirectory)\ClientBin"/>
     <MakeDir Directories="$(WorkingDirectory)\UserImages"/>
     <MakeDir Directories="$(WorkingDirectory)\Services"/>
-	<MakeDir Directories="$(WorkingDirectory)\Splash"/>
+	  <MakeDir Directories="$(WorkingDirectory)\Splash"/>
+    <MakeDir Directories="$(WorkingDirectory)\WebSnapshots"/>
   </Target>
 
 
