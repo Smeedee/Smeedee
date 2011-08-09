@@ -1,20 +1,20 @@
 ﻿<UserControl x:Class="Smeedee.Widgets.SL.GenericCharting.Views.ChartSettingsView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:src="clr-namespace:Smeedee.Widgets.GenericCharting.ViewModels"
-             
              xmlns:conv="clr-namespace:Smeedee.Client.Framework.SL.Converters;assembly=Smeedee.Client.Framework.SL"
-            xmlns:brushes="clr-namespace:Smeedee.Client.Framework.Resources;assembly=Smeedee.Client.Framework.SL"
-    mc:Ignorable="d"
-    d:DesignHeight="600" d:DesignWidth="600">
+             xmlns:brushes="clr-namespace:Smeedee.Client.Framework.Resources;assembly=Smeedee.Client.Framework.SL"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="600">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Smeedee.Client.SL;component/SettingsViewStyles.xaml"/>
+                <ResourceDictionary Source="/Smeedee.Client.SL;component/SettingsViewStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <conv:StringToResourceConverter x:Key="StringToResourceConverter" />
@@ -24,9 +24,9 @@
             <DataTemplate x:Key="BrushColorText">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="15"
-                    Height="15"
-                    Margin="5"
-                    Fill="{Binding BrushName, Converter={StaticResource StringToResourceConverter}}" />
+                               Height="15"
+                               Margin="5"
+                               Fill="{Binding BrushName, Converter={StaticResource StringToResourceConverter}}" />
                     <TextBlock Text="{Binding BrushKey}" />
                 </StackPanel>
             </DataTemplate>
@@ -34,10 +34,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" >
+    <Grid x:Name="LayoutRoot">
         <Border Style="{StaticResource SettingsViewBorder}">
-            <Grid Style="{StaticResource SettingsViewGrid}" 
-                  Height="500" 
+            <Grid Style="{StaticResource SettingsViewGrid}"
+                  Height="500"
                   Width="auto"
                   Margin="0,90,0,0">
                 <Grid.ColumnDefinitions>
@@ -58,156 +58,147 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                    Grid.ColumnSpan="2"
-                    Style="{StaticResource SettingsViewH1}" 
-                    Text="Configure Generic Charting" />
+                           Grid.ColumnSpan="2"
+                           Style="{StaticResource SettingsViewH1}"
+                           Text="Configure Generic Charting" />
 
-                <TextBlock 
-                    Grid.Row="1" 
-                    Grid.Column="0"
-                    Style="{StaticResource SettingsViewText}"
-                    Text="Chart name:" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Style="{StaticResource SettingsViewText}"
+                           Text="Chart name:" />
 
-                <TextBox
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Style="{StaticResource SettingsViewTextBox}"
-                    Text ="{Binding ChartName, Mode=TwoWay}" />
+                <TextBox Grid.Row="1"
+                         Grid.Column="1"
+                         Style="{StaticResource SettingsViewTextBox}"
+                         Text="{Binding ChartName, Mode=TwoWay}" />
 
-                <TextBlock 
-                    Grid.Row="2" 
-                    Grid.Column="0"
-                    Style="{StaticResource SettingsViewText}"
-                    Text="X-axis name:" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Style="{StaticResource SettingsViewText}"
+                           Text="X-axis name:" />
 
-                <TextBox
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Style="{StaticResource SettingsViewTextBox}"
-                    Text ="{Binding XAxisName, Mode=TwoWay}" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="1"
+                         Style="{StaticResource SettingsViewTextBox}"
+                         Text="{Binding XAxisName, Mode=TwoWay}" />
 
-                <TextBlock 
-                    Grid.Row="3" 
-                    Grid.Column="0"
-                    Style="{StaticResource SettingsViewText}"
-                    Text="Y-axis name:" />
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           Style="{StaticResource SettingsViewText}"
+                           Text="Y-axis name:" />
 
-                <TextBox
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Style="{StaticResource SettingsViewTextBox}"
-                    Text ="{Binding YAxisName, Mode=TwoWay}" />
+                <TextBox Grid.Row="3"
+                         Grid.Column="1"
+                         Style="{StaticResource SettingsViewTextBox}"
+                         Text="{Binding YAxisName, Mode=TwoWay}" />
 
-                <TextBlock 
-                    Grid.Row="4" 
-                    Grid.Column="0"
-                    Style="{StaticResource SettingsViewText}"
-                    Text="Type of x-axis:" />
+                <TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Style="{StaticResource SettingsViewText}"
+                           Text="Type of x-axis:" />
 
-                <ComboBox
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Style="{StaticResource SettingsViewComboBox}"
-                    Width="120"
-                    ItemsSource="{Binding XAxisTypes, Mode=TwoWay}"
-                    SelectedValue="{Binding XAxisType, Mode=TwoWay}" />
+                <ComboBox Grid.Row="4"
+                          Grid.Column="1"
+                          Style="{StaticResource SettingsViewComboBox}"
+                          Width="120"
+                          ItemsSource="{Binding XAxisTypes, Mode=TwoWay}"
+                          SelectedValue="{Binding XAxisType, Mode=TwoWay}" />
 
                 <ScrollViewer Grid.Column="0"
-                    Grid.Row="5" 
-                    Grid.ColumnSpan="2"
-                    Width="750"
-                    HorizontalScrollBarVisibility="Auto"          >
-                <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
-                    AutoGenerateColumns="False" 
-                    HorizontalScrollBarVisibility="Hidden"
-                    FontSize="14" 
-                    VirtualizingStackPanel.VirtualizationMode="Standard"
-                    >
-                    
-                    <Controls:DataGrid.Columns>
-                        
-                        <Controls:DataGridTemplateColumn
-                            Header="Action"
-                            MinWidth="111">
-                            <Controls:DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                                              ItemsSource="{Binding Actions, Mode=TwoWay, Source={StaticResource settingsChoices}}"
-                                              SelectedValue="{Binding Action, Mode=TwoWay}"
-                                              MinWidth="110" />
-                                </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellTemplate>
-                        </Controls:DataGridTemplateColumn>
-                       
-                        <Controls:DataGridTextColumn Header="Database"
-                                                     Binding="{Binding Database, Mode=TwoWay}"
-                                                     IsReadOnly="True"
-                                                     MinWidth="90" />
+                              Grid.Row="5"
+                              Grid.ColumnSpan="2"
+                              Width="750"
+                              HorizontalScrollBarVisibility="Auto">
+                    <Controls:DataGrid ItemsSource="{Binding SeriesConfig, Mode=TwoWay}"
+                                       AutoGenerateColumns="False"
+                                       HorizontalScrollBarVisibility="Hidden"
+                                       FontSize="14"
+                                       VirtualizingStackPanel.VirtualizationMode="Standard">
 
-                        <Controls:DataGridTextColumn Header="Collection"
-                                                     Binding="{Binding Collection, Mode=TwoWay}"
-                                                     IsReadOnly="True"
-                                                     MinWidth="90" />
+                        <Controls:DataGrid.Columns>
 
-                        <Controls:DataGridTextColumn Header="Dataset"
-                                                     Binding="{Binding Name, Mode=TwoWay}"
-                                                     IsReadOnly ="True"
-                                                     MinWidth="90" />
+                            <Controls:DataGridTemplateColumn Header="Action"
+                                                             MinWidth="111">
+                                <Controls:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox Style="{StaticResource SettingsViewComboBox}"
+                                                  ItemsSource="{Binding Actions, Mode=TwoWay, Source={StaticResource settingsChoices}}"
+                                                  SelectedValue="{Binding Action, Mode=TwoWay}"
+                                                  MinWidth="110" />
+                                    </DataTemplate>
+                                </Controls:DataGridTemplateColumn.CellTemplate>
+                            </Controls:DataGridTemplateColumn>
 
-                        <Controls:DataGridTextColumn Header="Legend*"
-                                                     Binding="{Binding Legend, Mode=TwoWay}"
-                                                     MinWidth="90" />
-                        
-                        <Controls:DataGridTemplateColumn 
-                            Header="Type"
-                            MinWidth="111">
-                            <Controls:DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <ComboBox Style="{StaticResource SettingsViewComboBox}"
-                                              ItemsSource="{Binding ChartTypes, Source={StaticResource settingsChoices}}"
-                                              SelectedValue="{Binding ChartType, Mode=TwoWay}"
-                                              MinWidth="110" />
-                                </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellEditingTemplate>
-                        </Controls:DataGridTemplateColumn>
-                        
-                        <Controls:DataGridTemplateColumn
-                            Header="Color"
-                            MinWidth="139" VirtualizingStackPanel.VirtualizationMode="Standard" >
-                            <Controls:DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
-                                              SelectedValuePath="BrushKey"
-                                              SelectedValue="{Binding Brush, Mode=TwoWay}"
-                                              ItemTemplate="{StaticResource BrushColorText}" >
-                                        <ComboBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel/>
-                                            </ItemsPanelTemplate>
-                                        </ComboBox.ItemsPanel>
-                                    </ComboBox>
-                                </DataTemplate>
+                            <Controls:DataGridTextColumn Header="Database"
+                                                         Binding="{Binding Database, Mode=TwoWay}"
+                                                         IsReadOnly="True"
+                                                         MinWidth="90" />
 
-                            </Controls:DataGridTemplateColumn.CellTemplate>
-                            <Controls:DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
-                                              SelectedValuePath="BrushKey"
-                                              SelectedValue="{Binding Brush, Mode=TwoWay}"
-                                              ItemTemplate="{StaticResource BrushColorText}" >
-                                        <ComboBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel/>
-                                            </ItemsPanelTemplate>
-                                        </ComboBox.ItemsPanel>
-                                    </ComboBox>
-                                </DataTemplate>
-                            </Controls:DataGridTemplateColumn.CellEditingTemplate>
-                        </Controls:DataGridTemplateColumn>
-                        
-                        
-                    </Controls:DataGrid.Columns>
-                </Controls:DataGrid>
+                            <Controls:DataGridTextColumn Header="Collection"
+                                                         Binding="{Binding Collection, Mode=TwoWay}"
+                                                         IsReadOnly="True"
+                                                         MinWidth="90" />
+
+                            <Controls:DataGridTextColumn Header="Dataset"
+                                                         Binding="{Binding Name, Mode=TwoWay}"
+                                                         IsReadOnly="True"
+                                                         MinWidth="90" />
+
+                            <Controls:DataGridTextColumn Header="Legend*"
+                                                         Binding="{Binding Legend, Mode=TwoWay}"
+                                                         MinWidth="90" />
+
+                            <Controls:DataGridTemplateColumn Header="Type"
+                                                             MinWidth="111">
+                                <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox Style="{StaticResource SettingsViewComboBox}"
+                                                  ItemsSource="{Binding ChartTypes, Source={StaticResource settingsChoices}}"
+                                                  SelectedValue="{Binding ChartType, Mode=TwoWay}"
+                                                  MinWidth="110" />
+                                    </DataTemplate>
+                                </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            </Controls:DataGridTemplateColumn>
+
+                            <Controls:DataGridTemplateColumn Header="Color"
+                                                             MinWidth="139"
+                                                             VirtualizingStackPanel.VirtualizationMode="Standard">
+                                <Controls:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox Style="{StaticResource SettingsViewComboBox}"
+                                                  MinWidth="138"
+                                                  ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
+                                                  SelectedValuePath="BrushKey"
+                                                  SelectedValue="{Binding Brush, Mode=TwoWay}"
+                                                  ItemTemplate="{StaticResource BrushColorText}">
+                                            <ComboBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel />
+                                                </ItemsPanelTemplate>
+                                            </ComboBox.ItemsPanel>
+                                        </ComboBox>
+                                    </DataTemplate>
+
+                                </Controls:DataGridTemplateColumn.CellTemplate>
+                                <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{Binding BrushList, Source={StaticResource brushProvider}}"
+                                                  SelectedValuePath="BrushKey"
+                                                  SelectedValue="{Binding Brush, Mode=TwoWay}"
+                                                  ItemTemplate="{StaticResource BrushColorText}">
+                                            <ComboBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel />
+                                                </ItemsPanelTemplate>
+                                            </ComboBox.ItemsPanel>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            </Controls:DataGridTemplateColumn>
+
+
+                        </Controls:DataGrid.Columns>
+                    </Controls:DataGrid>
                 </ScrollViewer>
 
                 <StackPanel Grid.Column="0"
@@ -221,42 +212,37 @@
                     <TextBlock Style="{StaticResource SettingsViewText}"
                                Text="Database:"
                                Width="140"
-                               VerticalAlignment="Bottom"/>
+                               VerticalAlignment="Bottom" />
                     <TextBlock Style="{StaticResource SettingsViewText}"
                                Text="Collection:"
                                Width="140"
                                VerticalAlignment="Bottom" />
                 </StackPanel>
-                    <StackPanel
-					Grid.Column="0" 
-                    Grid.ColumnSpan="2"
-                    Grid.Row="8"
-					Orientation="Horizontal">
+                <StackPanel Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Grid.Row="8"
+                            Orientation="Horizontal">
                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                               ItemsSource="{Binding Databases}"
                               SelectedItem="{Binding SelectedDatabase, Mode=TwoWay}"
-                              Width="140"/>
+                              Width="140" />
                     <ComboBox Style="{StaticResource SettingsViewComboBox}"
                               ItemsSource="{Binding Collections}"
                               SelectedItem="{Binding SelectedCollection, Mode=TwoWay}"
-                              Width="140"/>
-                    <Button
-						Style="{StaticResource SettingsViewButton}"
-						Command="{Binding AddDataSettings}" 
-						Content="Add"
-                        HorizontalAlignment="Right" />
-                    
+                              Width="140" />
+                    <Button Style="{StaticResource SettingsViewButton}"
+                            Command="{Binding AddDataSettings}"
+                            Content="Add"
+                            HorizontalAlignment="Right" />
+
                 </StackPanel>
-                <StackPanel
-					Grid.Row="9"
-					Grid.Column="1"
-					Style="{StaticResource SettingsViewControlButtonsWrapper}" >
-                    <Button
-                		Style="{StaticResource SettingsViewSaveButton}"
-                    	Command="{Binding SaveSettings}" />
-                    <Button 
-                		Style="{StaticResource SettingsViewReloadSettingsButton}"
-                     	Command="{Binding ReloadSettings}"  />
+                <StackPanel Grid.Row="9"
+                            Grid.Column="1"
+                            Style="{StaticResource SettingsViewControlButtonsWrapper}">
+                    <Button Style="{StaticResource SettingsViewSaveButton}"
+                            Command="{Binding SaveSettings}" />
+                    <Button Style="{StaticResource SettingsViewReloadSettingsButton}"
+                            Command="{Binding ReloadSettings}" />
                 </StackPanel>
             </Grid>
         </Border>
