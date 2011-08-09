@@ -17,7 +17,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot
         Name = "Web Snapshot",
         Description = "Display snapshots taken by the \"Web Snapshot\" task",
         Author = "Smeedee team",
-        Version = "0.2",
+        Version = "1.0",
         Tags = new[] { CommonTags.Fun })]
     public class WebSnapshotWidget : Client.Framework.ViewModel.Widget
     {
