@@ -72,18 +72,9 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.DynamicProxy2">
-      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\Castle.DynamicProxy2.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_Bins\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle">
-      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
+      <HintPath>..\..\..\tools\NHibernate-3.2.0.GA-bin\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -91,7 +82,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\..\tools\SQLite.NET.0.21_x68_dll\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\..\tools\SQLite.NET\bin\System.Data.SQLite.DLL</HintPath>
     </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq">

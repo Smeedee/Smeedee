@@ -41,8 +41,7 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
     {
         protected readonly ISessionFactory sessionFactory;
 
-        public GenericDatabaseRepository() :
-            this(NHibernateFactory.AssembleSessionFactory(NHibernateFactory.DatabaseFilePath))
+        public GenericDatabaseRepository() : this(GetSessionFactoryInstance())
         {
         }
 
@@ -61,6 +60,7 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
                 var results = session.CreateCriteria(typeof(TDomainModelType))
                                      .List<TDomainModelType>()
                                      .Where(cs => specification.IsSatisfiedBy(cs));
+
                 return results;
             }
         }
@@ -107,6 +107,16 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
                     session.Transaction.Commit();
                 }
             }
+        }
+
+        private static ISessionFactory globalSessionFactory;
+        private static ISessionFactory GetSessionFactoryInstance()
+        {
+            if (globalSessionFactory != null)
+                return globalSessionFactory;
+
+            globalSessionFactory = NHibernateFactory.AssembleSessionFactory(NHibernateFactory.DatabaseFilePath);
+            return globalSessionFactory;
         }
     }
 }

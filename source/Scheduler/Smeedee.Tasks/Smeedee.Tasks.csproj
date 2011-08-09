@@ -61,8 +61,8 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\..\tools\htmlagilitypack\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_Bins\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\tools\NHibernate-3.2.0.GA-bin\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />

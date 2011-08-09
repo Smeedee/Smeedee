@@ -18,7 +18,7 @@ namespace Smeedee.Integration.Database.DomainModel.Repositories
             configuration.Properties.Add("connection.driver_class", "NHibernate.Driver.SQLite20Driver");
             configuration.Properties.Add("dialect", "NHibernate.Dialect.SQLiteDialect");
             configuration.Properties.Add("query.substitutions", "true=1;false=0");
-            configuration.Properties.Add("proxyfactory.factory_class", "NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle");
+            //configuration.Properties.Add("proxyfactory.factory_class", "NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle");
             AddAssembliesToConfiguration(configuration);
             CreateDbSchema(configuration);
             return configuration;
