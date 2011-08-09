@@ -58,7 +58,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             SettingsViewModel.Save.ExecuteDelegate += OnSaveSettings;
 
             SettingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadSettings;
-            SettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
+            //SettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
 
             repository.GetCompleted += OnGetCompleted;
 
@@ -93,7 +93,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
                 else
                 {
                     logger.WriteEntry(new LogEntry("WebSnapshotController",
-                                                   string.Format("EventAargs as null. {0}", eventArgs.Error)));
+                                                   string.Format("EventArgs as null. {0}", eventArgs.Error)));
                 }
             }
             SetIsNotLoadingData();
@@ -118,29 +118,32 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             }
         }
 
-        private void TriggerUpdate()
-        {
-            SettingsViewModel.IsTimeToUpdate = false;
-            SettingsViewModel.IsTimeToUpdate = true;
-        }
-
         private void SetWebSnapshot(DomainModel.WebSnapshot.WebSnapshot snapshot)
         {
             var timestamp = snapshot.Timestamp;
 
             if (previousTimestamp != timestamp)
             {
-                if (!firstRun)
+                if (firstRun)
                 {
-                    previousTimestamp = timestamp;
                     firstRun = false;
+                    return;
                 }
+
+                previousTimestamp = timestamp;
+
                 TriggerUpdate();
             }
             else
             {
                 SettingsViewModel.IsTimeToUpdate = false;
             }
+        }
+
+        private void TriggerUpdate()
+        {
+            SettingsViewModel.IsTimeToUpdate = false;
+            SettingsViewModel.IsTimeToUpdate = true;
         }
 
         private void PopulateAvailableImages(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshotDataFromDb)
@@ -193,12 +196,13 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         public void OnReloadSettings()
         {
             CopyConfigurationToSettingsViewModel();
-        }
-
-        private void OnReloadSettingsCompleted(object sender, EventArgs e)
-        {
             BeginLoadData();
         }
+
+        //private void OnReloadSettingsCompleted(object sender, EventArgs e)
+        //{
+        //    BeginLoadData();
+        //}
 
         private void CopyConfigurationToSettingsViewModel()
         {
