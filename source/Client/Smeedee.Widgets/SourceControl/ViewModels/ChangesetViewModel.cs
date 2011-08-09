@@ -32,7 +32,7 @@ using Smeedee.Client.Framework.ViewModel;
 
 namespace Smeedee.Widgets.SourceControl.ViewModels
 {
-    public class ChangesetViewModel : AbstractViewModel
+    public class ChangesetViewModel : BasicViewModel
     {
         public const string DEFAULT_BACKGROUND_COLOR = "GreyGradientBrush";
 
