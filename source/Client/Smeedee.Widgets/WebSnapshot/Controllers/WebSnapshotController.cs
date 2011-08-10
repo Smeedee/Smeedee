@@ -199,11 +199,6 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             BeginLoadData();
         }
 
-        //private void OnReloadSettingsCompleted(object sender, EventArgs e)
-        //{
-        //    BeginLoadData();
-        //}
-
         private void CopyConfigurationToSettingsViewModel()
         {
             uiInvoker.Invoke(() =>
