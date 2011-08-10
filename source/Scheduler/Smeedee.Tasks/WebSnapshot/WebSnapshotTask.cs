@@ -22,9 +22,9 @@ namespace Smeedee.Tasks.WebSnapshot
                       "An current limitation is probably due to Javascript-heavy sites, which results in a blank snapshot.",
         Version = 1,
         Webpage = "http://smeedee.org")]
-    [TaskSetting(1, WEBPAGE, typeof(string), "http://", "URL to webpage for snapshotting or image for downloading")]
-    [TaskSetting(2, XPATH, typeof(string), "", "Optional XPath expression, that matches an image tag on the given URL, will download the image instead of snapshotting the entire page")]
-    [TaskSetting(3, SMEEDEEPATH, typeof(string), @"C:\Program Files\Smeedee", "Path to Smeedee base directory, where snapshots will be stored to be accessible on the server")]
+    [TaskSetting(1, WEBPAGE, typeof(string), "", @"URL to webpage for snapshotting or image for downloading. You can also use file:// or C:\ to find an image on a local disk")]
+    [TaskSetting(2, XPATH, typeof(string), "", "Optional XPath expression, that matches an image tag on the given URL. This will download the image instead of snapshotting the entire page. Best results with simpler expressions that doesn't use // or @")]
+    [TaskSetting(3, SMEEDEEPATH, typeof(string), @"C:\Program Files\Smeedee", "Path to Smeedee base directory, where snapshots will be stored in order to be accessible on the server")]
     
 
     public class WebSnapshotTask : TaskBase
