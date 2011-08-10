@@ -9,6 +9,7 @@ using Smeedee.Integration.Database.DomainModel.Repositories;
 using Smeedee.IntegrationTests.Database.DomainModel.Repositories;
 using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
+using System.Data.SQLite;
 
 namespace Smeedee.Integration.Tests.Database.DomainModel.Repositories
 {
