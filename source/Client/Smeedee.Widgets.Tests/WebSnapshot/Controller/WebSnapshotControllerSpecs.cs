@@ -18,8 +18,6 @@ using TinyMVVM.IoC;
 namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
 {
 
-    //this class should be more thoroughly tested
-
     [TestFixture]
     public class When_controller_is_spawning : Shared
     {

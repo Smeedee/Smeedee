@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using Moq;
 using NUnit.Framework;
+using TinyBDD.Dsl.GivenWhenThen;
 using TinyBDD.Specification.NUnit;
 using Smeedee.Widgets.WebSnapshot.Util;
 
@@ -15,13 +12,9 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
         [TestFixture]
         public class When_URL_is_specified : Shared
         {
-
             [Test]
             public void Then_assure_property_was_set_to_URL()
             {
-                webSnapshotterMock.Setup(w => w.GetSnapshot(url));
-                webSnapshotterMock.Setup(w => w.Url).Returns(url);
-                var webSnapshotter = webSnapshotterMock.Object;
                 webSnapshotter.GetSnapshot(url);
                 webSnapshotter.Url.ShouldBe(url);
             }
@@ -29,14 +22,9 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             [Test]
             public void Then_assure_property_is_updated_when_giving_new_URL()
             {
-                webSnapshotterMock.Setup(w => w.GetSnapshot(url));
-                webSnapshotterMock.Setup(w => w.Url).Returns(url);
-                var webSnapshotter = webSnapshotterMock.Object;
                 webSnapshotter.GetSnapshot(url);
                 webSnapshotter.Url.ShouldBe(url);
 
-                webSnapshotterMock.Setup(w => w.GetSnapshot("http://example.org"));
-                webSnapshotterMock.Setup(w => w.Url).Returns("http://example.org");
                 webSnapshotter.GetSnapshot("http://example.org");
                 webSnapshotter.Url.ShouldBe("http://example.org");
             }
@@ -49,8 +37,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             public void Then_assure_it_is_identified_as_blank()
             {
                 var blankBitmap = GetBlankBitmap();
-                webSnapshotterMock.Setup(w => w.IsBlank(blankBitmap)).Returns(true);
-                var webSnapshotter = webSnapshotterMock.Object;
                 webSnapshotter.IsBlank(blankBitmap).ShouldBeTrue();
             }
         }
@@ -62,8 +48,6 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             public void Then_assure_it_is_not_blank()
             {
                 var notBlankImage = GetColorfullBitmap();
-                webSnapshotterMock.Setup(w => w.GetSnapshot(url)).Returns(notBlankImage);
-                var webSnapshotter = webSnapshotterMock.Object;
                 var snapshot = webSnapshotter.GetSnapshot(url);
                 webSnapshotter.IsBlank(snapshot).ShouldBeFalse();
             }
@@ -76,23 +60,21 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             public void Then_assure_it_is_detected_as_blank()
             {
                 var blankImage = GetBlankBitmap();
-                webSnapshotterMock.Setup(w => w.GetSnapshot("http://google.com")).Returns(blankImage);
-                webSnapshotterMock.Setup(w => w.IsBlank(blankImage)).Returns(true);
-                var webSnapshotter = webSnapshotterMock.Object;
                 var snapshot = webSnapshotter.GetSnapshot("http://google.com");
                 webSnapshotter.IsBlank(snapshot).ShouldBeTrue();
             }
         }
 
-        public class Shared
+        public class Shared : ScenarioClass
         {
-            protected Mock<IWebSnapshotter> webSnapshotterMock;
-            protected string url;
+            protected static string url;
+
+            protected static WebSnapshotter webSnapshotter;
 
             [SetUp]
             public void Setup()
             {
-                webSnapshotterMock = new Mock<IWebSnapshotter>();
+                webSnapshotter = new WebSnapshotter();
                 url = "http://www.smeedee.org/";
             }
 
@@ -118,7 +100,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
                     for (int j = 0; j < colorfulBitmap.Height; j++)
                     {
                         var randomColor = Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
-                        colorfulBitmap.SetPixel(i,j,randomColor);
+                        colorfulBitmap.SetPixel(i, j, randomColor);
                     }
                 }
                 return colorfulBitmap;
