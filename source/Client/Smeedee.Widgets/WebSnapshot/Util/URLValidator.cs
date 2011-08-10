@@ -12,7 +12,14 @@ namespace Smeedee.Widgets.WebSnapshot.Util
 
         public static bool IsValidUrl(string url)
         {
-            return Regex.IsMatch(url, "^https?://[a-zA-Z1-9]");
+            if (Regex.IsMatch(url, "^https?://[a-zA-Z1-9]"))
+                return true;
+            if (Regex.IsMatch(url, "^file://[a-zA-Z1-9]"))
+                return true;
+            if (File.Exists(url))
+                return true;
+            
+            return false;
         }
 
         public static bool IsPictureURL(string url)
