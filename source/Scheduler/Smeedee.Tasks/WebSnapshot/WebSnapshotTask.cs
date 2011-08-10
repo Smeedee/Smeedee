@@ -70,16 +70,9 @@ namespace Smeedee.Tasks.WebSnapshot
 
         public override void Execute()
         {
-            Bitmap picture = null;
-            if ((config.ReadEntryValue(XPATH) as string).Length == 0)
-            {
-                picture = webImageFetcher.GetBitmapFromURL(config.ReadEntryValue(WEBPAGE) as string);
-            }
-            else
-            {
-                picture = webImageFetcher.GetBitmapFromURL(config.ReadEntryValue(WEBPAGE) as string,
-                                                           config.ReadEntryValue(XPATH) as string);
-            }
+            Bitmap picture = FetchPicture(
+                (config.ReadEntryValue(WEBPAGE) as string), 
+                (config.ReadEntryValue(XPATH) as string));
 
             if (picture != null)
             {
@@ -97,6 +90,17 @@ namespace Smeedee.Tasks.WebSnapshot
                 databasepersister.Save(model);
                 UpdateConfigValues();
             }
+        }
+
+        private Bitmap FetchPicture(string url, string xpath)
+        {
+            if (xpath.Length == 0)
+            {
+                return webImageFetcher.GetBitmapFromURL(url);
+            }
+
+            return webImageFetcher.GetBitmapFromURL(url,xpath);
+
         }
 
         private bool ConfigValuesHasChanged()
