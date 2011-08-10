@@ -36,6 +36,7 @@ using Smeedee.DomainModel.Framework.DSL.Specifications;
 using Smeedee.DomainModel.SourceControl;
 using TinyBDD.Specification.NUnit;
 using TinyBDD.Dsl.GivenWhenThen;
+using NHibernate.ByteCode.Castle;
 
 
 namespace Smeedee.Client.WebTests.Services.Integration.ChangesetRepositoryServiceTests
