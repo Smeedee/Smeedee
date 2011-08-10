@@ -41,21 +41,21 @@ namespace Smeedee.IntegrationTests.PMT.ScrumForTFS.DomainModel.Repositories
             {
                 new Task
                 {
-                    SystemId = "Task 1",
+                    SystemId = "123",
                     Name = "Task 1",
                     Status = "Open",
                     WorkEffortEstimate = 20
                 },
                 new Task
                 {
-                    SystemId = "Task 2",
+                    SystemId = "124",
                     Name = "Task 2",
                     Status = "Open",
                     WorkEffortEstimate = 10
                 },
                 new Task
                 {
-                    SystemId = "Task 3",
+                    SystemId = "125",
                     Name = "Task 3",
                     Status = "Open",
                     WorkEffortEstimate = 15

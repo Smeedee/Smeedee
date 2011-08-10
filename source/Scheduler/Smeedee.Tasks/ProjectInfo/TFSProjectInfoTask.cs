@@ -16,15 +16,16 @@ namespace Smeedee.Tasks.ProjectInfo
 {
     [Task("TFS Project Info Harvester",
                          Author = "Smeedee Team",
-                         Description = "Retrieves information from Team Foundation's Work Item functionality. Used to populate Smeedee's database with project related data such as burndown data and sprint dates.",
+                         Description = "Retrieves information from Team Foundation's Work Item functionality. Used to populate Smeedee's database with project related data such as burndown data and sprint dates. Values are defaulted to match the Conchango template.",
                          Version = 1,
                          Webpage = "http://smeedee.org")]
     [TaskSetting(1, TFSProjectInfoSettingsConstants.USERNAME_SETTING_NAME, typeof(string), "")]
     [TaskSetting(2, TFSProjectInfoSettingsConstants.PASSWORD_SETTING_NAME, typeof(string), "")]
     [TaskSetting(3, TFSProjectInfoSettingsConstants.URL_SETTING_NAME, typeof(Uri), "", "Include protocols such as http://\nand port numbers such as :8080")]
     [TaskSetting(4, TFSProjectInfoSettingsConstants.PROJECT_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(5, TFSProjectInfoSettingsConstants.REMAINING_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.REMAINING_FIELD, "If you are using a custom template you can edit this value to tell Smeedee what work item field it should retrieve 'time remaining' information for a task from.")]
-    [TaskSetting(6, TFSProjectInfoSettingsConstants.ESTIMATED_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.ESTIMATED_FIELD, "If you are using a custom template you can edit this value to tell Smeedee what work item field it should retrieve 'estimated time' information for a task from.")]
+    [TaskSetting(5, TFSProjectInfoSettingsConstants.REMAINING_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.WORK_REMAINING_FIELD, "If you are using a custom template you can edit this value to tell Smeedee what work item field it should retrieve 'time remaining' information for a task from.")]
+    [TaskSetting(6, TFSProjectInfoSettingsConstants.ESTIMATED_SETTING_NAME, typeof(string), TFSProjectInfoSettingsConstants.ESTIMATED_EFFORT_FIELD, "If you are using a custom template you can edit this value to tell Smeedee what work item field it should retrieve 'estimated time' information for a task from.")]
+    [TaskSetting(7, TFSProjectInfoSettingsConstants.WORK_ITEM_TYPE_NAME, typeof(string), TFSProjectInfoSettingsConstants.WORK_ITEM_TYPE_FIELD, "If you are using a custom template you can edit this value to tell Smeedee what type of work items it should retrieve information for a task from.")]
     public class TFSProjectInfoTask : TaskBase
     {
 
@@ -61,15 +62,19 @@ namespace Smeedee.Tasks.ProjectInfo
         {
             var remainingField = (string) config.ReadEntryValue(TFSProjectInfoSettingsConstants.REMAINING_SETTING_NAME);
             var estimatedField = (string) config.ReadEntryValue(TFSProjectInfoSettingsConstants.ESTIMATED_SETTING_NAME);
+            var workItemTypeField = (string) config.ReadEntryValue(TFSProjectInfoSettingsConstants.WORK_ITEM_TYPE_NAME);
 
             var configDictionary = new Dictionary<String, String>();
-            configDictionary["tfswi-remaining-field"] = (remainingField != "")
+            configDictionary[TFSProjectInfoSettingsConstants.ESTIMATED_EFFORT_NAME] = (remainingField != "")
                                                             ? remainingField
-                                                            : "Work Remaining (Scrum v3)";
-            configDictionary["tfswi-estimated-field"] = (estimatedField != "")
+                                                            : TFSProjectInfoSettingsConstants.WORK_REMAINING_FIELD;
+            configDictionary[TFSProjectInfoSettingsConstants.WORK_REMAINING_NAME] = (estimatedField != "")
                                                             ? estimatedField
-                                                            : "Estimated Effort (Scrum v3)";
-
+                                                            : TFSProjectInfoSettingsConstants.ESTIMATED_EFFORT_FIELD;
+            configDictionary[TFSProjectInfoSettingsConstants.WORK_ITEM_TYPE_NAME] = (workItemTypeField != "")
+                                                                                        ? workItemTypeField
+                                                                                        : TFSProjectInfoSettingsConstants
+                                                                                              .WORK_ITEM_TYPE_FIELD;
 
             var serverUrl = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.URL_SETTING_NAME);
             var projectName = (string)config.ReadEntryValue(TFSProjectInfoSettingsConstants.PROJECT_SETTING_NAME);
