@@ -40,6 +40,8 @@ namespace Smeedee.Widgets.SL.WebSnapshot
                                            controller.OnReloadSettings();
                                    } ;
 
+            PropertyChanged += controller.ToggleRefreshInSettingsMode;
+
             settingsViewModel.PropertyChanged += WebSnapshot_Propertychanged;
 
             snapshotView = new WebSnapshotView { DataContext = settingsViewModel };

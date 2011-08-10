@@ -35,6 +35,8 @@ namespace Smeedee.Widgets.SL.GenericCharting
                 if (e.PropertyName == "IsInSettingsMode")
                     controller.OnReloadSettings();
             };
+
+            PropertyChanged += controller.ToggleRefreshInSettingsMode;
         }
 
         public override void Configure(DependencyConfigSemantics config)
