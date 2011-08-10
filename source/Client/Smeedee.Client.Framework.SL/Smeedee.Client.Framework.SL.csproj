@@ -237,6 +237,9 @@
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\ApplicationContext.cs">
       <Link>ViewModel\ApplicationContext.cs</Link>
     </Compile>
+    <Compile Include="..\Smeedee.Client.Framework\ViewModel\BasicViewModel.cs">
+      <Link>ViewModel\BasicViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\BindableViewModel.cs">
       <Link>ViewModel\BindableViewModel.cs</Link>
     </Compile>

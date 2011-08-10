@@ -6,6 +6,7 @@ using System.Windows.Documents;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
+using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
 using Smeedee.DomainModel.Framework;
@@ -162,8 +163,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
            
             private Context changesetRepository_BeginGet_completed_calls_GetCompleted_without_error =
                 () => changesetRepoMock.Setup(c => c.BeginGet(It.IsAny<Specification<Changeset>>())).
-                    Callback((Specification<Changeset> specs) => changesetRepoMock.
-                    Raise(e => e.GetCompleted += null, new GetCompletedEventArgs<Changeset>(changesets, new AllChangesetsSpecification())));
+                    Raises(e => e.GetCompleted += null, new GetCompletedEventArgs<Changeset>(changesets, new AllChangesetsSpecification()));
             
             private static List<Changeset> changesets = CreateChangesets();
 
@@ -174,8 +174,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
 
             private Context changesetRepository_BeginGet_completed_calls_GetCompleted_with_empty_parameter =
                () => changesetRepoMock.Setup(c => c.BeginGet(It.IsAny<Specification<Changeset>>())).
-                    Callback((Specification<Changeset> specs) => changesetRepoMock.
-                    Raise(e => e.GetCompleted += null, getCompletedEventArgs));
+                    Raises(e => e.GetCompleted += null, getCompletedEventArgs);
             private static GetCompletedEventArgs<Changeset> getCompletedEventArgs = new GetCompletedEventArgs<Changeset>(null, new AllChangesetsSpecification());
 
             private When loadData_is_called = () => myChangesetControllerBase.MyLoadData();
@@ -300,10 +299,10 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
         {
             protected static MyChangeSetControllerBase myChangesetControllerBase;
 
-            protected static BindableViewModel<AbstractViewModel> viewModel;
+            protected static BindableViewModel<BasicViewModel> viewModel;
             protected static Mock<IAsyncRepository<Changeset>> changesetRepoMock;
             protected static Mock<ITimer> timerMock;
-            protected static Mock<IUIInvoker> uiInvokeMock;
+            protected static IUIInvoker uiInvoker;
 
             protected static LogEntryMockPersister loggerMock;
 
@@ -332,7 +331,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 myChangesetControllerBase = new MyChangeSetControllerBase(viewModel,
                                                                           GetChangesetRepoObject(),
                                                                           timerMock.Object,
-                                                                          uiInvokeMock.Object,
+                                                                          uiInvoker,
                                                                           GetLoggerObject(),
                                                                           loadingNotifierMock.Object,
                                                                           widgetMock.Object,
@@ -344,7 +343,7 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
                 myChangesetControllerBase = new MyChangeSetControllerBase(viewModel,
                                                                           GetChangesetRepoObject(),
                                                                           timerMock.Object,
-                                                                          uiInvokeMock.Object,
+                                                                          uiInvoker,
                                                                           null,
                                                                           loadingNotifierMock.Object,
                                                                           widgetMock.Object,
@@ -365,27 +364,16 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             {
                 Scenario("");
 
-                viewModel = new BindableViewModel<AbstractViewModel>();
+                viewModel = new BindableViewModel<BasicViewModel>();
                 changesetRepoMock = new Mock<IAsyncRepository<Changeset>>();
                 timerMock = new Mock<ITimer>();
-                uiInvokeMock = new Mock<IUIInvoker>();
+                uiInvoker = new NoUIInvokation();
 
                 loggerMock = new LogEntryMockPersister();
 
                 loadingNotifierMock = new Mock<IProgressbar>();
                 widgetMock = new Mock<IWidget>();
                 configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
-
-
-                uiInvokeMock.Setup(s => s.Invoke(It.IsAny<Action>())).Callback((Action a) => a.Invoke());
-
-                RemoveAllGlobalDependencies.ForAllViewModels();
-                ConfigureGlobalDependencies.ForAllViewModels(
-                    config =>
-                    {
-                        config.Bind<IPersistDomainModelsAsync<Configuration>>().ToInstance(configPersisterMock.Object);
-                        config.Bind<IUIInvoker>().ToInstance(uiInvokeMock.Object);
-                    });
             }
 
             [TearDown]
@@ -395,11 +383,11 @@ namespace Smeedee.Widgets.Tests.SourceControl.Controllers
             }
         }
 
-        public class MyChangeSetControllerBase : ChangesetControllerBase<AbstractViewModel>
+        public class MyChangeSetControllerBase : ChangesetControllerBase<BasicViewModel>
         {
             public bool LoadDataIntoViewModelOk;
 
-            public MyChangeSetControllerBase(BindableViewModel<AbstractViewModel> viewModel,
+            public MyChangeSetControllerBase(BindableViewModel<BasicViewModel> viewModel,
                                              IAsyncRepository<Changeset> changesetRepo,
                                              ITimer timer,
                                              IUIInvoker uiInvoke,

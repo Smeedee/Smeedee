@@ -37,7 +37,7 @@ namespace Smeedee.Widgets.SL.SourceControl
     [WidgetInfo(Name = "Commit statistics",
                 Description = "Shows a graph of the number of commits to the source control in a given time span.",
                 Author = "Smeedee team",
-                Version = "1.01",
+                Version = "1.1",
                 Tags = new[] { CommonTags.ProjectManagement, CommonTags.SourceControl, CommonTags.VCS, CommonTags.Agile })]
     public class CommitStatisticsWidget : Client.Framework.ViewModel.Widget
     {

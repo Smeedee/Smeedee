@@ -27,7 +27,7 @@ using Smeedee.Client.Framework.ViewModel;
 
 namespace Smeedee.Widgets.SourceControl.ViewModels
 {
-    public class KeywordColorPairViewModel : AbstractViewModel
+    public class KeywordColorPairViewModel : BasicViewModel
     {
         public delegate void KeywordEvent(KeywordColorPairViewModel sender);
 

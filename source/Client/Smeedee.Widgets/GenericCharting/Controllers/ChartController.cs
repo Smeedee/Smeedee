@@ -224,6 +224,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             ChartConfig = new ChartConfig(configuration);
             chartUpdater.ChartConfig = ChartConfig;
             CopyConfigurationToSettingsViewModel();
+            chartUpdater.ConfigHasChanged = true;
             LoadData();
         }
 

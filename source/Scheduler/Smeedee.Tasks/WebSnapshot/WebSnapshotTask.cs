@@ -54,7 +54,8 @@ namespace Smeedee.Tasks.WebSnapshot
             webImageFetcher = new WebImageFetcher(new WebImageProvider());
             filename = GenerateFilename() + ".png";
             filePath = Path.Combine(lastPathName, "WebSnapshots", filename);
-            
+
+            Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);
         }
 
         public const string WEBPAGE = "Webpage or Image URL";

@@ -36,18 +36,15 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
 
         void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (selectionDisabled)
-                return;
+            if (selectionDisabled) return;
 
+            if (rect != null) ResetImage();
             Point point = e.GetPosition(image);
-            
+
             if (CropUtil.OutsidePicture(point, image)) return;
 
             MousePress.X = point.X;
             MousePress.Y = point.Y;
-
-            Xbox.Text = MousePress.X.ToString();
-            Ybox.Text = MousePress.Y.ToString();
 
             rect = new Rectangle();
             origPoint = e.GetPosition(canvas);
@@ -100,9 +97,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             MouseRelease.X = point.X;
             MouseRelease.Y = point.Y;
 
-            Heightbox.Text = rect.Height.ToString();
-            Widthbox.Text = rect.Width.ToString();
-
             if (rect != null)
             {
                 canvas.MouseMove -= canvas_MouseMove;
@@ -110,12 +104,35 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             }
         }
 
+        private Point ActualPoint(Queue<Point> points)
+        {
+            var x = 0d;
+            var y = 0d;
+
+            for (var i = 0; i < points.Count; i++)
+            {
+                var point = points.Dequeue();
+
+                x += point.X;
+                y += point.Y;
+            }
+
+            return new Point(x,y);
+        }
+
         private void crop_click(object sender, RoutedEventArgs e)
         {
-            upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease, rect);
+            upperleftpoint = CropUtil.GetUpperLeftCornerInRectangle(MousePress, MouseRelease);
 
             previousPoints.Enqueue(upperleftpoint);
             previousRect.Push(rect);
+
+            var actualPoint = ActualPoint(previousPoints);
+            Xbox.Text = actualPoint.X.ToString();
+            Ybox.Text = actualPoint.Y.ToString();
+
+            Heightbox.Text = rect.Height.ToString();
+            Widthbox.Text = rect.Width.ToString();
 
             var img = CropPicture(upperleftpoint, rect, image);
 
@@ -152,12 +169,7 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
                     Y =  CropUtil.NegativeNumber(upperleftpoint.Y)
                 };
 
-                //Draw to Writable Bitmap
                 wb.Render(img, t);
-
-                //wb.Crop((int)upperleftpoint.X, (int)upperleftpoint.Y,
-                //    (int)rectangle.Width, (int)rectangle.Height);
-
                 wb.Invalidate();
                 
             }
@@ -195,7 +207,6 @@ namespace Smeedee.Widgets.SL.WebSnapshot.Views
             ResetCoordinateBoxes();
             CropButton.IsEnabled = true;
             selectionDisabled = false;
-            ScalingFactorBox.Text = "H:"+image.Height +" - W:"+image.Width;
         }
     }
 }

@@ -39,7 +39,7 @@ using TinyMVVM.Framework.Services;
 namespace Smeedee.Widgets.SourceControl.Controllers
 {
     public abstract class ChangesetControllerBase<T> : ControllerBase<BindableViewModel<T>>
-        where T : AbstractViewModel
+        where T : BasicViewModel
     {
         protected IAsyncRepository<Changeset> changesetRepository;
         protected ILog logger;

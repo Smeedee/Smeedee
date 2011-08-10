@@ -22,7 +22,9 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         private IAsyncRepository<DomainModel.WebSnapshot.WebSnapshot> repository;
         private WebSnapshotConfig webSnapshotConfig;
         private ILog logger;
-        private string previousTimestamp;
+        private string previousTimestamp = "invalidTimestamp";
+        private bool firstRun = true;
+
 
         public WebSnapshotController(
             WebSnapshotViewModel webSnapshotViewModel,
@@ -56,7 +58,7 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             SettingsViewModel.Save.ExecuteDelegate += OnSaveSettings;
 
             SettingsViewModel.ReloadSettings.ExecuteDelegate += OnReloadSettings;
-            SettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
+            //SettingsViewModel.ReloadSettings.AfterExecute += OnReloadSettingsCompleted;
 
             repository.GetCompleted += OnGetCompleted;
 
@@ -64,36 +66,55 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
             BeginLoadData();
         }
 
-        protected void BeginLoadData()
+        public void BeginLoadData()
         {
             if (!ViewModel.IsLoading)
             {
                 SetIsLoadingData();
+
                 repository.BeginGet(new WebSnapshotSpecification());
             }
         }
 
         private void OnGetCompleted(object sender, GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot> eventArgs)
         {
-            if (eventArgs.Result != null)
+            if (eventArgs.Error != null)
             {
-                var SnapshotDataFromDB = eventArgs.Result;
-                UpdateViewModel(SnapshotDataFromDB);
-                PopulateAvailableImages(SnapshotDataFromDB);
+                LogErrorMsg(eventArgs.Error);
             }
             else
             {
-                logger.WriteEntry(new LogEntry("WebSnapshotController", string.Format("EventAargs as null. {0}", eventArgs.Error)));
+                if (eventArgs.Result != null)
+                {
+                    var SnapshotDataFromDB = eventArgs.Result;
+                    UpdateViewModel(SnapshotDataFromDB);
+                    PopulateAvailableImages(SnapshotDataFromDB);
+                }
+                else
+                {
+                    logger.WriteEntry(new LogEntry("WebSnapshotController",
+                                                   string.Format("EventArgs as null. {0}", eventArgs.Error)));
+                }
             }
             SetIsNotLoadingData();
         }
 
         private void UpdateViewModel(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshots)
         {
-            if (snapshots.Count() > 0)
+            if (snapshots.Count() <= 0) return;
+
+            foreach (var webSnapshot in snapshots)
             {
-                var snapshot = snapshots.First();
-                uiInvoker.Invoke(() => SetWebSnapshot(snapshot));
+                if (webSnapshot.Name == SettingsViewModel.SelectedImage)
+                {
+                    uiInvoker.Invoke(() => SetWebSnapshot(webSnapshot));
+                    break;
+                }
+            }
+
+            if (SettingsViewModel.Image == null)
+            {
+                TriggerUpdate();
             }
         }
 
@@ -101,16 +122,28 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             var timestamp = snapshot.Timestamp;
 
-            if (previousTimestamp == timestamp)
+            if (previousTimestamp != timestamp)
             {
-                SettingsViewModel.IsTimeToUpdate = false;
+                if (firstRun)
+                {
+                    firstRun = false;
+                    return;
+                }
+
+                previousTimestamp = timestamp;
+
+                TriggerUpdate();
             }
             else
             {
-                webSnapshotConfig.Timestamp = timestamp;
-                SettingsViewModel.IsTimeToUpdate = true;
+                SettingsViewModel.IsTimeToUpdate = false;
             }
-            previousTimestamp = timestamp;
+        }
+
+        private void TriggerUpdate()
+        {
+            SettingsViewModel.IsTimeToUpdate = false;
+            SettingsViewModel.IsTimeToUpdate = true;
         }
 
         private void PopulateAvailableImages(IEnumerable<DomainModel.WebSnapshot.WebSnapshot> snapshotDataFromDb)
@@ -154,23 +187,22 @@ namespace Smeedee.Widgets.WebSnapshot.Controllers
         {
             SetIsNotSavingConfig();
 
-            //this triggers a propertyChanged in WebSnapshotWidget
-            SettingsViewModel.IsTimeToUpdate = false;
-            SettingsViewModel.IsTimeToUpdate = true;
+            TriggerUpdate();
 
             BeginLoadData();
         }
-       
+
 
         public void OnReloadSettings()
         {
             CopyConfigurationToSettingsViewModel();
-        }
-
-        private void OnReloadSettingsCompleted(object sender, EventArgs e)
-        {
             BeginLoadData();
         }
+
+        //private void OnReloadSettingsCompleted(object sender, EventArgs e)
+        //{
+        //    BeginLoadData();
+        //}
 
         private void CopyConfigurationToSettingsViewModel()
         {

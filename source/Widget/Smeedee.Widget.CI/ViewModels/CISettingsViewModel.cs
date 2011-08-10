@@ -172,7 +172,7 @@ namespace Smeedee.Widget.CI.ViewModels
     }
 
 
-    public class ProjectConfigViewModel : AbstractViewModel
+    public class ProjectConfigViewModel : BasicViewModel
     {
         //public CIProject Project { get; private set; }
 

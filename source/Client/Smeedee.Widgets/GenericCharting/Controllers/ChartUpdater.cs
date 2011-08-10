@@ -18,6 +18,9 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
         private ChartViewModel viewModel;
         private IUIInvoker uiInvoker;
         public ChartConfig ChartConfig { get; set; }
+
+        public bool ConfigHasChanged { get; set; }
+
         private IChartStorageReader storageReader;
         private CollectionDownloadManager downloadManager = null;
 
@@ -35,6 +38,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
             this.uiInvoker = uiInvoker;
             this.storageReader = storageReader;
             downloadedCharts = null;
+            ConfigHasChanged = true;
         }
 
         public void Update()
@@ -75,7 +79,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
 
         private void DownloadCompleted(Collection<Chart> downloadedCharts)
         {
-            if (DownloadedChartsHasNotChanged(downloadedCharts))
+            if (DownloadedChartsHasNotChanged(downloadedCharts) && !ConfigHasChanged)
             {
                 if (UpdateFinished != null)
                     UpdateFinished(this, EventArgs.Empty);
@@ -92,6 +96,7 @@ namespace Smeedee.Widgets.GenericCharting.Controllers
                                              UpdateFinished(this, EventArgs.Empty);
                                      });
             }
+            ConfigHasChanged = false;
         }
 
         private bool DownloadedChartsHasNotChanged(Collection<Chart> newCharts)

@@ -37,7 +37,7 @@ namespace Smeedee.Widgets.SL.SourceControl
     [WidgetInfo(Name = "Top committers", 
                 Description = "Aggregates the number of commits to the source control done by users and displays a graph of who has commited most often within a given timespan.",
                 Author = "Smeedee team",
-                Version = "1.01",
+                Version = "1.1",
                 Tags = new[] { CommonTags.SourceControl, CommonTags.Fun })
     ]
     public class TopCommitersWidget : Client.Framework.ViewModel.Widget

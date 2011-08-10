@@ -33,8 +33,10 @@
     
     <SmeedeeClientWebOutputServices Include="..\Client\Smeedee.Client.Web\Services\*.svc"/>
 
+
     <SmeedeeClientWebOutputMobileServices Include="..\Client\Smeedee.Client.Web\MobileServices\**\*.aspx"/>
     <SmeedeeClientWebOutputMobileServices Include="..\Client\Smeedee.Client.Web\MobileServices\**\*.aspx.cs"/>
+    <SmeedeeClientWebOutputServicesNoSql Include="..\Client\Smeedee.Client.Web\Services\NoSql\*.*" />
     
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\*.dll"/>
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\Smeedee.Scheduler.Service.exe"/>
@@ -107,8 +109,10 @@
     <MakeDir Directories="$(WorkingDirectory)\ClientBin"/>
     <MakeDir Directories="$(WorkingDirectory)\UserImages"/>
     <MakeDir Directories="$(WorkingDirectory)\Services"/>
-    <MakeDir Directories="$(WorkingDirectory)\MobileServices"/>
 	<MakeDir Directories="$(WorkingDirectory)\Splash"/>
+    <MakeDir Directories="$(WorkingDirectory)\MobileServices"/>
+    <MakeDir Directories="$(WorkingDirectory)\Services\NoSql"/>
+    <MakeDir Directories="$(WorkingDirectory)\WebSnapshots"/>
   </Target>
 
 
@@ -121,6 +125,9 @@
     <Copy SourceFiles="@(SmeedeeClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
     <Copy SourceFiles="@(SmeedeeClientWebOutputMobileServices)" DestinationFolder="$(WorkingDirectory)\MobileServices\%(RecursiveDir)"/>
     <Copy SourceFiles="@(SmeedeeClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
+    <Copy SourceFiles="@(SmeedeeClientWebOutputServicesNoSql)" DestinationFolder="$(WorkingDirectory)\Services\NoSql" />
+    <Copy SourceFiles="@(APDClientWebOutputServicesNoSql)" DestinationFolder="$(WorkingDirectory)\Services\NoSql" />
+    <Copy SourceFiles="@(APDClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
     <Copy SourceFiles="@(DataCollectorConsoleOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
     <Copy SourceFiles="@(SmeedeeIntegrationOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
   </Target>

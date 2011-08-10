@@ -3,7 +3,7 @@ using Smeedee.Client.Framework.ViewModel;
 
 namespace Smeedee.Widgets.SourceControl.ViewModels
 {
-    public class RevisionCounterViewModel : AbstractViewModel
+    public class RevisionCounterViewModel : BasicViewModel
     {
         public TopCommitersViewModel topCommitersViewModel;
 
