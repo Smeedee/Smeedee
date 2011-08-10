@@ -17,6 +17,9 @@ using TinyMVVM.IoC;
 
 namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
 {
+
+    //this class should be more thoroughly tested
+
     [TestFixture]
     public class When_controller_is_spawning : Shared
     {
@@ -171,6 +174,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             {
                 settingsViewModel.IsTimeToUpdate.ShouldBeFalse();
                 settingsViewModel.AvailableImages.Count.ShouldBe(0);
+                settingsViewModel.AvailableImagesUri.Count.ShouldBe(0);
             });
         }
 
@@ -180,16 +184,74 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
             Given(controller_is_created).
                 And(there_is_one_snapshot_in_repository);
             When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
-            Then(() => settingsViewModel.AvailableImages.Count.ShouldBe(2));
+            Then("available images should be updated", () => settingsViewModel.AvailableImages.Count.ShouldBe(2));
         }
 
         [Test]
-        public void Assure_something_when_snapshot_element_is_same_as_selected_image()
+        public void Assure_returns_when_snapshot_element_is_same_as_selected_image_and_firstrun_is_true()
         {
-            Given(controller_is_created).And("an image is selected", () => settingsViewModel.SelectedImage = "WebSnapshotTask2");
+            Given(controller_is_created).
+                And("an image is selected", () => settingsViewModel.SelectedImage = "WebSnapshotTask2").
+                And("settingsviewmodel has an image", () => settingsViewModel.Image = new object());
+            When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
+            Then(() => settingsViewModel.IsTimeToUpdate.ShouldBeFalse());
+        }
+
+        [Test]
+        public void Assure_is_time_to_update_is_true_when_snapshot_element_is_same_as_selected_image()
+        {
+            Given(controller_is_created).
+                And("an image is selected", () => settingsViewModel.SelectedImage = "WebSnapshotTask2").
+                And("settingsviewmodel has an image", () => settingsViewModel.Image = new object()).
+                And(repositoryMock_has_raised_getCompleted_with_populated_snapshotlist);
             When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
             Then(() => settingsViewModel.IsTimeToUpdate.ShouldBeTrue());
         }
+
+        [Test]
+        public void Assure_is_time_to_update_is_false_when_snapshot_element_is_same_as_selected_image_and_timestamp_is_the_same()
+        {
+            Given(controller_is_created).
+                And("an image is selected", () => settingsViewModel.SelectedImage = "WebSnapshotTask2").
+                And("settingsviewmodel has an image", () => settingsViewModel.Image = new object()).
+                And(repositoryMock_has_raised_getCompleted_with_populated_snapshotlist).
+                And(repositoryMock_has_raised_getCompleted_with_populated_snapshotlist);
+            When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
+            Then(() => settingsViewModel.IsTimeToUpdate.ShouldBeFalse());
+        }
+
+        [Test]
+        public void Assure_is_time_to_update_is_true_when_settingsviewmodel_image_is_null()
+        {
+            Given(controller_is_created);
+            When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
+            Then(() => settingsViewModel.IsTimeToUpdate.ShouldBeTrue());
+        }
+
+        [Test]
+        public void Assure_populates_available_images_when_snapshot_list_is_populated()
+        {
+            Given(controller_is_created);
+            When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
+            Then(() =>
+            {
+                settingsViewModel.AvailableImages.Count.ShouldBe(2);
+                settingsViewModel.AvailableImagesUri.Count.ShouldBe(2);
+            });
+        }
+
+        [Test]
+        public void Assure_selected_image_is_set_when_populate_available_images()
+        {
+            Given(controller_is_created).
+                And("settingsviewmodel has an image", () => settingsViewModel.SelectedImage = "MySelectedImage");
+            When(repositoryMock_raises_getCompleted_with_populated_snapshotlist);
+            Then(() =>
+            {
+                settingsViewModel.SelectedImage.ShouldBe("MySelectedImage");
+            });
+        }
+
 
 
         private static IEnumerable<DomainModel.WebSnapshot.WebSnapshot> result = new List<DomainModel.WebSnapshot.WebSnapshot>();
@@ -197,6 +259,11 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
 
         private Context repository_has_getCompleted = () => repositoryMock.Setup(r => r.BeginGet(It.IsAny<AllSpecification<DomainModel.WebSnapshot.WebSnapshot>>())).
             Raises(t => t.GetCompleted += null, new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(result, specification));
+
+
+        private Context repositoryMock_has_raised_getCompleted_with_populated_snapshotlist = () => repositoryMock.Raise(r => r.GetCompleted += null,
+                                 new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(populatedResult, specification));
+
 
         private When repositoryMock_raises_getCompleted =
             () =>
@@ -216,6 +283,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         private static IEnumerable<DomainModel.WebSnapshot.WebSnapshot> populatedResult = new List<DomainModel.WebSnapshot.WebSnapshot> { snapshot1, snapshot2 };
         private When repositoryMock_raises_getCompleted_with_populated_snapshotlist = () => repositoryMock.Raise(r => r.GetCompleted += null,
                                  new GetCompletedEventArgs<DomainModel.WebSnapshot.WebSnapshot>(populatedResult, specification));
+
+
     }
 
     [TestFixture]
@@ -247,6 +316,70 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Controller
         private When reloadsettings_is_called = () => settingsViewModel.ReloadSettings.ExecuteDelegate();
 
     }
+
+    [TestFixture]
+    public class When_configuration_is_updated : Shared
+    {
+        [Test]
+        public void Assure_configuration_is_correctly_copied_to_settingsviewmodel()
+        {
+            Given(controller_is_created);
+            When(configuration_is_changed);
+            Then(() =>
+            {
+                settingsViewModel.SelectedImage.ShouldBe("myTaskName");
+                settingsViewModel.CropCoordinateX.ShouldBe("myXCoord");
+                settingsViewModel.CropCoordinateY.ShouldBe("myYCoord");
+                settingsViewModel.CropRectangleHeight.ShouldBe("myRecHeight");
+                settingsViewModel.CropRectangleWidth.ShouldBe("myRecWidth");
+            });
+        }
+
+        [Test]
+        public void Assure_loading_data_starts()
+        {
+            Given(controller_is_created);
+            When(configuration_is_changed);
+            Then(
+                () =>
+                repositoryMock.Verify(l => l.BeginGet(It.IsAny<Specification<DomainModel.WebSnapshot.WebSnapshot>>())));
+        }
+
+        private static Configuration aConfiguration = new Configuration("myConfig");
+
+        private static void populateConfiguration()
+        {
+            aConfiguration.NewSetting(WebSnapshotConfig.taskname, "myTaskName");
+            aConfiguration.NewSetting(WebSnapshotConfig.coordinateX, "myXCoord");
+            aConfiguration.NewSetting(WebSnapshotConfig.coordinateY, "myYCoord");
+            aConfiguration.NewSetting(WebSnapshotConfig.rectangleHeight, "myRecHeight");
+            aConfiguration.NewSetting(WebSnapshotConfig.rectangleWidth, "myRecWidth");
+            aConfiguration.NewSetting(WebSnapshotConfig.timestamp, "myTime");
+            aConfiguration.IsConfigured = false;
+        }
+
+        private When configuration_is_changed = () => 
+        {
+            populateConfiguration();
+            controller.UpdateConfiguration(aConfiguration); 
+        };
+    }
+
+    [TestFixture]
+    public class When_show_image_in_settingsview : Shared
+    {
+        [Test]
+        public void Assure_settingsviewmodel_image_is_set()
+        {
+            Given(controller_is_created).
+            And("loaded image", () => settingsViewModel.LoadedImage = "a loaded image");
+            When("we want to show image in settingsview", () => controller.ShowImageInSettingsView());
+            Then(() => settingsViewModel.Image.ShouldBe("a loaded image"));
+        }
+    }
+
+    
+
 
     public class Shared : ScenarioClass
     {
