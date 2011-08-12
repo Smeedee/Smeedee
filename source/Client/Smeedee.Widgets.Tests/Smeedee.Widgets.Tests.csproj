@@ -97,6 +97,7 @@
     <Compile Include="WebSnapshot\Controller\WebSnapshotControllerSpecs.cs" />
     <Compile Include="WebSnapshot\Util\URLValidatorSpec.cs" />
     <Compile Include="WebSnapshot\Util\WebImageFetcherSpec.cs" />
+    <Compile Include="WebSnapshot\Util\WebImageProviderSpec.cs" />
     <Compile Include="WebSnapshot\Util\WebSnapshotterSpec.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotSettingsViewModelSpec.cs" />
     <Compile Include="WebSnapshot\ViewModel\WebSnapshotViewModelSpecs.cs" />
