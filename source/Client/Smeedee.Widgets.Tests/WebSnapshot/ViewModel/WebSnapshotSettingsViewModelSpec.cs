@@ -21,6 +21,24 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
             {
                 webSnapshotSettingsViewModel.Save.ShouldNotBeNull();
             }
+
+            [Test]
+            public void Then_assure_it_has_a_reload_command()
+            {
+                webSnapshotSettingsViewModel.ReloadSettings.ShouldNotBeNull();
+            }
+
+            [Test]
+            public void Then_assure_available_images_is_not_null()
+            {
+                webSnapshotSettingsViewModel.AvailableImages.ShouldNotBeNull();
+            }
+
+            [Test]
+            public void Then_assure_available_images_uri_is_not_null()
+            {
+                webSnapshotSettingsViewModel.AvailableImagesUri.ShouldNotBeNull();
+            }
         }
 
 

@@ -12,10 +12,8 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
         protected static WebSnapshotViewModel viewmodel;
         protected Context viewmodel_is_created = () => viewmodel = new WebSnapshotViewModel();
 
-        protected When picture_is_loaded = () =>
-                                               {
-                                                   viewmodel.Snapshot = new WriteableBitmap(new BitmapImage(new Uri("http://my.pic/somePicture.jpg")));
-                                               };
+        protected When picture_is_loaded = 
+            () => viewmodel.Snapshot = new WriteableBitmap(new BitmapImage(new Uri("http://my.pic/somePicture.jpg")));
 
         [SetUp]
         public void SetUp()
@@ -47,7 +45,7 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.ViewModel
         {
             Given(viewmodel_is_created);
             When(picture_is_loaded);
-            Then("picture should be gg", () => viewmodel.Snapshot.ShouldNotBeNull());
+            Then("picture should not be null", () => viewmodel.Snapshot.ShouldNotBeNull());
         }
 
     }
