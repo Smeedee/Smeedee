@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Moq;
@@ -12,6 +13,8 @@ using TinyBDD.Specification.NUnit;
 
 namespace Smeedee.Tasks.Tests.WebSnapshot
 {
+
+
 
     [TestFixture]
     public class When_Spawned : Shared
@@ -40,7 +43,7 @@ namespace Smeedee.Tasks.Tests.WebSnapshot
             {
                 var fileName = task.GenerateFilename();
                 fileName.ShouldNotBeNull();
-                task.ValidateFilename(fileName).ShouldBeTrue();
+                ValidateFilename(fileName).ShouldBeTrue();
             });
 
         }
@@ -51,7 +54,7 @@ namespace Smeedee.Tasks.Tests.WebSnapshot
             Given(Task_is_created);
             When("");
             Then("invalid filename is detected",
-                 () => task.ValidateFilename("not / valid -@#$%^%& at =\\ all").ShouldBeFalse());
+                 () => ValidateFilename("not / valid -@#$%^%& at =\\ all").ShouldBeFalse());
         }
 
         [Test]
@@ -63,7 +66,7 @@ namespace Smeedee.Tasks.Tests.WebSnapshot
             {
                 var fileName = task.GenerateFilename();
                 fileName.ShouldNotBeNull();
-                task.ValidateFilename(fileName).ShouldBeTrue();
+                ValidateFilename(fileName).ShouldBeTrue();
             });
         }
 
@@ -149,8 +152,11 @@ namespace Smeedee.Tasks.Tests.WebSnapshot
             StartScenario();
         }
 
+        public bool ValidateFilename(string filename)
+        {
+            return filename.IndexOfAny(Path.GetInvalidFileNameChars()) == -1;
+        }
+
     }
-
-
 
 }
