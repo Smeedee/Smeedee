@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Moq;
 using NUnit.Framework;
 using TinyBDD.Specification.NUnit;
 using Smeedee.Widgets.WebSnapshot.Util;
@@ -41,6 +42,12 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             {
                 URLValidator.IsPictureURL(url).ShouldBeFalse();
             }
+
+            [Test]
+            public void Then_assure_it_is_valid_as_file_url()
+            {
+                URLValidator.IsValidUrl(fileURL).ShouldBeTrue();
+            }
         }
 
         [TestFixture]
@@ -65,15 +72,19 @@ namespace Smeedee.Widgets.Tests.WebSnapshot.Util
             protected string url;
             protected string invalid;
 
+            protected string fileURL;
+
+            protected string existURL;
+
             [SetUp]
             public void Setup()
             {
                 imageURL = "http://smeedee.org/images/code.png";
                 url = "http://smeedee.org/";
                 invalid = "mister spock is not an url";
+
+                fileURL = "file://afile.txt";
             }
-        
-            
         }
     }
 }
