@@ -9,7 +9,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 	public partial class TasksViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual ObservableCollection<TaskViewModel> AvailableTasks
+		public ObservableCollection<TaskViewModel> AvailableTasks
 		{
 			get 
 			{
@@ -32,7 +32,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetAvailableTasks(ref ObservableCollection<TaskViewModel> value);
 		partial void OnSetAvailableTasks(ref ObservableCollection<TaskViewModel> value);
 
-		public virtual ObservableCollection<TaskInstanceConfigurationViewModel> RunningTasks
+		public ObservableCollection<TaskInstanceConfigurationViewModel> RunningTasks
 		{
 			get 
 			{
@@ -55,7 +55,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetRunningTasks(ref ObservableCollection<TaskInstanceConfigurationViewModel> value);
 		partial void OnSetRunningTasks(ref ObservableCollection<TaskInstanceConfigurationViewModel> value);
 
-		public virtual TaskViewModel SelectedAvailableTask
+		public TaskViewModel SelectedAvailableTask
 		{
 			get 
 			{
@@ -78,7 +78,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetSelectedAvailableTask(ref TaskViewModel value);
 		partial void OnSetSelectedAvailableTask(ref TaskViewModel value);
 
-		public virtual bool RunningTaskIsSelected
+		public bool RunningTaskIsSelected
 		{
 			get 
 			{
@@ -101,7 +101,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetRunningTaskIsSelected(ref bool value);
 		partial void OnSetRunningTaskIsSelected(ref bool value);
 
-		public virtual bool AvailableTaskIsSelected
+		public bool AvailableTaskIsSelected
 		{
 			get 
 			{
@@ -124,7 +124,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetAvailableTaskIsSelected(ref bool value);
 		partial void OnSetAvailableTaskIsSelected(ref bool value);
 
-		public virtual TaskInstanceConfigurationViewModel SelectedRunningTask
+		public TaskInstanceConfigurationViewModel SelectedRunningTask
 		{
 			get 
 			{
@@ -147,7 +147,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetSelectedRunningTask(ref TaskInstanceConfigurationViewModel value);
 		partial void OnSetSelectedRunningTask(ref TaskInstanceConfigurationViewModel value);
 
-		public virtual bool HasChanges
+		public bool HasChanges
 		{
 			get 
 			{
@@ -198,7 +198,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 	public partial class TaskViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual string Author 
+		public string Author 
 		{ 
 			get
 			{
@@ -216,7 +216,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		private string _Author;
 		partial void OnGetAuthor(ref string value);
 		partial void OnSetAuthor(ref string value);
-		public virtual string Description 
+		public string Description 
 		{ 
 			get
 			{
@@ -234,7 +234,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		private string _Description;
 		partial void OnGetDescription(ref string value);
 		partial void OnSetDescription(ref string value);
-		public virtual long Version 
+		public long Version 
 		{ 
 			get
 			{
@@ -252,7 +252,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		private long _Version;
 		partial void OnGetVersion(ref long value);
 		partial void OnSetVersion(ref long value);
-		public virtual string Webpage 
+		public string Webpage 
 		{ 
 			get
 			{
@@ -270,7 +270,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		private string _Webpage;
 		partial void OnGetWebpage(ref string value);
 		partial void OnSetWebpage(ref string value);
-		public virtual string Name
+		public string Name
 		{
 			get 
 			{
@@ -293,7 +293,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetName(ref string value);
 		partial void OnSetName(ref string value);
 
-		public virtual ObservableCollection<ConfigurationEntryViewModel> ConfigurationEntries
+		public ObservableCollection<ConfigurationEntryViewModel> ConfigurationEntries
 		{
 			get 
 			{
@@ -336,7 +336,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 	public partial class TaskInstanceConfigurationViewModel : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
-		public virtual string AvailableTaskName
+		public string AvailableTaskName
 		{
 			get 
 			{
@@ -359,7 +359,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetAvailableTaskName(ref string value);
 		partial void OnSetAvailableTaskName(ref string value);
 
-		public virtual string RunningTaskName
+		public string RunningTaskName
 		{
 			get 
 			{
@@ -382,7 +382,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetRunningTaskName(ref string value);
 		partial void OnSetRunningTaskName(ref string value);
 
-		public virtual int DispatchIntervalHours
+		public int DispatchIntervalHours
 		{
 			get 
 			{
@@ -405,7 +405,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetDispatchIntervalHours(ref int value);
 		partial void OnSetDispatchIntervalHours(ref int value);
 
-		public virtual int DispatchIntervalMinutes
+		public int DispatchIntervalMinutes
 		{
 			get 
 			{
@@ -428,7 +428,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetDispatchIntervalMinutes(ref int value);
 		partial void OnSetDispatchIntervalMinutes(ref int value);
 
-		public virtual int DispatchIntervalSeconds
+		public int DispatchIntervalSeconds
 		{
 			get 
 			{
@@ -451,7 +451,7 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		partial void OnGetDispatchIntervalSeconds(ref int value);
 		partial void OnSetDispatchIntervalSeconds(ref int value);
 
-		public virtual ObservableCollection<ConfigurationEntryViewModel> ConfigurationEntries
+		public ObservableCollection<ConfigurationEntryViewModel> ConfigurationEntries
 		{
 			get 
 			{
@@ -479,6 +479,137 @@ namespace Smeedee.Widget.Admin.Tasks.ViewModels
 		//Commands
 		
 		public TaskInstanceConfigurationViewModel()
+		{
+	
+			OnInitialize();
+			ApplyConvention(new BindCommandsDelegatesToMethods());
+		}
+
+		partial void OnInitialize();
+	}
+}
+
+namespace Smeedee.Widget.Admin.Tasks.ViewModels
+{
+	public partial class ConfigurationEntryViewModel : TinyMVVM.Framework.ViewModelBase
+	{
+		//State
+		public int OrderIndex 
+		{ 
+			get
+			{
+				OnGetOrderIndex(ref _OrderIndex);
+				 
+				return _OrderIndex; 
+			}
+			set 
+			{
+				OnSetOrderIndex(ref value); 
+				_OrderIndex = value; 
+			} 
+		}
+
+		private int _OrderIndex;
+		partial void OnGetOrderIndex(ref int value);
+		partial void OnSetOrderIndex(ref int value);
+		public string Name
+		{
+			get 
+			{
+				OnGetName(ref _Name);
+				 
+				return _Name; 
+			}
+			set
+			{
+				if (value != _Name)
+				{
+					OnSetName(ref value); 
+					_Name = value;
+					TriggerPropertyChanged("Name");
+				}
+			}
+		}
+		private string _Name;
+
+		partial void OnGetName(ref string value);
+		partial void OnSetName(ref string value);
+
+		public Type Type
+		{
+			get 
+			{
+				OnGetType(ref _Type);
+				 
+				return _Type; 
+			}
+			set
+			{
+				if (value != _Type)
+				{
+					OnSetType(ref value); 
+					_Type = value;
+					TriggerPropertyChanged("Type");
+				}
+			}
+		}
+		private Type _Type;
+
+		partial void OnGetType(ref Type value);
+		partial void OnSetType(ref Type value);
+
+		public object Value
+		{
+			get 
+			{
+				OnGetValue(ref _Value);
+				 
+				return _Value; 
+			}
+			set
+			{
+				if (value != _Value)
+				{
+					OnSetValue(ref value); 
+					_Value = value;
+					TriggerPropertyChanged("Value");
+				}
+			}
+		}
+		private object _Value;
+
+		partial void OnGetValue(ref object value);
+		partial void OnSetValue(ref object value);
+
+
+        public string HelpText
+        {
+            get
+            {
+                OnGetHelpText(ref _HelpText);
+
+                return _HelpText;
+            }
+            set
+            {
+                if (value != _HelpText)
+                {
+                    OnSetHelpText(ref value);
+                    _HelpText = value;
+                    TriggerPropertyChanged("HelpText");
+                }
+            }
+        }
+        private string _HelpText;
+
+        partial void OnGetHelpText(ref string value);
+        partial void OnSetHelpText(ref string value);
+
+	
+		
+		//Commands
+		
+		public ConfigurationEntryViewModel()
 		{
 	
 			OnInitialize();

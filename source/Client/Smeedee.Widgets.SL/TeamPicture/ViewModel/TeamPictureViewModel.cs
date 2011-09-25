@@ -92,7 +92,6 @@ namespace Smeedee.Widgets.SL.TeamPicture.ViewModel
 				try
 				{
 					var teamPictures = _teamPictureRepository.Get(new CurrentTeamPictureSpecification());
-                    
 					UpdateViewModel(teamPictures);
 				}
 				catch (Exception e)
@@ -125,7 +124,6 @@ namespace Smeedee.Widgets.SL.TeamPicture.ViewModel
                     var imageFromDb = WriteableBitmapHelper.FromByteArray(teamPicture.Picture, teamPicture.PictureWidth, teamPicture.PictureHeight);
                     SetSnapshot(imageFromDb);
                     Message = teamPicture.Message;
-                    PictureScaling = teamPicture.PictureScaling;
                     Snapshots.Clear();
                     Snapshots.Add(imageFromDb);
                     SelectedSnapshot = imageFromDb;
@@ -204,7 +202,6 @@ namespace Smeedee.Widgets.SL.TeamPicture.ViewModel
             {
                 var teamPicture = new DomainModel.TeamPicture.TeamPicture();
                 teamPicture.Message = Message;
-                teamPicture.PictureScaling = PictureScaling;
                 teamPicture.Picture = WriteableBitmapHelper.ToByteArray(SelectedSnapshot.Pixels);
                 teamPicture.PictureHeight = SelectedSnapshot.PixelHeight;
                 teamPicture.PictureWidth = SelectedSnapshot.PixelWidth;
@@ -347,44 +344,5 @@ namespace Smeedee.Widgets.SL.TeamPicture.ViewModel
             }
         }
         private bool isSaving;
-
-        public bool IsMaximized
-        {
-            get { return isMaximized; }
-            set
-            {
-                if (value != isMaximized)
-                {
-                    isMaximized = value;
-                    if (value)
-                    {
-                        PictureScaling = "UniformToFill";
-                        IsFitToScreen = false;
-                    }
-                    TriggerPropertyChanged<TeamPictureViewModel>(vm => vm.IsMaximized);
-                } 
-            }
-        }
-        private bool isMaximized;
-
-        public bool IsFitToScreen
-        {
-            get { return isFitToScreen; }
-            set
-            {
-                if(value != isFitToScreen) 
-                {
-                    isFitToScreen = value;
-                    if (value)
-                    {
-                       PictureScaling = "Uniform";
-                       IsMaximized = false;
-                    }
-                    TriggerPropertyChanged<TeamPictureViewModel>(vm => vm.IsFitToScreen); 
-                }
-            }
-        }
-        private bool isFitToScreen;
-
     }
 }

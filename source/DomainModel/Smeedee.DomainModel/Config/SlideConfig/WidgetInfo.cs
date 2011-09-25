@@ -30,7 +30,5 @@ namespace Smeedee.DomainModel.Config.SlideConfig
 
         public const string Agile = "Agile";
         public const string Scrum = "Scrum";
-
-        public const string Charting = "Charting";
     }
 }

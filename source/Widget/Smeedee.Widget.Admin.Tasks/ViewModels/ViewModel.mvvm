@@ -39,3 +39,11 @@ viewmodel TaskInstanceConfigurationViewModel:
     oproperty DispatchIntervalMinutes as int
     oproperty DispatchIntervalSeconds as int
 	oproperty ConfigurationEntries as ObservableCollection<ConfigurationEntryViewModel>
+
+namespace Smeedee.Widget.Admin.Tasks.ViewModels:
+viewmodel ConfigurationEntryViewModel:
+
+	property  OrderIndex as int
+	oproperty Name as string
+	oproperty Type as Type
+	oproperty Value as object

@@ -60,7 +60,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
@@ -68,30 +67,20 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
-      <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Bin\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Toolkit">
-      <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml.XPath, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="TinyMVVM.SL">
       <HintPath>..\..\..\tools\TinyMVVM-Silverlight\TinyMVVM.SL.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\DomainModel\Smeedee.DomainModel\WebSnapshot\WebSnapshotSpecification.cs">
-      <Link>WebSnapshot\Controller\WebSnapshotSpecification.cs</Link>
-    </Compile>
     <Compile Include="..\Smeedee.Widgets\Corkboard\Controllers\CorkboardController.cs">
       <Link>Corkboard\Controllers\CorkboardController.cs</Link>
     </Compile>
@@ -109,75 +98,6 @@
     </Compile>
     <Compile Include="..\Smeedee.Widgets\Corkboard\ViewModel\ViewModels.cs">
       <Link>Corkboard\ViewModel\ViewModels.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartConfig.cs">
-      <Link>GenericCharting\Controllers\ChartConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartController.cs">
-      <Link>GenericCharting\Controllers\ChartController.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\Controllers\ChartUpdater.cs">
-      <Link>GenericCharting\Controllers\ChartUpdater.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartSettingsViewModel.cs">
-      <Link>GenericCharting\ViewModels\ChartSettingsViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartTypeViewModel.cs">
-      <Link>GenericCharting\ViewModels\ChartTypeViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ChartViewModel.cs">
-      <Link>GenericCharting\ViewModels\ChartViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\CollectionViewModel.cs">
-      <Link>GenericCharting\ViewModels\CollectionViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\DataPointViewModel.cs">
-      <Link>GenericCharting\ViewModels\DataPointViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\DataSetViewModel.cs">
-      <Link>GenericCharting\ViewModels\DataSetViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\SeriesConfigViewModel.cs">
-      <Link>GenericCharting\ViewModels\SeriesConfigViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\GenericCharting\ViewModels\ViewModels.cs">
-      <Link>GenericCharting\ViewModels\ViewModels.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\ChangesetControllerBase.cs">
-      <Link>SourceControl\Controllers\ChangesetControllerBase.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\CommitStatisticsController.cs">
-      <Link>SourceControl\Controllers\CommitStatisticsController.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\LatestCommitsController.cs">
-      <Link>SourceControl\Controllers\LatestCommitsController.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\Controllers\TopCommitersController.cs">
-      <Link>SourceControl\Controllers\TopCommitersController.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\ChangesetViewModel.cs">
-      <Link>SourceControl\ViewModels\ChangesetViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\CodeCommiterViewModel.cs">
-      <Link>SourceControl\ViewModels\CodeCommiterViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\CommitStatisticsForDate.cs">
-      <Link>SourceControl\ViewModels\CommitStatisticsForDate.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\CommitStatisticsSettingsViewModel.cs">
-      <Link>SourceControl\ViewModels\CommitStatisticsSettingsViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\KeywordColorPairViewModel.cs">
-      <Link>SourceControl\ViewModels\KeywordColorPairViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\LatestCommitsViewModel.cs">
-      <Link>SourceControl\ViewModels\LatestCommitsViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\RevisionCounterViewModel.cs">
-      <Link>SourceControl\ViewModels\RevisionCounterViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\SourceControl\ViewModels\TopCommitersViewModel.cs">
-      <Link>SourceControl\ViewModels\TopCommitersViewModel.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Widgets\TeamMembers\Controllers\TeamMembersController.cs">
       <Link>TeamMembers\Controllers\TeamMembersController.cs</Link>
@@ -203,24 +123,6 @@
     <Compile Include="..\Smeedee.Widgets\WebPage\ViewModel\WebPageViewModel.cs">
       <Link>WebPage\ViewModel\WebPageViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Controllers\WebSnapshotConfig.cs">
-      <Link>WebSnapshot\Controller\WebSnapshotConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Controllers\WebSnapshotController.cs">
-      <Link>WebSnapshot\Controller\WebSnapshotController.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\Util\URLValidator.cs">
-      <Link>WebSnapshot\Util\URLValidator.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\ViewModels.cs">
-      <Link>WebSnapshot\ViewModel\ViewModels.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs">
-      <Link>WebSnapshot\ViewModel\WebSnapshotSettingsViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Widgets\WebSnapshot\ViewModel\WebSnapshotViewModel.cs">
-      <Link>WebSnapshot\ViewModel\WebSnapshotViewModel.cs</Link>
-    </Compile>
     <Compile Include="Corkboard\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -237,50 +139,7 @@
     <Compile Include="Corkboard\Views\RetrospectiveNoteView.xaml.cs">
       <DependentUpon>RetrospectiveNoteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GenericCharting\GenericChartingWidget.cs" />
-    <Compile Include="GenericCharting\Views\ChartSettingsView.xaml.cs">
-      <DependentUpon>ChartSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GenericCharting\Views\ChartView.xaml.cs">
-      <DependentUpon>ChartView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GenericCharting\Views\GenericChart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SourceControl\CommitStatisticsWidget.cs" />
-    <Compile Include="SourceControl\Converters\BackgroundToFontBrushConverter.cs" />
-    <Compile Include="SourceControl\Converters\DayCountToChartLegendIntervalConverter.cs" />
-    <Compile Include="SourceControl\SampleData\ChangesetSampleData\ChangesetSampleData.xaml.cs">
-      <DependentUpon>ChangesetSampleData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\SampleData\ChangesetsSampleDataSource\ChangesetsSampleDataSource.xaml.cs">
-      <DependentUpon>ChangesetsSampleDataSource.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\SampleData\TopCommittersDataSource\TopCommittersDataSource.xaml.cs">
-      <DependentUpon>TopCommittersDataSource.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\LatestCommitsWidget.cs" />
-    <Compile Include="SourceControl\TopCommitersWidget.cs" />
-    <Compile Include="SourceControl\Views\ChangesetView.xaml.cs">
-      <DependentUpon>ChangesetView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\Views\LatestCommitsView.xaml.cs">
-      <DependentUpon>LatestCommitsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\Views\LatestCommitsSettingsView.xaml.cs">
-      <DependentUpon>LatestCommitsSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\Views\CommitStatisticsSettingsView.xaml.cs">
-      <DependentUpon>CommitStatisticsSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\Views\CommitStatisticsView.xaml.cs">
-      <DependentUpon>CommitStatisticsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\Views\TopCommiters.xaml.cs">
-      <DependentUpon>TopCommiters.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SourceControl\Views\TopCommitersSettings.xaml.cs">
-      <DependentUpon>TopCommitersSettings.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TeamMembers\TeamMembersWidget.cs" />
     <Compile Include="TeamMembers\Views\TeamMembersSettingsView.xaml.cs">
       <DependentUpon>TeamMembersSettingsView.xaml</DependentUpon>
@@ -352,14 +211,6 @@
       <DependentUpon>WebPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebPage\WebPageWidget.cs" />
-    <Compile Include="WebSnapshot\Util\CropUtil.cs" />
-    <Compile Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml.cs">
-      <DependentUpon>WebSnapshotSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WebSnapshot\Views\WebSnapshotView.xaml.cs">
-      <DependentUpon>WebSnapshotView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WebSnapshot\WebSnapshotWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Corkboard\App.xaml">
@@ -385,54 +236,6 @@
     <Page Include="Corkboard\Views\RetrospectiveNoteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GenericCharting\Views\ChartSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GenericCharting\Views\ChartView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <ApplicationDefinition Include="SourceControl\Views\ChangesetView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="SourceControl\SampleData\ChangesetSampleData\ChangesetSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SourceControl\SampleData\ChangesetsSampleDataSource\ChangesetsSampleDataSource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SourceControl\SampleData\TopCommittersDataSource\TopCommittersDataSource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SourceControl\Views\LatestCommitsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <ApplicationDefinition Include="SourceControl\Views\LatestCommitsSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <ApplicationDefinition Include="SourceControl\Views\CommitStatisticsSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <ApplicationDefinition Include="SourceControl\Views\CommitStatisticsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <ApplicationDefinition Include="SourceControl\Views\TopCommiters.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="SourceControl\Views\TopCommitersSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TeamMembers\Views\TeamMembersSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -478,26 +281,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WebSnapshot\Views\WebSnapshotSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WebSnapshot\Views\WebSnapshotView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
-    <None Include="SourceControl\SampleData\ChangesetSampleData\ChangesetSampleData.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SourceControl\SampleData\ChangesetsSampleDataSource\ChangesetsSampleDataSource.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SourceControl\SampleData\TopCommittersDataSource\TopCommittersDataSource.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="TeamPicture\ViewModel\ViewModel.mvvm">
       <Generator>T4ScriptFileGenerator</Generator>
       <LastGenOutput>ViewModel.tt</LastGenOutput>
@@ -519,17 +305,9 @@
       <Project>{6D860A9B-0B17-4E78-AB4D-533D1698F225}</Project>
       <Name>Smeedee.DomainModel.SL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Widget\Smeedee.Widget.DeveloperInfo.SL\Smeedee.Widget.DeveloperInfo.SL.csproj">
-      <Project>{754C1232-CD79-474B-B21C-B3243015C1DC}</Project>
-      <Name>Smeedee.Widget.DeveloperInfo.SL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Smeedee.Client.Framework.SL\Smeedee.Client.Framework.SL.csproj">
       <Project>{DB3A158F-D0F2-46F2-BC90-1BB163EA76AB}</Project>
       <Name>Smeedee.Client.Framework.SL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Smeedee.Client.SL\Smeedee.Client.SL.csproj">
-      <Project>{82E89814-481B-48A7-9EBB-6717E47640EA}</Project>
-      <Name>Smeedee.Client.SL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -539,15 +317,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TeamPicture\Views\digital_camera_icon-red.png" />
-    <Resource Include="TeamPicture\Views\digital_camera_icon.png" />
+    <Content Include="TeamPicture\ViewModel\ViewModel.txt">
+      <DependentUpon>ViewModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TeamPicture\ViewModel\ViewModel.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ViewModel.tt</DependentUpon>
-    </Content>
+    <Resource Include="TeamPicture\Views\digital_camera_icon-red.png" />
+    <Resource Include="TeamPicture\Views\digital_camera_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

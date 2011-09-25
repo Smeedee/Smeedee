@@ -23,9 +23,9 @@ namespace Smeedee.Client.Framework.Services.Impl
     public class ModuleLoader : IModuleLoader
     {
         [ImportMany(AllowRecomposition = true)]
-        private IEnumerable<WidgetMetadata> availableWidgets;
+        private IEnumerable<WidgetMetadata> availalbleWidgets;
 
-        private readonly List<string> adminSlideTitles = new List<string>() { "Task Administration", "User Administration", "Holidays", "Add Widget", "Edit Slideshow", "Smeedee for Mobile Devices" };
+        private readonly List<string> adminSlideTitles = new List<string>() { "Task Administration", "User Administration", "Holidays", "Add Widget", "Edit Slideshow" };
         private readonly IAsyncRepository<SlideConfiguration> slideConfigRepo;
         private readonly ILog logger;
         private Slideshow slideshowViewModel;
@@ -53,7 +53,7 @@ namespace Smeedee.Client.Framework.Services.Impl
 		{
 			slideConfigRepo.GetCompleted -= slideConfigRepo_GetCompleted;
 			slideConfigRepo.GetCompleted += slideConfigRepo_GetCompleted;
-			availableWidgets = e.Result;
+			availalbleWidgets = e.Result;
 
 			if (slideConfigs == null)
 				slideConfigRepo.BeginGet(All.ItemsOf<SlideConfiguration>());
@@ -74,7 +74,6 @@ namespace Smeedee.Client.Framework.Services.Impl
     		{
     			welcomeWidget.ProgressbarService.ShowInView("Got slideshow configuration!");
     			CreateSlidesFromConfigs();
-                
     		}
 
     		if (dockBarViewModel != null)
@@ -124,7 +123,7 @@ namespace Smeedee.Client.Framework.Services.Impl
 								numberOfReadySlides,
 								numberOfSlideConfigs));
 
-				if (availableWidgets.Any(w => w.Type.FullName == config.WidgetType))
+				if (availalbleWidgets.Any(w => w.Type.FullName == config.WidgetType))
 				{
 					try
 					{
@@ -153,16 +152,11 @@ namespace Smeedee.Client.Framework.Services.Impl
 			}
 			else
 			{
-                
 				slideshowViewModel.Slides.Clear();
 				foreach (var loadedSlide in loadedSlides)
 				{
 					slideshowViewModel.Slides.Add(loadedSlide);
 				}
-
-                if (slideshowViewModel.Slides.Count > 1)
-                    slideshowViewModel.Start.ExecuteDelegate();
-
 			}
         }
 
@@ -184,7 +178,7 @@ namespace Smeedee.Client.Framework.Services.Impl
 
         private Type GetType(string typeName)
         {
-            var widgetType = availableWidgets
+            var widgetType = availalbleWidgets
                 .Where(w => w.Type.FullName.Equals(typeName))
                 .Select(w => w.Type)
                 .SingleOrDefault();
@@ -204,7 +198,7 @@ namespace Smeedee.Client.Framework.Services.Impl
             {
                 if (dockBarViewModel.Items.Any(i => i.Description == title)) continue;
 
-                var adminWidget = availableWidgets.FirstOrDefault(w => w.Name == title);
+                var adminWidget = availalbleWidgets.FirstOrDefault(w => w.Name == title);
                 
                 if (adminWidget != null)
                 {   
@@ -248,7 +242,6 @@ namespace Smeedee.Client.Framework.Services.Impl
             if (title == "User Administration") return new UserAdministrationIcon();
             if (title == "Add Widget") return new AddWidgetIcon();
             if (title == "Edit Slideshow") return new EditSlideShowIcon();
-            if (title == "Smeedee for Mobile Devices") return new RemoteServicesAdministrationIcon();
             return new SettingsIcon(title);
 #endif
 

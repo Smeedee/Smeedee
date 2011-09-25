@@ -8,15 +8,12 @@ using System.Threading;
 using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
-using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.Tests;
-using Smeedee.Client.Framework.Tests.Services.Impl;
 using Smeedee.Client.Framework.ViewModel;
 using Smeedee.Client.Framework.ViewModel.Dialogs;
 using Smeedee.DomainModel.Config.SlideConfig;
 using Smeedee.DomainModel.Framework;
 using Smeedee.DomainModel.Framework.DSL.Specifications;
-using Smeedee.DomainModel.Framework.Logging;
 using TinyBDD.Specification.NUnit;
 using TinyMVVM.Framework.Services;
 
@@ -32,7 +29,7 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
             }
@@ -49,11 +46,11 @@ namespace Smeedee.Client.Tests.ViewModel
                 viewModel.ErrorInfo.ShouldNotBeNull();
             }
 
-            [Test]
-            public void assure_Slides_are_loaded()
-            {
-                viewModel.Slides.Count.ShouldNotBe(0);
-            }
+        	[Test]
+        	public void assure_Slides_are_loaded()
+        	{
+        		viewModel.Slides.Count.ShouldNotBe(0);
+        	}
 
             [Test]
             public void assure_the_first_Slide_is_set_as_CurrentSlide()
@@ -67,12 +64,12 @@ namespace Smeedee.Client.Tests.ViewModel
                 viewModel.SlideshowInfo.ShouldBe(string.Format(SlideshowInfoPausedTemplate, 1, viewModel.Slides.Count));
             }
 
-            [Test]
-            public void assure_IsDisplayed_flag_is_set_on_CurrentSlide()
-            {
-                viewModel.CurrentSlide.IsDisplayed.ShouldBeTrue();
-                viewModel.CurrentSlide.Widget.IsDisplayed.ShouldBeTrue();
-            }
+        	[Test]
+        	public void assure_IsDisplayed_flag_is_set_on_CurrentSlide()
+        	{
+        		viewModel.CurrentSlide.IsDisplayed.ShouldBeTrue();
+				viewModel.CurrentSlide.Widget.IsDisplayed.ShouldBeTrue();
+        	}
         }
 
         [TestFixture]
@@ -80,7 +77,7 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
                 When_execute_Next_Command();
@@ -104,7 +101,7 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
 
@@ -131,7 +128,7 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
 
@@ -157,12 +154,12 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
                 And_Slideshow_PropertyChangeRecording_is_Started();
 
-                for (int i = 0; i < viewModel.Slides.Count; i++)
+                for(int i = 0; i < viewModel.Slides.Count; i++)
                     When_execute_Previous_Command();
             }
 
@@ -191,7 +188,7 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
                 And_Slideshow_PropertyChangeRecording_is_Started();
@@ -205,28 +202,28 @@ namespace Smeedee.Client.Tests.ViewModel
                 viewModel.PropertyChangeRecorder.Data.Where(r => r.PropertyName == "CurrentSlide").Count().ShouldBe(1);
             }
 
-            [Test]
-            public void assure_IsDisplayed_flag_is_set_on_CurrentSlide()
-            {
-                viewModel.CurrentSlide.IsDisplayed.ShouldBeTrue();
-                viewModel.CurrentSlide.Widget.IsDisplayed.ShouldBeTrue();
-            }
+        	[Test]
+        	public void assure_IsDisplayed_flag_is_set_on_CurrentSlide()
+        	{
+				viewModel.CurrentSlide.IsDisplayed.ShouldBeTrue();
+        		viewModel.CurrentSlide.Widget.IsDisplayed.ShouldBeTrue();
+        	}
 
-            [Test]
-            public void assure_all_others_Slides_IsDisplayed_flag_is_removed()
-            {
-                When_execute_Next_Command();
-
-                viewModel.Slides.Count(s => s.Widget.IsDisplayed).ShouldBe(1);
-            }
+        	[Test]
+        	public void assure_all_others_Slides_IsDisplayed_flag_is_removed()
+        	{
+				When_execute_Next_Command();
+        		
+				viewModel.Slides.Count(s => s.Widget.IsDisplayed).ShouldBe(1);
+        	}
         }
 
         [TestFixture]
         public class When_Start : Shared
         {
-            public override void Context()
+        	public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 timerFake.Setup(t => t.Start(It.IsAny<int>())).Callback((int interval) =>
                 {
@@ -254,31 +251,6 @@ namespace Smeedee.Client.Tests.ViewModel
         }
 
         [TestFixture]
-        public class When_start_for_first_time : Shared
-        {
-            private Slideshow slideshow;
-
-            private void Given_one_slide_exist()
-            {
-                slideshow = new Slideshow();
-                slideshow.Slides.Clear();
-                slideshow.Slides.Count.ShouldBe(0);
-
-                Slide firstSlide = new Slide() { Title = "one", SecondsOnScreen = 1, Widget = new Widget() };
-
-                slideshow.Slides.Add(firstSlide);
-            }
-
-            [Test]
-            public void assure_autostart_is_deactivated_when_no_or_one_slide()
-            {
-                Given_one_slide_exist();
-                slideshow.Slides.Count.ShouldBe(1);
-                slideshow.IsRunning.ShouldBeFalse();
-            }
-        }
-
-        [TestFixture]
         public class when_changing_slides : Shared
         {
             public override void Context()
@@ -286,7 +258,7 @@ namespace Smeedee.Client.Tests.ViewModel
                 base.Context();
                 Given_Slideshow_is_created();
 
-                Slide firstSlide = new Slide() { Title = "one", SecondsOnScreen = 1, Widget = new Widget() };
+                Slide firstSlide = new Slide() {Title = "one", SecondsOnScreen = 1, Widget = new Widget()};
                 var slides = new ObservableCollection<Slide>
                 {
                     firstSlide,
@@ -321,8 +293,8 @@ namespace Smeedee.Client.Tests.ViewModel
                 When_timer_elapses();
                 Debug.WriteLine(viewModel.TimeLeftOfSlideInPercent);
 
-                (viewModel.TimeLeftOfSlideInPercent > 0.4 && viewModel.TimeLeftOfSlideInPercent < 0.6).ShouldBeTrue();
-
+                (viewModel.TimeLeftOfSlideInPercent > 0.4 && viewModel.TimeLeftOfSlideInPercent < 0.6 ).ShouldBeTrue();
+                
             }
         }
 
@@ -332,7 +304,7 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
                 And_Start_Command_is_executed();
@@ -382,11 +354,11 @@ namespace Smeedee.Client.Tests.ViewModel
         [TestFixture]
         public class When_loading_slides_fails : Shared
         {
-            private string ERROR_MSG = "something happend during initialization of slides";
+        	private string ERROR_MSG = "something happend during initialization of slides";
 
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_ModuleLoaderFake_is_created_and_configured_to_fail();
 
@@ -442,7 +414,7 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_no_slides_exists();
                 And_Slideshow_is_created();
@@ -506,7 +478,7 @@ namespace Smeedee.Client.Tests.ViewModel
 
             private void And_It_contains_the_welcomeWidget()
             {
-                viewModel.Slides.Add(new Slide { Widget = new WelcomeWidget() });
+                viewModel.Slides.Add(new Slide{Widget = new WelcomeWidget()});
             }
 
             [Test]
@@ -514,12 +486,12 @@ namespace Smeedee.Client.Tests.ViewModel
             {
                 foreach (var slide in viewModel.Slides)
                 {
-                    if (slide.Widget != null)
+                    if(slide.Widget != null)
                         slide.Widget.GetType().ShouldNotBe(typeof(WelcomeWidget));
                 }
             }
 
-
+            
         }
 
         [TestFixture]
@@ -527,13 +499,13 @@ namespace Smeedee.Client.Tests.ViewModel
         {
             public override void Context()
             {
-                base.Context();
+				base.Context();
 
                 Given_Slideshow_is_created();
 
                 And("CurrentSlide is in settings mode", () =>
                 {
-                    viewModel.CurrentSlide = new Slide() { Widget = new Widget() };
+                    viewModel.CurrentSlide = new Slide() {Widget = new Widget()};
                     viewModel.CurrentSlide.Settings.Execute(null);
                 });
             }
@@ -565,39 +537,39 @@ namespace Smeedee.Client.Tests.ViewModel
             {
                 When_execute_Pause_Command();
 
-                timerFake.Verify(t => t.Stop(), Times.Never());
+                timerFake.Verify(t=>t.Stop(), Times.Never());
             }
         }
 
-        [TestFixture]
-        public class When_AddSlide : Shared
-        {
+    	[TestFixture]
+    	public class When_AddSlide : Shared
+    	{
             private int numberOfSlidesBeforeAdd;
 
-            public override void Context()
-            {
-                base.Context();
+			public override void Context()
+			{
+				base.Context();
 
-                Given_Slideshow_is_created();
-                And_SelectWidgetsDialog_Contains_one_new_slide();
+				Given_Slideshow_is_created();
+			    And_SelectWidgetsDialog_Contains_one_new_slide();
 
                 numberOfSlidesBeforeAdd = viewModel.Slides.Count;
             }
 
-            [Test]
-            public void assure_ModalDialog_is_displayed()
-            {
+    		[Test]
+    		public void assure_ModalDialog_is_displayed()
+    		{
                 When_execute_AddSlide_Command();
 
-                modalDialogServiceFake.Verify(s => s.Show(
+    			modalDialogServiceFake.Verify(s => s.Show(
                     It.IsAny<SelectWidgetsDialog>(),
                     It.IsAny<Action<bool>>()));
-            }
+    		}
 
-            [Test]
-            public void assure_Slide_is_added_if_DialogResult_is_OK()
-            {
-                modalDialogServiceFake.Setup(s => s.Show(
+    	    [Test]
+    	    public void assure_Slide_is_added_if_DialogResult_is_OK()
+    	    {
+    	        modalDialogServiceFake.Setup(s => s.Show(
                     It.IsAny<SelectWidgetsDialog>(),
                     It.IsAny<Action<bool>>())).Callback((Dialog dialog, Action<bool> dialogClosedCallback) =>
                     {
@@ -607,20 +579,20 @@ namespace Smeedee.Client.Tests.ViewModel
 
                 When_execute_AddSlide_Command();
                 viewModel.Slides.Count.ShouldBe(numberOfSlidesBeforeAdd + 1);
-            }
+    	    }
 
-            [Test]
-            public void assure_Slide_is_not_added_if_DialogResult_is_Cancel()
-            {
-                modalDialogServiceFake.Setup(s => s.Show(
-                    It.IsAny<Dialog>(),
-                    It.IsAny<Action<bool>>()));
+    	    [Test]
+    	    public void assure_Slide_is_not_added_if_DialogResult_is_Cancel()
+    	    {
+    	        modalDialogServiceFake.Setup(s => s.Show(
+    	            It.IsAny<Dialog>(),
+    	            It.IsAny<Action<bool>>()));
 
                 When_execute_AddSlide_Command();
 
                 viewModel.Slides.Count.ShouldBe(numberOfSlidesBeforeAdd);
-            }
-        }
+    	    }
+    	}
 
         [TestFixture]
         public class When_Edit : Shared
@@ -734,7 +706,7 @@ namespace Smeedee.Client.Tests.ViewModel
             public void Assure_pauses_when_in_settings_mode()
             {
                 viewModel.Start.Execute();
-                viewModel.IsRunning.ShouldBeTrue(); ;
+                viewModel.IsRunning.ShouldBeTrue();;
                 viewModel.Slides[0].Widget.IsInSettingsMode = true;
                 viewModel.IsRunning.ShouldBeFalse();
             }
@@ -742,17 +714,17 @@ namespace Smeedee.Client.Tests.ViewModel
 
         public class Shared : SlideshowTestContext
         {
-            protected Mock<IModalDialogService> modalDialogServiceFake;
-            protected Mock<ITimer> timerFake;
-            protected Mock<IModuleLoader> moduleLoaderFake;
+			protected Mock<IModalDialogService> modalDialogServiceFake;
+        	protected Mock<ITimer> timerFake;
+        	protected Mock<IModuleLoader> moduleLoaderFake;
             protected ObservableCollection<Slide> _slides;
 
             public override void Context()
             {
-                ViewModelBootstrapperForTests.Initialize();
-                modalDialogServiceFake = ViewModelBootstrapperForTests.ModalDialogServiceFake;
-                timerFake = ViewModelBootstrapperForTests.TimerFake;
-                moduleLoaderFake = ViewModelBootstrapperForTests.ModuleLoaderFake;
+				ViewModelBootstrapperForTests.Initialize();
+            	modalDialogServiceFake = ViewModelBootstrapperForTests.ModalDialogServiceFake;
+				timerFake = ViewModelBootstrapperForTests.TimerFake;
+        		moduleLoaderFake = ViewModelBootstrapperForTests.ModuleLoaderFake;
             }
 
             public void And_SelectWidgetsDialog_Contains_one_new_slide()
@@ -764,7 +736,7 @@ namespace Smeedee.Client.Tests.ViewModel
                 });
 
 
-
+                
             }
 
             public void Slideshow_has_one_slide()

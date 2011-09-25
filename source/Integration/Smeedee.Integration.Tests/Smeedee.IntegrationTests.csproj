@@ -71,9 +71,6 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>..\..\..\tools\NHibernate-3.2.0.GA-bin\Required_For_LazyLoading\Castle\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="GitSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\GitSharp_binaries\GitSharp.dll</HintPath>
@@ -129,12 +126,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\JSON\DotNet\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\NHibernate-3.2.0.GA-bin\Required_Bins\NHibernate.dll</HintPath>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle">
-      <HintPath>..\..\..\tools\NHibernate-3.2.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
+    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NHibernate-2.1.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.2.10.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
@@ -152,9 +150,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.60.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\SQLite.NET\bin\System.Data.SQLite.DLL</HintPath>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\..\tools\SQLite.NET.0.21_x68_dll\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Extensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -208,7 +205,6 @@
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\Integration\BuildFetcherIntegrationTests.cs" />
     <Compile Include="CI\TFSBuild\DomainModel\Repositories\Integration\CIServerRepositoryIntegrationTests.cs" />
     <Compile Include="CI\TFSBuild\Learning\TFSApiLearningTests.cs" />
-    <Compile Include="Database\DomainModel\Charting\ChartStorageSpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\ChangesetDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\CIServerDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\ConfigurationRepositorySpecs.cs" />
@@ -226,7 +222,7 @@
     <Compile Include="Database\DomainModel\Repositories\TaskConfigurationDatabaseRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\TeamPictureRepositorySpecs.cs" />
     <Compile Include="Database\DomainModel\Repositories\UserdbRepositorySpecs.cs" />
-    <Compile Include="Database\DomainModel\Repositories\WebSnapshotDatabaseRepositorySpecs.cs" />
+    <Compile Include="Database\DomainModel\Repositories\UserRepositorySpecs.cs" />
     <Compile Include="Database\Learning\NHibernateLearningTests.cs" />
     <Compile Include="Database\Learning\SessionFactoryLearning.cs" />
     <Compile Include="Holidays\Resource.Designer.cs">
@@ -271,10 +267,6 @@
     <Compile Include="WidgetDiscovery\XapUnpackerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
-      <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
-      <Name>Smeedee.Client.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel\Smeedee.DomainModel.csproj">
       <Project>{6D3D6DF1-E250-46D8-914D-05C09E6BFA54}</Project>
       <Name>Smeedee.DomainModel</Name>

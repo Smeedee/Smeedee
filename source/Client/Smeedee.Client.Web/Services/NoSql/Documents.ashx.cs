@@ -31,7 +31,7 @@ namespace Smeedee.Client.Web.Services.NoSql
             {
                 var doc = docs.ElementAt(i);
                 str.Append("{\r\n");
-                //str.AppendFormat("Id: \"{0}\",", doc.Id); // commented out to test if this is really needed (doesn't appear to do anything useful)
+                str.AppendFormat("Id: \"{0}\",", doc.Id);
                 str.Append(doc.JSON.Substring(0, doc.JSON.Length - 1).Substring(1, doc.JSON.Length - 2));
                 str.Append("}\r\n");
 

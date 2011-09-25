@@ -29,7 +29,7 @@ using Smeedee.Client.Framework.ViewModel;
 
 namespace Smeedee.Widget.CI.ViewModels
 {
-    public class BuildViewModel : BasicViewModel
+    public class BuildViewModel : AbstractViewModel
     {
         private Timer buildDurationUpdateTimer;
         private TimeSpan buildDurationUpdateTimerOffset;

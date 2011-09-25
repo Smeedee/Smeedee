@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Smeedee.Client.Framework.Repositories.Charting;
-using Smeedee.Client.Framework.Repositories.NoSql;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.Services.Impl;
 using Smeedee.Client.Framework.SL.Repositories;
@@ -22,7 +20,6 @@ using Smeedee.DomainModel.TaskDefinition;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.DomainModel.TeamPicture;
 using Smeedee.DomainModel.Users;
-using Smeedee.DomainModel.WebSnapshot;
 using TinyMVVM.Framework;
 using TinyMVVM.Framework.Services;
 using TinyMVVM.Framework.Services.Impl;
@@ -55,10 +52,7 @@ namespace Smeedee.Client.Framework
                 config.Bind<ITimer>().To<StandardTimer>();
                 config.Bind<IUIInvoker>().To<UIInvoker>();
         	    config.Bind<SmeedeeREST>().To<SmeedeeREST>();
-                
                 config.Bind<IDownloadStringService>().To<WebClientDownloadStringService>();
-        	    config.Bind<INoSqlRepository>().To<NoSqlRepository>();
-        	    config.Bind<IChartStorageReader>().To<ChartStorageReader>();
 
                 BindAsyncIDomainModelDeleters(config);
                 BindAsyncPersisters(config);
@@ -84,8 +78,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IRepository<TaskDefinition>>().To<TaskDefinitionWebserviceRepository>();
             config.Bind<IRepository<TeamPicture>>().To<TeamPictureWebserviceRepository>();
             config.Bind<IRepository<User>>().To<UserWebserviceRepositoryProxy>();
-            config.Bind<IRepository<Userdb>>().To<UserdbWebserviceRepository>();
-            //config.Bind<IRepository<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
+            config.Bind<IRepository<Userdb>>().To<UserdbWebserviceRepository>();			
 		}
 
         private static void BindDomainModelPersisters(DependencyConfigSemantics config)
@@ -97,8 +90,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IPersistDomainModels<RetrospectiveNote>>().To<RetrospectiveNoteWebServiceRepository>();
             config.Bind<IPersistDomainModels<TaskConfiguration>>().To<TaskConfigurationWebserviceRepository>();
             config.Bind<IPersistDomainModels<TeamPicture>>().To<TeamPictureWebserviceRepository>();
-            config.Bind<IPersistDomainModels<Userdb>>().To<UserdbWebserviceRepository>();
-            //config.Bind<IPersistDomainModels<WebSnapshot>>().To<WebSnapshotWebserviceRepository>();
+            config.Bind<IPersistDomainModels<Userdb>>().To<UserdbWebserviceRepository>();            
         }
 
         private static void BindDomainModelDeleters(DependencyConfigSemantics config)
@@ -121,8 +113,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IAsyncRepository<TaskConfiguration>>().To<AsyncTaskConfigurationRepository>();
             config.Bind<IAsyncRepository<TaskDefinition>>().To<AsyncTaskDefinitionRepository>();
             config.Bind<IAsyncRepository<TeamPicture>>().To<AsyncTeamPictureRepository>();
-            config.Bind<IAsyncRepository<Userdb>>().To<AsyncUserdbRepository>();
-            config.Bind<IAsyncRepository<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
+            config.Bind<IAsyncRepository<Userdb>>().To<AsyncUserdbRepository>();            
         }
 
         private static void BindAsyncPersisters(DependencyConfigSemantics config)
@@ -135,8 +126,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IPersistDomainModelsAsync<SlideConfiguration>>().To<AsyncSlideConfigurationRepository>();
             config.Bind<IPersistDomainModelsAsync<TaskConfiguration>>().To<AsyncTaskConfigurationRepository>();
             config.Bind<IPersistDomainModelsAsync<TeamPicture>>().To<AsyncTeamPictureRepository>();
-            config.Bind<IPersistDomainModelsAsync<Userdb>>().To<AsyncUserdbRepository>();
-            //config.Bind<IPersistDomainModelsAsync<WebSnapshot>>().To<AsyncWebSnapshotRepository>();
+            config.Bind<IPersistDomainModelsAsync<Userdb>>().To<AsyncUserdbRepository>();            
         }
 
         private static void BindAsyncIDomainModelDeleters(DependencyConfigSemantics config)
@@ -158,8 +148,7 @@ namespace Smeedee.Client.Framework
             config.Bind<IInvokeBackgroundWorker<IEnumerable<TaskConfiguration>>>().To<AsyncClient<IEnumerable<TaskConfiguration>>>();
             config.Bind<IInvokeBackgroundWorker<IEnumerable<TaskDefinition>>>().To<AsyncClient<IEnumerable<TaskDefinition>>>();
             config.Bind<IInvokeBackgroundWorker<IEnumerable<TeamPicture>>>().To<AsyncClient<IEnumerable<TeamPicture>>>();
-			config.Bind<IInvokeBackgroundWorker<IEnumerable<Userdb>>>().To<AsyncClient<IEnumerable<Userdb>>>();
-            config.Bind<IInvokeBackgroundWorker<IEnumerable<WebSnapshot>>>().To<AsyncClient<IEnumerable<WebSnapshot>>>();
+			config.Bind<IInvokeBackgroundWorker<IEnumerable<Userdb>>>().To<AsyncClient<IEnumerable<Userdb>>>();            
         }
     }
 }

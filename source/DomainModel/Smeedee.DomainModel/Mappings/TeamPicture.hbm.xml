@@ -7,6 +7,5 @@
     <property name="Picture" type="BinaryBlob"/>
     <property name="PictureHeight"/>
     <property name="PictureWidth"/>
-    <property name="PictureScaling"/>
   </class>
 </hibernate-mapping>

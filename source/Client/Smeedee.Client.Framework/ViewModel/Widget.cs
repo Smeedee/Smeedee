@@ -12,16 +12,7 @@ using TinyMVVM.IoC;
 
 namespace Smeedee.Client.Framework.ViewModel
 {
-    public interface IWidget
-    {
-        event EventHandler ConfigurationChanged;
-        Configuration Configuration { get; }
-
-        void ShowErrorMessage(string message);
-        void NoErrors();
-    }
-
-    public partial class Widget : IWidget
+    public partial class Widget
     {
         private IPersistDomainModelsAsync<Configuration> configRepo;
 
@@ -65,7 +56,6 @@ namespace Smeedee.Client.Framework.ViewModel
 				config.MergeInGlobalDependenciesConfig = true;
 				config.Bind<IProgressbar>().ToInstance(ProgressbarService);
 			    config.Bind<Configuration>().ToInstance(Configuration);
-			    config.Bind<IWidget>().ToInstance(this);
 			    config.Bind<Widget>().ToInstance(this);
 			    config.Bind<IAsyncRepository<Configuration>>().ToInstance(widgetConfigRepository);
 			    config.Bind<IRepository<Configuration>>().ToInstance(widgetConfigRepository);
@@ -110,14 +100,13 @@ namespace Smeedee.Client.Framework.ViewModel
             IsInSettingsMode = !IsInSettingsMode;
         }
 
-
-        public void ShowErrorMessage(string message)
+        protected void ReportFailure(string message)
         {
             ErrorInfo.HasError = true;
             ErrorInfo.ErrorMessage = message;
         }
 
-        public void NoErrors()
+        protected void NoFailure()
         {
             ErrorInfo.HasError = false;
             ErrorInfo.ErrorMessage = string.Empty;

@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" 
     xmlns:Converters="clr-namespace:Smeedee.Client.Framework.Converters;assembly=Smeedee.Client.Framework.SL" 
     x:Class="Smeedee.Widget.ProjectInfo.SL.Views.WorkingDaysLeft"
     >
@@ -11,7 +12,7 @@
     <UserControl.Resources>
         <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <ControlTemplate x:Name="RemainingDays" TargetType="ContentControl">
-            <Viewbox>
+            <controlsToolkit:Viewbox>
                 <Grid 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Center"
@@ -36,11 +37,11 @@
                         FontFamily="{StaticResource FontFamily}"
                         Foreground="Orange"/>
                 </Grid> 
-            </Viewbox>
+            </controlsToolkit:Viewbox>
         </ControlTemplate>
 
         <ControlTemplate x:Name="RemainingDaysLarge" TargetType="ContentControl">
-                <Viewbox>
+                <controlsToolkit:Viewbox>
                 <Grid 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Center">
@@ -68,7 +69,7 @@
                             FontFamily="{StaticResource FontFamily}"
                             Foreground="{StaticResource FontBrushBright}"/>
                     </Grid>
-                </Viewbox>
+                </controlsToolkit:Viewbox>
         </ControlTemplate>
     </UserControl.Resources>
     <Grid 

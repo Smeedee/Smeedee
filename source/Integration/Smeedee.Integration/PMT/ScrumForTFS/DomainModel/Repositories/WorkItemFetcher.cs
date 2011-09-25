@@ -15,14 +15,8 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         // Defaulting to the values used by Conchango's Scrum for Team System
         private readonly string WORK_REMAINING_FIELD = "Work Remaining (Scrum v3)";
         private readonly string ESTIMATED_EFFORT_FIELD = "Estimated Effort (Scrum v3)";
-        private readonly string WORK_ITEM_TYPE_FIELD = "Sprint Backlog Task";
-
-        private readonly string WORK_ITEM_TYPE_NAME = "Work item type";
-        private readonly string WORK_REMAINING_NAME = "tfswi-remaining-field";
-        private readonly string ESTIMATED_EFFORT_NAME = "tfswi-estimated-field";
         
         private readonly TeamFoundationServer tfsServer;
-        private readonly TfsTeamProjectCollection tfsTeamProjectCollection;
         private readonly WorkItemStore workItemStore;
 
         private readonly string projectName;
@@ -32,21 +26,18 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
                                Dictionary<String, String> configuration)
         {
             String configValue = "";
-            WORK_REMAINING_FIELD = (configuration.TryGetValue(WORK_REMAINING_NAME, out configValue))
+            WORK_REMAINING_FIELD = (configuration.TryGetValue("tfswi-remaining-field", out configValue))
                                        ? configValue
                                        : WORK_REMAINING_FIELD;
-            ESTIMATED_EFFORT_FIELD = (configuration.TryGetValue(ESTIMATED_EFFORT_NAME, out configValue))
+            ESTIMATED_EFFORT_FIELD = (configuration.TryGetValue("tfswi-estimated-field", out configValue))
                                          ? configValue
                                          : ESTIMATED_EFFORT_FIELD;
-            WORK_ITEM_TYPE_FIELD = (configuration.TryGetValue(WORK_ITEM_TYPE_NAME, out configValue))
-                                       ? configValue
-                                       : WORK_ITEM_TYPE_FIELD;
 
             this.projectName = projectName;
 
             tfsServer = new TeamFoundationServer(serverAddress, credentials);
             tfsServer.Authenticate();
-            
+
             workItemStore = tfsServer.GetService(typeof (WorkItemStore)) as WorkItemStore;
         }
 
@@ -89,12 +80,12 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         private WorkItemCollection GetCurrentWorkItemsInSprint(string iterationPath)
         {
             string wiqlQuery =
-                @"SELECT [" + ESTIMATED_EFFORT_FIELD + "], " +
-                @"[" + WORK_REMAINING_FIELD + "] " +
+                @"SELECT [Estimated Effort (Scrum v3)], " +
+                @"[Work Remaining (Scrum v3)] " +
                 @"FROM [WorkItems] " +
                 @"WHERE [Team Project] = '" + projectName + "'" +
                 @"AND [Iteration Path] = '" + iterationPath + "'" +
-                @"AND [Work Item Type] = '" + WORK_ITEM_TYPE_FIELD + "'";
+                @"AND [Work Item Type] = 'Sprint Backlog Task'";
             return workItemStore.Query(wiqlQuery);
         }
 
@@ -127,23 +118,24 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
                 var estimatedWork = ParseFieldToInt(workItem.Fields[ESTIMATED_EFFORT_FIELD]);
 
                 // NOTE: We have at least one corner case here.. What if someone changes a name as part of a revision?
-                if (!tasks.Select((t) => t.SystemId).Contains(workItem.Id.ToString()))
-                {                   
+                if (!tasks.Select((t) => t.Name).Contains(workItem.Title))
+                {
                     var task = new Task
-                                    {
-                                        SystemId = workItem.Id.ToString(),
-                                        Name = workItem.Title,
-                                        Status = workItem.State,
-                                        WorkEffortEstimate = estimatedWork
-                                    };
+                                   {
+                                       SystemId = workItem.Id.ToString(),
+                                       Name = workItem.Title,
+                                       Status = workItem.State,
+                                       WorkEffortEstimate = estimatedWork
+                                   };
+
                     tasks.Add(task);
                 }
-                
+
                 // NOTE: To naive?
                 // We add the WorkEffortHistoryItem to the first task we can find with the same name.
-                var taskToAddTo = tasks.Where((t) => t.SystemId == workItem.Id.ToString()).First();
+                var taskToAddTo = tasks.Where((t) => t.Name == workItem.Title).First();
                 taskToAddTo.AddWorkEffortHistoryItem(new WorkEffortHistoryItem(remainingWork, workItem.ChangedDate));
-                taskToAddTo.WorkEffortEstimate = estimatedWork;                         
+                taskToAddTo.WorkEffortEstimate = estimatedWork;
             }
 
             return tasks;
@@ -157,11 +149,11 @@ namespace Smeedee.Integration.PMT.ScrumForTFS.DomainModel.Repositories
         private WorkItemCollection GetAllCurrentWorkItems()
         {
             var wiqlQuery =
-                @"SELECT [" + ESTIMATED_EFFORT_FIELD + "], " +
-                @"[" + WORK_REMAINING_FIELD + "] " +
+                @"SELECT [Estimated Effort (Scrum v3)], " +
+                @"[Work Remaining (Scrum v3)] " +
                 @"FROM [WorkItems] " +
                 @"WHERE [System.TeamProject] = '" + projectName + "'" +
-                @"AND [Work Item Type] = '" + WORK_ITEM_TYPE_FIELD + "'";
+                @"AND [Work Item Type] = 'Sprint Backlog Task'";
             return workItemStore.Query(wiqlQuery);
         }
 

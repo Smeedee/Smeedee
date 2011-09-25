@@ -121,11 +121,6 @@ namespace Smeedee.Tasks.SourceControl.Git
             contents += string.Format("set PATH=$PATH;{0}{1}", 
                                         config.Entries.Single(c => c.Name == MINGW_BINARY_DIRECTORY).Value, 
                                         Environment.NewLine);
-            contents += string.Format("\"{0}\" --git-dir \"{1}\\.git\" {2} {3}",
-                                      GetGitExecutable(),
-                                      targetPath, 
-                                      "reset --hard HEAD", 
-                                      Environment.NewLine);
             contents += string.Format("\"{0}\" --git-dir \"{1}\\.git\" {2}",
                                         GetGitExecutable(),
                                         targetPath,

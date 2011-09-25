@@ -3,7 +3,7 @@ using Smeedee.Client.Framework.ViewModel;
 
 namespace Smeedee.Widgets.SL.Twitter.ViewModel
 {
-    public class TweetViewModel : BasicViewModel
+    public class TweetViewModel : AbstractViewModel
     {
         private string username;
         public string Username

@@ -20,7 +20,8 @@ namespace Smeedee.Client.Framework.SL.Repositories
 
         public CIServerWebserviceRepository()
         {
-            
+            ciServers = new List<CIServer>();
+
             client = new CIRepositoryServiceClient();
             client.Endpoint.Address =
                 WebserviceEndpointResolver.ResolveDynamicEndpointAddress(client.Endpoint.Address);
@@ -31,7 +32,6 @@ namespace Smeedee.Client.Framework.SL.Repositories
 
         public IEnumerable<CIServer> Get(Specification<CIServer> specification)
         {
-            
             client.GetAsync(new AllSpecification<CIServer>());
             resetEvent.Reset();
             resetEvent.WaitOne();
@@ -40,7 +40,6 @@ namespace Smeedee.Client.Framework.SL.Repositories
                 throw invocationException;
 
             var servers = ciServers;
-            ciServers = null;
             return servers;
         }
 
@@ -51,9 +50,6 @@ namespace Smeedee.Client.Framework.SL.Repositories
             if (qServers != null && qServers.Count > 0)
             {
                 ciServers = qServers;
-            } else
-            {
-                ciServers = new List<CIServer>();
             }
 
             invocationException = e.Error;

@@ -39,11 +39,6 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\NUnit 2.5.3\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -76,9 +71,6 @@
     <Compile Include="Converters\TimeSpanToPrettyStringConverter.cs" />
     <Compile Include="Messages\CloseModalDialogMessage.cs" />
     <Compile Include="Messages\OpenModalDialogMessage.cs" />
-    <Compile Include="Repositories\Charting\ChartStorageReader.cs" />
-    <Compile Include="Repositories\NoSql\NoSqlRepository.cs" />
-    <Compile Include="Resources\BrushProvider.cs" />
     <Compile Include="Services\Impl\EventAggregator.cs" />
     <Compile Include="Factories\ModuleLoaderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,7 +95,6 @@
     <Compile Include="Services\Impl\ModuleLoader.cs" />
     <Compile Include="Services\Impl\NoUIInvokation.cs" />
     <Compile Include="Services\Impl\StandardTimer.cs" />
-    <Compile Include="Services\Impl\WebClientDownloadStringService.cs" />
     <Compile Include="Services\Impl\WidgetProgressbar.cs" />
     <Compile Include="Services\IProgressbar.cs" />
     <Compile Include="Services\ITimer.cs" />
@@ -126,7 +117,6 @@
     <Compile Include="ViewModel\Dialogs\SelectWidgetsDialog.cs" />
     <Compile Include="ViewModel\Slide.cs" />
     <Compile Include="ViewModel\Slideshow.cs" />
-    <Compile Include="ViewModel\BasicViewModel.cs" />
     <Compile Include="ViewModel\Traybar.cs" />
     <Compile Include="ViewModel\ViewModels.cs">
       <DependentUpon>ViewModel.tt</DependentUpon>
@@ -181,7 +171,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

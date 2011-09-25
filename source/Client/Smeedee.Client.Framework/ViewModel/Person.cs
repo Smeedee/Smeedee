@@ -31,7 +31,7 @@ using System;
 
 namespace Smeedee.Client.Framework.ViewModel
 {
-    public class Person : BasicViewModel
+    public class Person : AbstractViewModel
     {
         private string _email;
         private string _firstname;

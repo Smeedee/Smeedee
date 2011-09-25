@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Text;
-using System.Threading;
 using Smeedee.Client.Framework.Controller;
 using Smeedee.Client.Framework.Factories;
 using Smeedee.Client.Framework.Services;
@@ -26,32 +25,30 @@ namespace Smeedee.Client.Framework.ViewModel
         private int cursor;
         private IModuleLoader moduleLoader;
         private ITimer timer;
-        private ITimer checkCountTimer;
         private DateTimeOffset slideChangedTimestamp;
         private ILog log;
         private IModalDialogService modalDialogService;
         private bool wasRunningBeforeEnteringSettingsView = true;
-        public SelectWidgetsDialog SelectWidgetsDialog { get; protected set; }
+        public SelectWidgetsDialog SelectWidgetsDialog { get; protected set;}
 
 
         partial void OnInitialize()
         {
             SelectWidgetsDialog = new SelectWidgetsDialog();
-            moduleLoader = this.GetDependency<IModuleLoader>();
+        	moduleLoader = this.GetDependency<IModuleLoader>();
             log = this.GetDependency<ILog>();
-
+            
             ErrorInfo = new ErrorInfo();
             Slides = new ObservableCollection<Slide>();
             Slides.CollectionChanged += Slides_CollectionChanged;
 
             TryLoadSlides();
-
             SetSlideshowInfo();
 
             timer = this.GetDependency<ITimer>();
             timer.Elapsed += timer_Elapsed;
 
-            modalDialogService = this.GetDependency<IModalDialogService>();
+        	modalDialogService = this.GetDependency<IModalDialogService>();
 
             if (Slides.Count > 0)
             {
@@ -60,25 +57,25 @@ namespace Smeedee.Client.Framework.ViewModel
             }
         }
 
-        partial void OnSetCurrentSlide(ref Slide value)
-        {
-            foreach (var slide in Slides)
-            {
-                slide.IsDisplayed = false;
-                if (slide.Widget != null)
-                    slide.Widget.IsDisplayed = false;
-            }
+		partial void OnSetCurrentSlide(ref Slide value)
+		{
+			foreach (var slide in Slides)
+			{
+				slide.IsDisplayed = false;
+				if (slide.Widget != null)
+					slide.Widget.IsDisplayed = false;
+			}
 
             if (value != null)
                 value.IsDisplayed = true;
 
-            if (value != null && value.Widget != null)
-                value.Widget.IsDisplayed = true;
-        }
+			if (value != null && value.Widget != null)
+				value.Widget.IsDisplayed = true;
+		}
 
         void Slides_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (!HasSlides())
+            if (!HasSlides()) 
                 return;
 
             Next.TriggerCanExecuteChanged();
@@ -101,14 +98,14 @@ namespace Smeedee.Client.Framework.ViewModel
         private void PauseOnSettingsView(object sender, PropertyChangedEventArgs e)
         {
             var widget = sender as Widget;
-            if (e.PropertyName != "IsInSettingsMode" || widget == null)
+            if (e.PropertyName != "IsInSettingsMode" || widget == null) 
                 return;
 
             if (widget.IsInSettingsMode)
             {
                 wasRunningBeforeEnteringSettingsView = IsRunning;
                 Pause.Execute();
-            }
+            } 
             else
             {
                 if (wasRunningBeforeEnteringSettingsView)
@@ -118,23 +115,23 @@ namespace Smeedee.Client.Framework.ViewModel
 
         private void TryLoadSlides()
         {
-            try
-            {
-                moduleLoader.LoadSlides(this);
-            }
-            catch (Exception ex)
-            {
-                ErrorInfo.HasError = true;
-                ErrorInfo.ErrorMessage = ex.Message;
-                TryWriteToErrorLog(ex);
-            }
+        	try
+        	{
+				moduleLoader.LoadSlides(this);
+        	}
+        	catch (Exception ex)
+        	{
+				ErrorInfo.HasError = true;
+				ErrorInfo.ErrorMessage = ex.Message;
+				TryWriteToErrorLog(ex);
+        	}
         }
 
-        private void TryWriteToErrorLog(Exception ex)
+    	private void TryWriteToErrorLog(Exception ex)
         {
             if (log != null)
             {
-                log.WriteEntry(new ErrorLogEntry("Slideshow", "Failed to load slide: " + ex.ToString()));
+                log.WriteEntry(new ErrorLogEntry("Slideshow", "Failed to load slide: " + ex.ToString()));    
             }
         }
 
@@ -143,9 +140,9 @@ namespace Smeedee.Client.Framework.ViewModel
             var cursorPrettyPrint = HasSlides() ? string.Format("{0}", cursor + 1) : "0";
             if (IsRunning)
             {
-                SlideshowInfo = string.Format("Slide {0}/{1} - Next slide in {2} seconds", cursorPrettyPrint, Slides.Count,
+                SlideshowInfo = string.Format("Slide {0}/{1} - Next slide in {2} seconds", cursorPrettyPrint, Slides.Count, 
                     (CurrentSlide.SecondsOnScreen - SecondsSinceChangedLastSlide()).ToString("0"));
-                TimeLeftOfSlideInPercent = 1.0 - (SecondsSinceChangedLastSlide() / CurrentSlide.SecondsOnScreen);
+                TimeLeftOfSlideInPercent = 1.0 - (SecondsSinceChangedLastSlide()/CurrentSlide.SecondsOnScreen);
             }
             else
             {
@@ -160,10 +157,10 @@ namespace Smeedee.Client.Framework.ViewModel
 
         void timer_Elapsed(object sender, EventArgs e)
         {
-            if (CurrentSlide == null)
+            if( CurrentSlide == null )
                 return;
 
-            if (SecondsSinceChangedLastSlide() >= CurrentSlide.SecondsOnScreen)
+            if (SecondsSinceChangedLastSlide() >= CurrentSlide.SecondsOnScreen)           
                 NextSlide();
             else
                 SetSlideshowInfo();
@@ -182,9 +179,9 @@ namespace Smeedee.Client.Framework.ViewModel
 
         private void NextSlide()
         {
-            if (CurrentSlideInSettingsMode())
+            if(CurrentSlideInSettingsMode() )
                 return;
-
+            
             if (cursor < Slides.Count - 1) cursor++;
             else cursor = 0;
 
@@ -259,7 +256,7 @@ namespace Smeedee.Client.Framework.ViewModel
 
         public void OnPause()
         {
-            if (!IsRunning)
+            if(!IsRunning )
                 return;
 
             IsRunning = false;
@@ -268,15 +265,15 @@ namespace Smeedee.Client.Framework.ViewModel
         }
 
         public void OnAddSlide()
-        {
+		{
             if (CurrentSlideInSettingsMode())
             {
                 return;
             }
-
+		    
             SelectWidgetsDialog = new SelectWidgetsDialog();
             modalDialogService.Show(SelectWidgetsDialog, dialogResult =>
-            {
+		    {
                 if (dialogResult == true)
                 {
                     RemoveWelcomeWidgetIfPresent();
@@ -284,12 +281,12 @@ namespace Smeedee.Client.Framework.ViewModel
                     foreach (var newSlide in SelectWidgetsDialog.NewSlides)
                     {
                         Slides.Add(newSlide);
-
+                        
                     }
                 }
             });
 
-        }
+		}
 
         private void RemoveWelcomeWidgetIfPresent()
         {
@@ -303,7 +300,7 @@ namespace Smeedee.Client.Framework.ViewModel
                 indexCounter++;
             }
 
-            if (welcomeWidgetIndex != -1)
+            if(welcomeWidgetIndex != -1)
             {
                 Slides.RemoveAt(welcomeWidgetIndex);
             }
@@ -315,21 +312,21 @@ namespace Smeedee.Client.Framework.ViewModel
         }
 
         public void OnEdit()
-        {
+		{
             if (CurrentSlideInSettingsMode())
             {
                 return;
             }
-            var dialogViewModel = new EditSlideshowDialog()
-            {
+		    var dialogViewModel = new EditSlideshowDialog()
+		    {
                 Slideshow = this
-            };
+		    };
 
-            modalDialogService.Show(dialogViewModel, dialogResult =>
-            {
+			modalDialogService.Show(dialogViewModel, dialogResult =>
+			{
                 if (dialogResult)
-                {
-                    var slideConfigPersister = this.GetDependency<IPersistDomainModelsAsync<SlideConfiguration>>();
+	            {
+		            var slideConfigPersister = this.GetDependency<IPersistDomainModelsAsync<SlideConfiguration>>();
                     var newSlideConfigurations = new List<SlideConfiguration>();
                     foreach (var slide in Slides)
                     {
@@ -345,8 +342,8 @@ namespace Smeedee.Client.Framework.ViewModel
                         newSlideConfigurations.Add(slideConfig);
                     }
                     slideConfigPersister.Save(newSlideConfigurations);
-                }
-            });
-        }
+			    }
+            }); 
+		}
     }
 }

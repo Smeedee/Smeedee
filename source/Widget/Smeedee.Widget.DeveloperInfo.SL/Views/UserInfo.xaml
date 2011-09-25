@@ -15,7 +15,7 @@
 	<StackPanel x:Name="LayoutRoot" d:DataContext="{Binding User, Mode=OneWay, Source={StaticResource UserDataSource}}">		
 		<Controls:DefaultImage ImageUrl="{Binding ImageUrl, Mode=OneWay}" MaxWidth="135" MaxHeight="200" />
 		<TextBlock x:Name="Name" Text="{Binding Name, Mode=OneWay}" 
-			
+			Foreground="{StaticResource FontBrushBright}" 
 			FontSize="21.333" 
 			FontFamily="{StaticResource FontFamily}"
 			TextWrapping="Wrap" 

@@ -111,38 +111,6 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
         	}
         }
 
-        [TestFixture]
-        public class When_loading_more_than_one_slide : Shared
-        {
-            private SlideConfiguration slideConfig2;
-
-            [Test]
-            public void Then_assure_slideshow_autostarts()
-            {
-                add_second_slide_config();
-
-                moduleLoader.LoadSlides(slideshowViewModel);
-
-                slideshowViewModel.Slides.Count().ShouldBe(2);
-
-                slideshowViewModel.IsRunning.ShouldBeTrue();
-
-            }
-
-            private void add_second_slide_config()
-            {
-                slideConfig2 = new SlideConfiguration
-                                   {
-                                       Duration = 100,
-                                       Title = "gggHolidays provider widget",
-                                       WidgetType = typeof(HolidayProviderTestWidget).FullName,
-                                       WidgetConfigurationId = Guid.NewGuid()
-                                   };
-
-                slideConfigs.Add(slideConfig2);
-            }
-        }
-
 		public class Shared
 		{
 			protected Mock<IAsyncRepository<SlideConfiguration>> slideConfigRepoMock;
@@ -163,8 +131,7 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
 				loggerMock = new Mock<ILog>();
 
 				widgetMetadataRepoMock = new Mock<IAsyncRepository<WidgetMetadata>>();
-                WidgetsExists();
-
+				WidgetsExists();
 
 				slideConfig = new SlideConfiguration
 				{
@@ -173,7 +140,6 @@ namespace Smeedee.Client.Framework.Tests.Services.Impl
 					WidgetType = typeof(HolidayProviderTestWidget).FullName,
 					WidgetConfigurationId = Guid.NewGuid()
 				};
-
 				slideConfigs = new List<SlideConfiguration> { slideConfig };
 				slideConfigRepoMock.Setup(t => t.BeginGet(It.IsAny<Specification<SlideConfiguration>>())).Raises(
 					t => t.GetCompleted += null, new GetCompletedEventArgs<SlideConfiguration>(slideConfigs, new AllSpecification<SlideConfiguration>()));

@@ -27,8 +27,6 @@ using System;
 using System.ComponentModel;
 using Smeedee.Client.Framework.Services;
 using Smeedee.Client.Framework.ViewModel;
-using Smeedee.DomainModel.Config;
-using Smeedee.DomainModel.Framework;
 using Smeedee.Framework;
 using TinyMVVM.Framework.Services;
 
@@ -39,11 +37,8 @@ namespace Smeedee.Client.Framework.Controller
         public T ViewModel { get; private set; }
         protected ITimer refreshNotifier;
         protected IUIInvoker uiInvoker;
-        protected int REFRESH_INTERVAL = 1 * 60 * 1000;
+        protected int REFRESH_INTERVAL = 2 * 60 * 1000;
         protected readonly IProgressbar loadingNotifier;
-        private readonly IPersistDomainModelsAsync<Configuration> configPersister; 
-
-        protected IWidget Widget { get; private set; }
 
         protected const string SAVING_DATA_MESSAGE = "Saving data...";
         protected const string LOADING_DATA_MESSAGE = "Loading data from server...";
@@ -53,26 +48,16 @@ namespace Smeedee.Client.Framework.Controller
         protected const string LOADING_REAL_CONFIG_MESSAGE =
             "The default configuration is now loaded. We are still trying to load the real configuration";
 
-        public ControllerBase(T viewModel, 
-            ITimer timer, 
-            IUIInvoker uiInvoker, 
-            IProgressbar loadingNotifier)
-            : this(viewModel, timer, uiInvoker, loadingNotifier, null, null)
-        {
-            // TODO: this constructor should be removed as soon as old controllers don't depend on it
-        }
 
         public ControllerBase(T viewModel, 
             ITimer timer, 
             IUIInvoker uiInvoker, 
-            IProgressbar loadingNotifier,
-            IWidget widget,
-            IPersistDomainModelsAsync<Configuration> configPersister)
+            IProgressbar loadingNotifier)
         {
-            Guard.Requires<ArgumentNullException>(timer != null, "timer");
-            Guard.Requires<ArgumentNullException>(uiInvoker != null, "uiInvoker");
-            Guard.Requires<ArgumentNullException>(viewModel != null, "viewModel");
-            Guard.Requires<ArgumentNullException>(loadingNotifier != null, "loadingNotifyer");
+            Guard.Requires<ArgumentException>(timer != null, "timer");
+            Guard.Requires<ArgumentException>(uiInvoker != null, "uiInvoker");
+            Guard.Requires<ArgumentException>(viewModel != null, "viewModel");
+            Guard.Requires<ArgumentException>(loadingNotifier != null, "loadingNotifyer");
             
             this.refreshNotifier = timer;
             this.uiInvoker = uiInvoker;
@@ -80,54 +65,18 @@ namespace Smeedee.Client.Framework.Controller
 
             ViewModel = viewModel;
             refreshNotifier.Elapsed += OnNotifiedToRefresh;
-
-            Widget = widget;
-
-            if (Widget != null)
-            {
-                Widget.ConfigurationChanged += ConfigurationChanged;
-            }
-
-            this.configPersister = configPersister;
-            if (configPersister != null)
-            {
-                configPersister.SaveCompleted += OnConfigurationSaveCompleted;
-            }
         }
 
-        private void ConfigurationChanged(object sender, EventArgs e)
+        protected void ThrowIfNull(object obj, string parameterName)
         {
-            OnConfigurationChanged(Widget.Configuration);
+            if (obj == null)
+            {
+                throw new ArgumentException("The" + parameterName + " argument cannot be null");
+            }
         }
 
         protected abstract void OnNotifiedToRefresh(object sender, EventArgs e);
-        protected virtual void OnConfigurationChanged(Configuration configuration)
-        {
-            // TODO: this should be made abstract as soon as it will not break old widget controllers.
-        }
 
-        protected void SaveConfiguration()
-        {
-            if (configPersister != null)
-            {
-                SetIsSavingConfig();
-                configPersister.Save(Widget.Configuration);
-            }
-        }
-
-        private void OnConfigurationSaveCompleted(object sender, SaveCompletedEventArgs e)
-        {
-            SetIsNotSavingConfig();
-            if (e.Error != null)
-            {
-                Widget.ShowErrorMessage("Failed to save settings :(");
-            }
-            else
-            {
-                Widget.NoErrors();
-                OnConfigurationChanged(Widget.Configuration);
-            }
-        }
 
         public void Start()
         {

@@ -23,50 +23,16 @@
 
 #endregion
 
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Smeedee.Widget.DeveloperInfo.SL.Views
 {
     public partial class UserInfo : UserControl
     {
-        public Brush TextBrush
-        {
-            get { return (Brush)GetValue(TextBrushProperty); }
-            set { SetValue(TextBrushProperty, value); }
-        }
-
         public UserInfo()
         {
             // Required to initialize variables
             InitializeComponent();
-            UpdateTextBrush();
-        }
-
-        public void UpdateTextBrush()
-        {
-            var brush = TextBrush;
-            if (brush != null)
-            {
-                Name.Foreground = brush;
-            }
-            else
-            {
-                Name.Foreground = (Brush)Application.Current.Resources["FontBrushBright"];
-            }
-        }
-
-        public static readonly DependencyProperty TextBrushProperty =
-            DependencyProperty.Register("TextBrush", typeof(Brush), typeof(UserInfo),
-                new PropertyMetadata(null, TextBrushChanged));
-
-        private static void TextBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var userInfo = d as UserInfo;
-            if (userInfo == null) return;
-            userInfo.UpdateTextBrush();
         }
     }
-
 }

@@ -11,6 +11,5 @@ namespace Smeedee.DomainModel.TeamPicture
         public virtual int PictureWidth { get; set; }
         public virtual string Message { get; set; }
         public virtual byte[] Picture { get; set; }
-        public virtual string PictureScaling { get; set; }
     }
 }

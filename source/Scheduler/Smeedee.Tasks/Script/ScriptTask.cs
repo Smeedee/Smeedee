@@ -53,7 +53,7 @@ namespace Smeedee.Tasks.Script
                 "Path specified for SafeDirectoryPathForScripts does not exist");
 
             Guard.Requires<ArgumentNullException>(taskConfiguration != null);
-            Guard.Requires<TaskConfigurationException>(taskConfiguration.EntryExists(ScriptName) == true && taskConfiguration.Entries.Single(c => c.Name == ScriptName).Value != "");
+            Guard.Requires<TaskConfigurationException>(taskConfiguration.EntryExists(ScriptName) == true);
             Guard.Requires<TaskConfigurationException>(
                 taskConfiguration.ReadEntryValue(ScriptName) != null && 
                 taskConfiguration.ReadEntryValue(ScriptName) != string.Empty);

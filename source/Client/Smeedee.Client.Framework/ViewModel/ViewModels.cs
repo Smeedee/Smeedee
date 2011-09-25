@@ -153,7 +153,7 @@ namespace Smeedee.Client.Framework.ViewModel
 
 namespace Smeedee.Client.Framework.ViewModel
 {
-	public partial class Widget : TinyMVVM.Framework.ViewModelBase, IWidget
+	public partial class Widget : TinyMVVM.Framework.ViewModelBase
 	{
 		//State
 		public virtual string Title

@@ -52,31 +52,24 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
-							Style="{StaticResource SettingsViewH1}" Text="Administrate Users" />                      
+                        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource SettingsViewH1}" Text="Administrate Users" />                      
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" x:Name="labelUserDB" 
-							Style="{StaticResource SettingsViewText}" Text="Select database" />
-                        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbUserDB" 
-							Style="{StaticResource SettingsViewComboBox}" ItemsSource="{Binding Userdbs}" 
-							SelectedItem="{Binding CurrentDBName, Mode=TwoWay}" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" x:Name="labelUserDB" Style="{StaticResource SettingsViewText}" Text="Select database" />
+                        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbUserDB" Style="{StaticResource SettingsViewComboBox}" ItemsSource="{Binding Userdbs}" SelectedItem="{Binding CurrentDBName, Mode=TwoWay}" />
 
                         <TextBlock Grid.Row="4" Style="{StaticResource SettingsViewText}" Grid.Column="0" Text="Add new user" />
                         <StackPanel Style="{StaticResource SettingsViewButtonWrapper}" Grid.Row="4" Grid.Column="1">
-                            <Button Style="{StaticResource SettingsViewButton}" Click="AddUserClick" 
-								x:Name="btnNewUser" Content="Add..." Command="{Binding OpenUserEditWindow}" />
+                            <Button Style="{StaticResource SettingsViewButton}" Click="AddUserClick" x:Name="btnNewUser" Content="Add..." Command="{Binding OpenUserEditWindow}" />
                         </StackPanel>
 
                         <TextBlock Style="{StaticResource SettingsViewText}" Grid.Row="5" Grid.Column="0" Text="Delete user" />
                         <StackPanel Grid.Row="5" Grid.Column="1" Style="{StaticResource SettingsViewButtonWrapper}">
-                            <Button Grid.Column="1" x:Name="btnDelete" Style="{StaticResource SettingsViewButton}" 
-							Content="Delete..." Command="{Binding DeleteSelectedUser}" />
+                            <Button Grid.Column="1" x:Name="btnDelete" Style="{StaticResource SettingsViewButton}" Content="Delete..." Command="{Binding DeleteSelectedUser}" />
                         </StackPanel>
 
                         <TextBlock Style="{StaticResource SettingsViewText}" Grid.Row="6" Grid.Column="0" Text="Edit user" />
                         <StackPanel Grid.Row="6" Grid.Column="1" Style="{StaticResource SettingsViewButtonWrapper}">
-                            <Button Grid.Column="1" x:Name="btEdit" Style="{StaticResource SettingsViewButton}" 
-							Content="Edit..." Click="EditUserClick" Command="{Binding EditUser}" />
+                            <Button Grid.Column="1" x:Name="btEdit" Style="{StaticResource SettingsViewButton}" Command="{Binding EditUser}" Content="Edit..." Click="EditUserClick"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -104,50 +97,32 @@
                         FontSize="14"
                         >
                         <Controls:DataGrid.Columns>
-                            <Controls:DataGridTextColumn 
-								x:Name="usernameColumn" 
-								Binding="{Binding Username, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" 
-								Header="Username" Width="SizeToCells" MinWidth="120">
+                            <Controls:DataGridTextColumn x:Name="usernameColumn" Binding="{Binding Username, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Header="Username" Width="SizeToCells" MinWidth="120">
                                 <Controls:DataGridTextColumn.Foreground>
                                     <SolidColorBrush Color="Black" />
                                 </Controls:DataGridTextColumn.Foreground>
                             </Controls:DataGridTextColumn>
-                            <Controls:DataGridTextColumn 
-								x:Name="firstnameColumn" 
-								Binding="{Binding Firstname, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" 
-								Header="Firstname" Width="SizeToCells" MinWidth="120">
+                            <Controls:DataGridTextColumn x:Name="firstnameColumn" Binding="{Binding Firstname, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Header="Firstname" Width="SizeToCells" MinWidth="120">
                                 <Controls:DataGridTextColumn.Foreground>
                                     <SolidColorBrush Color="Black" />
                                 </Controls:DataGridTextColumn.Foreground>
                             </Controls:DataGridTextColumn>
-                            <Controls:DataGridTextColumn 
-								x:Name="middlenameColumn" 
-								Binding="{Binding Middlename}" 
-								Header="Middlename" Width="SizeToCells" MinWidth="120">
+                            <Controls:DataGridTextColumn x:Name="middlenameColumn" Binding="{Binding Middlename}" Header="Middlename" Width="SizeToCells" MinWidth="120">
                                 <Controls:DataGridTextColumn.Foreground>
                                     <SolidColorBrush Color="Black" />
                                 </Controls:DataGridTextColumn.Foreground>
                             </Controls:DataGridTextColumn>
-                            <Controls:DataGridTextColumn 
-								x:Name="surnameColumn" 
-								Binding="{Binding Surname}" 
-								Header="Surname" Width="SizeToCells" MinWidth="120">
+                            <Controls:DataGridTextColumn x:Name="surnameColumn" Binding="{Binding Surname}" Header="Surname" Width="SizeToCells" MinWidth="120">
                                 <Controls:DataGridTextColumn.Foreground>
                                     <SolidColorBrush Color="Black" />
                                 </Controls:DataGridTextColumn.Foreground>
                             </Controls:DataGridTextColumn>
-                            <Controls:DataGridTextColumn 
-								x:Name="emailColumn" 
-								Binding="{Binding Email}" 
-								Header="Email" Width="SizeToCells" MinWidth="120">
+                            <Controls:DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email}" Header="Email" Width="SizeToCells" MinWidth="120">
                                 <Controls:DataGridTextColumn.Foreground>
                                     <SolidColorBrush Color="Black" />
                                 </Controls:DataGridTextColumn.Foreground>
                             </Controls:DataGridTextColumn>
-                            <Controls:DataGridTextColumn 
-								x:Name="imageUrlColumn" 
-								Binding="{Binding ImageUrl}" 
-								Header="Image Url" Width="SizeToCells" MinWidth="120">
+                            <Controls:DataGridTextColumn x:Name="imageUrlColumn" Binding="{Binding ImageUrl}" Header="Image Url" Width="SizeToCells" MinWidth="120">
                                 <Controls:DataGridTextColumn.Foreground>
                                     <SolidColorBrush Color="Black" />
                                 </Controls:DataGridTextColumn.Foreground>

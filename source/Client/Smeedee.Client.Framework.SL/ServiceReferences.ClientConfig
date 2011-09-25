@@ -10,10 +10,6 @@
                     maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
-                <binding name="BasicHttpBinding_WebSnapshotRepositoryService"
-                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
             </basicHttpBinding>
             <customBinding>
                 <binding name="CustomBinding_ConfigurationRepositoryService">
@@ -105,10 +101,6 @@
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ChangesetRepositoryService"
                 contract="ChangesetRepositoryService.ChangesetRepositoryService"
                 name="BasicHttpBinding_ChangesetRepositoryService" />
-            <endpoint address="http://localhost:1155/Smeedee/Services/WebSnapshotRepositoryService.svc"
-                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_WebSnapshotRepositoryService"
-                contract="WebSnapshotRepositoryService.WebSnapshotRepositoryService"
-                name="BasicHttpBinding_WebSnapshotRepositoryService" />
         </client>
     </system.serviceModel>
 </configuration>

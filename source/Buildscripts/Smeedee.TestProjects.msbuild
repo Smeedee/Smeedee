@@ -34,9 +34,9 @@
       <Report>TestResults.Smeedee.Widget.ProjectInfo.xml</Report>
     </TestProject>
 
-    <TestProject Include="..\Client\Smeedee.Widgets.Tests\Smeedee.Widgets.Tests.csproj">
-      <Assembly>..\Client\Smeedee.Widgets.Tests\bin\debug\Smeedee.Widgets.Tests.dll</Assembly>
-      <Report>TestResults.Smeedee.Widgets.xml</Report>
+    <TestProject Include="..\Widget\Smeedee.Widget.SourceControl.Tests\Smeedee.Widget.SourceControl.Tests.csproj">
+      <Assembly>..\Widget\Smeedee.Widget.SourceControl.Tests\bin\debug\Smeedee.Widget.SourceControl.Tests.dll</Assembly>
+      <Report>TestResults.Smeedee.Widget.SourceControl.xml</Report>
     </TestProject>
 
 	<!-- TODO Commented out due to MSTest/Silverlight Test

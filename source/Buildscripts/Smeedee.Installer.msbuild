@@ -15,29 +15,24 @@
     <SmeedeeSolution Include="..\Smeedee.sln"/>
     <InstallerProject Include="..\Installers\Smeedee.Client.Web.Installer\Smeedee.Client.Web.Installer.sln"/>
 
-    <SmeedeeClientWebClientBinOutput Include="..\Client\Smeedee.Client.Web\ClientBin\*.xap"/>
+    <APDClientWebClientBinOutput Include="..\Client\Smeedee.Client.Web\ClientBin\*.xap"/>
 
-    <SmeedeeClientWebOutputBin Include="..\Client\Smeedee.Client.Web\bin\*.dll"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.asax"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.aspx"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.aspx.cs"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.config"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.htm"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.js"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.ashx"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.ashx.cs"/>
-    <SmeedeeClientWebOutput Include="..\Client\Smeedee.Client.Web\*.xml"/>
+    <APDClientWebOutputBin Include="..\Client\Smeedee.Client.Web\bin\*.dll"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.asax"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.aspx"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.aspx.cs"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.config"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.htm"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.js"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.ashx"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.ashx.cs"/>
+    <APDClientWebOutput Include="..\Client\Smeedee.Client.Web\*.xml"/>
     
-    <SmeedeeClientWebOutputSplash Include="..\Client\Smeedee.Client.Web\Splash\*"/>
-    <SmeedeeClientWebOutputUserImages Include="..\Client\Smeedee.Client.Web\UserImages\*.jpg"/>
+    <APDClientWebOutputSplash Include="..\Client\Smeedee.Client.Web\Splash\*"/>
+    <APDClientWebOutputUserImages Include="..\Client\Smeedee.Client.Web\UserImages\*.jpg"/>
     
-    <SmeedeeClientWebOutputServices Include="..\Client\Smeedee.Client.Web\Services\*.svc"/>
+    <APDClientWebOutputServices Include="..\Client\Smeedee.Client.Web\Services\*.svc"/>
 
-
-    <SmeedeeClientWebOutputMobileServices Include="..\Client\Smeedee.Client.Web\MobileServices\**\*.aspx"/>
-    <SmeedeeClientWebOutputMobileServices Include="..\Client\Smeedee.Client.Web\MobileServices\**\*.aspx.cs"/>
-    <SmeedeeClientWebOutputServicesNoSql Include="..\Client\Smeedee.Client.Web\Services\NoSql\*.*" />
-    
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\*.dll"/>
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\Smeedee.Scheduler.Service.exe"/>
     <DataCollectorOutput Include="..\Scheduler\Smeedee.Scheduler.Service\bin\Debug\Smeedee.Scheduler.Service.exe.config"/>
@@ -46,9 +41,9 @@
     <DataCollectorConsoleOutput Include="..\Scheduler\Smeedee.Scheduler.Console\bin\Debug\Smeedee.Scheduler.Console.exe"/>
     <DataCollectorConsoleOutput Include="..\Scheduler\Smeedee.Scheduler.Console\bin\Debug\Smeedee.Scheduler.Console.exe.config"/>
 
-    <SmeedeeIntegrationOutputBin Include="..\Integration\Smeedee.Integration\bin\Debug\*.dll"/>
+    <APDIntegrationOutputBin Include="..\Integration\Smeedee.Integration\bin\Debug\*.dll"/>
     
-    <SmeedeeInstallerOutput Include="..\Installers\Smeedee.Client.Web.Installer\bin\Debug\*.msi"/>
+    <APDInstallerOutput Include="..\Installers\Smeedee.Client.Web.Installer\bin\Debug\*.msi"/>
 
     <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\Smeedee.Client.Framework.dll" />
     <SDKWidgetAssemblies Include="..\Client\Smeedee.Client.Framework\Bin\Debug\Smeedee.DomainModel.Framework.dll" />
@@ -110,26 +105,19 @@
     <MakeDir Directories="$(WorkingDirectory)\UserImages"/>
     <MakeDir Directories="$(WorkingDirectory)\Services"/>
 	<MakeDir Directories="$(WorkingDirectory)\Splash"/>
-    <MakeDir Directories="$(WorkingDirectory)\MobileServices"/>
-    <MakeDir Directories="$(WorkingDirectory)\Services\NoSql"/>
-    <MakeDir Directories="$(WorkingDirectory)\WebSnapshots"/>
   </Target>
 
 
   <Target Name="DeployInstallerOutput" DependsOnTargets="CreateOutputDirectories">
     <Copy SourceFiles="@(DataCollectorOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
-    <Copy SourceFiles="@(SmeedeeClientWebOutput)" DestinationFolder="$(WorkingDirectory)"/>
-    <Copy SourceFiles="@(SmeedeeClientWebOutputSplash)" DestinationFolder="$(WorkingDirectory)\Splash"/>
-    <Copy SourceFiles="@(SmeedeeClientWebOutputUserImages)" DestinationFolder="$(WorkingDirectory)\UserImages"/>
-    <Copy SourceFiles="@(SmeedeeClientWebOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
-    <Copy SourceFiles="@(SmeedeeClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
-    <Copy SourceFiles="@(SmeedeeClientWebOutputMobileServices)" DestinationFolder="$(WorkingDirectory)\MobileServices\%(RecursiveDir)"/>
-    <Copy SourceFiles="@(SmeedeeClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
-    <Copy SourceFiles="@(SmeedeeClientWebOutputServicesNoSql)" DestinationFolder="$(WorkingDirectory)\Services\NoSql" />
-    <Copy SourceFiles="@(APDClientWebOutputServicesNoSql)" DestinationFolder="$(WorkingDirectory)\Services\NoSql" />
+    <Copy SourceFiles="@(APDClientWebOutput)" DestinationFolder="$(WorkingDirectory)"/>
+    <Copy SourceFiles="@(APDClientWebOutputSplash)" DestinationFolder="$(WorkingDirectory)\Splash"/>
+    <Copy SourceFiles="@(APDClientWebOutputUserImages)" DestinationFolder="$(WorkingDirectory)\UserImages"/>
+    <Copy SourceFiles="@(APDClientWebOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(APDClientWebOutputServices)" DestinationFolder="$(WorkingDirectory)\Services"/>
     <Copy SourceFiles="@(APDClientWebClientBinOutput)" DestinationFolder="$(WorkingDirectory)\ClientBin"/>
     <Copy SourceFiles="@(DataCollectorConsoleOutput)" DestinationFolder="$(WorkingDirectory)\bin"/>
-    <Copy SourceFiles="@(SmeedeeIntegrationOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
+    <Copy SourceFiles="@(APDIntegrationOutputBin)" DestinationFolder="$(WorkingDirectory)\bin"/>
   </Target>
 
 
@@ -152,7 +140,7 @@
   </Target>
 
   <Target Name="DeployInstaller">
-      <Copy SourceFiles="@(SmeedeeInstallerOutput)" DestinationFolder="$(OutputDirectory)\"/>
+      <Copy SourceFiles="@(APDInstallerOutput)" DestinationFolder="$(OutputDirectory)\"/>
   </Target>
 
   <Target Name="BuildSetupKit" DependsOnTargets="CompileInstaller;DeployInstaller">

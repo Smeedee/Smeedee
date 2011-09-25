@@ -56,15 +56,11 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Controls" />
     <Reference Include="Microsoft.Expression.Drawing" />
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\..\..\tools\Expression Blend\Silverlight\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\..\..\tools\JSON\Silverlight\Newtonsoft.Json.Silverlight.dll</HintPath>
-    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\..\..\tools\Ninject\Ninject.dll</HintPath>
     </Reference>
@@ -79,17 +75,15 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Bin\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\Silverlight Toolkit April 2010\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.Toolkit, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\..\tools\Silverlight Toolkit July 2009\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\..\..\tools\Expression Blend\Silverlight\System.Windows.Interactivity.dll</HintPath>
@@ -144,12 +138,6 @@
     <Compile Include="..\Smeedee.Client.Framework\Messages\OpenModalDialogMessage.cs">
       <Link>Messages\OpenModalDialogMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Client.Framework\Repositories\Charting\ChartStorageReader.cs">
-      <Link>Repositories\Charting\ChartStorageReader.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Client.Framework\Repositories\NoSql\NoSqlRepository.cs">
-      <Link>Repositories\NoSql\NoSqlRepository.cs</Link>
-    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Repositories\WidgetConfigurationRepository.cs">
       <Link>Repositories\WidgetConfigurationRepository.cs</Link>
     </Compile>
@@ -158,9 +146,6 @@
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ResourceParsing\XamlResourceDictionary.cs">
       <Link>ResourceReading\XamlResourceDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Client.Framework\Resources\BrushProvider.cs">
-      <Link>Resources\BrushProvider.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\IDockBarService.cs">
       <Link>Services\IDockBarService.cs</Link>
@@ -216,9 +201,6 @@
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\StandardTimer.cs">
       <Link>Services\Impl\StandardTimer.cs</Link>
     </Compile>
-    <Compile Include="..\Smeedee.Client.Framework\Services\Impl\WebClientDownloadStringService.cs">
-      <Link>Services\Impl\WebClientDownloadStringService.cs</Link>
-    </Compile>
     <Compile Include="..\Smeedee.Client.Framework\Services\Impl\WidgetProgressbar.cs">
       <Link>Services\Impl\WidgetProgressbar.cs</Link>
     </Compile>
@@ -236,9 +218,6 @@
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\ApplicationContext.cs">
       <Link>ViewModel\ApplicationContext.cs</Link>
-    </Compile>
-    <Compile Include="..\Smeedee.Client.Framework\ViewModel\BasicViewModel.cs">
-      <Link>ViewModel\BasicViewModel.cs</Link>
     </Compile>
     <Compile Include="..\Smeedee.Client.Framework\ViewModel\BindableViewModel.cs">
       <Link>ViewModel\BindableViewModel.cs</Link>
@@ -312,7 +291,6 @@
     </Compile>
     <Compile Include="Controls\IDataTemplateSelector.cs" />
     <Compile Include="Controls\ItemsControlEx.cs" />
-    <Compile Include="Converters\StringToResourceConverter.cs" />
     <Compile Include="MEF\DeploymentFolderCatalog.cs" />
     <Compile Include="MEF\Package.cs" />
     <Compile Include="MEF\Services\HttpDownloadService.cs" />
@@ -331,7 +309,6 @@
     <Compile Include="Repositories\Async\AsyncTeamPictureRepository.cs" />
     <Compile Include="Repositories\Async\AsyncUserdbRepository.cs" />
     <Compile Include="Repositories\Async\AsyncUserRepository.cs" />
-    <Compile Include="Repositories\Async\AsyncWebSnapshotRepository.cs" />
     <Compile Include="Repositories\ChangesetWebserviceRepository.cs" />
     <Compile Include="Repositories\CIServerWebserviceRepository.cs" />
     <Compile Include="Repositories\ConfigurationWebserviceRepository.cs" />
@@ -346,9 +323,6 @@
     <Compile Include="Repositories\UserWebserviceRepositoryProxy.cs" />
     <Compile Include="Resources\Graphic\Icons\AddWidgetIcon.xaml.cs">
       <DependentUpon>AddWidgetIcon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Graphic\Icons\RemoteServicesAdministrationIcon.xaml.cs">
-      <DependentUpon>RemoteServicesAdministrationIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Graphic\Icons\EditSlideShowIcon.xaml.cs">
       <DependentUpon>EditSlideShowIcon.xaml</DependentUpon>
@@ -388,14 +362,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\WebSnapshotRepositoryService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Services\Impl\MetadataService.cs" />
     <Compile Include="Services\Impl\SLFullScreenService.cs" />
     <Compile Include="Services\Impl\SLMessageBoxService.cs" />
+    <Compile Include="Services\Impl\WebClientDownloadStringService.cs" />
     <Compile Include="ViewModel\Repositories\WidgetMetadataRepository.cs" />
     <Compile Include="ResourceReading\SLXamlReader.cs" />
     <Compile Include="SampleData\LoadingNotificationSampleDataSource\LoadingNotificationSampleDataSource.xaml.cs">
@@ -518,7 +488,6 @@
     <DesignTimeOnly Include="SampleData\LoadingNotificationSampleDataSource\LoadingNotificationSampleDataSource.xsd" />
     <DesignTimeOnly Include="SampleData\EditSlideshowDialogSampleDataSource\EditSlideshowDialogSampleDataSource.xsd" />
     <DesignTimeOnly Include="SampleData\SelectWidgetsDialogSampleSource\SelectWidgetsDialogSampleSource.xsd" />
-    <None Include="Properties\DataSources\Smeedee.DomainModel.WebSnapshot.WebSnapshot.datasource" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.wsdl" />
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.xsd">
       <SubType>Designer</SubType>
@@ -709,12 +678,6 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\WebSnapshotRepositoryService\configuration91.svcinfo" />
-    <None Include="Service References\WebSnapshotRepositoryService\configuration.svcinfo" />
-    <None Include="Service References\WebSnapshotRepositoryService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -729,6 +692,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.wsdl" />
     <None Include="Service References\ConfigurationRepositoryService\ConfigurationRepositoryService.xsd">
       <SubType>Designer</SubType>
@@ -791,17 +755,6 @@
     <None Include="Service References\UserRepositoryService\UserRepositoryService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebSnapshotRepositoryService\service.wsdl" />
-    <None Include="Service References\WebSnapshotRepositoryService\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\Smeedee.DomainModel.WebSnapshot.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WebSnapshotRepositoryService\smeedee.org.wsdl" />
-    <None Include="Service References\WebSnapshotRepositoryService\smeedee.org.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -831,10 +784,6 @@
     <Page Include="Resources\Graphic\Icons\AddWidgetIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Graphic\Icons\RemoteServicesAdministrationIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Graphic\Icons\EditSlideShowIcon.xaml">
       <SubType>Designer</SubType>
@@ -943,7 +892,6 @@
     <WCFMetadataStorage Include="Service References\TaskDefinitionRepositoryService\" />
     <WCFMetadataStorage Include="Service References\TeamPictureService\" />
     <WCFMetadataStorage Include="Service References\UserRepositoryService\" />
-    <WCFMetadataStorage Include="Service References\WebSnapshotRepositoryService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ChangesetRepositoryService\ChangesetRepositoryService.disco" />

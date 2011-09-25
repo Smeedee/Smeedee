@@ -54,12 +54,12 @@ namespace Smeedee.Client.Widget.CI.Tests.CIControllerSpecs
         protected static CISettingsViewModel settingsViewModel = new CISettingsViewModel();
 
         protected static Mock<IRepository<CIServer>> RepositoryMock;
+        protected static Mock<IRepository<Configuration>> configRepoMock = new Mock<IRepository<Configuration>>();
         protected static Mock<IPersistDomainModelsAsync<Configuration>> configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
         protected static Mock<IRepository<User>> UserRepoMock;
         protected static Mock<IProgressbar> progressbarMock = new Mock<IProgressbar>();
         protected static Mock<ITimer> timermock = new Mock<ITimer>();
         protected static Mock<CIProject> projectMock;
-        protected static Mock<IWidget> widgetMock;
 
         protected static DateTime MockStartTime = DateTime.Now;
         protected static DateTime MockEndTime = DateTime.Now.AddMinutes(30);
@@ -220,18 +220,13 @@ namespace Smeedee.Client.Widget.CI.Tests.CIControllerSpecs
                                           settingsViewModel,
                                           UserRepoMock.Object,
                                           RepositoryMock.Object,
+                                          configRepoMock.Object,
                                           configPersisterMock.Object,
                                           new NoBackgroundWorkerInvocation<IEnumerable<CIProject>>(),
                                           timermock.Object,
                                           new NoUIInvokation(),
                                           new Mock<ILog>().Object,
-                                          progressbarMock.Object,
-                                          widgetMock.Object);
-        }
-
-        protected static void WidgetConfigurationIs(Configuration config)
-        {
-            widgetMock.SetupGet(w => w.Configuration).Returns(config);
+                                          progressbarMock.Object);
         }
 
         protected static Build CreateBuild(DomainModel.CI.BuildStatus status, Trigger trigger)
@@ -253,6 +248,7 @@ namespace Smeedee.Client.Widget.CI.Tests.CIControllerSpecs
         protected Context settingsViewmodel_is_instantiated = () =>
         {
             RepositoryMock = new Mock<IRepository<CIServer>>();
+            configRepoMock = new Mock<IRepository<Configuration>>();
             configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
             progressbarMock = new Mock<IProgressbar>();
 
@@ -351,12 +347,7 @@ namespace Smeedee.Client.Widget.CI.Tests.CIControllerSpecs
         [SetUp]
         public void Setup()
         {
-            Scenario("");
             progressbarMock = new Mock<IProgressbar>();
-            widgetMock = new Mock<IWidget>();
-            WidgetConfigurationIs(CIController.GetDefaultConfiguration()); // default config until otherwise specified
-            configPersisterMock = new Mock<IPersistDomainModelsAsync<Configuration>>();
-            timermock = new Mock<ITimer>();
         }
     }
 
@@ -437,7 +428,7 @@ namespace Smeedee.Client.Widget.CI.Tests.CIControllerSpecs
             var config = new Configuration("CIWidgetSettings");
             config.NewSetting("FilterInactiveProjects", "True");
             config.NewSetting("InactiveProjectThreshold", "90");
-            WidgetConfigurationIs(config);
+            configRepoMock.Setup(r => r.Get(It.IsAny<Specification<Configuration>>())).Returns(new List<Configuration> { config });
         };
 
         [Test]

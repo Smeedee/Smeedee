@@ -6,30 +6,12 @@ namespace Smeedee.DomainModel.TaskInstanceConfiguration
     [DataContract]
     public class TaskConfigurationEntry
     {
-
-        public TaskConfigurationEntry()
-        {
-            PersistableType = typeof (string).AssemblyQualifiedName;
-            PersistableValue = "";
-        }
         public virtual TaskConfiguration TaskConfiguration { get; set; }
 
         protected string PersistableValue { get; set; }
-
-        private string  persistableType;
-
+        
         [DataMember]
-        public virtual string PersistableType
-        {
-            get
-            {
-                return persistableType;
-            }
-            set
-            {
-                persistableType = value;
-            }
-        }
+        public virtual string PersistableType { get; set; }
 
         public virtual Type Type
         {

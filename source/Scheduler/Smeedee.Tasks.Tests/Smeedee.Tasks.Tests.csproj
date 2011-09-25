@@ -70,17 +70,11 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>..\..\..\tools\NHibernate-3.2.0.GA-bin\Required_For_LazyLoading\Castle\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Moq, Version=3.1.416.3, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\Moq.3.1.416.3-bin\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
-    <Reference Include="NHibernate.ByteCode.Castle">
-      <HintPath>..\..\..\tools\NHibernate-3.2.0.GA-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
-    </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=2.2.10.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\NUnit 2.2\nunit.framework.dll</HintPath>
@@ -113,7 +107,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Charting\ChartingTaskSpecs.cs" />
     <Compile Include="CI\CITaskBaseSpecs.cs" />
     <Compile Include="CI\HudsonXMLTask\HudsonXMLTaskSpecs.cs" />
     <Compile Include="CI\Integration\CIHarvesterSpecs.cs" />
@@ -129,7 +122,6 @@
     <Compile Include="SourceControl\ChangesetHarvesterBaseSpecs.cs" />
     <Compile Include="SourceControl\SVN_Git_TFS_HarvestersSpecs.cs" />
     <Compile Include="SourceControl\TFSChangesetHarvesterTaskSpecs.cs" />
-    <Compile Include="WebSnapshot\WebSnapshotTaskSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -152,10 +144,6 @@
     <ProjectReference Include="..\..\Client\Smeedee.Client.Framework.Tests\Smeedee.Client.Framework.Tests.csproj">
       <Project>{1E77D895-A0E6-4DC9-82FF-3379D65836C1}</Project>
       <Name>Smeedee.Client.Framework.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Client\Smeedee.Client.Framework\Smeedee.Client.Framework.csproj">
-      <Project>{7882F92F-E48B-479E-A2EA-68844EE1C113}</Project>
-      <Name>Smeedee.Client.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DomainModel\Smeedee.DomainModel.Framework\Smeedee.DomainModel.Framework.csproj">
       <Project>{7C423CC1-417A-410A-81C9-741029DC0F8B}</Project>
