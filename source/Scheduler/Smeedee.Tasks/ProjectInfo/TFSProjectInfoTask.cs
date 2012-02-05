@@ -19,7 +19,7 @@ namespace Smeedee.Tasks.ProjectInfo
                          Description = "Retrieves information from Team Foundation's Work Item functionality. Used to populate Smeedee's database with project related data such as burndown data and sprint dates. Values are defaulted to match the Conchango template.",
                          Version = 1,
                          Webpage = "http://smeedee.org")]
-    [TaskSetting(1, TFSProjectInfoSettingsConstants.USERNAME_SETTING_NAME, typeof(string), "")]
+    [TaskSetting(1, TFSProjectInfoSettingsConstants.USERNAME_SETTING_NAME, typeof(string), "", "The username or domain/username of the Team Foundation server that this task may log in with.")]
     [TaskSetting(2, TFSProjectInfoSettingsConstants.PASSWORD_SETTING_NAME, typeof(string), "")]
     [TaskSetting(3, TFSProjectInfoSettingsConstants.URL_SETTING_NAME, typeof(Uri), "", "Include protocols such as http://\nand port numbers such as :8080")]
     [TaskSetting(4, TFSProjectInfoSettingsConstants.PROJECT_SETTING_NAME, typeof(string), "")]

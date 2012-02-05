@@ -18,15 +18,15 @@ namespace Smeedee.Tasks.SourceControl
        Description = "Retrieves information from a Team Foundation version control repository. Used to populate Smeedee's database with information about the latest commits and other commit statistics.",
        Version = 1,
        Webpage = "http://smeedee.org")]
-    [TaskSetting(1, USERNAME_SETTING_NAME, typeof(string), "guest")]
+    [TaskSetting(1, USERNAME_SETTING_NAME, typeof(string), "guest", "The username or domain/username of the Team Foundation server that this task may log in with.")]
     [TaskSetting(2, PASSWORD_SETTING_NAME, typeof(string), "")]
     [TaskSetting(3, SOURCECONTROL_SERVER_NAME, typeof(string), "Main Sourcecontrol Server")]
-    [TaskSetting(4, URL_SETTING_NAME, typeof(string), "")]
+    [TaskSetting(4, URL_SETTING_NAME, typeof(string), "", "Include protocols such as http://\nand port numbers such as :8080")]
     [TaskSetting(5, PROJECT_SETTING_NAME, typeof(string), "")]
     public class TFSChangesetHarvesterTask : ChangesetHarvesterBase
     {
         public const string PROJECT_SETTING_NAME = "Project";
-        public const string REQUIRED_PREFIX = "$\\";
+        public const string REQUIRED_PROJECT_NAME_PREFIX = "$\\";
         public override string Name { get { return "TFS Changeset Harvester"; } }
 
         public string ProjectSettingValue { get; set; }
@@ -37,23 +37,9 @@ namespace Smeedee.Tasks.SourceControl
             Guard.Requires<ArgumentNullException>(changesetDbRepository != null);
             Guard.Requires<ArgumentNullException>(databasePersister != null);
             Guard.Requires<ArgumentNullException>(config != null);
-            Guard.Requires<TaskConfigurationException>(config.Entries.Count() >= 4);
-
-            setProjectSettingValueWithPrefix(config.ReadEntryValue(PROJECT_SETTING_NAME) as string);
+            Guard.Requires<TaskConfigurationException>(config.Entries.Count() >= 4);            
             
             Interval = TimeSpan.FromMilliseconds(config.DispatchInterval);
-        }
-
-        private void setProjectSettingValueWithPrefix(string projectSettingName)
-        {
-            if (projectSettingName.Contains(REQUIRED_PREFIX))
-            {
-                ProjectSettingValue = projectSettingName;
-            }
-            else
-            {
-                ProjectSettingValue = REQUIRED_PREFIX + projectSettingName;
-            }
         }
 
         public override void Execute()
@@ -72,8 +58,21 @@ namespace Smeedee.Tasks.SourceControl
 
             return new TFSChangesetRepository(
                    (string)config.ReadEntryValue(URL_SETTING_NAME),
-                   ProjectSettingValue,
+                   SetProjectSettingValueWithPrefix(),
                    cred);
+        }
+
+        private string SetProjectSettingValueWithPrefix()
+        {
+            var configValue = (string)config.ReadEntryValue(PROJECT_SETTING_NAME);
+            if (configValue.Contains(REQUIRED_PROJECT_NAME_PREFIX))
+            {
+                return configValue;
+            }
+            else
+            {
+                return REQUIRED_PROJECT_NAME_PREFIX + configValue;
+            }
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Smeedee.Tasks.CI.TeamFoundationServerCITask
        Description = "Retrieves information from Team Foundation's build functionality. Used to populate Smeedee's database with build status information.",
        Version = 1,
        Webpage = "http://smeedee.org")]
-    [TaskSetting(1, USERNAME_SETTING_NAME, typeof(string), "guest")]
+    [TaskSetting(1, USERNAME_SETTING_NAME, typeof(string), "guest", "The username or domain/username of the Team Foundation server that this task may log in with.")]
     [TaskSetting(2, PASSWORD_SETTING_NAME, typeof(string), "")]
-    [TaskSetting(3, URL_SETTING_NAME, typeof(Uri), "")]
+    [TaskSetting(3, URL_SETTING_NAME, typeof(Uri), "", "Include protocols such as http://\nand port numbers such as :8080")]
     [TaskSetting(4, PROJECT_SETTING_NAME, typeof(string), "")]
     public class TeamFoundationServerCITask : CiTaskBase
     {
