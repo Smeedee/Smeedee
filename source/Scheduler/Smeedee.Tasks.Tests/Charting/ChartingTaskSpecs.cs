@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Charting;
+using Smeedee.DomainModel.Framework.Logging;
 using Smeedee.DomainModel.TaskInstanceConfiguration;
 using Smeedee.Integration.Database.DomainModel.Charting;
 using Smeedee.Tasks.Charting;
@@ -140,12 +141,13 @@ namespace Smeedee.Tasks.Tests.Charting
     {
         protected static ChartingTask Task;
         protected static TaskConfiguration config;
+        protected static Mock<ILog> logger;
         protected static Mock<IChartStorage> chartStorage;
         protected static Mock<IDownloadStringService> downloadStringServiceFake;
 
         protected Context Task_is_created = () =>
                                                 {
-                                                    Task = new ChartingTask(chartStorage.Object, config, downloadStringServiceFake.Object);
+                                                    Task = new ChartingTask(logger.Object, chartStorage.Object, config, downloadStringServiceFake.Object);
                                                 };
 
         protected Context File_contains_one_row_with_three_values = () => DownloadStringServiceFakeReturns("1,1,1");
@@ -182,6 +184,7 @@ namespace Smeedee.Tasks.Tests.Charting
         {
             Scenario("");
             config = new TaskConfiguration { Entries = new List<TaskConfigurationEntry>() { new TaskConfigurationEntry { Name = ChartingTask.VALUE_SEPARATOR, Value = ",", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.FILEPATH, Value = "http://my.url", Type = typeof(string) }, new TaskConfigurationEntry { Name = ChartingTask.COLLECTIONS_NAME, Value = "collection", Type = typeof(string) } } };
+            logger = new Mock<ILog>();
             chartStorage = new Mock<IChartStorage>();
             downloadStringServiceFake = new Mock<IDownloadStringService>();
             Before();

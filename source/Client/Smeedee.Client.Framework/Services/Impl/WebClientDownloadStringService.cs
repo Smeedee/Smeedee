@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Net;
 using Smeedee.Client.Framework.Services;
+using Smeedee.DomainModel.Framework.Logging;
 
 namespace Smeedee.Client.Framework.SL.Services.Impl
 {
     public class WebClientDownloadStringService : IDownloadStringService
     {
-        public WebClientDownloadStringService()
+        private readonly ILog logger;
+
+        public WebClientDownloadStringService(ILog logger)
         {
+            this.logger = logger;
         }
 
         public void DownloadAsync(Uri url, Action<string> callback)
@@ -25,7 +29,13 @@ namespace Smeedee.Client.Framework.SL.Services.Impl
                     if (e.Error != null && onErrorCallback != null)
                         onErrorCallback(e.Error);
 
-                    callback(e.Result);
+                    try
+                    {
+                        callback(e.Result);
+                    }
+                    catch (Exception)
+                    {
+                    }
                     ((WebClient)o).DownloadStringCompleted -= null;
                 };
             }

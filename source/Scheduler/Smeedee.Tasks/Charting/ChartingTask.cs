@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Smeedee.Client.Framework.Services;
 using Smeedee.DomainModel.Charting;
@@ -29,15 +30,17 @@ namespace Smeedee.Tasks.Charting
         public const string VALUE_SEPARATOR = "Value separator";
         public const string COLLECTIONS_NAME = "Name of collection";
 
+        private ILog logger;
         private IChartStorage chartStorage;
         private TaskConfiguration _configuration;
         private IDownloadStringService downloadStringService;
 
-        public ChartingTask(IChartStorage chartStorage, TaskConfiguration configuration, IDownloadStringService downloadStringService)
+        public ChartingTask(ILog logger, IChartStorage chartStorage, TaskConfiguration configuration, IDownloadStringService downloadStringService)
         {
             Guard.Requires<ArgumentNullException>(chartStorage != null);
             Guard.Requires<ArgumentNullException>(configuration != null);
             Guard.Requires<TaskConfigurationException>(configuration.Entries.Count() >= 3);
+            this.logger = logger;
             this.chartStorage = chartStorage;
             _configuration = configuration;
             this.downloadStringService = downloadStringService;
@@ -64,37 +67,36 @@ namespace Smeedee.Tasks.Charting
             {
                 var datasets = new List<DataSet>();
                 downloadStringService.DownloadAsync(new Uri(filepath), data =>
-                                                                           {
-                                                                               var oneLineOneDataset = data.Split('\n');
-                                                                               var valueSeparator = char.Parse(separator);
-                                                                               int shortestDataset = GetShortestDataset(oneLineOneDataset, valueSeparator);
+                                                                            {
+                                                                                var oneLineOneDataset = data.Split('\n');
+                                                                                var valueSeparator = char.Parse(separator);
+                                                                                int shortestDataset = GetShortestDataset(oneLineOneDataset, valueSeparator);
 
-                                                                               foreach (var item in oneLineOneDataset)
-                                                                               {
-                                                                                   var set = new DataSet();
-                                                                                   var splittedString = item.Split(valueSeparator);
+                                                                                foreach (var item in oneLineOneDataset)
+                                                                                {
+                                                                                    var set = new DataSet();
+                                                                                    var splittedString = item.Split(valueSeparator);
                                                                                    
-                                                                                   int i = 0;
-                                                                                   if (!IsNumber(splittedString[0]))
-                                                                                   {
-                                                                                       set.Name = splittedString[0];
-                                                                                       i = 1;
-                                                                                   }
-                                                                                   for (;i < shortestDataset; i++)
-                                                                                   {
+                                                                                    int i = 0;
+                                                                                    if (!IsNumber(splittedString[0]))
+                                                                                    {
+                                                                                        set.Name = splittedString[0];
+                                                                                        i = 1;
+                                                                                    }
+                                                                                    for (;i < shortestDataset; i++)
+                                                                                    {
                                                                                         set.DataPoints.Add(splittedString[i].Trim());
-                                                                                   }
-                                                                                   datasets.Add(set);
-                                                                               }
-                                                                               callback(datasets);
-                                                                           });
+                                                                                    }
+                                                                                    datasets.Add(set);
+                                                                                }
+                                                                                callback(datasets);
+                                                                            }, OnErrorCallback);
             }
-            else
-            {
-                //ILog logger = new Logger(new LogEntryDatabaseRepository(DefaultSessionFactory.Instance));
-                //logger.WriteEntry(new ErrorLogEntry(this.Name, filepath + " is an invalid URL of filepath. Did you remember 'http://' or 'file://' in the front?"));
-            }
+        }
 
+        private void OnErrorCallback(Exception ex)
+        {
+            logger.WriteEntry(new ErrorLogEntry(Name, ex.Message));
         }
 
         private int GetShortestDataset(string[] datasets, char separator)
