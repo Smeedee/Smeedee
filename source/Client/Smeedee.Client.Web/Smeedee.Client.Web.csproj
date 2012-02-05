@@ -219,16 +219,10 @@
     <Content Include="ClientBin\Smeedee.Client.SL.xap" />
     <Content Include="ClientBin\Smeedee.Client.Widget.ProjectInfo.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widget.Admin.Holidays.SL.xap" />
-    <Content Include="ClientBin\Smeedee.Widget.Admin.MobileServices.SL.xap" />
-    <Content Include="ClientBin\Smeedee.Widget.Admin.Tasks.SL.Tests.xap" />
     <Content Include="ClientBin\Smeedee.Widget.Admin.Tasks.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widget.Admin.Users.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widget.BurndownChart.xap" />
     <Content Include="ClientBin\Smeedee.Widget.CI.SL.xap" />
-    <Content Include="ClientBin\Smeedee.Widget.Corkboard.SL.xap" />
-    <Content Include="ClientBin\Smeedee.Widget.TeamPicture.xap" />
-    <Content Include="ClientBin\Smeedee.Widget.Twitter.xap" />
-    <Content Include="ClientBin\Smeedee.Widget.TeamMembers.SL.xap" />
     <Content Include="ClientBin\Smeedee.Widgets.SL.xap" />
     <Content Include="ClientBin\Tskjortebutikken.Widgets.xap" />
     <Content Include="Default.htm" />

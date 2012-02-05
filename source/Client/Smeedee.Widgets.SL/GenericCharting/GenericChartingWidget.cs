@@ -9,10 +9,10 @@ using TinyMVVM.Framework;
 namespace Smeedee.Widgets.SL.GenericCharting
 {
     [WidgetInfo(Name = "Generic Charting",
-                Description = "Used to add generic charting",
+                Description = "Used together with the Charting Task to quickly and easily set up a graphical visualization of any two-dimensional data",
                 Author = "Smeedee team",
                 Version = "1.0",
-                Tags = new[] { CommonTags.Charting })]
+                Tags = new[] { CommonTags.Charting, CommonTags.Agile, CommonTags.ProjectManagement })]
     public class GenericChartingWidget : Client.Framework.ViewModel.Widget
     {
 

@@ -15,10 +15,10 @@ namespace Smeedee.Widgets.SL.WebSnapshot
 {
     [WidgetInfo(
         Name = "Web Snapshot",
-        Description = "Display snapshots taken by the \"Web Snapshot\" task",
+        Description = "Display snapshots taken by the Web Snapshot Task",
         Author = "Smeedee team",
         Version = "1.0",
-        Tags = new[] { CommonTags.Fun })]
+        Tags = new[] { CommonTags.Charting, CommonTags.ProjectManagement, CommonTags.Fun })]
     public class WebSnapshotWidget : Client.Framework.ViewModel.Widget
     {
         private WebSnapshotViewModel viewModel;

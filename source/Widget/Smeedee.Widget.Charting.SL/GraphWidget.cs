@@ -1,17 +1,19 @@
 ﻿using Smeedee.Client.Framework.ViewModel;
 using Smeedee.DomainModel.Config;
+using Smeedee.DomainModel.Config.SlideConfig;
 using TinyMVVM.Framework;
 using Tskjortebutikken.Widgets.Controllers;
 using Tskjortebutikken.Widgets.SL.Views;
 using Tskjortebutikken.Widgets.ViewModel;
 
-namespace Tskjortebutikken.Widgets.SL
+namespace Smeedee.Widget.Charting.SL
 {
-    [WidgetInfo(Name = "Graf",
+    [WidgetInfo(Name = "Dataset Visualizer",
         Author = "Gøran Hansen",
-        Description = "Visualiserer et dataset som en graf",
-        Tags = new string[]{ "t-skjortebutikken.no", "Charting" })]
-    public class GraphWidget : Widget
+        Description = " Used together with Script Task to Visualize dataset as a graph (for advanced users)",
+        Version = "0.1 Beta",
+        Tags = new string[]{ CommonTags.Charting })]
+    public class GraphWidget : Client.Framework.ViewModel.Widget
     {
         private GraphController controller;
         private GraphSettingsController settingsController;

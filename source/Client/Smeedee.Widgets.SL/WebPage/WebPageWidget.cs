@@ -11,11 +11,11 @@ using TinyMVVM.Framework;
 
 namespace Smeedee.Widgets.SL.WebPage
 {
-    [WidgetInfo(Name = "Web Page",
-                Description = "Lets you display a web site",
-                Author = "Smeedee team",
-                Version = "1.0",
-                Tags = new[] { CommonTags.Fun })]
+    //[WidgetInfo(Name = "Web Page",
+    //            Description = "Lets you display a web site",
+    //            Author = "Smeedee team",
+    //            Version = "1.0",
+    //            Tags = new[] { CommonTags.Fun })]
     public class WebPageWidget : Client.Framework.ViewModel.Widget
     {
     	private readonly WebPageController webPageController;
