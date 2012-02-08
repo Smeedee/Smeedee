@@ -48,10 +48,11 @@ namespace Smeedee.Integration.Tests.CI.HudsonXML
 
         [Test]
         [Category("IntegrationTest")]
-        [Ignore("Not working")]
+        //[Ignore("Not working")]
         public void TestGetHudsonProjects()
         {
-            doc.LoadXml(hudsonXmlFetcher.GetProjects());
+            var path = hudsonXmlFetcher.GetProjects();
+            doc.Load(path);
             var result = doc.SelectNodes("/allView/job");
             result.ShouldNotBeNull();
             if (result != null)

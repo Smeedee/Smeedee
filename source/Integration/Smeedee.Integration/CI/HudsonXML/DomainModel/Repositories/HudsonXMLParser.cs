@@ -25,7 +25,19 @@ namespace Smeedee.Integration.CI.HudsonXML.DomainModel.Repositories
         public IList<CIProject> GetProjects()
         {
             var doc = new XmlDocument();
-            doc.LoadXml(xmlFetcher.GetProjects());
+
+            var path = xmlFetcher.GetProjects();
+
+            try
+            {
+                doc.LoadXml(path);
+            }
+            catch (Exception e)
+            {
+                doc = new XmlDocument();
+                string test = xmlFetcher.GetUrl();
+                doc.Load(test);
+            }
             var result = from XmlElement e in doc.SelectNodes("/allView/job/name")
                          select new CIProject(e.InnerXml.Trim());
 
@@ -36,7 +48,10 @@ namespace Smeedee.Integration.CI.HudsonXML.DomainModel.Repositories
         {
             var doc = new XmlDocument();
             var builds = new List<Build>();
-            doc.LoadXml(xmlFetcher.GetBuilds(projectName));
+
+            var path = xmlFetcher.GetBuilds(projectName);
+
+            doc.LoadXml(path);
 
             foreach (XmlElement e in doc.SelectNodes("/freeStyleProject/build"))
             {
